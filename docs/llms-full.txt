@@ -1,7 +1,7 @@
-# clio.css 0.7.0 — full reference
+# clio.css 0.8.0 — full reference
 
 Classic Mac OS interface CSS: System 6 (default), System 7 (data-era="system7"), Mac OS 8.5 Drawing Board (data-era="drawingboard") and Mac OS 8/9 Platinum (data-era="platinum").
-Install: npm install clio.css — or <link rel="stylesheet" href="https://unpkg.com/clio.css@0.7.0/dist/clio.css">
+Install: npm install clio.css — or <link rel="stylesheet" href="https://unpkg.com/clio.css@0.8.0/dist/clio.css">
 Rules have zero or one-class specificity; override any --clio-* custom property on any element.
 
 ## Window (#window)
@@ -346,14 +346,15 @@ Accessibility: Make each icon a <button> (or give it role=button and tabindex=0)
 
 The fonts, the palette and every --clio-* custom property you can override.
 
-Selectors: .clio, .text, .heading, [data-era=system6], [data-era=platinum]
-Tokens: --clio-ink, --clio-paper, --clio-font-chrome, --clio-font-text, --clio-font-size, --clio-selection-bg, --clio-focus-outline
+Selectors: .clio, .text, .heading, .display, [data-era=system6], [data-era=platinum]
+Tokens: --clio-ink, --clio-paper, --clio-font-chrome, --clio-font-text, --clio-font-display, --clio-font-size, --clio-selection-bg, --clio-focus-outline
 Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text keeps 3:1 or more.
 
 ```html
 <div class="clio" style="padding: 12px; background: var(--clio-pane-bg)">
   <h2 class="heading">Clio Sans '84 is the system font</h2>
   <p class="text">Clio Text '84 (Geneva) is the application font. Every value is a --clio-* custom property you can override on any element.</p>
+  <p class="display" style="font-size: 28px; line-height: 34px; margin: 0">Display: any other size</p>
 </div>
 ```
 
@@ -389,6 +390,16 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
 @font-face {
   font-family: "Clio Sans '97";
   src: url("fonts/ClioSans97.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+/* Clio Sans '97 Display: Charcoal's outlines, traced from Mac OS 9.0 drawing it
+   at 72 points (fonts/ClioSans97Display.woff2, tooling/trace-outline.py), for
+   every size that is not 12px or a multiple of it. */
+@font-face {
+  font-family: "Clio Sans '97 Display";
+  src: url("fonts/ClioSans97Display.woff2") format("woff2");
   font-weight: 100 900;
   font-display: swap;
 }
@@ -434,6 +445,12 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
   /* [A] Disabled text: System 6 drew it through a 50% grey pattern; a solid
      grey keeps 5.6:1 on white instead of a dither the browser would blur. */
   --clio-disabled: #696969;
+  /* Dimmed text is drawn through QuickDraw's 50% gray pattern, aligned to the
+     screen: the ink where x + y is odd survives (measured, File menu). The
+     pattern is fixed to the viewport the same way; #696969 is only the
+     fallback colour where background-clip: text is missing. */
+  --clio-disabled-dither: var(--clio-art-s6-gray50);
+  --clio-disabled-fill: transparent;
   --clio-selection-bg: #000000;
   --clio-selection-fg: #ffffff;
 
@@ -444,6 +461,9 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
   --clio-font-small: "Clio Text '84 9", Geneva, "Helvetica Neue", Arial, sans-serif;
   --clio-text-smoothing: none;
   --clio-font-mono: Monaco, Menlo, Consolas, "Courier New", monospace;
+  /* Chrome type at sizes other than 12px and its multiples (.display): an
+     outline face, smoothed. */
+  --clio-font-display: Chicago, "ChicagoFLF", Charcoal, "Helvetica Neue", Arial, sans-serif;
   --clio-font-size: 12px;
   /* A bitmap face: no antialiasing, so a glyph on a half pixel stays 1-bit. */
   --clio-font-smoothing: none;
@@ -520,7 +540,7 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
   --clio-menu-border-top-width: 0;
   --clio-menu-shadow: 1px 1px 0 var(--clio-ink);
   --clio-menu-item-height: 16px;
-  --clio-menu-item-padding: 0 12px 0 15px;
+  --clio-menu-item-padding: 0 12px 0 13px;
   --clio-menu-item-weight: 400;
   --clio-menu-item-active-bg: var(--clio-ink);
   --clio-menu-item-active-fg: var(--clio-paper);
@@ -661,7 +681,7 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
   --clio-strip-module-width: 30px;
   --clio-strip-icon-inset: 2px;
   --clio-strip-menu-top: 7px;
-  --clio-strip-menu-inset: 3px;
+  --clio-strip-menu-inset: 4px;
   --clio-strip-handle-width: 18px;
   --clio-strip-tab-width: 18px;
   --clio-strip-cap: var(--clio-art-s6-strip-cap);
@@ -698,8 +718,9 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
   --clio-art-s6-grow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' shape-rendering='crispEdges'%3E%3Cpath fill='%23000' d='M2 2h7v1h-7zM2 3h1v1h-1zM8 3h1v1h-1zM2 4h1v1h-1zM8 4h5v1h-5zM2 5h1v1h-1zM8 5h1v1h-1zM12 5h1v1h-1zM2 6h1v1h-1zM8 6h1v1h-1zM12 6h1v1h-1zM2 7h1v1h-1zM8 7h1v1h-1zM12 7h1v1h-1zM2 8h7v1h-7zM12 8h1v1h-1zM4 9h1v1h-1zM12 9h1v1h-1zM4 10h1v1h-1zM12 10h1v1h-1zM4 11h1v1h-1zM12 11h1v1h-1zM4 12h9v1h-9z'/%3E%3C/svg%3E");
   --clio-art-s6-dkgray: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='2' shape-rendering='crispEdges'%3E%3Cpath fill='%23000' d='M0 0h1v1h-1zM2 0h2v1h-2zM0 1h3v1h-3z'/%3E%3Cpath fill='%23fff' d='M1 0h1v1h-1zM3 1h1v1h-1z'/%3E%3C/svg%3E");
   --clio-art-s6-menucheck: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='8' shape-rendering='crispEdges'%3E%3Cpath fill='%23000' d='M8 0h1v1h-1zM7 1h2v1h-2zM6 2h2v1h-2zM5 3h2v1h-2zM0 4h1v1h-1zM4 4h2v1h-2zM0 5h2v1h-2zM3 5h2v1h-2zM1 6h3v1h-3zM2 7h1v1h-1z'/%3E%3C/svg%3E");
+  --clio-art-s6-gray50: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='2' height='2' shape-rendering='crispEdges'%3E%3Cpath d='M1 0h1v1H1zM0 1h1v1H0z'/%3E%3C/svg%3E");
   --clio-art-s6-menucheck-on: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='8' shape-rendering='crispEdges'%3E%3Cpath fill='%23fff' d='M8 0h1v1h-1zM7 1h2v1h-2zM6 2h2v1h-2zM5 3h2v1h-2zM0 4h1v1h-1zM4 4h2v1h-2zM0 5h2v1h-2zM3 5h2v1h-2zM1 6h3v1h-3zM2 7h1v1h-1z'/%3E%3C/svg%3E");
-  --clio-art-s6-strip-cap: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' shape-rendering='crispEdges'%3E%3Cpath d='M0 0h8v8H0zM1 1v6h6V1z'/%3E%3C/svg%3E");
+  --clio-art-s6-strip-cap: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='15' height='24' shape-rendering='crispEdges'%3E%3Cpath fill='%23fff' d='M1 1h13v22H1z'/%3E%3Cpath d='M0 0h15v1H0zM0 23h15v1H0zM0 1h1v22H0zM14 1h1v22h-1zM3 8h8v1H3zM3 15h8v1H3zM3 9h1v6H3zM10 9h1v6h-1z'/%3E%3C/svg%3E");
   --clio-art-s6-strip-back: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' shape-rendering='crispEdges'%3E%3Cpath d='M4 1h1v8H4zM3 2h1v6H3zM2 3h1v4H2zM1 4h1v2H1z'/%3E%3C/svg%3E");
   --clio-art-s6-strip-forward: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' shape-rendering='crispEdges'%3E%3Cpath d='M5 1h1v8H5zM6 2h1v6H6zM7 3h1v4H7zM8 4h1v2H8z'/%3E%3C/svg%3E");
   --clio-art-s6-strip-menu: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='7' shape-rendering='crispEdges'%3E%3Cpath d='M0 0h1v7H0zM1 1h1v5H1zM2 2h1v3H2zM3 3h1v1H3z'/%3E%3C/svg%3E");
@@ -750,6 +771,11 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
   font-size: var(--clio-font-size);
   font-weight: var(--clio-chrome-weight);
   line-height: 16px;
+}
+
+:where(.display) {
+  font-family: var(--clio-font-display);
+  -webkit-font-smoothing: auto;
 }
 
 :where(.window, .modal-dialog, .alert-box, .standard-dialog, .clio) :where(p) {
@@ -1162,6 +1188,12 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
 :where(.menu, [role="menu"]) > li:is(.disabled, [aria-disabled="true"]),
 :where(.menu, [role="menu"]) > li > :is(a, button):is(:disabled, [aria-disabled="true"]) {
   color: var(--clio-disabled);
+  background-image: var(--clio-disabled-dither);
+  background-size: 2px 2px;
+  background-attachment: fixed;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: var(--clio-disabled-fill);
 }
 
 /* Keyboard shortcut column, right-aligned. */
@@ -1284,6 +1316,13 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
 :where(button, .btn, .btn-default, .standard-button, input[type="button"], input[type="submit"], input[type="reset"]):is(:disabled, .disabled) {
   border: var(--clio-button-disabled-border);
   color: var(--clio-button-disabled-fg);
+  /* System 6: the label through the 50% pattern, the frame left solid. */
+  background-image: var(--clio-disabled-dither), linear-gradient(var(--clio-button-bg), var(--clio-button-bg));
+  background-size: 2px 2px, auto;
+  background-attachment: fixed, scroll;
+  -webkit-background-clip: text, border-box;
+  background-clip: text, border-box;
+  -webkit-text-fill-color: var(--clio-disabled-fill);
 }
 
 :where(button, .btn, .btn-default, .standard-button, input[type="button"], input[type="submit"], input[type="reset"]):focus-visible {
@@ -1379,6 +1418,12 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
 :where(input[type="checkbox"], input[type="radio"]):disabled + label,
 :where(label):has(> :is(input[type="checkbox"], input[type="radio"]):disabled) {
   color: var(--clio-disabled);
+  background-image: var(--clio-disabled-dither);
+  background-size: 2px 2px;
+  background-attachment: fixed;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: var(--clio-disabled-fill);
 }
 
 /* ---- Text fields ---------------------------------------------------------- */
@@ -1724,7 +1769,7 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
   border-radius: 6px;
   background: var(--clio-paper);
   color: var(--clio-ink);
-  font: 700 22px/28px var(--clio-font-chrome);
+  font: 700 22px/28px var(--clio-font-display);
   text-align: center;
 }
 
@@ -1871,6 +1916,19 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
    button.control-strip-handle. Add .is-collapsed to fold it to the tab, and
    data-edge="right" for a strip on the right edge. Placement is yours
    (AI System 6 fixes it to the screen's lower left). */
+/* The strip's art is the same in System 7.5.3, Mac OS 8.5 and Mac OS 9.0
+   (compared pixel for pixel with the backdrop removed); only the cell colours
+   differ, so it lives here for every era. Redrawn by tooling/p9-art.py. */
+:root {
+  --clio-art-p9-strip-cap: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAYBAMAAADXK7paAAAAHlBMVEUAAAAAAABERERVVVWAgICIiIigoKDAwMDMzP/////+VYXkAAAAAXRSTlMAQObYZgAAAGlJREFUeJxjFGQAg/8sbAlgxkwWBiUQfZuBheHfAwYGhg8MTBAlDPgYLAx/9jAwsOgysDAwhDIw/L8LYvy98NcVry4mBoa/Zy+AtTOwlzP8AzFY3r0jYBfC0l/3P4AZjILMBiD6DCPMOwBKOxgiile5lQAAAABJRU5ErkJggg==");
+  --clio-art-s7-strip-cap: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAYBAMAAADXK7paAAAAG1BMVEUAAAAAAABERERVVVWIiIiqqqrMzMzMzP/////JRvoVAAAAAXRSTlMAQObYZgAAAGVJREFUeJxjFGQAg/8srAFgxioWBiUQfYeBheHfAwYGhg8MTBAlDPgYLAx/zzIwMMsxsDAwuDAw/L8HYvy98M+FgC6Gf/egDLY0hn8gBvO7dwTsQmj/ff8DmMEoyGwAos8wwrwDAP+1F0dci98qAAAAAElFTkSuQmCC");
+  --clio-art-p9-strip-back: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKAgMAAADwXCcuAAAACVBMVEUAAABVVVXd3d2apXz3AAAAAXRSTlMAQObYZgAAACxJREFUeJwFwaERwCAABLD0j3oE7IPBs/8KrcBjSKhiKM/cebs0gvzkfFioLlg9BPcTGNP4AAAAAElFTkSuQmCC");
+  --clio-art-p9-strip-forward: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKAgMAAADwXCcuAAAACVBMVEUAAABVVVXd3d2apXz3AAAAAXRSTlMAQObYZgAAAC1JREFUeJwFwSESABAUQMHnzegC9/nFqRX3IegCuxBIwVYxdySFgLzpHbg2cvhWkAdTrBZiqwAAAABJRU5ErkJggg==");
+  --clio-art-p9-strip-menu: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAHAQMAAAAVq36TAAAABlBMVEUAAAAAAAClZ7nPAAAAAXRSTlMAQObYZgAAABZJREFUeJxjaGA4wPCA4QMTA9MHpgcAIQYE58W2/JQAAAAASUVORK5CYII=");
+  --clio-art-p9-strip-handle: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAAYBAMAAAAFe7ACAAAAFVBMVEUAAAAAAABERERVVVWIiIjMzMz///8V67gPAAAAAXRSTlMAQObYZgAAAINJREFUeJxVz7ENAjEMheE/IbQokRiAUVJQUjAs5RXZhJvgkp6LjGwfBU309PzFkkMBZAApVVgAIqWUZ9bORsE6fWvWJCukoIlbtjICG0sK5iLnVrM7Hqefsy3qPKnzZM6n/+41D/epbbi772IOaOPYsIv/sIrEG6YA4XqB3vWO2UErvmVcJ4BylohjAAAAAElFTkSuQmCC");
+  --clio-art-p9-strip-tab: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAAYBAMAAAAFe7ACAAAAFVBMVEUAAAAAAABERERVVVWIiIjMzMz///8V67gPAAAAAXRSTlMAQObYZgAAAIFJREFUeJxVz7ENAjEMQNHvKPS+DRiBEVJQMi49WeAkRrgJSHoijOyEgipf1pPlyAbQgMwVxqN7iYIACVprRaMUskS9gKJeSWKYADtGLRruzC3Lcqd6WW7uw45V7ma5m/Xv3uW53H3YdLnU7g4YFg9Q+6phfv2nw95BNlGsRf1++QW6eCj9rQPMHAAAAABJRU5ErkJggg==");
+}
+
 :where(.control-strip) {
   display: inline-flex;
   align-items: stretch;
@@ -1892,12 +1950,14 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
   box-shadow: var(--clio-strip-cell-shadow);
 }
 
+/* The end cap is one picture: frame, bevel, icon and the rounded lower-left corner. */
 :where(.control-strip)::before {
   content: "";
   flex: none;
   width: calc(var(--clio-strip-cap-width) + 2px);
-  border-left: var(--clio-strip-line);
-  background: var(--clio-strip-cap) 2px 7px / 8px 8px no-repeat, var(--clio-strip-bg);
+  border: 0;
+  background: var(--clio-strip-cap) 0 0 / 100% 100% no-repeat;
+  box-shadow: none;
 }
 
 :where(.control-strip) > :is(.control-strip-scroll, .control-strip-handle) {
@@ -2069,6 +2129,24 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
   /* Menus: disabled items and the separator are solid #888 (System 6 used a
      50% dither); the separator is still a full 16px row, ruled on its ninth line. */
   --clio-disabled: #888888;
+  --clio-disabled-dither: none;
+
+  /* Control Strip, measured from System 7.5.3 (frame folder-window): the
+     Mac OS 9 geometry and art in System 7 greys, #ccc cells with a #aaa then
+     #888 shade; the held module is inferred from Mac OS 9's in these greys. */
+  --clio-strip-bg: #cccccc;
+  --clio-strip-line: 1px solid #000000;
+  --clio-strip-cell-shadow: inset -1px -1px 0 #888888, inset -2px -2px 0 #aaaaaa, inset 1px 1px 0 #cccccc, inset 2px 2px 0 #ffffff;
+  --clio-strip-sunken-shadow: inset 1px 1px 0 #888888, inset -1px -1px 0 #ffffff;
+  --clio-strip-pressed-bg: #888888;
+  --clio-strip-pressed-shadow: inset 2px 2px 0 #555555, inset -2px -2px 0 #cccccc;
+  --clio-strip-cap: var(--clio-art-s7-strip-cap);
+  --clio-strip-back: var(--clio-art-p9-strip-back);
+  --clio-strip-forward: var(--clio-art-p9-strip-forward);
+  --clio-strip-menu: var(--clio-art-p9-strip-menu);
+  --clio-strip-handle: var(--clio-art-p9-strip-handle);
+  --clio-strip-tab: var(--clio-art-p9-strip-tab);
+  --clio-disabled-fill: currentcolor;
   --clio-menu-separator: linear-gradient(#888888, #888888) 0 8px / 100% 1px no-repeat;
 
   /* Pop-up menu (Numbers control panel): an 18px box, a 1px shadow that starts
@@ -2196,6 +2274,8 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
   --clio-paper: #dddddd;
   --clio-face: #dddddd;
   --clio-disabled: #6f6f6f;
+  --clio-disabled-dither: none;
+  --clio-disabled-fill: currentcolor;
   --clio-selection-bg: #ccccff;
   --clio-selection-fg: #000000;
 
@@ -2204,6 +2284,7 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
      (OFL) at the widths AI System 6 measured against Charcoal as the last
      fallback; Geneva for text on a Mac. */
   --clio-font-chrome: Charcoal, "Charcoal CY", "Clio Sans '97", "Clio Asap", Geneva, "Helvetica Neue", Arial, sans-serif;
+  --clio-font-display: Charcoal, "Charcoal CY", "Clio Sans '97 Display", "Clio Asap", "Helvetica Neue", Arial, sans-serif;
   --clio-font-text: Geneva, "Clio Asap", "Helvetica Neue", Arial, sans-serif;
   --clio-font-size: 12px;
   --clio-font-smoothing: none;
@@ -2276,10 +2357,12 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
   --clio-menu-item-active-bg: #333399;
   --clio-menu-item-active-fg: #ffffff;
   --clio-menu-item-active-shadow: inset 1px 0 0 #6666cc, inset -1px 0 0 #000088;
+  /* Separator: a 6px row, #888 on its third line and white on its fourth,
+     across the menu's full width (Mac OS 9.0 Finder File menu). */
   --clio-menu-separator:
-    linear-gradient(#888888, #888888) 0 3px / 100% 1px no-repeat,
-    linear-gradient(#ffffff, #ffffff) 0 4px / 100% 1px no-repeat;
-  --clio-menu-separator-height: 8px;
+    linear-gradient(#888888, #888888) 0 2px / 100% 1px no-repeat,
+    linear-gradient(#ffffff, #ffffff) 0 3px / 100% 1px no-repeat;
+  --clio-menu-separator-height: 6px;
 
   /* Push buttons: bevel, 3px corners (P29 pressed) */
   --clio-button-bg: #dddddd;
@@ -2321,18 +2404,28 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
   --clio-field-padding: 2px 3px;
   --clio-field-focus-shadow: -1px -1px 0 #888888, 1px 1px 0 #ffffff;
 
-  /* Pop-up menus (P31) */
+  /* Pop-up menus, measured from Mac OS 9.0 (Appearance tab, "Apple platinum"):
+     20px, black frame, #ddd face with a white top line and #aaa foot; a #aaa
+     divider 20px from the right, then a raised arrow box (white left and top,
+     #aaa then #777 shade) with the 7x10 arrows 7px from the right, 4px down. */
   --clio-popup-bg: #dddddd;
   --clio-popup-border: 1px solid #000000;
   --clio-popup-radius: 3px;
-  --clio-popup-shadow: inset 1px 1px #ffffff, inset -1px -1px #aaaaaa;
+  --clio-popup-shadow: none;
   --clio-popup-height: 20px;
   --clio-popup-padding: 0 28px 0 7px;
   --clio-popup-weight: 700;
   --clio-popup-arrow:
-    var(--clio-art-p-dropdown) right 6px center / 7px 10px no-repeat,
-    linear-gradient(#ffffff, #ffffff) right 18px top 1px / 1px calc(100% - 2px) no-repeat,
-    linear-gradient(#aaaaaa, #aaaaaa) right 19px top 0 / 1px 100% no-repeat;
+    var(--clio-art-p-dropdown) right 7px top 4px / 7px 10px no-repeat,
+    linear-gradient(#777777, #777777) right 0 top 1px / 1px calc(100% - 1px) no-repeat,
+    linear-gradient(#777777, #777777) right 0 bottom 0 / 19px 1px no-repeat,
+    linear-gradient(#aaaaaa, #aaaaaa) right 1px top 1px / 1px calc(100% - 2px) no-repeat,
+    linear-gradient(#aaaaaa, #aaaaaa) right 1px bottom 1px / 18px 1px no-repeat,
+    linear-gradient(#ffffff, #ffffff) right 18px top 1px / 1px calc(100% - 3px) no-repeat,
+    linear-gradient(#ffffff, #ffffff) right 2px top 1px / 17px 1px no-repeat,
+    linear-gradient(#aaaaaa, #aaaaaa) right 20px top 0 / 1px 100% no-repeat,
+    linear-gradient(#ffffff, #ffffff) left 0 top 0 / calc(100% - 21px) 1px no-repeat,
+    linear-gradient(#aaaaaa, #aaaaaa) left 0 bottom 0 / calc(100% - 21px) 1px no-repeat;
 
   /* Scroll bars (P16, P17, P27) */
   --clio-scrollbar-size: 16px;
@@ -2405,7 +2498,7 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
   --clio-strip-bg: #c0c0c0;
   --clio-strip-line: 1px solid #000000;
   --clio-strip-cell-shadow: inset -1px -1px 0 #808080, inset -2px -2px 0 #a0a0a0, inset 1px 1px 0 #c0c0c0, inset 2px 2px 0 #ffffff;
-  --clio-strip-sunken-shadow: inset 1px 1px 0 #808080, inset 2px 2px 0 #a0a0a0, inset -1px -1px 0 #ffffff;
+  --clio-strip-sunken-shadow: inset 1px 1px 0 #808080, inset -1px -1px 0 #ffffff;
   --clio-strip-pressed-bg: #808080;
   --clio-strip-pressed-shadow: inset 2px 2px 0 #404040, inset -2px -2px 0 #c0c0c0;
   --clio-strip-cap: var(--clio-art-p9-strip-cap);
@@ -2415,14 +2508,14 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
   --clio-strip-handle: var(--clio-art-p9-strip-handle);
   --clio-strip-tab: var(--clio-art-p9-strip-tab);
 
-  /* Art: pop-up arrow, check mark and submenu arrow from classic-stylesheets
-     (MIT, Niels Sonnich Poulsen); scroll arrows, grips and tabs drawn here
-     (tabs: tooling/tab-art.py). */
-  --clio-art-p-dropdown: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='7' height='10' shape-rendering='crispEdges'%3E%3Cpath d='M3 0h1v1H3zM2 1h3v1H2zM1 2h5v1H1zM0 3h7v1H0zM0 6h7v1H0zM1 7h5v1H1zM2 8h3v1H2zM3 9h1v1H3z'/%3E%3C/svg%3E");
-  --clio-art-p-dropdown-off: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='7' height='10' shape-rendering='crispEdges'%3E%3Cpath fill='%23888' d='M3 0h1v1H3zM2 1h3v1H2zM1 2h5v1H1zM0 3h7v1H0zM0 6h7v1H0zM1 7h5v1H1zM2 8h3v1H2zM3 9h1v1H3z'/%3E%3C/svg%3E");
-  --clio-art-p-check: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='8'%3E%3Cpath d='M0 5.5 2.5 8 9 1.5V0h-.5L3 5 1 3 .5 4.25Z' fill-rule='evenodd' shape-rendering='crispEdges'/%3E%3C/svg%3E");
-  --clio-art-p-submenu: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='11'%3E%3Cpath d='m0 0 6 5.5L0 11Z'/%3E%3C/svg%3E");
-  --clio-art-p-submenu-on: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='11'%3E%3Cpath fill='%23fff' d='m0 0 6 5.5L0 11Z'/%3E%3C/svg%3E");
+  /* Art: pop-up arrow, menu check mark and submenu arrow redrawn from
+     Mac OS 9.0 (tooling/p9-art.py, below); scroll arrows, grips and tabs drawn
+     here (tabs: tooling/tab-art.py). */
+  --clio-art-p-dropdown: var(--clio-art-p9-dropdown);
+  --clio-art-p-dropdown-off: var(--clio-art-p9-dropdown-off);
+  --clio-art-p-check: var(--clio-art-p9-menucheck);
+  --clio-art-p-submenu: var(--clio-art-p9-submenu);
+  --clio-art-p-submenu-on: var(--clio-art-p9-submenu-on);
   --clio-art-p-up: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' shape-rendering='crispEdges'%3E%3Cpath fill='%23000' d='M5 5h2v1h-2zM4 6h4v1h-4zM3 7h6v1h-6zM2 8h8v1h-8z'/%3E%3C/svg%3E");
   --clio-art-p-up-off: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' shape-rendering='crispEdges'%3E%3Cpath fill='%23888' d='M5 5h2v1h-2zM4 6h4v1h-4zM3 7h6v1h-6zM2 8h8v1h-8z'/%3E%3C/svg%3E");
   --clio-art-p-down: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' shape-rendering='crispEdges'%3E%3Cpath fill='%23000' d='M2 5h8v1h-8zM3 6h6v1h-6zM4 7h4v1h-4zM5 8h2v1h-2z'/%3E%3C/svg%3E");
@@ -2443,12 +2536,14 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
   --clio-art-p9-check-overhang: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAAEAgMAAADZgQaqAAAADFBMVEUAAAAAAAB3d3eqqqoo0Gg2AAAAAXRSTlMAQObYZgAAABBJREFUeJxjcGDYwCTAwAAABXABA8z2jo8AAAAASUVORK5CYII=");
   --clio-art-p9-radio-on: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMBAMAAACkW0HUAAAAIVBMVEUAAAAAAAAiIiJERERVVVV3d3eIiIiZmZm7u7vd3d3///9FvHqFAAAAAXRSTlMAQObYZgAAAFlJREFUeJwVwUERQEAUgOH/vdlxcni7W8CSQBYh5HBy0kEADeigAQqYoQDG9wEpgJCinavTmKTa9fXLbIWWOYyN3oA8ys/UDCTolkE3OKz1dugzme8voI7wAZyaEH+rqNVXAAAAAElFTkSuQmCC");
   --clio-art-p9-radio: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMBAMAAACkW0HUAAAAG1BMVEUAAAAAAABERERVVVWIiIiqqqq7u7vd3d3///9N7yqcAAAAAXRSTlMAQObYZgAAAFpJREFUeJwlzLENQEAYBeDn5RJRuZwJiI2IOZTKW0FnB7OICbDC61x1v8I3wAegDYBDM9n+sBjXMHiyigs9+y2V6KgYZxmRSjOwxiwVvF4zu5lPSXJ2ZFzCn32EjiE9A/VQnAAAAABJRU5ErkJggg==");
-  --clio-art-p9-strip-cap: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAIBAMAAAA2IaO4AAAAElBMVEUAAABERERVVVWIiIjMzP////8FX/ZGAAAAAXRSTlMAQObYZgAAAChJREFUeJxjVGJgYGBhUmBgYGF4z/CIiYGBgQFBsDDcY2BhYXBhYAAARIYDUwza/HEAAAAASUVORK5CYII=");
-  --clio-art-p9-strip-back: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKAgMAAADwXCcuAAAACVBMVEUAAABVVVXd3d2apXz3AAAAAXRSTlMAQObYZgAAACxJREFUeJwFwaERwCAABLD0j3oE7IPBs/8KrcBjSKhiKM/cebs0gvzkfFioLlg9BPcTGNP4AAAAAElFTkSuQmCC");
-  --clio-art-p9-strip-forward: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKAgMAAADwXCcuAAAACVBMVEUAAABVVVXd3d2apXz3AAAAAXRSTlMAQObYZgAAAC1JREFUeJwFwSESABAUQMHnzegC9/nFqRX3IegCuxBIwVYxdySFgLzpHbg2cvhWkAdTrBZiqwAAAABJRU5ErkJggg==");
-  --clio-art-p9-strip-menu: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAHAQMAAAAVq36TAAAABlBMVEUAAAAAAAClZ7nPAAAAAXRSTlMAQObYZgAAABZJREFUeJxjaGA4wPCA4QMTA9MHpgcAIQYE58W2/JQAAAAASUVORK5CYII=");
-  --clio-art-p9-strip-handle: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAAYBAMAAAAFe7ACAAAAFVBMVEUAAAAAAABERERVVVWIiIjMzMz///8V67gPAAAAAXRSTlMAQObYZgAAAINJREFUeJxVz7ENAjEMheE/IbQokRiAUVJQUjAs5RXZhJvgkp6LjGwfBU309PzFkkMBZAApVVgAIqWUZ9bORsE6fWvWJCukoIlbtjICG0sK5iLnVrM7Hqefsy3qPKnzZM6n/+41D/epbbi772IOaOPYsIv/sIrEG6YA4XqB3vWO2UErvmVcJ4BylohjAAAAAElFTkSuQmCC");
-  --clio-art-p9-strip-tab: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAAYBAMAAAAFe7ACAAAAFVBMVEUAAAAAAABERERVVVWIiIjMzMz///8V67gPAAAAAXRSTlMAQObYZgAAAIFJREFUeJxVz7ENAjEMQNHvKPS+DRiBEVJQMi49WeAkRrgJSHoijOyEgipf1pPlyAbQgMwVxqN7iYIACVprRaMUskS9gKJeSWKYADtGLRruzC3Lcqd6WW7uw45V7ma5m/Xv3uW53H3YdLnU7g4YFg9Q+6phfv2nw95BNlGsRf1++QW6eCj9rQPMHAAAAABJRU5ErkJggg==");
+  --clio-art-p9-radio-pressed: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMBAMAAACkW0HUAAAAIVBMVEUAAAAAAAAiIiJERERVVVVmZmZ3d3eIiIiZmZm7u7v////rjZGwAAAAAXRSTlMAQObYZgAAAFdJREFUeJwVxKsRgDAURcFz34B/iUaQoQE0ilKogUHREyVQAxKZFnBRfIYVC6QI+n+OymIIyvZK8lZdCkGNXapHfwz3RZiL0kfLwLyZ3CmT3bvDKhhO+ABY6xACXUidtgAAAABJRU5ErkJggg==");
+  --clio-art-p9-checkbox-pressed: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMBAMAAACkW0HUAAAAElBMVEUAAAAAAABVVVV3d3eZmZn///8vNloyAAAAAXRSTlMAQObYZgAAADhJREFUeJxFibENACAMwxzUGegH/f8MxFkdEHQgi2VHzp1pAsO42ttrfLQoW4WM+lYhp8kFW44lHI3DBiNDd4iSAAAAAElFTkSuQmCC");
+  --clio-art-p9-progress-pole: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAKBAMAAABPkMOvAAAAKlBMVEUAAAAAAFUAAIgzM5lVVVVmZsx3d3eZmZmZmf+qqqq7u7vMzP/d3d3///+RIHmxAAAAAXRSTlMAQObYZgAAAFFJREFUeJwlyrEJgwAQQNF3ciNYiziBIKQ2U7lTpnAAAy4QcYOAtQbRFK/5/GhwyefM1pKPDR3x+q0UtfhY7ism+0j2ufBGFYN/yi8uUbYcMycurhMrVyrlPQAAAABJRU5ErkJggg==");
+  --clio-art-p9-submenu: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAALAQMAAABmnG7VAAAABlBMVEUAAAAAAAClZ7nPAAAAAXRSTlMAQObYZgAAAB9JREFUeJxjaGA4wPCA4QPDD4Y/TH+YfjB9YHrAdAAAZSIJk3jnGdQAAAAASUVORK5CYII=");
+  --clio-art-p9-submenu-on: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAALAQMAAABmnG7VAAAABlBMVEUAAAD///+l2Z/dAAAAAXRSTlMAQObYZgAAAB9JREFUeJxjaGA4wPCA4QPDD4Y/TH+YfjB9YHrAdAAAZSIJk3jnGdQAAAAASUVORK5CYII=");
+  --clio-art-p9-dropdown: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAKAQMAAABCAtZOAAAABlBMVEUAAAAAAAClZ7nPAAAAAXRSTlMAQObYZgAAABlJREFUeJxjEGDSYHJh+McAAv8YahgsGAQAHygDQTD2iPAAAAAASUVORK5CYII=");
+  --clio-art-p9-dropdown-off: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAKAQMAAABCAtZOAAAABlBMVEUAAACIiIhaeOqmAAAAAXRSTlMAQObYZgAAABlJREFUeJxjEGDSYHJh+McAAv8YahgsGAQAHygDQTD2iPAAAAAASUVORK5CYII=");
+  --clio-art-p9-menucheck: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAICAYAAAArzdW1AAAAP0lEQVR42mNgIAyMiFHwnxgFK2ECLgwMDKFYFJxB1nUGKmiEpOAOAwODALKilVCJ/7gUwMAdQgoYoBIrsSkAAK+iEhBS63EWAAAAAElFTkSuQmCC");
 }
 
 /* ---- Window ---------------------------------------------------------------- */
@@ -2626,20 +2721,26 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
 }
 
 :is([data-era="platinum"], [data-era="drawingboard"]) input[type="radio"]:not(:disabled):active {
-  border: 1px solid #000000;
-  border-radius: 50%;
-  background: linear-gradient(to bottom right, #444444, #bbbbbb);
+  background: var(--clio-art-p9-radio-pressed) 0 0 / 12px 12px no-repeat;
 }
 
+/* Held while on: not captured; the on ball stays (inferred). */
 :is([data-era="platinum"], [data-era="drawingboard"]) input[type="radio"]:checked:not(:disabled):active {
+  background: var(--clio-art-p9-radio-on) 0 0 / 12px 12px no-repeat;
+}
+
+/* Held while checked: the mark over the held box (inferred; only the empty
+   box was captured held). */
+:is([data-era="platinum"], [data-era="drawingboard"]) input[type="checkbox"]:checked:not(:disabled):active {
   background:
-    radial-gradient(circle, #000000 0 2.5px, transparent 3px),
-    linear-gradient(to bottom right, #444444, #bbbbbb);
+    var(--clio-art-p9-check) 0 0 / 10px 10px no-repeat padding-box,
+    var(--clio-art-p9-checkbox-pressed) -1px -1px / 12px 12px no-repeat;
 }
 
 :is([data-era="platinum"], [data-era="drawingboard"]) input[type="checkbox"]:not(:disabled):active {
-  background-color: #777777;
-  box-shadow: inset 1px 1px 0 #555555, inset -1px -1px 0 #999999;
+  border-color: transparent;
+  background: var(--clio-art-p9-checkbox-pressed) -1px -1px / 12px 12px no-repeat;
+  box-shadow: none;
 }
 
 :is([data-era="platinum"], [data-era="drawingboard"]) :is(input[type="checkbox"], input[type="radio"]):disabled {
@@ -2753,6 +2854,13 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
   opacity: 1;
 }
 
+/* Indeterminate progress (no value): Mac OS 9's stripes, one 16px period
+   repeated (Finder copy window). Static: clio.css adds no motion. */
+:is([data-era="platinum"], [data-era="drawingboard"]) progress:indeterminate,
+:is([data-era="platinum"], [data-era="drawingboard"]) progress:indeterminate::-webkit-progress-bar {
+  background: var(--clio-art-p9-progress-pole) 0 0 / 16px 10px repeat-x;
+}
+
 /* Mac OS 8.5 "Drawing Board" (the beta theme Apple shipped in 8.5b6 and
    withdrew). Applies inside any element with data-era="drawingboard"; it shares
    the Platinum layer's structure (both are Appearance Manager themes) and
@@ -2826,9 +2934,11 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
   --clio-button-border: 1px solid #333333;
   --clio-button-radius: 0;
   --clio-button-shadow: 2px 0 0 #555555, 0 1px 0 #777777, 2px 1px 0 #777777;
-  --clio-button-active-bg: #9f9a94;
-  --clio-button-active-fg: #000000;
-  --clio-button-active-shadow: 2px 0 0 #555555, 0 1px 0 #777777, 2px 1px 0 #777777;
+  /* Held ("Save Theme…"): the hatch goes, the right pencil line steps 1px
+     out (#555), the foot lightens to #756f66 and the shade is 1px of #999. */
+  --clio-button-active-bg: #cec6b5;
+  --clio-button-active-fg: #313131;
+  --clio-button-active-shadow: 1px 0 0 #555555, 2px 0 0 #999999, 0 1px 0 #999999, 2px 1px 0 #999999;
   --clio-popup-bg: #cec6b5;
   --clio-popup-border: 1px solid #555555;
   --clio-popup-radius: 0;
@@ -2864,7 +2974,8 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
   --clio-scrollbar-right-on: var(--clio-art-db-right-on);
   --clio-scrollbar-button-bg: transparent;
   --clio-scrollbar-button-shadow: none;
-  --clio-scrollbar-track: linear-gradient(to right, #aaaaaa 0 1px, #ece6e4 1px 7px, #888888 7px 8px, #555555 8px 9px, #ece6e4 9px 15px, #777777 15px);
+  /* Vertical (Desktop tab pattern list): #555 edges, a two-pixel #777 rail. */
+  --clio-scrollbar-track: linear-gradient(to right, #555555 0 1px, #ece6e4 1px 7px, #777777 7px 9px, #ece6e4 9px 15px, #555555 15px);
   --clio-scrollbar-track-color: #ece6e4;
   --clio-scrollbar-track-shadow: none;
   --clio-scrollbar-thumb-bg:
@@ -2894,10 +3005,19 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
   --clio-details-bg: #e7ded6;
   --clio-details-border: 1px solid #555555;
   --clio-details-shadow: none;
-  --clio-list-border: 1px solid #555555;
-  --clio-list-shadow: none;
+  /* List boxes (Desktop tab pattern list): a 2px olive #9c9c63 line with 1px
+     of the panel colour inside it; the chosen row #ccf. */
+  --clio-list-border: 2px solid #9c9c63;
+  --clio-list-shadow: inset 0 0 0 1px #e7ded6;
   --clio-group-border: 1px solid #777777;
   --clio-group-shadow: none;
+  /* Progress bar (Finder copy window): 12px, a #756f66 pencil line (#333 on
+     the left) round #ddd6c5; an indeterminate bar shows the theme's arrows.
+     The determinate fill was not captured and stays Platinum's. */
+  --clio-progress-height: 12px;
+  --clio-progress-bg: #ddd6c5;
+  --clio-progress-border: 1px solid #756f66;
+  --clio-progress-shadow: none;
   --clio-tab-height: 27px;
   --clio-tab-panel-bg: #e7ded6;
   --clio-tab-panel-border: 1px solid #555555;
@@ -2939,6 +3059,15 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
   --clio-art-db-grow: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAAMFBMVEWtraS2raV3d3fOxrXOvbXWxr1VVVUzMzNmZmZ1b2a8va4RERHAvL7Nxr2IiIifmpQPGnj1AAAAm0lEQVR4nAGQAG//AWvh+43nAAD7AITTPEQkQiTWAIxN1NJM0i3WAITdTQDUhNQmBP4Ag/f+WfWwBAL4NNkwyFspAY2zDQOF/QMBBADtDb0N0KggAvUg9dDlsIrwAv4A6/ejAJ/wAgyFIAr4ZO8ABPi79xFebfAgAIhEzu3ULV/mBAWZEeYCsCFIAvdx9wmX9C+QAYcAAQABEAD/yrZANB/FBGEAAAAASUVORK5CYII=");
   --clio-art-db-popup-corner: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYBAMAAAASWSDLAAAAMFBMVEWtraS2raV3d3eZmZnOxrXOvbVmZmYzMzN1b2ZVVVW8va61tanNxr2IiIhERESfmpRirDAXAAAAsUlEQVR4nGN0YUAAJgYcnH/InEmMCD1svxAy3F1IehoLEJz/UxmY4Zxd9zm6WKDsP+wO237AZKoc2C4xIBmN6oIjSBxOGZgBDAwMxt8RMv+OsCA4kxg8QBwBBoYCBsmCf1uYGBjSPjCwTeCe/n+SKKML2y8G7taCh/K7XWczMUSBHPxvPicrYyoT+wIGzi0Mjxra3eo5GVkcGG6qM/3LnO5w8jiTAcNfdQZ5bnemY7JWAMZRLUehBHV0AAAAAElFTkSuQmCC");
   --clio-art-db-button-corner: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYBAMAAAASWSDLAAAALVBMVEWtraS2raUAAAB3d3fOxrXOvbVmZmZVVVUzMzO8va4iIiKIiIhERESfmpTGvq90loRyAAAA1ElEQVR4nGN0YUAAJgYcHHYkzt9MRoSeT3wIGeY6BoSMyh0OuMx/VYZjcJnPvH+sYTLsfxn+nIRy/hYIhFvADPjDAkIQGc6JDJxTGL5AZC4Y/L1gzFQH5vxhYeBy2+C+E6TszxEBhtkbOHaygGQ4vzP8YeFSu5AOkmlnYChh6LxwYiajC8PMdIbrmv8/8humMbpw/vn9X/GB5fH3gvpMDO3eDBYPmNuZGzm1WNgL/zNxMtT+1Zu+8yTD1icu2108XLa7dD7fy8SSwB7LkHq+lu3QMlcArtNDTQfJPrAAAAAASUVORK5CYII=");
+  --clio-art-db-btn-tl: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAADBAMAAACt7Qj2AAAAGFBMVEUAAAC2raV3d3d1b2ZmZmZERETGvq+fmpTOeh1RAAAAAXRSTlMAQObYZgAAABVJREFUeJxjYBBgYGACEYzpbz78BQAItQNkaXXtagAAAABJRU5ErkJggg==");
+  --clio-art-db-btn-tr: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAADBAMAAABG2rP1AAAAD1BMVEUAAAC2raV3d3dVVVWfmpRgPRkMAAAAAXRSTlMAQObYZgAAABFJREFUeJxjUGBgEmBgNOIHAAHbAHVWrRcVAAAAAElFTkSuQmCC");
+  --clio-art-db-btn-br: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAGBAMAAAD51Ul4AAAAHlBMVEUAAAAAAAC2raV3d3dVVVVmZmZ1b2aIiIhERESfmpSsKKP1AAAAAXRSTlMAQObYZgAAACBJREFUeJxjFHGQYWhjYGC6xcDAYMDAwJTAwMCgwMAAACXAAob+NiTkAAAAAElFTkSuQmCC");
+  --clio-art-db-btn-bl: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAEBAMAAACw6DhOAAAAHlBMVEUAAACtraS2raUAAAB3d3cRAABVVVV1b2YRERGIiIgB19i+AAAAAXRSTlMAQObYZgAAABpJREFUeJxj1LS57MF0XchGgIFBgIGBCUQAACryAtv4KjPvAAAAAElFTkSuQmCC");
+  --clio-art-db-progress-arrows: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAAAFBAMAAAB/bfmTAAAAHlBMVEUAAABmZmYzMwAzMzN1b2ZVVVVmZjNmMzOIiIhERES5MUf9AAAAAXRSTlMAQObYZgAAADlJREFUeJxjYGBgYGBsAJG4aYKAyTIFL40PMLLEfv1vt4CB6TwO+jQxLmA2h9iEiyYI2KB+xUXjAwBb+xkS1czrnQAAAABJRU5ErkJggg==");
+  --clio-art-db-def-tl: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAFBAMAAABlfdtYAAAAIVBMVEUAAAC2raWZmZkzMzNVVVV1b2ZmZmaIiIhERESfmpTGvq8oZkmnAAAAAXRSTlMAQObYZgAAACRJREFUeJxjYFjAAAICDAwMjJL5awT+MD0/L3o3gIXhvb3MBQBU8ggKikU/0QAAAABJRU5ErkJggg==");
+  --clio-art-db-def-tr: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAEBAMAAABb34NNAAAAGFBMVEUAAAC2raV1b2ZVVVVERESIiIjGvq+fmpQgItkpAAAAAXRSTlMAQObYZgAAABRJREFUeJxjYChgdHnExKjF8v4PABBiA7SAnSY4AAAAAElFTkSuQmCC");
+  --clio-art-db-def-br: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAGBAMAAAD51Ul4AAAAG1BMVEUAAAAAAAC2raV3d3dVVVUzMzMRERGIiIifmpTHv11LAAAAAXRSTlMAQObYZgAAACBJREFUeJxjFPXnYYgQYGDi42BgOiXBwNDAwMCgwMAAACB5AnZBz2qhAAAAAElFTkSuQmCC");
+  --clio-art-db-def-bl: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAFBAMAAABlfdtYAAAAKlBMVEUAAAAAAAC2raWZmZnOxrURAABVVVUzMzN1b2YREREiIiKIiIhERESfmpRN4iyqAAAAAXRSTlMAQObYZgAAACZJREFUeJxjZCh7v6WciSGcY5cCo28k84fvDAwNCgwMDAwXGBgYAItxB85eOkhQAAAAAElFTkSuQmCC");
   --clio-art-db-thumb-left: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAOBAMAAAARcxsoAAAAJ1BMVEXe3tVSUlLe3t4QEBDVxb0xMTGLi4ve1cXNzc1zamJzc3Pu5tXm3s0eHK1HAAAAKklEQVR4nGPczcDwlYmBgYGBKOI7iIjcycDy98CHr0xnPjAwMJo+/e8OAOBRC5TLG+mBAAAAAElFTkSuQmCC");
   --clio-art-db-thumb-right: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAOBAMAAADgeEClAAAAKlBMVEW0rKRSUlIQEBDVxb3u5uZBQUGLi4tiYmKcnJTe1cVzamJzc3Pu5tXm3s16aRdHAAAAS0lEQVR4nGM8w8DAxsTAwJDKeIaB4RcTww8GViaGDoY/UC4DwxcWBgbunywMDFt/MzF84fnA8vfMbz4mJpuvvSxvz7uysXz4nMgMAHm8FeAKzGKWAAAAAElFTkSuQmCC");
   --clio-art-db-thumb-hgrip: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAAOBAMAAAD3WtBsAAAAElBMVEWcYjFSUlJiYmKcnJTNzc3u5tU+4ML7AAAAFklEQVR4nGMIZWJgYGViQIMOTB8YhAAO4AGzmDYCUQAAAABJRU5ErkJggg==");
@@ -3226,6 +3355,45 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
     var(--clio-art-db-popup-corner) right 19px bottom / 24px 24px no-repeat,
     #cec6b5;
   color: #8c8c8c;
+}
+
+[data-era="drawingboard"] :is(button, .btn, .btn-default, input[type="button"], input[type="submit"], input[type="reset"]):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *):not(:disabled, .disabled):is(:active, .active) {
+  border-color: #777777 #cec6b5 #756f66 #777777;
+}
+
+/* The pencil overruns at a push button's corners, outside its box: Button*
+   pieces round a plain button, *Default pieces round the default one. */
+[data-era="drawingboard"] :is(button, .btn, .btn-default, input[type="button"], input[type="submit"], input[type="reset"]):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *) {
+  position: relative;
+}
+
+[data-era="drawingboard"] :is(button, .btn, .btn-default):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *)::after {
+  content: "";
+  position: absolute;
+  inset: -6px;   /* from the padding box: 5px outside the frame */
+  background:
+    var(--clio-art-db-btn-tl) left 3px top 3px / 7px 3px no-repeat,
+    var(--clio-art-db-btn-tr) right 1px top 3px / 4px 3px no-repeat,
+    var(--clio-art-db-btn-br) right 0 bottom 0 / 5px 6px no-repeat,
+    var(--clio-art-db-btn-bl) left 3px bottom 2px / 7px 4px no-repeat;
+  pointer-events: none;
+}
+
+[data-era="drawingboard"] :is(button, .btn, .btn-default):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *):is(.default, .btn-default)::after {
+  background:
+    var(--clio-art-db-def-tl) left 1px top 1px / 9px 5px no-repeat,
+    var(--clio-art-db-def-tr) right 1px top 2px / 4px 4px no-repeat,
+    var(--clio-art-db-def-br) right 0 bottom 0 / 5px 6px no-repeat,
+    var(--clio-art-db-def-bl) left 1px bottom 1px / 9px 5px no-repeat;
+}
+
+[data-era="drawingboard"] progress {
+  border-left-color: #333333;
+}
+
+[data-era="drawingboard"] progress:indeterminate,
+[data-era="drawingboard"] progress:indeterminate::-webkit-progress-bar {
+  background: var(--clio-art-db-progress-arrows) 0 center / 128px 5px repeat-x, #ddd6c5;
 }
 
 /* Adaptations the historical machines never needed. Historical sizes are

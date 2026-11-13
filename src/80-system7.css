@@ -45,6 +45,24 @@
   /* Menus: disabled items and the separator are solid #888 (System 6 used a
      50% dither); the separator is still a full 16px row, ruled on its ninth line. */
   --clio-disabled: #888888;
+  --clio-disabled-dither: none;
+
+  /* Control Strip, measured from System 7.5.3 (frame folder-window): the
+     Mac OS 9 geometry and art in System 7 greys, #ccc cells with a #aaa then
+     #888 shade; the held module is inferred from Mac OS 9's in these greys. */
+  --clio-strip-bg: #cccccc;
+  --clio-strip-line: 1px solid #000000;
+  --clio-strip-cell-shadow: inset -1px -1px 0 #888888, inset -2px -2px 0 #aaaaaa, inset 1px 1px 0 #cccccc, inset 2px 2px 0 #ffffff;
+  --clio-strip-sunken-shadow: inset 1px 1px 0 #888888, inset -1px -1px 0 #ffffff;
+  --clio-strip-pressed-bg: #888888;
+  --clio-strip-pressed-shadow: inset 2px 2px 0 #555555, inset -2px -2px 0 #cccccc;
+  --clio-strip-cap: var(--clio-art-s7-strip-cap);
+  --clio-strip-back: var(--clio-art-p9-strip-back);
+  --clio-strip-forward: var(--clio-art-p9-strip-forward);
+  --clio-strip-menu: var(--clio-art-p9-strip-menu);
+  --clio-strip-handle: var(--clio-art-p9-strip-handle);
+  --clio-strip-tab: var(--clio-art-p9-strip-tab);
+  --clio-disabled-fill: currentcolor;
   --clio-menu-separator: linear-gradient(#888888, #888888) 0 8px / 100% 1px no-repeat;
 
   /* Pop-up menu (Numbers control panel): an 18px box, a 1px shadow that starts

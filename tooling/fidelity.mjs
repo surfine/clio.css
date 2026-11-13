@@ -64,6 +64,9 @@ specimens.push(
   S6("s6-progress-fill", `<div style="padding:12px;background:#fff"><progress id="s" max="100" value="60" style="width:228px"></progress></div>`, [0, 0, 12, 12], "copy-progress", [109, 93, 12, 12]),
   S6("s6-info-line", `<div class="window" id="s" style="width:240px"><div class="title-bar"><button class="close" aria-label="Close"></button><h2 class="title">Macintosh HD</h2><button class="resize" aria-label="Zoom"></button></div><div class="details-bar"><span>2 items</span></div><div class="window-pane" style="height:40px"></div></div>`, [1, 19, 60, 17], "hd-window", [0, 46, 60, 17]),
   S6("s6-geneva-12", `<div style="padding:12px;background:#fff"><div class="text" id="s" style="font-size:12px;line-height:16px;white-space:nowrap">Welcome to Infinite Macintosh!</div></div>`, [0, 0, 160, 16], "teachtext", [9, 42, 160, 16]),
+  // "Print", disabled: the label through the 50% pattern. QuickDraw aligns the pattern to the
+  // screen; the specimen sits where x + y has the capture's parity (li at 37,38 vs 35,52; the menu has no top line).
+  S6("s6-menu-disabled", `<div style="padding:14px 12px 12px;background:#fff"><ul class="menu" role="menu" style="width:146px"><li class="disabled" id="s"><span>Print</span></li></ul></div>`, [0, 0, 60, 16], "file-menu", [35, 52, 60, 16]),
   S6("s6-menu-separator", `<div style="padding:12px;background:#fff"><ul class="menu" role="menu" style="width:146px"><li role="separator" id="s"></li></ul></div>`, [0, 0, 136, 16], "file-menu", [34, 164, 136, 16]),
 );
 
@@ -112,6 +115,8 @@ specimens.push(
   DB("db-alert-corner", `<div style="padding:12px;background:#ffffff"><div class="alert-box" id="s" style="width:469px;height:212px"></div></div>`, [-1, 0, 20, 12], "energy-saver-alert", [163, 201, 20, 12]),
   DB("db-alert-shadow", `<div style="padding:12px;background:#ffffff"><div class="alert-box" id="s" style="width:469px;height:212px"></div></div>`, [455, 200, 14, 12], "energy-saver-alert", [618, 401, 14, 12]),
   DB("db-popup-disabled", `<div style="padding:12px;background:#e7ded6"><select id="s" style="width:180px" disabled><option>Variation</option></select></div>`, [140, 0, 40, 20], "appearance", [428, 225, 40, 20]),
+  DB("db-button-held", `<div style="padding:12px;background:#e7ded6"><button class="active" id="s" style="width:102px">Save Theme…</button></div>`, [88, 0, 16, 21], "button-held", [606, 370, 16, 21]),
+  DB("db-listbox-corner", `<div style="padding:12px;background:#e7ded6"><div class="listbox" role="listbox" id="s" style="width:198px;height:134px;background:#fff"></div></div>`, [0, 126, 8, 8], "desktop-tab", [405, 280, 8, 8]),   // lower-left: the top row is the chosen one
   // General Controls and Date & Time.
   DB("db-checkbox-on", `<div style="padding:12px;background:#eeeeee"><input type="checkbox" id="s" checked></div>`, [0, 0, 14, 11], "general-controls", [33, 83, 14, 11]),
   DB("db-checkbox-off", `<div style="padding:12px;background:#eeeeee"><input type="checkbox" id="s"></div>`, [0, 0, 14, 11], "general-controls", [33, 131, 14, 11]),
@@ -122,6 +127,11 @@ specimens.push(
   // Control Panels submenu (194..350), Energy Saver chosen: row 175..192, underline 210..333 x 189..191.
   DB("db-menu-underline", `<div style="padding:12px;background:#fff"><ul class="menu" role="menu" style="width:157px"><li role="none" class="active" id="s"><span role="menuitem">Energy Saver</span></li></ul></div>`, [15, 14, 124, 3], "control-panels-menu", [210, 189, 124, 3]),
   DB("db-menu-separator", `<div style="padding:12px;background:#fff"><ul class="menu" role="menu" style="width:150px"><li role="separator" id="s"></li></ul></div>`, [0, 0, 100, 9], "file-menu", [41, 111, 100, 9]),
+);
+
+// System 7.5.3's Control Strip (same frame as the scroll bar specimens).
+specimens.push(
+  S7("s7-strip-start", `<div class="control-strip" id="s"><button class="control-strip-scroll control-strip-scroll-back" disabled aria-label="Scroll back"></button><div class="control-strip-modules" role="toolbar" aria-label="Control Strip"><div class="control-strip-module-track"><button class="control-strip-module" aria-haspopup="menu" aria-label="Module"></button></div></div><button class="control-strip-scroll control-strip-scroll-forward" disabled aria-label="Scroll forward"></button><button class="control-strip-handle" aria-label="Collapse"></button></div>`, [0, 0, 29, 24], "folder-window", [0, 576, 29, 24]),
 );
 
 // Platinum, re-measured: crops of Mac OS 9.0 from `npm run capture:platinum`.
@@ -139,6 +149,9 @@ specimens.push(
   P9("p9-button-end", `<div style="padding:12px;background:#dddddd"><button id="s" style="width:84px">Set Desktop</button></div>`, [64, 0, 20, 20], "appearance", [600, 369, 20, 20]),
   P9("p9-popup-disabled", `<div style="padding:12px;background:#dddddd"><select id="s" style="width:194px" disabled><option>Position Automatically</option></select></div>`, [160, 0, 34, 20], "appearance", [566, 337, 34, 20]),
   P9("p9-group-corner", `<div style="padding:12px;background:#eeeeee"><fieldset id="s" style="width:200px;height:60px"><legend>Desktop</legend></fieldset></div>`, [0, 0, 12, 30], "general-controls", [18, 51, 12, 30]),
+  P9("p9-menu-separator", `<div style="padding:12px;background:#fff"><ul class="menu" role="menu" style="width:176px"><li role="separator" id="s"></li></ul></div>`, [0, 0, 100, 6], "file-menu", [38, 100, 100, 6]),
+  P9("p9-popup-end", `<div style="padding:12px;background:#dddddd"><select id="s" style="width:178px"><option>Apple platinum</option></select></div>`, [154, 0, 24, 20], "appearance-tab", [444, 143, 24, 20]),
+  P9("p9-button-held", `<div style="padding:12px;background:#dddddd"><button class="active" id="s" style="width:84px">Set Desktop</button></div>`, [64, 0, 20, 20], "button-held", [600, 369, 20, 20]),
   // Control Strip, Finder desktop: end cap and the idle back-scroll cell (0..28), a module's frame, the tab.
   P9("p9-strip-start", strip("", "strip"), [0, 0, 29, 24], "strip-expanded", [0, 576, 29, 24]),
   P9("p9-strip-handle", `<div style="padding:12px;background:#9999cc">${strip("", "handle")}</div>`, [0, 0, 18, 24], "strip-expanded", [164, 576, 18, 24]),

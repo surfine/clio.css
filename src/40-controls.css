@@ -60,6 +60,13 @@
 :where(button, .btn, .btn-default, .standard-button, input[type="button"], input[type="submit"], input[type="reset"]):is(:disabled, .disabled) {
   border: var(--clio-button-disabled-border);
   color: var(--clio-button-disabled-fg);
+  /* System 6: the label through the 50% pattern, the frame left solid. */
+  background-image: var(--clio-disabled-dither), linear-gradient(var(--clio-button-bg), var(--clio-button-bg));
+  background-size: 2px 2px, auto;
+  background-attachment: fixed, scroll;
+  -webkit-background-clip: text, border-box;
+  background-clip: text, border-box;
+  -webkit-text-fill-color: var(--clio-disabled-fill);
 }
 
 :where(button, .btn, .btn-default, .standard-button, input[type="button"], input[type="submit"], input[type="reset"]):focus-visible {
@@ -155,6 +162,12 @@
 :where(input[type="checkbox"], input[type="radio"]):disabled + label,
 :where(label):has(> :is(input[type="checkbox"], input[type="radio"]):disabled) {
   color: var(--clio-disabled);
+  background-image: var(--clio-disabled-dither);
+  background-size: 2px 2px;
+  background-attachment: fixed;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: var(--clio-disabled-fill);
 }
 
 /* ---- Text fields ---------------------------------------------------------- */

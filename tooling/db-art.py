@@ -62,6 +62,11 @@ art = {
     # ButtonFaceCorner: image 2 is the hatched corner of a pop-up button, image 0
     # that of a push button (both found in the capture, clipped to the face).
     'db-popup-corner': pxm[1150][2], 'db-button-corner': pxm[1150][0],
+    # The pencil overruns at a push button's corners (Button*, *Default), found 1:1
+    # round "Save Theme…" and Energy Saver's default "Close Message".
+    'db-btn-tl': pxm[1151][0], 'db-btn-tr': pxm[1152][0], 'db-btn-br': pxm[1153][0], 'db-btn-bl': pxm[1154][0],
+    'db-progress-arrows': pxm[6243][0],   # the indeterminate bar's arrows (128x5), found 1:1 in the Finder copy window
+    'db-def-tl': pxm[1160][0], 'db-def-tr': pxm[1161][0], 'db-def-br': pxm[1162][0], 'db-def-bl': pxm[1163][0],
     # Scroll box ends, grip and stretch (HThumb*/VThumb*), found in the capture.
     'db-thumb-left': pxm[1113][0], 'db-thumb-right': pxm[1112][0],
     'db-thumb-hgrip': pxm[1115][0], 'db-thumb-hstretch': pxm[1114][0],

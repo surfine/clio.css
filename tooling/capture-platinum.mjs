@@ -62,6 +62,7 @@ const panel = async (y, peek) => {
 // 1. Finder: window, menus, the Control Strip.
 await away(); await dump("finder");
 await hold(52, 9, "file-menu");      // retry the run if the menu is not open in this frame
+await hold(90, 9, "view-menu");      // check marks
 await hold(130, 586, "strip-slider");      // Sound volume module
 await hold(30, 586, "strip-menu");         // Keychain module
 await click(176, 586); await wait(1500); await away(); await dump("strip-collapsed");
@@ -69,8 +70,17 @@ await click(10, 586); await wait(1500); await away(); await dump("strip-expanded
 // 2. Control panels.
 await panel(83, "cp-menu");                // Appearance
 await away(); await dump("appearance");
+await hold(615, 378, "button-held");       // "Set Desktop"
+await click(295, 110); await wait(2500); await away(); await dump("appearance-tab");
+await hold(367, 152, "popup-open");
 await cmd("w");
 await panel(179); await away(); await dump("date-time"); await cmd("w");
-await panel(275); await away(); await dump("general-controls"); await cmd("w");
+await panel(275); await away(); await dump("general-controls");
+await hold(274, 288, "radio-held"); await hold(39, 135, "checkbox-held"); await cmd("w");
 await panel(211); await away(); await dump("energy-saver");
+// Last, because it changes the Finder windows the frames above were measured in:
+// duplicate the Games folder (Infinite HD window) for the copy progress window.
+await page.keyboard.press("Enter"); await wait(1500); await cmd("q");
+await click(356, 110); await wait(600); await page.keyboard.down("Meta"); await page.keyboard.press("d"); await page.keyboard.up("Meta");
+for (let i = 0; i < 6; i++) { await wait(500); await dump(`copy-progress-${i}`); }
 await browser.close();

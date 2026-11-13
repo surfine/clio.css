@@ -32,6 +32,7 @@ Infinite Mac tints black and white as #222222 and #eeeeee.
 | s6-progress-fill | 12×12 | 100.0% | 0.0% | 0 |
 | s6-info-line | 60×17 | 100.0% | 0.0% | 0 |
 | s6-geneva-12 | 160×16 | 100.0% | 0.0% | 0 |
+| s6-menu-disabled | 60×16 | 100.0% | 0.0% | 0 |
 | s6-menu-separator | 136×16 | 100.0% | 0.0% | 0 |
 
 ## System 7
@@ -56,6 +57,7 @@ Reference: System 7.5.3 running in Infinite Mac, the 800×600 colour canvas read
 | s7-progress-track | 8×11 | 100.0% | 0.0% | 0 |
 | s7-menu-separator | 100×16 | 100.0% | 0.0% | 0 |
 | s7-default-ok | 67×28 | 93.8% | 5.1% | 4.53 |
+| s7-strip-start | 29×24 | 95.1% | 4.9% | 5.96 |
 
 ## Mac OS 8.5 Drawing Board
 
@@ -70,13 +72,15 @@ the 800×600 colour canvas read 1:1 (`npm run capture:drawingboard`), compared i
 | db-titlebar-right | 40×26 | 58.9% | 3.0% | 6 |
 | db-popup-end | 40×20 | 90.0% | 5.1% | 4.46 |
 | db-menubar | 200×22 | 63.8% | 1.2% | 5.78 |
-| db-button-end | 16×21 | 75.0% | 13.1% | 14.22 |
+| db-button-end | 16×21 | 76.2% | 12.5% | 13.69 |
 | db-scroll-start | 40×16 | 68.0% | 14.8% | 17.56 |
 | db-scroll-track | 100×16 | 83.4% | 7.4% | 7.54 |
-| db-default-button | 16×24 | 78.4% | 2.9% | 5.22 |
+| db-default-button | 16×24 | 84.4% | 1.0% | 3.31 |
 | db-alert-corner | 20×12 | 62.9% | 20.0% | 16.26 |
 | db-alert-shadow | 14×12 | 78.6% | 8.9% | 10.44 |
 | db-popup-disabled | 40×20 | 79.5% | 1.1% | 5.02 |
+| db-button-held | 16×21 | 84.8% | 5.4% | 7.77 |
+| db-listbox-corner | 8×8 | 87.5% | 0.0% | 1.01 |
 | db-checkbox-on | 14×11 | 100.0% | 0.0% | 0 |
 | db-checkbox-off | 14×11 | 100.0% | 0.0% | 0 |
 | db-checkbox-disabled | 14×11 | 89.0% | 0.0% | 0.69 |
@@ -102,7 +106,10 @@ Reference: Mac OS 9.0 running in Infinite Mac, the 800×600 colour canvas read 1
 | p9-button-end | 20×20 | 80.5% | 16.0% | 29.43 |
 | p9-popup-disabled | 34×20 | 95.6% | 2.6% | 2.58 |
 | p9-group-corner | 12×30 | 82.8% | 0.3% | 3.12 |
-| p9-strip-start | 29×24 | 89.5% | 5.8% | 8.08 |
+| p9-menu-separator | 100×6 | 67.0% | 16.5% | 16.83 |
+| p9-popup-end | 24×20 | 96.7% | 2.1% | 2 |
+| p9-button-held | 20×20 | 68.8% | 28.0% | 38.36 |
+| p9-strip-start | 29×24 | 95.1% | 4.9% | 5.6 |
 | p9-strip-handle | 18×24 | 100.0% | 0.0% | 0 |
 | p9-strip-collapsed | 18×24 | 100.0% | 0.0% | 0 |
 

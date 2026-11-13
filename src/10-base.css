@@ -43,6 +43,11 @@
   line-height: 16px;
 }
 
+:where(.display) {
+  font-family: var(--clio-font-display);
+  -webkit-font-smoothing: auto;
+}
+
 :where(.window, .modal-dialog, .alert-box, .standard-dialog, .clio) :where(p) {
   margin: 0 0 8px;
 }

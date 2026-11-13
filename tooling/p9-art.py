@@ -15,6 +15,10 @@ from PIL import Image
 ROOT = os.path.join(os.path.dirname(__file__), '..')
 load = lambda n: Image.open(os.path.join(ROOT, '.fidelity', 'platinum9', n + '.png')).convert('RGB')
 gc, strip, tab = load('general-controls'), load('strip-expanded'), load('strip-collapsed')
+fmenu, aptab, popup = load('file-menu'), load('appearance-tab'), load('popup-open')
+rheld, cheld = load('radio-held'), load('checkbox-held')
+copying = load('copy-progress-5')
+s7 = Image.open(os.path.join(ROOT, '.fidelity', 'system7', 'folder-window.png')).convert('RGB')
 
 def crop(im, x0, y0, w, h, clear=()):
     px = {}
@@ -44,12 +48,44 @@ art = {
     'p9-check-overhang': crop(gc, 45, 82, 2, 4, (PANE,)),
     'p9-radio-on': crop(gc, 268, 265, 12, 12, (PANE,)),
     'p9-radio': crop(gc, 268, 282, 12, 12, (PANE,)),
-    'p9-strip-cap': crop(strip, 3, 584, 8, 8),
+    # Held with the mouse (frames radio-held, checkbox-held): the off radio, the empty box.
+    'p9-radio-pressed': crop(rheld, 268, 282, 12, 12, (PANE,)),
+    'p9-checkbox-pressed': crop(cheld, 33, 129, 12, 12),
+    # The indeterminate progress bar's stripes inside the frame: one 16x10 period
+    # (Finder copy window, "Preparing to copy…").
+    'p9-progress-pole': crop(copying, 272, 165, 16, 10),
+    # The end cap as a whole cell (its frame, bevel, icon and the rounded lower-left
+    # corner), in Mac OS 9's and System 7.5.3's greys.
+    'p9-strip-cap': crop(strip, 0, 576, 15, 24, (DESK,)),
+    's7-strip-cap': crop(s7, 0, 576, 15, 24),
     'p9-strip-back': crop(strip, 16, 583, 10, 10, (FACE,)),
     'p9-strip-forward': crop(strip, 151, 583, 10, 10, (FACE,)),
     'p9-strip-menu': crop(strip, 49, 584, 4, 7, (FACE,)),
     'p9-strip-handle': crop(strip, 164, 576, 18, 24, (DESK,)),
     'p9-strip-tab': crop(tab, 0, 576, 18, 24, (DESK,)),
 }
+def shape(im, x0, y0, w, h, colour):
+    """The black pixels of a part, redrawn in one colour."""
+    return ({(x, y): colour for x in range(w) for y in range(h) if sum(im.getpixel((x0 + x, y0 + y))) < 150}, w, h)
+
+art['p9-submenu'] = shape(fmenu, 199, 108, 6, 11, '#000000')
+art['p9-submenu-on'] = shape(fmenu, 199, 108, 6, 11, '#ffffff')
+art['p9-dropdown'] = shape(aptab, 453, 148, 7, 10, '#000000')
+art['p9-dropdown-off'] = shape(aptab, 453, 148, 7, 10, '#888888')
+
+def check():
+    """Coverage of the white check over #333399, as black with alpha (9x8)."""
+    bg = (0x33, 0x33, 0x99)
+    pal, px = {}, {}
+    im = Image.new('RGBA', (9, 8))
+    for x in range(9):
+        for y in range(8):
+            c = popup.getpixel((291 + x, 148 + y))
+            a = max(0.0, min(1.0, ((c[0] - bg[0]) / (255 - bg[0]) + (c[1] - bg[1]) / (255 - bg[1])) / 2))
+            im.putpixel((x, y), (0, 0, 0, round(a * 255)))
+    buf = io.BytesIO(); im.save(buf, 'PNG', optimize=True)
+    return 'url("data:image/png;base64,%s")' % base64.b64encode(buf.getvalue()).decode()
+
 for k, (px, w, h) in art.items():
     print('  --clio-art-%s: %s; /* %dx%d */' % (k, png(px, w, h), w, h))
+print('  --clio-art-p9-menucheck: %s; /* 9x8 */' % check())
