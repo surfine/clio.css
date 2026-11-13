@@ -1,5 +1,5 @@
-/*! clio.css 0.3.1 (Platinum default) | MIT | https://surfine.github.io/clio.css/
- * Classic Mac OS interface CSS: System 6 and Mac OS 9 Platinum.
+/*! clio.css 0.4.0 (Platinum default) | MIT | https://surfine.github.io/clio.css/
+ * Classic Mac OS interface CSS: System 6, System 7 and Mac OS 9 Platinum.
  * Measured values traced to AI System 6; see EVIDENCE.md.
  * Includes art from system.css (MIT) and classic-stylesheets (MIT); see THIRD-PARTY.md. */
 /* Clio Sans '84: Chicago 12 rebuilt pixel for pixel from System 6.0.8
@@ -56,7 +56,8 @@
    adaptation (contrast, focus, touch). Platinum re-declares these tokens in
    90-platinum.css under [data-era="platinum"]. */
 :root,
-[data-era="system6"] {
+[data-era="system6"],
+[data-era="system7"] {
   /* 1-bit palette. System 6 on a compact Mac had two colours. */
   --clio-ink: #000000;
   --clio-paper: #ffffff;

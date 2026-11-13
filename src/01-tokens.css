@@ -6,7 +6,8 @@
    adaptation (contrast, focus, touch). Platinum re-declares these tokens in
    90-platinum.css under [data-era="platinum"]. */
 :root,
-[data-era="system6"] {
+[data-era="system6"],
+[data-era="system7"] {
   /* 1-bit palette. System 6 on a compact Mac had two colours. */
   --clio-ink: #000000;
   --clio-paper: #ffffff;

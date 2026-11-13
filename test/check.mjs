@@ -12,7 +12,7 @@ let checks = 0;
 const ok = (cond, m) => { checks++; if (!cond) fail(m); };
 
 // 1. Outputs exist.
-const outputs = ["clio.css", "clio.min.css", "clio.system6.css", "clio.system6.min.css", "clio.platinum.css", "clio.platinum.min.css", "components.json", "fonts/ChicagoFLF.woff2", "fonts/Asap-Variable.woff2", "fonts/OFL-Asap.txt"];
+const outputs = ["clio.css", "clio.min.css", "clio.system6.css", "clio.system6.min.css", "clio.system7.css", "clio.system7.min.css", "clio.platinum.css", "clio.platinum.min.css", "components.json", "fonts/ChicagoFLF.woff2", "fonts/Asap-Variable.woff2", "fonts/OFL-Asap.txt"];
 for (const f of outputs) ok(existsSync(join(root, "dist", f)), `missing dist/${f}`);
 
 const css = read("dist/clio.css");
@@ -37,7 +37,7 @@ for (const v of optional) ok(noComments.includes(`var(${v},`), `${v} is optional
 
 // 4. System 6 build has no Platinum; Platinum build has no data-era scope left.
 const strip = (t) => t.replace(/\/\*[\s\S]*?\*\//g, "");
-ok(!strip(s6).includes('data-era="platinum"'), "clio.system6.css contains Platinum rules");
+ok(!strip(s6).includes('data-era="platinum"') && !strip(s6).includes('data-era="system7"'), "clio.system6.css contains other eras' rules");
 ok(!strip(pt).includes('[data-era="platinum"]'), "clio.platinum.css still scoped to data-era");
 
 // 5. No external or Apple assets: url() is a data: URI or a bundled font.
@@ -48,7 +48,7 @@ for (const m of noComments.matchAll(/url\(\s*["']?([^"')]+)/g)) {
 
 // 6. Component index: every component is documented, evidenced and styled.
 const allowed = new Set(["measured", "inferred", "adapted", "third-party"]);
-const eras = new Set(["system6", "platinum", "both"]);
+const eras = new Set(["system6", "system7", "platinum", "both"]);
 const ids = new Set();
 for (const c of components) {
   ok(!ids.has(c.id), `duplicate component id ${c.id}`); ids.add(c.id);
@@ -105,7 +105,7 @@ ok(read("docs/llms-full.txt").includes("```css"), "llms-full.txt: stylesheet mis
 // 10. Package.
 const pkg = JSON.parse(read("package.json"));
 for (const [k, v] of Object.entries(pkg.exports)) if (!v.includes("*")) ok(existsSync(join(root, v)), `exports ${k} -> ${v} missing`);
-ok(statSync(join(root, "dist/clio.min.css")).size < 72000, "clio.min.css grew past 72 KB");
+ok(statSync(join(root, "dist/clio.min.css")).size < 96000, "clio.min.css grew past 96 KB");
 
 if (failures.length) {
   console.error(`FAIL ${failures.length} of ${checks} checks`);

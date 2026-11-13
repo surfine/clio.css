@@ -67,6 +67,21 @@ specimens.push(
   S6("s6-menu-separator", `<div style="padding:12px;background:#fff"><ul class="menu" role="menu" style="width:146px"><li role="separator" id="s"></li></ul></div>`, [0, 0, 136, 16], "file-menu", [34, 164, 136, 16]),
 );
 
+// System 7: crops of the System 7.5.3 frames from `npm run capture:system7`, in colour.
+const s7dir = join(root, ".fidelity/system7");
+const S7 = (id, html, crop, file, ref) => ({ id, era: "system7", html, crop, refFile: join(s7dir, file + ".png"), refCrop: ref });
+const s7Window = (cls, title) => `<div class="${cls}" id="s" style="width:376px"><div class="title-bar"><button class="close" aria-label="Close"></button><h2 class="title">${title}</h2><button class="resize" aria-label="Zoom"></button></div><div class="window-pane" style="height:40px"></div></div>`;
+specimens.push(
+  S7("s7-titlebar", s7Window("window", "Infinite HD"), [0, 0, 377, 19], "hd-window", [29, 55, 377, 19]),
+  S7("s7-titlebar-inactive", s7Window("window inactive", "Infinite HD"), [0, 0, 377, 16], "folder-window", [29, 55, 377, 16]),
+  S7("s7-scroll-up", s6Scroll, [106, 0, 14, 14], "folder-window", [406, 110, 14, 14]),
+  // Content long enough that the scroll box is System 7's 16 rows.
+  S7("s7-scroll-thumb", `<div class="clio-scroll" id="s" style="width:120px;height:120px;overflow:scroll;background:#fff"><div style="width:400px;height:562px"></div></div>`, [106, 15, 14, 16], "folder-window", [406, 125, 14, 16]),
+  S7("s7-grow-box", s6Scroll, [106, 106, 14, 14], "folder-window", [406, 234, 14, 14]),
+  S7("s7-alert-frame", `<div class="alert-box" id="s" style="width:200px;height:80px"></div>`, [0, 0, 18, 18], "page-setup", [208, 110, 18, 18]),
+  S7("s7-default-ok", `<div class="clio" style="padding:12px;background:#fff"><button class="default" id="s" style="width:59px">OK</button></div>`, [-4, -4, 67, 28], "page-setup", [511, 198, 67, 28]),
+);
+
 const css = pathToFileURL(join(root, "dist/clio.css")).href;
 const out = join(root, ".fidelity");
 mkdirSync(out, { recursive: true });
@@ -140,6 +155,13 @@ Reference: System 6.0.8 running in Infinite Mac, the emulator's 512×342 canvas 
 Infinite Mac tints black and white as #222222 and #eeeeee.
 
 ${table("system6")}
+
+## System 7
+
+Reference: System 7.5.3 running in Infinite Mac, the 800×600 colour canvas read 1:1
+(\`npm run capture:system7\`), compared in colour.
+
+${table("system7")}
 
 ## Mac OS 9 Platinum
 

@@ -1,6 +1,6 @@
 // Renderers for the docs site and the agent-facing text files.
 const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
-const ERA = { system6: "System 6", platinum: "Platinum", both: "Both eras" };
+const ERA = { system6: "System 6", system7: "System 7", platinum: "Platinum", both: "All eras" };
 const STATUS = {
   measured: "Measured",
   inferred: "Inferred",
@@ -42,9 +42,9 @@ ${live}
 
 export function renderSite({ pkg, components }) {
   const url = pkg.homepage;
-  const title = "clio.css — classic Mac OS CSS for System 6 and Mac OS 9 Platinum";
+  const title = "clio.css — classic Mac OS CSS for System 6, System 7 and Mac OS 9 Platinum";
   const description =
-    "CSS library for classic Mac OS interfaces: System 6 and Mac OS 9 Platinum windows, menus, buttons and dialogs, with values traced to measured pixels. MIT.";
+    "CSS library for classic Mac OS interfaces: System 6, System 7 and Mac OS 9 Platinum windows, menus, buttons and dialogs, measured from real pixels. MIT.";
   const jsonld = {
     "@context": "https://schema.org",
     "@graph": [
@@ -194,10 +194,11 @@ export function renderSite({ pkg, components }) {
 <body>
   <header class="top">
     <h1><span>clio.css</span></h1>
-    <p class="lede">A CSS library for classic Mac OS interfaces: <strong>System 6</strong> and <strong>Mac OS 8/9 Platinum</strong>. Windows, menus, buttons, check boxes, pop-up menus, scroll bars and dialogs, drawn with CSS and small SVGs. Every value is traced to measured pixels or marked as inferred. No JavaScript, no Apple bitmaps or fonts. MIT.</p>
+    <p class="lede">A CSS library for classic Mac OS interfaces: <strong>System 6</strong>, <strong>System 7</strong> and <strong>Mac OS 8/9 Platinum</strong>. Windows, menus, buttons, check boxes, pop-up menus, scroll bars and dialogs, drawn with CSS and small SVGs. Every value is traced to measured pixels or marked as inferred. No JavaScript, no Apple bitmaps or fonts. MIT.</p>
     <fieldset class="era-switch">
       <legend>Era</legend>
       <label><input type="radio" name="era" value="system6" checked> System 6</label>
+      <label><input type="radio" name="era" value="system7"> System 7</label>
       <label><input type="radio" name="era" value="platinum"> Mac OS 9 Platinum</label>
     </fieldset>
   </header>
@@ -219,7 +220,7 @@ export function renderSite({ pkg, components }) {
         <pre><code>npm install ${esc(pkg.name)}</code></pre>
         <pre><code>&lt;link rel="stylesheet" href="https://unpkg.com/${esc(pkg.name)}@${esc(pkg.version)}/dist/clio.css"&gt;</code></pre>
       </div>
-      <p><code>clio.css</code> draws System 6 by default. Put <code>data-era="platinum"</code> on <code>&lt;html&gt;</code>, or on any element, to switch everything inside it to Mac OS 9 Platinum. <code>clio.system6.css</code> and <code>clio.platinum.css</code> are single-era builds. Every rule uses <code>:where()</code> or a single class, so your own CSS always wins, and every value is a <code>--clio-*</code> custom property.</p>
+      <p><code>clio.css</code> draws System 6 by default. Put <code>data-era="system7"</code> or <code>data-era="platinum"</code> on <code>&lt;html&gt;</code>, or on any element, to switch everything inside it to that era. <code>clio.system6.css</code>, <code>clio.system7.css</code> and <code>clio.platinum.css</code> are single-era builds. Every rule uses <code>:where()</code> or a single class, so your own CSS always wins, and every value is a <code>--clio-*</code> custom property.</p>
       <p>Coming from system.css? Its markup works unchanged: <code>.window</code>, <code>.title-bar</code> with <code>button.close</code> and <code>button.resize</code>, <code>.details-bar</code>, <code>.window-pane</code>, <code>.btn</code>, <code>.btn-default</code>, <code>.standard-dialog</code>, <code>.modal-dialog</code>, <code>.alert-box</code>, <code>.field-row</code> and <code>role="menu-bar"</code> menus.</p>
     </section>
 
@@ -251,7 +252,7 @@ export function renderSite({ pkg, components }) {
   <script>
     (function () {
       var root = document.documentElement;
-      function set(era) { root.setAttribute("data-era", era === "platinum" ? "platinum" : "system6"); }
+      function set(era) { root.setAttribute("data-era", era === "platinum" || era === "system7" ? era : "system6"); }
       var era = new URLSearchParams(location.search).get("era");
       if (!era) { try { era = localStorage.getItem("clio-era"); } catch (e) {} }
       if (era) {
@@ -283,10 +284,10 @@ export function renderLlms({ pkg, components }) {
   const url = pkg.homepage;
   return `# clio.css
 
-> CSS library for classic Mac OS interfaces: Macintosh System 6 and Mac OS 8/9 Platinum. Windows, title bars, menu bars and menus, push buttons, check boxes, radio buttons, text fields, pop-up menus, list boxes, scroll bars, dialogs and alerts, group boxes, progress bars, tabs and desktop icons. Pure CSS (no JavaScript), MIT licence, no Apple bitmaps or fonts. Every value is traced to measured pixels from AI System 6 or marked as inferred.
+> CSS library for classic Mac OS interfaces: Macintosh System 6, System 7 and Mac OS 8/9 Platinum. Windows, title bars, menu bars and menus, push buttons, check boxes, radio buttons, text fields, pop-up menus, list boxes, scroll bars, dialogs and alerts, group boxes, progress bars, tabs and desktop icons. Pure CSS (no JavaScript), MIT licence, no Apple bitmaps or fonts. Every value is traced to measured pixels from AI System 6 or marked as inferred.
 
 Install: \`npm install ${pkg.name}\` or \`<link rel="stylesheet" href="https://unpkg.com/${pkg.name}@${pkg.version}/dist/clio.css">\`.
-System 6 is the default; add \`data-era="platinum"\` to \`<html>\` or any element for Mac OS 9 Platinum. Single-era builds: \`dist/clio.system6.css\`, \`dist/clio.platinum.css\`.
+System 6 is the default; add \`data-era="system7"\` or \`data-era="platinum"\` to \`<html>\` or any element. Single-era builds: \`dist/clio.system6.css\`, \`dist/clio.system7.css\`, \`dist/clio.platinum.css\`.
 All rules use \`:where()\` or one class, so author CSS always wins; every value is a \`--clio-*\` custom property.
 Drop-in for system.css markup (.window, .title-bar button.close, .btn, .btn-default, .standard-dialog, .modal-dialog, .alert-box, .field-row, role="menu-bar").
 
@@ -326,7 +327,7 @@ ${variants}`;
   });
   return `# clio.css ${pkg.version} — full reference
 
-Classic Mac OS interface CSS: System 6 (default) and Mac OS 8/9 Platinum (data-era="platinum").
+Classic Mac OS interface CSS: System 6 (default), System 7 (data-era="system7") and Mac OS 8/9 Platinum (data-era="platinum").
 Install: npm install ${pkg.name} — or <link rel="stylesheet" href="https://unpkg.com/${pkg.name}@${pkg.version}/dist/clio.css">
 Rules have zero or one-class specificity; override any --clio-* custom property on any element.
 

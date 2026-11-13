@@ -34,6 +34,21 @@ Infinite Mac tints black and white as #222222 and #eeeeee.
 | s6-geneva-12 | 160×16 | 100.0% | 0.0% | 0 |
 | s6-menu-separator | 136×16 | 100.0% | 0.0% | 0 |
 
+## System 7
+
+Reference: System 7.5.3 running in Infinite Mac, the 800×600 colour canvas read 1:1
+(`npm run capture:system7`), compared in colour.
+
+| Specimen | Size | exact | off | mean |
+| --- | --- | ---: | ---: | ---: |
+| s7-titlebar | 377×19 | 99.1% | 0.8% | 1.64 |
+| s7-titlebar-inactive | 377×16 | 100.0% | 0.0% | 0.01 |
+| s7-scroll-up | 14×14 | 100.0% | 0.0% | 0 |
+| s7-scroll-thumb | 14×16 | 93.8% | 6.3% | 6.83 |
+| s7-grow-box | 14×14 | 100.0% | 0.0% | 0 |
+| s7-alert-frame | 18×18 | 100.0% | 0.0% | 0 |
+| s7-default-ok | 67×28 | 93.8% | 5.1% | 4.53 |
+
 ## Mac OS 9 Platinum
 
 Reference: GUIdebook Mac OS 9.0 captures, cropped by AI System 6 (`AIS6_DIR`).
