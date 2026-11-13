@@ -6,9 +6,10 @@ pop-up menus, list boxes, scroll bars, dialogs, group boxes, progress bars, tabs
 desktop icons. Pure CSS, no JavaScript. MIT. No Apple bitmaps, icons, logos or fonts.
 
 Every value is traced to its source and labelled **measured** (read from real pixels of
-the era), **inferred**, **adapted** (a deliberate web change) or **third-party**. The
-measurements come from [AI System 6](https://github.com/surfine/AI-System-6), which
-recreates these eras against System 6.0.8 in an emulator and Mac OS 9.0 captures.
+the era), **inferred**, **adapted** (a deliberate web change) or **third-party**. System 6
+is measured from System 6.0.8 running in [Infinite Mac](https://infinitemac.org), its
+screen read pixel for pixel; Platinum from Mac OS 9.0 captures measured by
+[AI System 6](https://github.com/surfine/AI-System-6).
 
 ![A System 6 window and a Mac OS 9 Platinum window drawn with clio.css](assets/og.png)
 
@@ -21,7 +22,7 @@ npm install clio.css
 ```
 
 ```html
-<link rel="stylesheet" href="https://unpkg.com/clio.css@0.1.0/dist/clio.css">
+<link rel="stylesheet" href="https://unpkg.com/clio.css@0.2.0/dist/clio.css">
 ```
 
 | File | What it draws |
@@ -94,14 +95,22 @@ or a single class, so your own CSS always wins without `!important`.
 
 ## How faithful is it?
 
-[EVIDENCE.md](EVIDENCE.md) lists every value with its status and source. Of the 69
-rows, the Platinum chrome is almost all **measured**; much of System 6 beyond the
-title bar is still **inferred** and marked as such.
+[EVIDENCE.md](EVIDENCE.md) lists every value with its status and source: 50 of the 77
+rows are **measured** from real pixels, 13 are still **inferred** and say so.
 
-[FIDELITY.md](FIDELITY.md) has a pixel check (`npm run fidelity`) that renders the
-Platinum specimens and compares them with Mac OS 9.0 GUIdebook captures: the active title
-bar matches 94% of pixels exactly, and nearly all the rest is the label, because
-Charcoal is not shipped (Asap stands in).
+[FIDELITY.md](FIDELITY.md) is a pixel check (`npm run fidelity`) against the real screens:
+
+| Specimen | Pixels identical to the real screen |
+| --- | ---: |
+| System 6 check box, radio buttons, scroll arrow, grow box, menu separator | 100% |
+| System 6 default OK button | 96.7% |
+| System 6 title bar | 96.3% |
+| Platinum title bar | 94.3% |
+| Platinum default OK button | 92.4% |
+
+Nearly every remaining pixel is lettering: Chicago and Charcoal are Apple's fonts and are
+not shipped, so ChicagoFLF and Asap stand in. `npm run capture:system6` re-takes the
+System 6.0.8 reference frames from Infinite Mac; the frames are never committed.
 
 What the era never had is adapted, not imitated: keyboard focus rings, touch-size
 controls on `pointer: coarse` (title-bar boxes get a 45px hit area while their art stays

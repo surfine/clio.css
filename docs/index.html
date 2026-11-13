@@ -21,7 +21,7 @@
   <link rel="alternate" type="text/plain" title="llms.txt" href="llms.txt">
   <link rel="alternate" type="application/json" title="Component index" href="components.json">
   <link rel="stylesheet" href="dist/clio.css">
-  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"SoftwareSourceCode","@id":"https://surfine.github.io/clio.css/#software","name":"clio.css","description":"CSS library for classic Mac OS interfaces: System 6 and Mac OS 9 Platinum windows, menus, buttons and dialogs, with values traced to measured pixels. MIT.","url":"https://surfine.github.io/clio.css/","codeRepository":"https://github.com/surfine/clio.css","programmingLanguage":"CSS","license":"https://opensource.org/licenses/MIT","version":"0.1.0","keywords":"css, css-framework, design-system, classic-mac, classic-macos, macintosh, system-6, mac-os-9, mac-os-8, platinum, retro, vintage, 1-bit, chicago, ui, system.css","runtimePlatform":"Web browsers","isAccessibleForFree":true,"hasPart":[{"@type":"WebPageElement","name":"Window","url":"https://surfine.github.io/clio.css/#window"},{"@type":"WebPageElement","name":"Menu bar and menus","url":"https://surfine.github.io/clio.css/#menu"},{"@type":"WebPageElement","name":"Push button","url":"https://surfine.github.io/clio.css/#button"},{"@type":"WebPageElement","name":"Check box","url":"https://surfine.github.io/clio.css/#checkbox"},{"@type":"WebPageElement","name":"Radio button","url":"https://surfine.github.io/clio.css/#radio"},{"@type":"WebPageElement","name":"Text field","url":"https://surfine.github.io/clio.css/#text-field"},{"@type":"WebPageElement","name":"Pop-up menu","url":"https://surfine.github.io/clio.css/#select"},{"@type":"WebPageElement","name":"List box","url":"https://surfine.github.io/clio.css/#listbox"},{"@type":"WebPageElement","name":"Scroll bar","url":"https://surfine.github.io/clio.css/#scrollbar"},{"@type":"WebPageElement","name":"Dialogs and alerts","url":"https://surfine.github.io/clio.css/#dialog"},{"@type":"WebPageElement","name":"Group box","url":"https://surfine.github.io/clio.css/#fieldset"},{"@type":"WebPageElement","name":"Progress bar","url":"https://surfine.github.io/clio.css/#progress"},{"@type":"WebPageElement","name":"Tabs","url":"https://surfine.github.io/clio.css/#tabs"},{"@type":"WebPageElement","name":"Desktop and icons","url":"https://surfine.github.io/clio.css/#desktop"},{"@type":"WebPageElement","name":"Type and tokens","url":"https://surfine.github.io/clio.css/#typography"}]},{"@type":"WebSite","@id":"https://surfine.github.io/clio.css/#site","name":"clio.css","url":"https://surfine.github.io/clio.css/","inLanguage":"en"}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"SoftwareSourceCode","@id":"https://surfine.github.io/clio.css/#software","name":"clio.css","description":"CSS library for classic Mac OS interfaces: System 6 and Mac OS 9 Platinum windows, menus, buttons and dialogs, with values traced to measured pixels. MIT.","url":"https://surfine.github.io/clio.css/","codeRepository":"https://github.com/surfine/clio.css","programmingLanguage":"CSS","license":"https://opensource.org/licenses/MIT","version":"0.2.0","keywords":"css, css-framework, design-system, classic-mac, classic-macos, macintosh, system-6, mac-os-9, mac-os-8, platinum, retro, vintage, 1-bit, chicago, ui, system.css","runtimePlatform":"Web browsers","isAccessibleForFree":true,"hasPart":[{"@type":"WebPageElement","name":"Window","url":"https://surfine.github.io/clio.css/#window"},{"@type":"WebPageElement","name":"Menu bar and menus","url":"https://surfine.github.io/clio.css/#menu"},{"@type":"WebPageElement","name":"Push button","url":"https://surfine.github.io/clio.css/#button"},{"@type":"WebPageElement","name":"Check box","url":"https://surfine.github.io/clio.css/#checkbox"},{"@type":"WebPageElement","name":"Radio button","url":"https://surfine.github.io/clio.css/#radio"},{"@type":"WebPageElement","name":"Text field","url":"https://surfine.github.io/clio.css/#text-field"},{"@type":"WebPageElement","name":"Pop-up menu","url":"https://surfine.github.io/clio.css/#select"},{"@type":"WebPageElement","name":"List box","url":"https://surfine.github.io/clio.css/#listbox"},{"@type":"WebPageElement","name":"Scroll bar","url":"https://surfine.github.io/clio.css/#scrollbar"},{"@type":"WebPageElement","name":"Dialogs and alerts","url":"https://surfine.github.io/clio.css/#dialog"},{"@type":"WebPageElement","name":"Group box","url":"https://surfine.github.io/clio.css/#fieldset"},{"@type":"WebPageElement","name":"Progress bar","url":"https://surfine.github.io/clio.css/#progress"},{"@type":"WebPageElement","name":"Tabs","url":"https://surfine.github.io/clio.css/#tabs"},{"@type":"WebPageElement","name":"Desktop and icons","url":"https://surfine.github.io/clio.css/#desktop"},{"@type":"WebPageElement","name":"Type and tokens","url":"https://surfine.github.io/clio.css/#typography"}]},{"@type":"WebSite","@id":"https://surfine.github.io/clio.css/#site","name":"clio.css","url":"https://surfine.github.io/clio.css/","inLanguage":"en"}]}</script>
   <style>
     :root { --doc-ink: #111; --doc-muted: #555; --doc-rule: #d4d4d4; --doc-bg: #ffffff; --doc-tint: #f4f4f4; }
     html { background: var(--doc-bg); }
@@ -122,7 +122,7 @@
       <h2 id="h-start">Get started</h2>
       <div class="install">
         <pre><code>npm install clio.css</code></pre>
-        <pre><code>&lt;link rel="stylesheet" href="https://unpkg.com/clio.css@0.1.0/dist/clio.css"&gt;</code></pre>
+        <pre><code>&lt;link rel="stylesheet" href="https://unpkg.com/clio.css@0.2.0/dist/clio.css"&gt;</code></pre>
       </div>
       <p><code>clio.css</code> draws System 6 by default. Put <code>data-era="platinum"</code> on <code>&lt;html&gt;</code>, or on any element, to switch everything inside it to Mac OS 9 Platinum. <code>clio.system6.css</code> and <code>clio.platinum.css</code> are single-era builds. Every rule uses <code>:where()</code> or a single class, so your own CSS always wins, and every value is a <code>--clio-*</code> custom property.</p>
       <p>Coming from system.css? Its markup works unchanged: <code>.window</code>, <code>.title-bar</code> with <code>button.close</code> and <code>button.resize</code>, <code>.details-bar</code>, <code>.window-pane</code>, <code>.btn</code>, <code>.btn-default</code>, <code>.standard-dialog</code>, <code>.modal-dialog</code>, <code>.alert-box</code>, <code>.field-row</code> and <code>role="menu-bar"</code> menus.</p>
@@ -221,22 +221,28 @@
       </dl>
       <p class="aliases">Also accepts: system.css markup (<code>.title-bar button.close</code>, <code>.title-bar button.resize</code>, <code>.inactive-title-bar</code>, <code>.window-pane</code>, <code>.details-bar</code>, <code>.separator</code>); AI System 6 markup (<code>.close-box</code>, <code>.resize-box</code>, <code>.shade-box</code>, <code>.title-bar h1</code>, <code>.title-bar h2</code>).</p>
       <details class="evidence-details">
-        <summary>Evidence (13)</summary>
+        <summary>Evidence (14)</summary>
       <table class="evidence">
         <caption>Where each value comes from</caption>
         <thead><tr><th scope="col">Era</th><th scope="col">Value</th><th scope="col">Status</th><th scope="col">Source</th></tr></thead>
         <tbody>
 <tr>
           <td>System 6</td>
-          <td>Title bar: a 17px box below a 1px inset; 2px paper, a 12px row of six 1px ink stripes on a 2px period, 2px paper, a 1px rule</td>
+          <td>Title bar: 19 rows from the frame to the rule; 3 rows of paper, six 1px ink stripes on a 2px period, 3 rows of paper, the 1px rule</td>
           <td><span class="status status-measured">Measured</span></td>
-          <td><code>apps/desktop/styles/00-foundation.css:906</code><br><span class="upstream">System 6.0.8 running in an emulator, read at exact 2x pixels</span></td>
+          <td><code>clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame hd-window rows 27–45</code><br><span class="upstream">agrees with AI System 6 apps/desktop/styles/00-foundation.css:906 (emulator, 2x)</span></td>
         </tr>
 <tr>
           <td>System 6</td>
-          <td>Close and zoom boxes are 11px squares, 7px in from each end, with 3px of paper cut out of the stripes around them</td>
+          <td>Close and zoom boxes: 11px squares on the stripe band, 8px in from each inner edge, with 1px of paper between box and stripes (AI System 6 uses 3px)</td>
           <td><span class="status status-measured">Measured</span></td>
-          <td><code>apps/desktop/styles/00-foundation.css:906</code><br><span class="upstream">same capture</span></td>
+          <td><code>clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame hd-window</code><br><span class="upstream">System 6.0.8 Finder window Macintosh HD</span></td>
+        </tr>
+<tr>
+          <td>System 6</td>
+          <td>Title cut-out: about 6px of paper either side of the name (7px left, 5px right including the glyph's side bearing)</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame hd-window</code><br><span class="upstream">System 6.0.8 Finder window</span></td>
         </tr>
 <tr>
           <td>System 6</td>
@@ -248,25 +254,25 @@
           <td>System 6</td>
           <td>An inactive window draws a plain white title strip with its name; no stripes, close box or zoom box</td>
           <td><span class="status status-measured">Measured</span></td>
-          <td><code>apps/desktop/styles/00-foundation.css:951</code><br><span class="upstream">observed behaviour of System 6</span></td>
+          <td><code>clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame alert (Macintosh HD behind the alert)</code><br><span class="upstream">agrees with AI System 6 apps/desktop/styles/00-foundation.css:951</span></td>
         </tr>
 <tr>
           <td>System 6</td>
-          <td>Pressed close box shows a starburst</td>
-          <td><span class="status status-inferred">Inferred</span></td>
-          <td><code>apps/desktop/styles/10-windows.css (close-box ::before/::after)</code><br><span class="upstream">System 6 close-box tracking; pixels redrawn for clio.css</span></td>
+          <td>A held close or zoom box draws the same starburst: eight 3px rays and a centre dot inside the frame</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), mouse held on each box</code><br><span class="upstream">the cursor covered the lower half; it is drawn as the mirror of the upper half</span></td>
         </tr>
 <tr>
           <td>System 6</td>
           <td>The window frame has a 1px ink drop shadow on the right and bottom</td>
-          <td><span class="status status-inferred">Inferred</span></td>
-          <td><code>not in AI System 6 (it sets no window shadow)</code><br><span class="upstream">Inside Macintosh, Window Manager: documentProc frame; to be measured</span></td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame hd-window x=239, y=152</code><br><span class="upstream">AI System 6 sets no window shadow</span></td>
         </tr>
 <tr>
           <td>System 6</td>
-          <td>The details bar closes with two 1px rules</td>
-          <td><span class="status status-inferred">Inferred</span></td>
-          <td><code>not measured</code><br><span class="upstream">System 6 Finder window header</span></td>
+          <td>Finder info line: 17 rows of Geneva 9, text 15px in, closed by 1px ink, 1px paper, 1px ink</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame hd-window rows 46–65</code><br><span class="upstream">System 6.0.8 Finder window</span></td>
         </tr>
 <tr>
           <td>Platinum</td>
@@ -357,28 +363,40 @@
       </dl>
       <p class="aliases">Also accepts: system.css markup (<code>ul[role=menu-bar]</code>, <code>[role=menu-item]</code>, <code>li.divider</code>).</p>
       <details class="evidence-details">
-        <summary>Evidence (7)</summary>
+        <summary>Evidence (9)</summary>
       <table class="evidence">
         <caption>Where each value comes from</caption>
         <thead><tr><th scope="col">Era</th><th scope="col">Value</th><th scope="col">Status</th><th scope="col">Source</th></tr></thead>
         <tbody>
 <tr>
           <td>System 6</td>
-          <td>Menu bar 20px with a 1px ink rule; selected title inverts</td>
-          <td><span class="status status-inferred">Inferred</span></td>
-          <td><code>docs/design/CLASSIC_PLATINUM_FIDELITY.md:87</code><br><span class="upstream">historical reference ~20px; not yet measured from a capture</span></td>
+          <td>Menu bar: 20 rows with the rule on the last; an open title inverts rows 1–18, about 9px either side of the word</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame file-menu</code><br><span class="upstream">System 6.0.8 Finder File menu</span></td>
         </tr>
 <tr>
           <td>System 6</td>
-          <td>Menu: paper, 1px ink frame, 1px ink drop shadow; 16px rows; the highlighted row inverts</td>
-          <td><span class="status status-inferred">Inferred</span></td>
-          <td><code>apps/desktop/styles/00-foundation.css:1094</code><br><span class="upstream">System 6 menus; Chicago 12 line spacing</span></td>
+          <td>Menu: hangs from the bar's rule with no top line; 1px ink frame and 1px drop shadow; 16px rows; text 15px in; the highlighted row inverts</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame file-menu</code><br><span class="upstream">System 6.0.8 Finder File menu</span></td>
         </tr>
 <tr>
           <td>System 6</td>
-          <td>Separator: a dotted grey rule through a full-height row</td>
-          <td><span class="status status-inferred">Inferred</span></td>
-          <td><code>not measured</code><br><span class="upstream">System 6 menus</span></td>
+          <td>Separator: a full 16px row with a 1-on 1-off dotted rule on its ninth line</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame file-menu rows 164–179</code><br><span class="upstream">System 6.0.8 Finder File menu</span></td>
+        </tr>
+<tr>
+          <td>System 6</td>
+          <td>Check mark: the Chicago check glyph, 9×8, 3px in from the frame</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), Apple menu Finder item</code><br><span class="upstream">redrawn as pixels in tooling/s6-art.py</span></td>
+        </tr>
+<tr>
+          <td>System 6</td>
+          <td>Disabled items are drawn through a 50% grey dither; clio.css uses solid #696969</td>
+          <td><span class="status status-adapted">Adapted</span></td>
+          <td><code>clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame file-menu</code><br><span class="upstream">a dither blurs under browser scaling; solid grey keeps 5.6:1</span></td>
         </tr>
 <tr>
           <td>Platinum</td>
@@ -439,22 +457,28 @@
       </dl>
       <p class="aliases">Also accepts: system.css markup (<code>.btn</code>, <code>.btn-default</code>, <code>.standard-button</code>); AI System 6 markup (<code>.btn.default</code>).</p>
       <details class="evidence-details">
-        <summary>Evidence (8)</summary>
+        <summary>Evidence (9)</summary>
       <table class="evidence">
         <caption>Where each value comes from</caption>
         <thead><tr><th scope="col">Era</th><th scope="col">Value</th><th scope="col">Status</th><th scope="col">Source</th></tr></thead>
         <tbody>
 <tr>
           <td>System 6</td>
-          <td>1px ink round rectangle, paper face, Chicago 12; pressed inverts to ink with paper text</td>
-          <td><span class="status status-inferred">Inferred</span></td>
-          <td><code>apps/desktop/styles/10-windows.css:3588</code><br><span class="upstream">AI System 6 Theme Lab default-ok specimen (authored, not a capture)</span></td>
+          <td>Push button: 20px tall, 1px ink round rectangle with corners of about 4px, paper face, Chicago 12 (AI System 6 uses 7px corners)</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame alert, OK button 60×20</code><br><span class="upstream">System 6.0.8 stop alert</span></td>
         </tr>
 <tr>
           <td>System 6</td>
-          <td>Default button: a 1px gap then a 3px ring</td>
+          <td>Pressed: the button inverts to ink with paper text</td>
           <td><span class="status status-inferred">Inferred</span></td>
-          <td><code>apps/desktop/styles/00-foundation.css:79</code><br><span class="upstream">Inside Macintosh, Dialog Manager: PenSize(3,3), InsetRect(-4,-4), FrameRoundRect(16,16)</span></td>
+          <td><code>not captured</code><br><span class="upstream">System 6 button tracking</span></td>
+        </tr>
+<tr>
+          <td>System 6</td>
+          <td>Default button: a 1px gap then a 3px ring (68×28 around a 60×20 button)</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame alert</code><br><span class="upstream">agrees with Inside Macintosh, Dialog Manager: PenSize(3,3), InsetRect(-4,-4), FrameRoundRect(16,16)</span></td>
         </tr>
 <tr>
           <td>Both eras</td>
@@ -525,16 +549,22 @@
       </dl>
       
       <details class="evidence-details">
-        <summary>Evidence (4)</summary>
+        <summary>Evidence (5)</summary>
       <table class="evidence">
         <caption>Where each value comes from</caption>
         <thead><tr><th scope="col">Era</th><th scope="col">Value</th><th scope="col">Status</th><th scope="col">Source</th></tr></thead>
         <tbody>
 <tr>
           <td>System 6</td>
-          <td>A 12px box; checked draws an X from corner to corner</td>
+          <td>A 12px box with a 1px frame; held, the frame thickens to 2px</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame get-info (Locked)</code><br><span class="upstream">AI System 6 uses 13px</span></td>
+        </tr>
+<tr>
+          <td>System 6</td>
+          <td>Checked draws an X from corner to corner</td>
           <td><span class="status status-inferred">Inferred</span></td>
-          <td><code>apps/desktop/styles/00-foundation.css:965</code><br><span class="upstream">System 6 check box; AI System 6 uses 13px, clio.css 12px to match the radio</span></td>
+          <td><code>not captured (the Locked box was unchecked)</code><br><span class="upstream">System 6 check box</span></td>
         </tr>
 <tr>
           <td>System 6</td>
@@ -600,9 +630,9 @@
         <tbody>
 <tr>
           <td>System 6</td>
-          <td>12px ring and 6px dot art</td>
-          <td><span class="status status-third-party">Third-party</span></td>
-          <td><code>apps/desktop/assets/themes/classic/controls/radio-*.svg</code><br><span class="upstream">system.css icon/radio-border.svg, radio-dot.svg (MIT, Sakun Acharige)</span></td>
+          <td>12px ring and 6px dot: the real pixels match system.css's art exactly</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame control-panel (Rate of Insertion Point Blinking)</code><br><span class="upstream">art from system.css icon/radio-border.svg, radio-dot.svg (MIT, Sakun Acharige)</span></td>
         </tr>
 <tr>
           <td>Platinum</td>
@@ -652,9 +682,9 @@
         <tbody>
 <tr>
           <td>System 6</td>
-          <td>1px ink frame, white, Geneva 12</td>
-          <td><span class="status status-inferred">Inferred</span></td>
-          <td><code>apps/desktop/styles/00-foundation.css:189</code><br><span class="upstream">System 6 dialog edit text</span></td>
+          <td>1px ink frame, white, text inset 3px</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame control-panel (RAM Cache field), get-info (comments)</code><br><span class="upstream">System 6.0.8</span></td>
         </tr>
 <tr>
           <td>Platinum</td>
@@ -831,28 +861,46 @@
       </dl>
       
       <details class="evidence-details">
-        <summary>Evidence (5)</summary>
+        <summary>Evidence (8)</summary>
       <table class="evidence">
         <caption>Where each value comes from</caption>
         <thead><tr><th scope="col">Era</th><th scope="col">Value</th><th scope="col">Status</th><th scope="col">Source</th></tr></thead>
         <tbody>
 <tr>
           <td>System 6</td>
-          <td>A 16px lane</td>
-          <td><span class="status status-inferred">Inferred</span></td>
-          <td><code>apps/desktop/styles/00-foundation.css:1173</code><br><span class="upstream">System 6 document window frame</span></td>
+          <td>Lane: a 1px line and 14px inside; the window frame closes it, so the bar is 15px in CSS</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame system-folder</code><br><span class="upstream">AI System 6 uses a 16px lane</span></td>
         </tr>
 <tr>
           <td>System 6</td>
-          <td>50% grey lane pattern</td>
-          <td><span class="status status-inferred">Inferred</span></td>
-          <td><code>apps/desktop/styles/00-foundation.css:1177</code><br><span class="upstream">drawn as a 1px checker here; AI System 6 uses a 2px cell</span></td>
+          <td>Active lane pattern is QuickDraw's ltGray (one dot in four, rows offset by two), not 50% grey; an empty lane is white</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frames system-folder and hd-window</code><br><span class="upstream">AI System 6 draws a 50% checker</span></td>
         </tr>
 <tr>
           <td>System 6</td>
-          <td>Hollow arrow art</td>
+          <td>Scroll box: a white square with a 1px frame filling the lane, 16 rows tall</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame system-folder</code><br><span class="upstream">System 6.0.8 Finder list view</span></td>
+        </tr>
+<tr>
+          <td>System 6</td>
+          <td>Up and down arrows: hollow, 13 wide and 11 tall in the 14px box, a 45° head and a 7px stem</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frames hd-window and system-folder</code><br><span class="upstream">redrawn as pixels in tooling/s6-art.py</span></td>
+        </tr>
+<tr>
+          <td>System 6</td>
+          <td>Left and right arrows are the up and down arrows turned</td>
           <td><span class="status status-inferred">Inferred</span></td>
-          <td><code>drawn for clio.css</code><br><span class="upstream">System 6 scroll arrows; to be measured</span></td>
+          <td><code>tooling/s6-art.py</code><br><span class="upstream">the horizontal arrows were captured only partly</span></td>
+        </tr>
+<tr>
+          <td>System 6</td>
+          <td>Grow box: a 7×7 square over a 9×9 square in the 14px corner</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame system-folder</code><br><span class="upstream">redrawn as pixels in tooling/s6-art.py</span></td>
         </tr>
 <tr>
           <td>Both eras</td>
@@ -924,9 +972,9 @@
         <tbody>
 <tr>
           <td>System 6</td>
-          <td>Modal frame: 1px ink, 1px paper gap, 2px ink</td>
-          <td><span class="status status-inferred">Inferred</span></td>
-          <td><code>apps/desktop/styles/84-clio-write.css:210</code><br><span class="upstream">AI System 6 has two recipes (this one and 00-foundation.css .system-modal); neither is measured</span></td>
+          <td>Modal frame: 1px ink, 2px paper, 2px ink, and no drop shadow</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame alert</code><br><span class="upstream">AI System 6 has two recipes, both off (84-clio-write.css:210 has a 1px gap)</span></td>
         </tr>
 <tr>
           <td>System 6</td>
@@ -1160,15 +1208,15 @@
         <tbody>
 <tr>
           <td>System 6</td>
-          <td>A 50% grey desktop pattern</td>
-          <td><span class="status status-inferred">Inferred</span></td>
-          <td><code>apps/desktop/styles/00-foundation.css:224</code><br><span class="upstream">System 6.0.8 default desktop; AI System 6 draws an 8px stipple</span></td>
+          <td>The desktop is a 1px 50% checker</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), every frame</code><br><span class="upstream">AI System 6 draws an 8px stipple</span></td>
         </tr>
 <tr>
           <td>System 6</td>
-          <td>White name tag; a selected icon inverts</td>
-          <td><span class="status status-inferred">Inferred</span></td>
-          <td><code>apps/desktop/styles/00-foundation.css (desktop-label tokens)</code><br><span class="upstream">System 6 Finder</span></td>
+          <td>Icon names: Geneva 9 on a white tag; a selected icon and its tag invert</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), desktop (Macintosh HD selected, Welcome! not)</code><br><span class="upstream">System 6.0.8 Finder</span></td>
         </tr>
 <tr>
           <td>Platinum</td>
@@ -1267,7 +1315,7 @@
   </div>
 
   <footer>
-    <p>clio.css 0.1.0 · MIT · Not affiliated with or endorsed by Apple Inc. Macintosh, Mac OS and Chicago are trademarks of Apple Inc., named here only to describe the eras recreated.</p>
+    <p>clio.css 0.2.0 · MIT · Not affiliated with or endorsed by Apple Inc. Macintosh, Mac OS and Chicago are trademarks of Apple Inc., named here only to describe the eras recreated.</p>
   </footer>
 
   <script>

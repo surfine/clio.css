@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.2.0 — 2026-11-13
+
+System 6 measured from System 6.0.8 running in Infinite Mac (canvas read 1:1).
+
+- Title-bar boxes cut 1px of paper out of the stripes, not 3px.
+- Held close and zoom boxes both draw the starburst, now with its centre dot.
+- Push buttons have 4px corners (were 7px); the default ring is confirmed 1px gap + 3px.
+- Alerts and modal dialogs: 1px ink, 2px paper, 2px ink (the gap was 1px).
+- Finder info line: Geneva 9 in 17 rows.
+- Menus hang from the menu bar's rule with no top line; an open title leaves the bar's top
+  row white; text is 15px in; the separator rule sits on the ninth line of its row; the
+  check mark is the Chicago glyph.
+- Scroll bars: 15px (the window frame is the 16th line), QuickDraw ltGray lane, arrows and
+  grow box redrawn from the real pixels.
+- Edit text insets 3px.
+- `npm run capture:system6` and System 6 specimens in `npm run fidelity`.
+- Evidence: 50 of 77 rows measured (was 29 of 69).
+
 ## 0.1.0 — unreleased
 
 First version, extracted from AI System 6.

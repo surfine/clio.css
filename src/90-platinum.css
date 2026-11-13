@@ -70,6 +70,7 @@
   --clio-menubar-shadow: inset 0 1px 0 #ffffff, inset 0 -1px 0 #999999;
   --clio-menubar-padding: 0 8px;
   --clio-menu-title-padding: 0 10px;
+  --clio-menu-title-inset: 0px;
   --clio-menu-title-active-bg: #333399;
   --clio-menu-title-active-fg: #ffffff;
   --clio-menu-title-active-shadow: inset 0 1px 0 #6666cc, inset 0 -1px 0 #000088;
@@ -179,6 +180,10 @@
   --clio-details-bg: #dddddd;
   --clio-details-border: 1px solid #000000;
   --clio-details-shadow: inset 0 1px 0 #ffffff, inset 0 -1px 0 #aaaaaa;
+  --clio-details-font-size: 12px;
+  --clio-details-height: 20px;
+  --clio-details-padding: 0 8px;
+  --clio-scrollbar-corner: #dddddd;
   --clio-list-bg: #ffffff;
   --clio-list-border: 1px solid #000000;
   --clio-list-shadow: -1px -1px 0 #888888, 1px 1px 0 #ffffff;
@@ -291,10 +296,6 @@
 [data-era="platinum"] .title-bar > :is(button, .close, .close-box, .resize, .resize-box, .zoom, .shade, .shade-box, .collapse):is(:active, .active) {
   background: linear-gradient(to bottom right, #444444, #bbbbbb);
   box-shadow: -1px -1px 0 #888888, 1px 1px 0 #ffffff, inset -1px -1px 0 #999999;
-}
-
-[data-era="platinum"] .title-bar > :is(.close, .close-box)::before {
-  display: none;
 }
 
 /* Zoom: a six-pixel lower-left corner inside the frame. */

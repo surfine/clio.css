@@ -65,13 +65,14 @@ export const components = [
       }
     ],
     evidence: [
-      { era: "system6", claim: "Title bar: a 17px box below a 1px inset; 2px paper, a 12px row of six 1px ink stripes on a 2px period, 2px paper, a 1px rule", status: "measured", source: "apps/desktop/styles/00-foundation.css:906", upstream: "System 6.0.8 running in an emulator, read at exact 2x pixels" },
-      { era: "system6", claim: "Close and zoom boxes are 11px squares, 7px in from each end, with 3px of paper cut out of the stripes around them", status: "measured", source: "apps/desktop/styles/00-foundation.css:906", upstream: "same capture" },
+      { era: "system6", claim: "Title bar: 19 rows from the frame to the rule; 3 rows of paper, six 1px ink stripes on a 2px period, 3 rows of paper, the 1px rule", status: "measured", source: "clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame hd-window rows 27–45", upstream: "agrees with AI System 6 apps/desktop/styles/00-foundation.css:906 (emulator, 2x)" },
+      { era: "system6", claim: "Close and zoom boxes: 11px squares on the stripe band, 8px in from each inner edge, with 1px of paper between box and stripes (AI System 6 uses 3px)", status: "measured", source: "clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame hd-window", upstream: "System 6.0.8 Finder window Macintosh HD" },
+      { era: "system6", claim: "Title cut-out: about 6px of paper either side of the name (7px left, 5px right including the glyph's side bearing)", status: "measured", source: "clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame hd-window", upstream: "System 6.0.8 Finder window" },
       { era: "system6", claim: "Zoom box: an inner square of 7 of the frame's 11 pixels sharing its top-left corner", status: "measured", source: "apps/desktop/styles/10-windows.css:1059", upstream: "System 6 zoom box, 7:11" },
-      { era: "system6", claim: "An inactive window draws a plain white title strip with its name; no stripes, close box or zoom box", status: "measured", source: "apps/desktop/styles/00-foundation.css:951", upstream: "observed behaviour of System 6" },
-      { era: "system6", claim: "Pressed close box shows a starburst", status: "inferred", source: "apps/desktop/styles/10-windows.css (close-box ::before/::after)", upstream: "System 6 close-box tracking; pixels redrawn for clio.css" },
-      { era: "system6", claim: "The window frame has a 1px ink drop shadow on the right and bottom", status: "inferred", source: "not in AI System 6 (it sets no window shadow)", upstream: "Inside Macintosh, Window Manager: documentProc frame; to be measured" },
-      { era: "system6", claim: "The details bar closes with two 1px rules", status: "inferred", source: "not measured", upstream: "System 6 Finder window header" },
+      { era: "system6", claim: "An inactive window draws a plain white title strip with its name; no stripes, close box or zoom box", status: "measured", source: "clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame alert (Macintosh HD behind the alert)", upstream: "agrees with AI System 6 apps/desktop/styles/00-foundation.css:951" },
+      { era: "system6", claim: "A held close or zoom box draws the same starburst: eight 3px rays and a centre dot inside the frame", status: "measured", source: "clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), mouse held on each box", upstream: "the cursor covered the lower half; it is drawn as the mirror of the upper half" },
+      { era: "system6", claim: "The window frame has a 1px ink drop shadow on the right and bottom", status: "measured", source: "clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame hd-window x=239, y=152", upstream: "AI System 6 sets no window shadow" },
+      { era: "system6", claim: "Finder info line: 17 rows of Geneva 9, text 15px in, closed by 1px ink, 1px paper, 1px ink", status: "measured", source: "clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame hd-window rows 46–65", upstream: "System 6.0.8 Finder window" },
       { era: "platinum", claim: "Frame: 1px black line, a raised 4px strip (white top/left, #999 bottom/right), the black content line; 2px 5px 5px padding", status: "measured", source: "apps/desktop/styles/65-appearance-themes.css:1744 (P14)", upstream: "Mac OS 8/9 window captures 16 and 21" },
       { era: "platinum", claim: "Title bar 19px: #ccc, six white/#777 ridge pairs from row 1, #999 shadow row, black rule; #ccc covers behind the boxes", status: "measured", source: "apps/desktop/styles/65-appearance-themes.css:104", upstream: "GUIdebook Mac OS 9.0 Appearance window (Theme Lab specimen active-titlebar)" },
       { era: "platinum", claim: "Title in bold Charcoal; on other systems Asap at width 123 shifted (-1px, -1px), the metrics the title bar was measured with", status: "measured", source: "apps/desktop/styles/65-appearance-themes.css:1803", upstream: "GUIdebook Mac OS 9.0 Appearance window" },
@@ -107,9 +108,11 @@ export const components = [
 </ul>`,
     reserveHeight: 150,
     evidence: [
-      { era: "system6", claim: "Menu bar 20px with a 1px ink rule; selected title inverts", status: "inferred", source: "docs/design/CLASSIC_PLATINUM_FIDELITY.md:87", upstream: "historical reference ~20px; not yet measured from a capture" },
-      { era: "system6", claim: "Menu: paper, 1px ink frame, 1px ink drop shadow; 16px rows; the highlighted row inverts", status: "inferred", source: "apps/desktop/styles/00-foundation.css:1094", upstream: "System 6 menus; Chicago 12 line spacing" },
-      { era: "system6", claim: "Separator: a dotted grey rule through a full-height row", status: "inferred", source: "not measured", upstream: "System 6 menus" },
+      { era: "system6", claim: "Menu bar: 20 rows with the rule on the last; an open title inverts rows 1–18, about 9px either side of the word", status: "measured", source: "clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame file-menu", upstream: "System 6.0.8 Finder File menu" },
+      { era: "system6", claim: "Menu: hangs from the bar's rule with no top line; 1px ink frame and 1px drop shadow; 16px rows; text 15px in; the highlighted row inverts", status: "measured", source: "clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame file-menu", upstream: "System 6.0.8 Finder File menu" },
+      { era: "system6", claim: "Separator: a full 16px row with a 1-on 1-off dotted rule on its ninth line", status: "measured", source: "clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame file-menu rows 164–179", upstream: "System 6.0.8 Finder File menu" },
+      { era: "system6", claim: "Check mark: the Chicago check glyph, 9×8, 3px in from the frame", status: "measured", source: "clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), Apple menu Finder item", upstream: "redrawn as pixels in tooling/s6-art.py" },
+      { era: "system6", claim: "Disabled items are drawn through a 50% grey dither; clio.css uses solid #696969", status: "adapted", source: "clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame file-menu", upstream: "a dither blurs under browser scaling; solid grey keeps 5.6:1" },
       { era: "platinum", claim: "Menu bar: #ddd, white top line, #999 bottom line, 1px black rule, 20px; open title #333399 with #6666cc/#000088 lines", status: "measured", source: "apps/desktop/styles/65-appearance-themes.css:298, :45", upstream: "Mac OS 9 native menu bar captures 02/04" },
       { era: "platinum", claim: "Menu: no top rule, white/#999 inner bevel, #222 1px drop; 16px rows at weight 600; highlight #333399 with #6666cc/#000088 side columns", status: "measured", source: "apps/desktop/styles/65-appearance-themes.css:912 (P21), :917 (P24)", upstream: "GUIdebook Mac OS 9.0 Apple menu (Theme Lab specimen apple-menu)" },
       { era: "platinum", claim: "Separator: #888 over white, in an 8px row", status: "inferred", source: "apps/desktop/styles/65-appearance-themes.css (separator #888/white)", upstream: "the line pair is measured; the 8px row height is not" },
@@ -131,8 +134,9 @@ export const components = [
   <button disabled>Eject</button>
 </div>`,
     evidence: [
-      { era: "system6", claim: "1px ink round rectangle, paper face, Chicago 12; pressed inverts to ink with paper text", status: "inferred", source: "apps/desktop/styles/10-windows.css:3588", upstream: "AI System 6 Theme Lab default-ok specimen (authored, not a capture)" },
-      { era: "system6", claim: "Default button: a 1px gap then a 3px ring", status: "inferred", source: "apps/desktop/styles/00-foundation.css:79", upstream: "Inside Macintosh, Dialog Manager: PenSize(3,3), InsetRect(-4,-4), FrameRoundRect(16,16)" },
+      { era: "system6", claim: "Push button: 20px tall, 1px ink round rectangle with corners of about 4px, paper face, Chicago 12 (AI System 6 uses 7px corners)", status: "measured", source: "clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame alert, OK button 60×20", upstream: "System 6.0.8 stop alert" },
+      { era: "system6", claim: "Pressed: the button inverts to ink with paper text", status: "inferred", source: "not captured", upstream: "System 6 button tracking" },
+      { era: "system6", claim: "Default button: a 1px gap then a 3px ring (68×28 around a 60×20 button)", status: "measured", source: "clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame alert", upstream: "agrees with Inside Macintosh, Dialog Manager: PenSize(3,3), InsetRect(-4,-4), FrameRoundRect(16,16)" },
       { era: "both", claim: "Hover never changes a push button; pressed only on pointer-down, Space or Enter", status: "inferred", source: "docs/design/CLASSIC_PLATINUM_FIDELITY.md:210", upstream: "a 1987–1999 Mac had no hover state" },
       { era: "system6", claim: "Keyboard focus: a 1px dotted frame 2px out", status: "adapted", source: "apps/desktop/styles/00-foundation.css:519", upstream: "System 6 had no button focus; a dotted frame cannot be read as the default ring" },
       { era: "platinum", claim: "#ddd face, 1px black border, 3px corners, bevel white/#ddd over #777/#aaa", status: "measured", source: "apps/desktop/styles/65-appearance-themes.css:236", upstream: "GUIdebook Mac OS 9.0 About dialog (Theme Lab specimen default-ok)" },
@@ -154,7 +158,8 @@ export const components = [
   <label><input type="checkbox" checked disabled> Locked</label>
 </div>`,
     evidence: [
-      { era: "system6", claim: "A 12px box; checked draws an X from corner to corner", status: "inferred", source: "apps/desktop/styles/00-foundation.css:965", upstream: "System 6 check box; AI System 6 uses 13px, clio.css 12px to match the radio" },
+      { era: "system6", claim: "A 12px box with a 1px frame; held, the frame thickens to 2px", status: "measured", source: "clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame get-info (Locked)", upstream: "AI System 6 uses 13px" },
+      { era: "system6", claim: "Checked draws an X from corner to corner", status: "inferred", source: "not captured (the Locked box was unchecked)", upstream: "System 6 check box" },
       { era: "system6", claim: "X art", status: "third-party", source: "apps/desktop/assets/themes/classic/controls/checkmark.svg", upstream: "system.css icon/checkmark.svg (MIT, Sakun Acharige)" },
       { era: "platinum", claim: "12px #ddd well, 1px black frame, white top-left and #888 bottom-right bevel", status: "measured", source: "apps/desktop/styles/65-appearance-themes.css:897 (P18)", upstream: "GUIdebook Mac OS 9.0 Appearance Options tab (checkbox specimens)" },
       { era: "platinum", claim: "Check mark art", status: "third-party", source: "classic-stylesheets macos9/checkmark.svg (MIT)", upstream: "nielssp/classic-stylesheets @9ebd2d8" }
@@ -176,7 +181,7 @@ export const components = [
   </div>
 </fieldset>`,
     evidence: [
-      { era: "system6", claim: "12px ring and 6px dot art", status: "third-party", source: "apps/desktop/assets/themes/classic/controls/radio-*.svg", upstream: "system.css icon/radio-border.svg, radio-dot.svg (MIT, Sakun Acharige)" },
+      { era: "system6", claim: "12px ring and 6px dot: the real pixels match system.css's art exactly", status: "measured", source: "clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame control-panel (Rate of Insertion Point Blinking)", upstream: "art from system.css icon/radio-border.svg, radio-dot.svg (MIT, Sakun Acharige)" },
       { era: "platinum", claim: "Radio drawn with CSS gradients: black ring, white to #888 well, 6px black dot", status: "adapted", source: "apps/desktop/styles/65-appearance-themes.css:291", upstream: "AI System 6 later replaced this with art cut from a capture (P19); clio.css ships no cut art" }
     ]
   },
@@ -194,7 +199,7 @@ export const components = [
   <textarea id="clio-notes" rows="3" style="width: 100%">Text areas scroll with the era's scroll bar.</textarea>
 </div>`,
     evidence: [
-      { era: "system6", claim: "1px ink frame, white, Geneva 12", status: "inferred", source: "apps/desktop/styles/00-foundation.css:189", upstream: "System 6 dialog edit text" },
+      { era: "system6", claim: "1px ink frame, white, text inset 3px", status: "measured", source: "clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame control-panel (RAM Cache field), get-info (comments)", upstream: "System 6.0.8" },
       { era: "platinum", claim: "White field, 1px black frame, #888 shadow above-left and white etch below-right", status: "measured", source: "apps/desktop/styles/65-appearance-themes.css:935 (P30)", upstream: "Infinite Mac Mac OS 9.0 capture" },
       { era: "platinum", claim: "Focus: a 2px #6666cc ring", status: "measured", source: "apps/desktop/styles/65-platinum-utility.css:38", upstream: "Mac OS 9 capture platinum-native/10b-fonts-tab" }
     ]
@@ -257,9 +262,12 @@ export const components = [
   <p style="margin: 8px">Scroll me.</p>
 </div>`,
     evidence: [
-      { era: "system6", claim: "A 16px lane", status: "inferred", source: "apps/desktop/styles/00-foundation.css:1173", upstream: "System 6 document window frame" },
-      { era: "system6", claim: "50% grey lane pattern", status: "inferred", source: "apps/desktop/styles/00-foundation.css:1177", upstream: "drawn as a 1px checker here; AI System 6 uses a 2px cell" },
-      { era: "system6", claim: "Hollow arrow art", status: "inferred", source: "drawn for clio.css", upstream: "System 6 scroll arrows; to be measured" },
+      { era: "system6", claim: "Lane: a 1px line and 14px inside; the window frame closes it, so the bar is 15px in CSS", status: "measured", source: "clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame system-folder", upstream: "AI System 6 uses a 16px lane" },
+      { era: "system6", claim: "Active lane pattern is QuickDraw's ltGray (one dot in four, rows offset by two), not 50% grey; an empty lane is white", status: "measured", source: "clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frames system-folder and hd-window", upstream: "AI System 6 draws a 50% checker" },
+      { era: "system6", claim: "Scroll box: a white square with a 1px frame filling the lane, 16 rows tall", status: "measured", source: "clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame system-folder", upstream: "System 6.0.8 Finder list view" },
+      { era: "system6", claim: "Up and down arrows: hollow, 13 wide and 11 tall in the 14px box, a 45° head and a 7px stem", status: "measured", source: "clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frames hd-window and system-folder", upstream: "redrawn as pixels in tooling/s6-art.py" },
+      { era: "system6", claim: "Left and right arrows are the up and down arrows turned", status: "inferred", source: "tooling/s6-art.py", upstream: "the horizontal arrows were captured only partly" },
+      { era: "system6", claim: "Grow box: a 7×7 square over a 9×9 square in the 14px corner", status: "measured", source: "clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame system-folder", upstream: "redrawn as pixels in tooling/s6-art.py" },
       { era: "both", claim: "The scroll box grows with the visible fraction instead of a fixed 16px square", status: "adapted", source: "clio.css", upstream: "browsers size ::-webkit-scrollbar-thumb themselves" },
       { era: "platinum", claim: "Lane #aaa with a double bevel; lavender #9999ff scroll box with #ccf/#66c bevel and grip ridges; #ddd arrow boxes with stepped 2/4/6/8 arrows", status: "measured", source: "apps/desktop/styles/65-appearance-themes.css:336 (P16), :351 (P17), :364 (P27)", upstream: "Mac OS 9 native capture 16; GUIdebook Open dialog" }
     ]
@@ -292,7 +300,7 @@ export const components = [
       }
     ],
     evidence: [
-      { era: "system6", claim: "Modal frame: 1px ink, 1px paper gap, 2px ink", status: "inferred", source: "apps/desktop/styles/84-clio-write.css:210", upstream: "AI System 6 has two recipes (this one and 00-foundation.css .system-modal); neither is measured" },
+      { era: "system6", claim: "Modal frame: 1px ink, 2px paper, 2px ink, and no drop shadow", status: "measured", source: "clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame alert", upstream: "AI System 6 has two recipes, both off (84-clio-write.css:210 has a 1px gap)" },
       { era: "system6", claim: "Plain box: 1px ink frame and a 2px drop shadow", status: "inferred", source: "not measured", upstream: "altDBoxProc" },
       { era: "both", claim: "The alert icon is drawn here, not Apple's", status: "adapted", source: "clio.css", upstream: "no Apple icons are shipped" },
       { era: "platinum", claim: "1px black frame over #ddd, inner bevel of three white steps inside #555/#999/#aaa, 1px black drop", status: "measured", source: "apps/desktop/styles/65-appearance-themes.css:840 (P06)", upstream: "GUIdebook Mac OS 9.0 About application (about-alert specimen)" }
@@ -374,8 +382,8 @@ export const components = [
   </button>
 </div>`,
     evidence: [
-      { era: "system6", claim: "A 50% grey desktop pattern", status: "inferred", source: "apps/desktop/styles/00-foundation.css:224", upstream: "System 6.0.8 default desktop; AI System 6 draws an 8px stipple" },
-      { era: "system6", claim: "White name tag; a selected icon inverts", status: "inferred", source: "apps/desktop/styles/00-foundation.css (desktop-label tokens)", upstream: "System 6 Finder" },
+      { era: "system6", claim: "The desktop is a 1px 50% checker", status: "measured", source: "clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), every frame", upstream: "AI System 6 draws an 8px stipple" },
+      { era: "system6", claim: "Icon names: Geneva 9 on a white tag; a selected icon and its tag invert", status: "measured", source: "clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), desktop (Macintosh HD selected, Welcome! not)", upstream: "System 6.0.8 Finder" },
       { era: "platinum", claim: "70% white tag with no edge; selected: black tag, white name, artwork darkened", status: "measured", source: "apps/desktop/styles/65-appearance-themes.css:882 (P12, P13)", upstream: "Mac OS 9 native capture 02" },
       { era: "platinum", claim: "Desktop colour #4a71ab", status: "inferred", source: "apps/desktop/styles/65-appearance-themes.css:85", upstream: "base colour of AI System 6's azul tile, generated from a 512 Pixels capture; the tile is not shipped" }
     ]
