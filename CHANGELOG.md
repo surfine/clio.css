@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.9.1 — 2026-11-14
+
+**Safari**: Clio Sans '97 draws its antialiasing as COLRv1 colour layers, which Safari
+paints solid, so Platinum and Drawing Board text turned into blocks on iPhone and Mac.
+Each Clio Sans '97 face now lists a Plain file (outlines only, 3 KB) after the colour one,
+chosen with `tech(color-COLRv1)`.
+
 ## 0.9.0 — 2026-11-14
 
 Classic Mac OS at 100%: all 90 pixel-check specimens of System 6, System 7, Drawing Board and
@@ -37,10 +44,6 @@ Sans '97 Title Exact** paint each level from a palette entry, and `@font-palette
 Platinum push buttons (normal, held, disabled) and Drawing Board push buttons. A page that
 recolours those sets `--clio-font-window-title` or `--clio-font-button` to a stack without
 "Exact".
-
-**Safari**: Clio Sans '97 draws its antialiasing as COLRv1 colour layers, which Safari
-paints solid, so every word turned into blocks. Each Clio Sans '97 face now lists a Plain
-file (outlines only) after the colour one, chosen with `tech(color-COLRv1)`.
 
 ## 0.8.0 — 2026-11-14
 
