@@ -11,6 +11,9 @@
    each found 1:1 in the capture. The stylesheet loads them from art/ beside
    itself, as it loads fonts/. See EVIDENCE.md. */
 [data-era="drawingboard"] {
+  /* Titles sit on the textured title bar, where no palette can know the
+     background: they keep Clio Sans '97 Title in the text colour. */
+  --clio-font-window-title: Charcoal, "Charcoal CY", "Clio Sans '97 Title", "Clio Sans '97", "Clio Asap", Geneva, "Helvetica Neue", Arial, sans-serif;
   /* Where a 128px theme pattern starts. Mac OS sometimes starts one half a
      tile (64px) earlier, depending on where the window sits on screen; a page
      matching a particular screen can set 64px on that window or control. */
@@ -881,4 +884,15 @@
 
 [data-era="drawingboard"] fieldset > legend {
   margin-left: 0;
+}
+
+/* ---- Antialiasing as Mac OS blends it: #333 labels on #cec6b5 (their solid
+   pixels #313131, from a 16-bit buffer); grey when disabled. */
+[data-era="drawingboard"] :is(button, .btn, .btn-default, input[type="button"], input[type="submit"], input[type="reset"]):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *),
+[data-era="drawingboard"] :is(button, .btn, .btn-default, input[type="button"], input[type="submit"], input[type="reset"]):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *):not(:disabled, .disabled):is(:active, .active) {
+  font-palette: --clio-aa-db-button;
+}
+
+[data-era="drawingboard"] :is(button, .btn, .btn-default, input[type="button"], input[type="submit"], input[type="reset"]):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *):is(:disabled, .disabled) {
+  font-palette: --clio-aa-db-button-disabled;
 }

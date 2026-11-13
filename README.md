@@ -127,7 +127,10 @@ titles, menus, buttons and body text match the real screen exactly.
 Platinum and Drawing Board chrome is drawn in **Clio Sans '97**, Charcoal 12 rebuilt the
 same way from Mac OS 9.0 (3 KB), and at any other size in **Clio Sans '97 Display**
 (`.display`), Charcoal's outlines traced from Mac OS 9.0 at 72 points; Asap stays as the
-fallback. `npm run capture:system6` re-takes the
+fallback. Window titles and push button labels use **Exact** variants whose antialiasing
+levels take the very colours the real screen shows for clio.css's own title and button
+colours (`@font-palette-values`); recolour them and set `--clio-font-window-title` or
+`--clio-font-button` to a stack without "Exact". `npm run capture:system6` re-takes the
 System 6.0.8 reference frames from Infinite Mac; the frames are never committed.
 
 What the era never had is adapted, not imitated: keyboard focus rings, touch-size
