@@ -1,5 +1,32 @@
 # Changelog
 
+## 0.8.0 — 2026-11-14
+
+Classic Mac OS debts paid before Mac OS X.
+
+**Clio Sans '97 Display**: Charcoal's outlines, traced with potrace from Mac OS 9.0 drawing
+every character at 72 points (`npm run capture:charcoal-large`, `tooling/trace-outline.py`),
+for every size the 12px bitmap does not cover. Use `.display` or `--clio-font-display`;
+at 72px its ink overlaps the real screen's by 90%. No open-licence Charcoal outline exists
+(a FontStruct pixel clone is CC BY-SA, Virtue states no redistribution terms), so clio.css
+traces its own.
+
+- **System 6 disabled text** is drawn through QuickDraw's 50% gray pattern, screen-aligned
+  (menu items, button and control labels): "Print" in the File menu is now 100% identical.
+  Menu items sit 13px in, not 15px (measured).
+- **Platinum**, re-measured against Mac OS 9.0: the pop-up menu's raised arrow box (96.7%),
+  the menu separator (a 6px row), the held radio button and check box, and the menu check
+  mark, submenu arrow and pop-up arrows redrawn from the real screen. No classic-stylesheets
+  art ships any more.
+- **Drawing Board**: held buttons (the hatch goes, 84%), the pencil overruns at button
+  corners (default ring 84%), list boxes (olive frame, 87.5%), the list scroll bar, the
+  progress bar and its indeterminate arrows, the movable modal frame.
+- **Control Strip**: System 7.5.3 measured (its own greys, same art); the end cap is drawn
+  whole with its rounded corner (95.1% in both eras); the menu triangle sits 4px in.
+- What stays adapted or inferred is listed in EVIDENCE.md: the Drawing Board paper and
+  sketch textures (Apple artwork, owner's call), a few states that were not on screen in any
+  capture, and web necessities (focus rings, proportional scroll boxes).
+
 ## 0.7.0 — 2026-11-14
 
 **Clio Sans '97**: Charcoal 12, the Mac OS 8 and 9 system font, rebuilt pixel for pixel from

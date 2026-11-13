@@ -48,8 +48,8 @@ ok(!strip(db).includes('[data-era="drawingboard"]') && !strip(db).includes('[dat
 //    redrawn by tooling/db-art.py and tooling/p9-art.py.
 for (const m of noComments.matchAll(/url\(\s*["']?([^"')]+)/g)) {
   const u = m[1];
-  const png = u.startsWith("data:image/png;base64,") && /--clio-art-(db|p9)-[\w-]+:\s*$/.test(noComments.slice(Math.max(0, m.index - 60), m.index));
-  ok(u.startsWith("data:image/svg+xml,") || png || /^fonts\/(ChicagoFLF\.woff2?|Asap-Variable\.woff2|ClioSans84\.woff2|ClioText84\.woff2|ClioText84-9\.woff2|ClioSans97\.woff2)$/.test(u), `unexpected url(): ${u.slice(0, 60)}`);
+  const png = u.startsWith("data:image/png;base64,") && /--clio-art-(db|p9|s7)-[\w-]+:\s*$/.test(noComments.slice(Math.max(0, m.index - 60), m.index));
+  ok(u.startsWith("data:image/svg+xml,") || png || /^fonts\/(ChicagoFLF\.woff2?|Asap-Variable\.woff2|ClioSans84\.woff2|ClioText84\.woff2|ClioText84-9\.woff2|ClioSans97\.woff2|ClioSans97Display\.woff2)$/.test(u), `unexpected url(): ${u.slice(0, 60)}`);
 }
 
 // 6. Component index: every component is documented, evidenced and styled.
@@ -111,7 +111,7 @@ ok(read("docs/llms-full.txt").includes("```css"), "llms-full.txt: stylesheet mis
 // 10. Package.
 const pkg = JSON.parse(read("package.json"));
 for (const [k, v] of Object.entries(pkg.exports)) if (!v.includes("*")) ok(existsSync(join(root, v)), `exports ${k} -> ${v} missing`);
-ok(statSync(join(root, "dist/clio.min.css")).size < 128000, "clio.min.css grew past 128 KB");
+ok(statSync(join(root, "dist/clio.min.css")).size < 140000, "clio.min.css grew past 140 KB");
 
 if (failures.length) {
   console.error(`FAIL ${failures.length} of ${checks} checks`);

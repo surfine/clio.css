@@ -150,6 +150,12 @@
 :where(.menu, [role="menu"]) > li:is(.disabled, [aria-disabled="true"]),
 :where(.menu, [role="menu"]) > li > :is(a, button):is(:disabled, [aria-disabled="true"]) {
   color: var(--clio-disabled);
+  background-image: var(--clio-disabled-dither);
+  background-size: 2px 2px;
+  background-attachment: fixed;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: var(--clio-disabled-fill);
 }
 
 /* Keyboard shortcut column, right-aligned. */

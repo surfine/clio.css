@@ -7,6 +7,19 @@
    button.control-strip-handle. Add .is-collapsed to fold it to the tab, and
    data-edge="right" for a strip on the right edge. Placement is yours
    (AI System 6 fixes it to the screen's lower left). */
+/* The strip's art is the same in System 7.5.3, Mac OS 8.5 and Mac OS 9.0
+   (compared pixel for pixel with the backdrop removed); only the cell colours
+   differ, so it lives here for every era. Redrawn by tooling/p9-art.py. */
+:root {
+  --clio-art-p9-strip-cap: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAYBAMAAADXK7paAAAAHlBMVEUAAAAAAABERERVVVWAgICIiIigoKDAwMDMzP/////+VYXkAAAAAXRSTlMAQObYZgAAAGlJREFUeJxjFGQAg/8sbAlgxkwWBiUQfZuBheHfAwYGhg8MTBAlDPgYLAx/9jAwsOgysDAwhDIw/L8LYvy98NcVry4mBoa/Zy+AtTOwlzP8AzFY3r0jYBfC0l/3P4AZjILMBiD6DCPMOwBKOxgiile5lQAAAABJRU5ErkJggg==");
+  --clio-art-s7-strip-cap: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAYBAMAAADXK7paAAAAG1BMVEUAAAAAAABERERVVVWIiIiqqqrMzMzMzP/////JRvoVAAAAAXRSTlMAQObYZgAAAGVJREFUeJxjFGQAg/8srAFgxioWBiUQfYeBheHfAwYGhg8MTBAlDPgYLAx/zzIwMMsxsDAwuDAw/L8HYvy98M+FgC6Gf/egDLY0hn8gBvO7dwTsQmj/ff8DmMEoyGwAos8wwrwDAP+1F0dci98qAAAAAElFTkSuQmCC");
+  --clio-art-p9-strip-back: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKAgMAAADwXCcuAAAACVBMVEUAAABVVVXd3d2apXz3AAAAAXRSTlMAQObYZgAAACxJREFUeJwFwaERwCAABLD0j3oE7IPBs/8KrcBjSKhiKM/cebs0gvzkfFioLlg9BPcTGNP4AAAAAElFTkSuQmCC");
+  --clio-art-p9-strip-forward: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKAgMAAADwXCcuAAAACVBMVEUAAABVVVXd3d2apXz3AAAAAXRSTlMAQObYZgAAAC1JREFUeJwFwSESABAUQMHnzegC9/nFqRX3IegCuxBIwVYxdySFgLzpHbg2cvhWkAdTrBZiqwAAAABJRU5ErkJggg==");
+  --clio-art-p9-strip-menu: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAHAQMAAAAVq36TAAAABlBMVEUAAAAAAAClZ7nPAAAAAXRSTlMAQObYZgAAABZJREFUeJxjaGA4wPCA4QMTA9MHpgcAIQYE58W2/JQAAAAASUVORK5CYII=");
+  --clio-art-p9-strip-handle: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAAYBAMAAAAFe7ACAAAAFVBMVEUAAAAAAABERERVVVWIiIjMzMz///8V67gPAAAAAXRSTlMAQObYZgAAAINJREFUeJxVz7ENAjEMheE/IbQokRiAUVJQUjAs5RXZhJvgkp6LjGwfBU309PzFkkMBZAApVVgAIqWUZ9bORsE6fWvWJCukoIlbtjICG0sK5iLnVrM7Hqefsy3qPKnzZM6n/+41D/epbbi772IOaOPYsIv/sIrEG6YA4XqB3vWO2UErvmVcJ4BylohjAAAAAElFTkSuQmCC");
+  --clio-art-p9-strip-tab: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAAYBAMAAAAFe7ACAAAAFVBMVEUAAAAAAABERERVVVWIiIjMzMz///8V67gPAAAAAXRSTlMAQObYZgAAAIFJREFUeJxVz7ENAjEMQNHvKPS+DRiBEVJQMi49WeAkRrgJSHoijOyEgipf1pPlyAbQgMwVxqN7iYIACVprRaMUskS9gKJeSWKYADtGLRruzC3Lcqd6WW7uw45V7ma5m/Xv3uW53H3YdLnU7g4YFg9Q+6phfv2nw95BNlGsRf1++QW6eCj9rQPMHAAAAABJRU5ErkJggg==");
+}
+
 :where(.control-strip) {
   display: inline-flex;
   align-items: stretch;
@@ -28,12 +41,14 @@
   box-shadow: var(--clio-strip-cell-shadow);
 }
 
+/* The end cap is one picture: frame, bevel, icon and the rounded lower-left corner. */
 :where(.control-strip)::before {
   content: "";
   flex: none;
   width: calc(var(--clio-strip-cap-width) + 2px);
-  border-left: var(--clio-strip-line);
-  background: var(--clio-strip-cap) 2px 7px / 8px 8px no-repeat, var(--clio-strip-bg);
+  border: 0;
+  background: var(--clio-strip-cap) 0 0 / 100% 100% no-repeat;
+  box-shadow: none;
 }
 
 :where(.control-strip) > :is(.control-strip-scroll, .control-strip-handle) {

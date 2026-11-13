@@ -15,6 +15,12 @@
   /* [A] Disabled text: System 6 drew it through a 50% grey pattern; a solid
      grey keeps 5.6:1 on white instead of a dither the browser would blur. */
   --clio-disabled: #696969;
+  /* Dimmed text is drawn through QuickDraw's 50% gray pattern, aligned to the
+     screen: the ink where x + y is odd survives (measured, File menu). The
+     pattern is fixed to the viewport the same way; #696969 is only the
+     fallback colour where background-clip: text is missing. */
+  --clio-disabled-dither: var(--clio-art-s6-gray50);
+  --clio-disabled-fill: transparent;
   --clio-selection-bg: #000000;
   --clio-selection-fg: #ffffff;
 
@@ -25,6 +31,9 @@
   --clio-font-small: "Clio Text '84 9", Geneva, "Helvetica Neue", Arial, sans-serif;
   --clio-text-smoothing: none;
   --clio-font-mono: Monaco, Menlo, Consolas, "Courier New", monospace;
+  /* Chrome type at sizes other than 12px and its multiples (.display): an
+     outline face, smoothed. */
+  --clio-font-display: Chicago, "ChicagoFLF", Charcoal, "Helvetica Neue", Arial, sans-serif;
   --clio-font-size: 12px;
   /* A bitmap face: no antialiasing, so a glyph on a half pixel stays 1-bit. */
   --clio-font-smoothing: none;
@@ -101,7 +110,7 @@
   --clio-menu-border-top-width: 0;
   --clio-menu-shadow: 1px 1px 0 var(--clio-ink);
   --clio-menu-item-height: 16px;
-  --clio-menu-item-padding: 0 12px 0 15px;
+  --clio-menu-item-padding: 0 12px 0 13px;
   --clio-menu-item-weight: 400;
   --clio-menu-item-active-bg: var(--clio-ink);
   --clio-menu-item-active-fg: var(--clio-paper);
@@ -242,7 +251,7 @@
   --clio-strip-module-width: 30px;
   --clio-strip-icon-inset: 2px;
   --clio-strip-menu-top: 7px;
-  --clio-strip-menu-inset: 3px;
+  --clio-strip-menu-inset: 4px;
   --clio-strip-handle-width: 18px;
   --clio-strip-tab-width: 18px;
   --clio-strip-cap: var(--clio-art-s6-strip-cap);
@@ -279,8 +288,9 @@
   --clio-art-s6-grow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' shape-rendering='crispEdges'%3E%3Cpath fill='%23000' d='M2 2h7v1h-7zM2 3h1v1h-1zM8 3h1v1h-1zM2 4h1v1h-1zM8 4h5v1h-5zM2 5h1v1h-1zM8 5h1v1h-1zM12 5h1v1h-1zM2 6h1v1h-1zM8 6h1v1h-1zM12 6h1v1h-1zM2 7h1v1h-1zM8 7h1v1h-1zM12 7h1v1h-1zM2 8h7v1h-7zM12 8h1v1h-1zM4 9h1v1h-1zM12 9h1v1h-1zM4 10h1v1h-1zM12 10h1v1h-1zM4 11h1v1h-1zM12 11h1v1h-1zM4 12h9v1h-9z'/%3E%3C/svg%3E");
   --clio-art-s6-dkgray: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='2' shape-rendering='crispEdges'%3E%3Cpath fill='%23000' d='M0 0h1v1h-1zM2 0h2v1h-2zM0 1h3v1h-3z'/%3E%3Cpath fill='%23fff' d='M1 0h1v1h-1zM3 1h1v1h-1z'/%3E%3C/svg%3E");
   --clio-art-s6-menucheck: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='8' shape-rendering='crispEdges'%3E%3Cpath fill='%23000' d='M8 0h1v1h-1zM7 1h2v1h-2zM6 2h2v1h-2zM5 3h2v1h-2zM0 4h1v1h-1zM4 4h2v1h-2zM0 5h2v1h-2zM3 5h2v1h-2zM1 6h3v1h-3zM2 7h1v1h-1z'/%3E%3C/svg%3E");
+  --clio-art-s6-gray50: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='2' height='2' shape-rendering='crispEdges'%3E%3Cpath d='M1 0h1v1H1zM0 1h1v1H0z'/%3E%3C/svg%3E");
   --clio-art-s6-menucheck-on: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='8' shape-rendering='crispEdges'%3E%3Cpath fill='%23fff' d='M8 0h1v1h-1zM7 1h2v1h-2zM6 2h2v1h-2zM5 3h2v1h-2zM0 4h1v1h-1zM4 4h2v1h-2zM0 5h2v1h-2zM3 5h2v1h-2zM1 6h3v1h-3zM2 7h1v1h-1z'/%3E%3C/svg%3E");
-  --clio-art-s6-strip-cap: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' shape-rendering='crispEdges'%3E%3Cpath d='M0 0h8v8H0zM1 1v6h6V1z'/%3E%3C/svg%3E");
+  --clio-art-s6-strip-cap: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='15' height='24' shape-rendering='crispEdges'%3E%3Cpath fill='%23fff' d='M1 1h13v22H1z'/%3E%3Cpath d='M0 0h15v1H0zM0 23h15v1H0zM0 1h1v22H0zM14 1h1v22h-1zM3 8h8v1H3zM3 15h8v1H3zM3 9h1v6H3zM10 9h1v6h-1z'/%3E%3C/svg%3E");
   --clio-art-s6-strip-back: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' shape-rendering='crispEdges'%3E%3Cpath d='M4 1h1v8H4zM3 2h1v6H3zM2 3h1v4H2zM1 4h1v2H1z'/%3E%3C/svg%3E");
   --clio-art-s6-strip-forward: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' shape-rendering='crispEdges'%3E%3Cpath d='M5 1h1v8H5zM6 2h1v6H6zM7 3h1v4H7zM8 4h1v2H8z'/%3E%3C/svg%3E");
   --clio-art-s6-strip-menu: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='7' shape-rendering='crispEdges'%3E%3Cpath d='M0 0h1v7H0zM1 1h1v5H1zM2 2h1v3H2zM3 3h1v1H3z'/%3E%3C/svg%3E");

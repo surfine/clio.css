@@ -27,7 +27,7 @@ control. If that does not suit your use, override the `--clio-art-s7-*`,
 
 ## Fonts
 
-### Clio Sans '84, Clio Text '84 and Clio Sans '97 (`dist/fonts/ClioSans84.woff2`, `ClioText84.woff2`, `ClioText84-9.woff2`, `ClioSans97.woff2`)
+### Clio Sans '84, Clio Text '84 and Clio Sans '97 (`dist/fonts/ClioSans84.woff2`, `ClioText84.woff2`, `ClioText84-9.woff2`, `ClioSans97.woff2`, `ClioSans97Display.woff2`)
 
 Pixel reconstructions of Chicago 12 (Clio Sans '84), Geneva 12 (Clio Text '84) and
 Geneva 9 (Clio Text '84 9), Macintosh system fonts designed by Susan Kare for Apple
@@ -35,7 +35,9 @@ Computer in 1984, and of Charcoal 12 (Clio Sans '97), the Mac OS 8 system font
 designed by David Berlow of the Font Bureau for Apple in 1997. clio.css read every
 glyph from System 6.0.8 or Mac OS 9.0 running in an emulator (`npm run capture:keycaps`),
 wrote the bitmaps to `fonts-src/*.txt` and built the fonts from them
-(`npm run build:font`). No Apple font file was copied.
+(`npm run build:font`). Clio Sans '97 Display is Charcoal's outlines traced from
+Mac OS 9.0 drawing every character at 72 points (`npm run capture:charcoal-large`,
+`tooling/trace-outline.py`). No Apple font file was copied.
 
 They are not original designs and are not presented as such: the letterforms are
 Apple's. They ship under clio.css's MIT licence on the basis that, in the United States, typeface
@@ -86,12 +88,13 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ## Art from classic-stylesheets (MIT)
 
-The Platinum pop-up arrow (and its disabled colour), check mark, submenu
-arrow and the three tab drawings are re-encoded from `macos9/dropdown.svg`,
-`checkmark.svg`, `menu-right.svg`, `tab.svg`, `tab-active.svg` and
-`tab-selected.svg` of https://github.com/nielssp/classic-stylesheets at commit
-9ebd2d84. AI System 6 also adapted Platinum control relationships from the
-same project.
+Up to 0.7.0 the Platinum pop-up arrow, check mark and submenu arrow were
+re-encoded from `macos9/dropdown.svg`, `checkmark.svg` and `menu-right.svg` of
+https://github.com/nielssp/classic-stylesheets at commit 9ebd2d84, and the tab
+drawings followed its `tab*.svg`. Since 0.8.0 the arrows and check mark are
+redrawn from Mac OS 9.0 (`tooling/p9-art.py`) and the tabs from measured geometry
+(`tooling/tab-art.py`). AI System 6 adapted Platinum control relationships from the
+same project, so the notice stays.
 
 MIT License
 

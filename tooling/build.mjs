@@ -21,7 +21,7 @@ const write = (p, s) => { mkdirSync(dirname(join(root, p)), { recursive: true })
 const banner = (variant) => `/*! clio.css ${pkg.version}${variant} | MIT | ${pkg.homepage}
  * Classic Mac OS interface CSS: System 6, System 7, Mac OS 8.5 Drawing Board and Mac OS 9 Platinum.
  * Measured values traced to AI System 6; see EVIDENCE.md.
- * Includes art from system.css (MIT) and classic-stylesheets (MIT); see THIRD-PARTY.md. */\n`;
+ * Includes art from system.css (MIT) and pixel reconstructions of Apple control art; see THIRD-PARTY.md. */\n`;
 
 const srcFiles = readdirSync(join(root, "src")).filter((f) => f.endsWith(".css")).sort();
 const part = (f) => read(`src/${f}`).trim() + "\n";

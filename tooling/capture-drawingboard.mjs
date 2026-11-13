@@ -59,7 +59,7 @@ const at = (x, y) => [box.x + x + 0.5, box.y + y + 0.5];
 const wait = (ms) => page.waitForTimeout(ms);
 const move = async (x, y) => { await page.mouse.move(...at(x, y), { steps: 4 }); await wait(150); };
 const click = async (x, y) => { await move(x, y); await page.mouse.down(); await wait(120); await page.mouse.up(); await wait(400); };
-const cmd = async (k) => { await page.keyboard.down("Meta"); await wait(150); await page.keyboard.press(k); await wait(150); await page.keyboard.up("Meta"); await wait(3000); };
+const cmd = async (k, ms = 3000) => { await page.keyboard.down("Meta"); await wait(150); await page.keyboard.press(k); await wait(150); await page.keyboard.up("Meta"); await wait(ms); };
 const dump = async (name) => {
   const b64 = await page.evaluate(() => document.querySelector("canvas").toDataURL("image/png").split(",")[1]);
   writeFileSync(join(out, `${name}.png`), Buffer.from(b64, "base64"));
@@ -108,10 +108,15 @@ await move(367, 152); await page.mouse.down(); await wait(1500); await move(367,
 await wait(15000); await away(); await dump("appearance");
 await move(367, 152); await page.mouse.down(); await wait(1500); await dump("popup-open"); await away(); await page.mouse.up(); await wait(1000);
 await click(200, 110); await wait(4000); await away(); await dump("themes-tab");
+await move(570, 380); await page.mouse.down(); await wait(1000); await dump("button-held"); await away(); await page.mouse.up(); await wait(1500);
+await page.keyboard.press("Escape"); await wait(1500);        // dismiss Save Theme if it opened
+await click(432, 110); await wait(4000); await away(); await dump("desktop-tab");   // pattern list box
 await cmd("w", 3000);
 // 6. Finder windows, menus and a control panel in Drawing Board.
 await click(737, 55); await wait(1200); await dump("finder");
 await move(52, 9); await page.mouse.down(); await wait(1300); await dump("file-menu"); await away(); await page.mouse.up(); await wait(800);
+await move(90, 9); await page.mouse.down(); await wait(1300); await dump("edit-menu"); await away(); await page.mouse.up(); await wait(800);
+
 // Control panels with check boxes, radio buttons, group boxes and push buttons.
 // The submenu's text rows are 18px from Appearance at y=37. Energy Saver's
 // start-up notice (a plain dialog with a default button) shows over the first.
@@ -121,5 +126,15 @@ await appleSub(145, null, 194);                                  // Date & Time
 await away(); await dump("date-time"); await cmd("w", 3000);
 await appleSub(271, null, 194);                                  // General Controls
 await away(); await dump("general-controls");
+// Last, because they change the Finder windows the frames above were measured in.
+await page.keyboard.press("Enter"); await wait(1500);
+await click(737, 55); await wait(1200);
+// Edit > Preferences… (row y=167): a tabbed window with check boxes, radio buttons and a slider.
+await move(90, 9); await page.mouse.down(); await wait(1300); await move(120, 60); await move(120, 167); await wait(600); await page.mouse.up(); await wait(4000);
+await away(); await dump("finder-prefs"); await page.keyboard.press("Escape"); await wait(1500); await cmd("w", 2000);
+// Duplicate the Games folder for the copy progress window, read every half second.
+await click(356, 120); await wait(600); await cmd("d", 200);
+for (let i = 0; i < 6; i++) { await wait(500); await dump(`copy-progress-${i}`); }
+await wait(10000);
 await browser.close();
 rmSync(work, { recursive: true, force: true });

@@ -71,9 +71,11 @@
   --clio-button-border: 1px solid #333333;
   --clio-button-radius: 0;
   --clio-button-shadow: 2px 0 0 #555555, 0 1px 0 #777777, 2px 1px 0 #777777;
-  --clio-button-active-bg: #9f9a94;
-  --clio-button-active-fg: #000000;
-  --clio-button-active-shadow: 2px 0 0 #555555, 0 1px 0 #777777, 2px 1px 0 #777777;
+  /* Held ("Save Theme…"): the hatch goes, the right pencil line steps 1px
+     out (#555), the foot lightens to #756f66 and the shade is 1px of #999. */
+  --clio-button-active-bg: #cec6b5;
+  --clio-button-active-fg: #313131;
+  --clio-button-active-shadow: 1px 0 0 #555555, 2px 0 0 #999999, 0 1px 0 #999999, 2px 1px 0 #999999;
   --clio-popup-bg: #cec6b5;
   --clio-popup-border: 1px solid #555555;
   --clio-popup-radius: 0;
@@ -109,7 +111,8 @@
   --clio-scrollbar-right-on: var(--clio-art-db-right-on);
   --clio-scrollbar-button-bg: transparent;
   --clio-scrollbar-button-shadow: none;
-  --clio-scrollbar-track: linear-gradient(to right, #aaaaaa 0 1px, #ece6e4 1px 7px, #888888 7px 8px, #555555 8px 9px, #ece6e4 9px 15px, #777777 15px);
+  /* Vertical (Desktop tab pattern list): #555 edges, a two-pixel #777 rail. */
+  --clio-scrollbar-track: linear-gradient(to right, #555555 0 1px, #ece6e4 1px 7px, #777777 7px 9px, #ece6e4 9px 15px, #555555 15px);
   --clio-scrollbar-track-color: #ece6e4;
   --clio-scrollbar-track-shadow: none;
   --clio-scrollbar-thumb-bg:
@@ -139,10 +142,19 @@
   --clio-details-bg: #e7ded6;
   --clio-details-border: 1px solid #555555;
   --clio-details-shadow: none;
-  --clio-list-border: 1px solid #555555;
-  --clio-list-shadow: none;
+  /* List boxes (Desktop tab pattern list): a 2px olive #9c9c63 line with 1px
+     of the panel colour inside it; the chosen row #ccf. */
+  --clio-list-border: 2px solid #9c9c63;
+  --clio-list-shadow: inset 0 0 0 1px #e7ded6;
   --clio-group-border: 1px solid #777777;
   --clio-group-shadow: none;
+  /* Progress bar (Finder copy window): 12px, a #756f66 pencil line (#333 on
+     the left) round #ddd6c5; an indeterminate bar shows the theme's arrows.
+     The determinate fill was not captured and stays Platinum's. */
+  --clio-progress-height: 12px;
+  --clio-progress-bg: #ddd6c5;
+  --clio-progress-border: 1px solid #756f66;
+  --clio-progress-shadow: none;
   --clio-tab-height: 27px;
   --clio-tab-panel-bg: #e7ded6;
   --clio-tab-panel-border: 1px solid #555555;
@@ -184,6 +196,15 @@
   --clio-art-db-grow: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAAMFBMVEWtraS2raV3d3fOxrXOvbXWxr1VVVUzMzNmZmZ1b2a8va4RERHAvL7Nxr2IiIifmpQPGnj1AAAAm0lEQVR4nAGQAG//AWvh+43nAAD7AITTPEQkQiTWAIxN1NJM0i3WAITdTQDUhNQmBP4Ag/f+WfWwBAL4NNkwyFspAY2zDQOF/QMBBADtDb0N0KggAvUg9dDlsIrwAv4A6/ejAJ/wAgyFIAr4ZO8ABPi79xFebfAgAIhEzu3ULV/mBAWZEeYCsCFIAvdx9wmX9C+QAYcAAQABEAD/yrZANB/FBGEAAAAASUVORK5CYII=");
   --clio-art-db-popup-corner: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYBAMAAAASWSDLAAAAMFBMVEWtraS2raV3d3eZmZnOxrXOvbVmZmYzMzN1b2ZVVVW8va61tanNxr2IiIhERESfmpRirDAXAAAAsUlEQVR4nGN0YUAAJgYcnH/InEmMCD1svxAy3F1IehoLEJz/UxmY4Zxd9zm6WKDsP+wO237AZKoc2C4xIBmN6oIjSBxOGZgBDAwMxt8RMv+OsCA4kxg8QBwBBoYCBsmCf1uYGBjSPjCwTeCe/n+SKKML2y8G7taCh/K7XWczMUSBHPxvPicrYyoT+wIGzi0Mjxra3eo5GVkcGG6qM/3LnO5w8jiTAcNfdQZ5bnemY7JWAMZRLUehBHV0AAAAAElFTkSuQmCC");
   --clio-art-db-button-corner: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYBAMAAAASWSDLAAAALVBMVEWtraS2raUAAAB3d3fOxrXOvbVmZmZVVVUzMzO8va4iIiKIiIhERESfmpTGvq90loRyAAAA1ElEQVR4nGN0YUAAJgYcHHYkzt9MRoSeT3wIGeY6BoSMyh0OuMx/VYZjcJnPvH+sYTLsfxn+nIRy/hYIhFvADPjDAkIQGc6JDJxTGL5AZC4Y/L1gzFQH5vxhYeBy2+C+E6TszxEBhtkbOHaygGQ4vzP8YeFSu5AOkmlnYChh6LxwYiajC8PMdIbrmv8/8humMbpw/vn9X/GB5fH3gvpMDO3eDBYPmNuZGzm1WNgL/zNxMtT+1Zu+8yTD1icu2108XLa7dD7fy8SSwB7LkHq+lu3QMlcArtNDTQfJPrAAAAAASUVORK5CYII=");
+  --clio-art-db-btn-tl: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAADBAMAAACt7Qj2AAAAGFBMVEUAAAC2raV3d3d1b2ZmZmZERETGvq+fmpTOeh1RAAAAAXRSTlMAQObYZgAAABVJREFUeJxjYBBgYGACEYzpbz78BQAItQNkaXXtagAAAABJRU5ErkJggg==");
+  --clio-art-db-btn-tr: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAADBAMAAABG2rP1AAAAD1BMVEUAAAC2raV3d3dVVVWfmpRgPRkMAAAAAXRSTlMAQObYZgAAABFJREFUeJxjUGBgEmBgNOIHAAHbAHVWrRcVAAAAAElFTkSuQmCC");
+  --clio-art-db-btn-br: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAGBAMAAAD51Ul4AAAAHlBMVEUAAAAAAAC2raV3d3dVVVVmZmZ1b2aIiIhERESfmpSsKKP1AAAAAXRSTlMAQObYZgAAACBJREFUeJxjFHGQYWhjYGC6xcDAYMDAwJTAwMCgwMAAACXAAob+NiTkAAAAAElFTkSuQmCC");
+  --clio-art-db-btn-bl: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAEBAMAAACw6DhOAAAAHlBMVEUAAACtraS2raUAAAB3d3cRAABVVVV1b2YRERGIiIgB19i+AAAAAXRSTlMAQObYZgAAABpJREFUeJxj1LS57MF0XchGgIFBgIGBCUQAACryAtv4KjPvAAAAAElFTkSuQmCC");
+  --clio-art-db-progress-arrows: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAAAFBAMAAAB/bfmTAAAAHlBMVEUAAABmZmYzMwAzMzN1b2ZVVVVmZjNmMzOIiIhERES5MUf9AAAAAXRSTlMAQObYZgAAADlJREFUeJxjYGBgYGBsAJG4aYKAyTIFL40PMLLEfv1vt4CB6TwO+jQxLmA2h9iEiyYI2KB+xUXjAwBb+xkS1czrnQAAAABJRU5ErkJggg==");
+  --clio-art-db-def-tl: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAFBAMAAABlfdtYAAAAIVBMVEUAAAC2raWZmZkzMzNVVVV1b2ZmZmaIiIhERESfmpTGvq8oZkmnAAAAAXRSTlMAQObYZgAAACRJREFUeJxjYFjAAAICDAwMjJL5awT+MD0/L3o3gIXhvb3MBQBU8ggKikU/0QAAAABJRU5ErkJggg==");
+  --clio-art-db-def-tr: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAEBAMAAABb34NNAAAAGFBMVEUAAAC2raV1b2ZVVVVERESIiIjGvq+fmpQgItkpAAAAAXRSTlMAQObYZgAAABRJREFUeJxjYChgdHnExKjF8v4PABBiA7SAnSY4AAAAAElFTkSuQmCC");
+  --clio-art-db-def-br: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAGBAMAAAD51Ul4AAAAG1BMVEUAAAAAAAC2raV3d3dVVVUzMzMRERGIiIifmpTHv11LAAAAAXRSTlMAQObYZgAAACBJREFUeJxjFPXnYYgQYGDi42BgOiXBwNDAwMCgwMAAACB5AnZBz2qhAAAAAElFTkSuQmCC");
+  --clio-art-db-def-bl: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAFBAMAAABlfdtYAAAAKlBMVEUAAAAAAAC2raWZmZnOxrURAABVVVUzMzN1b2YREREiIiKIiIhERESfmpRN4iyqAAAAAXRSTlMAQObYZgAAACZJREFUeJxjZCh7v6WciSGcY5cCo28k84fvDAwNCgwMDAwXGBgYAItxB85eOkhQAAAAAElFTkSuQmCC");
   --clio-art-db-thumb-left: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAOBAMAAAARcxsoAAAAJ1BMVEXe3tVSUlLe3t4QEBDVxb0xMTGLi4ve1cXNzc1zamJzc3Pu5tXm3s0eHK1HAAAAKklEQVR4nGPczcDwlYmBgYGBKOI7iIjcycDy98CHr0xnPjAwMJo+/e8OAOBRC5TLG+mBAAAAAElFTkSuQmCC");
   --clio-art-db-thumb-right: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAOBAMAAADgeEClAAAAKlBMVEW0rKRSUlIQEBDVxb3u5uZBQUGLi4tiYmKcnJTe1cVzamJzc3Pu5tXm3s16aRdHAAAAS0lEQVR4nGM8w8DAxsTAwJDKeIaB4RcTww8GViaGDoY/UC4DwxcWBgbunywMDFt/MzF84fnA8vfMbz4mJpuvvSxvz7uysXz4nMgMAHm8FeAKzGKWAAAAAElFTkSuQmCC");
   --clio-art-db-thumb-hgrip: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAAOBAMAAAD3WtBsAAAAElBMVEWcYjFSUlJiYmKcnJTNzc3u5tU+4ML7AAAAFklEQVR4nGMIZWJgYGViQIMOTB8YhAAO4AGzmDYCUQAAAABJRU5ErkJggg==");
@@ -471,4 +492,43 @@
     var(--clio-art-db-popup-corner) right 19px bottom / 24px 24px no-repeat,
     #cec6b5;
   color: #8c8c8c;
+}
+
+[data-era="drawingboard"] :is(button, .btn, .btn-default, input[type="button"], input[type="submit"], input[type="reset"]):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *):not(:disabled, .disabled):is(:active, .active) {
+  border-color: #777777 #cec6b5 #756f66 #777777;
+}
+
+/* The pencil overruns at a push button's corners, outside its box: Button*
+   pieces round a plain button, *Default pieces round the default one. */
+[data-era="drawingboard"] :is(button, .btn, .btn-default, input[type="button"], input[type="submit"], input[type="reset"]):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *) {
+  position: relative;
+}
+
+[data-era="drawingboard"] :is(button, .btn, .btn-default):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *)::after {
+  content: "";
+  position: absolute;
+  inset: -6px;   /* from the padding box: 5px outside the frame */
+  background:
+    var(--clio-art-db-btn-tl) left 3px top 3px / 7px 3px no-repeat,
+    var(--clio-art-db-btn-tr) right 1px top 3px / 4px 3px no-repeat,
+    var(--clio-art-db-btn-br) right 0 bottom 0 / 5px 6px no-repeat,
+    var(--clio-art-db-btn-bl) left 3px bottom 2px / 7px 4px no-repeat;
+  pointer-events: none;
+}
+
+[data-era="drawingboard"] :is(button, .btn, .btn-default):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *):is(.default, .btn-default)::after {
+  background:
+    var(--clio-art-db-def-tl) left 1px top 1px / 9px 5px no-repeat,
+    var(--clio-art-db-def-tr) right 1px top 2px / 4px 4px no-repeat,
+    var(--clio-art-db-def-br) right 0 bottom 0 / 5px 6px no-repeat,
+    var(--clio-art-db-def-bl) left 1px bottom 1px / 9px 5px no-repeat;
+}
+
+[data-era="drawingboard"] progress {
+  border-left-color: #333333;
+}
+
+[data-era="drawingboard"] progress:indeterminate,
+[data-era="drawingboard"] progress:indeterminate::-webkit-progress-bar {
+  background: var(--clio-art-db-progress-arrows) 0 center / 128px 5px repeat-x, #ddd6c5;
 }

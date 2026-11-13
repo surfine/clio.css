@@ -75,7 +75,7 @@
   border-radius: 6px;
   background: var(--clio-paper);
   color: var(--clio-ink);
-  font: 700 22px/28px var(--clio-font-chrome);
+  font: 700 22px/28px var(--clio-font-display);
   text-align: center;
 }
 
