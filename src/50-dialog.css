@@ -1,0 +1,85 @@
+/* Dialogs and alerts.
+   .modal-dialog / .alert-box: the double-framed modal box (dBoxProc).
+   .standard-dialog: the plain box with a drop shadow (altDBoxProc).
+   .modeless-dialog: a movable dialog, which is a .window.
+   Use them on <dialog> or on a <div role="dialog">. system.css's
+   .outer-border / .inner-border wrappers are accepted and draw nothing extra. */
+:where(.modal-dialog, .alert-box, dialog.modal) {
+  box-sizing: border-box;
+  max-width: 100%;
+  margin: 0;
+  padding: var(--clio-modal-padding);
+  border: var(--clio-modal-border);
+  background: var(--clio-dialog-bg);
+  box-shadow: var(--clio-modal-frame);
+  color: var(--clio-ink);
+}
+
+:where(.standard-dialog) {
+  box-sizing: border-box;
+  max-width: 100%;
+  margin: 0;
+  padding: 12px 14px;
+  border: var(--clio-plain-dialog-border);
+  background: var(--clio-dialog-bg);
+  box-shadow: var(--clio-plain-dialog-shadow);
+  color: var(--clio-ink);
+}
+
+:where(dialog):is(.modal-dialog, .alert-box, .standard-dialog, .modal)::backdrop {
+  background: transparent;
+}
+
+:where(.modal-dialog, .alert-box, .standard-dialog) :where(.outer-border, .inner-border) {
+  padding: 0;
+  border: 0;
+}
+
+/* Alert layout: icon on the left, message, buttons bottom-right. */
+:where(.alert-box) {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 16px;
+  row-gap: 12px;
+  align-items: start;
+}
+
+:where(.alert-box) > :where(.alert-icon) {
+  grid-row: 1;
+  width: 32px;
+  height: 32px;
+}
+
+:where(.alert-box) > :where(.alert-contents, .modal-contents, p) {
+  grid-column: 2;
+  margin: 0;
+}
+
+:where(.alert-box) > :where(.alert-buttons, .dialog-buttons) {
+  grid-column: 1 / -1;
+}
+
+:where(.dialog-buttons, .alert-buttons) {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+/* An alert icon drawn here, not Apple's: a rounded speech box with "!". */
+:where(.alert-icon.caution, .alert-icon.note, .alert-icon.stop) {
+  display: block;
+  box-sizing: border-box;
+  border: 2px solid var(--clio-ink);
+  border-radius: 6px;
+  background: var(--clio-paper);
+  color: var(--clio-ink);
+  font: 700 22px/28px var(--clio-font-chrome);
+  text-align: center;
+}
+
+:where(.alert-icon.caution)::before { content: "!"; }
+:where(.alert-icon.note)::before { content: "i"; }
+:where(.alert-icon.stop) { border-radius: 50%; }
+:where(.alert-icon.stop)::before { content: "\00D7"; }

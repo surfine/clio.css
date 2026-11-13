@@ -1,0 +1,128 @@
+/* Scroll bars, for scroll areas clio.css owns (.window-pane, .listbox,
+   textarea, list-box selects) and for anything you mark with .clio-scroll.
+   Add class="clio-scrollbars" to <html> to give every scroll area the era's
+   scroll bar.
+
+   WebKit/Blink draw the full bar: two arrow boxes, the patterned lane and the
+   scroll box. The scroll box is proportional to the content here (a browser
+   limit), where System 6 drew a fixed 16px square. Firefox has no scroll bar
+   parts, so it gets the era's colours through scrollbar-color. */
+:where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar,
+:where(html.clio-scrollbars)::-webkit-scrollbar {
+  width: var(--clio-scrollbar-size);
+  height: var(--clio-scrollbar-size);
+  background: var(--clio-paper);
+}
+
+:where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-track,
+:where(html.clio-scrollbars)::-webkit-scrollbar-track {
+  background: var(--clio-scrollbar-track);
+  box-shadow: var(--clio-scrollbar-track-shadow);
+}
+
+:where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-track:vertical,
+:where(html.clio-scrollbars)::-webkit-scrollbar-track:vertical {
+  border-left: 1px solid var(--clio-ink);
+}
+
+:where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-track:horizontal,
+:where(html.clio-scrollbars)::-webkit-scrollbar-track:horizontal {
+  border-top: 1px solid var(--clio-ink);
+}
+
+:where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-thumb,
+:where(html.clio-scrollbars)::-webkit-scrollbar-thumb {
+  min-width: var(--clio-scrollbar-size);
+  min-height: var(--clio-scrollbar-size);
+  border: var(--clio-scrollbar-thumb-border);
+  background: var(--clio-scrollbar-thumb-bg);
+  box-shadow: var(--clio-scrollbar-thumb-shadow);
+}
+
+:where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-thumb:horizontal,
+:where(html.clio-scrollbars)::-webkit-scrollbar-thumb:horizontal {
+  background: var(--clio-scrollbar-thumb-bg-horizontal, var(--clio-scrollbar-thumb-bg));
+  box-shadow: var(--clio-scrollbar-thumb-shadow-horizontal, var(--clio-scrollbar-thumb-shadow));
+}
+
+:where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-button:start:decrement,
+:where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-button:end:increment,
+:where(html.clio-scrollbars)::-webkit-scrollbar-button:start:decrement,
+:where(html.clio-scrollbars)::-webkit-scrollbar-button:end:increment {
+  display: block;
+  width: var(--clio-scrollbar-size);
+  height: var(--clio-scrollbar-size);
+  background-color: var(--clio-scrollbar-button-bg);
+  background-position: center;
+  background-repeat: no-repeat;
+  box-shadow: var(--clio-scrollbar-button-shadow);
+}
+
+:where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-button:vertical:decrement,
+:where(html.clio-scrollbars)::-webkit-scrollbar-button:vertical:decrement {
+  border-left: 1px solid var(--clio-ink);
+  border-bottom: 1px solid var(--clio-ink);
+  background-image: var(--clio-scrollbar-up);
+}
+
+:where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-button:vertical:increment,
+:where(html.clio-scrollbars)::-webkit-scrollbar-button:vertical:increment {
+  border-left: 1px solid var(--clio-ink);
+  border-top: 1px solid var(--clio-ink);
+  background-image: var(--clio-scrollbar-down);
+}
+
+:where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-button:horizontal:decrement,
+:where(html.clio-scrollbars)::-webkit-scrollbar-button:horizontal:decrement {
+  border-top: 1px solid var(--clio-ink);
+  border-right: 1px solid var(--clio-ink);
+  background-image: var(--clio-scrollbar-left);
+}
+
+:where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-button:horizontal:increment,
+:where(html.clio-scrollbars)::-webkit-scrollbar-button:horizontal:increment {
+  border-top: 1px solid var(--clio-ink);
+  border-left: 1px solid var(--clio-ink);
+  background-image: var(--clio-scrollbar-right);
+}
+
+:where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-button:vertical:decrement:active,
+:where(html.clio-scrollbars)::-webkit-scrollbar-button:vertical:decrement:active {
+  background-image: var(--clio-scrollbar-up-on);
+}
+
+:where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-button:vertical:increment:active,
+:where(html.clio-scrollbars)::-webkit-scrollbar-button:vertical:increment:active {
+  background-image: var(--clio-scrollbar-down-on);
+}
+
+:where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-button:horizontal:decrement:active,
+:where(html.clio-scrollbars)::-webkit-scrollbar-button:horizontal:decrement:active {
+  background-image: var(--clio-scrollbar-left-on);
+}
+
+:where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-button:horizontal:increment:active,
+:where(html.clio-scrollbars)::-webkit-scrollbar-button:horizontal:increment:active {
+  background-image: var(--clio-scrollbar-right-on);
+}
+
+/* Only the single arrow box at each end, as on the Mac. */
+:where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-button:start:increment,
+:where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-button:end:decrement,
+:where(html.clio-scrollbars)::-webkit-scrollbar-button:start:increment,
+:where(html.clio-scrollbars)::-webkit-scrollbar-button:end:decrement {
+  display: none;
+}
+
+:where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-corner,
+:where(html.clio-scrollbars)::-webkit-scrollbar-corner {
+  border-top: 1px solid var(--clio-ink);
+  border-left: 1px solid var(--clio-ink);
+  background: var(--clio-scrollbar-button-bg);
+}
+
+@supports not selector(::-webkit-scrollbar) {
+  :where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, html.clio-scrollbars, .clio-scrollbars *) {
+    scrollbar-color: var(--clio-scrollbar-thumb-color, var(--clio-ink)) var(--clio-scrollbar-track-color, #c0c0c0);
+  }
+}

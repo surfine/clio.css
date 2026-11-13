@@ -1,0 +1,1446 @@
+/*! clio.css 0.1.0 (System 6 only) | MIT | https://surfine.github.io/clio.css/
+ * Classic Mac OS interface CSS: System 6 and Mac OS 9 Platinum.
+ * Measured values traced to AI System 6; see EVIDENCE.md.
+ * Includes art from system.css (MIT) and classic-stylesheets (MIT); see THIRD-PARTY.md. */
+/* Fonts. Only two faces ship, both with a licence that allows it:
+   - ChicagoFLF: a public-domain outline revival of Chicago (Robin Casady).
+   - Asap (variable, wdth + wght): SIL OFL 1.1, Omnibus-Type. The legal
+     stand-in for Charcoal that AI System 6 measured its Platinum title bar
+     against (width axis 113 for text, 123 for titles).
+   Apple's own faces (Chicago, Geneva, Charcoal, Monaco) are never shipped;
+   the stacks below reach them only when the visitor already has them. */
+@font-face {
+  font-family: "ChicagoFLF";
+  src: url("fonts/ChicagoFLF.woff2") format("woff2"),
+       url("fonts/ChicagoFLF.woff") format("woff");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Clio Asap";
+  src: url("fonts/Asap-Variable.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 100 900;
+  font-stretch: 75% 125%;
+  font-display: swap;
+}
+
+/* Tokens: Macintosh System 6 is the default era.
+   Every value below is traceable in EVIDENCE.md. A value marked [M] there was
+   measured from real pixels; [I] is inferred; [A] is a deliberate web
+   adaptation (contrast, focus, touch). Platinum re-declares these tokens in
+   90-platinum.css under [data-era="platinum"]. */
+:root,
+[data-era="system6"] {
+  /* 1-bit palette. System 6 on a compact Mac had two colours. */
+  --clio-ink: #000000;
+  --clio-paper: #ffffff;
+  --clio-face: #ffffff;
+  /* [A] Disabled text: System 6 drew it through a 50% grey pattern; a solid
+     grey keeps 5.6:1 on white instead of a dither the browser would blur. */
+  --clio-disabled: #696969;
+  --clio-selection-bg: #000000;
+  --clio-selection-fg: #ffffff;
+
+  /* Type. Chicago 12 is the system font; Geneva is the application font. */
+  --clio-font-chrome: Chicago, "ChicagoFLF", Charcoal, Geneva, "Helvetica Neue", Arial, sans-serif;
+  --clio-font-text: Geneva, "Clio Asap", "Helvetica Neue", Arial, sans-serif;
+  --clio-font-mono: Monaco, Menlo, Consolas, "Courier New", monospace;
+  --clio-font-size: 12px;
+  --clio-font-size-small: 10px;
+  --clio-chrome-weight: 400;
+  --clio-font-stretch-text: normal;
+  --clio-font-stretch-title: normal;
+
+  /* Geometry */
+  --clio-line: 1px;
+  --clio-border: 1px solid var(--clio-ink);
+  --clio-radius: 0;
+  --clio-control-height: 20px;
+  --clio-field-height: 20px;
+  --clio-row-height: 16px;
+  --clio-gap: 8px;
+
+  /* Focus: [A] the era had no keyboard focus ring for buttons. A dotted frame
+     is how System 6 drew a dragged outline, so it reads as native and cannot
+     be confused with the default button's solid ring. */
+  --clio-focus-outline: 1px dotted var(--clio-ink);
+  --clio-focus-offset: 2px;
+
+  /* Desktop */
+  --clio-desktop: var(--clio-art-s6-desktop) 0 0 / 2px 2px repeat, #808080;
+
+  /* Window frame and title bar [M: measured at the emulator's exact 2x] */
+  --clio-window-bg: var(--clio-paper);
+  --clio-pane-bg: var(--clio-paper);
+  --clio-window-border: 1px solid var(--clio-ink);
+  --clio-window-shadow: 1px 1px 0 var(--clio-ink);
+  --clio-window-padding: 0;
+  --clio-titlebar-height: 17px;
+  --clio-titlebar-margin: 1px 0 0;
+  --clio-titlebar-padding: 2px 1px;
+  --clio-titlebar-border: 1px solid var(--clio-ink);
+  --clio-titlebar-row: 12px;
+  --clio-titlebar-stripe: 2px;
+  --clio-titlebar-bg:
+    linear-gradient(to bottom, var(--clio-ink) 0 1px, transparent 1px 2px)
+      0 0 / 100% var(--clio-titlebar-stripe) repeat-y content-box content-box,
+    var(--clio-paper);
+  --clio-titlebar-inactive-bg: var(--clio-paper);
+  --clio-title-font-size: 12px;
+  --clio-title-bg: var(--clio-paper);
+  --clio-title-fg: var(--clio-ink);
+  --clio-title-inactive-fg: var(--clio-ink);
+  --clio-title-padding: 0 0.5em;
+  --clio-titlebar-slot: 18px;
+  --clio-titlebar-shade-slot: 0px;
+  --clio-shade-display: none;
+  --clio-box-size: 11px;
+  --clio-box-inset: 7px;
+  --clio-box-isolation: 3px;
+
+  /* Menus */
+  --clio-menubar-height: 20px;
+  --clio-menubar-bg: var(--clio-paper);
+  --clio-menubar-border: 1px solid var(--clio-ink);
+  --clio-menubar-shadow: none;
+  --clio-menubar-padding: 0 8px;
+  --clio-menu-title-padding: 0 8px;
+  --clio-menu-title-active-bg: var(--clio-ink);
+  --clio-menu-title-active-fg: var(--clio-paper);
+  --clio-menu-title-active-shadow: none;
+  --clio-menu-bg: var(--clio-paper);
+  --clio-menu-border: 1px solid var(--clio-ink);
+  --clio-menu-border-top-width: 1px;
+  --clio-menu-shadow: 1px 1px 0 var(--clio-ink);
+  --clio-menu-item-height: 16px;
+  --clio-menu-item-padding: 0 12px 0 16px;
+  --clio-menu-item-weight: 400;
+  --clio-menu-item-active-bg: var(--clio-ink);
+  --clio-menu-item-active-fg: var(--clio-paper);
+  --clio-menu-item-active-shadow: none;
+  --clio-menu-separator:
+    repeating-linear-gradient(to right, var(--clio-ink) 0 1px, transparent 1px 2px) 0 50% / 100% 1px no-repeat;
+  --clio-menu-separator-height: 16px;
+
+  /* Push buttons */
+  --clio-button-bg: var(--clio-paper);
+  --clio-button-fg: var(--clio-ink);
+  --clio-button-border: 1px solid var(--clio-ink);
+  --clio-button-radius: 7px;
+  --clio-button-shadow: 0 0 0 0 transparent;
+  --clio-button-padding: 0 12px;
+  --clio-button-min-width: 59px;
+  --clio-button-weight: 400;
+  --clio-button-active-bg: var(--clio-ink);
+  --clio-button-active-fg: var(--clio-paper);
+  --clio-button-active-shadow: 0 0 0 0 transparent;
+  /* Default button: Inside Macintosh's recipe is PenSize(3,3) around the
+     button inset by -4, so a 1px gap then a 3px ring. */
+  --clio-button-default-ring: 0 0 0 1px var(--clio-paper), 0 0 0 4px var(--clio-ink);
+  --clio-button-default-radius: 8px;
+  --clio-button-disabled-fg: var(--clio-disabled);
+  --clio-button-disabled-border: 1px solid var(--clio-ink);
+
+  /* Check boxes and radio buttons */
+  --clio-check-size: 12px;
+  --clio-check-bg: var(--clio-paper);
+  --clio-check-border: 1px solid var(--clio-ink);
+  --clio-check-shadow: none;
+  --clio-check-mark: var(--clio-art-s6-check) 0 0 / 12px 12px no-repeat;
+  --clio-check-mark-origin: border-box;
+  --clio-check-pressed-border-width: 2px;
+  --clio-radio-size: 12px;
+  --clio-radio-off: var(--clio-art-s6-radio) 0 0 / 12px 12px no-repeat;
+  --clio-radio-on: var(--clio-art-s6-radio-dot) 3px 3px / 6px 6px no-repeat, var(--clio-art-s6-radio) 0 0 / 12px 12px no-repeat;
+  --clio-radio-pressed: var(--clio-art-s6-radio-focus) 0 0 / 12px 12px no-repeat;
+  --clio-radio-pressed-on: var(--clio-art-s6-radio-dot) 3px 3px / 6px 6px no-repeat, var(--clio-art-s6-radio-focus) 0 0 / 12px 12px no-repeat;
+
+  /* Text fields */
+  --clio-field-bg: var(--clio-paper);
+  --clio-field-border: 1px solid var(--clio-ink);
+  --clio-field-shadow: none;
+  --clio-field-padding: 2px 3px;
+  --clio-field-focus-shadow: none;
+
+  /* Pop-up menus */
+  --clio-popup-bg: var(--clio-paper);
+  --clio-popup-border: 1px solid var(--clio-ink);
+  --clio-popup-radius: 0;
+  --clio-popup-shadow: 1px 1px 0 var(--clio-ink);
+  --clio-popup-padding: 0 24px 0 6px;
+  --clio-popup-arrow: var(--clio-art-s6-popup) right 6px center / 11px 6px no-repeat;
+  --clio-popup-weight: 400;
+
+  /* Scroll bars */
+  --clio-scrollbar-size: 16px;
+  --clio-scrollbar-track: var(--clio-art-s6-desktop) 0 0 / 2px 2px repeat, #808080;
+  --clio-scrollbar-track-shadow: none;
+  --clio-scrollbar-thumb-bg: var(--clio-paper);
+  --clio-scrollbar-thumb-border: 1px solid var(--clio-ink);
+  --clio-scrollbar-thumb-shadow: none;
+  --clio-scrollbar-button-bg: var(--clio-paper);
+  --clio-scrollbar-button-shadow: none;
+  --clio-scrollbar-up: var(--clio-art-s6-up);
+  --clio-scrollbar-up-on: var(--clio-art-s6-up-on);
+  --clio-scrollbar-down: var(--clio-art-s6-down);
+  --clio-scrollbar-down-on: var(--clio-art-s6-down-on);
+  --clio-scrollbar-left: var(--clio-art-s6-left);
+  --clio-scrollbar-left-on: var(--clio-art-s6-left-on);
+  --clio-scrollbar-right: var(--clio-art-s6-right);
+  --clio-scrollbar-right-on: var(--clio-art-s6-right-on);
+
+  /* Dialogs */
+  --clio-dialog-bg: var(--clio-paper);
+  /* [I] dBoxProc: a 1px frame, a 1px paper gap, then a 2px ink border. */
+  --clio-modal-border: 1px solid var(--clio-ink);
+  --clio-modal-frame: inset 0 0 0 1px var(--clio-paper), inset 0 0 0 3px var(--clio-ink);
+  --clio-modal-padding: 16px 18px;
+  --clio-plain-dialog-border: 1px solid var(--clio-ink);
+  --clio-plain-dialog-shadow: 2px 2px 0 var(--clio-ink);
+
+  /* Bars, lists, groups, progress, tabs */
+  --clio-details-bg: var(--clio-paper);
+  /* [I] Finder's info line closes with two 1px rules. */
+  --clio-details-border: 3px double var(--clio-ink);
+  --clio-list-bg: var(--clio-paper);
+  --clio-list-border: 1px solid var(--clio-ink);
+  --clio-list-shadow: none;
+  --clio-list-row: 16px;
+  --clio-group-border: 1px solid var(--clio-ink);
+  --clio-group-shadow: none;
+  --clio-group-bg: transparent;
+  --clio-progress-height: 12px;
+  --clio-progress-bg: var(--clio-paper);
+  --clio-progress-border: 1px solid var(--clio-ink);
+  --clio-progress-shadow: none;
+  --clio-progress-fill: var(--clio-ink);
+  --clio-tab-height: 20px;
+  --clio-tab-bg: var(--clio-paper);
+  --clio-tab-active-bg: var(--clio-paper);
+  --clio-tab-panel-bg: var(--clio-paper);
+  --clio-tab-panel-border: 1px solid var(--clio-ink);
+  --clio-label-bg: var(--clio-paper);
+  --clio-label-fg: var(--clio-ink);
+  --clio-label-selected-bg: var(--clio-ink);
+  --clio-label-selected-fg: var(--clio-paper);
+}
+
+/* Inline art. Pixel-grid SVGs, never Apple bitmaps: the System 6 check, radio
+   ring and dot come from system.css (MIT, Sakun Acharige); Platinum's art lives
+   in 90-platinum.css; everything here is drawn for clio.css. See
+   THIRD-PARTY.md. */
+:root {
+  --clio-art-s6-check: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' shape-rendering='crispEdges'%3E%3Cpath d='M0 0h1v1h-1zM1 1h1v1h-1zM2 2h1v1h-1zM3 3h1v1h-1zM4 4h1v1h-1zM5 5h1v1h-1zM6 6h1v1h-1zM7 7h1v1h-1zM8 8h1v1h-1zM9 9h1v1h-1zM10 10h1v1h-1zM11 11h1v1h-1zM11 0h1v1h-1zM10 1h1v1h-1zM9 2h1v1h-1zM8 3h1v1h-1zM7 4h1v1h-1zM6 5h1v1h-1zM5 6h1v1h-1zM4 7h1v1h-1zM3 8h1v1h-1zM2 9h1v1h-1zM1 10h1v1h-1zM0 11h1v1h-1z'/%3E%3C/svg%3E");
+  --clio-art-s6-radio: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' shape-rendering='crispEdges'%3E%3Cpath d='M4 0h4v1H4zM0 4h1v4H0zM11 4h1v4h-1zM2 1h2v1H2zM8 1h2v1H8zM10 2h1v2h-1zM1 2h1v2H1zM4 11h4v1H4zM2 10h2v1H2zM8 10h2v1H8zM10 8h1v2h-1zM1 8h1v2H1z'/%3E%3C/svg%3E");
+  --clio-art-s6-radio-focus: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' shape-rendering='crispEdges'%3E%3Cpath d='M4 0h4v2H4zM0 4h2v4H0zM10 4h2v4h-2zM2 1h2v2H2zM8 1h2v2H8zM9 2h2v2H9zM1 2h2v2H1zM4 10h4v2H4zM2 9h2v2H2zM8 9h2v2H8zM9 8h2v2H9zM1 8h2v2H1z'/%3E%3C/svg%3E");
+  --clio-art-s6-radio-dot: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='6' shape-rendering='crispEdges'%3E%3Cpath d='M1 0h4v1H1zM1 5h4v1H1zM0 1h6v4H0z'/%3E%3C/svg%3E");
+  --clio-art-s6-up: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Cpolygon points='8.5,3.5 14.5,9.5 11.5,9.5 11.5,13.5 5.5,13.5 5.5,9.5 2.5,9.5' fill='%23fff' stroke='%23000' stroke-width='1' shape-rendering='crispEdges'/%3E%3C/svg%3E");
+  --clio-art-s6-up-on: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Cpolygon points='8.5,3.5 14.5,9.5 11.5,9.5 11.5,13.5 5.5,13.5 5.5,9.5 2.5,9.5' fill='%23000' stroke='%23000' stroke-width='1' shape-rendering='crispEdges'/%3E%3C/svg%3E");
+  --clio-art-s6-down: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Cpolygon points='8.5,13.5 14.5,7.5 11.5,7.5 11.5,3.5 5.5,3.5 5.5,7.5 2.5,7.5' fill='%23fff' stroke='%23000' stroke-width='1' shape-rendering='crispEdges'/%3E%3C/svg%3E");
+  --clio-art-s6-down-on: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Cpolygon points='8.5,13.5 14.5,7.5 11.5,7.5 11.5,3.5 5.5,3.5 5.5,7.5 2.5,7.5' fill='%23000' stroke='%23000' stroke-width='1' shape-rendering='crispEdges'/%3E%3C/svg%3E");
+  --clio-art-s6-left: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Cpolygon points='3.5,8.5 9.5,14.5 9.5,11.5 13.5,11.5 13.5,5.5 9.5,5.5 9.5,2.5' fill='%23fff' stroke='%23000' stroke-width='1' shape-rendering='crispEdges'/%3E%3C/svg%3E");
+  --clio-art-s6-left-on: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Cpolygon points='3.5,8.5 9.5,14.5 9.5,11.5 13.5,11.5 13.5,5.5 9.5,5.5 9.5,2.5' fill='%23000' stroke='%23000' stroke-width='1' shape-rendering='crispEdges'/%3E%3C/svg%3E");
+  --clio-art-s6-right: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Cpolygon points='13.5,8.5 7.5,14.5 7.5,11.5 3.5,11.5 3.5,5.5 7.5,5.5 7.5,2.5' fill='%23fff' stroke='%23000' stroke-width='1' shape-rendering='crispEdges'/%3E%3C/svg%3E");
+  --clio-art-s6-right-on: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Cpolygon points='13.5,8.5 7.5,14.5 7.5,11.5 3.5,11.5 3.5,5.5 7.5,5.5 7.5,2.5' fill='%23000' stroke='%23000' stroke-width='1' shape-rendering='crispEdges'/%3E%3C/svg%3E");
+  --clio-art-s6-popup: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='6' shape-rendering='crispEdges'%3E%3Cpath d='M0 0h11v1H0zM1 1h9v1H1zM2 2h7v1H2zM3 3h5v1H3zM4 4h3v1H4zM5 5h1v1H5z'/%3E%3C/svg%3E");
+  --clio-art-s6-submenu: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='11'%3E%3Cpath d='m0 0 6 5.5L0 11Z'/%3E%3C/svg%3E");
+  --clio-art-s6-submenu-on: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='11'%3E%3Cpath fill='%23fff' d='m0 0 6 5.5L0 11Z'/%3E%3C/svg%3E");
+  --clio-art-s6-menucheck: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' shape-rendering='crispEdges'%3E%3Cpath d='M9 0h1v2H9zM8 2h1v2H8zM7 4h1v2H7zM6 5h1v2H6zM5 6h1v3H5zM4 7h1v3H4zM3 6h1v3H3zM2 5h1v2H2zM1 4h1v2H1zM0 4h1v1H0z'/%3E%3C/svg%3E");
+  --clio-art-s6-menucheck-on: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' shape-rendering='crispEdges'%3E%3Cpath fill='%23fff' d='M9 0h1v2H9zM8 2h1v2H8zM7 4h1v2H7zM6 5h1v2H6zM5 6h1v3H5zM4 7h1v3H4zM3 6h1v3H3zM2 5h1v2H2zM1 4h1v2H1zM0 4h1v1H0z'/%3E%3C/svg%3E");
+  --clio-art-s6-desktop: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='2' height='2' shape-rendering='crispEdges'%3E%3Cpath d='M0 0h1v1H0zM1 1h1v1H1z'/%3E%3Cpath fill='%23fff' d='M1 0h1v1H1zM0 1h1v1H0z'/%3E%3C/svg%3E");
+}
+
+/* Base. clio.css styles elements only inside its own components, plus bare
+   form controls through :where(), so every rule here has zero specificity and
+   your own CSS always wins. It never restyles <body> unless you ask with
+   .desktop. */
+:where(.desktop) {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--clio-desktop);
+  color: var(--clio-ink);
+}
+
+:where(.window, .menu-bar, [role="menubar"], [role="menu-bar"], .menu, [role="menu"],
+  .modal-dialog, .alert-box, .standard-dialog, .modeless-dialog, .clio) {
+  box-sizing: border-box;
+  color: var(--clio-ink);
+  font-family: var(--clio-font-chrome);
+  font-size: var(--clio-font-size);
+  font-weight: var(--clio-chrome-weight);
+  font-stretch: var(--clio-font-stretch-text);
+  font-synthesis: none;
+  line-height: 16px;
+  -webkit-font-smoothing: auto;
+}
+
+:where(.window, .modal-dialog, .alert-box, .standard-dialog, .modeless-dialog, .clio) *,
+:where(.window, .modal-dialog, .alert-box, .standard-dialog, .modeless-dialog, .clio) *::before,
+:where(.window, .modal-dialog, .alert-box, .standard-dialog, .modeless-dialog, .clio) *::after {
+  box-sizing: border-box;
+}
+
+/* Application text (Geneva role) for content areas. */
+:where(.window-pane, .modal-contents, .alert-contents, .text) {
+  font-family: var(--clio-font-text);
+  font-stretch: var(--clio-font-stretch-text);
+}
+
+:where(.window, .modal-dialog, .alert-box, .standard-dialog, .clio) :where(h1, h2, h3, h4, .heading) {
+  margin: 0 0 8px;
+  font-family: var(--clio-font-chrome);
+  font-size: var(--clio-font-size);
+  font-weight: var(--clio-chrome-weight);
+  line-height: 16px;
+}
+
+:where(.window, .modal-dialog, .alert-box, .standard-dialog, .clio) :where(p) {
+  margin: 0 0 8px;
+}
+
+:where(.window, .modal-dialog, .alert-box, .standard-dialog, .clio) :where(a) {
+  color: inherit;
+}
+
+:where(.window, .modal-dialog, .alert-box, .standard-dialog, .clio) :where(code, kbd, pre, samp) {
+  font-family: var(--clio-font-mono);
+}
+
+:where(.window, .modal-dialog, .alert-box, .standard-dialog, .clio) :where(hr) {
+  height: 0;
+  margin: 8px 0;
+  border: 0;
+  border-top: var(--clio-border);
+}
+
+:where(.window, .modal-dialog, .alert-box, .standard-dialog, .clio) ::selection {
+  background: var(--clio-selection-bg);
+  color: var(--clio-selection-fg);
+}
+
+/* A row of controls with their label (system.css name kept). */
+:where(.field-row, .field-row-stacked) {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+:where(.field-row-stacked) {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+:where(.field-row, .field-row-stacked) + :where(.field-row, .field-row-stacked) {
+  margin-top: 6px;
+}
+
+/* Hidden, still read aloud. */
+:where(.visually-hidden, .title-bar button > span) {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* Windows.
+   Markup: .window > .title-bar (> .close, .title, .resize [, .shade]) >
+   optional .details-bar > .window-pane. system.css markup (.title-bar
+   button.close / button.resize, .inactive-title-bar) and AI System 6 markup
+   (.close-box, .resize-box, .shade-box, h1/h2 as the title) also work. */
+:where(.window) {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 120px;
+  padding: var(--clio-window-padding);
+  border: var(--clio-window-border);
+  background: var(--clio-window-bg);
+  box-shadow: var(--clio-window-shadow);
+}
+
+/* ---- Title bar ---------------------------------------------------------
+   System 6: a 17px box under a 1px inset: 2px of paper, six 1px ink stripes
+   on a 2px period across a 12px row, 2px of paper, then the 1px rule. */
+.title-bar,
+.inactive-title-bar {
+  --clio-tb-close: var(--clio-titlebar-slot);
+  --clio-tb-zoom: var(--clio-titlebar-slot);
+  --clio-tb-shade: var(--clio-titlebar-shade-slot);
+  --clio-tb-gutter: max(var(--clio-tb-close), calc(var(--clio-tb-zoom) + var(--clio-tb-shade)));
+  position: relative;
+  display: grid;
+  flex: none;
+  grid-template-columns:
+    var(--clio-tb-gutter)
+    minmax(0, 1fr)
+    var(--clio-tb-zoom)
+    calc(var(--clio-tb-gutter) - var(--clio-tb-zoom));
+  grid-template-rows: var(--clio-titlebar-row);
+  align-items: start;
+  box-sizing: border-box;
+  height: var(--clio-titlebar-height);
+  margin: var(--clio-titlebar-margin);
+  padding: var(--clio-titlebar-padding);
+  border-bottom: var(--clio-titlebar-border);
+  background: var(--clio-titlebar-bg);
+  font-family: var(--clio-font-chrome);
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* A slot is reserved only for a control that is really there, so the title
+   stays centred on the whole bar. */
+.title-bar:not(:has(> :is(.resize, .resize-box, .zoom))) { --clio-tb-zoom: 0px; }
+.title-bar:not(:has(> :is(.shade, .shade-box, .collapse))) { --clio-tb-shade: 0px; }
+
+.title-bar > :is(.title, h1, h2, h3),
+.inactive-title-bar > :is(.title, h1, h2, h3) {
+  grid-column: 2;
+  grid-row: 1;
+  justify-self: center;
+  max-width: 100%;
+  height: var(--clio-titlebar-row);
+  margin: 0;
+  padding: var(--clio-title-padding);
+  overflow: hidden;
+  background: var(--clio-title-bg);
+  color: var(--clio-title-fg);
+  font-family: var(--clio-font-chrome);
+  font-size: var(--clio-title-font-size);
+  font-stretch: var(--clio-font-stretch-title);
+  font-weight: var(--clio-chrome-weight);
+  line-height: var(--clio-titlebar-row);
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ---- Close, zoom and collapse boxes ------------------------------------ */
+.title-bar > :is(button, .close, .close-box, .resize, .resize-box, .zoom, .shade, .shade-box, .collapse) {
+  position: relative;
+  grid-row: 1;
+  width: var(--clio-box-size);
+  min-width: 0;
+  height: var(--clio-box-size);
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  border: 1px solid var(--clio-ink);
+  border-radius: 0;
+  background: var(--clio-paper);
+  box-shadow: 0 0 0 var(--clio-box-isolation) var(--clio-paper);
+  color: transparent;
+  font-size: 0;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: default;
+  touch-action: manipulation;
+}
+
+.title-bar > :is(.close, .close-box) {
+  grid-column: 1;
+  justify-self: start;
+  margin-left: var(--clio-box-inset);
+}
+
+.title-bar > :is(.resize, .resize-box, .zoom) {
+  grid-column: 3;
+  justify-self: end;
+  margin-right: var(--clio-box-inset);
+}
+
+/* System 6 had no WindowShade box; only an era that opens the slot shows it. */
+.title-bar > :is(.shade, .shade-box, .collapse) {
+  display: var(--clio-shade-display);
+  grid-column: 4;
+  justify-self: end;
+}
+
+/* Pressed close box: the starburst System 6 draws while the mouse is held. */
+.title-bar > :is(.close, .close-box)::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='11' shape-rendering='crispEdges'%3E%3Cpath d='M1 5h3v1H1zM7 5h3v1H7zM5 1h1v3H5zM5 7h1v3H5zM2 2h1v1H2zM3 3h1v1H3zM7 7h1v1H7zM8 8h1v1H8zM8 2h1v1H8zM7 3h1v1H7zM2 8h1v1H2zM3 7h1v1H3z'/%3E%3C/svg%3E") 0 0 / 11px 11px no-repeat;
+  opacity: 0;
+}
+
+.title-bar > :is(.close, .close-box):is(:active, .active)::before {
+  opacity: 1;
+}
+
+/* Zoom box: an inner square sharing the outer frame's top-left corner,
+   7 of the frame's 11 pixels (System 6's 7:11 ratio). */
+.title-bar > :is(.resize, .resize-box, .zoom)::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  width: 7px;
+  height: 7px;
+  border-right: 1px solid var(--clio-ink);
+  border-bottom: 1px solid var(--clio-ink);
+  box-sizing: border-box;
+}
+
+.title-bar > :is(.resize, .resize-box, .zoom):is(:active, .active)::before {
+  opacity: 0;
+}
+
+.title-bar > button:focus-visible {
+  outline: var(--clio-focus-outline);
+  outline-offset: calc(var(--clio-box-isolation) - 1px);
+}
+
+/* ---- Inactive windows ----------------------------------------------------
+   System 6 draws a background window's title bar as a plain strip with its
+   name: no stripes, no close box, no zoom box. */
+.window.inactive > .title-bar,
+.inactive-title-bar {
+  background: var(--clio-titlebar-inactive-bg);
+}
+
+.window.inactive > .title-bar > :is(.title, h1, h2, h3),
+.inactive-title-bar > :is(.title, h1, h2, h3) {
+  color: var(--clio-title-inactive-fg);
+}
+
+.window.inactive > .title-bar > :not(.title, h1, h2, h3),
+.inactive-title-bar > :not(.title, h1, h2, h3) {
+  visibility: hidden;
+}
+
+/* ---- Window body ------------------------------------------------------- */
+:where(.window-pane) {
+  flex: 1 1 auto;
+  min-height: 0;
+  padding: 8px;
+  overflow: auto;
+  background: var(--clio-pane-bg);
+  font-size: var(--clio-font-size);
+  line-height: 16px;
+}
+
+/* Finder's info line ("3 items  1,234K in disk"), ruled twice below. */
+:where(.details-bar) {
+  display: flex;
+  flex: none;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 2px 8px 1px;
+  border-bottom: var(--clio-details-border);
+  background: var(--clio-details-bg);
+  box-shadow: var(--clio-details-shadow, none);
+  font-family: var(--clio-font-text);
+  font-size: var(--clio-font-size);
+  line-height: 16px;
+  white-space: nowrap;
+}
+
+:where(.separator) {
+  flex: none;
+  border-top: var(--clio-border);
+}
+
+/* A status line under the pane. */
+:where(.status-bar) {
+  display: flex;
+  flex: none;
+  gap: 12px;
+  padding: 1px 8px;
+  border-top: var(--clio-border);
+  background: var(--clio-details-bg);
+  font-family: var(--clio-font-text);
+  font-size: var(--clio-font-size-small);
+  line-height: 14px;
+}
+
+/* Menu bar and menus.
+   Markup: <ul role="menubar" class="menu-bar"> <li role="none"><button
+   role="menuitem" aria-haspopup="true" aria-expanded="false">File</button>
+   <ul role="menu" class="menu">…</ul></li></ul>. A menu opens while its title
+   has aria-expanded="true" or the class .open (your script toggles either), or
+   while focus is inside it, so it works with the keyboard and no script.
+   system.css's role="menu-bar" / role="menu-item" markup is accepted too. */
+:where(.menu-bar, ul[role="menubar"], ul[role="menu-bar"]) {
+  display: flex;
+  align-items: stretch;
+  box-sizing: border-box;
+  height: var(--clio-menubar-height);
+  margin: 0;
+  padding: var(--clio-menubar-padding);
+  list-style: none;
+  border-bottom: var(--clio-menubar-border);
+  background: var(--clio-menubar-bg);
+  box-shadow: var(--clio-menubar-shadow);
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+:where(.menu-bar, [role="menubar"], [role="menu-bar"]) > li {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+}
+
+/* Menu titles: a <button>, an <a>, or the <li> itself (system.css). */
+:where(.menu-bar, [role="menubar"], [role="menu-bar"]) > li > :is(button, a, span),
+:where([role="menu-bar"]) > [role="menu-item"] {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  margin: 0;
+  padding: var(--clio-menu-title-padding);
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  color: inherit;
+  font: inherit;
+  line-height: 16px;
+  text-decoration: none;
+  white-space: nowrap;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: default;
+}
+
+:where(.menu-bar, [role="menubar"], [role="menu-bar"]) > li > :is(button, a, span):is([aria-expanded="true"], .active),
+:where(.menu-bar, [role="menubar"], [role="menu-bar"]) > li.open > :is(button, a, span),
+:where(.menu-bar, [role="menubar"], [role="menu-bar"]) > li > :is(button, a):active,
+:where([role="menu-bar"]) > [role="menu-item"]:is(:focus, :focus-within) {
+  background: var(--clio-menu-title-active-bg);
+  box-shadow: var(--clio-menu-title-active-shadow);
+  color: var(--clio-menu-title-active-fg);
+  outline: none;
+}
+
+:where(.menu-bar, [role="menubar"], [role="menu-bar"]) > li > :is(button, a):focus-visible {
+  outline: var(--clio-focus-outline);
+  outline-offset: -3px;
+}
+
+/* ---- Menu panel ----------------------------------------------------------
+   System 6: paper, a 1px ink frame and a 1px ink drop shadow. */
+:where(.menu, ul[role="menu"]) {
+  z-index: 10;
+  display: block;
+  box-sizing: border-box;
+  min-width: 140px;
+  width: max-content;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border: var(--clio-menu-border);
+  border-top-width: var(--clio-menu-border-top-width);
+  background: var(--clio-menu-bg);
+  box-shadow: var(--clio-menu-shadow);
+  font-family: var(--clio-font-chrome);
+  font-size: var(--clio-font-size);
+}
+
+/* Inside a menu bar or a parent item, a menu is a drop-down. */
+:where(.menu-bar, [role="menubar"], [role="menu-bar"], .menu, [role="menu"]) li > :is(.menu, ul[role="menu"]) {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  display: none;
+}
+
+:where(.menu, [role="menu"]) li > :is(.menu, ul[role="menu"]) {
+  top: -1px;
+  left: 100%;
+}
+
+:where(.menu-bar, [role="menubar"], [role="menu-bar"], .menu, [role="menu"]) li:is(.open, :focus-within) > :is(.menu, ul[role="menu"]),
+:where(.menu-bar, [role="menubar"], [role="menu-bar"], .menu, [role="menu"]) li > [aria-expanded="true"] + :is(.menu, ul[role="menu"]) {
+  display: block;
+}
+
+/* ---- Menu items ---------------------------------------------------------- */
+:where(.menu, [role="menu"]) > li {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: var(--clio-menu-item-height);
+  padding: var(--clio-menu-item-padding);
+  font-weight: var(--clio-menu-item-weight);
+  line-height: var(--clio-menu-item-height);
+  white-space: nowrap;
+  cursor: default;
+}
+
+:where(.menu, [role="menu"]) > li:has(> :is(a, button)) {
+  padding: 0;
+}
+
+:where(.menu, [role="menu"]) > li > :is(a, button) {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: flex-start;
+  min-width: 0;
+  min-height: var(--clio-menu-item-height);
+  margin: 0;
+  padding: var(--clio-menu-item-padding);
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  text-decoration: none;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: default;
+}
+
+:where(.menu, [role="menu"]) > li:not(.disabled, [aria-disabled="true"], .separator, [role="separator"]):is(:hover, :focus-within, .active),
+:where(.menu, [role="menu"]) > li > :is(a, button):not([aria-disabled="true"], :disabled):is(:hover, :focus-visible, .active) {
+  background: var(--clio-menu-item-active-bg);
+  box-shadow: var(--clio-menu-item-active-shadow);
+  color: var(--clio-menu-item-active-fg);
+  outline: none;
+}
+
+:where(.menu, [role="menu"]) > li:is(.disabled, [aria-disabled="true"]),
+:where(.menu, [role="menu"]) > li > :is(a, button):is(:disabled, [aria-disabled="true"]) {
+  color: var(--clio-disabled);
+}
+
+/* Keyboard shortcut column, right-aligned. */
+:where(.menu, [role="menu"]) :is(kbd, .shortcut) {
+  margin-left: auto;
+  padding-left: 24px;
+  font: inherit;
+}
+
+/* Check mark column. */
+:where(.menu, [role="menu"]) > li:is(.checked, [aria-checked="true"])::before,
+:where(.menu, [role="menu"]) > li > :is([aria-checked="true"], .checked)::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 3px;
+  width: 10px;
+  height: 10px;
+  margin-top: -5px;
+  background: var(--clio-art-s6-menucheck) 0 0 / 10px 10px no-repeat;
+}
+
+:where(.menu, [role="menu"]) > li:is(.checked, [aria-checked="true"]):is(:hover, :focus-within, .active)::before,
+:where(.menu, [role="menu"]) > li > :is([aria-checked="true"], .checked):is(:hover, :focus-visible, .active)::before {
+  background-image: var(--clio-art-s6-menucheck-on);
+}
+
+/* Submenu arrow. */
+:where(.menu, [role="menu"]) > li:has(> :is(.menu, ul[role="menu"]))::after,
+:where(.menu, [role="menu"]) > li > [aria-haspopup="true"]::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 4px;
+  width: 6px;
+  height: 11px;
+  margin-top: -5.5px;
+  background: var(--clio-art-s6-submenu) 0 0 / 6px 11px no-repeat;
+}
+
+:where(.menu, [role="menu"]) > li:has(> :is(.menu, ul[role="menu"])):is(:hover, :focus-within, .active)::after {
+  background-image: var(--clio-art-s6-submenu-on);
+}
+
+/* Separator: System 6 draws a dotted grey rule through a full-height row. */
+:where(.menu, [role="menu"]) > :is(li.separator, li[role="separator"], hr) {
+  display: block;
+  height: var(--clio-menu-separator-height);
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: var(--clio-menu-separator);
+}
+
+/* system.css divider items keep their label row and add the rule below. */
+:where(.menu, [role="menu"]) > li.divider {
+  border-bottom: 1px dotted var(--clio-ink);
+}
+
+/* Controls. Bare elements are styled through :where(), so the rules carry no
+   specificity. State model (from AI System 6's fidelity contract): hover never
+   changes a push button; pressed comes only from pointer-down, Space or
+   Enter (:active) or from the .active class; disabled keeps full geometry. */
+
+/* ---- Push buttons -------------------------------------------------------- */
+:where(button, .btn, .btn-default, .standard-button, input[type="button"], input[type="submit"], input[type="reset"]) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-width: var(--clio-button-min-width);
+  min-height: var(--clio-control-height);
+  margin: 0;
+  padding: var(--clio-button-padding);
+  border: var(--clio-button-border);
+  border-radius: var(--clio-button-radius);
+  background: var(--clio-button-bg);
+  box-shadow: var(--clio-button-shadow);
+  color: var(--clio-button-fg);
+  font-family: var(--clio-font-chrome);
+  font-size: var(--clio-font-size);
+  font-stretch: var(--clio-font-stretch-text);
+  font-weight: var(--clio-button-weight);
+  line-height: 14px;
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: default;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+:where(button, .btn, .btn-default, .standard-button, input[type="button"], input[type="submit"], input[type="reset"]):not(:disabled, .disabled):is(:active, .active) {
+  background: var(--clio-button-active-bg);
+  box-shadow: var(--clio-button-active-shadow);
+  color: var(--clio-button-active-fg);
+}
+
+/* Default button: the ring that says Return will press it. */
+:where(.default, .btn-default, button[type="submit"].default) {
+  border-radius: var(--clio-button-radius);
+  box-shadow: var(--clio-button-shadow), var(--clio-button-default-ring);
+}
+
+:where(.default, .btn-default):not(:disabled, .disabled):is(:active, .active) {
+  box-shadow: var(--clio-button-active-shadow), var(--clio-button-default-ring);
+}
+
+:where(button, .btn, .btn-default, .standard-button, input[type="button"], input[type="submit"], input[type="reset"]):is(:disabled, .disabled) {
+  border: var(--clio-button-disabled-border);
+  color: var(--clio-button-disabled-fg);
+}
+
+:where(button, .btn, .btn-default, .standard-button, input[type="button"], input[type="submit"], input[type="reset"]):focus-visible {
+  outline: var(--clio-focus-outline);
+  outline-offset: var(--clio-focus-offset);
+}
+
+:where(.default, .btn-default):focus-visible {
+  outline-offset: calc(var(--clio-focus-offset) + 4px);
+}
+
+/* ---- Check boxes ---------------------------------------------------------- */
+:where(input[type="checkbox"]) {
+  position: relative;
+  flex: none;
+  box-sizing: border-box;
+  width: var(--clio-check-size);
+  height: var(--clio-check-size);
+  margin: 0;
+  border: var(--clio-check-border);
+  border-radius: 0;
+  background: var(--clio-check-bg);
+  box-shadow: var(--clio-check-shadow);
+  vertical-align: -2px;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: default;
+}
+
+:where(input[type="checkbox"]):checked {
+  background: var(--clio-check-mark), var(--clio-check-bg);
+  background-origin: var(--clio-check-mark-origin);
+}
+
+:where(input[type="checkbox"]):not(:disabled):active {
+  border-width: var(--clio-check-pressed-border-width);
+}
+
+:where(input[type="checkbox"]):disabled {
+  border-color: var(--clio-disabled);
+  opacity: 0.6;
+}
+
+/* ---- Radio buttons -------------------------------------------------------- */
+:where(input[type="radio"]) {
+  flex: none;
+  box-sizing: border-box;
+  width: var(--clio-radio-size);
+  height: var(--clio-radio-size);
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  background: var(--clio-radio-off);
+  vertical-align: -2px;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: default;
+}
+
+:where(input[type="radio"]):checked {
+  background: var(--clio-radio-on);
+}
+
+:where(input[type="radio"]):not(:disabled):active {
+  background: var(--clio-radio-pressed);
+}
+
+:where(input[type="radio"]):checked:not(:disabled):active {
+  background: var(--clio-radio-pressed-on);
+}
+
+:where(input[type="radio"]):disabled {
+  opacity: 0.45;
+}
+
+:where(input[type="checkbox"], input[type="radio"]):focus-visible {
+  outline: var(--clio-focus-outline);
+  outline-offset: var(--clio-focus-offset);
+}
+
+:where(input[type="checkbox"], input[type="radio"]) + label,
+:where(label):has(> :is(input[type="checkbox"], input[type="radio"])) {
+  font-family: var(--clio-font-chrome);
+  font-size: var(--clio-font-size);
+}
+
+:where(label):has(> :is(input[type="checkbox"], input[type="radio"])) {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+:where(input[type="checkbox"], input[type="radio"]):disabled + label,
+:where(label):has(> :is(input[type="checkbox"], input[type="radio"]):disabled) {
+  color: var(--clio-disabled);
+}
+
+/* ---- Text fields ---------------------------------------------------------- */
+:where(input:not([type]), input[type="text"], input[type="search"], input[type="email"], input[type="password"],
+  input[type="number"], input[type="url"], input[type="tel"], input[type="date"], input[type="time"],
+  input[type="datetime-local"], input[type="month"], input[type="week"], textarea) {
+  box-sizing: border-box;
+  min-height: var(--clio-field-height);
+  margin: 0;
+  padding: var(--clio-field-padding);
+  border: var(--clio-field-border);
+  border-radius: 0;
+  background: var(--clio-field-bg);
+  box-shadow: var(--clio-field-shadow);
+  color: var(--clio-ink);
+  font-family: var(--clio-font-text);
+  font-size: var(--clio-font-size);
+  font-stretch: var(--clio-font-stretch-text);
+  line-height: 14px;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+:where(textarea) {
+  display: block;
+  line-height: 16px;
+  resize: vertical;
+}
+
+:where(input, textarea):focus-visible {
+  outline: var(--clio-focus-outline);
+  outline-offset: var(--clio-focus-offset);
+  box-shadow: var(--clio-field-focus-shadow);
+}
+
+:where(input, textarea):disabled {
+  color: var(--clio-disabled);
+}
+
+:where(input, textarea)::placeholder {
+  color: var(--clio-disabled);
+  opacity: 1;
+}
+
+:where(label) {
+  font-family: var(--clio-font-chrome);
+  font-size: var(--clio-font-size);
+}
+
+/* ---- Pop-up menus (select) ------------------------------------------------ */
+:where(select) {
+  box-sizing: border-box;
+  min-height: var(--clio-control-height);
+  margin: 0;
+  padding: var(--clio-popup-padding);
+  border: var(--clio-popup-border);
+  border-radius: var(--clio-popup-radius);
+  background: var(--clio-popup-arrow), var(--clio-popup-bg);
+  box-shadow: var(--clio-popup-shadow);
+  color: var(--clio-ink);
+  font-family: var(--clio-font-chrome);
+  font-size: var(--clio-font-size);
+  font-stretch: var(--clio-font-stretch-text);
+  font-weight: var(--clio-popup-weight);
+  line-height: 16px;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: default;
+}
+
+:where(select):focus-visible {
+  outline: var(--clio-focus-outline);
+  outline-offset: var(--clio-focus-offset);
+}
+
+:where(select):disabled {
+  color: var(--clio-disabled);
+}
+
+/* A list box: <select multiple> or <select size="n">. */
+:where(select[multiple], select[size]:not([size="1"])) {
+  min-height: 0;
+  padding: 0;
+  border: var(--clio-list-border);
+  border-radius: 0;
+  background: var(--clio-list-bg);
+  box-shadow: var(--clio-list-shadow);
+  font-family: var(--clio-font-text);
+}
+
+:where(select[multiple], select[size]:not([size="1"])) option {
+  min-height: var(--clio-list-row);
+  padding: 0 4px;
+}
+
+:where(select[multiple], select[size]:not([size="1"])) option:checked {
+  background: var(--clio-selection-bg) linear-gradient(var(--clio-selection-bg), var(--clio-selection-bg));
+  color: var(--clio-selection-fg);
+}
+
+/* ---- List boxes ------------------------------------------------------------ */
+:where(.listbox, ul[role="listbox"], ol[role="listbox"], div[role="listbox"]) {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  overflow: auto;
+  list-style: none;
+  border: var(--clio-list-border);
+  background: var(--clio-list-bg);
+  box-shadow: var(--clio-list-shadow);
+  font-family: var(--clio-font-text);
+  font-size: var(--clio-font-size);
+}
+
+:where(.listbox, [role="listbox"]) > :is(li, [role="option"]) {
+  min-height: var(--clio-list-row);
+  padding: 0 4px;
+  line-height: var(--clio-list-row);
+  white-space: nowrap;
+  cursor: default;
+}
+
+:where(.listbox, [role="listbox"]) > :is(li, [role="option"]):is([aria-selected="true"], .selected) {
+  background: var(--clio-selection-bg);
+  color: var(--clio-selection-fg);
+}
+
+:where(.listbox, [role="listbox"]) > :is(li, [role="option"]):focus-visible {
+  outline: var(--clio-focus-outline);
+  outline-offset: -2px;
+}
+
+/* ---- Group boxes (fieldset) ---------------------------------------------- */
+:where(fieldset) {
+  margin: 0;
+  padding: 8px 10px 10px;
+  border: var(--clio-group-border);
+  background: var(--clio-group-bg);
+  box-shadow: var(--clio-group-shadow);
+}
+
+:where(fieldset) > :where(legend) {
+  padding: 0 4px;
+  background: var(--clio-pane-bg);
+  font-family: var(--clio-font-chrome);
+  font-size: var(--clio-font-size);
+  font-weight: var(--clio-chrome-weight);
+}
+
+/* ---- Progress -------------------------------------------------------------- */
+:where(progress) {
+  box-sizing: border-box;
+  width: 100%;
+  height: var(--clio-progress-height);
+  margin: 0;
+  border: var(--clio-progress-border);
+  border-radius: 0;
+  background: var(--clio-progress-bg);
+  box-shadow: var(--clio-progress-shadow);
+  color: var(--clio-ink);
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+:where(progress)::-webkit-progress-bar {
+  background: var(--clio-progress-bg);
+}
+
+:where(progress)::-webkit-progress-value {
+  background: var(--clio-progress-fill);
+}
+
+:where(progress)::-moz-progress-bar {
+  background: var(--clio-progress-fill);
+}
+
+/* ---- Tabs -------------------------------------------------------------------
+   System 6 had no tab control; the System 6 tab here is an adaptation (a
+   boxed label that joins its panel). Platinum draws the real Mac OS 9 tab. */
+:where([role="tablist"], .tabs) {
+  display: flex;
+  align-items: flex-end;
+  gap: 0;
+  margin: 0;
+  padding: 0 8px;
+  list-style: none;
+}
+
+:where([role="tablist"], .tabs) > :is([role="tab"], li, button) {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  box-sizing: border-box;
+  min-width: 0;
+  min-height: var(--clio-tab-height);
+  margin: 0 -1px -1px 0;
+  padding: 0 12px;
+  border: 1px solid var(--clio-ink);
+  border-radius: 0;
+  background: var(--clio-tab-bg);
+  box-shadow: none;
+  color: var(--clio-ink);
+  font-family: var(--clio-font-chrome);
+  font-size: var(--clio-font-size);
+  font-weight: var(--clio-chrome-weight);
+  cursor: default;
+}
+
+:where([role="tablist"], .tabs) > :is([role="tab"], li, button):is([aria-selected="true"], .active) {
+  z-index: 1;
+  border-bottom-color: var(--clio-tab-active-bg);
+  background: var(--clio-tab-active-bg);
+  color: var(--clio-ink);
+}
+
+:where([role="tabpanel"], .tab-panel) {
+  padding: 10px;
+  border: var(--clio-tab-panel-border);
+  background: var(--clio-tab-panel-bg);
+}
+
+/* ---- Desktop icons ---------------------------------------------------------- */
+:where(.icon) {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 2px;
+  width: 80px;
+  min-width: 0;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  color: var(--clio-ink);
+  font-family: var(--clio-font-text);
+  font-size: var(--clio-font-size-small);
+  text-align: center;
+  cursor: default;
+}
+
+:where(.icon) > :is(img, svg, .icon-image) {
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+:where(.icon) > :is(figcaption, span, .icon-label) {
+  max-width: 100%;
+  padding: 0 2px;
+  background: var(--clio-label-bg);
+  color: var(--clio-label-fg);
+  line-height: 13px;
+}
+
+:where(.icon):is(.selected, [aria-selected="true"], [aria-pressed="true"]) > :is(img, svg, .icon-image) {
+  filter: var(--clio-icon-selected-filter, invert(1));
+}
+
+:where(.icon):is(.selected, [aria-selected="true"], [aria-pressed="true"]) > :is(figcaption, span, .icon-label) {
+  background: var(--clio-label-selected-bg);
+  color: var(--clio-label-selected-fg);
+}
+
+/* Dialogs and alerts.
+   .modal-dialog / .alert-box: the double-framed modal box (dBoxProc).
+   .standard-dialog: the plain box with a drop shadow (altDBoxProc).
+   .modeless-dialog: a movable dialog, which is a .window.
+   Use them on <dialog> or on a <div role="dialog">. system.css's
+   .outer-border / .inner-border wrappers are accepted and draw nothing extra. */
+:where(.modal-dialog, .alert-box, dialog.modal) {
+  box-sizing: border-box;
+  max-width: 100%;
+  margin: 0;
+  padding: var(--clio-modal-padding);
+  border: var(--clio-modal-border);
+  background: var(--clio-dialog-bg);
+  box-shadow: var(--clio-modal-frame);
+  color: var(--clio-ink);
+}
+
+:where(.standard-dialog) {
+  box-sizing: border-box;
+  max-width: 100%;
+  margin: 0;
+  padding: 12px 14px;
+  border: var(--clio-plain-dialog-border);
+  background: var(--clio-dialog-bg);
+  box-shadow: var(--clio-plain-dialog-shadow);
+  color: var(--clio-ink);
+}
+
+:where(dialog):is(.modal-dialog, .alert-box, .standard-dialog, .modal)::backdrop {
+  background: transparent;
+}
+
+:where(.modal-dialog, .alert-box, .standard-dialog) :where(.outer-border, .inner-border) {
+  padding: 0;
+  border: 0;
+}
+
+/* Alert layout: icon on the left, message, buttons bottom-right. */
+:where(.alert-box) {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 16px;
+  row-gap: 12px;
+  align-items: start;
+}
+
+:where(.alert-box) > :where(.alert-icon) {
+  grid-row: 1;
+  width: 32px;
+  height: 32px;
+}
+
+:where(.alert-box) > :where(.alert-contents, .modal-contents, p) {
+  grid-column: 2;
+  margin: 0;
+}
+
+:where(.alert-box) > :where(.alert-buttons, .dialog-buttons) {
+  grid-column: 1 / -1;
+}
+
+:where(.dialog-buttons, .alert-buttons) {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+/* An alert icon drawn here, not Apple's: a rounded speech box with "!". */
+:where(.alert-icon.caution, .alert-icon.note, .alert-icon.stop) {
+  display: block;
+  box-sizing: border-box;
+  border: 2px solid var(--clio-ink);
+  border-radius: 6px;
+  background: var(--clio-paper);
+  color: var(--clio-ink);
+  font: 700 22px/28px var(--clio-font-chrome);
+  text-align: center;
+}
+
+:where(.alert-icon.caution)::before { content: "!"; }
+:where(.alert-icon.note)::before { content: "i"; }
+:where(.alert-icon.stop) { border-radius: 50%; }
+:where(.alert-icon.stop)::before { content: "\00D7"; }
+
+/* Scroll bars, for scroll areas clio.css owns (.window-pane, .listbox,
+   textarea, list-box selects) and for anything you mark with .clio-scroll.
+   Add class="clio-scrollbars" to <html> to give every scroll area the era's
+   scroll bar.
+
+   WebKit/Blink draw the full bar: two arrow boxes, the patterned lane and the
+   scroll box. The scroll box is proportional to the content here (a browser
+   limit), where System 6 drew a fixed 16px square. Firefox has no scroll bar
+   parts, so it gets the era's colours through scrollbar-color. */
+:where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar,
+:where(html.clio-scrollbars)::-webkit-scrollbar {
+  width: var(--clio-scrollbar-size);
+  height: var(--clio-scrollbar-size);
+  background: var(--clio-paper);
+}
+
+:where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-track,
+:where(html.clio-scrollbars)::-webkit-scrollbar-track {
+  background: var(--clio-scrollbar-track);
+  box-shadow: var(--clio-scrollbar-track-shadow);
+}
+
+:where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-track:vertical,
+:where(html.clio-scrollbars)::-webkit-scrollbar-track:vertical {
+  border-left: 1px solid var(--clio-ink);
+}
+
+:where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-track:horizontal,
+:where(html.clio-scrollbars)::-webkit-scrollbar-track:horizontal {
+  border-top: 1px solid var(--clio-ink);
+}
+
+:where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-thumb,
+:where(html.clio-scrollbars)::-webkit-scrollbar-thumb {
+  min-width: var(--clio-scrollbar-size);
+  min-height: var(--clio-scrollbar-size);
+  border: var(--clio-scrollbar-thumb-border);
+  background: var(--clio-scrollbar-thumb-bg);
+  box-shadow: var(--clio-scrollbar-thumb-shadow);
+}
+
+:where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-thumb:horizontal,
+:where(html.clio-scrollbars)::-webkit-scrollbar-thumb:horizontal {
+  background: var(--clio-scrollbar-thumb-bg-horizontal, var(--clio-scrollbar-thumb-bg));
+  box-shadow: var(--clio-scrollbar-thumb-shadow-horizontal, var(--clio-scrollbar-thumb-shadow));
+}
+
+:where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-button:start:decrement,
+:where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-button:end:increment,
+:where(html.clio-scrollbars)::-webkit-scrollbar-button:start:decrement,
+:where(html.clio-scrollbars)::-webkit-scrollbar-button:end:increment {
+  display: block;
+  width: var(--clio-scrollbar-size);
+  height: var(--clio-scrollbar-size);
+  background-color: var(--clio-scrollbar-button-bg);
+  background-position: center;
+  background-repeat: no-repeat;
+  box-shadow: var(--clio-scrollbar-button-shadow);
+}
+
+:where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-button:vertical:decrement,
+:where(html.clio-scrollbars)::-webkit-scrollbar-button:vertical:decrement {
+  border-left: 1px solid var(--clio-ink);
+  border-bottom: 1px solid var(--clio-ink);
+  background-image: var(--clio-scrollbar-up);
+}
+
+:where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-button:vertical:increment,
+:where(html.clio-scrollbars)::-webkit-scrollbar-button:vertical:increment {
+  border-left: 1px solid var(--clio-ink);
+  border-top: 1px solid var(--clio-ink);
+  background-image: var(--clio-scrollbar-down);
+}
+
+:where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-button:horizontal:decrement,
+:where(html.clio-scrollbars)::-webkit-scrollbar-button:horizontal:decrement {
+  border-top: 1px solid var(--clio-ink);
+  border-right: 1px solid var(--clio-ink);
+  background-image: var(--clio-scrollbar-left);
+}
+
+:where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-button:horizontal:increment,
+:where(html.clio-scrollbars)::-webkit-scrollbar-button:horizontal:increment {
+  border-top: 1px solid var(--clio-ink);
+  border-left: 1px solid var(--clio-ink);
+  background-image: var(--clio-scrollbar-right);
+}
+
+:where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-button:vertical:decrement:active,
+:where(html.clio-scrollbars)::-webkit-scrollbar-button:vertical:decrement:active {
+  background-image: var(--clio-scrollbar-up-on);
+}
+
+:where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-button:vertical:increment:active,
+:where(html.clio-scrollbars)::-webkit-scrollbar-button:vertical:increment:active {
+  background-image: var(--clio-scrollbar-down-on);
+}
+
+:where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-button:horizontal:decrement:active,
+:where(html.clio-scrollbars)::-webkit-scrollbar-button:horizontal:decrement:active {
+  background-image: var(--clio-scrollbar-left-on);
+}
+
+:where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-button:horizontal:increment:active,
+:where(html.clio-scrollbars)::-webkit-scrollbar-button:horizontal:increment:active {
+  background-image: var(--clio-scrollbar-right-on);
+}
+
+/* Only the single arrow box at each end, as on the Mac. */
+:where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-button:start:increment,
+:where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-button:end:decrement,
+:where(html.clio-scrollbars)::-webkit-scrollbar-button:start:increment,
+:where(html.clio-scrollbars)::-webkit-scrollbar-button:end:decrement {
+  display: none;
+}
+
+:where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-corner,
+:where(html.clio-scrollbars)::-webkit-scrollbar-corner {
+  border-top: 1px solid var(--clio-ink);
+  border-left: 1px solid var(--clio-ink);
+  background: var(--clio-scrollbar-button-bg);
+}
+
+@supports not selector(::-webkit-scrollbar) {
+  :where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, html.clio-scrollbars, .clio-scrollbars *) {
+    scrollbar-color: var(--clio-scrollbar-thumb-color, var(--clio-ink)) var(--clio-scrollbar-track-color, #c0c0c0);
+  }
+}
+
+/* Adaptations the historical machines never needed. Historical sizes are
+   calibration, not a cage: on a touch screen the controls grow to the
+   "coarse pointer" sizes from AI System 6's fidelity contract, without any
+   transform: scale() of the interface. */
+@media (pointer: coarse) {
+  :root,
+  [data-era] {
+    --clio-control-height: 36px;
+    --clio-field-height: 40px;
+    --clio-menubar-height: 32px;
+    --clio-menu-item-height: 32px;
+    --clio-list-row: 32px;
+    --clio-tab-height: 32px;
+  }
+
+  /* The title-bar boxes keep their 11px art; their hit area grows to 44px. */
+  .title-bar > :is(button, .close, .close-box, .resize, .resize-box, .zoom, .shade, .shade-box, .collapse)::after {
+    content: "";
+    position: absolute;
+    inset: -17px;
+  }
+}
+
+/* Windows High Contrast and other forced-colour modes: give the choice
+   controls back to the system so their state stays visible. */
+@media (forced-colors: active) {
+  :where(input[type="checkbox"], input[type="radio"]) {
+    appearance: auto;
+    -webkit-appearance: auto;
+  }
+
+  .title-bar,
+  .inactive-title-bar {
+    forced-color-adjust: none;
+  }
+}
+
+@media print {
+  :where(.window, .modal-dialog, .alert-box, .standard-dialog) {
+    box-shadow: none;
+  }
+}

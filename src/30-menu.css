@@ -1,0 +1,211 @@
+/* Menu bar and menus.
+   Markup: <ul role="menubar" class="menu-bar"> <li role="none"><button
+   role="menuitem" aria-haspopup="true" aria-expanded="false">File</button>
+   <ul role="menu" class="menu">…</ul></li></ul>. A menu opens while its title
+   has aria-expanded="true" or the class .open (your script toggles either), or
+   while focus is inside it, so it works with the keyboard and no script.
+   system.css's role="menu-bar" / role="menu-item" markup is accepted too. */
+:where(.menu-bar, ul[role="menubar"], ul[role="menu-bar"]) {
+  display: flex;
+  align-items: stretch;
+  box-sizing: border-box;
+  height: var(--clio-menubar-height);
+  margin: 0;
+  padding: var(--clio-menubar-padding);
+  list-style: none;
+  border-bottom: var(--clio-menubar-border);
+  background: var(--clio-menubar-bg);
+  box-shadow: var(--clio-menubar-shadow);
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+:where(.menu-bar, [role="menubar"], [role="menu-bar"]) > li {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+}
+
+/* Menu titles: a <button>, an <a>, or the <li> itself (system.css). */
+:where(.menu-bar, [role="menubar"], [role="menu-bar"]) > li > :is(button, a, span),
+:where([role="menu-bar"]) > [role="menu-item"] {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  margin: 0;
+  padding: var(--clio-menu-title-padding);
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  color: inherit;
+  font: inherit;
+  line-height: 16px;
+  text-decoration: none;
+  white-space: nowrap;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: default;
+}
+
+:where(.menu-bar, [role="menubar"], [role="menu-bar"]) > li > :is(button, a, span):is([aria-expanded="true"], .active),
+:where(.menu-bar, [role="menubar"], [role="menu-bar"]) > li.open > :is(button, a, span),
+:where(.menu-bar, [role="menubar"], [role="menu-bar"]) > li > :is(button, a):active,
+:where([role="menu-bar"]) > [role="menu-item"]:is(:focus, :focus-within) {
+  background: var(--clio-menu-title-active-bg);
+  box-shadow: var(--clio-menu-title-active-shadow);
+  color: var(--clio-menu-title-active-fg);
+  outline: none;
+}
+
+:where(.menu-bar, [role="menubar"], [role="menu-bar"]) > li > :is(button, a):focus-visible {
+  outline: var(--clio-focus-outline);
+  outline-offset: -3px;
+}
+
+/* ---- Menu panel ----------------------------------------------------------
+   System 6: paper, a 1px ink frame and a 1px ink drop shadow. */
+:where(.menu, ul[role="menu"]) {
+  z-index: 10;
+  display: block;
+  box-sizing: border-box;
+  min-width: 140px;
+  width: max-content;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border: var(--clio-menu-border);
+  border-top-width: var(--clio-menu-border-top-width);
+  background: var(--clio-menu-bg);
+  box-shadow: var(--clio-menu-shadow);
+  font-family: var(--clio-font-chrome);
+  font-size: var(--clio-font-size);
+}
+
+/* Inside a menu bar or a parent item, a menu is a drop-down. */
+:where(.menu-bar, [role="menubar"], [role="menu-bar"], .menu, [role="menu"]) li > :is(.menu, ul[role="menu"]) {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  display: none;
+}
+
+:where(.menu, [role="menu"]) li > :is(.menu, ul[role="menu"]) {
+  top: -1px;
+  left: 100%;
+}
+
+:where(.menu-bar, [role="menubar"], [role="menu-bar"], .menu, [role="menu"]) li:is(.open, :focus-within) > :is(.menu, ul[role="menu"]),
+:where(.menu-bar, [role="menubar"], [role="menu-bar"], .menu, [role="menu"]) li > [aria-expanded="true"] + :is(.menu, ul[role="menu"]) {
+  display: block;
+}
+
+/* ---- Menu items ---------------------------------------------------------- */
+:where(.menu, [role="menu"]) > li {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: var(--clio-menu-item-height);
+  padding: var(--clio-menu-item-padding);
+  font-weight: var(--clio-menu-item-weight);
+  line-height: var(--clio-menu-item-height);
+  white-space: nowrap;
+  cursor: default;
+}
+
+:where(.menu, [role="menu"]) > li:has(> :is(a, button)) {
+  padding: 0;
+}
+
+:where(.menu, [role="menu"]) > li > :is(a, button) {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: flex-start;
+  min-width: 0;
+  min-height: var(--clio-menu-item-height);
+  margin: 0;
+  padding: var(--clio-menu-item-padding);
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  text-decoration: none;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: default;
+}
+
+:where(.menu, [role="menu"]) > li:not(.disabled, [aria-disabled="true"], .separator, [role="separator"]):is(:hover, :focus-within, .active),
+:where(.menu, [role="menu"]) > li > :is(a, button):not([aria-disabled="true"], :disabled):is(:hover, :focus-visible, .active) {
+  background: var(--clio-menu-item-active-bg);
+  box-shadow: var(--clio-menu-item-active-shadow);
+  color: var(--clio-menu-item-active-fg);
+  outline: none;
+}
+
+:where(.menu, [role="menu"]) > li:is(.disabled, [aria-disabled="true"]),
+:where(.menu, [role="menu"]) > li > :is(a, button):is(:disabled, [aria-disabled="true"]) {
+  color: var(--clio-disabled);
+}
+
+/* Keyboard shortcut column, right-aligned. */
+:where(.menu, [role="menu"]) :is(kbd, .shortcut) {
+  margin-left: auto;
+  padding-left: 24px;
+  font: inherit;
+}
+
+/* Check mark column. */
+:where(.menu, [role="menu"]) > li:is(.checked, [aria-checked="true"])::before,
+:where(.menu, [role="menu"]) > li > :is([aria-checked="true"], .checked)::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 3px;
+  width: 10px;
+  height: 10px;
+  margin-top: -5px;
+  background: var(--clio-art-s6-menucheck) 0 0 / 10px 10px no-repeat;
+}
+
+:where(.menu, [role="menu"]) > li:is(.checked, [aria-checked="true"]):is(:hover, :focus-within, .active)::before,
+:where(.menu, [role="menu"]) > li > :is([aria-checked="true"], .checked):is(:hover, :focus-visible, .active)::before {
+  background-image: var(--clio-art-s6-menucheck-on);
+}
+
+/* Submenu arrow. */
+:where(.menu, [role="menu"]) > li:has(> :is(.menu, ul[role="menu"]))::after,
+:where(.menu, [role="menu"]) > li > [aria-haspopup="true"]::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 4px;
+  width: 6px;
+  height: 11px;
+  margin-top: -5.5px;
+  background: var(--clio-art-s6-submenu) 0 0 / 6px 11px no-repeat;
+}
+
+:where(.menu, [role="menu"]) > li:has(> :is(.menu, ul[role="menu"])):is(:hover, :focus-within, .active)::after {
+  background-image: var(--clio-art-s6-submenu-on);
+}
+
+/* Separator: System 6 draws a dotted grey rule through a full-height row. */
+:where(.menu, [role="menu"]) > :is(li.separator, li[role="separator"], hr) {
+  display: block;
+  height: var(--clio-menu-separator-height);
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: var(--clio-menu-separator);
+}
+
+/* system.css divider items keep their label row and add the rule below. */
+:where(.menu, [role="menu"]) > li.divider {
+  border-bottom: 1px dotted var(--clio-ink);
+}

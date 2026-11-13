@@ -1,0 +1,934 @@
+{
+  "name": "clio.css",
+  "version": "0.1.0",
+  "description": "CSS library for classic Mac OS interfaces: Macintosh System 6 and Mac OS 8/9 Platinum windows, menus, buttons, scroll bars and dialogs, with every value traced to measured pixels.",
+  "homepage": "https://surfine.github.io/clio.css/",
+  "license": "MIT",
+  "eras": [
+    {
+      "id": "system6",
+      "name": "Macintosh System 6",
+      "attribute": "data-era=\"system6\"",
+      "default": true,
+      "file": "dist/clio.system6.css"
+    },
+    {
+      "id": "platinum",
+      "name": "Mac OS 8/9 Platinum",
+      "attribute": "data-era=\"platinum\"",
+      "file": "dist/clio.platinum.css"
+    }
+  ],
+  "install": {
+    "npm": "npm install clio.css",
+    "cdn": "https://unpkg.com/clio.css@0.1.0/dist/clio.css",
+    "jsdelivr": "https://cdn.jsdelivr.net/npm/clio.css@0.1.0/dist/clio.css"
+  },
+  "evidenceStatuses": {
+    "measured": "read from real pixels of the era",
+    "inferred": "reasoned from documentation or behaviour, not measured",
+    "adapted": "a deliberate departure for the web (touch, focus, contrast)",
+    "third-party": "art or font from a named, licensed project"
+  },
+  "evidenceBase": "AI System 6 @b75cd4ed",
+  "components": [
+    {
+      "id": "window",
+      "bare": true,
+      "name": "Window",
+      "summary": "A document window: frame, title bar with close and zoom boxes (plus the WindowShade box in Platinum), an optional details bar and a scrolling pane.",
+      "selectors": [
+        ".window",
+        ".window.inactive",
+        ".title-bar",
+        ".title-bar > .title",
+        ".title-bar > .close",
+        ".title-bar > .resize",
+        ".title-bar > .shade",
+        ".details-bar",
+        ".window-pane",
+        ".status-bar",
+        ".separator",
+        ".inactive-title-bar"
+      ],
+      "aliases": {
+        "system.css": [
+          ".title-bar button.close",
+          ".title-bar button.resize",
+          ".inactive-title-bar",
+          ".window-pane",
+          ".details-bar",
+          ".separator"
+        ],
+        "AI System 6": [
+          ".close-box",
+          ".resize-box",
+          ".shade-box",
+          ".title-bar h1",
+          ".title-bar h2"
+        ]
+      },
+      "tokens": [
+        "--clio-window-bg",
+        "--clio-window-border",
+        "--clio-window-shadow",
+        "--clio-titlebar-height",
+        "--clio-titlebar-bg",
+        "--clio-box-size",
+        "--clio-box-inset",
+        "--clio-box-isolation",
+        "--clio-pane-bg"
+      ],
+      "accessibility": "Give each box an aria-label (Close, Zoom, Collapse). The title is a real heading; pick the level that fits your page (h1 for a full-screen app window). Buttons keep a visible focus ring. On touch screens each box gets a 45px hit area while its art stays 11px.",
+      "html": "<div class=\"window\" style=\"width: 300px\">\n  <div class=\"title-bar\">\n    <button class=\"close\" aria-label=\"Close\"></button>\n    <h3 class=\"title\">Macintosh HD</h3>\n    <button class=\"resize\" aria-label=\"Zoom\"></button>\n  </div>\n  <div class=\"details-bar\">\n    <span>12 items</span>\n    <span>232K in disk</span>\n    <span>167K available</span>\n  </div>\n  <div class=\"window-pane\" style=\"height: 96px\">\n    <p>A window pane scrolls with the era's scroll bars.</p>\n  </div>\n</div>",
+      "variants": [
+        {
+          "name": "Inactive window",
+          "note": "A background window keeps its title but erases its stripes and boxes.",
+          "html": "<div class=\"window inactive\" style=\"width: 300px\">\n  <div class=\"title-bar\">\n    <button class=\"close\" aria-label=\"Close\"></button>\n    <h3 class=\"title\">Untitled</h3>\n    <button class=\"resize\" aria-label=\"Zoom\"></button>\n  </div>\n  <div class=\"window-pane\" style=\"height: 48px\"></div>\n</div>"
+        },
+        {
+          "name": "With a WindowShade box",
+          "note": "Platinum draws the collapse box at the far right. System 6 had none, so the box is hidden there.",
+          "html": "<div class=\"window\" style=\"width: 300px\">\n  <div class=\"title-bar\">\n    <button class=\"close\" aria-label=\"Close\"></button>\n    <h3 class=\"title\">Appearance</h3>\n    <button class=\"resize\" aria-label=\"Zoom\"></button>\n    <button class=\"shade\" aria-label=\"Collapse\"></button>\n  </div>\n  <div class=\"window-pane\" style=\"height: 48px\"></div>\n</div>"
+        }
+      ],
+      "evidence": [
+        {
+          "era": "system6",
+          "claim": "Title bar: a 17px box below a 1px inset; 2px paper, a 12px row of six 1px ink stripes on a 2px period, 2px paper, a 1px rule",
+          "status": "measured",
+          "source": "apps/desktop/styles/00-foundation.css:906",
+          "upstream": "System 6.0.8 running in an emulator, read at exact 2x pixels"
+        },
+        {
+          "era": "system6",
+          "claim": "Close and zoom boxes are 11px squares, 7px in from each end, with 3px of paper cut out of the stripes around them",
+          "status": "measured",
+          "source": "apps/desktop/styles/00-foundation.css:906",
+          "upstream": "same capture"
+        },
+        {
+          "era": "system6",
+          "claim": "Zoom box: an inner square of 7 of the frame's 11 pixels sharing its top-left corner",
+          "status": "measured",
+          "source": "apps/desktop/styles/10-windows.css:1059",
+          "upstream": "System 6 zoom box, 7:11"
+        },
+        {
+          "era": "system6",
+          "claim": "An inactive window draws a plain white title strip with its name; no stripes, close box or zoom box",
+          "status": "measured",
+          "source": "apps/desktop/styles/00-foundation.css:951",
+          "upstream": "observed behaviour of System 6"
+        },
+        {
+          "era": "system6",
+          "claim": "Pressed close box shows a starburst",
+          "status": "inferred",
+          "source": "apps/desktop/styles/10-windows.css (close-box ::before/::after)",
+          "upstream": "System 6 close-box tracking; pixels redrawn for clio.css"
+        },
+        {
+          "era": "system6",
+          "claim": "The window frame has a 1px ink drop shadow on the right and bottom",
+          "status": "inferred",
+          "source": "not in AI System 6 (it sets no window shadow)",
+          "upstream": "Inside Macintosh, Window Manager: documentProc frame; to be measured"
+        },
+        {
+          "era": "system6",
+          "claim": "The details bar closes with two 1px rules",
+          "status": "inferred",
+          "source": "not measured",
+          "upstream": "System 6 Finder window header"
+        },
+        {
+          "era": "platinum",
+          "claim": "Frame: 1px black line, a raised 4px strip (white top/left, #999 bottom/right), the black content line; 2px 5px 5px padding",
+          "status": "measured",
+          "source": "apps/desktop/styles/65-appearance-themes.css:1744 (P14)",
+          "upstream": "Mac OS 8/9 window captures 16 and 21"
+        },
+        {
+          "era": "platinum",
+          "claim": "Title bar 19px: #ccc, six white/#777 ridge pairs from row 1, #999 shadow row, black rule; #ccc covers behind the boxes",
+          "status": "measured",
+          "source": "apps/desktop/styles/65-appearance-themes.css:104",
+          "upstream": "GUIdebook Mac OS 9.0 Appearance window (Theme Lab specimen active-titlebar)"
+        },
+        {
+          "era": "platinum",
+          "claim": "Title in bold Charcoal; on other systems Asap at width 123 shifted (-1px, -1px), the metrics the title bar was measured with",
+          "status": "measured",
+          "source": "apps/desktop/styles/65-appearance-themes.css:1803",
+          "upstream": "GUIdebook Mac OS 9.0 Appearance window"
+        },
+        {
+          "era": "platinum",
+          "claim": "Boxes: 11px, #222 frame, #999 to white gradient, #888 bevel above-left and white below-right; pressed #444 to #bbb",
+          "status": "measured",
+          "source": "apps/desktop/styles/65-appearance-themes.css:1820",
+          "upstream": "GUIdebook Mac OS 9.0 captures"
+        },
+        {
+          "era": "platinum",
+          "claim": "Zoom mark: a six-pixel lower-left corner; WindowShade mark: two nine-pixel rules at y=4 and y=6",
+          "status": "measured",
+          "source": "apps/desktop/styles/65-platinum-utility.css:725, :738",
+          "upstream": "GUIdebook Mac OS 9, 1x pixels"
+        },
+        {
+          "era": "platinum",
+          "claim": "Background window: #555 frame and drop, flat controls, #777 title, boxes erased",
+          "status": "measured",
+          "source": "apps/desktop/styles/65-appearance-themes.css:1757 (N1, P26)",
+          "upstream": "Mac OS 9 native capture 53; GUIdebook active/inactive"
+        }
+      ]
+    },
+    {
+      "id": "menu",
+      "bare": true,
+      "name": "Menu bar and menus",
+      "summary": "The menu bar across the top of the screen and its pull-down menus: items, keyboard shortcuts, check marks, separators, disabled items and submenus.",
+      "selectors": [
+        ".menu-bar",
+        "[role=menubar]",
+        ".menu",
+        "[role=menu]",
+        ".menu > li",
+        "li.separator",
+        "li.checked",
+        "li.disabled",
+        "kbd"
+      ],
+      "aliases": {
+        "system.css": [
+          "ul[role=menu-bar]",
+          "[role=menu-item]",
+          "li.divider"
+        ]
+      },
+      "tokens": [
+        "--clio-menubar-height",
+        "--clio-menubar-bg",
+        "--clio-menu-bg",
+        "--clio-menu-shadow",
+        "--clio-menu-item-height",
+        "--clio-menu-item-active-bg",
+        "--clio-menu-separator"
+      ],
+      "accessibility": "Use role=menubar, role=menu and role=menuitem with aria-haspopup and aria-expanded on titles. A menu opens while its title has aria-expanded=true, while its <li> has the class open, or while focus is inside it, so it works from the keyboard without script. Arrow-key movement between items is up to your script.",
+      "html": "<ul class=\"menu-bar\" role=\"menubar\" aria-label=\"Menu bar\">\n  <li role=\"none\" class=\"open\">\n    <button role=\"menuitem\" aria-haspopup=\"true\" aria-expanded=\"true\">File</button>\n    <ul class=\"menu\" role=\"menu\">\n      <li role=\"none\"><button role=\"menuitem\">New Folder <kbd>⌘N</kbd></button></li>\n      <li role=\"none\"><button role=\"menuitem\">Open <kbd>⌘O</kbd></button></li>\n      <li role=\"none\"><button role=\"menuitem\" aria-disabled=\"true\">Print</button></li>\n      <li role=\"none\"><button role=\"menuitem\">Close <kbd>⌘W</kbd></button></li>\n      <li role=\"separator\"></li>\n      <li role=\"none\"><button role=\"menuitemcheckbox\" aria-checked=\"true\">Show Clipboard</button></li>\n    </ul>\n  </li>\n  <li role=\"none\"><button role=\"menuitem\" aria-haspopup=\"true\" aria-expanded=\"false\">Edit</button></li>\n  <li role=\"none\"><button role=\"menuitem\" aria-haspopup=\"true\" aria-expanded=\"false\">View</button></li>\n  <li role=\"none\"><button role=\"menuitem\" aria-haspopup=\"true\" aria-expanded=\"false\">Special</button></li>\n</ul>",
+      "reserveHeight": 150,
+      "evidence": [
+        {
+          "era": "system6",
+          "claim": "Menu bar 20px with a 1px ink rule; selected title inverts",
+          "status": "inferred",
+          "source": "docs/design/CLASSIC_PLATINUM_FIDELITY.md:87",
+          "upstream": "historical reference ~20px; not yet measured from a capture"
+        },
+        {
+          "era": "system6",
+          "claim": "Menu: paper, 1px ink frame, 1px ink drop shadow; 16px rows; the highlighted row inverts",
+          "status": "inferred",
+          "source": "apps/desktop/styles/00-foundation.css:1094",
+          "upstream": "System 6 menus; Chicago 12 line spacing"
+        },
+        {
+          "era": "system6",
+          "claim": "Separator: a dotted grey rule through a full-height row",
+          "status": "inferred",
+          "source": "not measured",
+          "upstream": "System 6 menus"
+        },
+        {
+          "era": "platinum",
+          "claim": "Menu bar: #ddd, white top line, #999 bottom line, 1px black rule, 20px; open title #333399 with #6666cc/#000088 lines",
+          "status": "measured",
+          "source": "apps/desktop/styles/65-appearance-themes.css:298, :45",
+          "upstream": "Mac OS 9 native menu bar captures 02/04"
+        },
+        {
+          "era": "platinum",
+          "claim": "Menu: no top rule, white/#999 inner bevel, #222 1px drop; 16px rows at weight 600; highlight #333399 with #6666cc/#000088 side columns",
+          "status": "measured",
+          "source": "apps/desktop/styles/65-appearance-themes.css:912 (P21), :917 (P24)",
+          "upstream": "GUIdebook Mac OS 9.0 Apple menu (Theme Lab specimen apple-menu)"
+        },
+        {
+          "era": "platinum",
+          "claim": "Separator: #888 over white, in an 8px row",
+          "status": "inferred",
+          "source": "apps/desktop/styles/65-appearance-themes.css (separator #888/white)",
+          "upstream": "the line pair is measured; the 8px row height is not"
+        },
+        {
+          "era": "platinum",
+          "claim": "Check mark and submenu arrow art",
+          "status": "third-party",
+          "source": "classic-stylesheets macos9/checkmark.svg, menu-right.svg (MIT)",
+          "upstream": "nielssp/classic-stylesheets @9ebd2d8"
+        }
+      ]
+    },
+    {
+      "id": "button",
+      "name": "Push button",
+      "summary": "Push buttons, the default button with its ring, the pressed state and the disabled state. Styles <button>, .btn and input buttons.",
+      "selectors": [
+        "button",
+        ".btn",
+        ".default",
+        ".btn-default",
+        "button:active",
+        "button.active",
+        "button:disabled",
+        "input[type=submit]"
+      ],
+      "aliases": {
+        "system.css": [
+          ".btn",
+          ".btn-default",
+          ".standard-button"
+        ],
+        "AI System 6": [
+          ".btn.default"
+        ]
+      },
+      "tokens": [
+        "--clio-button-bg",
+        "--clio-button-border",
+        "--clio-button-radius",
+        "--clio-button-shadow",
+        "--clio-button-active-bg",
+        "--clio-button-default-ring",
+        "--clio-control-height"
+      ],
+      "accessibility": "Hover never changes a button: it is pressed only by pointer-down, Space or Enter. Keyboard focus draws a dotted frame (System 6) or a 2px #6666cc ring (Platinum), separate from the default ring.",
+      "html": "<div class=\"field-row\" style=\"gap: 16px\">\n  <button>Cancel</button>\n  <button class=\"default\">OK</button>\n  <button class=\"active\">Pressed</button>\n  <button disabled>Eject</button>\n</div>",
+      "evidence": [
+        {
+          "era": "system6",
+          "claim": "1px ink round rectangle, paper face, Chicago 12; pressed inverts to ink with paper text",
+          "status": "inferred",
+          "source": "apps/desktop/styles/10-windows.css:3588",
+          "upstream": "AI System 6 Theme Lab default-ok specimen (authored, not a capture)"
+        },
+        {
+          "era": "system6",
+          "claim": "Default button: a 1px gap then a 3px ring",
+          "status": "inferred",
+          "source": "apps/desktop/styles/00-foundation.css:79",
+          "upstream": "Inside Macintosh, Dialog Manager: PenSize(3,3), InsetRect(-4,-4), FrameRoundRect(16,16)"
+        },
+        {
+          "era": "both",
+          "claim": "Hover never changes a push button; pressed only on pointer-down, Space or Enter",
+          "status": "inferred",
+          "source": "docs/design/CLASSIC_PLATINUM_FIDELITY.md:210",
+          "upstream": "a 1987–1999 Mac had no hover state"
+        },
+        {
+          "era": "system6",
+          "claim": "Keyboard focus: a 1px dotted frame 2px out",
+          "status": "adapted",
+          "source": "apps/desktop/styles/00-foundation.css:519",
+          "upstream": "System 6 had no button focus; a dotted frame cannot be read as the default ring"
+        },
+        {
+          "era": "platinum",
+          "claim": "#ddd face, 1px black border, 3px corners, bevel white/#ddd over #777/#aaa",
+          "status": "measured",
+          "source": "apps/desktop/styles/65-appearance-themes.css:236",
+          "upstream": "GUIdebook Mac OS 9.0 About dialog (Theme Lab specimen default-ok)"
+        },
+        {
+          "era": "platinum",
+          "claim": "Pressed: #666 face, white text, #444/#555 top-left over #888/#777 bottom-right",
+          "status": "measured",
+          "source": "apps/desktop/styles/65-appearance-themes.css:933 (P29)",
+          "upstream": "Infinite Mac Mac OS 9.0 capture"
+        },
+        {
+          "era": "platinum",
+          "claim": "Default ring: 1px black, a #aaa band with #ddd/#777 edges, 1px gap",
+          "status": "measured",
+          "source": "apps/desktop/styles/65-platinum-utility.css:773",
+          "upstream": "GUIdebook Mac OS 9.0 (default-ok specimen)"
+        },
+        {
+          "era": "platinum",
+          "claim": "Disabled: #888 border, flat #ddd, #777 text; the default ring goes #888",
+          "status": "measured",
+          "source": "apps/desktop/styles/65-appearance-themes.css (N5)",
+          "upstream": "GUIdebook Open dialog Eject button (button-disabled specimen)"
+        }
+      ]
+    },
+    {
+      "id": "checkbox",
+      "name": "Check box",
+      "summary": "A check box drawn on the native <input type=checkbox>; no extra label markup needed.",
+      "selectors": [
+        "input[type=checkbox]",
+        "label > input[type=checkbox]",
+        ".field-row"
+      ],
+      "tokens": [
+        "--clio-check-size",
+        "--clio-check-bg",
+        "--clio-check-border",
+        "--clio-check-shadow",
+        "--clio-check-mark"
+      ],
+      "accessibility": "Native input, so keyboard, form and screen-reader behaviour are the browser's. In forced-colours mode the control returns to the system's own drawing.",
+      "html": "<div class=\"field-row-stacked\">\n  <label><input type=\"checkbox\" checked> Show warnings</label>\n  <label><input type=\"checkbox\"> Use small icons</label>\n  <label><input type=\"checkbox\" checked disabled> Locked</label>\n</div>",
+      "evidence": [
+        {
+          "era": "system6",
+          "claim": "A 12px box; checked draws an X from corner to corner",
+          "status": "inferred",
+          "source": "apps/desktop/styles/00-foundation.css:965",
+          "upstream": "System 6 check box; AI System 6 uses 13px, clio.css 12px to match the radio"
+        },
+        {
+          "era": "system6",
+          "claim": "X art",
+          "status": "third-party",
+          "source": "apps/desktop/assets/themes/classic/controls/checkmark.svg",
+          "upstream": "system.css icon/checkmark.svg (MIT, Sakun Acharige)"
+        },
+        {
+          "era": "platinum",
+          "claim": "12px #ddd well, 1px black frame, white top-left and #888 bottom-right bevel",
+          "status": "measured",
+          "source": "apps/desktop/styles/65-appearance-themes.css:897 (P18)",
+          "upstream": "GUIdebook Mac OS 9.0 Appearance Options tab (checkbox specimens)"
+        },
+        {
+          "era": "platinum",
+          "claim": "Check mark art",
+          "status": "third-party",
+          "source": "classic-stylesheets macos9/checkmark.svg (MIT)",
+          "upstream": "nielssp/classic-stylesheets @9ebd2d8"
+        }
+      ]
+    },
+    {
+      "id": "radio",
+      "name": "Radio button",
+      "summary": "A radio button drawn on the native <input type=radio>.",
+      "selectors": [
+        "input[type=radio]"
+      ],
+      "tokens": [
+        "--clio-radio-size",
+        "--clio-radio-off",
+        "--clio-radio-on"
+      ],
+      "accessibility": "Native input; group radios with the same name inside a fieldset with a legend.",
+      "html": "<fieldset>\n  <legend>Highlight</legend>\n  <div class=\"field-row-stacked\">\n    <label><input type=\"radio\" name=\"hl\" checked> Lavender</label>\n    <label><input type=\"radio\" name=\"hl\"> Graphite</label>\n    <label><input type=\"radio\" name=\"hl\" disabled> Other</label>\n  </div>\n</fieldset>",
+      "evidence": [
+        {
+          "era": "system6",
+          "claim": "12px ring and 6px dot art",
+          "status": "third-party",
+          "source": "apps/desktop/assets/themes/classic/controls/radio-*.svg",
+          "upstream": "system.css icon/radio-border.svg, radio-dot.svg (MIT, Sakun Acharige)"
+        },
+        {
+          "era": "platinum",
+          "claim": "Radio drawn with CSS gradients: black ring, white to #888 well, 6px black dot",
+          "status": "adapted",
+          "source": "apps/desktop/styles/65-appearance-themes.css:291",
+          "upstream": "AI System 6 later replaced this with art cut from a capture (P19); clio.css ships no cut art"
+        }
+      ]
+    },
+    {
+      "id": "text-field",
+      "name": "Text field",
+      "summary": "Single-line inputs and <textarea>.",
+      "selectors": [
+        "input[type=text]",
+        "input[type=search]",
+        "input[type=email]",
+        "input[type=password]",
+        "input[type=number]",
+        "textarea"
+      ],
+      "tokens": [
+        "--clio-field-bg",
+        "--clio-field-border",
+        "--clio-field-shadow",
+        "--clio-field-padding",
+        "--clio-field-height"
+      ],
+      "accessibility": "Keyboard focus draws a ring around the field in addition to the caret.",
+      "html": "<div class=\"field-row-stacked\" style=\"width: 240px\">\n  <label for=\"clio-name\">Name:</label>\n  <input id=\"clio-name\" type=\"text\" value=\"Untitled\" style=\"width: 100%\">\n  <label for=\"clio-notes\">Notes:</label>\n  <textarea id=\"clio-notes\" rows=\"3\" style=\"width: 100%\">Text areas scroll with the era's scroll bar.</textarea>\n</div>",
+      "evidence": [
+        {
+          "era": "system6",
+          "claim": "1px ink frame, white, Geneva 12",
+          "status": "inferred",
+          "source": "apps/desktop/styles/00-foundation.css:189",
+          "upstream": "System 6 dialog edit text"
+        },
+        {
+          "era": "platinum",
+          "claim": "White field, 1px black frame, #888 shadow above-left and white etch below-right",
+          "status": "measured",
+          "source": "apps/desktop/styles/65-appearance-themes.css:935 (P30)",
+          "upstream": "Infinite Mac Mac OS 9.0 capture"
+        },
+        {
+          "era": "platinum",
+          "claim": "Focus: a 2px #6666cc ring",
+          "status": "measured",
+          "source": "apps/desktop/styles/65-platinum-utility.css:38",
+          "upstream": "Mac OS 9 capture platinum-native/10b-fonts-tab"
+        }
+      ]
+    },
+    {
+      "id": "select",
+      "name": "Pop-up menu",
+      "summary": "A <select> drawn as the era's pop-up menu; <select multiple> or size>1 becomes a list box.",
+      "selectors": [
+        "select",
+        "select[multiple]",
+        "select[size]"
+      ],
+      "tokens": [
+        "--clio-popup-bg",
+        "--clio-popup-border",
+        "--clio-popup-shadow",
+        "--clio-popup-arrow"
+      ],
+      "accessibility": "Native <select>, so the open list is the browser's own and works everywhere.",
+      "html": "<div class=\"field-row\">\n  <label for=\"clio-font\">Font:</label>\n  <select id=\"clio-font\">\n    <option>Chicago</option>\n    <option selected>Geneva</option>\n    <option>New York</option>\n  </select>\n</div>",
+      "evidence": [
+        {
+          "era": "system6",
+          "claim": "A box with a 1px drop shadow",
+          "status": "inferred",
+          "source": "not measured",
+          "upstream": "System 6 pop-up menu CDEF"
+        },
+        {
+          "era": "system6",
+          "claim": "The down triangle",
+          "status": "adapted",
+          "source": "drawn for clio.css",
+          "upstream": "a System 7 convention, kept so the control reads as a menu"
+        },
+        {
+          "era": "platinum",
+          "claim": "#ddd, 3px corners, white/#aaa bevel, bold label, a separate bevelled arrow part with the 7x10 arrow",
+          "status": "measured",
+          "source": "apps/desktop/styles/65-appearance-themes.css:1916 (P31)",
+          "upstream": "GUIdebook Mac OS 9.0 (popup-normal specimen), native 09b"
+        },
+        {
+          "era": "platinum",
+          "claim": "The arrow part is drawn with background layers, approximating the measured bevel",
+          "status": "inferred",
+          "source": "clio.css",
+          "upstream": "select has no ::after in CSS"
+        },
+        {
+          "era": "platinum",
+          "claim": "Arrow art",
+          "status": "third-party",
+          "source": "classic-stylesheets macos9/dropdown.svg (MIT)",
+          "upstream": "nielssp/classic-stylesheets @9ebd2d8"
+        }
+      ]
+    },
+    {
+      "id": "listbox",
+      "bare": true,
+      "name": "List box",
+      "summary": "A scrolling list with one or more selected rows, as in the Open dialog.",
+      "selectors": [
+        ".listbox",
+        "[role=listbox]",
+        "[role=option]",
+        "[aria-selected=true]",
+        ".selected"
+      ],
+      "tokens": [
+        "--clio-list-bg",
+        "--clio-list-border",
+        "--clio-list-shadow",
+        "--clio-list-row",
+        "--clio-selection-bg",
+        "--clio-selection-fg"
+      ],
+      "accessibility": "Use role=listbox and role=option with aria-selected; move focus with your script (roving tabindex).",
+      "html": "<ul class=\"listbox\" role=\"listbox\" aria-label=\"Documents\" style=\"width: 220px; height: 82px\">\n  <li role=\"option\" aria-selected=\"true\">Apple DVD Player</li>\n  <li role=\"option\">Apple Video Player</li>\n  <li role=\"option\">AppleCD Audio Player</li>\n  <li role=\"option\">QuickTime</li>\n  <li role=\"option\">Security</li>\n  <li role=\"option\">SimpleText</li>\n</ul>",
+      "evidence": [
+        {
+          "era": "system6",
+          "claim": "White list, 1px ink frame, 16px rows, selection inverts",
+          "status": "inferred",
+          "source": "not measured",
+          "upstream": "System 6 Standard File dialog"
+        },
+        {
+          "era": "platinum",
+          "claim": "Selection is lavender #ccccff with black text",
+          "status": "measured",
+          "source": "apps/desktop/styles/65-appearance-themes.css:128",
+          "upstream": "GUIdebook Mac OS 9.0 Open dialog (open-list-scrollbar specimen)"
+        },
+        {
+          "era": "platinum",
+          "claim": "Rows carry no divider",
+          "status": "measured",
+          "source": "apps/desktop/styles/65-appearance-themes.css:860 (P10)",
+          "upstream": "Mac OS 9 native list capture 21"
+        }
+      ]
+    },
+    {
+      "id": "scrollbar",
+      "bare": true,
+      "name": "Scroll bar",
+      "summary": "The era's scroll bar on every scroll area clio.css owns, on any element with .clio-scroll, or on the whole page with <html class=\"clio-scrollbars\">.",
+      "selectors": [
+        ".window-pane",
+        ".clio-scroll",
+        "html.clio-scrollbars",
+        "::-webkit-scrollbar"
+      ],
+      "tokens": [
+        "--clio-scrollbar-size",
+        "--clio-scrollbar-track",
+        "--clio-scrollbar-thumb-bg",
+        "--clio-scrollbar-button-bg"
+      ],
+      "accessibility": "Native scrolling is untouched: wheel, keyboard and touch scroll as usual.",
+      "html": "<div class=\"clio clio-scroll\" style=\"width: 220px; height: 96px; overflow: scroll; border: 1px solid; background: var(--clio-pane-bg); font-family: var(--clio-font-text)\">\n  <p style=\"width: 360px; margin: 8px\">The lane, the scroll box and both arrow boxes come from the era. Firefox has no scroll-bar parts, so it gets the era's colours only.</p>\n  <p style=\"margin: 8px\">Scroll me.</p>\n</div>",
+      "evidence": [
+        {
+          "era": "system6",
+          "claim": "A 16px lane",
+          "status": "inferred",
+          "source": "apps/desktop/styles/00-foundation.css:1173",
+          "upstream": "System 6 document window frame"
+        },
+        {
+          "era": "system6",
+          "claim": "50% grey lane pattern",
+          "status": "inferred",
+          "source": "apps/desktop/styles/00-foundation.css:1177",
+          "upstream": "drawn as a 1px checker here; AI System 6 uses a 2px cell"
+        },
+        {
+          "era": "system6",
+          "claim": "Hollow arrow art",
+          "status": "inferred",
+          "source": "drawn for clio.css",
+          "upstream": "System 6 scroll arrows; to be measured"
+        },
+        {
+          "era": "both",
+          "claim": "The scroll box grows with the visible fraction instead of a fixed 16px square",
+          "status": "adapted",
+          "source": "clio.css",
+          "upstream": "browsers size ::-webkit-scrollbar-thumb themselves"
+        },
+        {
+          "era": "platinum",
+          "claim": "Lane #aaa with a double bevel; lavender #9999ff scroll box with #ccf/#66c bevel and grip ridges; #ddd arrow boxes with stepped 2/4/6/8 arrows",
+          "status": "measured",
+          "source": "apps/desktop/styles/65-appearance-themes.css:336 (P16), :351 (P17), :364 (P27)",
+          "upstream": "Mac OS 9 native capture 16; GUIdebook Open dialog"
+        }
+      ]
+    },
+    {
+      "id": "dialog",
+      "bare": true,
+      "name": "Dialogs and alerts",
+      "summary": "The modal dialog frame, the alert layout with an icon, and the plain shadowed box.",
+      "selectors": [
+        ".modal-dialog",
+        ".alert-box",
+        ".standard-dialog",
+        ".modeless-dialog",
+        ".alert-icon",
+        ".dialog-buttons"
+      ],
+      "aliases": {
+        "system.css": [
+          ".modal-dialog",
+          ".alert-box",
+          ".standard-dialog",
+          ".outer-border",
+          ".inner-border",
+          ".modal-contents"
+        ]
+      },
+      "tokens": [
+        "--clio-dialog-bg",
+        "--clio-modal-border",
+        "--clio-modal-frame",
+        "--clio-plain-dialog-shadow"
+      ],
+      "accessibility": "Put the classes on a native <dialog> opened with showModal() to get focus trapping and Escape; label it with aria-labelledby.",
+      "html": "<div class=\"alert-box\" role=\"alertdialog\" aria-labelledby=\"clio-alert-msg\" style=\"width: 340px\">\n  <span class=\"alert-icon caution\" aria-hidden=\"true\"></span>\n  <p id=\"clio-alert-msg\">Save changes to the document “Untitled” before closing?</p>\n  <div class=\"dialog-buttons\">\n    <button>Don’t Save</button>\n    <button>Cancel</button>\n    <button class=\"default\">Save</button>\n  </div>\n</div>",
+      "variants": [
+        {
+          "name": "Plain box",
+          "note": "The shadowed box, for a message with no frame of its own.",
+          "html": "<div class=\"standard-dialog\" style=\"width: 280px\">\n  <p style=\"margin: 0\">Welcome to Macintosh.</p>\n</div>"
+        }
+      ],
+      "evidence": [
+        {
+          "era": "system6",
+          "claim": "Modal frame: 1px ink, 1px paper gap, 2px ink",
+          "status": "inferred",
+          "source": "apps/desktop/styles/84-clio-write.css:210",
+          "upstream": "AI System 6 has two recipes (this one and 00-foundation.css .system-modal); neither is measured"
+        },
+        {
+          "era": "system6",
+          "claim": "Plain box: 1px ink frame and a 2px drop shadow",
+          "status": "inferred",
+          "source": "not measured",
+          "upstream": "altDBoxProc"
+        },
+        {
+          "era": "both",
+          "claim": "The alert icon is drawn here, not Apple's",
+          "status": "adapted",
+          "source": "clio.css",
+          "upstream": "no Apple icons are shipped"
+        },
+        {
+          "era": "platinum",
+          "claim": "1px black frame over #ddd, inner bevel of three white steps inside #555/#999/#aaa, 1px black drop",
+          "status": "measured",
+          "source": "apps/desktop/styles/65-appearance-themes.css:840 (P06)",
+          "upstream": "GUIdebook Mac OS 9.0 About application (about-alert specimen)"
+        }
+      ]
+    },
+    {
+      "id": "fieldset",
+      "name": "Group box",
+      "summary": "A <fieldset> with a <legend>, for grouping controls.",
+      "selectors": [
+        "fieldset",
+        "legend"
+      ],
+      "tokens": [
+        "--clio-group-border",
+        "--clio-group-shadow"
+      ],
+      "accessibility": "A fieldset's legend names the group for screen readers.",
+      "html": "<fieldset style=\"width: 260px\">\n  <legend>Sound</legend>\n  <div class=\"field-row\"><label><input type=\"checkbox\" checked> Play system alerts</label></div>\n</fieldset>",
+      "evidence": [
+        {
+          "era": "system6",
+          "claim": "1px ink frame with the legend on paper",
+          "status": "inferred",
+          "source": "not measured",
+          "upstream": "System 6 control panels"
+        },
+        {
+          "era": "platinum",
+          "claim": "Etched: #888 line with a white line inside and below",
+          "status": "measured",
+          "source": "apps/desktop/styles/65-appearance-themes.css:909 (P20)",
+          "upstream": "Mac OS 9 native group box"
+        }
+      ]
+    },
+    {
+      "id": "progress",
+      "name": "Progress bar",
+      "summary": "The native <progress> element as the era's thermometer.",
+      "selectors": [
+        "progress"
+      ],
+      "tokens": [
+        "--clio-progress-height",
+        "--clio-progress-bg",
+        "--clio-progress-fill",
+        "--clio-progress-shadow"
+      ],
+      "accessibility": "Native <progress>; give it a label or aria-label.",
+      "html": "<div class=\"field-row-stacked\" style=\"width: 260px\">\n  <label for=\"clio-copy\">Copying “System Folder”…</label>\n  <progress id=\"clio-copy\" max=\"100\" value=\"62\">62%</progress>\n</div>",
+      "evidence": [
+        {
+          "era": "system6",
+          "claim": "1px ink frame, ink fill",
+          "status": "inferred",
+          "source": "not measured",
+          "upstream": "System 6 Finder copy progress"
+        },
+        {
+          "era": "platinum",
+          "claim": "Barber-pole fill: ten 1px hard stops from #333399 through #eee to #000055",
+          "status": "measured",
+          "source": "apps/desktop/styles/65-appearance-themes.css:937 (P32)",
+          "upstream": "Mac OS 9 native progress bar"
+        },
+        {
+          "era": "platinum",
+          "claim": "#bbb track with white/#aaa outer and #888/#ddd inner bevel",
+          "status": "inferred",
+          "source": "apps/desktop/styles/65-appearance-themes.css:592",
+          "upstream": "AI System 6 token, not tagged as measured"
+        }
+      ]
+    },
+    {
+      "id": "tabs",
+      "name": "Tabs",
+      "summary": "A tab strip over a panel. Native in Platinum; an adaptation in System 6, which had no tab control.",
+      "selectors": [
+        "[role=tablist]",
+        "[role=tab]",
+        "[aria-selected=true]",
+        "[role=tabpanel]",
+        ".tabs",
+        ".tab-panel"
+      ],
+      "tokens": [
+        "--clio-tab-height",
+        "--clio-tab-panel-bg",
+        "--clio-tab-panel-border"
+      ],
+      "accessibility": "Use role=tablist, role=tab with aria-selected and aria-controls, and role=tabpanel; arrow keys between tabs are up to your script.",
+      "html": "<div style=\"width: 320px\">\n  <div role=\"tablist\" aria-label=\"Appearance\">\n    <button role=\"tab\" aria-selected=\"true\">Appearance</button>\n    <button role=\"tab\" aria-selected=\"false\">Fonts</button>\n    <button role=\"tab\" aria-selected=\"false\">Sound</button>\n  </div>\n  <div role=\"tabpanel\">\n    <div class=\"field-row\"><label for=\"clio-theme\">Theme:</label>\n      <select id=\"clio-theme\"><option>Mac OS Default</option></select>\n    </div>\n  </div>\n</div>",
+      "evidence": [
+        {
+          "era": "system6",
+          "claim": "Boxed labels that join the panel",
+          "status": "adapted",
+          "source": "clio.css",
+          "upstream": "System 6 had no tab control"
+        },
+        {
+          "era": "platinum",
+          "claim": "Tab art: sloped caps, #ccc tabs, the front tab #eee and 2px taller",
+          "status": "third-party",
+          "source": "classic-stylesheets macos9/tab*.svg (MIT)",
+          "upstream": "nielssp/classic-stylesheets @9ebd2d8; AI System 6 measured a 21-row tab (P01, 65-appearance-themes.css:742)"
+        }
+      ]
+    },
+    {
+      "id": "desktop",
+      "bare": true,
+      "name": "Desktop and icons",
+      "summary": "The desktop pattern and desktop icons with their name labels. Bring your own icon images; clio.css ships no Apple icons.",
+      "selectors": [
+        ".desktop",
+        ".icon",
+        ".icon > img",
+        ".icon > figcaption",
+        ".icon.selected"
+      ],
+      "tokens": [
+        "--clio-desktop",
+        "--clio-label-bg",
+        "--clio-label-selected-bg",
+        "--clio-icon-selected-filter"
+      ],
+      "accessibility": "Make each icon a <button> (or give it role=button and tabindex=0) with its name as the label.",
+      "html": "<div class=\"desktop\" style=\"min-height: 0; padding: 16px; display: flex; gap: 12px\">\n  <button class=\"icon\" aria-pressed=\"false\">\n    <svg viewBox=\"0 0 32 32\" aria-hidden=\"true\"><rect x=\"4\" y=\"6\" width=\"24\" height=\"20\" fill=\"#fff\" stroke=\"#000\"/><rect x=\"7\" y=\"9\" width=\"18\" height=\"11\" fill=\"#000\"/></svg>\n    <span>Macintosh HD</span>\n  </button>\n  <button class=\"icon selected\" aria-pressed=\"true\">\n    <svg viewBox=\"0 0 32 32\" aria-hidden=\"true\"><path d=\"M5 9h9l2 2h11v15H5z\" fill=\"#fff\" stroke=\"#000\"/></svg>\n    <span>Documents</span>\n  </button>\n</div>",
+      "evidence": [
+        {
+          "era": "system6",
+          "claim": "A 50% grey desktop pattern",
+          "status": "inferred",
+          "source": "apps/desktop/styles/00-foundation.css:224",
+          "upstream": "System 6.0.8 default desktop; AI System 6 draws an 8px stipple"
+        },
+        {
+          "era": "system6",
+          "claim": "White name tag; a selected icon inverts",
+          "status": "inferred",
+          "source": "apps/desktop/styles/00-foundation.css (desktop-label tokens)",
+          "upstream": "System 6 Finder"
+        },
+        {
+          "era": "platinum",
+          "claim": "70% white tag with no edge; selected: black tag, white name, artwork darkened",
+          "status": "measured",
+          "source": "apps/desktop/styles/65-appearance-themes.css:882 (P12, P13)",
+          "upstream": "Mac OS 9 native capture 02"
+        },
+        {
+          "era": "platinum",
+          "claim": "Desktop colour #4a71ab",
+          "status": "inferred",
+          "source": "apps/desktop/styles/65-appearance-themes.css:85",
+          "upstream": "base colour of AI System 6's azul tile, generated from a 512 Pixels capture; the tile is not shipped"
+        }
+      ]
+    },
+    {
+      "id": "typography",
+      "name": "Type and tokens",
+      "summary": "The fonts, the palette and every --clio-* custom property you can override.",
+      "selectors": [
+        ".clio",
+        ".text",
+        ".heading",
+        "[data-era=system6]",
+        "[data-era=platinum]"
+      ],
+      "tokens": [
+        "--clio-ink",
+        "--clio-paper",
+        "--clio-font-chrome",
+        "--clio-font-text",
+        "--clio-font-size",
+        "--clio-selection-bg",
+        "--clio-focus-outline"
+      ],
+      "accessibility": "Text colours keep at least 4.5:1 on their grounds; disabled text keeps 3:1 or more.",
+      "html": "<div class=\"clio\" style=\"padding: 12px; background: var(--clio-pane-bg)\">\n  <h2 class=\"heading\">Chicago is the system font</h2>\n  <p class=\"text\">Geneva is the application font. Every value is a --clio-* custom property you can override on any element.</p>\n</div>",
+      "evidence": [
+        {
+          "era": "system6",
+          "claim": "ChicagoFLF, a public-domain revival of Chicago, for chrome",
+          "status": "third-party",
+          "source": "vendor/system.css-reference/fonts/ChicagoFLF.woff2",
+          "upstream": "Robin Casady's ChicagoFLF (public domain), as shipped by system.css"
+        },
+        {
+          "era": "platinum",
+          "claim": "Charcoal when installed; otherwise Asap (OFL) at width 113 for text and 123 for titles, weights 400/600/700",
+          "status": "measured",
+          "source": "apps/desktop/assets/fonts/platinum/README.md; 65-appearance-themes.css:25",
+          "upstream": "Asap matched to a measured Charcoal sample's x-height and advance width"
+        },
+        {
+          "era": "platinum",
+          "claim": "Palette #fff #ddd #ccc #999 #777 #000, accent #333399, lavender #ccccff",
+          "status": "measured",
+          "source": "tooling/classic-platinum-fidelity-contract.json (platinum.palette)",
+          "upstream": "Mac OS 9 captures"
+        },
+        {
+          "era": "system6",
+          "claim": "Disabled text #696969 instead of a 50% dither",
+          "status": "adapted",
+          "source": "apps/desktop/styles/00-foundation.css (shade-dark)",
+          "upstream": "5.6:1 on white; a dither blurs under browser scaling"
+        }
+      ]
+    }
+  ]
+}
