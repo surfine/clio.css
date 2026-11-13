@@ -197,12 +197,20 @@
   --clio-button-border: 1px solid var(--clio-ink);
   /* 20px tall; the corner steps in 3, 1, 1 pixels on its first three rows
      (OK and Cancel, 6.0.8), which a 4.5px radius reproduces exactly. */
-  --clio-button-radius: 4.5px;
+  /* The frame and the default ring are the real pixel staircases, cut from
+     System 6.0.8's Alert and Save dialog (tooling/frame-art.py) and drawn with
+     border-image; border-radius would antialias an arc. */
+  --clio-button-radius: 0;
+  --clio-button-frame: var(--clio-art-frame-s6-button);
+  --clio-button-frame-held: var(--clio-art-frame-s6-button-held);
+  --clio-button-frame-slice: 4;
+  --clio-ring-frame: var(--clio-art-frame-s6-ring);
+  --clio-ring-frame-slice: 7;
   --clio-button-shadow: 0 0 0 0 transparent;
   --clio-button-padding: 0 12px;
   --clio-button-min-width: 59px;
   --clio-button-weight: 400;
-  --clio-button-active-bg: var(--clio-ink);
+  --clio-button-active-bg: transparent;   /* the held frame carries the ink face */
   --clio-button-active-fg: var(--clio-paper);
   --clio-button-active-shadow: 0 0 0 0 transparent;
   /* Default button: Inside Macintosh's recipe is PenSize(3,3) around the
@@ -315,6 +323,7 @@
   --clio-strip-line: 1px solid var(--clio-ink);
   --clio-strip-cell-shadow: none;
   --clio-strip-sunken-shadow: none;
+  --clio-strip-sunken-lines: linear-gradient(transparent, transparent);
   --clio-strip-pressed-bg: var(--clio-ink);
   --clio-strip-pressed-shadow: inset 0 0 0 2px var(--clio-paper);
   --clio-strip-cap-width: 13px;
@@ -359,6 +368,10 @@
   --clio-art-s6-grow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' shape-rendering='crispEdges'%3E%3Cpath fill='%23000' d='M2 2h7v1h-7zM2 3h1v1h-1zM8 3h1v1h-1zM2 4h1v1h-1zM8 4h5v1h-5zM2 5h1v1h-1zM8 5h1v1h-1zM12 5h1v1h-1zM2 6h1v1h-1zM8 6h1v1h-1zM12 6h1v1h-1zM2 7h1v1h-1zM8 7h1v1h-1zM12 7h1v1h-1zM2 8h7v1h-7zM12 8h1v1h-1zM4 9h1v1h-1zM12 9h1v1h-1zM4 10h1v1h-1zM12 10h1v1h-1zM4 11h1v1h-1zM12 11h1v1h-1zM4 12h9v1h-9z'/%3E%3C/svg%3E");
   --clio-art-s6-dkgray: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='2' shape-rendering='crispEdges'%3E%3Cpath fill='%23000' d='M0 0h1v1h-1zM2 0h2v1h-2zM0 1h3v1h-3z'/%3E%3Cpath fill='%23fff' d='M1 0h1v1h-1zM3 1h1v1h-1z'/%3E%3C/svg%3E");
   --clio-art-s6-menucheck: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='8' shape-rendering='crispEdges'%3E%3Cpath fill='%23000' d='M8 0h1v1h-1zM7 1h2v1h-2zM6 2h2v1h-2zM5 3h2v1h-2zM0 4h1v1h-1zM4 4h2v1h-2zM0 5h2v1h-2zM3 5h2v1h-2zM1 6h3v1h-3zM2 7h1v1h-1z'/%3E%3C/svg%3E");
+  /* Frames cut from captures by tooling/frame-art.py. */
+  --clio-art-frame-s6-button: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJAgMAAACd/+6DAAAACVBMVEUAAAAAAAD///+D3c/SAAAAAXRSTlMAQObYZgAAACpJREFUeJxjYAxgYBINZWBiYWFgCmB0YGJgYABhBqmVDEx//jAwMAYwAAA66QRtNyAoFwAAAABJRU5ErkJggg==");
+  --clio-art-frame-s6-button-held: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJAQMAAADaX5RTAAAABlBMVEUAAAAAAAClZ7nPAAAAAXRSTlMAQObYZgAAAB1JREFUeJxjkGFgSmZgYmBg/N/IxABiMNSDSRkGACm1Aqb7EOVpAAAAAElFTkSuQmCC");
+  --clio-art-frame-s6-ring: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPAQMAAAABGAcJAAAABlBMVEUAAAAAAAClZ7nPAAAAAXRSTlMAQObYZgAAADRJREFUeJxjYD/AIP+BSYGDsYaB5csahg9yTB8+MDEwgJCAAFPDPyaeBAb7H0wPfjCwHwAAEpMM/gNXK+MAAAAASUVORK5CYII=");
   --clio-art-s6-gray50: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='2' height='2' shape-rendering='crispEdges'%3E%3Cpath d='M1 0h1v1H1zM0 1h1v1H0z'/%3E%3C/svg%3E");
   --clio-art-s6-menucheck-on: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='8' shape-rendering='crispEdges'%3E%3Cpath fill='%23fff' d='M8 0h1v1h-1zM7 1h2v1h-2zM6 2h2v1h-2zM5 3h2v1h-2zM0 4h1v1h-1zM4 4h2v1h-2zM0 5h2v1h-2zM3 5h2v1h-2zM1 6h3v1h-3zM2 7h1v1h-1z'/%3E%3C/svg%3E");
   --clio-art-s6-strip-cap: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='15' height='24' shape-rendering='crispEdges'%3E%3Cpath fill='%23fff' d='M1 1h13v22H1z'/%3E%3Cpath d='M0 0h15v1H0zM0 23h15v1H0zM0 1h1v22H0zM14 1h1v22h-1zM3 8h8v1H3zM3 15h8v1H3zM3 9h1v6H3zM10 9h1v6h-1z'/%3E%3C/svg%3E");
@@ -914,6 +927,7 @@
   border-radius: var(--clio-button-radius);
   background: var(--clio-button-bg);
   box-shadow: var(--clio-button-shadow);
+  border-image: var(--clio-button-frame) var(--clio-button-frame-slice) fill / calc(var(--clio-button-frame-slice) * 1px) stretch;
   color: var(--clio-button-fg);
   font-family: var(--clio-font-chrome);
   font-size: var(--clio-font-size);
@@ -934,6 +948,7 @@
 :where(button, .btn, .btn-default, .standard-button, input[type="button"], input[type="submit"], input[type="reset"]):not(:disabled, .disabled):is(:active, .active) {
   background: var(--clio-button-active-bg);
   box-shadow: var(--clio-button-active-shadow);
+  border-image-source: var(--clio-button-frame-held);
   color: var(--clio-button-active-fg);
 }
 
@@ -951,6 +966,7 @@
   inset: calc(-1px - var(--clio-button-default-gap) - var(--clio-button-default-width));
   border: var(--clio-button-default-width) solid var(--clio-ink);
   border-radius: var(--clio-button-default-radius);
+  border-image: var(--clio-ring-frame) var(--clio-ring-frame-slice) / calc(var(--clio-ring-frame-slice) * 1px) stretch;
   pointer-events: none;
 }
 
@@ -964,6 +980,8 @@
   -webkit-background-clip: text, border-box;
   background-clip: text, border-box;
   -webkit-text-fill-color: var(--clio-disabled-fill);
+  /* The frame without its face, so the dimmed label shows through. */
+  border-image-slice: var(--clio-button-frame-slice);
 }
 
 :where(button, .btn, .btn-default, .standard-button, input[type="button"], input[type="submit"], input[type="reset"]):focus-visible {
@@ -1617,7 +1635,7 @@
   min-width: 0;
   height: auto;
   min-height: 0;
-  background: var(--clio-strip-back) center / 10px 10px no-repeat, var(--clio-strip-bg);
+  background: var(--clio-strip-back) 1px 6px / 10px 10px no-repeat, var(--clio-strip-bg);
   box-shadow: var(--clio-strip-cell-shadow);
 }
 
@@ -1626,7 +1644,15 @@
 }
 
 :where(.control-strip) > .control-strip-scroll:disabled {
+  background:
+    var(--clio-strip-back) 1px 6px / 10px 10px no-repeat,
+    var(--clio-strip-sunken-lines),
+    var(--clio-strip-bg);
   box-shadow: var(--clio-strip-sunken-shadow);
+}
+
+:where(.control-strip) > .control-strip-scroll-forward:disabled {
+  background-image: var(--clio-strip-forward);
 }
 
 :where(.control-strip) > .control-strip-scroll:not(:disabled):active,
@@ -1753,7 +1779,7 @@
   --clio-scrollbar-thumb-bg: var(--clio-art-s7-grip-v) 50% 2px / 6px 10px no-repeat, #aaaaaa;
   --clio-scrollbar-thumb-bg-horizontal: var(--clio-art-s7-grip-h) 2px 50% / 10px 6px no-repeat, #aaaaaa;
   --clio-scrollbar-thumb-border: 0;
-  --clio-scrollbar-thumb-shadow: inset 1px 1px 0 #ccccff, inset -1px -1px 0 #333366;
+  --clio-scrollbar-thumb-shadow: inset -1px -1px 0 #333366, inset 1px 1px 0 #ccccff;   /* the shade owns the corners */
   --clio-scrollbar-button-bg: #dddddd;
   --clio-scrollbar-up: var(--clio-art-s7-up);
   --clio-scrollbar-up-on: var(--clio-art-s7-up);
@@ -1778,7 +1804,14 @@
   --clio-strip-bg: #cccccc;
   --clio-strip-line: 1px solid #000000;
   --clio-strip-cell-shadow: inset -1px -1px 0 #888888, inset -2px -2px 0 #aaaaaa, inset 1px 1px 0 #cccccc, inset 2px 2px 0 #ffffff;
-  --clio-strip-sunken-shadow: inset 1px 1px 0 #888888, inset -1px -1px 0 #ffffff;
+  --clio-strip-sunken-shadow: none;
+  /* Idle scroll cells: #888 along the top and left, white along the bottom and
+     right, the two odd corners left in the face. */
+  --clio-strip-sunken-lines:
+    linear-gradient(#888888, #888888) 0 0 / calc(100% - 1px) 1px no-repeat,
+    linear-gradient(#888888, #888888) 0 0 / 1px calc(100% - 1px) no-repeat,
+    linear-gradient(#ffffff, #ffffff) 1px 100% / calc(100% - 1px) 1px no-repeat,
+    linear-gradient(#ffffff, #ffffff) 100% 1px / 1px calc(100% - 1px) no-repeat;
   --clio-strip-pressed-bg: #888888;
   --clio-strip-pressed-shadow: inset 2px 2px 0 #555555, inset -2px -2px 0 #cccccc;
   --clio-strip-cap: var(--clio-art-s7-strip-cap);
@@ -1888,12 +1921,14 @@
 /* The scroll box's leading edge is a #555 line (16 rows in all, as in System 6). */
 [data-era="system7"] :is(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-thumb:vertical,
 [data-era="system7"]:is(html.clio-scrollbars)::-webkit-scrollbar-thumb:vertical {
+  min-height: 17px;                   /* the lane's black line, then 16 rows of box */
   border-top: 1px solid #555555;
   border-left: 1px solid #000000;     /* the lane's own line, which the box covers */
 }
 
 [data-era="system7"] :is(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-thumb:horizontal,
 [data-era="system7"]:is(html.clio-scrollbars)::-webkit-scrollbar-thumb:horizontal {
+  min-width: 17px;
   border-left: 1px solid #555555;
   border-top: 1px solid #000000;
 }
@@ -1916,6 +1951,9 @@
   --clio-face: #dddddd;
   --clio-disabled: #6f6f6f;
   --clio-disabled-dither: none;
+  --clio-button-frame: none;
+  --clio-button-frame-held: none;
+  --clio-ring-frame: none;
   --clio-disabled-fill: currentcolor;
   --clio-selection-bg: #ccccff;
   --clio-selection-fg: #000000;
@@ -2139,7 +2177,12 @@
   --clio-strip-bg: #c0c0c0;
   --clio-strip-line: 1px solid #000000;
   --clio-strip-cell-shadow: inset -1px -1px 0 #808080, inset -2px -2px 0 #a0a0a0, inset 1px 1px 0 #c0c0c0, inset 2px 2px 0 #ffffff;
-  --clio-strip-sunken-shadow: inset 1px 1px 0 #808080, inset -1px -1px 0 #ffffff;
+  --clio-strip-sunken-shadow: none;
+  --clio-strip-sunken-lines:
+    linear-gradient(#808080, #808080) 0 0 / calc(100% - 1px) 1px no-repeat,
+    linear-gradient(#808080, #808080) 0 0 / 1px calc(100% - 1px) no-repeat,
+    linear-gradient(#ffffff, #ffffff) 1px 100% / calc(100% - 1px) 1px no-repeat,
+    linear-gradient(#ffffff, #ffffff) 100% 1px / 1px calc(100% - 1px) no-repeat;
   --clio-strip-pressed-bg: #808080;
   --clio-strip-pressed-shadow: inset 2px 2px 0 #404040, inset -2px -2px 0 #c0c0c0;
   --clio-strip-cap: var(--clio-art-p9-strip-cap);

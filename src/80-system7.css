@@ -28,7 +28,7 @@
   --clio-scrollbar-thumb-bg: var(--clio-art-s7-grip-v) 50% 2px / 6px 10px no-repeat, #aaaaaa;
   --clio-scrollbar-thumb-bg-horizontal: var(--clio-art-s7-grip-h) 2px 50% / 10px 6px no-repeat, #aaaaaa;
   --clio-scrollbar-thumb-border: 0;
-  --clio-scrollbar-thumb-shadow: inset 1px 1px 0 #ccccff, inset -1px -1px 0 #333366;
+  --clio-scrollbar-thumb-shadow: inset -1px -1px 0 #333366, inset 1px 1px 0 #ccccff;   /* the shade owns the corners */
   --clio-scrollbar-button-bg: #dddddd;
   --clio-scrollbar-up: var(--clio-art-s7-up);
   --clio-scrollbar-up-on: var(--clio-art-s7-up);
@@ -53,7 +53,14 @@
   --clio-strip-bg: #cccccc;
   --clio-strip-line: 1px solid #000000;
   --clio-strip-cell-shadow: inset -1px -1px 0 #888888, inset -2px -2px 0 #aaaaaa, inset 1px 1px 0 #cccccc, inset 2px 2px 0 #ffffff;
-  --clio-strip-sunken-shadow: inset 1px 1px 0 #888888, inset -1px -1px 0 #ffffff;
+  --clio-strip-sunken-shadow: none;
+  /* Idle scroll cells: #888 along the top and left, white along the bottom and
+     right, the two odd corners left in the face. */
+  --clio-strip-sunken-lines:
+    linear-gradient(#888888, #888888) 0 0 / calc(100% - 1px) 1px no-repeat,
+    linear-gradient(#888888, #888888) 0 0 / 1px calc(100% - 1px) no-repeat,
+    linear-gradient(#ffffff, #ffffff) 1px 100% / calc(100% - 1px) 1px no-repeat,
+    linear-gradient(#ffffff, #ffffff) 100% 1px / 1px calc(100% - 1px) no-repeat;
   --clio-strip-pressed-bg: #888888;
   --clio-strip-pressed-shadow: inset 2px 2px 0 #555555, inset -2px -2px 0 #cccccc;
   --clio-strip-cap: var(--clio-art-s7-strip-cap);
@@ -163,12 +170,14 @@
 /* The scroll box's leading edge is a #555 line (16 rows in all, as in System 6). */
 [data-era="system7"] :is(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-thumb:vertical,
 [data-era="system7"]:is(html.clio-scrollbars)::-webkit-scrollbar-thumb:vertical {
+  min-height: 17px;                   /* the lane's black line, then 16 rows of box */
   border-top: 1px solid #555555;
   border-left: 1px solid #000000;     /* the lane's own line, which the box covers */
 }
 
 [data-era="system7"] :is(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-thumb:horizontal,
 [data-era="system7"]:is(html.clio-scrollbars)::-webkit-scrollbar-thumb:horizontal {
+  min-width: 17px;
   border-left: 1px solid #555555;
   border-top: 1px solid #000000;
 }

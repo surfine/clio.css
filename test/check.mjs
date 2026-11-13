@@ -48,7 +48,7 @@ ok(!strip(db).includes('[data-era="drawingboard"]') && !strip(db).includes('[dat
 //    redrawn by tooling/db-art.py and tooling/p9-art.py.
 for (const m of noComments.matchAll(/url\(\s*["']?([^"')]+)/g)) {
   const u = m[1];
-  const png = u.startsWith("data:image/png;base64,") && /--clio-art-(db|p9|s7)-[\w-]+:\s*$/.test(noComments.slice(Math.max(0, m.index - 60), m.index));
+  const png = u.startsWith("data:image/png;base64,") && /--clio-art-(db|p9|s7|frame)-[\w-]+:\s*$/.test(noComments.slice(Math.max(0, m.index - 60), m.index));
   ok(u.startsWith("data:image/svg+xml,") || png || /^fonts\/(ChicagoFLF\.woff2?|Asap-Variable\.woff2|ClioSans84\.woff2|ClioText84\.woff2|ClioText84-9\.woff2|ClioSans97\.woff2|ClioSans97Display\.woff2)$/.test(u), `unexpected url(): ${u.slice(0, 60)}`);
 }
 

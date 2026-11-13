@@ -58,9 +58,9 @@ specimens.push(
   S6("s6-scroll-left", s6Scroll, [0, 106, 14, 14], "hd-window", [0, 137, 14, 14]),
   S6("s6-scroll-right", s6Scroll, [91, 106, 14, 14], "hd-window", [209, 137, 14, 14]),
   S6("s6-checkbox-checked", `<div style="padding:12px;background:#fff"><input type="checkbox" id="s" checked></div>`, [0, 0, 12, 12], "get-info-checked", [224, 52, 12, 12]),
-  S6("s6-button-pressed", `<div class="clio" style="padding:12px;background:#fff"><button class="active" id="s" style="width:60px">Cancel</button></div>`, [0, 0, 60, 20], "button-pressed", [164, 158, 60, 20]),
-  S6("s6-button-hover", `<div class="clio" style="padding:12px;background:#fff"><button id="s" style="width:60px">Cancel</button></div>`, [0, 0, 60, 20], "button-hover", [164, 158, 60, 20]),
-  S6("s6-popup-end", `<div class="clio" style="padding:12px;background:#fff"><select id="s" style="width:116px"><option>Macintosh HD</option></select></div>`, [105, 0, 12, 19], "save-dialog", [242, 107, 12, 19]),
+  { ...S6("s6-button-pressed", `<div class="clio" style="padding:12px;background:#fff"><button class="active" id="s" style="width:60px">Cancel</button></div>`, [0, 0, 60, 20], "button-pressed", [164, 158, 60, 20]), mask: [[28, 8, 11, 12]] },
+  { ...S6("s6-button-hover", `<div class="clio" style="padding:12px;background:#fff"><button id="s" style="width:60px">Cancel</button></div>`, [0, 0, 60, 20], "button-hover", [164, 158, 60, 20]), mask: [[28, 8, 10, 12]] },
+  S6("s6-popup-end", `<div class="clio" style="padding:12px;background:#fff"><select id="s" style="width:116px"><option>Macintosh HD</option></select></div>`, [111, 0, 6, 19], "save-dialog", [248, 107, 6, 19]),   // the frame's end and shadow: the reference is Standard File's disk box (icon + name), so labels differ
   S6("s6-progress-fill", `<div style="padding:12px;background:#fff"><progress id="s" max="100" value="60" style="width:228px"></progress></div>`, [0, 0, 12, 12], "copy-progress", [109, 93, 12, 12]),
   S6("s6-info-line", `<div class="window" id="s" style="width:240px"><div class="title-bar"><button class="close" aria-label="Close"></button><h2 class="title">Macintosh HD</h2><button class="resize" aria-label="Zoom"></button></div><div class="details-bar"><span>2 items</span></div><div class="window-pane" style="height:40px"></div></div>`, [1, 19, 60, 17], "hd-window", [0, 46, 60, 17]),
   S6("s6-geneva-12", `<div style="padding:12px;background:#fff"><div class="text" id="s" style="font-size:12px;line-height:16px;white-space:nowrap">Welcome to Infinite Macintosh!</div></div>`, [0, 0, 160, 16], "teachtext", [9, 42, 160, 16]),
@@ -75,11 +75,11 @@ const s7dir = join(root, ".fidelity/system7");
 const S7 = (id, html, crop, file, ref) => ({ id, era: "system7", html, crop, refFile: join(s7dir, file + ".png"), refCrop: ref });
 const s7Window = (cls, title) => `<div class="${cls}" id="s" style="width:376px"><div class="title-bar"><button class="close" aria-label="Close"></button><h2 class="title">${title}</h2><button class="resize" aria-label="Zoom"></button></div><div class="window-pane" style="height:40px"></div></div>`;
 specimens.push(
-  S7("s7-titlebar", s7Window("window", "Infinite HD"), [0, 0, 377, 19], "hd-window", [29, 55, 377, 19]),
-  S7("s7-titlebar-inactive", s7Window("window inactive", "Infinite HD"), [0, 0, 377, 16], "folder-window", [29, 55, 377, 16]),
+  { ...S7("s7-titlebar", s7Window("window", "Infinite HD"), [0, 0, 377, 19], "hd-window", [29, 55, 377, 19]), mask: [[218, 7, 14, 13], [376, 0, 1, 1]] },   // the pointer, and desktop beside the shadow
+  { ...S7("s7-titlebar-inactive", s7Window("window inactive", "Infinite HD"), [0, 0, 377, 16], "folder-window", [29, 55, 377, 16]), mask: [[376, 0, 1, 1]] },   // desktop beside the shadow
   S7("s7-scroll-up", s6Scroll, [106, 0, 14, 14], "folder-window", [406, 110, 14, 14]),
   // Content long enough that the scroll box is System 7's 16 rows.
-  S7("s7-scroll-thumb", `<div class="clio-scroll" id="s" style="width:120px;height:120px;overflow:scroll;background:#fff"><div style="width:400px;height:562px"></div></div>`, [106, 15, 14, 16], "folder-window", [406, 125, 14, 16]),
+  S7("s7-scroll-thumb", `<div class="clio-scroll" id="s" style="width:120px;height:120px;overflow:scroll;background:#fff"><div style="width:400px;height:562px"></div></div>`, [106, 15, 14, 15], "folder-window", [406, 125, 14, 15]),   // the box's drawing; its length is Chromium's (26px at least, see EVIDENCE: scroll box)
   S7("s7-grow-box", s6Scroll, [106, 106, 14, 14], "folder-window", [406, 234, 14, 14]),
   S7("s7-alert-frame", `<div class="alert-box" id="s" style="width:200px;height:80px"></div>`, [0, 0, 18, 18], "page-setup", [208, 110, 18, 18]),
   S7("s7-checkbox-on", `<div style="padding:12px;background:#fff"><input type="checkbox" id="s" checked></div>`, [0, 0, 12, 12], "general-controls", [33, 81, 12, 12]),
@@ -175,7 +175,7 @@ for (const s of specimens) {
   const [x, y, w, h] = s.crop;
   const shot = await page.screenshot({ clip: { x: box.x + x, y: box.y + y, width: w, height: h } });
   const ref = readFileSync(s.refFile || join(tiles, `${s.id}-reference.png`));
-  const metrics = await page.evaluate(async ([a, b, name, refCrop, mono]) => {
+  const metrics = await page.evaluate(async ([a, b, name, refCrop, mono, mask]) => {
     const load = (b64) => new Promise((res) => { const i = new Image(); i.onload = () => res(i); i.src = "data:image/png;base64," + b64; });
     let [ia, ib] = await Promise.all([load(a), load(b)]);
     if (refCrop) {
@@ -187,24 +187,32 @@ for (const s of specimens) {
     const px = (img) => { const c = document.createElement("canvas"); c.width = w; c.height = h; const g = c.getContext("2d"); g.drawImage(img, 0, 0); return g.getImageData(0, 0, w, h).data; };
     const A = px(ia), B = px(ib);
     if (mono) for (const P of [A, B]) for (let i = 0; i < P.length; i += 4) { const v = (P[i] + P[i + 1] + P[i + 2]) / 3 < 128 ? 0 : 255; P[i] = P[i + 1] = P[i + 2] = v; }
-    let exact = 0, off = 0, sum = 0;
+    // Masked pixels (the mouse pointer in a held-state frame, say) are not part of the
+    // interface: they are left out of every count.
+    const masked = (i) => { const p = i / 4, x = p % w, y = Math.floor(p / w); return mask.some(([mx, my, mw, mh]) => x >= mx && x < mx + mw && y >= my && y < my + mh); };
+    let exact = 0, off = 0, sum = 0, n = 0;
+    const misses = [];
     const diff = document.createElement("canvas"); diff.width = w * 3; diff.height = h; const g = diff.getContext("2d");
     const put = (P, x) => { const d = g.createImageData(w, h); d.data.set(P); g.putImageData(d, x, 0); };
     put(B, 0); put(A, w);
     const d = g.createImageData(w, h);
     for (let i = 0; i < A.length; i += 4) {
+      if (masked(i)) { d.data[i] = 128; d.data[i + 1] = 128; d.data[i + 2] = 255; d.data[i + 3] = 255; continue; }
+      n++;
       const m = Math.max(Math.abs(A[i] - B[i]), Math.abs(A[i + 1] - B[i + 1]), Math.abs(A[i + 2] - B[i + 2]));
+      if (m > 8 && misses.length < 400) misses.push([(i / 4) % w, Math.floor(i / 4 / w), B[i], B[i + 1], B[i + 2], A[i], A[i + 1], A[i + 2]]);
       sum += (Math.abs(A[i] - B[i]) + Math.abs(A[i + 1] - B[i + 1]) + Math.abs(A[i + 2] - B[i + 2])) / 3;
       if (m <= 8) exact++;
       if (m > 48) off++;
       d.data[i] = m > 48 ? 255 : m > 8 ? 255 : 255; d.data[i + 1] = m > 48 ? 0 : m > 8 ? 200 : 255; d.data[i + 2] = m > 48 ? 0 : m > 8 ? 0 : 255; d.data[i + 3] = 255;
     }
     g.putImageData(d, w * 2, 0);
-    const n = A.length / 4;
-    return { name, size: [w, h], exact: +(exact / n).toFixed(4), structural: +(off / n).toFixed(4), meanAbs: +(sum / n).toFixed(2), image: diff.toDataURL("image/png").split(",")[1] };
-  }, [shot.toString("base64"), ref.toString("base64"), s.id, s.refCrop || null, !!s.mono]);
+    return { name, size: [w, h], exact: +(exact / n).toFixed(4), structural: +(off / n).toFixed(4), meanAbs: +(sum / n).toFixed(2), misses, image: diff.toDataURL("image/png").split(",")[1] };
+  }, [shot.toString("base64"), ref.toString("base64"), s.id, s.refCrop || null, !!s.mono, s.mask || []]);
   writeFileSync(join(out, `${s.id}-compare.png`), Buffer.from(metrics.image, "base64"));
   delete metrics.image;
+  writeFileSync(join(out, `${s.id}-misses.json`), JSON.stringify(metrics.misses));   // [x, y, ref rgb, clio rgb]
+  delete metrics.misses;
   results.push({ ...metrics, era: s.group || s.era || "platinum" });
 }
 await browser.close();

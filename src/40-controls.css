@@ -17,6 +17,7 @@
   border-radius: var(--clio-button-radius);
   background: var(--clio-button-bg);
   box-shadow: var(--clio-button-shadow);
+  border-image: var(--clio-button-frame) var(--clio-button-frame-slice) fill / calc(var(--clio-button-frame-slice) * 1px) stretch;
   color: var(--clio-button-fg);
   font-family: var(--clio-font-chrome);
   font-size: var(--clio-font-size);
@@ -37,6 +38,7 @@
 :where(button, .btn, .btn-default, .standard-button, input[type="button"], input[type="submit"], input[type="reset"]):not(:disabled, .disabled):is(:active, .active) {
   background: var(--clio-button-active-bg);
   box-shadow: var(--clio-button-active-shadow);
+  border-image-source: var(--clio-button-frame-held);
   color: var(--clio-button-active-fg);
 }
 
@@ -54,6 +56,7 @@
   inset: calc(-1px - var(--clio-button-default-gap) - var(--clio-button-default-width));
   border: var(--clio-button-default-width) solid var(--clio-ink);
   border-radius: var(--clio-button-default-radius);
+  border-image: var(--clio-ring-frame) var(--clio-ring-frame-slice) / calc(var(--clio-ring-frame-slice) * 1px) stretch;
   pointer-events: none;
 }
 
@@ -67,6 +70,8 @@
   -webkit-background-clip: text, border-box;
   background-clip: text, border-box;
   -webkit-text-fill-color: var(--clio-disabled-fill);
+  /* The frame without its face, so the dimmed label shows through. */
+  border-image-slice: var(--clio-button-frame-slice);
 }
 
 :where(button, .btn, .btn-default, .standard-button, input[type="button"], input[type="submit"], input[type="reset"]):focus-visible {

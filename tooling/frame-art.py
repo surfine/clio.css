@@ -1,0 +1,72 @@
+"""Nine-slice frames for border-image, cut from real screens (classic eras).
+
+Rounded Mac frames are pixel staircases that border-radius cannot draw (it
+antialiases an arc). Each frame here is rebuilt from a capture: its four c x c
+corners, one column and one row of each edge (taken where no label crosses)
+and one pixel of face, written as a (2c + 1)-pixel square palette PNG that
+border-image stretches back to any size. Colours listed as clear become
+transparent (the paper round a ring, the gap inside it).
+
+  .venv/bin/python tooling/frame-art.py     -> prints --clio-art-frame-* properties
+"""
+import base64, io, os
+from PIL import Image
+
+ROOT = os.path.join(os.path.dirname(__file__), '..')
+def load(era, name, mono=False):
+    """mono: Infinite Mac tints 1-bit screens #222/#eee; threshold them back to black and white."""
+    im = Image.open(os.path.join(ROOT, '.fidelity', era, name + '.png')).convert('RGB')
+    return im.point(lambda v: 0 if v < 128 else 255) if mono else im
+
+def outside(im, x0, y0, w, h, colour):
+    """The pixels of one colour reachable from the crop's corners: what lies
+    outside a rounded frame."""
+    seen, todo = set(), [(0, 0), (w - 1, 0), (0, h - 1), (w - 1, h - 1)]
+    while todo:
+        x, y = todo.pop()
+        if (x, y) in seen or not (0 <= x < w and 0 <= y < h) or im.getpixel((x0 + x, y0 + y)) != colour: continue
+        seen.add((x, y)); todo += [(x + 1, y), (x - 1, y), (x, y + 1), (x, y - 1)]
+    return seen
+
+def nine(im, x0, y0, w, h, c, mx, my, clear=(), hole=None, out_colour=None):
+    """mx, my: the edge column and row to sample (crop coordinates); hole: a
+    rectangle (crop coordinates) that is cleared, such as the button inside a ring;
+    out_colour: clear that colour where it lies outside the frame."""
+    n = 2 * c + 1
+    out = Image.new('RGBA', (n, n))
+    gone = outside(im, x0, y0, w, h, out_colour) if out_colour else set()
+    def px(x, y):
+        if hole and hole[0] <= x < hole[0] + hole[2] and hole[1] <= y < hole[1] + hole[3]: return (0, 0, 0, 0)
+        if (x, y) in gone: return (0, 0, 0, 0)
+        p = im.getpixel((x0 + x, y0 + y))
+        return (0, 0, 0, 0) if p in clear else p + (255,)
+    for oy in range(n):
+        for ox in range(n):
+            sx = ox if ox < c else (mx if ox == c else w - (n - ox))
+            sy = oy if oy < c else (my if oy == c else h - (n - oy))
+            out.putpixel((ox, oy), px(sx, sy))
+    return out
+
+def uri(im):
+    cols = sorted({im.getpixel((x, y)) for x in range(im.width) for y in range(im.height)}, key=lambda c: c[3])
+    p = Image.new('P', im.size)
+    p.putpalette([v for c in cols for v in c[:3]], rawmode='RGB')
+    idx = {c: i for i, c in enumerate(cols)}
+    p.putdata([idx[im.getpixel((x, y))] for y in range(im.height) for x in range(im.width)])
+    buf = io.BytesIO()
+    bits = next(b for b in (1, 2, 4, 8) if len(cols) <= 1 << b)
+    alpha = bytes(c[3] for c in cols if c[3] < 255)
+    p.save(buf, 'PNG', bits=bits, **({'transparency': alpha} if alpha else {}))
+    return 'url("data:image/png;base64,%s")' % base64.b64encode(buf.getvalue()).decode()
+
+W, K = (255, 255, 255), (0, 0, 0)
+frames = {}
+s6 = load('system6', 'alert', mono=True)
+# System 6 OK (Alert, 6.0.8): the button 84..143 x 158..177 inside its ring 80..147 x 154..181.
+frames['s6-button'] = nine(s6, 84, 158, 60, 20, 4, 10, 10, out_colour=W)
+# Held (Save dialog's Cancel, 164..223 x 158..177): solid ink, the same corners.
+frames['s6-button-held'] = nine(load('system6', 'button-pressed', mono=True), 164, 158, 60, 20, 4, 6, 10, out_colour=W)
+frames['s6-ring'] = nine(s6, 80, 154, 68, 28, 7, 10, 14, clear=(W,), hole=(4, 4, 60, 20))
+
+for k, im in frames.items():
+    print('  --clio-art-frame-%s: %s; /* %dx%d, slice %d */' % (k, uri(im), im.width, im.height, im.width // 2))
