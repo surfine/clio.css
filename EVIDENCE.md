@@ -2,13 +2,13 @@
 
 Generated from `components/index.mjs` by `npm run build`; edit there.
 
-Every value in clio.css 0.4.0 has a row here. Sources are paths in the AI System 6 development tree at commit `b75cd4ed` (public mirror: https://github.com/surfine/AI-System-6; some evidence folders such as `internal/` are private). The images measurements were taken from are evidence only; clio.css never ships them.
+Every value in clio.css 0.4.1 has a row here. Sources are paths in the AI System 6 development tree at commit `b75cd4ed` (public mirror: https://github.com/surfine/AI-System-6; some evidence folders such as `internal/` are private). The images measurements were taken from are evidence only; clio.css never ships them.
 
 | Status | Meaning | Rows |
 | --- | --- | ---: |
-| Measured | read from real pixels of the era | 68 |
-| Inferred | reasoned from documentation or behaviour, not measured | 15 |
-| Adapted | a deliberate departure for the web (touch, focus, contrast) | 9 |
+| Measured | read from real pixels of the era | 75 |
+| Inferred | reasoned from documentation or behaviour, not measured | 7 |
+| Adapted | a deliberate departure for the web (touch, focus, contrast) | 10 |
 | Third-party | art or font from a named, licensed project | 6 |
 
 Pixel check: `npm run fidelity` renders the Platinum specimens and compares them with AI System 6's GUIdebook Mac OS 9.0 reference crops (it needs a local AI System 6 checkout; see the script).
@@ -32,7 +32,7 @@ Pixel check: `npm run fidelity` renders the Platinum specimens and compares them
 | Window | Platinum | Boxes: 11px, #222 frame, #999 to white gradient, #888 bevel above-left and white below-right; pressed #444 to #bbb | Measured | `apps/desktop/styles/65-appearance-themes.css:1820` — GUIdebook Mac OS 9.0 captures |
 | Window | Platinum | Zoom mark: a six-pixel lower-left corner; WindowShade mark: two nine-pixel rules at y=4 and y=6 | Measured | `apps/desktop/styles/65-platinum-utility.css:725, :738` — GUIdebook Mac OS 9, 1x pixels |
 | Window | Platinum | Background window: #555 frame and drop, flat controls, #777 title, boxes erased | Measured | `apps/desktop/styles/65-appearance-themes.css:1757 (N1, P26)` — Mac OS 9 native capture 53; GUIdebook active/inactive |
-| Menu bar and menus | System 7 | Menus stay black and white with System 6's rows | Inferred | `clio.css capture, System 7.5.3 in Infinite Mac (npm run capture:system7), frame file-menu (looked at, not pixel-checked)` — System 7.5.3 Finder File menu |
+| Menu bar and menus | System 7 | Menus keep System 6's rows and black highlight; disabled items and the separator are solid #888 instead of a dither | Measured | `clio.css capture, System 7.5.3 in Infinite Mac (npm run capture:system7), frame file-menu` — separator row 100% identical |
 | Menu bar and menus | System 6 | Menu bar: 20 rows with the rule on the last; an open title inverts rows 1–18, about 9px either side of the word | Measured | `clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame file-menu` — System 6.0.8 Finder File menu |
 | Menu bar and menus | System 6 | Menu: hangs from the bar's rule with no top line; 1px ink frame and 1px drop shadow; 16px rows; text 15px in; the highlighted row inverts | Measured | `clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame file-menu` — System 6.0.8 Finder File menu |
 | Menu bar and menus | System 6 | Separator: a full 16px row with a 1-on 1-off dotted rule on its ninth line | Measured | `clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame file-menu rows 164–179` — System 6.0.8 Finder File menu |
@@ -54,25 +54,25 @@ Pixel check: `npm run fidelity` renders the Platinum specimens and compares them
 | Push button | Platinum | Pressed: #666 face, white text, #444/#555 top-left over #888/#777 bottom-right | Measured | `apps/desktop/styles/65-appearance-themes.css:933 (P29)` — Infinite Mac Mac OS 9.0 capture |
 | Push button | Platinum | Default ring: 1px black, a #aaa band with #ddd/#777 edges, 1px gap | Measured | `apps/desktop/styles/65-platinum-utility.css:773` — GUIdebook Mac OS 9.0 (default-ok specimen) |
 | Push button | Platinum | Disabled: #888 border, flat #ddd, #777 text; the default ring goes #888 | Measured | `apps/desktop/styles/65-appearance-themes.css (N5)` — GUIdebook Open dialog Eject button (button-disabled specimen) |
-| Check box | System 7 | Same as System 6 (System 7's controls draw in black and white) | Inferred | `not captured in System 7` — System 7.5.3 control definitions |
+| Check box | System 7 | Identical to System 6: 12px, X when checked | Measured | `clio.css capture, System 7.5.3 in Infinite Mac (npm run capture:system7), frame general-controls` — 100% identical, on and off |
 | Check box | System 6 | A 12px box with a 1px frame; held, the frame thickens to 2px | Measured | `clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame get-info (Locked)` — AI System 6 uses 13px |
 | Check box | System 6 | Checked draws an X from corner to corner of the box | Measured | `clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame get-info-checked (Locked)` — the art is system.css's checkmark.svg (MIT), which matches |
 | Check box | System 6 | X art | Third-party | `apps/desktop/assets/themes/classic/controls/checkmark.svg` — system.css icon/checkmark.svg (MIT, Sakun Acharige) |
 | Check box | Platinum | 12px #ddd well, 1px black frame, white top-left and #888 bottom-right bevel | Measured | `apps/desktop/styles/65-appearance-themes.css:897 (P18)` — GUIdebook Mac OS 9.0 Appearance Options tab (checkbox specimens) |
 | Check box | Platinum | Check mark art | Third-party | `classic-stylesheets macos9/checkmark.svg (MIT)` — nielssp/classic-stylesheets @9ebd2d8 |
-| Radio button | System 7 | Same as System 6 (System 7's controls draw in black and white) | Inferred | `not captured in System 7` — System 7.5.3 control definitions |
+| Radio button | System 7 | Identical to System 6 | Measured | `clio.css capture, System 7.5.3 in Infinite Mac (npm run capture:system7), frame general-controls` — 100% identical, on and off |
 | Radio button | System 6 | 12px ring and 6px dot: the real pixels match system.css's art exactly | Measured | `clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame control-panel (Rate of Insertion Point Blinking)` — art from system.css icon/radio-border.svg, radio-dot.svg (MIT, Sakun Acharige) |
 | Radio button | Platinum | Radio drawn with CSS gradients: black ring, white to #888 well, 6px black dot | Adapted | `apps/desktop/styles/65-appearance-themes.css:291` — AI System 6 later replaced this with art cut from a capture (P19); clio.css ships no cut art |
-| Text field | System 7 | Same as System 6 (System 7's controls draw in black and white) | Inferred | `not captured in System 7` — System 7.5.3 control definitions |
+| Text field | System 7 | As System 6: a 1px black frame with the text 3px in | Measured | `clio.css capture, System 7.5.3 in Infinite Mac (npm run capture:system7), frame numbers (Currency Symbol)` — System 7.5.3 |
 | Text field | System 6 | 1px ink frame, white, text inset 3px | Measured | `clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame control-panel (RAM Cache field), get-info (comments)` — System 6.0.8 |
 | Text field | Platinum | White field, 1px black frame, #888 shadow above-left and white etch below-right | Measured | `apps/desktop/styles/65-appearance-themes.css:935 (P30)` — Infinite Mac Mac OS 9.0 capture |
 | Text field | Platinum | Focus: a 2px #6666cc ring | Measured | `apps/desktop/styles/65-platinum-utility.css:38` — Mac OS 9 capture platinum-native/10b-fonts-tab |
-| Pop-up menu | System 7 | Same as System 6 (System 7's controls draw in black and white) | Inferred | `not captured in System 7` — System 7.5.3 control definitions |
+| Pop-up menu | System 7 | An 18px box with an 11×6 black triangle 5px from the right edge, label 15px in, and a 1px shadow that starts 3px in from the corner | Measured | `clio.css capture, System 7.5.3 in Infinite Mac (npm run capture:system7), frame numbers (Number Format)` — 100% identical; the triangle is System 7's addition |
 | Pop-up menu | System 6 | An 18px rectangle with a 1px frame and a 1px drop shadow and no arrow; the shadow is what marks it as a menu; held, it inverts | Measured | `clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frames save-dialog and popup-held (Standard File folder menu)` — the down triangle arrived with System 7 |
 | Pop-up menu | Platinum | #ddd, 3px corners, white/#aaa bevel, bold label, a separate bevelled arrow part with the 7x10 arrow | Measured | `apps/desktop/styles/65-appearance-themes.css:1916 (P31)` — GUIdebook Mac OS 9.0 (popup-normal specimen), native 09b |
 | Pop-up menu | Platinum | The arrow part is drawn with background layers, approximating the measured bevel | Inferred | `clio.css` — select has no ::after in CSS |
 | Pop-up menu | Platinum | Arrow art | Third-party | `classic-stylesheets macos9/dropdown.svg (MIT)` — nielssp/classic-stylesheets @9ebd2d8 |
-| List box | System 7 | Same as System 6 (System 7's controls draw in black and white) | Inferred | `not captured in System 7` — System 7.5.3 control definitions |
+| List box | System 7 | As System 6: a selected row inverts across the list | Inferred | `seen in the Keyboard control panel during capture; not pixel-checked` — System 7.5.3 |
 | List box | System 6 | White list, 1px ink frame, 16px rows; a selected row inverts across the whole list width | Measured | `clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frames save-dialog and list-selected (Standard File)` — System 6.0.8 TeachText Save As |
 | List box | Platinum | Selection is lavender #ccccff with black text | Measured | `apps/desktop/styles/65-appearance-themes.css:128` — GUIdebook Mac OS 9.0 Open dialog (open-list-scrollbar specimen) |
 | List box | Platinum | Rows carry no divider | Measured | `apps/desktop/styles/65-appearance-themes.css:860 (P10)` — Mac OS 9 native list capture 21 |
@@ -86,19 +86,19 @@ Pixel check: `npm run fidelity` renders the Platinum specimens and compares them
 | Scroll bar | System 6 | Grow box: a 7×7 square over a 9×9 square in the 14px corner | Measured | `clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame system-folder` — redrawn as pixels in tooling/s6-art.py |
 | Scroll bar | All eras | The scroll box grows with the visible fraction instead of a fixed 16px square | Adapted | `clio.css` — browsers size ::-webkit-scrollbar-thumb themselves |
 | Scroll bar | Platinum | Lane #aaa with a double bevel; lavender #9999ff scroll box with #ccf/#66c bevel and grip ridges; #ddd arrow boxes with stepped 2/4/6/8 arrows | Measured | `apps/desktop/styles/65-appearance-themes.css:336 (P16), :351 (P17), :364 (P27)` — Mac OS 9 native capture 16; GUIdebook Open dialog |
-| Dialogs and alerts | System 7 | Alert frame: 1px black, a raised #ccf/#669 ring, #bbb, a sunken #669/#ccf ring, 1px black (5px, as in System 6) | Measured | `clio.css capture, System 7.5.3 in Infinite Mac (npm run capture:system7), frame page-setup` — 100% identical |
+| Dialogs and alerts | System 7 | Alert frame: 1px black, a raised #ccf/#669 ring, #bbb, a sunken #669/#ccf ring, 1px black (5px, as in System 6) | Measured | `clio.css capture, System 7.5.3 in Infinite Mac (npm run capture:system7), frame page-setup` — 100% identical. An alert without a colour table keeps System 6's black frame (Monitors & Sound alert); clio.css draws the colour one |
 | Dialogs and alerts | System 6 | Modal frame: 1px ink, 2px paper, 2px ink, and no drop shadow | Measured | `clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame alert` — AI System 6 has two recipes, both off (84-clio-write.css:210 has a 1px gap) |
 | Dialogs and alerts | System 6 | Plain box: 1px ink frame and a 2px drop shadow | Inferred | `not measured` — altDBoxProc; none of the 6.0.8 Finder and TeachText dialogs opened for capture (alerts, Standard File, About the Finder) uses it |
 | Dialogs and alerts | All eras | The alert icon is drawn here, not Apple's | Adapted | `clio.css` — no Apple icons are shipped |
 | Dialogs and alerts | Platinum | 1px black frame over #ddd, inner bevel of three white steps inside #555/#999/#aaa, 1px black drop | Measured | `apps/desktop/styles/65-appearance-themes.css:840 (P06)` — GUIdebook Mac OS 9.0 About application (about-alert specimen) |
-| Group box | System 7 | Same as System 6 (System 7's controls draw in black and white) | Inferred | `not captured in System 7` — System 7.5.3 control definitions |
+| Group box | System 7 | Native group box: a 1px grey line with the legend on it; the original alternates #777 and #888, drawn #777 here | Measured | `clio.css capture, System 7.5.3 in Infinite Mac (npm run capture:system7), frames general-controls and numbers` — System 7.5.3 control panels |
 | Group box | System 6 | System 6 had no group box; clio.css draws a 1px ink frame with the legend on paper | Adapted | `clio.css` — Control Panel divides its panes with plain 1px rules (clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame control-panel) |
 | Group box | Platinum | Etched: #888 line with a white line inside and below | Measured | `apps/desktop/styles/65-appearance-themes.css:909 (P20)` — Mac OS 9 native group box |
-| Progress bar | System 7 | Same as System 6 (System 7's controls draw in black and white) | Inferred | `not captured in System 7` — System 7.5.3 control definitions |
+| Progress bar | System 7 | 11px, 1px black frame, #ccf track, #444 fill | Measured | `clio.css capture, System 7.5.3 in Infinite Mac (npm run capture:system7), frame copy-progress` — 100% identical |
 | Progress bar | System 6 | 12px tall, 1px ink frame, white track, fill in QuickDraw dkGray (one white dot in four) | Measured | `clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame copy-progress (Finder duplicating System Folder)` — redrawn as a pattern tile in tooling/s6-art.py |
 | Progress bar | Platinum | Barber-pole fill: ten 1px hard stops from #333399 through #eee to #000055 | Measured | `apps/desktop/styles/65-appearance-themes.css:937 (P32)` — Mac OS 9 native progress bar |
 | Progress bar | Platinum | #bbb track with white/#aaa outer and #888/#ddd inner bevel | Inferred | `apps/desktop/styles/65-appearance-themes.css:592` — AI System 6 token, not tagged as measured |
-| Tabs | System 7 | Same as System 6 (System 7's controls draw in black and white) | Inferred | `not captured in System 7` — System 7.5.3 control definitions |
+| Tabs | System 7 | System 7 had no tab control; the System 6 adaptation is used | Adapted | `clio.css` — System 7.5.3 |
 | Tabs | System 6 | Boxed labels that join the panel | Adapted | `clio.css` — System 6 had no tab control |
 | Tabs | Platinum | Tab art: sloped caps, #ccc tabs, the front tab #eee and 2px taller | Third-party | `classic-stylesheets macos9/tab*.svg (MIT)` — nielssp/classic-stylesheets @9ebd2d8; AI System 6 measured a 21-row tab (P01, 65-appearance-themes.css:742) |
 | Desktop and icons | System 7 | The desktop is a 1px #666/#aaa checker | Measured | `clio.css capture, System 7.5.3 in Infinite Mac (npm run capture:system7), every frame` — agrees with AI System 6 system-7-reference |

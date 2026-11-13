@@ -47,6 +47,14 @@ Reference: System 7.5.3 running in Infinite Mac, the 800×600 colour canvas read
 | s7-scroll-thumb | 14×16 | 93.8% | 6.3% | 6.83 |
 | s7-grow-box | 14×14 | 100.0% | 0.0% | 0 |
 | s7-alert-frame | 18×18 | 100.0% | 0.0% | 0 |
+| s7-checkbox-on | 12×12 | 100.0% | 0.0% | 0 |
+| s7-checkbox-off | 12×12 | 100.0% | 0.0% | 0 |
+| s7-radio-on | 12×12 | 100.0% | 0.0% | 0 |
+| s7-radio-off | 12×12 | 100.0% | 0.0% | 0 |
+| s7-popup-end | 26×20 | 100.0% | 0.0% | 0 |
+| s7-progress-fill | 3×11 | 100.0% | 0.0% | 0 |
+| s7-progress-track | 8×11 | 100.0% | 0.0% | 0 |
+| s7-menu-separator | 100×16 | 100.0% | 0.0% | 0 |
 | s7-default-ok | 67×28 | 93.8% | 5.1% | 4.53 |
 
 ## Mac OS 9 Platinum

@@ -79,6 +79,15 @@ specimens.push(
   S7("s7-scroll-thumb", `<div class="clio-scroll" id="s" style="width:120px;height:120px;overflow:scroll;background:#fff"><div style="width:400px;height:562px"></div></div>`, [106, 15, 14, 16], "folder-window", [406, 125, 14, 16]),
   S7("s7-grow-box", s6Scroll, [106, 106, 14, 14], "folder-window", [406, 234, 14, 14]),
   S7("s7-alert-frame", `<div class="alert-box" id="s" style="width:200px;height:80px"></div>`, [0, 0, 18, 18], "page-setup", [208, 110, 18, 18]),
+  S7("s7-checkbox-on", `<div style="padding:12px;background:#fff"><input type="checkbox" id="s" checked></div>`, [0, 0, 12, 12], "general-controls", [33, 81, 12, 12]),
+  S7("s7-checkbox-off", `<div style="padding:12px;background:#fff"><input type="checkbox" id="s"></div>`, [0, 0, 12, 12], "general-controls", [33, 129, 12, 12]),
+  S7("s7-radio-on", `<div style="padding:12px;background:#fff"><input type="radio" id="s" checked></div>`, [0, 0, 12, 12], "general-controls", [429, 85, 12, 12]),
+  S7("s7-radio-off", `<div style="padding:12px;background:#fff"><input type="radio" id="s"></div>`, [0, 0, 12, 12], "general-controls", [395, 85, 12, 12]),
+  S7("s7-popup-end", `<div class="clio" style="padding:12px;background:#fff"><select id="s" style="width:138px"><option>U.S.</option></select></div>`, [114, 0, 26, 20], "numbers", [365, 71, 26, 20]),
+  // The capture holds a bar 2px into the copy: compare its filled start and an unfilled run.
+  S7("s7-progress-fill", `<div style="padding:12px;background:#fff"><progress id="s" max="100" value="60" style="width:200px"></progress></div>`, [0, 0, 3, 11], "copy-progress", [270, 181, 3, 11]),
+  S7("s7-progress-track", `<div style="padding:12px;background:#fff"><progress id="s" max="100" value="60" style="width:200px"></progress></div>`, [150, 0, 8, 11], "copy-progress", [273, 181, 8, 11]),
+  S7("s7-menu-separator", `<div style="padding:12px;background:#fff"><ul class="menu" role="menu" style="width:146px"><li role="separator" id="s"></li></ul></div>`, [0, 0, 100, 16], "file-menu", [34, 84, 100, 16]),
   S7("s7-default-ok", `<div class="clio" style="padding:12px;background:#fff"><button class="default" id="s" style="width:59px">OK</button></div>`, [-4, -4, 67, 28], "page-setup", [511, 198, 67, 28]),
 );
 

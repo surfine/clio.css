@@ -64,6 +64,24 @@ await move(53, 9); await page.mouse.down(); await wait(1200);
 await move(70, 150); await move(70, 251); await wait(800); await dump("file-menu");     // Page Setup highlighted
 await page.mouse.up(); await wait(6000); await dump("page-setup");
 await page.keyboard.press("Enter"); await wait(2500);
+// Control panels from the Apple menu's Control Panels submenu (rows of 16px from y=27).
+const controlPanel = async (y, name) => {
+  await move(18, 9); await page.mouse.down(); await wait(1200); await move(60, 100); await move(60, 150); await wait(1200);
+  await move(150, 150); await move(230, 151); await wait(400); await move(230, y); await wait(700);
+  await page.mouse.up(); await wait(20000); await dump(name);
+  await cmd("w", 2000);
+};
+await controlPanel(243, "general-controls");    // check boxes, radio buttons, group boxes
+await controlPanel(387, "numbers");             // pop-up menu, edit text, group boxes
+await click(250, 64); await wait(1000);
 // Control Panels & Extensions: active scroll bars over the inactive Infinite HD window.
 await click(100, 125); await wait(600); await cmd("o", 4000); await dump("folder-window");
+await cmd("w", 2000);
+// Finder copy progress: duplicate Graphics; keep the first frame with a filled bar.
+await click(100, 185); await page.keyboard.down("Meta"); await page.keyboard.press("d"); await page.keyboard.up("Meta");
+for (let i = 0; i < 80; i++) {
+  await wait(300);
+  const filled = await page.evaluate(() => { const d = document.querySelector("canvas").getContext("2d").getImageData(272, 186, 6, 4).data; return d[0] === 0x44 && d[1] === 0x44; });
+  if (filled) { await dump("copy-progress"); break; }
+}
 await browser.close();

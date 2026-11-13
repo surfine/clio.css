@@ -1,6 +1,6 @@
 {
   "name": "clio.css",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "CSS library for classic Mac OS interfaces: Macintosh System 6, System 7 and Mac OS 8/9 Platinum windows, menus, buttons, scroll bars and dialogs, with every value traced to measured pixels.",
   "homepage": "https://surfine.github.io/clio.css/",
   "license": "MIT",
@@ -27,8 +27,8 @@
   ],
   "install": {
     "npm": "npm install clio.css",
-    "cdn": "https://unpkg.com/clio.css@0.4.0/dist/clio.css",
-    "jsdelivr": "https://cdn.jsdelivr.net/npm/clio.css@0.4.0/dist/clio.css"
+    "cdn": "https://unpkg.com/clio.css@0.4.1/dist/clio.css",
+    "jsdelivr": "https://cdn.jsdelivr.net/npm/clio.css@0.4.1/dist/clio.css"
   },
   "evidenceStatuses": {
     "measured": "read from real pixels of the era",
@@ -259,10 +259,10 @@
       "evidence": [
         {
           "era": "system7",
-          "claim": "Menus stay black and white with System 6's rows",
-          "status": "inferred",
-          "source": "clio.css capture, System 7.5.3 in Infinite Mac (npm run capture:system7), frame file-menu (looked at, not pixel-checked)",
-          "upstream": "System 7.5.3 Finder File menu"
+          "claim": "Menus keep System 6's rows and black highlight; disabled items and the separator are solid #888 instead of a dither",
+          "status": "measured",
+          "source": "clio.css capture, System 7.5.3 in Infinite Mac (npm run capture:system7), frame file-menu",
+          "upstream": "separator row 100% identical"
         },
         {
           "era": "system6",
@@ -473,10 +473,10 @@
       "evidence": [
         {
           "era": "system7",
-          "claim": "Same as System 6 (System 7's controls draw in black and white)",
-          "status": "inferred",
-          "source": "not captured in System 7",
-          "upstream": "System 7.5.3 control definitions"
+          "claim": "Identical to System 6: 12px, X when checked",
+          "status": "measured",
+          "source": "clio.css capture, System 7.5.3 in Infinite Mac (npm run capture:system7), frame general-controls",
+          "upstream": "100% identical, on and off"
         },
         {
           "era": "system6",
@@ -532,10 +532,10 @@
       "evidence": [
         {
           "era": "system7",
-          "claim": "Same as System 6 (System 7's controls draw in black and white)",
-          "status": "inferred",
-          "source": "not captured in System 7",
-          "upstream": "System 7.5.3 control definitions"
+          "claim": "Identical to System 6",
+          "status": "measured",
+          "source": "clio.css capture, System 7.5.3 in Infinite Mac (npm run capture:system7), frame general-controls",
+          "upstream": "100% identical, on and off"
         },
         {
           "era": "system6",
@@ -577,10 +577,10 @@
       "evidence": [
         {
           "era": "system7",
-          "claim": "Same as System 6 (System 7's controls draw in black and white)",
-          "status": "inferred",
-          "source": "not captured in System 7",
-          "upstream": "System 7.5.3 control definitions"
+          "claim": "As System 6: a 1px black frame with the text 3px in",
+          "status": "measured",
+          "source": "clio.css capture, System 7.5.3 in Infinite Mac (npm run capture:system7), frame numbers (Currency Symbol)",
+          "upstream": "System 7.5.3"
         },
         {
           "era": "system6",
@@ -625,10 +625,10 @@
       "evidence": [
         {
           "era": "system7",
-          "claim": "Same as System 6 (System 7's controls draw in black and white)",
-          "status": "inferred",
-          "source": "not captured in System 7",
-          "upstream": "System 7.5.3 control definitions"
+          "claim": "An 18px box with an 11×6 black triangle 5px from the right edge, label 15px in, and a 1px shadow that starts 3px in from the corner",
+          "status": "measured",
+          "source": "clio.css capture, System 7.5.3 in Infinite Mac (npm run capture:system7), frame numbers (Number Format)",
+          "upstream": "100% identical; the triangle is System 7's addition"
         },
         {
           "era": "system6",
@@ -685,10 +685,10 @@
       "evidence": [
         {
           "era": "system7",
-          "claim": "Same as System 6 (System 7's controls draw in black and white)",
+          "claim": "As System 6: a selected row inverts across the list",
           "status": "inferred",
-          "source": "not captured in System 7",
-          "upstream": "System 7.5.3 control definitions"
+          "source": "seen in the Keyboard control panel during capture; not pixel-checked",
+          "upstream": "System 7.5.3"
         },
         {
           "era": "system6",
@@ -849,7 +849,7 @@
           "claim": "Alert frame: 1px black, a raised #ccf/#669 ring, #bbb, a sunken #669/#ccf ring, 1px black (5px, as in System 6)",
           "status": "measured",
           "source": "clio.css capture, System 7.5.3 in Infinite Mac (npm run capture:system7), frame page-setup",
-          "upstream": "100% identical"
+          "upstream": "100% identical. An alert without a colour table keeps System 6's black frame (Monitors & Sound alert); clio.css draws the colour one"
         },
         {
           "era": "system6",
@@ -898,10 +898,10 @@
       "evidence": [
         {
           "era": "system7",
-          "claim": "Same as System 6 (System 7's controls draw in black and white)",
-          "status": "inferred",
-          "source": "not captured in System 7",
-          "upstream": "System 7.5.3 control definitions"
+          "claim": "Native group box: a 1px grey line with the legend on it; the original alternates #777 and #888, drawn #777 here",
+          "status": "measured",
+          "source": "clio.css capture, System 7.5.3 in Infinite Mac (npm run capture:system7), frames general-controls and numbers",
+          "upstream": "System 7.5.3 control panels"
         },
         {
           "era": "system6",
@@ -937,10 +937,10 @@
       "evidence": [
         {
           "era": "system7",
-          "claim": "Same as System 6 (System 7's controls draw in black and white)",
-          "status": "inferred",
-          "source": "not captured in System 7",
-          "upstream": "System 7.5.3 control definitions"
+          "claim": "11px, 1px black frame, #ccf track, #444 fill",
+          "status": "measured",
+          "source": "clio.css capture, System 7.5.3 in Infinite Mac (npm run capture:system7), frame copy-progress",
+          "upstream": "100% identical"
         },
         {
           "era": "system6",
@@ -987,10 +987,10 @@
       "evidence": [
         {
           "era": "system7",
-          "claim": "Same as System 6 (System 7's controls draw in black and white)",
-          "status": "inferred",
-          "source": "not captured in System 7",
-          "upstream": "System 7.5.3 control definitions"
+          "claim": "System 7 had no tab control; the System 6 adaptation is used",
+          "status": "adapted",
+          "source": "clio.css",
+          "upstream": "System 7.5.3"
         },
         {
           "era": "system6",

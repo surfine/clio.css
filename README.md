@@ -22,7 +22,7 @@ npm install clio.css
 ```
 
 ```html
-<link rel="stylesheet" href="https://unpkg.com/clio.css@0.4.0/dist/clio.css">
+<link rel="stylesheet" href="https://unpkg.com/clio.css@0.4.1/dist/clio.css">
 ```
 
 | File | What it draws |
@@ -108,7 +108,7 @@ for System 6).
 | System 6 pressed and hovered button | identical apart from the mouse pointer in the capture |
 | System 6 default OK button | 99.7% |
 | System 6 title bar, Finder info line, TeachText text | 100% |
-| System 7 title bar (active and inactive), arrow boxes, grow box, alert frame | 99–100% |
+| System 7 title bar, arrow boxes, grow box, alert frame, check boxes, radio buttons, pop-up menu, progress bar, menu separator | 99–100% |
 | Platinum title bar | 94.3% |
 | Platinum default OK button | 92.4% |
 
