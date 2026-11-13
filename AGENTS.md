@@ -23,9 +23,14 @@ For AI coding agents using or changing this repository.
   honest status: `measured` only when read from real pixels of the era (name the
   capture), `inferred` when reasoned, `adapted` for web-only changes, `third-party` for
   licensed art or fonts. An unmeasured value is never labelled measured.
-- No Apple bitmaps, icons, logos or fonts, and no art cut from a screenshot. Draw art as
-  CSS or small SVGs (see `tooling/tab-art.py` for a drawn-from-measurement example).
+- No Apple fonts, logos or icon files, and never ship a screenshot or a crop of one.
+  Control art (arrows, boxes, lamps, tabs) may be a pixel-level reconstruction: an SVG
+  redrawn from measured pixels by a script in `tooling/` (see `tooling/s6-art.py`,
+  `tooling/tab-art.py`). Name the capture it was measured from in its evidence row.
   Third-party art needs a licence entry in `THIRD-PARTY.md`.
+- Scope (owner decision, 2026-11-13): eras that can be measured in an emulator —
+  System 6, System 7, Platinum, Mac OS X 10.0–10.4 (Aqua to Tiger), NeXTSTEP. Order:
+  System 7 next, then Aqua. Launch posts (awesome lists, Show HN) wait for Aqua.
 - Tokens live on `:root, [data-era="system6"]` (01-tokens.css) and
   `[data-era="platinum"]` (90-platinum.css). A token that reads another token is
   resolved where it is declared, so an era that changes `--clio-paper` must re-declare
