@@ -1,6 +1,6 @@
 {
   "name": "clio.css",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "CSS library for classic Mac OS interfaces: Macintosh System 6, System 7, Mac OS 8.5 Drawing Board and Mac OS 8/9 Platinum windows, menus, buttons, scroll bars and dialogs, with every value traced to measured pixels.",
   "keywords": [
     "css",
@@ -69,7 +69,7 @@
     "prepack": "node tooling/build.mjs && node test/check.mjs",
     "capture:system6": "node tooling/capture-system6.mjs",
     "capture:keycaps": "node tooling/capture-keycaps.mjs",
-    "build:font": "python3 tooling/extract-glyphs.py --font chicago && python3 tooling/extract-glyphs.py --font geneva && python3 tooling/extract-glyphs.py --font geneva9 && python3 tooling/build-font.py clio-sans-84 && python3 tooling/build-font.py clio-text-84 && python3 tooling/build-font.py clio-text-84-9",
+    "build:font": "python3 tooling/extract-glyphs.py --font chicago && python3 tooling/extract-glyphs.py --font geneva && python3 tooling/extract-glyphs.py --font geneva9 && python3 tooling/extract-glyphs.py --font charcoal && python3 tooling/build-font.py clio-sans-84 && python3 tooling/build-font.py clio-text-84 && python3 tooling/build-font.py clio-text-84-9 && python3 tooling/build-font.py clio-sans-97",
     "capture:system7": "node tooling/capture-system7.mjs",
     "capture:drawingboard": "node tooling/capture-drawingboard.mjs",
     "capture:platinum": "node tooling/capture-platinum.mjs"

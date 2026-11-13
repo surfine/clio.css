@@ -15,6 +15,7 @@ FONTS = {  # source -> (output, family, PostScript name, what it rebuilds)
     'clio-sans-84': ('ClioSans84.woff2', "Clio Sans '84", 'ClioSans84-Regular', 'Chicago 12, designed by Susan Kare for Apple Computer, 1984'),
     'clio-text-84': ('ClioText84.woff2', "Clio Text '84", 'ClioText84-Regular', 'Geneva 12, designed by Susan Kare for Apple Computer, 1984'),
     'clio-text-84-9': ('ClioText84-9.woff2', "Clio Text '84 9", 'ClioText84-9-Regular', 'Geneva 9, designed by Susan Kare for Apple Computer, 1984'),
+    'clio-sans-97': ('ClioSans97.woff2', "Clio Sans '97", 'ClioSans97-Regular', 'Charcoal 12, designed by David Berlow (Font Bureau) for Apple Computer, 1997'),
 }
 KEY = sys.argv[1] if len(sys.argv) > 1 else 'clio-sans-84'
 OUT_FILE, FAMILY, PS, ORIGIN = FONTS[KEY]
@@ -86,8 +87,8 @@ fb.setupNameTable({
     'fullName': FAMILY,
     'psName': PS,
     'version': 'Version 1.000',
-    'copyright': 'Pixel reconstruction (c) 2026 clio.css contributors, measured as drawn by System 6.0.8. The original bitmap design is ' + ORIGIN + '.',
-    'licenseDescription': 'Distributed with clio.css under the MIT licence. Not affiliated with or endorsed by Apple Inc.; Chicago and Geneva are trademarks of Apple Inc.',
+    'copyright': 'Pixel reconstruction (c) 2026 clio.css contributors, measured as drawn by ' + ('Mac OS 9.0' if KEY == 'clio-sans-97' else 'System 6.0.8') + '. The original bitmap design is ' + ORIGIN + '.',
+    'licenseDescription': 'Distributed with clio.css under the MIT licence. Not affiliated with or endorsed by Apple Inc.; Chicago, Geneva and Charcoal are trademarks of Apple Inc.',
     'licenseInfoURL': 'https://github.com/surfine/clio.css/blob/main/THIRD-PARTY.md',
 })
 fb.setupOS2(version=4, sTypoAscender=ASC * PX, sTypoDescender=-DESC * PX, sTypoLineGap=0,

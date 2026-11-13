@@ -12,12 +12,14 @@
   --clio-selection-bg: #ccccff;
   --clio-selection-fg: #000000;
 
-  /* Charcoal if the visitor has it; Geneva for text on a Mac; Asap (OFL) at
-     the widths AI System 6 measured against Charcoal everywhere else. */
-  --clio-font-chrome: Charcoal, "Charcoal CY", "Clio Asap", Geneva, "Helvetica Neue", Arial, sans-serif;
+  /* Charcoal if the visitor has it, else Clio Sans '97 (Charcoal 12 rebuilt
+     from Mac OS 9.0), drawn without smoothing like the bitmap it is; Asap
+     (OFL) at the widths AI System 6 measured against Charcoal as the last
+     fallback; Geneva for text on a Mac. */
+  --clio-font-chrome: Charcoal, "Charcoal CY", "Clio Sans '97", "Clio Asap", Geneva, "Helvetica Neue", Arial, sans-serif;
   --clio-font-text: Geneva, "Clio Asap", "Helvetica Neue", Arial, sans-serif;
   --clio-font-size: 12px;
-  --clio-font-smoothing: auto;
+  --clio-font-smoothing: none;
   --clio-text-smoothing: auto;
   --clio-font-small: var(--clio-font-text);
   --clio-font-size-small: 10px;

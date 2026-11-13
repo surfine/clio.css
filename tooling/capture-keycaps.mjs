@@ -4,8 +4,10 @@
 // (https://infinitemac.org), drives the Finder with the mouse and keyboard, and
 // reads the emulator's 512x342 canvas pixel for pixel (no screenshot scaling).
 //
-//   npm run capture:keycaps [-- chicago|geneva|geneva9]   -> .fidelity/system6/kc-<font>-*.png
+//   npm run capture:keycaps [-- chicago|geneva|geneva9|charcoal]   -> .fidelity/system6/kc-<font>-*.png
 // geneva9 types into the Get Info comments box instead, which is set in Geneva 9.
+// charcoal boots Mac OS 9.0 instead, whose Key Caps opens in Charcoal 12
+//   -> .fidelity/platinum9/kc-charcoal-*.png
 //
 // The frames are Apple's screen pixels: they are evidence for measurement and
 // the pixel check, and are never committed or published. Infinite Mac draws
@@ -17,7 +19,9 @@ import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
-const out = join(root, ".fidelity/system6");
+const FONT = process.argv[2] || "chicago";
+const OS9 = FONT === "charcoal";
+const out = join(root, OS9 ? ".fidelity/platinum9" : ".fidelity/system6");
 mkdirSync(out, { recursive: true });
 const ais6 = process.env.AIS6_DIR || "/Users/aaron/AI System 6";
 let playwright;
@@ -26,7 +30,7 @@ if (!playwright) { console.error("Playwright not found."); process.exit(2); }
 
 const browser = await playwright.chromium.launch();
 const page = await browser.newPage({ viewport: { width: 1200, height: 900 } });
-await page.goto("https://infinitemac.org/1991/System%206.0.8", { waitUntil: "domcontentloaded" });
+await page.goto(OS9 ? "https://infinitemac.org/1999/Mac%20OS%209.0" : "https://infinitemac.org/1991/System%206.0.8", { waitUntil: "domcontentloaded" });
 
 // Booted when the menu bar is drawn: row 5 mostly white, row 19 a black rule.
 const t0 = Date.now();
@@ -42,7 +46,7 @@ for (;;) {
   if (ok) break;
   if (Date.now() - t0 > 180000) { console.error("System 6 did not boot in 3 minutes."); process.exit(1); }
 }
-await page.waitForTimeout(20000); // let the extra disks mount and the desktop settle
+await page.waitForTimeout(OS9 ? 120000 : 20000); // let the extra disks mount and the desktop settle
 const box = await page.locator("canvas").boundingBox();
 const at = (x, y) => [box.x + x + 0.5, box.y + y + 0.5];
 const wait = (ms) => page.waitForTimeout(ms);
@@ -55,13 +59,17 @@ const dump = async (name) => {
   console.log("captured", name);
 };
 
-const FONT = process.argv[2] || "chicago";
 const FONT_ROW = { chicago: 27, courier: 43, geneva: 59, monaco: 91 }[FONT]; // Key Caps menu rows
 const ink = (x, y, w, h) => page.evaluate(([x, y, w, h]) => {
   const d = document.querySelector("canvas").getContext("2d").getImageData(x, y, w, h).data;
   let k = 0; for (let i = 0; i < d.length; i += 4) if (d[i] < 128) k++; return k / (d.length / 4);
 }, [x, y, w, h]);
-if (FONT === "geneva9") {
+if (OS9) {
+  // Apple menu > Key Caps (row y=140); it opens in Charcoal.
+  await move(18, 9); await page.mouse.down(); await wait(900);
+  await move(60, 80); await move(60, 140); await wait(600);
+  await page.mouse.up(); await wait(8000);
+} else if (FONT === "geneva9") {
   // Select Welcome! on the desktop, Get Info, click into the comments box.
   for (let i = 0; i < 5 && !(await ink(455, 126, 35, 6) > 0.6); i++) { await click(472, 104); await wait(800); }
   await cmd("i"); await click(120, 250); await wait(600);
@@ -71,7 +79,7 @@ await move(11, 9); await page.mouse.down(); await wait(1200);
 await move(40, 120); await move(40, 171); await wait(800);
 await page.mouse.up(); await wait(4000);
 }
-if (FONT !== "chicago" && FONT !== "geneva9") {   // choose the font in the Key Caps menu
+if (!OS9 && FONT !== "chicago" && FONT !== "geneva9") {   // choose the font in the Key Caps menu
   await move(116, 9); await page.mouse.down(); await wait(1200);
   await move(130, 40); await move(130, FONT_ROW); await wait(700); await page.mouse.up(); await wait(1500);
 }
