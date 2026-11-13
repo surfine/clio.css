@@ -30,6 +30,8 @@ Infinite Mac tints black and white as #222222 and #eeeeee.
 | s6-button-hover | 60×20 | 96.3% | 3.7% | 9.35 |
 | s6-popup-end | 12×19 | 87.3% | 12.7% | 32.43 |
 | s6-progress-fill | 12×12 | 100.0% | 0.0% | 0 |
+| s6-info-line | 60×17 | 100.0% | 0.0% | 0 |
+| s6-geneva-12 | 160×16 | 100.0% | 0.0% | 0 |
 | s6-menu-separator | 136×16 | 100.0% | 0.0% | 0 |
 
 ## Mac OS 9 Platinum

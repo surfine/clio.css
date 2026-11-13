@@ -398,10 +398,11 @@ export const components = [
     accessibility: "Text colours keep at least 4.5:1 on their grounds; disabled text keeps 3:1 or more.",
     html: `<div class="clio" style="padding: 12px; background: var(--clio-pane-bg)">
   <h2 class="heading">Clio Sans '84 is the system font</h2>
-  <p class="text">Geneva is the application font. Every value is a --clio-* custom property you can override on any element.</p>
+  <p class="text">Clio Text '84 (Geneva) is the application font. Every value is a --clio-* custom property you can override on any element.</p>
 </div>`,
     evidence: [
       { era: "system6", claim: "Chrome text is Clio Sans '84: Chicago 12 rebuilt pixel for pixel (104 Key Caps characters, space, |, ⌘ and ✓), ascent 11, descent 3, drawn without antialiasing", status: "measured", source: "clio.css capture, System 6.0.8 Key Caps (npm run capture:keycaps → tooling/extract-glyphs.py → fonts-src/clio-sans-84.txt)", upstream: "title bar 100% and default OK button 99.7% identical to the real screen" },
+      { era: "system6", claim: "Application text is Clio Text '84 (Geneva 12) and small text Clio Text '84 9 (Geneva 9: info line, icon names, status), rebuilt the same way and drawn without antialiasing", status: "measured", source: "clio.css capture, System 6.0.8 Key Caps (Geneva 12) and Get Info comments (Geneva 9) → fonts-src/clio-text-84.txt, clio-text-84-9.txt", upstream: "TeachText's first line and the Finder info line are 100% identical to the real screen" },
       { era: "system6", claim: "ChicagoFLF stays in the stack as the outline fallback for sizes that are not multiples of 12px", status: "third-party", source: "vendor/system.css-reference/fonts/ChicagoFLF.woff2", upstream: "Robin Casady's ChicagoFLF (public domain), as shipped by system.css" },
       { era: "platinum", claim: "Charcoal when installed; otherwise Asap (OFL) at width 113 for text and 123 for titles, weights 400/600/700", status: "measured", source: "apps/desktop/assets/fonts/platinum/README.md; 65-appearance-themes.css:25", upstream: "Asap matched to a measured Charcoal sample's x-height and advance width" },
       { era: "platinum", claim: "Palette #fff #ddd #ccc #999 #777 #000, accent #333399, lavender #ccccff", status: "measured", source: "tooling/classic-platinum-fidelity-contract.json (platinum.palette)", upstream: "Mac OS 9 captures" },

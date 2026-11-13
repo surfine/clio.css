@@ -394,7 +394,7 @@
   background: none;
   box-shadow: none;
   color: var(--clio-ink);
-  font-family: var(--clio-font-text);
+  font-family: var(--clio-font-small);
   font-size: var(--clio-font-size-small);
   text-align: center;
   cursor: default;

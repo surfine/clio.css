@@ -28,12 +28,11 @@
   box-sizing: border-box;
 }
 
-/* Application text (Geneva role) for content areas. It is an outline face
-   until a Geneva reconstruction ships, so it keeps antialiasing. */
+/* Application text (Geneva role) for content areas. */
 :where(.window-pane, .modal-contents, .alert-contents, .text, .details-bar, .listbox, [role="listbox"], .status-bar, .icon, input, textarea) {
   font-family: var(--clio-font-text);
   font-stretch: var(--clio-font-stretch-text);
-  -webkit-font-smoothing: auto;
+  -webkit-font-smoothing: var(--clio-text-smoothing);
 }
 
 :where(.window, .modal-dialog, .alert-box, .standard-dialog, .clio) :where(h1, h2, h3, h4, .heading) {

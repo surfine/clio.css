@@ -43,7 +43,7 @@ ok(!strip(pt).includes('[data-era="platinum"]'), "clio.platinum.css still scoped
 // 5. No external or Apple assets: url() is a data: URI or a bundled font.
 for (const m of noComments.matchAll(/url\(\s*["']?([^"')]+)/g)) {
   const u = m[1];
-  ok(u.startsWith("data:image/svg+xml,") || /^fonts\/(ChicagoFLF\.woff2?|Asap-Variable\.woff2|ClioSans84\.woff2)$/.test(u), `unexpected url(): ${u.slice(0, 60)}`);
+  ok(u.startsWith("data:image/svg+xml,") || /^fonts\/(ChicagoFLF\.woff2?|Asap-Variable\.woff2|ClioSans84\.woff2|ClioText84\.woff2|ClioText84-9\.woff2)$/.test(u), `unexpected url(): ${u.slice(0, 60)}`);
 }
 
 // 6. Component index: every component is documented, evidenced and styled.

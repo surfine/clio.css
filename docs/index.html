@@ -21,7 +21,7 @@
   <link rel="alternate" type="text/plain" title="llms.txt" href="llms.txt">
   <link rel="alternate" type="application/json" title="Component index" href="components.json">
   <link rel="stylesheet" href="dist/clio.css">
-  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"SoftwareSourceCode","@id":"https://surfine.github.io/clio.css/#software","name":"clio.css","description":"CSS library for classic Mac OS interfaces: System 6 and Mac OS 9 Platinum windows, menus, buttons and dialogs, with values traced to measured pixels. MIT.","url":"https://surfine.github.io/clio.css/","codeRepository":"https://github.com/surfine/clio.css","programmingLanguage":"CSS","license":"https://opensource.org/licenses/MIT","version":"0.3.0","keywords":"css, css-framework, design-system, classic-mac, classic-macos, macintosh, system-6, mac-os-9, mac-os-8, platinum, retro, vintage, 1-bit, chicago, ui, system.css","runtimePlatform":"Web browsers","isAccessibleForFree":true,"hasPart":[{"@type":"WebPageElement","name":"Window","url":"https://surfine.github.io/clio.css/#window"},{"@type":"WebPageElement","name":"Menu bar and menus","url":"https://surfine.github.io/clio.css/#menu"},{"@type":"WebPageElement","name":"Push button","url":"https://surfine.github.io/clio.css/#button"},{"@type":"WebPageElement","name":"Check box","url":"https://surfine.github.io/clio.css/#checkbox"},{"@type":"WebPageElement","name":"Radio button","url":"https://surfine.github.io/clio.css/#radio"},{"@type":"WebPageElement","name":"Text field","url":"https://surfine.github.io/clio.css/#text-field"},{"@type":"WebPageElement","name":"Pop-up menu","url":"https://surfine.github.io/clio.css/#select"},{"@type":"WebPageElement","name":"List box","url":"https://surfine.github.io/clio.css/#listbox"},{"@type":"WebPageElement","name":"Scroll bar","url":"https://surfine.github.io/clio.css/#scrollbar"},{"@type":"WebPageElement","name":"Dialogs and alerts","url":"https://surfine.github.io/clio.css/#dialog"},{"@type":"WebPageElement","name":"Group box","url":"https://surfine.github.io/clio.css/#fieldset"},{"@type":"WebPageElement","name":"Progress bar","url":"https://surfine.github.io/clio.css/#progress"},{"@type":"WebPageElement","name":"Tabs","url":"https://surfine.github.io/clio.css/#tabs"},{"@type":"WebPageElement","name":"Desktop and icons","url":"https://surfine.github.io/clio.css/#desktop"},{"@type":"WebPageElement","name":"Type and tokens","url":"https://surfine.github.io/clio.css/#typography"}]},{"@type":"WebSite","@id":"https://surfine.github.io/clio.css/#site","name":"clio.css","url":"https://surfine.github.io/clio.css/","inLanguage":"en"}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"SoftwareSourceCode","@id":"https://surfine.github.io/clio.css/#software","name":"clio.css","description":"CSS library for classic Mac OS interfaces: System 6 and Mac OS 9 Platinum windows, menus, buttons and dialogs, with values traced to measured pixels. MIT.","url":"https://surfine.github.io/clio.css/","codeRepository":"https://github.com/surfine/clio.css","programmingLanguage":"CSS","license":"https://opensource.org/licenses/MIT","version":"0.3.1","keywords":"css, css-framework, design-system, classic-mac, classic-macos, macintosh, system-6, mac-os-9, mac-os-8, platinum, retro, vintage, 1-bit, chicago, ui, system.css","runtimePlatform":"Web browsers","isAccessibleForFree":true,"hasPart":[{"@type":"WebPageElement","name":"Window","url":"https://surfine.github.io/clio.css/#window"},{"@type":"WebPageElement","name":"Menu bar and menus","url":"https://surfine.github.io/clio.css/#menu"},{"@type":"WebPageElement","name":"Push button","url":"https://surfine.github.io/clio.css/#button"},{"@type":"WebPageElement","name":"Check box","url":"https://surfine.github.io/clio.css/#checkbox"},{"@type":"WebPageElement","name":"Radio button","url":"https://surfine.github.io/clio.css/#radio"},{"@type":"WebPageElement","name":"Text field","url":"https://surfine.github.io/clio.css/#text-field"},{"@type":"WebPageElement","name":"Pop-up menu","url":"https://surfine.github.io/clio.css/#select"},{"@type":"WebPageElement","name":"List box","url":"https://surfine.github.io/clio.css/#listbox"},{"@type":"WebPageElement","name":"Scroll bar","url":"https://surfine.github.io/clio.css/#scrollbar"},{"@type":"WebPageElement","name":"Dialogs and alerts","url":"https://surfine.github.io/clio.css/#dialog"},{"@type":"WebPageElement","name":"Group box","url":"https://surfine.github.io/clio.css/#fieldset"},{"@type":"WebPageElement","name":"Progress bar","url":"https://surfine.github.io/clio.css/#progress"},{"@type":"WebPageElement","name":"Tabs","url":"https://surfine.github.io/clio.css/#tabs"},{"@type":"WebPageElement","name":"Desktop and icons","url":"https://surfine.github.io/clio.css/#desktop"},{"@type":"WebPageElement","name":"Type and tokens","url":"https://surfine.github.io/clio.css/#typography"}]},{"@type":"WebSite","@id":"https://surfine.github.io/clio.css/#site","name":"clio.css","url":"https://surfine.github.io/clio.css/","inLanguage":"en"}]}</script>
   <style>
     :root { --doc-ink: #111; --doc-muted: #555; --doc-rule: #d4d4d4; --doc-bg: #ffffff; --doc-tint: #f4f4f4; }
     html { background: var(--doc-bg); }
@@ -122,7 +122,7 @@
       <h2 id="h-start">Get started</h2>
       <div class="install">
         <pre><code>npm install clio.css</code></pre>
-        <pre><code>&lt;link rel="stylesheet" href="https://unpkg.com/clio.css@0.3.0/dist/clio.css"&gt;</code></pre>
+        <pre><code>&lt;link rel="stylesheet" href="https://unpkg.com/clio.css@0.3.1/dist/clio.css"&gt;</code></pre>
       </div>
       <p><code>clio.css</code> draws System 6 by default. Put <code>data-era="platinum"</code> on <code>&lt;html&gt;</code>, or on any element, to switch everything inside it to Mac OS 9 Platinum. <code>clio.system6.css</code> and <code>clio.platinum.css</code> are single-era builds. Every rule uses <code>:where()</code> or a single class, so your own CSS always wins, and every value is a <code>--clio-*</code> custom property.</p>
       <p>Coming from system.css? Its markup works unchanged: <code>.window</code>, <code>.title-bar</code> with <code>button.close</code> and <code>button.resize</code>, <code>.details-bar</code>, <code>.window-pane</code>, <code>.btn</code>, <code>.btn-default</code>, <code>.standard-dialog</code>, <code>.modal-dialog</code>, <code>.alert-box</code>, <code>.field-row</code> and <code>role="menu-bar"</code> menus.</p>
@@ -1248,14 +1248,14 @@
 <div class="specimen clio">
 <div class="clio" style="padding: 12px; background: var(--clio-pane-bg)">
   <h2 class="heading">Clio Sans '84 is the system font</h2>
-  <p class="text">Geneva is the application font. Every value is a --clio-* custom property you can override on any element.</p>
+  <p class="text">Clio Text '84 (Geneva) is the application font. Every value is a --clio-* custom property you can override on any element.</p>
 </div>
 </div>
       </div>
       <div class="snippet">
         <pre id="code-typography"><code>&lt;div class=&quot;clio&quot; style=&quot;padding: 12px; background: var(--clio-pane-bg)&quot;&gt;
   &lt;h2 class=&quot;heading&quot;&gt;Clio Sans '84 is the system font&lt;/h2&gt;
-  &lt;p class=&quot;text&quot;&gt;Geneva is the application font. Every value is a --clio-* custom property you can override on any element.&lt;/p&gt;
+  &lt;p class=&quot;text&quot;&gt;Clio Text '84 (Geneva) is the application font. Every value is a --clio-* custom property you can override on any element.&lt;/p&gt;
 &lt;/div&gt;</code></pre>
         <button type="button" class="copy" data-copy="code-typography">Copy HTML</button>
       </div>
@@ -1267,7 +1267,7 @@
       </dl>
       
       <details class="evidence-details">
-        <summary>Evidence (5)</summary>
+        <summary>Evidence (6)</summary>
       <table class="evidence">
         <caption>Where each value comes from</caption>
         <thead><tr><th scope="col">Era</th><th scope="col">Value</th><th scope="col">Status</th><th scope="col">Source</th></tr></thead>
@@ -1277,6 +1277,12 @@
           <td>Chrome text is Clio Sans '84: Chicago 12 rebuilt pixel for pixel (104 Key Caps characters, space, |, ⌘ and ✓), ascent 11, descent 3, drawn without antialiasing</td>
           <td><span class="status status-measured">Measured</span></td>
           <td><code>clio.css capture, System 6.0.8 Key Caps (npm run capture:keycaps → tooling/extract-glyphs.py → fonts-src/clio-sans-84.txt)</code><br><span class="upstream">title bar 100% and default OK button 99.7% identical to the real screen</span></td>
+        </tr>
+<tr>
+          <td>System 6</td>
+          <td>Application text is Clio Text '84 (Geneva 12) and small text Clio Text '84 9 (Geneva 9: info line, icon names, status), rebuilt the same way and drawn without antialiasing</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, System 6.0.8 Key Caps (Geneva 12) and Get Info comments (Geneva 9) → fonts-src/clio-text-84.txt, clio-text-84-9.txt</code><br><span class="upstream">TeachText's first line and the Finder info line are 100% identical to the real screen</span></td>
         </tr>
 <tr>
           <td>System 6</td>
@@ -1327,7 +1333,7 @@
   </div>
 
   <footer>
-    <p>clio.css 0.3.0 · MIT · Not affiliated with or endorsed by Apple Inc. Macintosh, Mac OS and Chicago are trademarks of Apple Inc., named here only to describe the eras recreated.</p>
+    <p>clio.css 0.3.1 · MIT · Not affiliated with or endorsed by Apple Inc. Macintosh, Mac OS and Chicago are trademarks of Apple Inc., named here only to describe the eras recreated.</p>
   </footer>
 
   <script>

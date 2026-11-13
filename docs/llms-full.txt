@@ -1,7 +1,7 @@
-# clio.css 0.3.0 — full reference
+# clio.css 0.3.1 — full reference
 
 Classic Mac OS interface CSS: System 6 (default) and Mac OS 8/9 Platinum (data-era="platinum").
-Install: npm install clio.css — or <link rel="stylesheet" href="https://unpkg.com/clio.css@0.3.0/dist/clio.css">
+Install: npm install clio.css — or <link rel="stylesheet" href="https://unpkg.com/clio.css@0.3.1/dist/clio.css">
 Rules have zero or one-class specificity; override any --clio-* custom property on any element.
 
 ## Window (#window)
@@ -323,7 +323,7 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
 ```html
 <div class="clio" style="padding: 12px; background: var(--clio-pane-bg)">
   <h2 class="heading">Clio Sans '84 is the system font</h2>
-  <p class="text">Geneva is the application font. Every value is a --clio-* custom property you can override on any element.</p>
+  <p class="text">Clio Text '84 (Geneva) is the application font. Every value is a --clio-* custom property you can override on any element.</p>
 </div>
 ```
 
@@ -336,6 +336,20 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
 @font-face {
   font-family: "Clio Sans '84";
   src: url("fonts/ClioSans84.woff2") format("woff2");
+  font-display: swap;
+}
+
+/* Clio Text '84: Geneva 12, and Clio Text '84 9: Geneva 9, rebuilt the same
+   way (fonts-src/clio-text-84*.txt). */
+@font-face {
+  font-family: "Clio Text '84";
+  src: url("fonts/ClioText84.woff2") format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Clio Text '84 9";
+  src: url("fonts/ClioText84-9.woff2") format("woff2");
   font-display: swap;
 }
 
@@ -383,7 +397,10 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
 
   /* Type. Chicago 12 is the system font; Geneva is the application font. */
   --clio-font-chrome: "Clio Sans '84", Chicago, "ChicagoFLF", Charcoal, Geneva, "Helvetica Neue", Arial, sans-serif;
-  --clio-font-text: Geneva, "Clio Asap", "Helvetica Neue", Arial, sans-serif;
+  --clio-font-text: "Clio Text '84", Geneva, "Helvetica Neue", Arial, sans-serif;
+  /* Geneva 9: the Finder info line, icon names, status lines. */
+  --clio-font-small: "Clio Text '84 9", Geneva, "Helvetica Neue", Arial, sans-serif;
+  --clio-text-smoothing: none;
   --clio-font-mono: Monaco, Menlo, Consolas, "Courier New", monospace;
   --clio-font-size: 12px;
   /* A bitmap face: no antialiasing, so a glyph on a half pixel stays 1-bit. */
@@ -648,12 +665,11 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
   box-sizing: border-box;
 }
 
-/* Application text (Geneva role) for content areas. It is an outline face
-   until a Geneva reconstruction ships, so it keeps antialiasing. */
+/* Application text (Geneva role) for content areas. */
 :where(.window-pane, .modal-contents, .alert-contents, .text, .details-bar, .listbox, [role="listbox"], .status-bar, .icon, input, textarea) {
   font-family: var(--clio-font-text);
   font-stretch: var(--clio-font-stretch-text);
-  -webkit-font-smoothing: auto;
+  -webkit-font-smoothing: var(--clio-text-smoothing);
 }
 
 :where(.window, .modal-dialog, .alert-box, .standard-dialog, .clio) :where(h1, h2, h3, h4, .heading) {
@@ -898,7 +914,7 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
   border-bottom: var(--clio-details-border);
   background: var(--clio-details-bg);
   box-shadow: var(--clio-details-shadow, none);
-  font-family: var(--clio-font-text);
+  font-family: var(--clio-font-small);
   font-size: var(--clio-details-font-size);
   line-height: var(--clio-details-height);
   white-space: nowrap;
@@ -917,7 +933,7 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
   padding: 1px 8px;
   border-top: var(--clio-border);
   background: var(--clio-details-bg);
-  font-family: var(--clio-font-text);
+  font-family: var(--clio-font-small);
   font-size: var(--clio-font-size-small);
   line-height: 14px;
 }
@@ -1530,7 +1546,7 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
   background: none;
   box-shadow: none;
   color: var(--clio-ink);
-  font-family: var(--clio-font-text);
+  font-family: var(--clio-font-small);
   font-size: var(--clio-font-size-small);
   text-align: center;
   cursor: default;
@@ -1794,6 +1810,8 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
   --clio-font-text: Geneva, "Clio Asap", "Helvetica Neue", Arial, sans-serif;
   --clio-font-size: 12px;
   --clio-font-smoothing: auto;
+  --clio-text-smoothing: auto;
+  --clio-font-small: var(--clio-font-text);
   --clio-font-size-small: 10px;
   --clio-chrome-weight: 700;
   --clio-font-stretch-text: 113%;

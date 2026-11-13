@@ -1,6 +1,6 @@
 {
   "name": "clio.css",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "CSS library for classic Mac OS interfaces: Macintosh System 6 and Mac OS 8/9 Platinum windows, menus, buttons, scroll bars and dialogs, with every value traced to measured pixels.",
   "homepage": "https://surfine.github.io/clio.css/",
   "license": "MIT",
@@ -21,8 +21,8 @@
   ],
   "install": {
     "npm": "npm install clio.css",
-    "cdn": "https://unpkg.com/clio.css@0.3.0/dist/clio.css",
-    "jsdelivr": "https://cdn.jsdelivr.net/npm/clio.css@0.3.0/dist/clio.css"
+    "cdn": "https://unpkg.com/clio.css@0.3.1/dist/clio.css",
+    "jsdelivr": "https://cdn.jsdelivr.net/npm/clio.css@0.3.1/dist/clio.css"
   },
   "evidenceStatuses": {
     "measured": "read from real pixels of the era",
@@ -962,7 +962,7 @@
         "--clio-focus-outline"
       ],
       "accessibility": "Text colours keep at least 4.5:1 on their grounds; disabled text keeps 3:1 or more.",
-      "html": "<div class=\"clio\" style=\"padding: 12px; background: var(--clio-pane-bg)\">\n  <h2 class=\"heading\">Clio Sans '84 is the system font</h2>\n  <p class=\"text\">Geneva is the application font. Every value is a --clio-* custom property you can override on any element.</p>\n</div>",
+      "html": "<div class=\"clio\" style=\"padding: 12px; background: var(--clio-pane-bg)\">\n  <h2 class=\"heading\">Clio Sans '84 is the system font</h2>\n  <p class=\"text\">Clio Text '84 (Geneva) is the application font. Every value is a --clio-* custom property you can override on any element.</p>\n</div>",
       "evidence": [
         {
           "era": "system6",
@@ -970,6 +970,13 @@
           "status": "measured",
           "source": "clio.css capture, System 6.0.8 Key Caps (npm run capture:keycaps → tooling/extract-glyphs.py → fonts-src/clio-sans-84.txt)",
           "upstream": "title bar 100% and default OK button 99.7% identical to the real screen"
+        },
+        {
+          "era": "system6",
+          "claim": "Application text is Clio Text '84 (Geneva 12) and small text Clio Text '84 9 (Geneva 9: info line, icon names, status), rebuilt the same way and drawn without antialiasing",
+          "status": "measured",
+          "source": "clio.css capture, System 6.0.8 Key Caps (Geneva 12) and Get Info comments (Geneva 9) → fonts-src/clio-text-84.txt, clio-text-84-9.txt",
+          "upstream": "TeachText's first line and the Finder info line are 100% identical to the real screen"
         },
         {
           "era": "system6",

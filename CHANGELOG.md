@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.3.1 — 2026-11-14
+
+- **Clio Text '84** (Geneva 12) and **Clio Text '84 9** (Geneva 9), rebuilt from System 6.0.8
+  the same way as Clio Sans '84 (Key Caps; Get Info comments for 9-point). They are the
+  System 6 application and small text fonts. TeachText's first line and the Finder info line
+  now match the real screen 100%.
+- New token `--clio-font-small`; `npm run capture:keycaps -- geneva|geneva9`.
+
 ## 0.3.0 — 2026-11-13
 
 - **Clio Sans '84**: Chicago 12 rebuilt pixel for pixel from System 6.0.8 (Key Caps), 108

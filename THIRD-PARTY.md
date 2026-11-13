@@ -6,19 +6,21 @@ following third-party material is included, each under its own licence.
 
 ## Fonts
 
-### Clio Sans '84 (`dist/fonts/ClioSans84.woff2`)
+### Clio Sans '84 and Clio Text '84 (`dist/fonts/ClioSans84.woff2`, `ClioText84.woff2`, `ClioText84-9.woff2`)
 
-A pixel reconstruction of Chicago 12, the Macintosh system font designed by Susan Kare
-for Apple Computer in 1984. clio.css read every glyph from System 6.0.8 running in an
-emulator (`npm run capture:keycaps`), wrote the bitmaps to `fonts-src/clio-sans-84.txt`
-and built the font from them (`npm run build:font`). No Apple font file was copied.
+Pixel reconstructions of Chicago 12 (Clio Sans '84), Geneva 12 (Clio Text '84) and
+Geneva 9 (Clio Text '84 9), Macintosh system fonts designed by Susan Kare for Apple
+Computer in 1984. clio.css read every glyph from System 6.0.8 running in an
+emulator (`npm run capture:keycaps`), wrote the bitmaps to `fonts-src/*.txt`
+and built the fonts from them (`npm run build:font`). No Apple font file was copied.
 
-It is not an original design and is not presented as one: the letterforms are Apple's.
-It ships under clio.css's MIT licence on the basis that, in the United States, typeface
+They are not original designs and are not presented as such: the letterforms are
+Apple's. They ship under clio.css's MIT licence on the basis that, in the United States, typeface
 designs are not protected by copyright (37 CFR 202.1(e)); only font software is, and
-this font file is new software. Some countries protect typeface designs separately; if
-that matters for your use, use `clio.system6.css` with your own font stack. "Chicago" is
-a trademark of Apple Inc., which is why the font has another name.
+these font files are new software. Some countries protect typeface designs separately; if
+that matters for your use, override `--clio-font-chrome`, `--clio-font-text` and
+`--clio-font-small` with your own stack. "Chicago" and "Geneva" are trademarks of Apple
+Inc., which is why the fonts have other names.
 
 ### Other fonts
 
