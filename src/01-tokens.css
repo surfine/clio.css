@@ -135,6 +135,8 @@
   --clio-button-frame-slice: 4;
   --clio-ring-frame: var(--clio-art-frame-s6-ring);
   --clio-ring-frame-slice: 7;
+  --clio-popup-frame: none;
+  --clio-popup-frame-slice: 3;
   --clio-button-shadow: 0 0 0 0 transparent;
   --clio-button-padding: 0 12px;
   --clio-button-min-width: 59px;
@@ -301,6 +303,11 @@
   --clio-art-frame-s6-button: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJAgMAAACd/+6DAAAACVBMVEUAAAAAAAD///+D3c/SAAAAAXRSTlMAQObYZgAAACpJREFUeJxjYAxgYBINZWBiYWFgCmB0YGJgYABhBqmVDEx//jAwMAYwAAA66QRtNyAoFwAAAABJRU5ErkJggg==");
   --clio-art-frame-s6-button-held: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJAQMAAADaX5RTAAAABlBMVEUAAAAAAAClZ7nPAAAAAXRSTlMAQObYZgAAAB1JREFUeJxjkGFgSmZgYmBg/N/IxABiMNSDSRkGACm1Aqb7EOVpAAAAAElFTkSuQmCC");
   --clio-art-frame-s6-ring: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPAQMAAAABGAcJAAAABlBMVEUAAAAAAAClZ7nPAAAAAXRSTlMAQObYZgAAADRJREFUeJxjYD/AIP+BSYGDsYaB5csahg9yTB8+MDEwgJCAAFPDPyaeBAb7H0wPfjCwHwAAEpMM/gNXK+MAAAAASUVORK5CYII=");
+  --clio-art-frame-p9-button: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJBAMAAAASvxsjAAAAGFBMVEUAAAAAAAB3d3fd3d27u7uqqqoiIiL///+EaqngAAAAAXRSTlMAQObYZgAAADxJREFUeJxjYEgUTGBgYnyk9JCBMUWYYa8O03qGPXIbmBj+MDAwMIERY8pFhbN2jIyOD/7fZ/ov/96eAQBghg8JraaOFgAAAABJRU5ErkJggg==");
+  --clio-art-frame-p9-ring: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAANBAMAAACAxflPAAAAG1BMVEUAAAAAAAB3d3fd3d3MzMy7u7uqqqoiIiKIiIhznn7oAAAAAXRSTlMAQObYZgAAAFpJREFUeJxjZGDnYmB7ycDCwKPAwPjzAwujgjEDg+x6xuLDrx6oOXEwCCcxMDAlCTAx/GMAISYGCEDQTGAOUyKLAoOKQgIjY6gAA9PO+4wMElwMDO8+MELNBwCaGBDQEM8mggAAAABJRU5ErkJggg==");
+  --clio-art-frame-p9-button-disabled: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJAgMAAACd/+6DAAAACVBMVEUAAACIiIjd3d2RXqmqAAAAAXRSTlMAQObYZgAAACFJREFUeJxjYA1hYBINZWAKYHRgYmBgQMYMUisZGFhDGAAtsQJ9dgAT/gAAAABJRU5ErkJggg==");
+  --clio-art-frame-p9-popup: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHBAMAAAA2fErgAAAAGFBMVEUAAAAAAAB3d3fd3d27u7uqqqoiIiL///+EaqngAAAAAXRSTlMAQObYZgAAACtJREFUeJxjYEhMYGBi5H/IwJh+klWbQYCBQYAl/OQnOwbGAEUGpv+C9gwAea0HTcaLsPwAAAAASUVORK5CYII=");
+  --clio-art-frame-p9-popup-disabled: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHAgMAAAC5PL9AAAAACVBMVEUAAACIiIjd3d2RXqmqAAAAAXRSTlMAQObYZgAAAB1JREFUeJxjZLVmEg5gChBhcGBh0ljAtOENI6s1ACDmA/qjrWTUAAAAAElFTkSuQmCC");
   --clio-art-s6-gray50: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='2' height='2' shape-rendering='crispEdges'%3E%3Cpath d='M1 0h1v1H1zM0 1h1v1H0z'/%3E%3C/svg%3E");
   --clio-art-s6-menucheck-on: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='8' shape-rendering='crispEdges'%3E%3Cpath fill='%23fff' d='M8 0h1v1h-1zM7 1h2v1h-2zM6 2h2v1h-2zM5 3h2v1h-2zM0 4h1v1h-1zM4 4h2v1h-2zM0 5h2v1h-2zM3 5h2v1h-2zM1 6h3v1h-3zM2 7h1v1h-1z'/%3E%3C/svg%3E");
   --clio-art-s6-strip-cap: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='15' height='24' shape-rendering='crispEdges'%3E%3Cpath fill='%23fff' d='M1 1h13v22H1z'/%3E%3Cpath d='M0 0h15v1H0zM0 23h15v1H0zM0 1h1v22H0zM14 1h1v22h-1zM3 8h8v1H3zM3 15h8v1H3zM3 9h1v6H3zM10 9h1v6h-1z'/%3E%3C/svg%3E");

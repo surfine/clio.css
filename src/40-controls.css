@@ -71,6 +71,7 @@
   background-clip: text, border-box;
   -webkit-text-fill-color: var(--clio-disabled-fill);
   /* The frame without its face, so the dimmed label shows through. */
+  border-image-source: var(--clio-button-frame-disabled, var(--clio-button-frame));
   border-image-slice: var(--clio-button-frame-slice);
 }
 
@@ -232,6 +233,7 @@
   border-radius: var(--clio-popup-radius);
   background: var(--clio-popup-arrow), var(--clio-popup-bg);
   box-shadow: var(--clio-popup-shadow);
+  border-image: var(--clio-popup-frame) var(--clio-popup-frame-slice) / calc(var(--clio-popup-frame-slice) * 1px) stretch;
   color: var(--clio-ink);
   font-family: var(--clio-font-chrome);
   font-size: var(--clio-font-size);

@@ -206,6 +206,8 @@
   --clio-button-frame-slice: 4;
   --clio-ring-frame: var(--clio-art-frame-s6-ring);
   --clio-ring-frame-slice: 7;
+  --clio-popup-frame: none;
+  --clio-popup-frame-slice: 3;
   --clio-button-shadow: 0 0 0 0 transparent;
   --clio-button-padding: 0 12px;
   --clio-button-min-width: 59px;
@@ -372,6 +374,11 @@
   --clio-art-frame-s6-button: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJAgMAAACd/+6DAAAACVBMVEUAAAAAAAD///+D3c/SAAAAAXRSTlMAQObYZgAAACpJREFUeJxjYAxgYBINZWBiYWFgCmB0YGJgYABhBqmVDEx//jAwMAYwAAA66QRtNyAoFwAAAABJRU5ErkJggg==");
   --clio-art-frame-s6-button-held: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJAQMAAADaX5RTAAAABlBMVEUAAAAAAAClZ7nPAAAAAXRSTlMAQObYZgAAAB1JREFUeJxjkGFgSmZgYmBg/N/IxABiMNSDSRkGACm1Aqb7EOVpAAAAAElFTkSuQmCC");
   --clio-art-frame-s6-ring: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPAQMAAAABGAcJAAAABlBMVEUAAAAAAAClZ7nPAAAAAXRSTlMAQObYZgAAADRJREFUeJxjYD/AIP+BSYGDsYaB5csahg9yTB8+MDEwgJCAAFPDPyaeBAb7H0wPfjCwHwAAEpMM/gNXK+MAAAAASUVORK5CYII=");
+  --clio-art-frame-p9-button: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJBAMAAAASvxsjAAAAGFBMVEUAAAAAAAB3d3fd3d27u7uqqqoiIiL///+EaqngAAAAAXRSTlMAQObYZgAAADxJREFUeJxjYEgUTGBgYnyk9JCBMUWYYa8O03qGPXIbmBj+MDAwMIERY8pFhbN2jIyOD/7fZ/ov/96eAQBghg8JraaOFgAAAABJRU5ErkJggg==");
+  --clio-art-frame-p9-ring: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAANBAMAAACAxflPAAAAG1BMVEUAAAAAAAB3d3fd3d3MzMy7u7uqqqoiIiKIiIhznn7oAAAAAXRSTlMAQObYZgAAAFpJREFUeJxjZGDnYmB7ycDCwKPAwPjzAwujgjEDg+x6xuLDrx6oOXEwCCcxMDAlCTAx/GMAISYGCEDQTGAOUyKLAoOKQgIjY6gAA9PO+4wMElwMDO8+MELNBwCaGBDQEM8mggAAAABJRU5ErkJggg==");
+  --clio-art-frame-p9-button-disabled: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJAgMAAACd/+6DAAAACVBMVEUAAACIiIjd3d2RXqmqAAAAAXRSTlMAQObYZgAAACFJREFUeJxjYA1hYBINZWAKYHRgYmBgQMYMUisZGFhDGAAtsQJ9dgAT/gAAAABJRU5ErkJggg==");
+  --clio-art-frame-p9-popup: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHBAMAAAA2fErgAAAAGFBMVEUAAAAAAAB3d3fd3d27u7uqqqoiIiL///+EaqngAAAAAXRSTlMAQObYZgAAACtJREFUeJxjYEhMYGBi5H/IwJh+klWbQYCBQYAl/OQnOwbGAEUGpv+C9gwAea0HTcaLsPwAAAAASUVORK5CYII=");
+  --clio-art-frame-p9-popup-disabled: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHAgMAAAC5PL9AAAAACVBMVEUAAACIiIjd3d2RXqmqAAAAAXRSTlMAQObYZgAAAB1JREFUeJxjZLVmEg5gChBhcGBh0ljAtOENI6s1ACDmA/qjrWTUAAAAAElFTkSuQmCC");
   --clio-art-s6-gray50: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='2' height='2' shape-rendering='crispEdges'%3E%3Cpath d='M1 0h1v1H1zM0 1h1v1H0z'/%3E%3C/svg%3E");
   --clio-art-s6-menucheck-on: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='8' shape-rendering='crispEdges'%3E%3Cpath fill='%23fff' d='M8 0h1v1h-1zM7 1h2v1h-2zM6 2h2v1h-2zM5 3h2v1h-2zM0 4h1v1h-1zM4 4h2v1h-2zM0 5h2v1h-2zM3 5h2v1h-2zM1 6h3v1h-3zM2 7h1v1h-1z'/%3E%3C/svg%3E");
   --clio-art-s6-strip-cap: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='15' height='24' shape-rendering='crispEdges'%3E%3Cpath fill='%23fff' d='M1 1h13v22H1z'/%3E%3Cpath d='M0 0h15v1H0zM0 23h15v1H0zM0 1h1v22H0zM14 1h1v22h-1zM3 8h8v1H3zM3 15h8v1H3zM3 9h1v6H3zM10 9h1v6h-1z'/%3E%3C/svg%3E");
@@ -981,6 +988,7 @@
   background-clip: text, border-box;
   -webkit-text-fill-color: var(--clio-disabled-fill);
   /* The frame without its face, so the dimmed label shows through. */
+  border-image-source: var(--clio-button-frame-disabled, var(--clio-button-frame));
   border-image-slice: var(--clio-button-frame-slice);
 }
 
@@ -1142,6 +1150,7 @@
   border-radius: var(--clio-popup-radius);
   background: var(--clio-popup-arrow), var(--clio-popup-bg);
   box-shadow: var(--clio-popup-shadow);
+  border-image: var(--clio-popup-frame) var(--clio-popup-frame-slice) / calc(var(--clio-popup-frame-slice) * 1px) stretch;
   color: var(--clio-ink);
   font-family: var(--clio-font-chrome);
   font-size: var(--clio-font-size);
@@ -1761,9 +1770,13 @@
   --clio-face: #dddddd;
   --clio-disabled: #6f6f6f;
   --clio-disabled-dither: none;
-  --clio-button-frame: none;
+  /* Push button, disabled button and default ring: the real pixel frames
+     (tooling/frame-art.py: Mac OS 9.0 Appearance and GUIdebook's Mac OS 9.0). */
+  --clio-button-frame: var(--clio-art-frame-p9-button);
   --clio-button-frame-held: none;
-  --clio-ring-frame: none;
+  --clio-button-frame-disabled: var(--clio-art-frame-p9-button-disabled);
+  --clio-ring-frame: var(--clio-art-frame-p9-ring);
+  --clio-ring-frame-slice: 6;
   --clio-disabled-fill: currentcolor;
   --clio-selection-bg: #ccccff;
   --clio-selection-fg: #000000;
@@ -1797,12 +1810,9 @@
   --clio-window-bg: #cccccc;
   --clio-pane-bg: #dddddd;
   --clio-window-border: 1px solid #000000;
-  --clio-window-shadow:
-    1px 1px 0 #000000,
-    inset 1px 0 0 #ffffff,
-    inset 0 1px 0 #ffffff,
-    inset -1px 0 0 #999999,
-    inset 0 -1px 0 #999999;
+  /* The frame's white light and #999 shade are drawn as lines in the window's
+     background (below), which leave the two odd corners in the frame grey. */
+  --clio-window-shadow: 1px 1px 0 #000000;
   /* AI System 6 pads 5px because its pane has no border; here the pane draws
      the black content line itself, so the strip is 4px. */
   --clio-window-padding: 2px 4px 4px;
@@ -1854,15 +1864,11 @@
   --clio-menu-separator-height: 6px;
 
   /* Push buttons: bevel, 3px corners (P29 pressed) */
-  --clio-button-bg: #dddddd;
+  --clio-button-bg: transparent;
   --clio-button-fg: #000000;
   --clio-button-border: 1px solid #000000;
   --clio-button-radius: 3px;
-  --clio-button-shadow:
-    inset 1px 1px 0 #dddddd,
-    inset 2px 2px 0 #ffffff,
-    inset -1px -1px 0 #777777,
-    inset -2px -2px 0 #aaaaaa;
+  --clio-button-shadow: none;
   --clio-button-padding: 0 10px;
   --clio-button-min-width: 58px;
   --clio-button-weight: 700;
@@ -1879,9 +1885,16 @@
   /* Check boxes and radio buttons: the mark and both radio states are redrawn
      from Mac OS 9.0's General Controls (tooling/p9-art.py). */
   --clio-check-size: 12px;
-  --clio-check-bg: #dddddd;
+  /* The well's white light and #888 shade as lines that leave the odd corners
+     in the face (an inset shadow would also paint over the check mark). */
+  --clio-check-bg:
+    linear-gradient(#ffffff, #ffffff) 0 0 / calc(100% - 1px) 1px no-repeat padding-box,
+    linear-gradient(#ffffff, #ffffff) 0 0 / 1px calc(100% - 1px) no-repeat padding-box,
+    linear-gradient(#888888, #888888) 1px 100% / calc(100% - 1px) 1px no-repeat padding-box,
+    linear-gradient(#888888, #888888) 100% 1px / 1px calc(100% - 1px) no-repeat padding-box,
+    #dddddd;
   --clio-check-border: 1px solid #000000;
-  --clio-check-shadow: inset -1px -1px 0 #888888, inset 1px 1px 0 #ffffff;
+  --clio-check-shadow: none;
   --clio-check-mark: var(--clio-art-p9-check) 0 0 / 10px 10px no-repeat;
   --clio-check-mark-origin: padding-box;
   --clio-check-pressed-border-width: 1px;
@@ -1899,7 +1912,8 @@
      #aaa then #777 shade) with the 7x10 arrows 7px from the right, 4px down. */
   --clio-popup-bg: #dddddd;
   --clio-popup-border: 1px solid #000000;
-  --clio-popup-radius: 3px;
+  --clio-popup-radius: 0;
+  --clio-popup-frame: var(--clio-art-frame-p9-popup);   /* the real corners */
   --clio-popup-shadow: none;
   --clio-popup-height: 20px;
   --clio-popup-padding: 0 28px 0 7px;
@@ -1909,10 +1923,11 @@
     linear-gradient(#777777, #777777) right 0 top 1px / 1px calc(100% - 1px) no-repeat,
     linear-gradient(#777777, #777777) right 0 bottom 0 / 19px 1px no-repeat,
     linear-gradient(#aaaaaa, #aaaaaa) right 1px top 1px / 1px calc(100% - 2px) no-repeat,
-    linear-gradient(#aaaaaa, #aaaaaa) right 1px bottom 1px / 18px 1px no-repeat,
+    linear-gradient(#aaaaaa, #aaaaaa) right 1px bottom 1px / 17px 1px no-repeat,
+    linear-gradient(#bbbbbb, #bbbbbb) right 19px bottom 0 / 1px 1px no-repeat,
     linear-gradient(#ffffff, #ffffff) right 18px top 1px / 1px calc(100% - 3px) no-repeat,
     linear-gradient(#ffffff, #ffffff) right 2px top 1px / 17px 1px no-repeat,
-    linear-gradient(#aaaaaa, #aaaaaa) right 20px top 0 / 1px 100% no-repeat,
+    linear-gradient(#aaaaaa, #aaaaaa) right 20px top 1px / 1px calc(100% - 1px) no-repeat,
     linear-gradient(#ffffff, #ffffff) left 0 top 0 / calc(100% - 21px) 1px no-repeat,
     linear-gradient(#aaaaaa, #aaaaaa) left 0 bottom 0 / calc(100% - 21px) 1px no-repeat;
 
@@ -1964,8 +1979,11 @@
   --clio-list-border: 1px solid #000000;
   --clio-list-shadow: -1px -1px 0 #888888, 1px 1px 0 #ffffff;
   --clio-list-row: 16px;
-  --clio-group-border: 1px solid #888888;
-  --clio-group-shadow: inset 1px 1px 0 #ffffff, 1px 1px 0 #ffffff;
+  /* Group box: a 1px line of #777 and #888 dots, the pattern aligned to the
+     screen (#777 where x + y is even), no light (Mac OS 9.0 General Controls). */
+  --clio-group-border: 1px solid transparent;
+  --clio-group-shadow: none;
+  --clio-art-p9-group-dots: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACAQMAAABIeJ9nAAAABlBMVEV3d3eIiIjxRXMlAAAADElEQVR4nGNwYHIAAAEIAIMYhovOAAAAAElFTkSuQmCC");
   --clio-progress-height: 12px;
   --clio-progress-bg: #bbbbbb;
   --clio-progress-border: 1px solid #000000;
@@ -2032,6 +2050,7 @@
   --clio-art-p9-radio: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMBAMAAACkW0HUAAAAG1BMVEUAAAAAAABERERVVVWIiIiqqqq7u7vd3d3///9N7yqcAAAAAXRSTlMAQObYZgAAAFpJREFUeJwlzLENQEAYBeDn5RJRuZwJiI2IOZTKW0FnB7OICbDC61x1v8I3wAegDYBDM9n+sBjXMHiyigs9+y2V6KgYZxmRSjOwxiwVvF4zu5lPSXJ2ZFzCn32EjiE9A/VQnAAAAABJRU5ErkJggg==");
   --clio-art-p9-radio-pressed: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMBAMAAACkW0HUAAAAIVBMVEUAAAAAAAAiIiJERERVVVVmZmZ3d3eIiIiZmZm7u7v////rjZGwAAAAAXRSTlMAQObYZgAAAFdJREFUeJwVxKsRgDAURcFz34B/iUaQoQE0ilKogUHREyVQAxKZFnBRfIYVC6QI+n+OymIIyvZK8lZdCkGNXapHfwz3RZiL0kfLwLyZ3CmT3bvDKhhO+ABY6xACXUidtgAAAABJRU5ErkJggg==");
   --clio-art-p9-checkbox-pressed: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMBAMAAACkW0HUAAAAElBMVEUAAAAAAABVVVV3d3eZmZn///8vNloyAAAAAXRSTlMAQObYZgAAADhJREFUeJxFibENACAMwxzUGegH/f8MxFkdEHQgi2VHzp1pAsO42ttrfLQoW4WM+lYhp8kFW44lHI3DBiNDd4iSAAAAAElFTkSuQmCC");
+  --clio-art-p9-box-face: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJBAMAAAASvxsjAAAAG1BMVEUAAACIiIiZmZmqqqq7u7vMzMzd3d3u7u7///8xpbC+AAAAAXRSTlMAQObYZgAAAClJREFUeJxjbL3AwPCb5exFQcHTTAwCAgIMTIyMjIwMuNgsfw4wMDAAAAO8B0nHBJxRAAAAAElFTkSuQmCC");
   --clio-art-p9-progress-pole: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAKBAMAAABPkMOvAAAAKlBMVEUAAAAAAFUAAIgzM5lVVVVmZsx3d3eZmZmZmf+qqqq7u7vMzP/d3d3///+RIHmxAAAAAXRSTlMAQObYZgAAAFFJREFUeJwlyrEJgwAQQNF3ciNYiziBIKQ2U7lTpnAAAy4QcYOAtQbRFK/5/GhwyefM1pKPDR3x+q0UtfhY7ism+0j2ufBGFYN/yi8uUbYcMycurhMrVyrlPQAAAABJRU5ErkJggg==");
   --clio-art-p9-submenu: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAALAQMAAABmnG7VAAAABlBMVEUAAAAAAAClZ7nPAAAAAXRSTlMAQObYZgAAAB9JREFUeJxjaGA4wPCA4QPDD4Y/TH+YfjB9YHrAdAAAZSIJk3jnGdQAAAAASUVORK5CYII=");
   --clio-art-p9-submenu-on: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAALAQMAAABmnG7VAAAABlBMVEUAAAD///+l2Z/dAAAAAXRSTlMAQObYZgAAAB9JREFUeJxjaGA4wPCA4QPDD4Y/TH+YfjB9YHrAdAAAZSIJk3jnGdQAAAAASUVORK5CYII=");
@@ -2045,6 +2064,10 @@
    right and bottom (GUIdebook Appearance window, x=4 and x=width-5). */
 :root .window:not(.inactive) {
   background:
+    linear-gradient(#ffffff, #ffffff) 0 0 / calc(100% - 1px) 1px no-repeat,
+    linear-gradient(#ffffff, #ffffff) 0 0 / 1px calc(100% - 1px) no-repeat,
+    linear-gradient(#999999, #999999) 1px 100% / calc(100% - 1px) 1px no-repeat,
+    linear-gradient(#999999, #999999) 100% 1px / 1px calc(100% - 1px) no-repeat,
     linear-gradient(#999999, #999999) 3px 19px / 1px calc(100% - 22px) no-repeat,
     linear-gradient(#ffffff, #ffffff) right 3px top 20px / 1px calc(100% - 23px) no-repeat,
     linear-gradient(#ffffff, #ffffff) left 3px bottom 3px / calc(100% - 6px) 1px no-repeat,
@@ -2069,11 +2092,13 @@
 /* The ridged bar. Its covers read the slot sizes the .title-bar itself
    computes, so this is a rule, not a token. */
 :root .title-bar {
+  /* Six ridges: white lines, and #777 lines one pixel to their right (the
+     ridge's shade), between the box slots (Mac OS 9.0, both ends measured). */
+  --clio-tb-ridges: calc(100% - var(--clio-tb-close) - var(--clio-tb-zoom) - var(--clio-tb-shade) - 1px);
   background:
-    linear-gradient(#cccccc, #cccccc) left top / var(--clio-tb-close) 17px no-repeat,
-    linear-gradient(#cccccc, #cccccc) right top / calc(var(--clio-tb-zoom) + var(--clio-tb-shade) + 1px) 17px no-repeat,
     linear-gradient(to bottom, #cccccc 0 1px, transparent 1px 13px, #cccccc 13px 17px, #999999 17px 18px),
-    repeating-linear-gradient(to bottom, #ffffff 0 1px, #777777 1px 2px) 0 1px / 100% 2px repeat-y,
+    repeating-linear-gradient(to bottom, #ffffff 0 1px, transparent 1px 2px) var(--clio-tb-close) 1px / var(--clio-tb-ridges) 2px repeat-y,
+    repeating-linear-gradient(to bottom, transparent 0 1px, #777777 1px 2px) calc(var(--clio-tb-close) + 1px) 1px / var(--clio-tb-ridges) 2px repeat-y,
     #cccccc;
 }
 
@@ -2084,7 +2109,19 @@
 
 /* The title is cut out of the ridges in the frame grey, drawn wide. */
 :root .title-bar > :is(.title, h1, h2, h3) {
-  transform: translate(-1px, -1px);
+  /* Mac OS 9.0: the cut-out spans the ridges, 4px before the title and 3px
+     after it, and is centred 1px left of the bar's middle; Charcoal sits one
+     row low in it. */
+  padding: 1px 3px 0 4px;
+  transform: translateX(-1px);
+  /* The ridge's #777 lines are its white lines one pixel to the right, and so
+     is their cut: show them in the cut-out's first column, cover them one
+     column past its last. */
+  background:
+    repeating-linear-gradient(to bottom, transparent 0 1px, #777777 1px 2px) 0 0 / 1px 12px no-repeat,
+    #cccccc;
+  overflow: clip;              /* still truncates with an ellipsis */
+  overflow-clip-margin: 1px;   /* but lets the column past the end show */
 }
 
 /* The close, zoom and collapse boxes: an 11px bevelled square sunk into the
@@ -2092,16 +2129,14 @@
 :root .title-bar > :is(button, .close, .close-box, .resize, .resize-box, .zoom, .shade, .shade-box, .collapse) {
   margin-top: 1px;
   border-color: #222222;
-  background: linear-gradient(to bottom right, #999999, #ffffff);
+  background: var(--clio-art-p9-box-face) 0 0 / 9px 9px no-repeat;
   box-shadow:
     -1px -1px 0 #888888,
     -1px 0 0 #888888,
     0 -1px 0 #888888,
     1px 1px 0 #ffffff,
     1px 0 0 #ffffff,
-    0 1px 0 #ffffff,
-    inset 1px 1px 0 #cccccc,
-    inset -1px -1px 0 #888888;
+    0 1px 0 #ffffff;
 }
 
 :root .title-bar > :is(button, .close, .close-box, .resize, .resize-box, .zoom, .shade, .shade-box, .collapse):is(:active, .active) {
@@ -2142,7 +2177,7 @@
   --clio-check-shadow: none;
   border-color: #555555;
   background: #dddddd;
-  box-shadow: 1px 1px 0 #555555, inset 1px 1px 0 #eeeeee, inset -1px -1px 0 #999999;
+  box-shadow: 1px 1px 0 #555555;   /* flat: no light or shade inside (Mac OS 9.0 Finder, behind Appearance) */
   color: #555555;
 }
 
@@ -2170,14 +2205,12 @@
 :root :is(.default, .btn-default)::before {
   content: "";
   position: absolute;
-  border: 0;
-  inset: -3px;
-  border-radius: 3px;
-  box-shadow:
-    0 0 0 1px #000000,
-    inset 1px 1px 0 #dddddd,
-    inset -1px -1px 0 #777777,
-    inset 0 0 0 2px #aaaaaa;
+  border-width: 1px;                  /* longhands: the shorthand would reset the ring, which is a border-image */
+  border-style: solid;
+  border-color: transparent;
+  inset: -4px;
+  border-radius: 0;
+  box-shadow: none;
   pointer-events: none;
 }
 
@@ -2186,8 +2219,9 @@
 }
 
 :root :is(button, .btn, .btn-default, input[type="button"], input[type="submit"], input[type="reset"]):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *):is(:disabled, .disabled) {
-  background: #dddddd;
+  background: transparent;
   box-shadow: none;
+  border-image: var(--clio-button-frame-disabled) var(--clio-button-frame-slice) fill / calc(var(--clio-button-frame-slice) * 1px) stretch;
 }
 
 /* ---- Radio buttons: drawn, not cut from a screenshot ------------------------ */
@@ -2334,18 +2368,37 @@
   background: var(--clio-pane-bg);
 }
 
+:root fieldset {
+  background:
+    linear-gradient(var(--clio-pane-bg), var(--clio-pane-bg)) padding-box,
+    var(--clio-art-p9-group-dots) 0 0 / 2px 2px fixed border-box;
+  image-rendering: pixelated;   /* keep the dots from blending into one grey */
+}
+
+/* The title's gap opens 13px after the corner (General Controls, "Desktop"). */
+:root fieldset > legend {
+  margin-left: 2px;
+}
+
 /* Disabled pop-up menu: #888 frame, flat face, the #aaa divider and a grey
    arrow (Mac OS 9.0 Appearance, "Position Automatically"). Browsers also fade
    a disabled <select>; Mac OS did not. */
 :root select:disabled {
   border-color: #888888;
   background:
-    var(--clio-art-p-dropdown-off) right 6px center / 7px 10px no-repeat,
-    linear-gradient(#aaaaaa, #aaaaaa) right 19px top 0 / 1px 100% no-repeat,
+    var(--clio-art-p-dropdown-off) right 7px top 4px / 7px 10px no-repeat,
+    linear-gradient(#aaaaaa, #aaaaaa) right 20px top 0 / 1px 100% no-repeat,
     #dddddd;
+  background-clip: padding-box;
   box-shadow: none;
   color: #888888;
   opacity: 1;
+  border-image-source: var(--clio-art-frame-p9-popup-disabled);
+}
+
+/* The face stays inside the frame, so the rounded corners show what is behind. */
+:root select {
+  background-clip: padding-box;
 }
 
 /* Indeterminate progress (no value): Mac OS 9's stripes, one 16px period
@@ -2353,6 +2406,21 @@
 :root progress:indeterminate,
 :root progress:indeterminate::-webkit-progress-bar {
   background: var(--clio-art-p9-progress-pole) 0 0 / 16px 10px repeat-x;
+}
+
+:root .title-bar > :is(.title, h1, h2, h3)::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: -1px;
+  width: 1px;
+  height: 12px;
+  background: repeating-linear-gradient(to bottom, transparent 0 1px, #cccccc 1px 2px);
+}
+
+:root .window.inactive > .title-bar > :is(.title, h1, h2, h3)::after,
+:root .inactive-title-bar > :is(.title, h1, h2, h3)::after {
+  content: none;
 }
 
 /* Mac OS 8.5 "Drawing Board" (the beta theme Apple shipped in 8.5b6 and
@@ -2433,6 +2501,11 @@
   --clio-button-active-bg: #cec6b5;
   --clio-button-active-fg: #313131;
   --clio-button-active-shadow: 1px 0 0 #555555, 2px 0 0 #999999, 0 1px 0 #999999, 2px 1px 0 #999999;
+  --clio-button-frame: none;
+  --clio-button-frame-held: none;
+  --clio-button-frame-disabled: none;
+  --clio-ring-frame: none;
+  --clio-popup-frame: none;
   --clio-popup-bg: #cec6b5;
   --clio-popup-border: 1px solid #555555;
   --clio-popup-radius: 0;
@@ -2504,6 +2577,7 @@
   --clio-list-border: 2px solid #9c9c63;
   --clio-list-shadow: inset 0 0 0 1px #e7ded6;
   --clio-group-border: 1px solid #777777;
+  --clio-group-bg: transparent;
   --clio-group-shadow: none;
   /* Progress bar (Finder copy window): 12px, a #756f66 pencil line (#333 on
      the left) round #ddd6c5; an indeterminate bar shows the theme's arrows.
@@ -2602,7 +2676,13 @@
 }
 
 :root .title-bar > :is(.title, h1, h2, h3) {
+  padding: var(--clio-title-padding);
+  background: transparent;
   transform: none;
+}
+
+:root .title-bar > :is(.title, h1, h2, h3)::after {
+  content: none;
 }
 
 /* Close, zoom and collapse boxes are the theme's 11px pictures. */
@@ -2843,6 +2923,7 @@
 /* Disabled pop-up menu: a lighter #9f9a94 pencil frame (#888 along the foot),
    the same face and hatch, the theme's dimmed arrow (Appearance, "Variation"). */
 :root select:disabled {
+  border-image: none;
   border-color: #9f9a94 #9f9a94 #888888;
   background:
     var(--clio-art-db-popup-arrow-off) right 5px top 4px / 7px 9px no-repeat,
@@ -2888,6 +2969,14 @@
 :root progress:indeterminate,
 :root progress:indeterminate::-webkit-progress-bar {
   background: var(--clio-art-db-progress-arrows) 0 center / 128px 5px repeat-x, #ddd6c5;
+}
+
+:root fieldset {
+  background: transparent;
+}
+
+:root fieldset > legend {
+  margin-left: 0;
 }
 
 /* Adaptations the historical machines never needed. Historical sizes are

@@ -87,7 +87,7 @@ the 800×600 colour canvas read 1:1 (`npm run capture:drawingboard`), compared i
 | db-radio-on | 16×12 | 100.0% | 0.0% | 0 |
 | db-radio-off | 16×12 | 100.0% | 0.0% | 0 |
 | db-field-corner | 12×25 | 80.7% | 7.3% | 18.44 |
-| db-menu-underline | 124×3 | 63.7% | 21.0% | 16.05 |
+| db-menu-underline | 124×3 | 63.2% | 21.0% | 16.01 |
 | db-menu-separator | 100×9 | 48.2% | 19.3% | 14.7 |
 
 ## Mac OS 9 Platinum, re-measured
@@ -97,18 +97,18 @@ Reference: Mac OS 9.0 running in Infinite Mac, the 800×600 colour canvas read 1
 
 | Specimen | Size | exact | off | mean |
 | --- | --- | ---: | ---: | ---: |
-| p9-checkbox-on | 14×12 | 96.4% | 3.0% | 3.04 |
-| p9-checkbox-off | 12×12 | 98.6% | 1.4% | 1.18 |
+| p9-checkbox-on | 14×12 | 100.0% | 0.0% | 0 |
+| p9-checkbox-off | 12×12 | 100.0% | 0.0% | 0 |
 | p9-radio-on | 12×12 | 100.0% | 0.0% | 0 |
 | p9-radio-off | 12×12 | 100.0% | 0.0% | 0 |
-| p9-titlebar-left | 30×22 | 95.9% | 1.1% | 1.44 |
-| p9-titlebar-right | 36×22 | 97.2% | 0.9% | 1.07 |
-| p9-button-end | 20×20 | 80.5% | 16.0% | 29.43 |
-| p9-popup-disabled | 34×20 | 95.6% | 2.6% | 2.58 |
-| p9-group-corner | 12×30 | 82.8% | 0.3% | 3.12 |
-| p9-menu-separator | 100×6 | 67.0% | 16.5% | 16.83 |
-| p9-popup-end | 24×20 | 96.7% | 2.1% | 2 |
-| p9-button-held | 20×20 | 68.8% | 28.0% | 38.36 |
+| p9-titlebar-left | 30×22 | 100.0% | 0.0% | 0 |
+| p9-titlebar-right | 36×22 | 100.0% | 0.0% | 0 |
+| p9-button-end | 86×20 | 100.0% | 0.0% | 0.03 |
+| p9-popup-disabled | 34×20 | 100.0% | 0.0% | 0 |
+| p9-group-corner | 12×30 | 100.0% | 0.0% | 0 |
+| p9-menu-separator | 100×6 | 100.0% | 0.0% | 0 |
+| p9-popup-end | 24×20 | 100.0% | 0.0% | 0 |
+| p9-button-held | 86×20 | 95.8% | 3.5% | 4.88 |
 | p9-strip-start | 29×24 | 100.0% | 0.0% | 0 |
 | p9-strip-handle | 18×24 | 100.0% | 0.0% | 0 |
 | p9-strip-collapsed | 18×24 | 100.0% | 0.0% | 0 |
@@ -119,13 +119,13 @@ Reference: GUIdebook Mac OS 9.0 captures, cropped by AI System 6 (`AIS6_DIR`).
 
 | Specimen | Size | exact | off | mean |
 | --- | --- | ---: | ---: | ---: |
-| active-titlebar | 477×22 | 95.7% | 3.8% | 6.87 |
-| inactive-titlebar | 424×22 | 91.8% | 2.9% | 3.69 |
-| default-ok | 73×32 | 95.2% | 2.3% | 3.1 |
-| button-disabled | 80×20 | 96.9% | 0.0% | 0.92 |
-| checkbox-checked | 12×12 | 95.8% | 3.5% | 3.54 |
-| checkbox-unchecked | 12×12 | 98.6% | 1.4% | 1.18 |
-| selected-tab | 103×24 | 95.7% | 2.5% | 2.84 |
+| active-titlebar | 477×22 | 100.0% | 0.0% | 0 |
+| inactive-titlebar | 424×22 | 100.0% | 0.0% | 0 |
+| default-ok | 73×32 | 100.0% | 0.0% | 0 |
+| button-disabled | 80×20 | 100.0% | 0.0% | 0 |
+| checkbox-checked | 12×12 | 100.0% | 0.0% | 0 |
+| checkbox-unchecked | 12×12 | 100.0% | 0.0% | 0 |
+| selected-tab | 103×24 | 99.5% | 0.0% | 0.11 |
 
 ## What the remaining difference is
 

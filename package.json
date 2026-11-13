@@ -73,7 +73,8 @@
     "capture:system7": "node tooling/capture-system7.mjs",
     "capture:drawingboard": "node tooling/capture-drawingboard.mjs",
     "capture:platinum": "node tooling/capture-platinum.mjs",
-    "capture:charcoal-large": "node tooling/capture-charcoal-large.mjs"
+    "capture:charcoal-large": "node tooling/capture-charcoal-large.mjs",
+    "capture:charcoal-ui": "node tooling/capture-charcoal-ui.mjs"
   },
   "engines": {
     "node": ">=18"

@@ -111,7 +111,7 @@ ok(read("docs/llms-full.txt").includes("```css"), "llms-full.txt: stylesheet mis
 // 10. Package.
 const pkg = JSON.parse(read("package.json"));
 for (const [k, v] of Object.entries(pkg.exports)) if (!v.includes("*")) ok(existsSync(join(root, v)), `exports ${k} -> ${v} missing`);
-ok(statSync(join(root, "dist/clio.min.css")).size < 140000, "clio.min.css grew past 140 KB");
+ok(statSync(join(root, "dist/clio.min.css")).size < 150000, "clio.min.css grew past 150 KB");
 
 if (failures.length) {
   console.error(`FAIL ${failures.length} of ${checks} checks`);
