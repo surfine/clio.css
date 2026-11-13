@@ -389,16 +389,21 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
    every weight and the browser never thickens it. */
 @font-face {
   font-family: "Clio Sans '97";
-  src: url("fonts/ClioSans97.woff2") format("woff2");
+  src: url("fonts/ClioSans97.woff2") format("woff2") tech(color-COLRv1),
+    url("fonts/ClioSans97Plain.woff2") format("woff2");
   font-weight: 100 900;
   font-display: swap;
 }
 
+/* Clio Sans '97's antialiasing is COLRv1 colour layers. A browser without
+   COLRv1 (Safari) would paint every layer solid, so it gets the Plain file:
+   the outlines alone, each pixel at least half covered. */
 /* Clio Sans '97 Title: the same face as window titles draw it (a few faint
    pixels fewer than menus and buttons), for title bars only. */
 @font-face {
   font-family: "Clio Sans '97 Title";
-  src: url("fonts/ClioSans97Title.woff2") format("woff2");
+  src: url("fonts/ClioSans97Title.woff2") format("woff2") tech(color-COLRv1),
+    url("fonts/ClioSans97TitlePlain.woff2") format("woff2");
   font-weight: 100 900;
   font-display: swap;
 }
@@ -412,14 +417,16 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
    '97 in its colour, within one level of the real screen. */
 @font-face {
   font-family: "Clio Sans '97 Exact";
-  src: url("fonts/ClioSans97Exact.woff2") format("woff2");
+  src: url("fonts/ClioSans97Exact.woff2") format("woff2") tech(color-COLRv1),
+    url("fonts/ClioSans97Plain.woff2") format("woff2");
   font-weight: 100 900;
   font-display: swap;
 }
 
 @font-face {
   font-family: "Clio Sans '97 Title Exact";
-  src: url("fonts/ClioSans97TitleExact.woff2") format("woff2");
+  src: url("fonts/ClioSans97TitleExact.woff2") format("woff2") tech(color-COLRv1),
+    url("fonts/ClioSans97TitlePlain.woff2") format("woff2");
   font-weight: 100 900;
   font-display: swap;
 }

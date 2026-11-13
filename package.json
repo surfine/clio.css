@@ -69,7 +69,7 @@
     "prepack": "node tooling/build.mjs && node test/check.mjs",
     "capture:system6": "node tooling/capture-system6.mjs",
     "capture:keycaps": "node tooling/capture-keycaps.mjs",
-    "build:font": "python3 tooling/extract-glyphs.py --font chicago && python3 tooling/extract-glyphs.py --font geneva && python3 tooling/extract-glyphs.py --font geneva9 && python3 tooling/extract-glyphs.py --font charcoal && python3 tooling/build-font.py clio-sans-84 && python3 tooling/build-font.py clio-text-84 && python3 tooling/build-font.py clio-text-84-9 && python3 tooling/build-font.py clio-sans-97 && python3 tooling/build-font.py clio-sans-97-title && python3 tooling/build-font.py clio-sans-97 --exact && python3 tooling/build-font.py clio-sans-97-title --exact && python3 tooling/trace-outline.py",
+    "build:font": "python3 tooling/extract-glyphs.py --font chicago && python3 tooling/extract-glyphs.py --font geneva && python3 tooling/extract-glyphs.py --font geneva9 && python3 tooling/extract-glyphs.py --font charcoal && python3 tooling/build-font.py clio-sans-84 && python3 tooling/build-font.py clio-text-84 && python3 tooling/build-font.py clio-text-84-9 && python3 tooling/build-font.py clio-sans-97 && python3 tooling/build-font.py clio-sans-97-title && python3 tooling/build-font.py clio-sans-97 --exact && python3 tooling/build-font.py clio-sans-97-title --exact && python3 tooling/build-font.py clio-sans-97 --plain && python3 tooling/build-font.py clio-sans-97-title --plain && python3 tooling/trace-outline.py",
     "capture:system7": "node tooling/capture-system7.mjs",
     "capture:drawingboard": "node tooling/capture-drawingboard.mjs",
     "capture:platinum": "node tooling/capture-platinum.mjs",
