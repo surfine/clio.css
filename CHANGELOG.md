@@ -1,5 +1,26 @@
 # Changelog
 
+## 0.6.0 — 2026-11-14
+
+**Control Strip** (`.control-strip`), with AI System 6's markup, so the same HTML styles in
+both: module buttons with menu triangles, scroll arrows, the tab, `.is-collapsed` and
+`data-edge="right"`.
+
+- Measured from Mac OS 9.0 in Infinite Mac (`npm run capture:platinum`, new): 24px, black
+  lines round every cell, #c0c0c0 cells with a white light and #a0a0a0/#808080 shade, 13px
+  scroll cells that sink while idle, 30px modules, the held module, the tab and the folded
+  tab (redrawn by `tooling/p9-art.py`; tab 100% identical). Mac OS 8.5 under Drawing Board
+  draws the same strip. System 6 gets an ink-and-paper version (adapted).
+
+**Platinum re-measured** against Mac OS 9.0 in Infinite Mac (new FIDELITY.md table):
+title bar ends 96–97%, button face identical, check box frame 98.6%.
+
+- Check mark and radio buttons are now Mac OS 9's own (mark 96.4%, radio 100%; against the
+  older GUIdebook reference the checked box rises from 84.7% to 95.8%), replacing
+  the classic-stylesheets check and the CSS-drawn ball.
+- Disabled pop-up menus: #888 frame, flat face, grey arrow, no browser fade (95.6%);
+  Drawing Board's own disabled pop-up measured too.
+
 ## 0.5.0 — 2026-11-14
 
 **Drawing Board** (Mac OS 8.5b6, the appearance theme Apple shipped in the 8.5 betas and

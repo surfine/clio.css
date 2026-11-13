@@ -44,10 +44,11 @@ ok(!strip(pt).includes('data-era="drawingboard"'), "clio.platinum.css contains D
 ok(!strip(db).includes('[data-era="drawingboard"]') && !strip(db).includes('[data-era="platinum"]'), "clio.drawingboard.css still scoped to data-era");
 
 // 5. No external assets: url() is a data: URI or a bundled font. PNG data URIs
-//    are allowed only for Drawing Board art (--clio-art-db-*), redrawn by tooling/db-art.py.
+//    are allowed only for Drawing Board and Mac OS 9 art (--clio-art-db-*, --clio-art-p9-*),
+//    redrawn by tooling/db-art.py and tooling/p9-art.py.
 for (const m of noComments.matchAll(/url\(\s*["']?([^"')]+)/g)) {
   const u = m[1];
-  const png = u.startsWith("data:image/png;base64,") && /--clio-art-db-[\w-]+:\s*$/.test(noComments.slice(Math.max(0, m.index - 60), m.index));
+  const png = u.startsWith("data:image/png;base64,") && /--clio-art-(db|p9)-[\w-]+:\s*$/.test(noComments.slice(Math.max(0, m.index - 60), m.index));
   ok(u.startsWith("data:image/svg+xml,") || png || /^fonts\/(ChicagoFLF\.woff2?|Asap-Variable\.woff2|ClioSans84\.woff2|ClioText84\.woff2|ClioText84-9\.woff2)$/.test(u), `unexpected url(): ${u.slice(0, 60)}`);
 }
 
@@ -110,7 +111,7 @@ ok(read("docs/llms-full.txt").includes("```css"), "llms-full.txt: stylesheet mis
 // 10. Package.
 const pkg = JSON.parse(read("package.json"));
 for (const [k, v] of Object.entries(pkg.exports)) if (!v.includes("*")) ok(existsSync(join(root, v)), `exports ${k} -> ${v} missing`);
-ok(statSync(join(root, "dist/clio.min.css")).size < 116000, "clio.min.css grew past 116 KB");
+ok(statSync(join(root, "dist/clio.min.css")).size < 128000, "clio.min.css grew past 128 KB");
 
 if (failures.length) {
   console.error(`FAIL ${failures.length} of ${checks} checks`);

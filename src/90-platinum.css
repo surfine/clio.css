@@ -115,12 +115,13 @@
   --clio-button-disabled-fg: #777777;
   --clio-button-disabled-border: 1px solid #888888;
 
-  /* Check boxes (classic-stylesheets check) and radio buttons */
+  /* Check boxes and radio buttons: the mark and both radio states are redrawn
+     from Mac OS 9.0's General Controls (tooling/p9-art.py). */
   --clio-check-size: 12px;
   --clio-check-bg: #dddddd;
   --clio-check-border: 1px solid #000000;
   --clio-check-shadow: inset -1px -1px 0 #888888, inset 1px 1px 0 #ffffff;
-  --clio-check-mark: var(--clio-art-p-check) center / 9px 8px no-repeat;
+  --clio-check-mark: var(--clio-art-p9-check) 0 0 / 10px 10px no-repeat;
   --clio-check-mark-origin: padding-box;
   --clio-check-pressed-border-width: 1px;
 
@@ -208,6 +209,23 @@
   --clio-label-selected-fg: #ffffff;
   --clio-icon-selected-filter: brightness(0.5);
 
+  /* Control Strip, measured from Mac OS 9.0 (npm run capture:platinum, frames
+     strip-expanded, strip-collapsed, strip-slider); Mac OS 8.5's is the same
+     under Drawing Board. 24px: 1px black lines, #c0c0c0 cells with a white
+     inner light, #a0a0a0 then #808080 shade; scroll cells sunken while idle. */
+  --clio-strip-bg: #c0c0c0;
+  --clio-strip-line: 1px solid #000000;
+  --clio-strip-cell-shadow: inset -1px -1px 0 #808080, inset -2px -2px 0 #a0a0a0, inset 1px 1px 0 #c0c0c0, inset 2px 2px 0 #ffffff;
+  --clio-strip-sunken-shadow: inset 1px 1px 0 #808080, inset 2px 2px 0 #a0a0a0, inset -1px -1px 0 #ffffff;
+  --clio-strip-pressed-bg: #808080;
+  --clio-strip-pressed-shadow: inset 2px 2px 0 #404040, inset -2px -2px 0 #c0c0c0;
+  --clio-strip-cap: var(--clio-art-p9-strip-cap);
+  --clio-strip-back: var(--clio-art-p9-strip-back);
+  --clio-strip-forward: var(--clio-art-p9-strip-forward);
+  --clio-strip-menu: var(--clio-art-p9-strip-menu);
+  --clio-strip-handle: var(--clio-art-p9-strip-handle);
+  --clio-strip-tab: var(--clio-art-p9-strip-tab);
+
   /* Art: pop-up arrow, check mark and submenu arrow from classic-stylesheets
      (MIT, Niels Sonnich Poulsen); scroll arrows, grips and tabs drawn here
      (tabs: tooling/tab-art.py). */
@@ -231,6 +249,17 @@
   --clio-art-p-tab-pressed: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='33' height='24' shape-rendering='crispEdges'%3E%3Cpath fill='%23222' d='M11 3h1v1h-1zM9 4h1v1h-1zM8 5h1v1h-1zM7 6h1v1h-1zM25 6h1v1h-1zM6 8h1v1h-1zM26 8h1v1h-1zM5 11h1v1h-1zM27 11h1v1h-1zM4 14h1v1h-1zM28 14h1v1h-1zM3 17h1v1h-1zM29 17h1v1h-1zM2 20h1v1h-1zM30 20h1v1h-1z'/%3E%3Cpath fill='%23000' d='M12 3h10v1h-10zM10 4h1v1h-1zM22 4h2v1h-2zM24 5h1v1h-1zM7 7h1v1h-1zM25 7h1v1h-1zM6 9h1v1h-1zM26 9h1v1h-1zM6 10h1v1h-1zM26 10h1v1h-1zM5 12h1v1h-1zM27 12h1v1h-1zM5 13h1v1h-1zM27 13h1v1h-1zM4 15h1v1h-1zM28 15h1v1h-1zM4 16h1v1h-1zM28 16h1v1h-1zM3 18h1v1h-1zM29 18h1v1h-1zM3 19h1v1h-1zM29 19h1v1h-1zM2 21h1v1h-1zM30 21h1v1h-1zM2 22h1v1h-1zM30 22h1v1h-1zM0 23h33v1h-33z'/%3E%3Cpath fill='%23bbb' d='M11 4h1v1h-1zM21 4h1v1h-1zM9 5h1v1h-1zM8 6h1v1h-1zM23 6h1v1h-1zM7 8h1v1h-1zM24 8h1v1h-1zM6 11h1v1h-1zM25 11h1v1h-1zM5 14h1v1h-1zM26 14h1v1h-1zM4 17h1v1h-1zM27 17h1v1h-1zM3 20h1v1h-1zM28 20h1v1h-1z'/%3E%3Cpath fill='%23ccc' d='M12 4h9v1h-9zM10 5h1v1h-1zM8 7h1v1h-1zM7 9h1v1h-1zM7 10h1v1h-1zM6 12h1v1h-1zM6 13h1v1h-1zM5 15h1v1h-1zM5 16h1v1h-1zM4 18h1v1h-1zM4 19h1v1h-1zM3 21h1v1h-1zM3 22h1v1h-1z'/%3E%3Cpath fill='%23888' d='M11 5h11v1h-11zM23 5h1v1h-1zM9 6h2v1h-2zM9 7h1v1h-1zM24 7h1v1h-1zM8 8h1v1h-1zM8 9h1v1h-1zM25 9h1v1h-1zM8 10h1v1h-1zM25 10h1v1h-1zM7 11h1v1h-1zM7 12h1v1h-1zM26 12h1v1h-1zM7 13h1v1h-1zM26 13h1v1h-1zM6 14h1v1h-1zM6 15h1v1h-1zM27 15h1v1h-1zM6 16h1v1h-1zM27 16h1v1h-1zM5 17h1v1h-1zM5 18h1v1h-1zM28 18h1v1h-1zM5 19h1v1h-1zM28 19h1v1h-1zM4 20h1v1h-1zM4 21h1v1h-1zM29 21h1v1h-1zM4 22h1v1h-1zM29 22h1v1h-1z'/%3E%3Cpath fill='%23ddd' d='M22 5h1v1h-1zM23 7h1v1h-1zM24 9h1v1h-1zM24 10h1v1h-1zM25 12h1v1h-1zM25 13h1v1h-1zM26 15h1v1h-1zM26 16h1v1h-1zM27 18h1v1h-1zM27 19h1v1h-1zM28 21h1v1h-1zM28 22h1v1h-1z'/%3E%3Cpath fill='%23666' d='M11 6h12v1h-12zM10 7h13v1h-13zM9 8h15v1h-15zM9 9h15v1h-15zM9 10h15v1h-15zM8 11h17v1h-17zM8 12h17v1h-17zM8 13h17v1h-17zM7 14h19v1h-19zM7 15h19v1h-19zM7 16h19v1h-19zM6 17h21v1h-21zM6 18h21v1h-21zM6 19h21v1h-21zM5 20h23v1h-23zM5 21h23v1h-23zM5 22h23v1h-23z'/%3E%3Cpath fill='%23444' d='M24 6h1v1h-1zM25 8h1v1h-1zM26 11h1v1h-1zM27 14h1v1h-1zM28 17h1v1h-1zM29 20h1v1h-1z'/%3E%3C/svg%3E");
 
   color: #000000;
+  /* Measured from Mac OS 9.0 frames by tooling/p9-art.py. */
+  --clio-art-p9-check: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKBAMAAAB/HNKOAAAAGFBMVEUAAAAAAABVVVV3d3eIiIiqqqrd3d3///8DgOpFAAAAAXRSTlMAQObYZgAAAEBJREFUeJwVxLENgDAQBMH9k4lxQAPvSuiKtr4iRAUW+QVGTDBxAautFyyA+nfIRaU2WynOGl0cSkSMTpvPfvMB4jgPBUEhtgkAAAAASUVORK5CYII=");
+  --clio-art-p9-check-overhang: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAAEAgMAAADZgQaqAAAADFBMVEUAAAAAAAB3d3eqqqoo0Gg2AAAAAXRSTlMAQObYZgAAABBJREFUeJxjcGDYwCTAwAAABXABA8z2jo8AAAAASUVORK5CYII=");
+  --clio-art-p9-radio-on: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMBAMAAACkW0HUAAAAIVBMVEUAAAAAAAAiIiJERERVVVV3d3eIiIiZmZm7u7vd3d3///9FvHqFAAAAAXRSTlMAQObYZgAAAFlJREFUeJwVwUERQEAUgOH/vdlxcni7W8CSQBYh5HBy0kEADeigAQqYoQDG9wEpgJCinavTmKTa9fXLbIWWOYyN3oA8ys/UDCTolkE3OKz1dugzme8voI7wAZyaEH+rqNVXAAAAAElFTkSuQmCC");
+  --clio-art-p9-radio: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMBAMAAACkW0HUAAAAG1BMVEUAAAAAAABERERVVVWIiIiqqqq7u7vd3d3///9N7yqcAAAAAXRSTlMAQObYZgAAAFpJREFUeJwlzLENQEAYBeDn5RJRuZwJiI2IOZTKW0FnB7OICbDC61x1v8I3wAegDYBDM9n+sBjXMHiyigs9+y2V6KgYZxmRSjOwxiwVvF4zu5lPSXJ2ZFzCn32EjiE9A/VQnAAAAABJRU5ErkJggg==");
+  --clio-art-p9-strip-cap: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAIBAMAAAA2IaO4AAAAElBMVEUAAABERERVVVWIiIjMzP////8FX/ZGAAAAAXRSTlMAQObYZgAAAChJREFUeJxjVGJgYGBhUmBgYGF4z/CIiYGBgQFBsDDcY2BhYXBhYAAARIYDUwza/HEAAAAASUVORK5CYII=");
+  --clio-art-p9-strip-back: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKAgMAAADwXCcuAAAACVBMVEUAAABVVVXd3d2apXz3AAAAAXRSTlMAQObYZgAAACxJREFUeJwFwaERwCAABLD0j3oE7IPBs/8KrcBjSKhiKM/cebs0gvzkfFioLlg9BPcTGNP4AAAAAElFTkSuQmCC");
+  --clio-art-p9-strip-forward: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKAgMAAADwXCcuAAAACVBMVEUAAABVVVXd3d2apXz3AAAAAXRSTlMAQObYZgAAAC1JREFUeJwFwSESABAUQMHnzegC9/nFqRX3IegCuxBIwVYxdySFgLzpHbg2cvhWkAdTrBZiqwAAAABJRU5ErkJggg==");
+  --clio-art-p9-strip-menu: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAHAQMAAAAVq36TAAAABlBMVEUAAAAAAAClZ7nPAAAAAXRSTlMAQObYZgAAABZJREFUeJxjaGA4wPCA4QMTA9MHpgcAIQYE58W2/JQAAAAASUVORK5CYII=");
+  --clio-art-p9-strip-handle: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAAYBAMAAAAFe7ACAAAAFVBMVEUAAAAAAABERERVVVWIiIjMzMz///8V67gPAAAAAXRSTlMAQObYZgAAAINJREFUeJxVz7ENAjEMheE/IbQokRiAUVJQUjAs5RXZhJvgkp6LjGwfBU309PzFkkMBZAApVVgAIqWUZ9bORsE6fWvWJCukoIlbtjICG0sK5iLnVrM7Hqefsy3qPKnzZM6n/+41D/epbbi772IOaOPYsIv/sIrEG6YA4XqB3vWO2UErvmVcJ4BylohjAAAAAElFTkSuQmCC");
+  --clio-art-p9-strip-tab: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAAYBAMAAAAFe7ACAAAAFVBMVEUAAAAAAABERERVVVWIiIjMzMz///8V67gPAAAAAXRSTlMAQObYZgAAAIFJREFUeJxVz7ENAjEMQNHvKPS+DRiBEVJQMi49WeAkRrgJSHoijOyEgipf1pPlyAbQgMwVxqN7iYIACVprRaMUskS9gKJeSWKYADtGLRruzC3Lcqd6WW7uw45V7ma5m/Xv3uW53H3YdLnU7g4YFg9Q+6phfv2nw95BNlGsRf1++QW6eCj9rQPMHAAAAABJRU5ErkJggg==");
 }
 
 /* ---- Window ---------------------------------------------------------------- */
@@ -378,26 +407,38 @@
   box-shadow: 0 0 0 1px #888888;
 }
 
-:is([data-era="platinum"], [data-era="drawingboard"]) :is(button, .btn, .btn-default, input[type="button"], input[type="submit"], input[type="reset"]):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *):is(:disabled, .disabled) {
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(button, .btn, .btn-default, input[type="button"], input[type="submit"], input[type="reset"]):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *):is(:disabled, .disabled) {
   background: #dddddd;
   box-shadow: none;
 }
 
 /* ---- Radio buttons: drawn, not cut from a screenshot ------------------------ */
+/* Check box mark: inside the frame, plus the two columns that overhang it. */
+:is([data-era="platinum"], [data-era="drawingboard"]) input[type="checkbox"]:checked::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: -3px;
+  width: 2px;
+  height: 4px;
+  background: var(--clio-art-p9-check-overhang) 0 0 / 2px 4px no-repeat;
+}
+
+/* ---- Radio buttons: Mac OS 9's shaded ball (pressed states drawn here). ---- */
 :is([data-era="platinum"], [data-era="drawingboard"]) input[type="radio"] {
-  border: 1px solid #000000;
-  border-radius: 50%;
-  background: linear-gradient(to bottom right, #ffffff, #888888);
-  box-shadow: inset 1px 1px 0 #dddddd, inset -1px -1px 0 #888888;
+  border: 0;
+  border-radius: 0;
+  background: var(--clio-art-p9-radio) 0 0 / 12px 12px no-repeat;
+  box-shadow: none;
 }
 
 :is([data-era="platinum"], [data-era="drawingboard"]) input[type="radio"]:checked {
-  background:
-    radial-gradient(circle, #000000 0 2.5px, transparent 3px),
-    linear-gradient(to bottom right, #555555, #ffffff);
+  background: var(--clio-art-p9-radio-on) 0 0 / 12px 12px no-repeat;
 }
 
 :is([data-era="platinum"], [data-era="drawingboard"]) input[type="radio"]:not(:disabled):active {
+  border: 1px solid #000000;
+  border-radius: 50%;
   background: linear-gradient(to bottom right, #444444, #bbbbbb);
 }
 
@@ -507,4 +548,18 @@
 
 :is([data-era="platinum"], [data-era="drawingboard"]) :is(fieldset) > legend {
   background: var(--clio-pane-bg);
+}
+
+/* Disabled pop-up menu: #888 frame, flat face, the #aaa divider and a grey
+   arrow (Mac OS 9.0 Appearance, "Position Automatically"). Browsers also fade
+   a disabled <select>; Mac OS did not. */
+:is([data-era="platinum"], [data-era="drawingboard"]) select:disabled {
+  border-color: #888888;
+  background:
+    var(--clio-art-p-dropdown-off) right 6px center / 7px 10px no-repeat,
+    linear-gradient(#aaaaaa, #aaaaaa) right 19px top 0 / 1px 100% no-repeat,
+    #dddddd;
+  box-shadow: none;
+  color: #888888;
+  opacity: 1;
 }

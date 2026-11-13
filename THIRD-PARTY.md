@@ -11,6 +11,9 @@ presented as such:
 
 - System 7 scroll arrows, grow box and grip (`--clio-art-s7-*`): redrawn as SVG by
   `tooling/s7-art.py` from System 7.5.3 running in an emulator.
+- Mac OS 9 check mark, radio buttons and Control Strip parts (end cap, scroll arrows, menu
+  triangle, tab and folded tab) (`--clio-art-p9-*`): re-encoded as palette PNGs by
+  `tooling/p9-art.py` from Mac OS 9.0 running in an emulator.
 - Drawing Board close, zoom and collapse boxes, check boxes, radio buttons, scroll arrows,
   pop-up arrow, hatched button corner, grow box, tab ends and menu underlines
   (`--clio-art-db-*`): re-encoded as palette PNGs by `tooling/db-art.py` from the
@@ -19,8 +22,8 @@ presented as such:
   and sketch textures and the window-frame illustrations are not reproduced.
 
 They are included to document the look of these interfaces at the size of a single
-control. If that does not suit your use, override the `--clio-art-s7-*` and
-`--clio-art-db-*` custom properties with your own art.
+control. If that does not suit your use, override the `--clio-art-s7-*`,
+`--clio-art-p9-*` and `--clio-art-db-*` custom properties with your own art.
 
 ## Fonts
 

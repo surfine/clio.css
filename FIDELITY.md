@@ -76,6 +76,7 @@ the 800×600 colour canvas read 1:1 (`npm run capture:drawingboard`), compared i
 | db-default-button | 16×24 | 78.4% | 2.9% | 5.22 |
 | db-alert-corner | 20×12 | 62.9% | 20.0% | 16.26 |
 | db-alert-shadow | 14×12 | 78.6% | 8.9% | 10.44 |
+| db-popup-disabled | 40×20 | 79.5% | 1.1% | 5.02 |
 | db-checkbox-on | 14×11 | 100.0% | 0.0% | 0 |
 | db-checkbox-off | 14×11 | 100.0% | 0.0% | 0 |
 | db-checkbox-disabled | 14×11 | 89.0% | 0.0% | 0.69 |
@@ -84,6 +85,26 @@ the 800×600 colour canvas read 1:1 (`npm run capture:drawingboard`), compared i
 | db-field-corner | 12×25 | 80.7% | 7.3% | 18.44 |
 | db-menu-underline | 124×3 | 62.4% | 21.5% | 15.86 |
 | db-menu-separator | 100×9 | 48.2% | 19.3% | 14.7 |
+
+## Mac OS 9 Platinum, re-measured
+
+Reference: Mac OS 9.0 running in Infinite Mac, the 800×600 colour canvas read 1:1
+(`npm run capture:platinum`): General Controls and the Control Strip.
+
+| Specimen | Size | exact | off | mean |
+| --- | --- | ---: | ---: | ---: |
+| p9-checkbox-on | 14×12 | 96.4% | 3.0% | 3.04 |
+| p9-checkbox-off | 12×12 | 98.6% | 1.4% | 1.18 |
+| p9-radio-on | 12×12 | 100.0% | 0.0% | 0 |
+| p9-radio-off | 12×12 | 100.0% | 0.0% | 0 |
+| p9-titlebar-left | 30×22 | 95.9% | 1.1% | 1.44 |
+| p9-titlebar-right | 36×22 | 97.2% | 0.9% | 1.07 |
+| p9-button-end | 20×20 | 74.8% | 18.0% | 25.34 |
+| p9-popup-disabled | 34×20 | 95.6% | 2.6% | 2.58 |
+| p9-group-corner | 12×30 | 82.8% | 0.3% | 3.12 |
+| p9-strip-start | 29×24 | 89.5% | 5.8% | 8.08 |
+| p9-strip-handle | 18×24 | 100.0% | 0.0% | 0 |
+| p9-strip-collapsed | 18×24 | 100.0% | 0.0% | 0 |
 
 ## Mac OS 9 Platinum
 
@@ -95,7 +116,7 @@ Reference: GUIdebook Mac OS 9.0 captures, cropped by AI System 6 (`AIS6_DIR`).
 | inactive-titlebar | 424×22 | 89.5% | 4.0% | 4.78 |
 | default-ok | 73×32 | 92.4% | 4.9% | 7.21 |
 | button-disabled | 80×20 | 88.2% | 7.3% | 7.35 |
-| checkbox-checked | 12×12 | 84.7% | 14.6% | 18.53 |
+| checkbox-checked | 12×12 | 95.8% | 3.5% | 3.54 |
 | checkbox-unchecked | 12×12 | 98.6% | 1.4% | 1.18 |
 | selected-tab | 103×24 | 80.5% | 16.1% | 28.81 |
 

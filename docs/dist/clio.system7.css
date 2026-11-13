@@ -1,4 +1,4 @@
-/*! clio.css 0.5.0 (System 7 default) | MIT | https://surfine.github.io/clio.css/
+/*! clio.css 0.6.0 (System 7 default) | MIT | https://surfine.github.io/clio.css/
  * Classic Mac OS interface CSS: System 6, System 7, Mac OS 8.5 Drawing Board and Mac OS 9 Platinum.
  * Measured values traced to AI System 6; see EVIDENCE.md.
  * Includes art from system.css (MIT) and classic-stylesheets (MIT); see THIRD-PARTY.md. */
@@ -277,6 +277,30 @@
   --clio-label-fg: var(--clio-ink);
   --clio-label-selected-bg: var(--clio-ink);
   --clio-label-selected-fg: var(--clio-paper);
+
+  /* Control Strip: System 6 had none; drawn here in its ink and paper, at the
+     Mac OS 9 geometry (adapted). */
+  --clio-strip-height: 24px;
+  --clio-strip-bg: var(--clio-paper);
+  --clio-strip-line: 1px solid var(--clio-ink);
+  --clio-strip-cell-shadow: none;
+  --clio-strip-sunken-shadow: none;
+  --clio-strip-pressed-bg: var(--clio-ink);
+  --clio-strip-pressed-shadow: inset 0 0 0 2px var(--clio-paper);
+  --clio-strip-cap-width: 13px;
+  --clio-strip-scroll-width: 13px;
+  --clio-strip-module-width: 30px;
+  --clio-strip-icon-inset: 2px;
+  --clio-strip-menu-top: 7px;
+  --clio-strip-menu-inset: 3px;
+  --clio-strip-handle-width: 18px;
+  --clio-strip-tab-width: 18px;
+  --clio-strip-cap: var(--clio-art-s6-strip-cap);
+  --clio-strip-back: var(--clio-art-s6-strip-back);
+  --clio-strip-forward: var(--clio-art-s6-strip-forward);
+  --clio-strip-menu: var(--clio-art-s6-strip-menu);
+  --clio-strip-handle: var(--clio-art-s6-strip-handle);
+  --clio-strip-tab: var(--clio-art-s6-strip-tab);
 }
 
 /* Inline art. Pixel-grid SVGs, never Apple bitmaps: the System 6 check, radio
@@ -306,6 +330,12 @@
   --clio-art-s6-dkgray: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='2' shape-rendering='crispEdges'%3E%3Cpath fill='%23000' d='M0 0h1v1h-1zM2 0h2v1h-2zM0 1h3v1h-3z'/%3E%3Cpath fill='%23fff' d='M1 0h1v1h-1zM3 1h1v1h-1z'/%3E%3C/svg%3E");
   --clio-art-s6-menucheck: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='8' shape-rendering='crispEdges'%3E%3Cpath fill='%23000' d='M8 0h1v1h-1zM7 1h2v1h-2zM6 2h2v1h-2zM5 3h2v1h-2zM0 4h1v1h-1zM4 4h2v1h-2zM0 5h2v1h-2zM3 5h2v1h-2zM1 6h3v1h-3zM2 7h1v1h-1z'/%3E%3C/svg%3E");
   --clio-art-s6-menucheck-on: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='8' shape-rendering='crispEdges'%3E%3Cpath fill='%23fff' d='M8 0h1v1h-1zM7 1h2v1h-2zM6 2h2v1h-2zM5 3h2v1h-2zM0 4h1v1h-1zM4 4h2v1h-2zM0 5h2v1h-2zM3 5h2v1h-2zM1 6h3v1h-3zM2 7h1v1h-1z'/%3E%3C/svg%3E");
+  --clio-art-s6-strip-cap: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' shape-rendering='crispEdges'%3E%3Cpath d='M0 0h8v8H0zM1 1v6h6V1z'/%3E%3C/svg%3E");
+  --clio-art-s6-strip-back: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' shape-rendering='crispEdges'%3E%3Cpath d='M4 1h1v8H4zM3 2h1v6H3zM2 3h1v4H2zM1 4h1v2H1z'/%3E%3C/svg%3E");
+  --clio-art-s6-strip-forward: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' shape-rendering='crispEdges'%3E%3Cpath d='M5 1h1v8H5zM6 2h1v6H6zM7 3h1v4H7zM8 4h1v2H8z'/%3E%3C/svg%3E");
+  --clio-art-s6-strip-menu: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='7' shape-rendering='crispEdges'%3E%3Cpath d='M0 0h1v7H0zM1 1h1v5H1zM2 2h1v3H2zM3 3h1v1H3z'/%3E%3C/svg%3E");
+  --clio-art-s6-strip-handle: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='24' shape-rendering='crispEdges'%3E%3Cpath fill='%23fff' d='M0 1h9l8 8v6l-8 8H0z'/%3E%3Cpath d='M0 0h10v1H0zM10 1h1v1h-1zM11 2h1v1h-1zM12 3h1v1h-1zM13 4h1v1h-1zM14 5h1v1h-1zM15 6h1v1h-1zM16 7h1v1h-1zM17 8h1v8h-1zM16 16h1v1h-1zM15 17h1v1h-1zM14 18h1v1h-1zM13 19h1v1h-1zM12 20h1v1h-1zM11 21h1v1h-1zM10 22h1v1h-1zM0 23h10v1H0zM5 6h1v1H5zM5 9h1v1H5zM5 12h1v1H5zM5 15h1v1H5zM5 18h1v1H5z'/%3E%3C/svg%3E");
+  --clio-art-s6-strip-tab: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='24' shape-rendering='crispEdges'%3E%3Cpath fill='%23fff' d='M0 1h9l8 8v6l-8 8H0z'/%3E%3Cpath d='M0 0h10v1H0zM10 1h1v1h-1zM11 2h1v1h-1zM12 3h1v1h-1zM13 4h1v1h-1zM14 5h1v1h-1zM15 6h1v1h-1zM16 7h1v1h-1zM17 8h1v8h-1zM16 16h1v1h-1zM15 17h1v1h-1zM14 18h1v1h-1zM13 19h1v1h-1zM12 20h1v1h-1zM11 21h1v1h-1zM10 22h1v1h-1zM0 23h10v1H0zM5 6h1v1H5zM5 9h1v1H5zM5 12h1v1H5zM5 15h1v1H5zM5 18h1v1H5z'/%3E%3C/svg%3E");
 }
 
 /* Base. clio.css styles elements only inside its own components, plus bare
@@ -1461,6 +1491,166 @@
   :where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, html.clio-scrollbars, .clio-scrollbars *) {
     scrollbar-color: var(--clio-scrollbar-thumb-color, var(--clio-ink)) var(--clio-scrollbar-track-color, #c0c0c0);
   }
+}
+
+/* Control Strip (System 7.5 to Mac OS 9): a row of module buttons with scroll
+   arrows and a tab that folds the strip away. Markup follows AI System 6:
+   .control-strip > button.control-strip-scroll.control-strip-scroll-back,
+   .control-strip-modules[role=toolbar] > .control-strip-module-track >
+   button.control-strip-module (an icon inside; aria-haspopup="menu" draws the
+   menu triangle), button.control-strip-scroll.control-strip-scroll-forward,
+   button.control-strip-handle. Add .is-collapsed to fold it to the tab, and
+   data-edge="right" for a strip on the right edge. Placement is yours
+   (AI System 6 fixes it to the screen's lower left). */
+:where(.control-strip) {
+  display: inline-flex;
+  align-items: stretch;
+  height: var(--clio-strip-height);
+  max-width: 100%;
+  vertical-align: bottom;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* The end cap, then every cell: one bevelled box between 1px lines. */
+:where(.control-strip)::before,
+:where(.control-strip) > :is(.control-strip-scroll, .control-strip-modules),
+:where(.control-strip-module) {
+  box-sizing: border-box;
+  border: var(--clio-strip-line);
+  border-left: 0;
+  background: var(--clio-strip-bg);
+  box-shadow: var(--clio-strip-cell-shadow);
+}
+
+:where(.control-strip)::before {
+  content: "";
+  flex: none;
+  width: calc(var(--clio-strip-cap-width) + 2px);
+  border-left: var(--clio-strip-line);
+  background: var(--clio-strip-cap) 2px 7px / 8px 8px no-repeat, var(--clio-strip-bg);
+}
+
+:where(.control-strip) > :is(.control-strip-scroll, .control-strip-handle) {
+  flex: none;
+  margin: 0;
+  padding: 0;
+  border-radius: 0;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: default;
+}
+
+/* Scroll arrows: 13px cells, sunken and hollow while there is nothing to scroll. */
+:where(.control-strip) > .control-strip-scroll {
+  width: calc(var(--clio-strip-scroll-width) + 1px);
+  min-width: 0;
+  height: auto;
+  min-height: 0;
+  background: var(--clio-strip-back) center / 10px 10px no-repeat, var(--clio-strip-bg);
+  box-shadow: var(--clio-strip-cell-shadow);
+}
+
+:where(.control-strip) > .control-strip-scroll-forward {
+  background-image: var(--clio-strip-forward);
+}
+
+:where(.control-strip) > .control-strip-scroll:disabled {
+  box-shadow: var(--clio-strip-sunken-shadow);
+}
+
+:where(.control-strip) > .control-strip-scroll:not(:disabled):active,
+:where(.control-strip-module):not(:disabled):is(:active, [aria-expanded="true"]) {
+  background-color: var(--clio-strip-pressed-bg);
+  box-shadow: var(--clio-strip-pressed-shadow);
+}
+
+:where(.control-strip-modules) {
+  display: flex;
+  min-width: 0;
+  overflow: hidden;
+  border: 0;
+  background: none;
+  box-shadow: none;
+}
+
+:where(.control-strip-module-track) {
+  display: flex;
+}
+
+/* A module: the 16px icon 2px in, the menu triangle 3px from the right. */
+:where(.control-strip-module) {
+  position: relative;
+  display: flex;
+  flex: none;
+  align-items: center;
+  width: calc(var(--clio-strip-module-width) + 1px);
+  min-width: 0;
+  height: var(--clio-strip-height);
+  min-height: 0;
+  margin: 0;
+  padding: 0 0 0 var(--clio-strip-icon-inset);
+  border-radius: 0;
+  color: var(--clio-ink);
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: default;
+}
+
+:where(.control-strip-module) > :is(svg, img, .sys-icon) {
+  width: 16px;
+  height: 16px;
+}
+
+:where(.control-strip-module)[aria-haspopup]::after {
+  content: "";
+  position: absolute;
+  top: var(--clio-strip-menu-top);
+  right: calc(var(--clio-strip-menu-inset) + 1px);
+  width: 4px;
+  height: 7px;
+  background: var(--clio-strip-menu) 0 0 / 4px 7px no-repeat;
+}
+
+:where(.control-strip-module):disabled {
+  color: var(--clio-disabled);
+  opacity: 0.5;
+}
+
+/* The tab: open, a slanted end with a grip; folded, the strip shrinks to it. */
+:where(.control-strip) > .control-strip-handle {
+  width: var(--clio-strip-handle-width);
+  min-width: 0;
+  height: var(--clio-strip-height);
+  min-height: 0;
+  border: 0;
+  background: var(--clio-strip-handle) 0 0 / 100% 100% no-repeat;
+  box-shadow: none;
+}
+
+:where(.control-strip.is-collapsed)::before,
+:where(.control-strip.is-collapsed) > :not(.control-strip-handle) {
+  display: none;
+}
+
+:where(.control-strip.is-collapsed) > .control-strip-handle {
+  width: var(--clio-strip-tab-width);
+  background-image: var(--clio-strip-tab);
+}
+
+:where(.control-strip)[data-edge="right"] {
+  flex-direction: row-reverse;
+}
+
+:where(.control-strip)[data-edge="right"]::before,
+:where(.control-strip)[data-edge="right"] > .control-strip-handle {
+  transform: scaleX(-1);
+}
+
+:where(.control-strip) > :focus-visible,
+:where(.control-strip-module):focus-visible {
+  outline: var(--clio-focus-outline);
+  outline-offset: -3px;
 }
 
 /* Macintosh System 7 in colour (7.5.3). System 7 keeps System 6's geometry,
