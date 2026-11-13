@@ -91,6 +91,38 @@ specimens.push(
   S7("s7-default-ok", `<div class="clio" style="padding:12px;background:#fff"><button class="default" id="s" style="width:59px">OK</button></div>`, [-4, -4, 67, 28], "page-setup", [511, 198, 67, 28]),
 );
 
+// Drawing Board: crops of Mac OS 8.5 with the 8.5b6 theme from `npm run capture:drawingboard`.
+// The window is the Appearance control panel (outline at 161,68, 476px wide).
+const dbdir = join(root, ".fidelity/drawingboard");
+const DB = (id, html, crop, file, ref) => ({ id, era: "drawingboard", html, crop, refFile: join(dbdir, file + ".png"), refCrop: ref });
+const dbWindow = `<div class="window" id="s" style="width:476px;height:120px"><div class="title-bar"><button class="close" aria-label="Close"></button><h2 class="title">Appearance</h2><button class="collapse" aria-label="Collapse"></button></div><div class="window-pane" style="height:60px"></div></div>`;
+specimens.push(
+  DB("db-close-box", dbWindow, [5, 5, 11, 11], "appearance", [166, 73, 11, 11]),
+  DB("db-collapse-box", dbWindow, [460, 5, 11, 11], "appearance", [621, 73, 11, 11]),
+  DB("db-titlebar-left", dbWindow, [0, 0, 40, 26], "appearance", [161, 68, 40, 26]),
+  DB("db-titlebar-right", dbWindow, [436, 0, 40, 26], "appearance", [597, 68, 40, 26]),
+  DB("db-popup-end", `<div style="padding:12px;background:#e7ded6"><select id="s" style="width:180px"><option>Drawing Board</option></select></div>`, [140, 0, 40, 20], "appearance", [428, 143, 40, 20]),
+  DB("db-menubar", `<ul class="menu-bar" role="menubar" id="s" style="width:600px"><li role="none"><button role="menuitem">File</button></li></ul>`, [300, 0, 200, 22], "file-menu", [300, 0, 200, 22]),
+  // Themes tab: the "Save Theme…" button (518..619 x 370..389) and the theme list's scroll bar (192..585 x 297..312).
+  DB("db-button-end", `<div style="padding:12px;background:#e7ded6"><button id="s" style="width:102px">Save Theme…</button></div>`, [88, 0, 16, 21], "themes-tab", [606, 370, 16, 21]),
+  DB("db-scroll-start", `<div class="clio-scroll" id="s" style="width:394px;height:60px;overflow-x:scroll;overflow-y:hidden;background:#fff"><div style="width:40000px;height:20px"></div></div>`, [0, 44, 40, 16], "themes-tab", [192, 297, 40, 16]),
+  DB("db-scroll-track", `<div class="clio-scroll" id="s" style="width:394px;height:60px;overflow-x:scroll;overflow-y:hidden;background:#fff"><div style="width:40000px;height:20px"></div></div>`, [100, 44, 100, 16], "themes-tab", [300, 297, 100, 16]),
+  // Energy Saver's start-up notice: an alert framed 164..632 x 201..412, "Close Message" the default button (441..579 x 375..394).
+  DB("db-default-button", `<div style="padding:12px;background:#e7ded6"><button class="default" id="s" style="width:139px">Close Message</button></div>`, [-3, -3, 16, 24], "energy-saver-alert", [438, 372, 16, 24]),
+  DB("db-alert-corner", `<div style="padding:12px;background:#ffffff"><div class="alert-box" id="s" style="width:469px;height:212px"></div></div>`, [-1, 0, 20, 12], "energy-saver-alert", [163, 201, 20, 12]),
+  DB("db-alert-shadow", `<div style="padding:12px;background:#ffffff"><div class="alert-box" id="s" style="width:469px;height:212px"></div></div>`, [455, 200, 14, 12], "energy-saver-alert", [618, 401, 14, 12]),
+  // General Controls and Date & Time.
+  DB("db-checkbox-on", `<div style="padding:12px;background:#eeeeee"><input type="checkbox" id="s" checked></div>`, [0, 0, 14, 11], "general-controls", [33, 83, 14, 11]),
+  DB("db-checkbox-off", `<div style="padding:12px;background:#eeeeee"><input type="checkbox" id="s"></div>`, [0, 0, 14, 11], "general-controls", [33, 131, 14, 11]),
+  DB("db-checkbox-disabled", `<div style="padding:12px;background:#e7ded6"><input type="checkbox" id="s" disabled></div>`, [0, 0, 14, 11], "date-time", [240, 230, 14, 11]),
+  DB("db-radio-on", `<div style="padding:12px;background:#eeeeee"><input type="radio" id="s" checked></div>`, [0, 0, 16, 12], "general-controls", [266, 267, 16, 12]),
+  DB("db-radio-off", `<div style="padding:12px;background:#eeeeee"><input type="radio" id="s"></div>`, [0, 0, 16, 12], "general-controls", [266, 250, 16, 12]),
+  DB("db-field-corner", `<div style="padding:12px;background:#e7ded6"><input type="text" id="s" style="width:106px;height:25px" value=""></div>`, [0, 0, 12, 25], "date-time", [251, 121, 12, 25]),
+  // Control Panels submenu (194..350), Energy Saver chosen: row 175..192, underline 210..333 x 189..191.
+  DB("db-menu-underline", `<div style="padding:12px;background:#fff"><ul class="menu" role="menu" style="width:157px"><li role="none" class="active" id="s"><span role="menuitem">Energy Saver</span></li></ul></div>`, [15, 14, 124, 3], "control-panels-menu", [210, 189, 124, 3]),
+  DB("db-menu-separator", `<div style="padding:12px;background:#fff"><ul class="menu" role="menu" style="width:150px"><li role="separator" id="s"></li></ul></div>`, [0, 0, 100, 9], "file-menu", [41, 111, 100, 9]),
+);
+
 const css = pathToFileURL(join(root, "dist/clio.css")).href;
 const out = join(root, ".fidelity");
 mkdirSync(out, { recursive: true });
@@ -172,6 +204,13 @@ Reference: System 7.5.3 running in Infinite Mac, the 800×600 colour canvas read
 
 ${table("system7")}
 
+## Mac OS 8.5 Drawing Board
+
+Reference: Mac OS 8.5 with the 8.5b6 Drawing Board theme installed, running in Infinite Mac,
+the 800×600 colour canvas read 1:1 (\`npm run capture:drawingboard\`), compared in colour.
+
+${table("drawingboard")}
+
 ## Mac OS 9 Platinum
 
 Reference: GUIdebook Mac OS 9.0 captures, cropped by AI System 6 (\`AIS6_DIR\`).
@@ -182,6 +221,10 @@ ${table("platinum")}
 
 - System 6: text is drawn in Clio Sans '84, Chicago 12 rebuilt from the emulator, so labels
   match too. The pressed and hovered button frames still contain the mouse pointer.
+- Drawing Board: control parts are the theme's own pixmaps and match exactly; frames,
+  bars and fields are flat colours where the theme draws paper grain, sketch lines and a
+  pencil line whose shade drifts, so those specimens sit at 60–90%. The scroll-start and
+  menu-underline references also contain the mouse pointer.
 - Platinum labels and titles: almost every off pixel is text. Charcoal is Apple's and is
   not shipped; clio.css draws Asap (OFL). On a Mac that has Charcoal, the stack uses it.
 - Platinum: a few corner pixels of the default ring, the right edge of the inactive frame and

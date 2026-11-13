@@ -1,6 +1,6 @@
 // Renderers for the docs site and the agent-facing text files.
 const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
-const ERA = { system6: "System 6", system7: "System 7", platinum: "Platinum", both: "All eras" };
+const ERA = { system6: "System 6", system7: "System 7", drawingboard: "Drawing Board", platinum: "Platinum", both: "All eras" };
 const STATUS = {
   measured: "Measured",
   inferred: "Inferred",
@@ -42,9 +42,9 @@ ${live}
 
 export function renderSite({ pkg, components }) {
   const url = pkg.homepage;
-  const title = "clio.css — classic Mac OS CSS for System 6, System 7 and Mac OS 9 Platinum";
+  const title = "clio.css — classic Mac OS CSS for System 6, System 7, Drawing Board and Mac OS 9 Platinum";
   const description =
-    "CSS library for classic Mac OS interfaces: System 6, System 7 and Mac OS 9 Platinum windows, menus, buttons and dialogs, measured from real pixels. MIT.";
+    "CSS library for classic Mac OS interfaces: System 6, System 7, Mac OS 8.5 Drawing Board and Mac OS 9 Platinum windows, menus, buttons and dialogs, measured from real pixels. MIT.";
   const jsonld = {
     "@context": "https://schema.org",
     "@graph": [
@@ -194,11 +194,12 @@ export function renderSite({ pkg, components }) {
 <body>
   <header class="top">
     <h1><span>clio.css</span></h1>
-    <p class="lede">A CSS library for classic Mac OS interfaces: <strong>System 6</strong>, <strong>System 7</strong> and <strong>Mac OS 8/9 Platinum</strong>. Windows, menus, buttons, check boxes, pop-up menus, scroll bars and dialogs, drawn with CSS and small SVGs. Every value is traced to measured pixels or marked as inferred. No JavaScript, no Apple bitmaps or fonts. MIT.</p>
+    <p class="lede">A CSS library for classic Mac OS interfaces: <strong>System 6</strong>, <strong>System 7</strong>, Mac OS 8.5’s withdrawn <strong>Drawing Board</strong> theme and <strong>Mac OS 8/9 Platinum</strong>. Windows, menus, buttons, check boxes, pop-up menus, scroll bars and dialogs, drawn with CSS and small SVGs. Every value is traced to measured pixels or marked as inferred. No JavaScript, no screenshots or Apple fonts. MIT.</p>
     <fieldset class="era-switch">
       <legend>Era</legend>
       <label><input type="radio" name="era" value="system6" checked> System 6</label>
       <label><input type="radio" name="era" value="system7"> System 7</label>
+      <label><input type="radio" name="era" value="drawingboard"> Drawing Board</label>
       <label><input type="radio" name="era" value="platinum"> Mac OS 9 Platinum</label>
     </fieldset>
   </header>
@@ -220,7 +221,7 @@ export function renderSite({ pkg, components }) {
         <pre><code>npm install ${esc(pkg.name)}</code></pre>
         <pre><code>&lt;link rel="stylesheet" href="https://unpkg.com/${esc(pkg.name)}@${esc(pkg.version)}/dist/clio.css"&gt;</code></pre>
       </div>
-      <p><code>clio.css</code> draws System 6 by default. Put <code>data-era="system7"</code> or <code>data-era="platinum"</code> on <code>&lt;html&gt;</code>, or on any element, to switch everything inside it to that era. <code>clio.system6.css</code>, <code>clio.system7.css</code> and <code>clio.platinum.css</code> are single-era builds. Every rule uses <code>:where()</code> or a single class, so your own CSS always wins, and every value is a <code>--clio-*</code> custom property.</p>
+      <p><code>clio.css</code> draws System 6 by default. Put <code>data-era="system7"</code>, <code>data-era="drawingboard"</code> or <code>data-era="platinum"</code> on <code>&lt;html&gt;</code>, or on any element, to switch everything inside it to that era. <code>clio.system6.css</code>, <code>clio.system7.css</code>, <code>clio.drawingboard.css</code> and <code>clio.platinum.css</code> are single-era builds. Every rule uses <code>:where()</code> or a single class, so your own CSS always wins, and every value is a <code>--clio-*</code> custom property.</p>
       <p>Coming from system.css? Its markup works unchanged: <code>.window</code>, <code>.title-bar</code> with <code>button.close</code> and <code>button.resize</code>, <code>.details-bar</code>, <code>.window-pane</code>, <code>.btn</code>, <code>.btn-default</code>, <code>.standard-dialog</code>, <code>.modal-dialog</code>, <code>.alert-box</code>, <code>.field-row</code> and <code>role="menu-bar"</code> menus.</p>
     </section>
 
@@ -228,14 +229,14 @@ export function renderSite({ pkg, components }) {
 
     <section id="evidence-policy" aria-labelledby="h-evidence" class="prose">
       <h2 id="h-evidence">Evidence policy</h2>
-      <p>The values come from <a href="https://github.com/surfine/AI-System-6">AI System 6</a>, a writing desktop that recreates these eras and measures them against real screens: System 6.0.8 in an emulator, Mac OS 9.0 captures from GUIdebook and Infinite Mac. Each value carries one of four labels:</p>
+      <p>The values come from <a href="https://github.com/surfine/AI-System-6">AI System 6</a>, a writing desktop that recreates these eras and measures them against real screens: System 6.0.8, System 7.5.3 and Mac OS 8.5 (with the 8.5b6 Drawing Board theme) in the Infinite Mac emulator, and Mac OS 9.0 captures from GUIdebook. Each value carries one of four labels:</p>
       <ul>
         <li><span class="status status-measured">Measured</span> read from real pixels of the era.</li>
         <li><span class="status status-inferred">Inferred</span> reasoned from documentation or behaviour, not yet measured.</li>
         <li><span class="status status-adapted">Adapted</span> a deliberate change for the web: touch sizes, keyboard focus, contrast.</li>
         <li><span class="status status-third-party">Third-party</span> art or a font from a named, licensed project.</li>
       </ul>
-      <p>clio.css ships no Apple bitmaps, icons, logos or fonts. Screenshots stay evidence only. The fonts are ChicagoFLF (public domain) and Asap (SIL Open Font License). The full table is in <a href="${esc(pkg.repository.url.replace(/^git\+/, "").replace(/\.git$/, ""))}/blob/main/EVIDENCE.md">EVIDENCE.md</a>.</p>
+      <p>clio.css ships no screenshots, icons, logos or Apple fonts; screenshots stay evidence only. Small control parts for System 7 and Drawing Board (boxes, arrows, check boxes, tab ends) are redrawn pixel for pixel by a script, from measured pixels or the theme’s own resources, and labelled in the evidence; large textures are not reproduced. The fonts are ChicagoFLF (public domain) and Asap (SIL Open Font License). The full table is in <a href="${esc(pkg.repository.url.replace(/^git\+/, "").replace(/\.git$/, ""))}/blob/main/EVIDENCE.md">EVIDENCE.md</a>.</p>
     </section>
 
     <section id="for-agents" aria-labelledby="h-agents" class="prose">
@@ -252,7 +253,7 @@ export function renderSite({ pkg, components }) {
   <script>
     (function () {
       var root = document.documentElement;
-      function set(era) { root.setAttribute("data-era", era === "platinum" || era === "system7" ? era : "system6"); }
+      function set(era) { root.setAttribute("data-era", ["platinum", "system7", "drawingboard"].indexOf(era) >= 0 ? era : "system6"); }
       var era = new URLSearchParams(location.search).get("era");
       if (!era) { try { era = localStorage.getItem("clio-era"); } catch (e) {} }
       if (era) {
@@ -284,10 +285,10 @@ export function renderLlms({ pkg, components }) {
   const url = pkg.homepage;
   return `# clio.css
 
-> CSS library for classic Mac OS interfaces: Macintosh System 6, System 7 and Mac OS 8/9 Platinum. Windows, title bars, menu bars and menus, push buttons, check boxes, radio buttons, text fields, pop-up menus, list boxes, scroll bars, dialogs and alerts, group boxes, progress bars, tabs and desktop icons. Pure CSS (no JavaScript), MIT licence, no Apple bitmaps or fonts. Every value is traced to measured pixels from AI System 6 or marked as inferred.
+> CSS library for classic Mac OS interfaces: Macintosh System 6, System 7, Mac OS 8.5 Drawing Board (the withdrawn beta theme) and Mac OS 8/9 Platinum. Windows, title bars, menu bars and menus, push buttons, check boxes, radio buttons, text fields, pop-up menus, list boxes, scroll bars, dialogs and alerts, group boxes, progress bars, tabs and desktop icons. Pure CSS (no JavaScript), MIT licence, no screenshots or Apple fonts. Every value is traced to measured pixels from AI System 6 or marked as inferred.
 
 Install: \`npm install ${pkg.name}\` or \`<link rel="stylesheet" href="https://unpkg.com/${pkg.name}@${pkg.version}/dist/clio.css">\`.
-System 6 is the default; add \`data-era="system7"\` or \`data-era="platinum"\` to \`<html>\` or any element. Single-era builds: \`dist/clio.system6.css\`, \`dist/clio.system7.css\`, \`dist/clio.platinum.css\`.
+System 6 is the default; add \`data-era="system7"\`, \`data-era="drawingboard"\` or \`data-era="platinum"\` to \`<html>\` or any element. Single-era builds: \`dist/clio.system6.css\`, \`dist/clio.system7.css\`, \`dist/clio.drawingboard.css\`, \`dist/clio.platinum.css\`.
 All rules use \`:where()\` or one class, so author CSS always wins; every value is a \`--clio-*\` custom property.
 Drop-in for system.css markup (.window, .title-bar button.close, .btn, .btn-default, .standard-dialog, .modal-dialog, .alert-box, .field-row, role="menu-bar").
 
@@ -327,7 +328,7 @@ ${variants}`;
   });
   return `# clio.css ${pkg.version} — full reference
 
-Classic Mac OS interface CSS: System 6 (default), System 7 (data-era="system7") and Mac OS 8/9 Platinum (data-era="platinum").
+Classic Mac OS interface CSS: System 6 (default), System 7 (data-era="system7"), Mac OS 8.5 Drawing Board (data-era="drawingboard") and Mac OS 8/9 Platinum (data-era="platinum").
 Install: npm install ${pkg.name} — or <link rel="stylesheet" href="https://unpkg.com/${pkg.name}@${pkg.version}/dist/clio.css">
 Rules have zero or one-class specificity; override any --clio-* custom property on any element.
 

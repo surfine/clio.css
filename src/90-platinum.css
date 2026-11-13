@@ -4,7 +4,7 @@
    Values: AI System 6's Platinum tables, each tied to a Mac OS 9.0 capture
    (GUIdebook, Infinite Mac). P-numbers in comments are AI System 6's patch
    ids; see EVIDENCE.md. */
-[data-era="platinum"] {
+:is([data-era="platinum"], [data-era="drawingboard"]) {
   --clio-ink: #000000;
   --clio-paper: #dddddd;
   --clio-face: #dddddd;
@@ -236,7 +236,7 @@
 /* ---- Window ---------------------------------------------------------------- */
 /* The strip's inner edge below the title bar: #999 on the left, white on the
    right and bottom (GUIdebook Appearance window, x=4 and x=width-5). */
-[data-era="platinum"] .window:not(.inactive) {
+:is([data-era="platinum"], [data-era="drawingboard"]) .window:not(.inactive) {
   background:
     linear-gradient(#999999, #999999) 3px 19px / 1px calc(100% - 22px) no-repeat,
     linear-gradient(#ffffff, #ffffff) right 3px top 20px / 1px calc(100% - 23px) no-repeat,
@@ -244,24 +244,24 @@
     var(--clio-window-bg);
 }
 
-[data-era="platinum"] .window-pane {
+:is([data-era="platinum"], [data-era="drawingboard"]) .window-pane {
   border: 1px solid #000000;
   background: var(--clio-pane-bg);
 }
 
-[data-era="platinum"] .window > .title-bar + .window-pane,
-[data-era="platinum"] .window > .details-bar + .window-pane {
+:is([data-era="platinum"], [data-era="drawingboard"]) .window > .title-bar + .window-pane,
+:is([data-era="platinum"], [data-era="drawingboard"]) .window > .details-bar + .window-pane {
   border-top: 0;
 }
 
-[data-era="platinum"] .window > .details-bar {
+:is([data-era="platinum"], [data-era="drawingboard"]) .window > .details-bar {
   border-left: 1px solid #000000;
   border-right: 1px solid #000000;
 }
 
 /* The ridged bar. Its covers read the slot sizes the .title-bar itself
    computes, so this is a rule, not a token. */
-[data-era="platinum"] .title-bar {
+:is([data-era="platinum"], [data-era="drawingboard"]) .title-bar {
   background:
     linear-gradient(#cccccc, #cccccc) left top / var(--clio-tb-close) 17px no-repeat,
     linear-gradient(#cccccc, #cccccc) right top / calc(var(--clio-tb-zoom) + var(--clio-tb-shade) + 1px) 17px no-repeat,
@@ -270,19 +270,19 @@
     #cccccc;
 }
 
-[data-era="platinum"] .window.inactive > .title-bar,
-[data-era="platinum"] .inactive-title-bar {
+:is([data-era="platinum"], [data-era="drawingboard"]) .window.inactive > .title-bar,
+:is([data-era="platinum"], [data-era="drawingboard"]) .inactive-title-bar {
   background: var(--clio-titlebar-inactive-bg);
 }
 
 /* The title is cut out of the ridges in the frame grey, drawn wide. */
-[data-era="platinum"] .title-bar > :is(.title, h1, h2, h3) {
+:is([data-era="platinum"], [data-era="drawingboard"]) .title-bar > :is(.title, h1, h2, h3) {
   transform: translate(-1px, -1px);
 }
 
 /* The close, zoom and collapse boxes: an 11px bevelled square sunk into the
    ridges, no paper isolation. */
-[data-era="platinum"] .title-bar > :is(button, .close, .close-box, .resize, .resize-box, .zoom, .shade, .shade-box, .collapse) {
+:is([data-era="platinum"], [data-era="drawingboard"]) .title-bar > :is(button, .close, .close-box, .resize, .resize-box, .zoom, .shade, .shade-box, .collapse) {
   margin-top: 1px;
   border-color: #222222;
   background: linear-gradient(to bottom right, #999999, #ffffff);
@@ -297,13 +297,13 @@
     inset -1px -1px 0 #888888;
 }
 
-[data-era="platinum"] .title-bar > :is(button, .close, .close-box, .resize, .resize-box, .zoom, .shade, .shade-box, .collapse):is(:active, .active) {
+:is([data-era="platinum"], [data-era="drawingboard"]) .title-bar > :is(button, .close, .close-box, .resize, .resize-box, .zoom, .shade, .shade-box, .collapse):is(:active, .active) {
   background: linear-gradient(to bottom right, #444444, #bbbbbb);
   box-shadow: -1px -1px 0 #888888, 1px 1px 0 #ffffff, inset -1px -1px 0 #999999;
 }
 
 /* Zoom: a six-pixel lower-left corner inside the frame. */
-[data-era="platinum"] .title-bar > :is(.resize, .resize-box, .zoom)::before {
+:is([data-era="platinum"], [data-era="drawingboard"]) .title-bar > :is(.resize, .resize-box, .zoom)::before {
   top: 0;
   left: 0;
   width: 6px;
@@ -316,7 +316,7 @@
 }
 
 /* WindowShade: two nine-pixel rules. */
-[data-era="platinum"] .title-bar > :is(.shade, .shade-box, .collapse)::before {
+:is([data-era="platinum"], [data-era="drawingboard"]) .title-bar > :is(.shade, .shade-box, .collapse)::before {
   content: "";
   position: absolute;
   top: 3px;
@@ -329,7 +329,7 @@
 }
 
 /* Background window: flat grey, #555 frame, controls erased, title kept. */
-[data-era="platinum"] .window.inactive {
+:is([data-era="platinum"], [data-era="drawingboard"]) .window.inactive {
   --clio-button-shadow: 0 0 0 0 transparent;
   --clio-field-shadow: none;
   --clio-check-shadow: none;
@@ -339,28 +339,28 @@
   color: #555555;
 }
 
-[data-era="platinum"] .window.inactive > .title-bar,
-[data-era="platinum"] .inactive-title-bar {
+:is([data-era="platinum"], [data-era="drawingboard"]) .window.inactive > .title-bar,
+:is([data-era="platinum"], [data-era="drawingboard"]) .inactive-title-bar {
   border-bottom-color: #555555;
   --clio-title-bg: #dddddd;
 }
 
-[data-era="platinum"] .window.inactive > .title-bar > :is(.title, h1, h2, h3),
-[data-era="platinum"] .inactive-title-bar > :is(.title, h1, h2, h3) {
+:is([data-era="platinum"], [data-era="drawingboard"]) .window.inactive > .title-bar > :is(.title, h1, h2, h3),
+:is([data-era="platinum"], [data-era="drawingboard"]) .inactive-title-bar > :is(.title, h1, h2, h3) {
   background: #dddddd;
 }
 
 /* ---- Default button ring: 1px black, a #aaa bevel band, 1px gap. -------- */
-[data-era="platinum"] :is(.default, .btn-default) {
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(.default, .btn-default) {
   position: relative;
   box-shadow: var(--clio-button-shadow);
 }
 
-[data-era="platinum"] :is(.default, .btn-default):not(:disabled, .disabled):is(:active, .active) {
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(.default, .btn-default):not(:disabled, .disabled):is(:active, .active) {
   box-shadow: var(--clio-button-active-shadow);
 }
 
-[data-era="platinum"] :is(.default, .btn-default)::before {
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(.default, .btn-default)::before {
   content: "";
   position: absolute;
   border: 0;
@@ -374,56 +374,56 @@
   pointer-events: none;
 }
 
-[data-era="platinum"] :is(.default, .btn-default):is(:disabled, .disabled)::before {
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(.default, .btn-default):is(:disabled, .disabled)::before {
   box-shadow: 0 0 0 1px #888888;
 }
 
-[data-era="platinum"] :is(button, .btn, .btn-default, input[type="button"], input[type="submit"], input[type="reset"]):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *):is(:disabled, .disabled) {
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(button, .btn, .btn-default, input[type="button"], input[type="submit"], input[type="reset"]):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *):is(:disabled, .disabled) {
   background: #dddddd;
   box-shadow: none;
 }
 
 /* ---- Radio buttons: drawn, not cut from a screenshot ------------------------ */
-[data-era="platinum"] input[type="radio"] {
+:is([data-era="platinum"], [data-era="drawingboard"]) input[type="radio"] {
   border: 1px solid #000000;
   border-radius: 50%;
   background: linear-gradient(to bottom right, #ffffff, #888888);
   box-shadow: inset 1px 1px 0 #dddddd, inset -1px -1px 0 #888888;
 }
 
-[data-era="platinum"] input[type="radio"]:checked {
+:is([data-era="platinum"], [data-era="drawingboard"]) input[type="radio"]:checked {
   background:
     radial-gradient(circle, #000000 0 2.5px, transparent 3px),
     linear-gradient(to bottom right, #555555, #ffffff);
 }
 
-[data-era="platinum"] input[type="radio"]:not(:disabled):active {
+:is([data-era="platinum"], [data-era="drawingboard"]) input[type="radio"]:not(:disabled):active {
   background: linear-gradient(to bottom right, #444444, #bbbbbb);
 }
 
-[data-era="platinum"] input[type="radio"]:checked:not(:disabled):active {
+:is([data-era="platinum"], [data-era="drawingboard"]) input[type="radio"]:checked:not(:disabled):active {
   background:
     radial-gradient(circle, #000000 0 2.5px, transparent 3px),
     linear-gradient(to bottom right, #444444, #bbbbbb);
 }
 
-[data-era="platinum"] input[type="checkbox"]:not(:disabled):active {
+:is([data-era="platinum"], [data-era="drawingboard"]) input[type="checkbox"]:not(:disabled):active {
   background-color: #777777;
   box-shadow: inset 1px 1px 0 #555555, inset -1px -1px 0 #999999;
 }
 
-[data-era="platinum"] :is(input[type="checkbox"], input[type="radio"]):disabled {
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(input[type="checkbox"], input[type="radio"]):disabled {
   border-color: #888888;
   opacity: 0.6;
 }
 
 /* ---- Menus ------------------------------------------------------------------- */
-[data-era="platinum"] :is(.menu-bar, [role="menubar"], [role="menu-bar"]) > li > :is(button, a, span) {
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(.menu-bar, [role="menubar"], [role="menu-bar"]) > li > :is(button, a, span) {
   font-weight: 700;
 }
 
-[data-era="platinum"] :is(.menu, [role="menu"]) > li:is(.checked, [aria-checked="true"])::before,
-[data-era="platinum"] :is(.menu, [role="menu"]) > li > :is([aria-checked="true"], .checked)::before {
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(.menu, [role="menu"]) > li:is(.checked, [aria-checked="true"])::before,
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(.menu, [role="menu"]) > li > :is([aria-checked="true"], .checked)::before {
   left: 7px;
   width: 9px;
   height: 8px;
@@ -431,32 +431,32 @@
   background: var(--clio-art-p-check) 0 0 / 9px 8px no-repeat;
 }
 
-[data-era="platinum"] :is(.menu, [role="menu"]) > li:is(.checked, [aria-checked="true"]):is(:hover, :focus-within, .active)::before,
-[data-era="platinum"] :is(.menu, [role="menu"]) > li > :is([aria-checked="true"], .checked):is(:hover, :focus-visible, .active)::before {
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(.menu, [role="menu"]) > li:is(.checked, [aria-checked="true"]):is(:hover, :focus-within, .active)::before,
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(.menu, [role="menu"]) > li > :is([aria-checked="true"], .checked):is(:hover, :focus-visible, .active)::before {
   filter: invert(1);
 }
 
-[data-era="platinum"] :is(.menu, [role="menu"]) > li:has(> :is(.menu, ul[role="menu"]))::after,
-[data-era="platinum"] :is(.menu, [role="menu"]) > li > [aria-haspopup="true"]::after {
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(.menu, [role="menu"]) > li:has(> :is(.menu, ul[role="menu"]))::after,
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(.menu, [role="menu"]) > li > [aria-haspopup="true"]::after {
   background-image: var(--clio-art-p-submenu);
 }
 
-[data-era="platinum"] :is(.menu, [role="menu"]) > li:has(> :is(.menu, ul[role="menu"])):is(:hover, :focus-within, .active)::after {
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(.menu, [role="menu"]) > li:has(> :is(.menu, ul[role="menu"])):is(:hover, :focus-within, .active)::after {
   background-image: var(--clio-art-p-submenu-on);
 }
 
-[data-era="platinum"] :is(.menu, [role="menu"]) > li.divider {
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(.menu, [role="menu"]) > li.divider {
   border-bottom: 0;
   box-shadow: inset 0 -2px 0 #dddddd, inset 0 -3px 0 #ffffff, inset 0 -4px 0 #888888;
 }
 
 /* ---- Tabs: drawn from the measured Mac OS 9 tab (tooling/tab-art.py) ------ */
-[data-era="platinum"] :is([role="tablist"], .tabs) {
+:is([data-era="platinum"], [data-era="drawingboard"]) :is([role="tablist"], .tabs) {
   gap: 0;
   padding: 0 4px;
 }
 
-[data-era="platinum"] :is([role="tablist"], .tabs) > :is([role="tab"], li, button) {
+:is([data-era="platinum"], [data-era="drawingboard"]) :is([role="tablist"], .tabs) > :is([role="tab"], li, button) {
   min-width: 48px;
   height: 24px;
   min-height: 0;
@@ -473,13 +473,13 @@
   line-height: 18px;
 }
 
-[data-era="platinum"] :is([role="tablist"], .tabs) > :is([role="tab"], li, button):not(:disabled):active {
+:is([data-era="platinum"], [data-era="drawingboard"]) :is([role="tablist"], .tabs) > :is([role="tab"], li, button):not(:disabled):active {
   border-image-source: var(--clio-art-p-tab-pressed);
   background: transparent;
   color: #ffffff;
 }
 
-[data-era="platinum"] :is([role="tablist"], .tabs) > :is([role="tab"], li, button):is([aria-selected="true"], .active) {
+:is([data-era="platinum"], [data-era="drawingboard"]) :is([role="tablist"], .tabs) > :is([role="tab"], li, button):is([aria-selected="true"], .active) {
   z-index: 1;
   padding-top: 0;
   border-image-source: var(--clio-art-p-tab-selected);
@@ -487,24 +487,24 @@
   color: #000000;
 }
 
-[data-era="platinum"] :is([role="tabpanel"], .tab-panel) {
+:is([data-era="platinum"], [data-era="drawingboard"]) :is([role="tabpanel"], .tab-panel) {
   border-top: 0;
   box-shadow: inset 1px 0 0 #ffffff, inset -1px -1px 0 #888888;
 }
 
 /* ---- Scroll arrow art sits on the bevelled box ---------------------------- */
-[data-era="platinum"] :is(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-button,
-[data-era="platinum"]:is(html.clio-scrollbars)::-webkit-scrollbar-button {
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-button,
+:is([data-era="platinum"], [data-era="drawingboard"]):is(html.clio-scrollbars)::-webkit-scrollbar-button {
   background-position: 1px 1px;
   background-size: 14px 14px;
 }
 
-[data-era="platinum"] :is(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-button:active,
-[data-era="platinum"]:is(html.clio-scrollbars)::-webkit-scrollbar-button:active {
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-button:active,
+:is([data-era="platinum"], [data-era="drawingboard"]):is(html.clio-scrollbars)::-webkit-scrollbar-button:active {
   background-color: #666666;
   box-shadow: inset 1px 1px #444444, inset -1px -1px #888888;
 }
 
-[data-era="platinum"] :is(fieldset) > legend {
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(fieldset) > legend {
   background: var(--clio-pane-bg);
 }

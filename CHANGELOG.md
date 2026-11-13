@@ -1,5 +1,30 @@
 # Changelog
 
+## 0.5.0 — 2026-11-14
+
+**Drawing Board** (Mac OS 8.5b6, the appearance theme Apple shipped in the 8.5 betas and
+withdrew): `data-era="drawingboard"` or `dist/clio.drawingboard.css`.
+
+- Measured from Mac OS 8.5 in Infinite Mac with the theme installed
+  (`npm run capture:drawingboard`, which installs the theme from the archive you supply and
+  opens Appearance, the Finder, Date & Time, General Controls and Energy Saver): the pencil
+  window frame (1px #222 outline, 4px #cdc6bd frame, #555 content line, the 6px #777 band
+  on the right and bottom), the 20px title bar, the 22px menu bar, 18px menu items and the
+  pencil underline that marks the chosen item, push buttons and the default ring, the
+  brown alert frame, edit text, group boxes, the scroll bar track, the pop-up menu and tabs.
+- Control art is the theme's own: `tooling/theme-resources.py` reads its resource fork
+  (`ppat` pixel patterns and the undocumented `pxm#` pixmap lists, decoded here), and
+  `tooling/db-art.py` re-encodes the close, zoom and collapse boxes, check boxes, radio
+  buttons, scroll arrows, pop-up arrow, hatched button corner, tab ends and menu
+  underlines. Each part was found 1:1 in the capture.
+- The paper and sketch textures are not reproduced; surfaces use their dominant colour.
+- Shares the Platinum layer (`90-platinum.css` now matches either era) and overrides it.
+- Pixel check (`npm run fidelity`, 20 Drawing Board specimens): close and collapse boxes,
+  check boxes and radio buttons 100%; pop-up end 90%; scroll track 83%; default ring 78%.
+  Most of what remains is the paper grain and pencil variation that flat colours do not follow.
+- The minified all-era build grows by about 31 KB (budget now 116 KB); the System 6,
+  System 7 and Platinum single-era builds are unchanged.
+
 ## 0.4.1 — 2026-11-14
 
 System 7 made solid: its controls captured in 7.5.3 (General Controls, Numbers, Finder copy).

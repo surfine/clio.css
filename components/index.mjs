@@ -81,7 +81,11 @@ export const components = [
       { era: "platinum", claim: "Title in bold Charcoal; on other systems Asap at width 123 shifted (-1px, -1px), the metrics the title bar was measured with", status: "measured", source: "apps/desktop/styles/65-appearance-themes.css:1803", upstream: "GUIdebook Mac OS 9.0 Appearance window" },
       { era: "platinum", claim: "Boxes: 11px, #222 frame, #999 to white gradient, #888 bevel above-left and white below-right; pressed #444 to #bbb", status: "measured", source: "apps/desktop/styles/65-appearance-themes.css:1820", upstream: "GUIdebook Mac OS 9.0 captures" },
       { era: "platinum", claim: "Zoom mark: a six-pixel lower-left corner; WindowShade mark: two nine-pixel rules at y=4 and y=6", status: "measured", source: "apps/desktop/styles/65-platinum-utility.css:725, :738", upstream: "GUIdebook Mac OS 9, 1x pixels" },
-      { era: "platinum", claim: "Background window: #555 frame and drop, flat controls, #777 title, boxes erased", status: "measured", source: "apps/desktop/styles/65-appearance-themes.css:1757 (N1, P26)", upstream: "Mac OS 9 native capture 53; GUIdebook active/inactive" }
+      { era: "platinum", claim: "Background window: #555 frame and drop, flat controls, #777 title, boxes erased", status: "measured", source: "apps/desktop/styles/65-appearance-themes.css:1757 (N1, P26)", upstream: "Mac OS 9 native capture 53; GUIdebook active/inactive" },
+      { era: "drawingboard", claim: "Window frame: 1px #222 outline, a 4px #cdc6bd frame, a #555 line round the content, #e7ded6 content; right and bottom a 6px #777 pencil band closed by a 1px #333 line", status: "measured", source: "clio.css capture, Mac OS 8.5 with the 8.5b6 Drawing Board theme in Infinite Mac (npm run capture:drawingboard), frame appearance", upstream: "Appearance control panel window; columns 161-166 and 631-643" },
+      { era: "drawingboard", claim: "Title bar: 20px on the frame colour then the #555 rule; close and collapse boxes 11px, 4px below the bar's top, flush with the content line", status: "measured", source: "clio.css capture, Mac OS 8.5 with the 8.5b6 Drawing Board theme in Infinite Mac (npm run capture:drawingboard), frame appearance", upstream: "close box 1:1 at (166,73), collapse box 1:1 at (621,73)" },
+      { era: "drawingboard", claim: "Close, zoom and collapse box art, normal and held", status: "measured", source: "the theme file's pxm# pixmaps, decoded by tooling/theme-resources.py and redrawn by tooling/db-art.py", upstream: "WindowLargeCloseBox, WindowLargeZoom, WindowLargeCollapse; each found 1:1 in the capture" },
+      { era: "drawingboard", claim: "Frame and title bar paper texture and the sketch lines that overrun the boxes are not reproduced; surfaces use the dominant measured colour", status: "adapted", source: "clio.css", upstream: "the theme's ppat 7065/7115 and Doc Window pixmaps are Apple artwork, not control parts" },
     ]
   },
   {
@@ -120,7 +124,10 @@ export const components = [
       { era: "platinum", claim: "Menu bar: #ddd, white top line, #999 bottom line, 1px black rule, 20px; open title #333399 with #6666cc/#000088 lines", status: "measured", source: "apps/desktop/styles/65-appearance-themes.css:298, :45", upstream: "Mac OS 9 native menu bar captures 02/04" },
       { era: "platinum", claim: "Menu: no top rule, white/#999 inner bevel, #222 1px drop; 16px rows at weight 600; highlight #333399 with #6666cc/#000088 side columns", status: "measured", source: "apps/desktop/styles/65-appearance-themes.css:912 (P21), :917 (P24)", upstream: "GUIdebook Mac OS 9.0 Apple menu (Theme Lab specimen apple-menu)" },
       { era: "platinum", claim: "Separator: #888 over white, in an 8px row", status: "inferred", source: "apps/desktop/styles/65-appearance-themes.css (separator #888/white)", upstream: "the line pair is measured; the 8px row height is not" },
-      { era: "platinum", claim: "Check mark and submenu arrow art", status: "third-party", source: "classic-stylesheets macos9/checkmark.svg, menu-right.svg (MIT)", upstream: "nielssp/classic-stylesheets @9ebd2d8" }
+      { era: "platinum", claim: "Check mark and submenu arrow art", status: "third-party", source: "classic-stylesheets macos9/checkmark.svg, menu-right.svg (MIT)", upstream: "nielssp/classic-stylesheets @9ebd2d8" },
+      { era: "drawingboard", claim: "Menu bar: 22px of #cec6b5 with no rule under it; menus #ddd with a #333 outline and 18px items; the separator is a 1px pencil line fading #888 to #b6ada5", status: "measured", source: "clio.css capture, Mac OS 8.5 with the 8.5b6 Drawing Board theme in Infinite Mac (npm run capture:drawingboard), frame file-menu", upstream: "menu bar rows 0-21; File menu" },
+      { era: "drawingboard", claim: "The chosen menu title and item are underlined in pencil instead of inverted", status: "measured", source: "the theme file's pxm# pixmaps, decoded by tooling/theme-resources.py and redrawn by tooling/db-art.py", upstream: "Menu_Title_Underline_Center, Menu_Item_underline_center; the title underline is visible under File in the capture" },
+      { era: "drawingboard", claim: "Menu paper grain (pink, peach and green flecks on #ddd) is not reproduced", status: "adapted", source: "clio.css", upstream: "texture, not a control part" },
     ]
   },
   {
@@ -149,7 +156,12 @@ export const components = [
       { era: "platinum", claim: "#ddd face, 1px black border, 3px corners, bevel white/#ddd over #777/#aaa", status: "measured", source: "apps/desktop/styles/65-appearance-themes.css:236", upstream: "GUIdebook Mac OS 9.0 About dialog (Theme Lab specimen default-ok)" },
       { era: "platinum", claim: "Pressed: #666 face, white text, #444/#555 top-left over #888/#777 bottom-right", status: "measured", source: "apps/desktop/styles/65-appearance-themes.css:933 (P29)", upstream: "Infinite Mac Mac OS 9.0 capture" },
       { era: "platinum", claim: "Default ring: 1px black, a #aaa band with #ddd/#777 edges, 1px gap", status: "measured", source: "apps/desktop/styles/65-platinum-utility.css:773", upstream: "GUIdebook Mac OS 9.0 (default-ok specimen)" },
-      { era: "platinum", claim: "Disabled: #888 border, flat #ddd, #777 text; the default ring goes #888", status: "measured", source: "apps/desktop/styles/65-appearance-themes.css (N5)", upstream: "GUIdebook Open dialog Eject button (button-disabled specimen)" }
+      { era: "platinum", claim: "Disabled: #888 border, flat #ddd, #777 text; the default ring goes #888", status: "measured", source: "apps/desktop/styles/65-appearance-themes.css (N5)", upstream: "GUIdebook Open dialog Eject button (button-disabled specimen)" },
+      { era: "drawingboard", claim: "Push buttons: 20px; #cec6b5 face; pencil outline #777 top and left, #333 right, #111 bottom; a 2px #555 shade on the right and #777 below; the hatched ButtonFaceCorner (image 0) in the lower right of the face", status: "measured", source: "clio.css capture, Mac OS 8.5 with the 8.5b6 Drawing Board theme in Infinite Mac (npm run capture:drawingboard), frame themes-tab; the theme file's pxm# pixmaps, decoded by tooling/theme-resources.py and redrawn by tooling/db-art.py", upstream: "\"Save Theme…\" button; the face matches pixel for pixel, the hatch 394 of 432 pixels (the rest under the label)" },
+      { era: "drawingboard", claim: "Default button: a second pencil line (#555 left and top, #111 right, #333 below) 2px out on the left and top, outside the shade on the right and below, with a #9f9a94 line between", status: "measured", source: "clio.css capture, Mac OS 8.5 with the 8.5b6 Drawing Board theme in Infinite Mac (npm run capture:drawingboard), frame energy-saver-alert", upstream: "\"Close Message\" in Energy Saver's start-up notice" },
+      { era: "drawingboard", claim: "Pressed buttons: a #9f9a94 face", status: "inferred", source: "clio.css", upstream: "ButtonFaceCorner images 1-3 are probably the pressed faces; no pressed button captured" },
+      { era: "drawingboard", claim: "Disabled buttons: #8c8c8c label on the same face", status: "measured", source: "clio.css capture, Mac OS 8.5 with the 8.5b6 Drawing Board theme in Infinite Mac (npm run capture:drawingboard), frame date-time", upstream: "\"Server Options…\"" },
+      { era: "drawingboard", claim: "The pencil overruns at the button corners (ButtonTopLeft, ButtonTopRight…) are not drawn", status: "adapted", source: "clio.css", upstream: "sketch decoration outside the control's box" },
     ]
   },
   {
@@ -170,7 +182,8 @@ export const components = [
       { era: "system6", claim: "Checked draws an X from corner to corner of the box", status: "measured", source: "clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame get-info-checked (Locked)", upstream: "the art is system.css's checkmark.svg (MIT), which matches" },
       { era: "system6", claim: "X art", status: "third-party", source: "apps/desktop/assets/themes/classic/controls/checkmark.svg", upstream: "system.css icon/checkmark.svg (MIT, Sakun Acharige)" },
       { era: "platinum", claim: "12px #ddd well, 1px black frame, white top-left and #888 bottom-right bevel", status: "measured", source: "apps/desktop/styles/65-appearance-themes.css:897 (P18)", upstream: "GUIdebook Mac OS 9.0 Appearance Options tab (checkbox specimens)" },
-      { era: "platinum", claim: "Check mark art", status: "third-party", source: "classic-stylesheets macos9/checkmark.svg (MIT)", upstream: "nielssp/classic-stylesheets @9ebd2d8" }
+      { era: "platinum", claim: "Check mark art", status: "third-party", source: "classic-stylesheets macos9/checkmark.svg (MIT)", upstream: "nielssp/classic-stylesheets @9ebd2d8" },
+      { era: "drawingboard", claim: "Check box: the theme's 14x11 pictures; image 0 off, 1 on, 3 mixed, 4/5 pressed, 8/9 disabled", status: "measured", source: "clio.css capture, Mac OS 8.5 with the 8.5b6 Drawing Board theme in Infinite Mac (npm run capture:drawingboard), frames general-controls and date-time; the theme file's pxm# pixmaps, decoded by tooling/theme-resources.py and redrawn by tooling/db-art.py", upstream: "off, on and disabled found 1:1 (Show Desktop, Show Launcher, Daylight-Saving Time is in effect)" },
     ]
   },
   {
@@ -191,7 +204,8 @@ export const components = [
     evidence: [
       { era: "system7", claim: "Identical to System 6", status: "measured", source: "clio.css capture, System 7.5.3 in Infinite Mac (npm run capture:system7), frame general-controls", upstream: "100% identical, on and off" },
       { era: "system6", claim: "12px ring and 6px dot: the real pixels match system.css's art exactly", status: "measured", source: "clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame control-panel (Rate of Insertion Point Blinking)", upstream: "art from system.css icon/radio-border.svg, radio-dot.svg (MIT, Sakun Acharige)" },
-      { era: "platinum", claim: "Radio drawn with CSS gradients: black ring, white to #888 well, 6px black dot", status: "adapted", source: "apps/desktop/styles/65-appearance-themes.css:291", upstream: "AI System 6 later replaced this with art cut from a capture (P19); clio.css ships no cut art" }
+      { era: "platinum", claim: "Radio drawn with CSS gradients: black ring, white to #888 well, 6px black dot", status: "adapted", source: "apps/desktop/styles/65-appearance-themes.css:291", upstream: "AI System 6 later replaced this with art cut from a capture (P19); clio.css ships no cut art" },
+      { era: "drawingboard", claim: "Radio button: the theme's 16x12 pictures; image 0 off, 1 on, 2 pressed, 3/4 disabled", status: "measured", source: "clio.css capture, Mac OS 8.5 with the 8.5b6 Drawing Board theme in Infinite Mac (npm run capture:drawingboard), frames general-controls and date-time; the theme file's pxm# pixmaps, decoded by tooling/theme-resources.py and redrawn by tooling/db-art.py", upstream: "off and on found 1:1 (Documents, Menu Bar Clock)" },
     ]
   },
   {
@@ -211,7 +225,8 @@ export const components = [
       { era: "system7", claim: "As System 6: a 1px black frame with the text 3px in", status: "measured", source: "clio.css capture, System 7.5.3 in Infinite Mac (npm run capture:system7), frame numbers (Currency Symbol)", upstream: "System 7.5.3" },
       { era: "system6", claim: "1px ink frame, white, text inset 3px", status: "measured", source: "clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame control-panel (RAM Cache field), get-info (comments)", upstream: "System 6.0.8" },
       { era: "platinum", claim: "White field, 1px black frame, #888 shadow above-left and white etch below-right", status: "measured", source: "apps/desktop/styles/65-appearance-themes.css:935 (P30)", upstream: "Infinite Mac Mac OS 9.0 capture" },
-      { era: "platinum", claim: "Focus: a 2px #6666cc ring", status: "measured", source: "apps/desktop/styles/65-platinum-utility.css:38", upstream: "Mac OS 9 capture platinum-native/10b-fonts-tab" }
+      { era: "platinum", claim: "Focus: a 2px #6666cc ring", status: "measured", source: "apps/desktop/styles/65-platinum-utility.css:38", upstream: "Mac OS 9 capture platinum-native/10b-fonts-tab" },
+      { era: "drawingboard", claim: "Edit text: a 1px pencil line (#555 left, #888 top and right, #9f9a94 bottom), 1px of the panel colour inside it, then the white field", status: "measured", source: "clio.css capture, Mac OS 8.5 with the 8.5b6 Drawing Board theme in Infinite Mac (npm run capture:drawingboard), frame date-time", upstream: "the date field" },
     ]
   },
   {
@@ -234,7 +249,8 @@ export const components = [
       { era: "system6", claim: "An 18px rectangle with a 1px frame and a 1px drop shadow and no arrow; the shadow is what marks it as a menu; held, it inverts", status: "measured", source: "clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frames save-dialog and popup-held (Standard File folder menu)", upstream: "the down triangle arrived with System 7" },
       { era: "platinum", claim: "#ddd, 3px corners, white/#aaa bevel, bold label, a separate bevelled arrow part with the 7x10 arrow", status: "measured", source: "apps/desktop/styles/65-appearance-themes.css:1916 (P31)", upstream: "GUIdebook Mac OS 9.0 (popup-normal specimen), native 09b" },
       { era: "platinum", claim: "The arrow part is drawn with background layers, approximating the measured bevel", status: "inferred", source: "clio.css", upstream: "select has no ::after in CSS" },
-      { era: "platinum", claim: "Arrow art", status: "third-party", source: "classic-stylesheets macos9/dropdown.svg (MIT)", upstream: "nielssp/classic-stylesheets @9ebd2d8" }
+      { era: "platinum", claim: "Arrow art", status: "third-party", source: "classic-stylesheets macos9/dropdown.svg (MIT)", upstream: "nielssp/classic-stylesheets @9ebd2d8" },
+      { era: "drawingboard", claim: "Pop-up menu: 20px, 1px pencil outline, #cec6b5 face; the 7x9 double arrow 5px from the right and 4px down; the hatched ButtonFaceCorner (image 2) ends 19px from the right, on the bottom edge", status: "measured", source: "clio.css capture, Mac OS 8.5 with the 8.5b6 Drawing Board theme in Infinite Mac (npm run capture:drawingboard), frame appearance; the theme file's pxm# pixmaps, decoded by tooling/theme-resources.py and redrawn by tooling/db-art.py", upstream: "the Appearance pop-up; arrow and hatch found 1:1 in the capture" },
     ]
   },
   {
@@ -257,7 +273,8 @@ export const components = [
       { era: "system7", claim: "As System 6: a selected row inverts across the list", status: "inferred", source: "seen in the Keyboard control panel during capture; not pixel-checked", upstream: "System 7.5.3" },
       { era: "system6", claim: "White list, 1px ink frame, 16px rows; a selected row inverts across the whole list width", status: "measured", source: "clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frames save-dialog and list-selected (Standard File)", upstream: "System 6.0.8 TeachText Save As" },
       { era: "platinum", claim: "Selection is lavender #ccccff with black text", status: "measured", source: "apps/desktop/styles/65-appearance-themes.css:128", upstream: "GUIdebook Mac OS 9.0 Open dialog (open-list-scrollbar specimen)" },
-      { era: "platinum", claim: "Rows carry no divider", status: "measured", source: "apps/desktop/styles/65-appearance-themes.css:860 (P10)", upstream: "Mac OS 9 native list capture 21" }
+      { era: "platinum", claim: "Rows carry no divider", status: "measured", source: "apps/desktop/styles/65-appearance-themes.css:860 (P10)", upstream: "Mac OS 9 native list capture 21" },
+      { era: "drawingboard", claim: "List boxes: white with a 1px #555 outline, no bevel", status: "inferred", source: "clio.css", upstream: "not captured" },
     ]
   },
   {
@@ -282,7 +299,9 @@ export const components = [
       { era: "system6", claim: "Left and right arrows: the up arrow turned, apex in the box's first column, tip in its last", status: "measured", source: "clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame hd-window (horizontal scroll bar)", upstream: "redrawn as pixels in tooling/s6-art.py" },
       { era: "system6", claim: "Grow box: a 7×7 square over a 9×9 square in the 14px corner", status: "measured", source: "clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame system-folder", upstream: "redrawn as pixels in tooling/s6-art.py" },
       { era: "both", claim: "The scroll box grows with the visible fraction instead of a fixed 16px square", status: "adapted", source: "clio.css", upstream: "browsers size ::-webkit-scrollbar-thumb themselves" },
-      { era: "platinum", claim: "Lane #aaa with a double bevel; lavender #9999ff scroll box with #ccf/#66c bevel and grip ridges; #ddd arrow boxes with stepped 2/4/6/8 arrows", status: "measured", source: "apps/desktop/styles/65-appearance-themes.css:336 (P16), :351 (P17), :364 (P27)", upstream: "Mac OS 9 native capture 16; GUIdebook Open dialog" }
+      { era: "platinum", claim: "Lane #aaa with a double bevel; lavender #9999ff scroll box with #ccf/#66c bevel and grip ridges; #ddd arrow boxes with stepped 2/4/6/8 arrows", status: "measured", source: "apps/desktop/styles/65-appearance-themes.css:336 (P16), :351 (P17), :364 (P27)", upstream: "Mac OS 9 native capture 16; GUIdebook Open dialog" },
+      { era: "drawingboard", claim: "Scroll arrows: the theme's 16x16 boxes, normal, held and disabled, flush with the bar; the grow box is NoGrowBoxRight", status: "measured", source: "clio.css capture, Mac OS 8.5 with the 8.5b6 Drawing Board theme in Infinite Mac (npm run capture:drawingboard), frame themes-tab; the theme file's pxm# pixmaps, decoded by tooling/theme-resources.py and redrawn by tooling/db-art.py", upstream: "left and right arrows found 1:1 at (192,297) and (570,297)" },
+      { era: "drawingboard", claim: "Track: #ece6e4 with a #aaa edge, a two-pixel pencil rail (#888, #555) through the middle and a #777 far edge; scroll box from the theme's ends, stretch and grip", status: "measured", source: "clio.css capture, Mac OS 8.5 with the 8.5b6 Drawing Board theme in Infinite Mac (npm run capture:drawingboard), frame themes-tab; the theme file's pxm# pixmaps, decoded by tooling/theme-resources.py and redrawn by tooling/db-art.py", upstream: "theme list scroll bar; HThumbLeft/Right/Center/Stretch found in place. Chromium will not draw a scroll box shorter than its own minimum, where the theme's is 15px" },
     ]
   },
   {
@@ -317,7 +336,9 @@ export const components = [
       { era: "system6", claim: "Modal frame: 1px ink, 2px paper, 2px ink, and no drop shadow", status: "measured", source: "clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame alert", upstream: "AI System 6 has two recipes, both off (84-clio-write.css:210 has a 1px gap)" },
       { era: "system6", claim: "Plain box: 1px ink frame and a 2px drop shadow", status: "inferred", source: "not measured", upstream: "altDBoxProc; none of the 6.0.8 Finder and TeachText dialogs opened for capture (alerts, Standard File, About the Finder) uses it" },
       { era: "both", claim: "The alert icon is drawn here, not Apple's", status: "adapted", source: "clio.css", upstream: "no Apple icons are shipped" },
-      { era: "platinum", claim: "1px black frame over #ddd, inner bevel of three white steps inside #555/#999/#aaa, 1px black drop", status: "measured", source: "apps/desktop/styles/65-appearance-themes.css:840 (P06)", upstream: "GUIdebook Mac OS 9.0 About application (about-alert specimen)" }
+      { era: "platinum", claim: "1px black frame over #ddd, inner bevel of three white steps inside #555/#999/#aaa, 1px black drop", status: "measured", source: "apps/desktop/styles/65-appearance-themes.css:840 (P06)", upstream: "GUIdebook Mac OS 9.0 About application (about-alert specimen)" },
+      { era: "drawingboard", claim: "Alerts: a 1px brown pencil frame (#996633 top and left with #cc9966 outside, #993333 right and bottom) on #e7ded6, and a #777 band 7px wide on the right and 8px deep below", status: "measured", source: "clio.css capture, Mac OS 8.5 with the 8.5b6 Drawing Board theme in Infinite Mac (npm run capture:drawingboard), frame energy-saver-alert", upstream: "Energy Saver's start-up notice; the frame's shade drifts along the pencil line, which a flat colour does not follow" },
+      { era: "drawingboard", claim: "Modal and plain dialogs: the same geometry framed in grey (#333 with #999 outside on the left)", status: "inferred", source: "the theme file's pxm# pixmaps, decoded by tooling/theme-resources.py and redrawn by tooling/db-art.py", upstream: "Modal_Left (#555/#999) and Modal_Right pixmaps; no modal dialog in the captures" },
     ]
   },
   {
@@ -334,7 +355,8 @@ export const components = [
     evidence: [
       { era: "system7", claim: "Native group box: a 1px grey line with the legend on it; the original alternates #777 and #888, drawn #777 here", status: "measured", source: "clio.css capture, System 7.5.3 in Infinite Mac (npm run capture:system7), frames general-controls and numbers", upstream: "System 7.5.3 control panels" },
       { era: "system6", claim: "System 6 had no group box; clio.css draws a 1px ink frame with the legend on paper", status: "adapted", source: "clio.css", upstream: "Control Panel divides its panes with plain 1px rules (clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame control-panel)" },
-      { era: "platinum", claim: "Etched: #888 line with a white line inside and below", status: "measured", source: "apps/desktop/styles/65-appearance-themes.css:909 (P20)", upstream: "Mac OS 9 native group box" }
+      { era: "platinum", claim: "Etched: #888 line with a white line inside and below", status: "measured", source: "apps/desktop/styles/65-appearance-themes.css:909 (P20)", upstream: "Mac OS 9 native group box" },
+      { era: "drawingboard", claim: "Group boxes: a 1px #777 line (#888 on the bottom and right edge), no bevel", status: "measured", source: "clio.css capture, Mac OS 8.5 with the 8.5b6 Drawing Board theme in Infinite Mac (npm run capture:drawingboard), frame general-controls", upstream: "Desktop group" },
     ]
   },
   {
@@ -352,7 +374,8 @@ export const components = [
       { era: "system7", claim: "11px, 1px black frame, #ccf track, #444 fill", status: "measured", source: "clio.css capture, System 7.5.3 in Infinite Mac (npm run capture:system7), frame copy-progress", upstream: "100% identical" },
       { era: "system6", claim: "12px tall, 1px ink frame, white track, fill in QuickDraw dkGray (one white dot in four)", status: "measured", source: "clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame copy-progress (Finder duplicating System Folder)", upstream: "redrawn as a pattern tile in tooling/s6-art.py" },
       { era: "platinum", claim: "Barber-pole fill: ten 1px hard stops from #333399 through #eee to #000055", status: "measured", source: "apps/desktop/styles/65-appearance-themes.css:937 (P32)", upstream: "Mac OS 9 native progress bar" },
-      { era: "platinum", claim: "#bbb track with white/#aaa outer and #888/#ddd inner bevel", status: "inferred", source: "apps/desktop/styles/65-appearance-themes.css:592", upstream: "AI System 6 token, not tagged as measured" }
+      { era: "platinum", claim: "#bbb track with white/#aaa outer and #888/#ddd inner bevel", status: "inferred", source: "apps/desktop/styles/65-appearance-themes.css:592", upstream: "AI System 6 token, not tagged as measured" },
+      { era: "drawingboard", claim: "Progress bars keep Platinum's drawing; the theme's own ends and fill (ProgressLeftEnd, ProgressRightEnd) are not yet used", status: "inferred", source: "clio.css", upstream: "not captured" },
     ]
   },
   {
@@ -377,7 +400,8 @@ export const components = [
     evidence: [
       { era: "system7", claim: "System 7 had no tab control; the System 6 adaptation is used", status: "adapted", source: "clio.css", upstream: "System 7.5.3" },
       { era: "system6", claim: "Boxed labels that join the panel", status: "adapted", source: "clio.css", upstream: "System 6 had no tab control" },
-      { era: "platinum", claim: "Tab art: sloped caps, #ccc tabs, the front tab #eee and 2px taller", status: "third-party", source: "classic-stylesheets macos9/tab*.svg (MIT)", upstream: "nielssp/classic-stylesheets @9ebd2d8; AI System 6 measured a 21-row tab (P01, 65-appearance-themes.css:742)" }
+      { era: "platinum", claim: "Tab art: sloped caps, #ccc tabs, the front tab #eee and 2px taller", status: "third-party", source: "classic-stylesheets macos9/tab*.svg (MIT)", upstream: "nielssp/classic-stylesheets @9ebd2d8; AI System 6 measured a 21-row tab (P01, 65-appearance-themes.css:742)" },
+      { era: "drawingboard", claim: "Tabs: the theme's left end (6px) and right end (17px, 2px taller) with the right end's first column stretched between; the front tab is the content colour and opens into the panel", status: "measured", source: "clio.css capture, Mac OS 8.5 with the 8.5b6 Drawing Board theme in Infinite Mac (npm run capture:drawingboard), frame appearance; the theme file's pxm# pixmaps, decoded by tooling/theme-resources.py and redrawn by tooling/db-art.py", upstream: "NTabLeft and NTabRight found 1:1 at (244,96) and (327,94)" },
     ]
   },
   {
@@ -403,7 +427,8 @@ export const components = [
       { era: "system6", claim: "The desktop is a 1px 50% checker", status: "measured", source: "clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), every frame", upstream: "AI System 6 draws an 8px stipple" },
       { era: "system6", claim: "Icon names: Geneva 9 on a white tag; a selected icon and its tag invert", status: "measured", source: "clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), desktop (Macintosh HD selected, Welcome! not)", upstream: "System 6.0.8 Finder" },
       { era: "platinum", claim: "70% white tag with no edge; selected: black tag, white name, artwork darkened", status: "measured", source: "apps/desktop/styles/65-appearance-themes.css:882 (P12, P13)", upstream: "Mac OS 9 native capture 02" },
-      { era: "platinum", claim: "Desktop colour #4a71ab", status: "inferred", source: "apps/desktop/styles/65-appearance-themes.css:85", upstream: "base colour of AI System 6's azul tile, generated from a 512 Pixels capture; the tile is not shipped" }
+      { era: "platinum", claim: "Desktop colour #4a71ab", status: "inferred", source: "apps/desktop/styles/65-appearance-themes.css:85", upstream: "base colour of AI System 6's azul tile, generated from a 512 Pixels capture; the tile is not shipped" },
+      { era: "drawingboard", claim: "Desktop and icons are unchanged from Platinum; the theme's desktop pictures are not reproduced", status: "adapted", source: "clio.css", upstream: "scen 'Drawing Board on a Grid' / 'on Parchment' are Apple artwork" },
     ]
   },
   {
@@ -424,7 +449,8 @@ export const components = [
       { era: "system6", claim: "ChicagoFLF stays in the stack as the outline fallback for sizes that are not multiples of 12px", status: "third-party", source: "vendor/system.css-reference/fonts/ChicagoFLF.woff2", upstream: "Robin Casady's ChicagoFLF (public domain), as shipped by system.css" },
       { era: "platinum", claim: "Charcoal when installed; otherwise Asap (OFL) at width 113 for text and 123 for titles, weights 400/600/700", status: "measured", source: "apps/desktop/assets/fonts/platinum/README.md; 65-appearance-themes.css:25", upstream: "Asap matched to a measured Charcoal sample's x-height and advance width" },
       { era: "platinum", claim: "Palette #fff #ddd #ccc #999 #777 #000, accent #333399, lavender #ccccff", status: "measured", source: "tooling/classic-platinum-fidelity-contract.json (platinum.palette)", upstream: "Mac OS 9 captures" },
-      { era: "system6", claim: "Disabled text #696969 instead of a 50% dither", status: "adapted", source: "apps/desktop/styles/00-foundation.css (shade-dark)", upstream: "5.6:1 on white; a dither blurs under browser scaling" }
+      { era: "system6", claim: "Disabled text #696969 instead of a 50% dither", status: "adapted", source: "apps/desktop/styles/00-foundation.css (shade-dark)", upstream: "5.6:1 on white; a dither blurs under browser scaling" },
+      { era: "drawingboard", claim: "Chrome text is #313131; titles and labels are Charcoal, as in Platinum", status: "measured", source: "clio.css capture, Mac OS 8.5 with the 8.5b6 Drawing Board theme in Infinite Mac (npm run capture:drawingboard), frame appearance", upstream: "tab and title text ink" },
     ]
   }
 ];

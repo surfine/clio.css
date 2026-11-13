@@ -1,8 +1,26 @@
 # Third-party material
 
-clio.css ships no Apple bitmaps, icons, logos or fonts. Screenshots used to
-measure values stay evidence in AI System 6 and are never distributed. The
-following third-party material is included, each under its own licence.
+clio.css ships no Apple screenshots, icons, logos or font files. Screenshots used to
+measure values stay evidence (git-ignored `.fidelity/`, or AI System 6) and are never
+distributed. The following third-party material is included, each under its own licence.
+
+## Control art reconstructed from Apple's interfaces
+
+Some small control parts are pixel reconstructions, not original designs, and are not
+presented as such:
+
+- System 7 scroll arrows, grow box and grip (`--clio-art-s7-*`): redrawn as SVG by
+  `tooling/s7-art.py` from System 7.5.3 running in an emulator.
+- Drawing Board close, zoom and collapse boxes, check boxes, radio buttons, scroll arrows,
+  pop-up arrow, hatched button corner, grow box, tab ends and menu underlines
+  (`--clio-art-db-*`): re-encoded as palette PNGs by `tooling/db-art.py` from the
+  `pxm#` pixmaps of Apple's Mac OS 8.5b6 "Drawing Board" theme, each matched 1:1 against
+  the theme running in an emulator. The theme file is not included; the large paper
+  and sketch textures and the window-frame illustrations are not reproduced.
+
+They are included to document the look of these interfaces at the size of a single
+control. If that does not suit your use, override the `--clio-art-s7-*` and
+`--clio-art-db-*` custom properties with your own art.
 
 ## Fonts
 
