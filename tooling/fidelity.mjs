@@ -39,7 +39,7 @@ const specimens = [
   { id: "button-disabled", html: `<div style="padding:12px;background:#ddd"><button id="s" disabled style="width:80px">Eject</button></div>`, crop: [0, 0, 80, 20], mask: [[29, 4, 27, 12]] },
   { id: "checkbox-checked", html: `<div style="padding:12px;background:#ddd"><input type="checkbox" id="s" checked></div>`, crop: [0, 0, 12, 12] },
   { id: "checkbox-unchecked", html: `<div style="padding:12px;background:#ddd"><input type="checkbox" id="s"></div>`, crop: [0, 0, 12, 12] },
-  { id: "selected-tab", html: `<div style="padding:12px;background:#ddd"><div role="tablist"><button role="tab" aria-selected="true" id="s" style="width:103px">Appearance</button></div></div>`, crop: [0, 0, 103, 24] },
+  { id: "selected-tab", html: `<div style="padding:12px;background:#ddd"><div role="tablist"><button role="tab" aria-selected="true" id="s" style="width:103px">Appearance</button></div></div>`, crop: [0, 0, 103, 24], mask: [[12, 5, 80, 13]] },   // the label: GUIdebook's is antialiased differently
 ];
 
 // System 6: crops of the System 6.0.8 frames from `npm run capture:system6`
@@ -146,6 +146,8 @@ specimens.push(
   P9("p9-radio-on", `<div style="padding:12px;background:#eeeeee"><input type="radio" id="s" checked></div>`, [0, 0, 12, 12], "general-controls", [268, 265, 12, 12]),
   P9("p9-radio-off", `<div style="padding:12px;background:#eeeeee"><input type="radio" id="s"></div>`, [0, 0, 12, 12], "general-controls", [268, 282, 12, 12]),
   // Appearance control panel (window outline 161..636 x 68..): title bar ends, "Set Desktop", the disabled pop-up.
+  // The whole bar with its title: Charcoal's antialiasing comes from window titles (capture:charcoal-ui).
+  { ...P9("p9-titlebar", `<div class="window" id="s" style="width:476px"><div class="title-bar"><button class="close" aria-label="Close"></button><h2 class="title">Appearance</h2><button class="shade" aria-label="Collapse"></button></div><div class="window-pane" style="height:40px"></div></div>`, [0, 0, 477, 22], "appearance", [161, 68, 477, 22]), mask: [[476, 0, 1, 2]] },   // desktop beside the shadow
   P9("p9-titlebar-left", `<div class="window" id="s" style="width:476px"><div class="title-bar"><button class="close" aria-label="Close"></button><h2 class="title">Appearance</h2><button class="shade" aria-label="Collapse"></button></div><div class="window-pane" style="height:40px"></div></div>`, [0, 0, 30, 22], "appearance", [161, 68, 30, 22]),
   P9("p9-titlebar-right", `<div class="window" id="s" style="width:476px"><div class="title-bar"><button class="close" aria-label="Close"></button><h2 class="title">Appearance</h2><button class="shade" aria-label="Collapse"></button></div><div class="window-pane" style="height:40px"></div></div>`, [438, 0, 36, 22], "appearance", [599, 68, 36, 22]),
   P9("p9-button-end", `<div style="padding:12px;background:#eeeeee"><button id="s" style="width:86px">Set Desktop</button></div>`, [0, 0, 86, 20], "appearance", [534, 369, 86, 20]),

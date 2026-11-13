@@ -27,6 +27,7 @@
      fallback; Geneva for text on a Mac. */
   --clio-font-chrome: Charcoal, "Charcoal CY", "Clio Sans '97", "Clio Asap", Geneva, "Helvetica Neue", Arial, sans-serif;
   --clio-font-display: Charcoal, "Charcoal CY", "Clio Sans '97 Display", "Clio Asap", "Helvetica Neue", Arial, sans-serif;
+  --clio-font-window-title: Charcoal, "Charcoal CY", "Clio Sans '97 Title", "Clio Sans '97", "Clio Asap", Geneva, "Helvetica Neue", Arial, sans-serif;
   --clio-font-text: Geneva, "Clio Asap", "Helvetica Neue", Arial, sans-serif;
   --clio-font-size: 12px;
   --clio-font-smoothing: none;

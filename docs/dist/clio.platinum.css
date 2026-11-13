@@ -35,6 +35,15 @@
   font-display: swap;
 }
 
+/* Clio Sans '97 Title: the same face as window titles draw it (a few faint
+   pixels fewer than menus and buttons), for title bars only. */
+@font-face {
+  font-family: "Clio Sans '97 Title";
+  src: url("fonts/ClioSans97Title.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+
 /* Clio Sans '97 Display: Charcoal's outlines, traced from Mac OS 9.0 drawing it
    at 72 points (fonts/ClioSans97Display.woff2, tooling/trace-outline.py), for
    every size that is not 12px or a multiple of it. */
@@ -553,7 +562,7 @@
   overflow: hidden;
   background: var(--clio-title-bg);
   color: var(--clio-title-fg);
-  font-family: var(--clio-font-chrome);
+  font-family: var(--clio-font-window-title, var(--clio-font-chrome));
   font-size: var(--clio-title-font-size);
   font-stretch: var(--clio-font-stretch-title);
   font-weight: var(--clio-chrome-weight);
@@ -1787,6 +1796,7 @@
      fallback; Geneva for text on a Mac. */
   --clio-font-chrome: Charcoal, "Charcoal CY", "Clio Sans '97", "Clio Asap", Geneva, "Helvetica Neue", Arial, sans-serif;
   --clio-font-display: Charcoal, "Charcoal CY", "Clio Sans '97 Display", "Clio Asap", "Helvetica Neue", Arial, sans-serif;
+  --clio-font-window-title: Charcoal, "Charcoal CY", "Clio Sans '97 Title", "Clio Sans '97", "Clio Asap", Geneva, "Helvetica Neue", Arial, sans-serif;
   --clio-font-text: Geneva, "Clio Asap", "Helvetica Neue", Arial, sans-serif;
   --clio-font-size: 12px;
   --clio-font-smoothing: none;
