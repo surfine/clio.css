@@ -1,4 +1,4 @@
-/*! clio.css 0.9.1 | MIT | https://surfine.github.io/clio.css/
+/*! clio.css 0.9.2 | MIT | https://surfine.github.io/clio.css/
  * Classic Mac OS interface CSS: System 6, System 7, Mac OS 8.5 Drawing Board and Mac OS 9 Platinum.
  * Measured values traced to AI System 6; see EVIDENCE.md.
  * Includes art from system.css (MIT) and pixel reconstructions of Apple control art; see THIRD-PARTY.md. */
@@ -38,7 +38,8 @@
 
 /* Clio Sans '97's antialiasing is COLRv1 colour layers. A browser without
    COLRv1 (Safari) would paint every layer solid, so it gets the Plain file:
-   the outlines alone, each pixel at least half covered. */
+   the same 16 levels as OpenType-SVG glyphs, which Safari draws, over outlines
+   (each pixel at least half covered) for browsers with neither. */
 /* Clio Sans '97 Title: the same face as window titles draw it (a few faint
    pixels fewer than menus and buttons), for title bars only. */
 @font-face {

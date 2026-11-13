@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.9.2 — 2026-11-14
+
+**Safari smooths Charcoal as Mac OS 9 does.** The Plain files Safari loads now carry the 16
+antialiasing levels as OpenType-SVG glyphs (squares in the text colour at each level's
+opacity), so iPhone and Mac Safari show the same grey edges as Chrome, in any text colour.
+Browsers with neither COLRv1 nor OpenType-SVG still draw the outlines.
+
 ## 0.9.1 — 2026-11-14
 
 **Safari**: Clio Sans '97 draws its antialiasing as COLRv1 colour layers, which Safari

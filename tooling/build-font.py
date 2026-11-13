@@ -145,6 +145,29 @@ if layers and not PLAIN:
             {'Format': 10, 'Glyph': ln, 'Paint': {'Format': 2, 'PaletteIndex': 0xFFFF, 'Alpha': a}} for ln, a in ls]}
             for g, ls in layers.items()}, version=1)
         fb.font['CPAL'] = buildCPAL([[(0.0, 0.0, 0.0, 1.0)]])
+if PLAIN and COVERAGE:
+    # Safari has no COLRv1 but draws OpenType-SVG glyphs: the same 16 levels
+    # as squares in the text colour at each level's opacity.
+    from fontTools.ttLib import newTable
+    from fontTools.ttLib.tables.S_V_G_ import SVGDocument
+    gid = {g: i for i, g in enumerate(fb.font.getGlyphOrder())}
+    docs = []
+    for cp, (adv, x0, top, rows) in sorted(glyphs.items()):
+        rects = []
+        for r, row in enumerate(rows):
+            y = top - r; x = 0
+            while x < len(row):
+                k = level(row[x])
+                if not k: x += 1; continue
+                n = 1
+                while x + n < len(row) and level(row[x + n]) == k: n += 1
+                op = '' if k == 15 else ' fill-opacity="%.4f"' % (k / 15)
+                rects.append('<rect x="%d" y="%d" width="%d" height="%d"%s/>' % ((x0 + x) * PX, -(y + 1) * PX, n * PX, PX, op))
+                x += n
+        if not rects: continue
+        i = gid[name(cp)]
+        docs.append(SVGDocument('<svg xmlns="http://www.w3.org/2000/svg"><g id="glyph%d" fill="currentColor">%s</g></svg>' % (i, ''.join(rects)), i, i, False))
+    t = newTable('SVG '); t.docList = docs; fb.font['SVG '] = t
 fb.font.flavor = 'woff2'
 fb.save(OUT)
 print(OUT, os.path.getsize(OUT), 'bytes,', len(glyphs), 'glyphs')
