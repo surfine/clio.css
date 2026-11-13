@@ -21,7 +21,7 @@
   <link rel="alternate" type="text/plain" title="llms.txt" href="llms.txt">
   <link rel="alternate" type="application/json" title="Component index" href="components.json">
   <link rel="stylesheet" href="dist/clio.css">
-  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"SoftwareSourceCode","@id":"https://surfine.github.io/clio.css/#software","name":"clio.css","description":"CSS library for classic Mac OS interfaces: System 6 and Mac OS 9 Platinum windows, menus, buttons and dialogs, with values traced to measured pixels. MIT.","url":"https://surfine.github.io/clio.css/","codeRepository":"https://github.com/surfine/clio.css","programmingLanguage":"CSS","license":"https://opensource.org/licenses/MIT","version":"0.2.0","keywords":"css, css-framework, design-system, classic-mac, classic-macos, macintosh, system-6, mac-os-9, mac-os-8, platinum, retro, vintage, 1-bit, chicago, ui, system.css","runtimePlatform":"Web browsers","isAccessibleForFree":true,"hasPart":[{"@type":"WebPageElement","name":"Window","url":"https://surfine.github.io/clio.css/#window"},{"@type":"WebPageElement","name":"Menu bar and menus","url":"https://surfine.github.io/clio.css/#menu"},{"@type":"WebPageElement","name":"Push button","url":"https://surfine.github.io/clio.css/#button"},{"@type":"WebPageElement","name":"Check box","url":"https://surfine.github.io/clio.css/#checkbox"},{"@type":"WebPageElement","name":"Radio button","url":"https://surfine.github.io/clio.css/#radio"},{"@type":"WebPageElement","name":"Text field","url":"https://surfine.github.io/clio.css/#text-field"},{"@type":"WebPageElement","name":"Pop-up menu","url":"https://surfine.github.io/clio.css/#select"},{"@type":"WebPageElement","name":"List box","url":"https://surfine.github.io/clio.css/#listbox"},{"@type":"WebPageElement","name":"Scroll bar","url":"https://surfine.github.io/clio.css/#scrollbar"},{"@type":"WebPageElement","name":"Dialogs and alerts","url":"https://surfine.github.io/clio.css/#dialog"},{"@type":"WebPageElement","name":"Group box","url":"https://surfine.github.io/clio.css/#fieldset"},{"@type":"WebPageElement","name":"Progress bar","url":"https://surfine.github.io/clio.css/#progress"},{"@type":"WebPageElement","name":"Tabs","url":"https://surfine.github.io/clio.css/#tabs"},{"@type":"WebPageElement","name":"Desktop and icons","url":"https://surfine.github.io/clio.css/#desktop"},{"@type":"WebPageElement","name":"Type and tokens","url":"https://surfine.github.io/clio.css/#typography"}]},{"@type":"WebSite","@id":"https://surfine.github.io/clio.css/#site","name":"clio.css","url":"https://surfine.github.io/clio.css/","inLanguage":"en"}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"SoftwareSourceCode","@id":"https://surfine.github.io/clio.css/#software","name":"clio.css","description":"CSS library for classic Mac OS interfaces: System 6 and Mac OS 9 Platinum windows, menus, buttons and dialogs, with values traced to measured pixels. MIT.","url":"https://surfine.github.io/clio.css/","codeRepository":"https://github.com/surfine/clio.css","programmingLanguage":"CSS","license":"https://opensource.org/licenses/MIT","version":"0.2.1","keywords":"css, css-framework, design-system, classic-mac, classic-macos, macintosh, system-6, mac-os-9, mac-os-8, platinum, retro, vintage, 1-bit, chicago, ui, system.css","runtimePlatform":"Web browsers","isAccessibleForFree":true,"hasPart":[{"@type":"WebPageElement","name":"Window","url":"https://surfine.github.io/clio.css/#window"},{"@type":"WebPageElement","name":"Menu bar and menus","url":"https://surfine.github.io/clio.css/#menu"},{"@type":"WebPageElement","name":"Push button","url":"https://surfine.github.io/clio.css/#button"},{"@type":"WebPageElement","name":"Check box","url":"https://surfine.github.io/clio.css/#checkbox"},{"@type":"WebPageElement","name":"Radio button","url":"https://surfine.github.io/clio.css/#radio"},{"@type":"WebPageElement","name":"Text field","url":"https://surfine.github.io/clio.css/#text-field"},{"@type":"WebPageElement","name":"Pop-up menu","url":"https://surfine.github.io/clio.css/#select"},{"@type":"WebPageElement","name":"List box","url":"https://surfine.github.io/clio.css/#listbox"},{"@type":"WebPageElement","name":"Scroll bar","url":"https://surfine.github.io/clio.css/#scrollbar"},{"@type":"WebPageElement","name":"Dialogs and alerts","url":"https://surfine.github.io/clio.css/#dialog"},{"@type":"WebPageElement","name":"Group box","url":"https://surfine.github.io/clio.css/#fieldset"},{"@type":"WebPageElement","name":"Progress bar","url":"https://surfine.github.io/clio.css/#progress"},{"@type":"WebPageElement","name":"Tabs","url":"https://surfine.github.io/clio.css/#tabs"},{"@type":"WebPageElement","name":"Desktop and icons","url":"https://surfine.github.io/clio.css/#desktop"},{"@type":"WebPageElement","name":"Type and tokens","url":"https://surfine.github.io/clio.css/#typography"}]},{"@type":"WebSite","@id":"https://surfine.github.io/clio.css/#site","name":"clio.css","url":"https://surfine.github.io/clio.css/","inLanguage":"en"}]}</script>
   <style>
     :root { --doc-ink: #111; --doc-muted: #555; --doc-rule: #d4d4d4; --doc-bg: #ffffff; --doc-tint: #f4f4f4; }
     html { background: var(--doc-bg); }
@@ -122,7 +122,7 @@
       <h2 id="h-start">Get started</h2>
       <div class="install">
         <pre><code>npm install clio.css</code></pre>
-        <pre><code>&lt;link rel="stylesheet" href="https://unpkg.com/clio.css@0.2.0/dist/clio.css"&gt;</code></pre>
+        <pre><code>&lt;link rel="stylesheet" href="https://unpkg.com/clio.css@0.2.1/dist/clio.css"&gt;</code></pre>
       </div>
       <p><code>clio.css</code> draws System 6 by default. Put <code>data-era="platinum"</code> on <code>&lt;html&gt;</code>, or on any element, to switch everything inside it to Mac OS 9 Platinum. <code>clio.system6.css</code> and <code>clio.platinum.css</code> are single-era builds. Every rule uses <code>:where()</code> or a single class, so your own CSS always wins, and every value is a <code>--clio-*</code> custom property.</p>
       <p>Coming from system.css? Its markup works unchanged: <code>.window</code>, <code>.title-bar</code> with <code>button.close</code> and <code>button.resize</code>, <code>.details-bar</code>, <code>.window-pane</code>, <code>.btn</code>, <code>.btn-default</code>, <code>.standard-dialog</code>, <code>.modal-dialog</code>, <code>.alert-box</code>, <code>.field-row</code> and <code>role="menu-bar"</code> menus.</p>
@@ -457,7 +457,7 @@
       </dl>
       <p class="aliases">Also accepts: system.css markup (<code>.btn</code>, <code>.btn-default</code>, <code>.standard-button</code>); AI System 6 markup (<code>.btn.default</code>).</p>
       <details class="evidence-details">
-        <summary>Evidence (9)</summary>
+        <summary>Evidence (11)</summary>
       <table class="evidence">
         <caption>Where each value comes from</caption>
         <thead><tr><th scope="col">Era</th><th scope="col">Value</th><th scope="col">Status</th><th scope="col">Source</th></tr></thead>
@@ -470,9 +470,15 @@
         </tr>
 <tr>
           <td>System 6</td>
-          <td>Pressed: the button inverts to ink with paper text</td>
-          <td><span class="status status-inferred">Inferred</span></td>
-          <td><code>not captured</code><br><span class="upstream">System 6 button tracking</span></td>
+          <td>Pressed: the whole button inverts to ink with paper text</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame button-pressed (Cancel held in a TeachText alert)</code><br><span class="upstream">System 6.0.8</span></td>
+        </tr>
+<tr>
+          <td>System 6</td>
+          <td>Disabled: the frame stays solid ink and the label is dithered 50% grey; clio.css draws the label solid #696969</td>
+          <td><span class="status status-adapted">Adapted</span></td>
+          <td><code>clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame save-dialog (Eject)</code><br><span class="upstream">a dither blurs under browser scaling</span></td>
         </tr>
 <tr>
           <td>System 6</td>
@@ -481,10 +487,16 @@
           <td><code>clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame alert</code><br><span class="upstream">agrees with Inside Macintosh, Dialog Manager: PenSize(3,3), InsetRect(-4,-4), FrameRoundRect(16,16)</span></td>
         </tr>
 <tr>
-          <td>Both eras</td>
+          <td>System 6</td>
+          <td>Hovering over a button changes nothing; only a press inverts it</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frames locked-alert and button-hover</code><br><span class="upstream">agrees with docs/design/CLASSIC_PLATINUM_FIDELITY.md:210</span></td>
+        </tr>
+<tr>
+          <td>Platinum</td>
           <td>Hover never changes a push button; pressed only on pointer-down, Space or Enter</td>
           <td><span class="status status-inferred">Inferred</span></td>
-          <td><code>docs/design/CLASSIC_PLATINUM_FIDELITY.md:210</code><br><span class="upstream">a 1987–1999 Mac had no hover state</span></td>
+          <td><code>docs/design/CLASSIC_PLATINUM_FIDELITY.md:210</code><br><span class="upstream">AI System 6 owner ruling: Platinum carries no hover state</span></td>
         </tr>
 <tr>
           <td>System 6</td>
@@ -562,9 +574,9 @@
         </tr>
 <tr>
           <td>System 6</td>
-          <td>Checked draws an X from corner to corner</td>
-          <td><span class="status status-inferred">Inferred</span></td>
-          <td><code>not captured (the Locked box was unchecked)</code><br><span class="upstream">System 6 check box</span></td>
+          <td>Checked draws an X from corner to corner of the box</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame get-info-checked (Locked)</code><br><span class="upstream">the art is system.css's checkmark.svg (MIT), which matches</span></td>
         </tr>
 <tr>
           <td>System 6</td>
@@ -737,22 +749,16 @@
       </dl>
       
       <details class="evidence-details">
-        <summary>Evidence (5)</summary>
+        <summary>Evidence (4)</summary>
       <table class="evidence">
         <caption>Where each value comes from</caption>
         <thead><tr><th scope="col">Era</th><th scope="col">Value</th><th scope="col">Status</th><th scope="col">Source</th></tr></thead>
         <tbody>
 <tr>
           <td>System 6</td>
-          <td>A box with a 1px drop shadow</td>
-          <td><span class="status status-inferred">Inferred</span></td>
-          <td><code>not measured</code><br><span class="upstream">System 6 pop-up menu CDEF</span></td>
-        </tr>
-<tr>
-          <td>System 6</td>
-          <td>The down triangle</td>
-          <td><span class="status status-adapted">Adapted</span></td>
-          <td><code>drawn for clio.css</code><br><span class="upstream">a System 7 convention, kept so the control reads as a menu</span></td>
+          <td>An 18px rectangle with a 1px frame and a 1px drop shadow and no arrow; the shadow is what marks it as a menu; held, it inverts</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frames save-dialog and popup-held (Standard File folder menu)</code><br><span class="upstream">the down triangle arrived with System 7</span></td>
         </tr>
 <tr>
           <td>Platinum</td>
@@ -816,9 +822,9 @@
         <tbody>
 <tr>
           <td>System 6</td>
-          <td>White list, 1px ink frame, 16px rows, selection inverts</td>
-          <td><span class="status status-inferred">Inferred</span></td>
-          <td><code>not measured</code><br><span class="upstream">System 6 Standard File dialog</span></td>
+          <td>White list, 1px ink frame, 16px rows; a selected row inverts across the whole list width</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frames save-dialog and list-selected (Standard File)</code><br><span class="upstream">System 6.0.8 TeachText Save As</span></td>
         </tr>
 <tr>
           <td>Platinum</td>
@@ -892,9 +898,9 @@
         </tr>
 <tr>
           <td>System 6</td>
-          <td>Left and right arrows are the up and down arrows turned</td>
-          <td><span class="status status-inferred">Inferred</span></td>
-          <td><code>tooling/s6-art.py</code><br><span class="upstream">the horizontal arrows were captured only partly</span></td>
+          <td>Left and right arrows: the up arrow turned, apex in the box's first column, tip in its last</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame hd-window (horizontal scroll bar)</code><br><span class="upstream">redrawn as pixels in tooling/s6-art.py</span></td>
         </tr>
 <tr>
           <td>System 6</td>
@@ -980,7 +986,7 @@
           <td>System 6</td>
           <td>Plain box: 1px ink frame and a 2px drop shadow</td>
           <td><span class="status status-inferred">Inferred</span></td>
-          <td><code>not measured</code><br><span class="upstream">altDBoxProc</span></td>
+          <td><code>not measured</code><br><span class="upstream">altDBoxProc; none of the 6.0.8 Finder and TeachText dialogs opened for capture (alerts, Standard File, About the Finder) uses it</span></td>
         </tr>
 <tr>
           <td>Both eras</td>
@@ -1032,9 +1038,9 @@
         <tbody>
 <tr>
           <td>System 6</td>
-          <td>1px ink frame with the legend on paper</td>
-          <td><span class="status status-inferred">Inferred</span></td>
-          <td><code>not measured</code><br><span class="upstream">System 6 control panels</span></td>
+          <td>System 6 had no group box; clio.css draws a 1px ink frame with the legend on paper</td>
+          <td><span class="status status-adapted">Adapted</span></td>
+          <td><code>clio.css</code><br><span class="upstream">Control Panel divides its panes with plain 1px rules (clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame control-panel)</span></td>
         </tr>
 <tr>
           <td>Platinum</td>
@@ -1080,9 +1086,9 @@
         <tbody>
 <tr>
           <td>System 6</td>
-          <td>1px ink frame, ink fill</td>
-          <td><span class="status status-inferred">Inferred</span></td>
-          <td><code>not measured</code><br><span class="upstream">System 6 Finder copy progress</span></td>
+          <td>12px tall, 1px ink frame, white track, fill in QuickDraw dkGray (one white dot in four)</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame copy-progress (Finder duplicating System Folder)</code><br><span class="upstream">redrawn as a pattern tile in tooling/s6-art.py</span></td>
         </tr>
 <tr>
           <td>Platinum</td>
@@ -1315,7 +1321,7 @@
   </div>
 
   <footer>
-    <p>clio.css 0.2.0 · MIT · Not affiliated with or endorsed by Apple Inc. Macintosh, Mac OS and Chicago are trademarks of Apple Inc., named here only to describe the eras recreated.</p>
+    <p>clio.css 0.2.1 · MIT · Not affiliated with or endorsed by Apple Inc. Macintosh, Mac OS and Chicago are trademarks of Apple Inc., named here only to describe the eras recreated.</p>
   </footer>
 
   <script>

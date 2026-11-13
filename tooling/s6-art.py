@@ -34,15 +34,17 @@ def fill_of(outline):
     return pts
 up_solid = fill_of(up_outline) | {(x, 7) for x in range(0, 13)}
 def flip_v(p): return {(x, 13 - y) for x, y in p}
-def rot_left(p): return {(y, x) for x, y in p}           # up -> left (transpose)
-def rot_right(p): return {(13 - y, x) for x, y in p}     # down -> right
+# Measured: the left arrow is the up arrow transposed and moved 1px left
+# (apex in column 0); the right arrow mirrors it (tip in column 13).
+def rot_left(p): return {(y - 1, x) for x, y in p}
+def rot_right(p): return {(13 - (y - 1), x) for x, y in p}
 arrows = {
     "up": up_outline, "down": flip_v(up_outline),
-    "left": rot_left(up_outline), "right": rot_right(flip_v(up_outline)),
+    "left": rot_left(up_outline), "right": rot_right(up_outline),
 }
 solids = {
     "up": up_solid, "down": flip_v(up_solid),
-    "left": rot_left(up_solid), "right": rot_right(flip_v(up_solid)),
+    "left": rot_left(up_solid), "right": rot_right(up_solid),
 }
 out = []
 for k in ("up", "down", "left", "right"):
@@ -63,6 +65,11 @@ small = square(2, 2, 7); big = square(4, 4, 9)
 small_inside = {(x, y) for x in range(3, 8) for y in range(3, 8)}
 grow_ink = small | (big - small_inside)
 out.append(("s6-grow", svg(14, 14, [("#000", grow_ink)])))
+
+# Progress fill: QuickDraw dkGray ($DD $77), one white dot in four.
+# Phase as the Finder bar shows it from the fill's first pixel: white at x=1 on
+# the first row and x=3 on the second.
+out.append(("s6-dkgray", svg(4, 2, [("#000", {(0, 0), (2, 0), (3, 0), (0, 1), (1, 1), (2, 1)}), ("#fff", {(1, 0), (3, 1)})])))
 
 # Menu check mark (Chicago check glyph, 9x8).
 check = {(8, 0), (7, 1), (8, 1), (6, 2), (7, 2), (5, 3), (6, 3), (0, 4), (4, 4), (5, 4), (0, 5), (1, 5), (3, 5), (4, 5), (1, 6), (2, 6), (3, 6), (2, 7)}

@@ -6,6 +6,7 @@
   :root,
   [data-era] {
     --clio-control-height: 36px;
+    --clio-popup-height: 36px;
     --clio-field-height: 40px;
     --clio-menubar-height: 32px;
     --clio-menu-item-height: 32px;

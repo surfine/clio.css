@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.2.1 — 2026-11-13
+
+The rest of System 6, measured from System 6.0.8 in Infinite Mac.
+
+- Pop-up menus: an 18px box with a 1px frame and shadow and no arrow (the triangle was a
+  System 7 addition); held, it inverts.
+- Progress bar fill: QuickDraw dkGray, not solid black.
+- Push-button corners: 4.5px, which steps 3, 1, 1 pixels like the real ones.
+- Left and right scroll arrows redrawn from the real pixels (1px left of a plain rotation).
+- Confirmed: checked X, pressed button inverts, hover changes nothing, list selection
+  inverts the full row, disabled buttons keep a solid frame.
+- Group box is now labelled adapted: System 6 had none.
+- capture:system6 takes 14 frames and checks its selections; the pixel check has 15
+  System 6 specimens. Evidence: 57 of 78 rows measured.
+
 ## 0.2.0 — 2026-11-13
 
 System 6 measured from System 6.0.8 running in Infinite Mac (canvas read 1:1).

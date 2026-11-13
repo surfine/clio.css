@@ -22,7 +22,7 @@ npm install clio.css
 ```
 
 ```html
-<link rel="stylesheet" href="https://unpkg.com/clio.css@0.2.0/dist/clio.css">
+<link rel="stylesheet" href="https://unpkg.com/clio.css@0.2.1/dist/clio.css">
 ```
 
 | File | What it draws |
@@ -102,7 +102,8 @@ rows are **measured** from real pixels, 13 are still **inferred** and say so.
 
 | Specimen | Pixels identical to the real screen |
 | --- | ---: |
-| System 6 check box, radio buttons, scroll arrow, grow box, menu separator | 100% |
+| System 6 check box (on and off), radio buttons, all four scroll arrows, grow box, progress fill, menu separator | 100% |
+| System 6 pressed and hovered button, pop-up menu | outline 100%; label differs |
 | System 6 default OK button | 96.7% |
 | System 6 title bar | 96.3% |
 | Platinum title bar | 94.3% |
