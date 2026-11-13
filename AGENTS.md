@@ -25,14 +25,20 @@ For AI coding agents using or changing this repository.
   licensed art or fonts. An unmeasured value is never labelled measured.
 - No Apple fonts, logos or icon files, and never ship a screenshot or a crop of one.
   Control art (arrows, boxes, lamps, tabs) may be a pixel-level reconstruction: an SVG
-  redrawn from measured pixels by a script in `tooling/` (see `tooling/s6-art.py`,
-  `tooling/tab-art.py`). Name the capture it was measured from in its evidence row.
+  or palette PNG redrawn from measured pixels by a script in `tooling/` (see
+  `tooling/s6-art.py`, `tooling/tab-art.py`, `tooling/db-art.py`). Name the capture or
+  resource it was measured from in its evidence row. Large textures and illustrations
+  (Drawing Board's paper and sketch lines) are not reproduced: use the dominant measured
+  colour and label it `adapted`.
   Third-party art needs a licence entry in `THIRD-PARTY.md`.
 - Scope (owner decision, 2026-11-13): eras that can be measured in an emulator —
-  System 6, System 7, Platinum, Mac OS X 10.0–10.4 (Aqua to Tiger), NeXTSTEP. Order:
-  System 7 next, then Aqua. Launch posts (awesome lists, Show HN) wait for Aqua.
-- Tokens live on `:root, [data-era="system6"]` (01-tokens.css) and
-  `[data-era="platinum"]` (90-platinum.css). A token that reads another token is
+  System 6, System 7, Drawing Board (Mac OS 8.5b6, as "System 8"), Platinum (as
+  "System 9"), Mac OS X 10.0–10.4 (Aqua to Tiger), NeXTSTEP. Order: Platinum re-measured
+  from Mac OS 9 next, then Aqua. Launch posts (awesome lists, Show HN) wait for Aqua.
+- Tokens live on `:root, [data-era="system6"]` (01-tokens.css),
+  `[data-era="system7"]` (80-system7.css), `:is([data-era="platinum"],
+  [data-era="drawingboard"])` (90-platinum.css, shared: both are Appearance Manager
+  themes) and `[data-era="drawingboard"]` (92-drawingboard.css, which overrides). A token that reads another token is
   resolved where it is declared, so an era that changes `--clio-paper` must re-declare
   every token built from it.
 - Motion: none today. If added, animate `transform`/`opacity` only and honour

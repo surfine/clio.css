@@ -57,6 +57,34 @@ Reference: System 7.5.3 running in Infinite Mac, the 800×600 colour canvas read
 | s7-menu-separator | 100×16 | 100.0% | 0.0% | 0 |
 | s7-default-ok | 67×28 | 93.8% | 5.1% | 4.53 |
 
+## Mac OS 8.5 Drawing Board
+
+Reference: Mac OS 8.5 with the 8.5b6 Drawing Board theme installed, running in Infinite Mac,
+the 800×600 colour canvas read 1:1 (`npm run capture:drawingboard`), compared in colour.
+
+| Specimen | Size | exact | off | mean |
+| --- | --- | ---: | ---: | ---: |
+| db-close-box | 11×11 | 100.0% | 0.0% | 0 |
+| db-collapse-box | 11×11 | 100.0% | 0.0% | 0.75 |
+| db-titlebar-left | 40×26 | 61.7% | 3.0% | 5.85 |
+| db-titlebar-right | 40×26 | 58.9% | 3.0% | 6 |
+| db-popup-end | 40×20 | 90.0% | 5.1% | 4.46 |
+| db-menubar | 200×22 | 63.8% | 1.2% | 5.78 |
+| db-button-end | 16×21 | 74.7% | 12.8% | 13.88 |
+| db-scroll-start | 40×16 | 68.0% | 14.8% | 17.56 |
+| db-scroll-track | 100×16 | 83.4% | 7.4% | 7.54 |
+| db-default-button | 16×24 | 78.4% | 2.9% | 5.22 |
+| db-alert-corner | 20×12 | 62.9% | 20.0% | 16.26 |
+| db-alert-shadow | 14×12 | 78.6% | 8.9% | 10.44 |
+| db-checkbox-on | 14×11 | 100.0% | 0.0% | 0 |
+| db-checkbox-off | 14×11 | 100.0% | 0.0% | 0 |
+| db-checkbox-disabled | 14×11 | 89.0% | 0.0% | 0.69 |
+| db-radio-on | 16×12 | 100.0% | 0.0% | 0 |
+| db-radio-off | 16×12 | 100.0% | 0.0% | 0 |
+| db-field-corner | 12×25 | 80.7% | 7.3% | 18.44 |
+| db-menu-underline | 124×3 | 62.4% | 21.5% | 15.86 |
+| db-menu-separator | 100×9 | 48.2% | 19.3% | 14.7 |
+
 ## Mac OS 9 Platinum
 
 Reference: GUIdebook Mac OS 9.0 captures, cropped by AI System 6 (`AIS6_DIR`).
@@ -75,6 +103,10 @@ Reference: GUIdebook Mac OS 9.0 captures, cropped by AI System 6 (`AIS6_DIR`).
 
 - System 6: text is drawn in Clio Sans '84, Chicago 12 rebuilt from the emulator, so labels
   match too. The pressed and hovered button frames still contain the mouse pointer.
+- Drawing Board: control parts are the theme's own pixmaps and match exactly; frames,
+  bars and fields are flat colours where the theme draws paper grain, sketch lines and a
+  pencil line whose shade drifts, so those specimens sit at 60–90%. The scroll-start and
+  menu-underline references also contain the mouse pointer.
 - Platinum labels and titles: almost every off pixel is text. Charcoal is Apple's and is
   not shipped; clio.css draws Asap (OFL). On a Mac that has Charcoal, the stack uses it.
 - Platinum: a few corner pixels of the default ring, the right edge of the inactive frame and

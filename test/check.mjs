@@ -12,15 +12,16 @@ let checks = 0;
 const ok = (cond, m) => { checks++; if (!cond) fail(m); };
 
 // 1. Outputs exist.
-const outputs = ["clio.css", "clio.min.css", "clio.system6.css", "clio.system6.min.css", "clio.system7.css", "clio.system7.min.css", "clio.platinum.css", "clio.platinum.min.css", "components.json", "fonts/ChicagoFLF.woff2", "fonts/Asap-Variable.woff2", "fonts/OFL-Asap.txt"];
+const outputs = ["clio.css", "clio.min.css", "clio.system6.css", "clio.system6.min.css", "clio.system7.css", "clio.system7.min.css", "clio.platinum.css", "clio.platinum.min.css", "clio.drawingboard.css", "clio.drawingboard.min.css", "components.json", "fonts/ChicagoFLF.woff2", "fonts/Asap-Variable.woff2", "fonts/OFL-Asap.txt"];
 for (const f of outputs) ok(existsSync(join(root, "dist", f)), `missing dist/${f}`);
 
 const css = read("dist/clio.css");
 const s6 = read("dist/clio.system6.css");
 const pt = read("dist/clio.platinum.css");
+const db = read("dist/clio.drawingboard.css");
 
 // 2. Braces balance (outside strings) in every build.
-for (const [name, text] of [["clio.css", css], ["clio.system6.css", s6], ["clio.platinum.css", pt], ["clio.min.css", read("dist/clio.min.css")]]) {
+for (const [name, text] of [["clio.css", css], ["clio.system6.css", s6], ["clio.platinum.css", pt], ["clio.drawingboard.css", db], ["clio.min.css", read("dist/clio.min.css")]]) {
   const stripped = text.replace(/\/\*[\s\S]*?\*\//g, "").replace(/"(?:[^"\\]|\\.)*"/g, '""');
   let depth = 0, bad = false;
   for (const ch of stripped) { if (ch === "{") depth++; if (ch === "}") depth--; if (depth < 0) bad = true; }
@@ -39,16 +40,20 @@ for (const v of optional) ok(noComments.includes(`var(${v},`), `${v} is optional
 const strip = (t) => t.replace(/\/\*[\s\S]*?\*\//g, "");
 ok(!strip(s6).includes('data-era="platinum"') && !strip(s6).includes('data-era="system7"'), "clio.system6.css contains other eras' rules");
 ok(!strip(pt).includes('[data-era="platinum"]'), "clio.platinum.css still scoped to data-era");
+ok(!strip(pt).includes('data-era="drawingboard"'), "clio.platinum.css contains Drawing Board rules");
+ok(!strip(db).includes('[data-era="drawingboard"]') && !strip(db).includes('[data-era="platinum"]'), "clio.drawingboard.css still scoped to data-era");
 
-// 5. No external or Apple assets: url() is a data: URI or a bundled font.
+// 5. No external assets: url() is a data: URI or a bundled font. PNG data URIs
+//    are allowed only for Drawing Board art (--clio-art-db-*), redrawn by tooling/db-art.py.
 for (const m of noComments.matchAll(/url\(\s*["']?([^"')]+)/g)) {
   const u = m[1];
-  ok(u.startsWith("data:image/svg+xml,") || /^fonts\/(ChicagoFLF\.woff2?|Asap-Variable\.woff2|ClioSans84\.woff2|ClioText84\.woff2|ClioText84-9\.woff2)$/.test(u), `unexpected url(): ${u.slice(0, 60)}`);
+  const png = u.startsWith("data:image/png;base64,") && /--clio-art-db-[\w-]+:\s*$/.test(noComments.slice(Math.max(0, m.index - 60), m.index));
+  ok(u.startsWith("data:image/svg+xml,") || png || /^fonts\/(ChicagoFLF\.woff2?|Asap-Variable\.woff2|ClioSans84\.woff2|ClioText84\.woff2|ClioText84-9\.woff2)$/.test(u), `unexpected url(): ${u.slice(0, 60)}`);
 }
 
 // 6. Component index: every component is documented, evidenced and styled.
 const allowed = new Set(["measured", "inferred", "adapted", "third-party"]);
-const eras = new Set(["system6", "system7", "platinum", "both"]);
+const eras = new Set(["system6", "system7", "drawingboard", "platinum", "both"]);
 const ids = new Set();
 for (const c of components) {
   ok(!ids.has(c.id), `duplicate component id ${c.id}`); ids.add(c.id);
@@ -105,7 +110,7 @@ ok(read("docs/llms-full.txt").includes("```css"), "llms-full.txt: stylesheet mis
 // 10. Package.
 const pkg = JSON.parse(read("package.json"));
 for (const [k, v] of Object.entries(pkg.exports)) if (!v.includes("*")) ok(existsSync(join(root, v)), `exports ${k} -> ${v} missing`);
-ok(statSync(join(root, "dist/clio.min.css")).size < 96000, "clio.min.css grew past 96 KB");
+ok(statSync(join(root, "dist/clio.min.css")).size < 116000, "clio.min.css grew past 116 KB");
 
 if (failures.length) {
   console.error(`FAIL ${failures.length} of ${checks} checks`);
