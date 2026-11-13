@@ -31,7 +31,7 @@ the files in `dist/art/drawingboard/`.
 
 ## Fonts
 
-### Clio Sans '84, Clio Text '84 and Clio Sans '97 (`dist/fonts/ClioSans84.woff2`, `ClioText84.woff2`, `ClioText84-9.woff2`, `ClioSans97.woff2`, `ClioSans97Display.woff2`)
+### Clio Sans '84, Clio Text '84 and Clio Sans '97 (`dist/fonts/ClioSans84.woff2`, `ClioText84.woff2`, `ClioText84-9.woff2`, `ClioSans97.woff2`, `ClioSans97Title.woff2`, `ClioSans97Exact.woff2`, `ClioSans97TitleExact.woff2`, `ClioSans97Display.woff2`)
 
 Pixel reconstructions of Chicago 12 (Clio Sans '84), Geneva 12 (Clio Text '84) and
 Geneva 9 (Clio Text '84 9), Macintosh system fonts designed by Susan Kare for Apple
@@ -41,7 +41,8 @@ glyph from System 6.0.8 or Mac OS 9.0 running in an emulator (`npm run capture:k
 wrote the bitmaps to `fonts-src/*.txt` and built the fonts from them
 (`npm run build:font`). Clio Sans '97 Display is Charcoal's outlines traced from
 Mac OS 9.0 drawing every character at 72 points (`npm run capture:charcoal-large`,
-`tooling/trace-outline.py`). No Apple font file was copied.
+`tooling/trace-outline.py`). The Exact variants carry the same glyphs with each
+antialiasing level in its own palette entry. No Apple font file was copied.
 
 They are not original designs and are not presented as such: the letterforms are
 Apple's. They ship under clio.css's MIT licence on the basis that, in the United States, typeface

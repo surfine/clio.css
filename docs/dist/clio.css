@@ -44,6 +44,168 @@
   font-display: swap;
 }
 
+/* Clio Sans '97 Exact and Clio Sans '97 Title Exact: the same glyphs with
+   each antialiasing level painted from a palette entry, so the palettes below
+   give, for clio.css's own title and button colours, the very pixels Mac OS
+   blends ((fg * a + bg * (255 - a)) >> 8). They ignore the text colour: a
+   page that recolours a title or a button label also sets --clio-font-window-title
+   or --clio-font-button back to a stack without "Exact", and gets Clio Sans
+   '97 in its colour, within one level of the real screen. */
+@font-face {
+  font-family: "Clio Sans '97 Exact";
+  src: url("fonts/ClioSans97Exact.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Clio Sans '97 Title Exact";
+  src: url("fonts/ClioSans97TitleExact.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+/* Written by tooling/aa-palettes.py. */
+@font-palette-values --clio-aa-p9-title {
+  font-family: "Clio Sans '97 Title Exact";
+  override-colors:
+    0 #bebebe,
+    1 #b0b0b0,
+    2 #a2a2a2,
+    3 #959595,
+    4 #878787,
+    5 #7a7a7a,
+    6 #6c6c6c,
+    7 #5f5f5f,
+    8 #515151,
+    9 #444444,
+    10 #363636,
+    11 #282828,
+    12 #1b1b1b,
+    13 #0d0d0d,
+    14 #000000;
+}
+
+@font-palette-values --clio-aa-p9-title-inactive {
+  font-family: "Clio Sans '97 Title Exact";
+  override-colors:
+    0 #c5c5c5,
+    1 #bfbfbf,
+    2 #bababa,
+    3 #b4b4b4,
+    4 #aeaeae,
+    5 #a9a9a9,
+    6 #a3a3a3,
+    7 #9e9e9e,
+    8 #989898,
+    9 #929292,
+    10 #8d8d8d,
+    11 #878787,
+    12 #818181,
+    13 #7c7c7c,
+    14 #777777;
+}
+
+@font-palette-values --clio-aa-p9-button {
+  font-family: "Clio Sans '97 Exact";
+  override-colors:
+    0 #cecece,
+    1 #bfbfbf,
+    2 #b0b0b0,
+    3 #a2a2a2,
+    4 #939393,
+    5 #848484,
+    6 #757575,
+    7 #676767,
+    8 #585858,
+    9 #494949,
+    10 #3a3a3a,
+    11 #2c2c2c,
+    12 #1d1d1d,
+    13 #0e0e0e,
+    14 #000000;
+}
+
+@font-palette-values --clio-aa-p9-button-held {
+  font-family: "Clio Sans '97 Exact";
+  override-colors:
+    0 #707070,
+    1 #7a7a7a,
+    2 #848484,
+    3 #8e8e8e,
+    4 #999999,
+    5 #a3a3a3,
+    6 #adadad,
+    7 #b7b7b7,
+    8 #c1c1c1,
+    9 #cbcbcb,
+    10 #d6d6d6,
+    11 #e0e0e0,
+    12 #eaeaea,
+    13 #f4f4f4,
+    14 #ffffff;
+}
+
+@font-palette-values --clio-aa-p9-button-disabled {
+  font-family: "Clio Sans '97 Exact";
+  override-colors:
+    0 #d5d5d5,
+    1 #cecece,
+    2 #c7c7c7,
+    3 #c1c1c1,
+    4 #bababa,
+    5 #b3b3b3,
+    6 #acacac,
+    7 #a5a5a5,
+    8 #9f9f9f,
+    9 #989898,
+    10 #919191,
+    11 #8a8a8a,
+    12 #848484,
+    13 #7d7d7d,
+    14 #777777;
+}
+
+@font-palette-values --clio-aa-db-button {
+  font-family: "Clio Sans '97 Exact";
+  override-colors:
+    0 #c3bcac,
+    1 #b9b2a3,
+    2 #aea89a,
+    3 #a49e91,
+    4 #999488,
+    5 #8f8a80,
+    6 #848077,
+    7 #7a766e,
+    8 #6f6c65,
+    9 #65625d,
+    10 #5a5854,
+    11 #504e4b,
+    12 #454442,
+    13 #3b3a39,
+    14 #313131;
+}
+
+@font-palette-values --clio-aa-db-button-disabled {
+  font-family: "Clio Sans '97 Exact";
+  override-colors:
+    0 #cac2b2,
+    1 #c6bfaf,
+    2 #c3bcad,
+    3 #c0b9ab,
+    4 #bdb6a9,
+    5 #bab3a7,
+    6 #b7b0a4,
+    7 #b4ada2,
+    8 #b1aaa0,
+    9 #ada89e,
+    10 #aaa59c,
+    11 #a7a299,
+    12 #a49f97,
+    13 #a19c95,
+    14 #9c9c94;
+}
+
 /* Clio Sans '97 Display: Charcoal's outlines, traced from Mac OS 9.0 drawing it
    at 72 points (fonts/ClioSans97Display.woff2, tooling/trace-outline.py), for
    every size that is not 12px or a multiple of it. */
@@ -1987,7 +2149,8 @@
      fallback; Geneva for text on a Mac. */
   --clio-font-chrome: Charcoal, "Charcoal CY", "Clio Sans '97", "Clio Asap", Geneva, "Helvetica Neue", Arial, sans-serif;
   --clio-font-display: Charcoal, "Charcoal CY", "Clio Sans '97 Display", "Clio Asap", "Helvetica Neue", Arial, sans-serif;
-  --clio-font-window-title: Charcoal, "Charcoal CY", "Clio Sans '97 Title", "Clio Sans '97", "Clio Asap", Geneva, "Helvetica Neue", Arial, sans-serif;
+  --clio-font-window-title: Charcoal, "Charcoal CY", "Clio Sans '97 Title Exact", "Clio Sans '97 Title", "Clio Sans '97", "Clio Asap", Geneva, "Helvetica Neue", Arial, sans-serif;
+  --clio-font-button: Charcoal, "Charcoal CY", "Clio Sans '97 Exact", "Clio Sans '97", "Clio Asap", Geneva, "Helvetica Neue", Arial, sans-serif;
   --clio-font-text: Geneva, "Clio Asap", "Helvetica Neue", Arial, sans-serif;
   --clio-font-size: 12px;
   --clio-font-smoothing: none;
@@ -2621,6 +2784,30 @@
   content: none;
 }
 
+/* ---- Antialiasing as Mac OS blends it -------------------------------------
+   Window titles and push button labels in their own colours on their own
+   backgrounds take the exact palettes (src/00-fonts.css). */
+:is([data-era="platinum"], [data-era="drawingboard"]) .title-bar > :is(.title, h1, h2, h3) {
+  font-palette: --clio-aa-p9-title;
+}
+
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(.window.inactive > .title-bar, .inactive-title-bar) > :is(.title, h1, h2, h3) {
+  font-palette: --clio-aa-p9-title-inactive;
+}
+
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(button, .btn, .btn-default, input[type="button"], input[type="submit"], input[type="reset"]):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *) {
+  font-family: var(--clio-font-button);
+  font-palette: --clio-aa-p9-button;
+}
+
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(button, .btn, .btn-default, input[type="button"], input[type="submit"], input[type="reset"]):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *):not(:disabled, .disabled):is(:active, .active) {
+  font-palette: --clio-aa-p9-button-held;
+}
+
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(button, .btn, .btn-default, input[type="button"], input[type="submit"], input[type="reset"]):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *):is(:disabled, .disabled) {
+  font-palette: --clio-aa-p9-button-disabled;
+}
+
 /* Mac OS 8.5 "Drawing Board" (the beta theme Apple shipped in 8.5b6 and
    withdrew). Applies inside any element with data-era="drawingboard"; it shares
    the Platinum layer's structure (both are Appearance Manager themes) and
@@ -2634,6 +2821,9 @@
    each found 1:1 in the capture. The stylesheet loads them from art/ beside
    itself, as it loads fonts/. See EVIDENCE.md. */
 [data-era="drawingboard"] {
+  /* Titles sit on the textured title bar, where no palette can know the
+     background: they keep Clio Sans '97 Title in the text colour. */
+  --clio-font-window-title: Charcoal, "Charcoal CY", "Clio Sans '97 Title", "Clio Sans '97", "Clio Asap", Geneva, "Helvetica Neue", Arial, sans-serif;
   /* Where a 128px theme pattern starts. Mac OS sometimes starts one half a
      tile (64px) earlier, depending on where the window sits on screen; a page
      matching a particular screen can set 64px on that window or control. */
@@ -3504,6 +3694,17 @@
 
 [data-era="drawingboard"] fieldset > legend {
   margin-left: 0;
+}
+
+/* ---- Antialiasing as Mac OS blends it: #333 labels on #cec6b5 (their solid
+   pixels #313131, from a 16-bit buffer); grey when disabled. */
+[data-era="drawingboard"] :is(button, .btn, .btn-default, input[type="button"], input[type="submit"], input[type="reset"]):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *),
+[data-era="drawingboard"] :is(button, .btn, .btn-default, input[type="button"], input[type="submit"], input[type="reset"]):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *):not(:disabled, .disabled):is(:active, .active) {
+  font-palette: --clio-aa-db-button;
+}
+
+[data-era="drawingboard"] :is(button, .btn, .btn-default, input[type="button"], input[type="submit"], input[type="reset"]):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *):is(:disabled, .disabled) {
+  font-palette: --clio-aa-db-button-disabled;
 }
 
 /* Adaptations the historical machines never needed. Historical sizes are

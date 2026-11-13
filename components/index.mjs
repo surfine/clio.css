@@ -489,6 +489,7 @@ export const components = [
       { era: "platinum", claim: "Palette #fff #ddd #ccc #999 #777 #000, accent #333399, lavender #ccccff", status: "measured", source: "tooling/classic-platinum-fidelity-contract.json (platinum.palette)", upstream: "Mac OS 9 captures" },
       { era: "system6", claim: "Disabled text (menu items, button and control labels) through the screen-aligned 50% gray pattern", status: "measured", source: "clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame file-menu", upstream: "--clio-disabled-dither: none gives solid #696969 (5.6:1 on white)" },
       { era: "drawingboard", claim: "Chrome text is #313131; titles and labels are Charcoal, as in Platinum", status: "measured", source: "clio.css capture, Mac OS 8.5 with the 8.5b6 Drawing Board theme in Infinite Mac (npm run capture:drawingboard), frame appearance", upstream: "tab and title text ink" },
+      { era: "both", claim: "Window titles and push button labels: each of Charcoal's 16 antialiasing levels takes the exact colour the real screen shows for that text colour on that background (Platinum titles on #ccc, buttons on #ddd, held buttons white on #666, disabled; Drawing Board buttons #333 on #cec6b5 with #313131 solid pixels), via Clio Sans '97 Exact palettes", status: "measured", source: "clio.css captures of Mac OS 9.0 and Mac OS 8.5 in Infinite Mac; tooling/aa-palettes.py", upstream: "Appearance title bar, Set Desktop normal and held, Save Theme…" },
     ]
   }
 ];

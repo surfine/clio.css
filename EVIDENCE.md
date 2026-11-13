@@ -6,7 +6,7 @@ Every value in clio.css 0.9.0 has a row here. Sources are paths in the AI System
 
 | Status | Meaning | Rows |
 | --- | --- | ---: |
-| Measured | read from real pixels of the era | 117 |
+| Measured | read from real pixels of the era | 118 |
 | Inferred | reasoned from documentation or behaviour, not measured | 8 |
 | Adapted | a deliberate departure for the web (touch, focus, contrast) | 9 |
 | Third-party | art or font from a named, licensed project | 2 |
@@ -151,3 +151,4 @@ Pixel check: `npm run fidelity` renders the Platinum specimens and compares them
 | Type and tokens | Platinum | Palette #fff #ddd #ccc #999 #777 #000, accent #333399, lavender #ccccff | Measured | `tooling/classic-platinum-fidelity-contract.json (platinum.palette)` — Mac OS 9 captures |
 | Type and tokens | System 6 | Disabled text (menu items, button and control labels) through the screen-aligned 50% gray pattern | Measured | `clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame file-menu` — --clio-disabled-dither: none gives solid #696969 (5.6:1 on white) |
 | Type and tokens | Drawing Board | Chrome text is #313131; titles and labels are Charcoal, as in Platinum | Measured | `clio.css capture, Mac OS 8.5 with the 8.5b6 Drawing Board theme in Infinite Mac (npm run capture:drawingboard), frame appearance` — tab and title text ink |
+| Type and tokens | All eras | Window titles and push button labels: each of Charcoal's 16 antialiasing levels takes the exact colour the real screen shows for that text colour on that background (Platinum titles on #ccc, buttons on #ddd, held buttons white on #666, disabled; Drawing Board buttons #333 on #cec6b5 with #313131 solid pixels), via Clio Sans '97 Exact palettes | Measured | `clio.css captures of Mac OS 9.0 and Mac OS 8.5 in Infinite Mac; tooling/aa-palettes.py` — Appearance title bar, Set Desktop normal and held, Save Theme… |

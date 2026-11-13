@@ -27,7 +27,8 @@
      fallback; Geneva for text on a Mac. */
   --clio-font-chrome: Charcoal, "Charcoal CY", "Clio Sans '97", "Clio Asap", Geneva, "Helvetica Neue", Arial, sans-serif;
   --clio-font-display: Charcoal, "Charcoal CY", "Clio Sans '97 Display", "Clio Asap", "Helvetica Neue", Arial, sans-serif;
-  --clio-font-window-title: Charcoal, "Charcoal CY", "Clio Sans '97 Title", "Clio Sans '97", "Clio Asap", Geneva, "Helvetica Neue", Arial, sans-serif;
+  --clio-font-window-title: Charcoal, "Charcoal CY", "Clio Sans '97 Title Exact", "Clio Sans '97 Title", "Clio Sans '97", "Clio Asap", Geneva, "Helvetica Neue", Arial, sans-serif;
+  --clio-font-button: Charcoal, "Charcoal CY", "Clio Sans '97 Exact", "Clio Sans '97", "Clio Asap", Geneva, "Helvetica Neue", Arial, sans-serif;
   --clio-font-text: Geneva, "Clio Asap", "Helvetica Neue", Arial, sans-serif;
   --clio-font-size: 12px;
   --clio-font-smoothing: none;
@@ -659,4 +660,28 @@
 :is([data-era="platinum"], [data-era="drawingboard"]) .window.inactive > .title-bar > :is(.title, h1, h2, h3)::after,
 :is([data-era="platinum"], [data-era="drawingboard"]) .inactive-title-bar > :is(.title, h1, h2, h3)::after {
   content: none;
+}
+
+/* ---- Antialiasing as Mac OS blends it -------------------------------------
+   Window titles and push button labels in their own colours on their own
+   backgrounds take the exact palettes (src/00-fonts.css). */
+:is([data-era="platinum"], [data-era="drawingboard"]) .title-bar > :is(.title, h1, h2, h3) {
+  font-palette: --clio-aa-p9-title;
+}
+
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(.window.inactive > .title-bar, .inactive-title-bar) > :is(.title, h1, h2, h3) {
+  font-palette: --clio-aa-p9-title-inactive;
+}
+
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(button, .btn, .btn-default, input[type="button"], input[type="submit"], input[type="reset"]):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *) {
+  font-family: var(--clio-font-button);
+  font-palette: --clio-aa-p9-button;
+}
+
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(button, .btn, .btn-default, input[type="button"], input[type="submit"], input[type="reset"]):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *):not(:disabled, .disabled):is(:active, .active) {
+  font-palette: --clio-aa-p9-button-held;
+}
+
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(button, .btn, .btn-default, input[type="button"], input[type="submit"], input[type="reset"]):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *):is(:disabled, .disabled) {
+  font-palette: --clio-aa-p9-button-disabled;
 }

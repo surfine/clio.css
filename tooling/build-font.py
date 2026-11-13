@@ -20,6 +20,14 @@ FONTS = {  # source -> (output, family, PostScript name, what it rebuilds)
 }
 KEY = sys.argv[1] if len(sys.argv) > 1 else 'clio-sans-84'
 OUT_FILE, FAMILY, PS, ORIGIN = FONTS[KEY]
+# '--exact': the same glyphs with each coverage level painted from its own
+# palette entry instead of the text colour at an alpha, so a stylesheet can
+# give, for a known text colour on a known background, the very colours Mac OS
+# blends ((fg*a + bg*(255-a)) >> 8, a = 17 per level), which no alpha
+# compositing reproduces exactly. Palette 0 is black at those alphas.
+EXACT = '--exact' in sys.argv
+if EXACT:
+    OUT_FILE = OUT_FILE.replace('.woff2', 'Exact.woff2'); FAMILY += ' Exact'; PS = PS.replace('-Regular', 'Exact-Regular')
 SIZE = 9 if KEY.endswith('-9') else 12      # the pixel size the em is drawn for
 SRC = os.path.join(ROOT, 'fonts-src', KEY + '.txt')
 OUT = os.path.join(ROOT, 'fonts', OUT_FILE)
@@ -122,10 +130,16 @@ fb.setupHead(unitsPerEm=UPM)
 fb.font['head'].flags |= 1 << 3   # integer ppem scaling
 if layers:
     from fontTools.colorLib.builder import buildCOLR, buildCPAL
-    fb.font['COLR'] = buildCOLR({g: {'Format': 1, 'Layers': [
-        {'Format': 10, 'Glyph': ln, 'Paint': {'Format': 2, 'PaletteIndex': 0xFFFF, 'Alpha': a}} for ln, a in ls]}
-        for g, ls in layers.items()}, version=1)
-    fb.font['CPAL'] = buildCPAL([[(0.0, 0.0, 0.0, 1.0)]])
+    if EXACT:
+        fb.font['COLR'] = buildCOLR({g: {'Format': 1, 'Layers': [
+            {'Format': 10, 'Glyph': ln, 'Paint': {'Format': 2, 'PaletteIndex': round(a * 15) - 1, 'Alpha': 1.0}} for ln, a in ls]}
+            for g, ls in layers.items()}, version=1)
+        fb.font['CPAL'] = buildCPAL([[(0.0, 0.0, 0.0, k * 17 / 255) for k in range(1, 16)]])
+    else:
+        fb.font['COLR'] = buildCOLR({g: {'Format': 1, 'Layers': [
+            {'Format': 10, 'Glyph': ln, 'Paint': {'Format': 2, 'PaletteIndex': 0xFFFF, 'Alpha': a}} for ln, a in ls]}
+            for g, ls in layers.items()}, version=1)
+        fb.font['CPAL'] = buildCPAL([[(0.0, 0.0, 0.0, 1.0)]])
 fb.font.flavor = 'woff2'
 fb.save(OUT)
 print(OUT, os.path.getsize(OUT), 'bytes,', len(glyphs), 'glyphs')

@@ -2,9 +2,10 @@
 
 ## 0.9.0 — 2026-11-14
 
-Classic Mac OS at 100%: every pixel-check specimen of System 6, System 7, Drawing Board and
-Platinum now matches the real screen pixel for pixel (FIDELITY.md), with the few masks each
-specimen states (the mouse pointer, text clio.css does not draw, what lies behind).
+Classic Mac OS at 100%: all 90 pixel-check specimens of System 6, System 7, Drawing Board and
+Platinum are now identical to the real screen, pixel for pixel (FIDELITY.md gains a **same**
+column: identical pixels, no tolerance), with the masks each specimen states (the mouse
+pointer, text clio.css does not draw, what lies behind the control).
 
 **Drawing Board is drawn with the theme's own art.** The owner chose to ship it: the
 `pxm#` pictures and `ppat` patterns of Apple's 8.5b6 theme, re-encoded by `tooling/db-art.py`
@@ -25,7 +26,17 @@ into `dist/art/drawingboard/` (165 small PNGs, 57 KB) and placed as Mac OS place
   `--clio-db-phase: 64px` matches that case (README).
 - The stylesheets reference only art files; `clio.min.css` is 139 KB (was 143 KB).
 
-**Platinum**: the held push button, recaptured with the pointer clear of its corners.
+**Platinum**: the held push button, recaptured with the pointer clear of its corners, its
+frame and dark face cut from Mac OS 9.0.
+
+**Antialiasing as Mac OS blends it.** For a given text colour on a given background Mac OS
+turns each of Charcoal's 16 coverage levels into one exact colour, which browser alpha
+compositing misses by one step on some edge pixels. New **Clio Sans '97 Exact** and **Clio
+Sans '97 Title Exact** paint each level from a palette entry, and `@font-palette-values`
+(`tooling/aa-palettes.py`) give the levels read from the screens for Platinum window titles,
+Platinum push buttons (normal, held, disabled) and Drawing Board push buttons. A page that
+recolours those sets `--clio-font-window-title` or `--clio-font-button` to a stack without
+"Exact".
 
 ## 0.8.0 — 2026-11-14
 

@@ -75,7 +75,7 @@ the 800×600 colour canvas read 1:1 (`npm run capture:drawingboard`), compared i
 | db-window-bottom-right | 40×40 | 100.0% | 100.0% | 0.0% | 0 |
 | db-popup-end | 40×20 | 100.0% | 100.0% | 0.0% | 0 |
 | db-menubar | 200×22 | 100.0% | 100.0% | 0.0% | 0 |
-| db-button-whole | 103×21 | 96.9% | 100.0% | 0.0% | 0.02 |
+| db-button-whole | 103×21 | 100.0% | 100.0% | 0.0% | 0 |
 | db-button-end | 16×21 | 100.0% | 100.0% | 0.0% | 0 |
 | db-scroll-arrow | 16×16 | 100.0% | 100.0% | 0.0% | 0 |
 | db-scroll-thumb-start | 6×16 | 100.0% | 100.0% | 0.0% | 0 |
@@ -112,15 +112,15 @@ Reference: Mac OS 9.0 running in Infinite Mac, the 800×600 colour canvas read 1
 | p9-checkbox-off | 12×12 | 100.0% | 100.0% | 0.0% | 0 |
 | p9-radio-on | 12×12 | 100.0% | 100.0% | 0.0% | 0 |
 | p9-radio-off | 12×12 | 100.0% | 100.0% | 0.0% | 0 |
-| p9-titlebar | 477×22 | 99.5% | 100.0% | 0.0% | 0.01 |
+| p9-titlebar | 477×22 | 100.0% | 100.0% | 0.0% | 0 |
 | p9-titlebar-left | 30×22 | 100.0% | 100.0% | 0.0% | 0 |
 | p9-titlebar-right | 36×22 | 100.0% | 100.0% | 0.0% | 0 |
-| p9-button-end | 86×20 | 96.7% | 100.0% | 0.0% | 0.03 |
+| p9-button-end | 86×20 | 100.0% | 100.0% | 0.0% | 0 |
 | p9-popup-disabled | 34×20 | 100.0% | 100.0% | 0.0% | 0 |
 | p9-group-corner | 12×30 | 100.0% | 100.0% | 0.0% | 0 |
 | p9-menu-separator | 100×6 | 100.0% | 100.0% | 0.0% | 0 |
 | p9-popup-end | 24×20 | 100.0% | 100.0% | 0.0% | 0 |
-| p9-button-held | 86×20 | 95.5% | 100.0% | 0.0% | 0.05 |
+| p9-button-held | 86×20 | 100.0% | 100.0% | 0.0% | 0 |
 | p9-strip-start | 29×24 | 100.0% | 100.0% | 0.0% | 0 |
 | p9-strip-handle | 18×24 | 100.0% | 100.0% | 0.0% | 0 |
 | p9-strip-collapsed | 18×24 | 100.0% | 100.0% | 0.0% | 0 |
