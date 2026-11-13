@@ -43,13 +43,16 @@ ok(!strip(pt).includes('[data-era="platinum"]'), "clio.platinum.css still scoped
 ok(!strip(pt).includes('data-era="drawingboard"'), "clio.platinum.css contains Drawing Board rules");
 ok(!strip(db).includes('[data-era="drawingboard"]') && !strip(db).includes('[data-era="platinum"]'), "clio.drawingboard.css still scoped to data-era");
 
-// 5. No external assets: url() is a data: URI or a bundled font. PNG data URIs
-//    are allowed only for Drawing Board and Mac OS 9 art (--clio-art-db-*, --clio-art-p9-*),
-//    redrawn by tooling/db-art.py and tooling/p9-art.py.
+// 5. No external assets: url() is a data: URI, a bundled font, or Drawing Board
+//    theme art shipped beside the stylesheet (dist/art/drawingboard/, written by
+//    tooling/db-art.py and tooling/db-pens.py). PNG data URIs are allowed only for
+//    Mac OS 9 and frame art (--clio-art-p9-*, --clio-art-frame-*) and inside the
+//    SVG tiles of Drawing Board art; "%23p" is such a tile's own pattern reference.
 for (const m of noComments.matchAll(/url\(\s*["']?([^"')]+)/g)) {
   const u = m[1];
   const png = u.startsWith("data:image/png;base64,") && /--clio-art-(db|p9|s7|frame)-[\w-]+:\s*$/.test(noComments.slice(Math.max(0, m.index - 60), m.index));
-  ok(u.startsWith("data:image/svg+xml,") || png || /^fonts\/(ChicagoFLF\.woff2?|Asap-Variable\.woff2|ClioSans84\.woff2|ClioText84\.woff2|ClioText84-9\.woff2|ClioSans97\.woff2|ClioSans97Display\.woff2|ClioSans97Title\.woff2)$/.test(u), `unexpected url(): ${u.slice(0, 60)}`);
+  if (u.startsWith("art/")) ok(existsSync(join(root, "dist", u)), `missing art file dist/${u}`);
+  ok(u.startsWith("data:image/svg+xml,") || png || /^fonts\/(ChicagoFLF\.woff2?|Asap-Variable\.woff2|ClioSans84\.woff2|ClioText84\.woff2|ClioText84-9\.woff2|ClioSans97\.woff2|ClioSans97Display\.woff2|ClioSans97Title\.woff2)$/.test(u) || /^art\/drawingboard\/(pens\/|parts\/)?[a-z0-9-]+\.png$/.test(u) || /^%23\w+$/.test(u), `unexpected url(): ${u.slice(0, 60)}`);
 }
 
 // 6. Component index: every component is documented, evidenced and styled.

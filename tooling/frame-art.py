@@ -93,6 +93,8 @@ tiles = os.path.join(os.environ.get('AIS6_DIR', '/Users/aaron/AI System 6'), 'in
 tile = lambda n: Image.open(os.path.join(tiles, n + '-reference.png')).convert('RGB')
 appear = load('platinum9', 'appearance')
 frames['p9-button'] = nine(appear, 534, 369, 86, 20, 4, 6, 10, out_colour=(0xee, 0xee, 0xee))
+# Held: "Set Desktop" held with the pointer on its label, clear of the corners (frame button-held).
+frames['p9-button-held'] = nine(load('platinum9', 'button-held'), 534, 369, 86, 20, 4, 6, 10, out_colour=(0xee, 0xee, 0xee))
 ok = tile('default-ok')                      # 73x32; the button sits at (4, 7), 65x20
 frames['p9-ring'] = nine(ok, 1, 4, 71, 26, 6, 20, 13, hole=(3, 3, 65, 20), out_colour=G)
 frames['p9-button-disabled'] = nine(tile('button-disabled'), 0, 0, 80, 20, 4, 6, 10, out_colour=G)

@@ -13,7 +13,7 @@
   /* Push button, disabled button and default ring: the real pixel frames
      (tooling/frame-art.py: Mac OS 9.0 Appearance and GUIdebook's Mac OS 9.0). */
   --clio-button-frame: var(--clio-art-frame-p9-button);
-  --clio-button-frame-held: none;
+  --clio-button-frame-held: var(--clio-art-frame-p9-button-held);
   --clio-button-frame-disabled: var(--clio-art-frame-p9-button-disabled);
   --clio-ring-frame: var(--clio-art-frame-p9-ring);
   --clio-ring-frame-slice: 6;
@@ -113,13 +113,10 @@
   --clio-button-padding: 0 10px;
   --clio-button-min-width: 58px;
   --clio-button-weight: 700;
-  --clio-button-active-bg: #666666;
+  /* Held: the frame and its dark face cut from Mac OS 9.0 (frame-art.py). */
+  --clio-button-active-bg: transparent;
   --clio-button-active-fg: #ffffff;
-  --clio-button-active-shadow:
-    inset 1px 1px 0 #444444,
-    inset 2px 2px 0 #555555,
-    inset -1px -1px 0 #888888,
-    inset -2px -2px 0 #777777;
+  --clio-button-active-shadow: none;
   --clio-button-disabled-fg: #777777;
   --clio-button-disabled-border: 1px solid #888888;
 

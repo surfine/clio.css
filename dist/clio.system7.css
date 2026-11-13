@@ -1,4 +1,4 @@
-/*! clio.css 0.8.0 (System 7 default) | MIT | https://surfine.github.io/clio.css/
+/*! clio.css 0.9.0 (System 7 default) | MIT | https://surfine.github.io/clio.css/
  * Classic Mac OS interface CSS: System 6, System 7, Mac OS 8.5 Drawing Board and Mac OS 9 Platinum.
  * Measured values traced to AI System 6; see EVIDENCE.md.
  * Includes art from system.css (MIT) and pixel reconstructions of Apple control art; see THIRD-PARTY.md. */
@@ -384,6 +384,7 @@
   --clio-art-frame-s6-button-held: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJAQMAAADaX5RTAAAABlBMVEUAAAAAAAClZ7nPAAAAAXRSTlMAQObYZgAAAB1JREFUeJxjkGFgSmZgYmBg/N/IxABiMNSDSRkGACm1Aqb7EOVpAAAAAElFTkSuQmCC");
   --clio-art-frame-s6-ring: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPAQMAAAABGAcJAAAABlBMVEUAAAAAAAClZ7nPAAAAAXRSTlMAQObYZgAAADRJREFUeJxjYD/AIP+BSYGDsYaB5csahg9yTB8+MDEwgJCAAFPDPyaeBAb7H0wPfjCwHwAAEpMM/gNXK+MAAAAASUVORK5CYII=");
   --clio-art-frame-p9-button: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJBAMAAAASvxsjAAAAGFBMVEUAAAAAAAB3d3fd3d27u7uqqqoiIiL///+EaqngAAAAAXRSTlMAQObYZgAAADxJREFUeJxjYEgUTGBgYnyk9JCBMUWYYa8O03qGPXIbmBj+MDAwMIERY8pFhbN2jIyOD/7fZ/ov/96eAQBghg8JraaOFgAAAABJRU5ErkJggg==");
+  --clio-art-frame-p9-button-held: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJBAMAAAASvxsjAAAAGFBMVEUAAAAAAAB3d3dVVVVmZmYiIiKIiIhEREQ39d/AAAAAAXRSTlMAQObYZgAAAD9JREFUeJxjYAgUDGBgYVRT+8XAGC5zgJ+PUVxG8NErJgZGBgYGJgaGfwwMLA6vH7i8YmRUdfg9n+m/9ur3DAAxwg5nPuolSwAAAABJRU5ErkJggg==");
   --clio-art-frame-p9-ring: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAANBAMAAACAxflPAAAAG1BMVEUAAAAAAAB3d3fd3d3MzMy7u7uqqqoiIiKIiIhznn7oAAAAAXRSTlMAQObYZgAAAFpJREFUeJxjZGDnYmB7ycDCwKPAwPjzAwujgjEDg+x6xuLDrx6oOXEwCCcxMDAlCTAx/GMAISYGCEDQTGAOUyKLAoOKQgIjY6gAA9PO+4wMElwMDO8+MELNBwCaGBDQEM8mggAAAABJRU5ErkJggg==");
   --clio-art-frame-p9-button-disabled: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJAgMAAACd/+6DAAAACVBMVEUAAACIiIjd3d2RXqmqAAAAAXRSTlMAQObYZgAAACFJREFUeJxjYA1hYBINZWAKYHRgYmBgQMYMUisZGFhDGAAtsQJ9dgAT/gAAAABJRU5ErkJggg==");
   --clio-art-frame-p9-popup: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHBAMAAAA2fErgAAAAGFBMVEUAAAAAAAB3d3fd3d27u7uqqqoiIiL///+EaqngAAAAAXRSTlMAQObYZgAAACtJREFUeJxjYEhMYGBi5H/IwJh+klWbQYCBQYAl/OQnOwbGAEUGpv+C9gwAea0HTcaLsPwAAAAASUVORK5CYII=");

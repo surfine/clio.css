@@ -1,5 +1,32 @@
 # Changelog
 
+## 0.9.0 — 2026-11-14
+
+Classic Mac OS at 100%: every pixel-check specimen of System 6, System 7, Drawing Board and
+Platinum now matches the real screen pixel for pixel (FIDELITY.md), with the few masks each
+specimen states (the mouse pointer, text clio.css does not draw, what lies behind).
+
+**Drawing Board is drawn with the theme's own art.** The owner chose to ship it: the
+`pxm#` pictures and `ppat` patterns of Apple's 8.5b6 theme, re-encoded by `tooling/db-art.py`
+into `dist/art/drawingboard/` (165 small PNGs, 57 KB) and placed as Mac OS places them.
+
+- **Windows, alerts and modal dialogs**: the nine frame pictures round the outline, edges
+  tiled from their ends, on the theme's paper from the content's corner.
+- **Menu bar and menus**: the menu bar picture; menus on their own paper in a frame of
+  pattern pens with a 2px pencil shade; the chosen item's underline tiled, not stretched.
+- **Push buttons, default buttons, held buttons, pop-up menus and text fields**: Drawing
+  Board draws their pencil lines with pattern pens. `tooling/db-pens.py` finds which pattern
+  row draws each line and from where it is tiled (the control's last column and row; a held
+  button's foot from its second), and reads the few corner pixels the pens leave.
+- **List boxes and text fields** show what is behind them through the 1px inside their line.
+- **Scroll bars**: tracks ruled by pattern pens; the scroll box keeps 5 bits per channel,
+  as Mac OS draws it through a 16-bit buffer.
+- Mac OS sometimes starts a 128px pattern half a tile along, depending on screen position;
+  `--clio-db-phase: 64px` matches that case (README).
+- The stylesheets reference only art files; `clio.min.css` is 139 KB (was 143 KB).
+
+**Platinum**: the held push button, recaptured with the pointer clear of its corners.
+
 ## 0.8.0 — 2026-11-14
 
 Classic Mac OS debts paid before Mac OS X.
