@@ -1,0 +1,504 @@
+/* Mac OS 8/9 Platinum. Applies inside any element with data-era="platinum"
+   (put it on <html> for a whole page). clio.platinum.css is a build of this
+   same file with Platinum as the page default.
+   Values: AI System 6's Platinum tables, each tied to a Mac OS 9.0 capture
+   (GUIdebook, Infinite Mac). P-numbers in comments are AI System 6's patch
+   ids; see EVIDENCE.md. */
+[data-era="platinum"] {
+  --clio-ink: #000000;
+  --clio-paper: #dddddd;
+  --clio-face: #dddddd;
+  --clio-disabled: #6f6f6f;
+  --clio-selection-bg: #ccccff;
+  --clio-selection-fg: #000000;
+
+  /* Charcoal if the visitor has it; Geneva for text on a Mac; Asap (OFL) at
+     the widths AI System 6 measured against Charcoal everywhere else. */
+  --clio-font-chrome: Charcoal, "Charcoal CY", "Clio Asap", Geneva, "Helvetica Neue", Arial, sans-serif;
+  --clio-font-text: Geneva, "Clio Asap", "Helvetica Neue", Arial, sans-serif;
+  --clio-font-size: 12px;
+  --clio-font-size-small: 10px;
+  --clio-chrome-weight: 700;
+  --clio-font-stretch-text: 113%;
+  --clio-font-stretch-title: 123%;
+
+  --clio-border: 1px solid #000000;
+  --clio-control-height: 20px;
+  --clio-field-height: 22px;
+  --clio-focus-outline: 2px solid #6666cc;
+  --clio-focus-offset: 0px;
+
+  /* [I] Solid base of AI System 6's azul tile; the tile itself is not shipped. */
+  --clio-desktop: #4a71ab;
+
+  /* P14 window frame: black line, a raised 4px strip, black content line. */
+  --clio-window-bg: #cccccc;
+  --clio-pane-bg: #dddddd;
+  --clio-window-border: 1px solid #000000;
+  --clio-window-shadow:
+    1px 1px 0 #000000,
+    inset 1px 0 0 #ffffff,
+    inset 0 1px 0 #ffffff,
+    inset -1px 0 0 #999999,
+    inset 0 -1px 0 #999999;
+  /* AI System 6 pads 5px because its pane has no border; here the pane draws
+     the black content line itself, so the strip is 4px. */
+  --clio-window-padding: 2px 4px 4px;
+
+  /* Title bar: 19px, six white/#777 ridge pairs, covers behind the boxes. */
+  --clio-titlebar-height: 19px;
+  --clio-titlebar-margin: 0;
+  --clio-titlebar-padding: 1px 0;
+  --clio-titlebar-border: 1px solid #000000;
+  --clio-titlebar-row: 13px;
+  --clio-titlebar-slot: 16px;
+  --clio-titlebar-shade-slot: 16px;
+  --clio-shade-display: block;
+  --clio-titlebar-inactive-bg: #dddddd;
+  --clio-title-bg: #cccccc;
+  --clio-title-fg: #000000;
+  --clio-title-inactive-fg: #777777;
+  --clio-title-padding: 0 4px;
+  --clio-box-size: 11px;
+  --clio-box-inset: 0px;
+  --clio-box-isolation: 0px;
+
+  /* Menu bar and menus (P21, P24) */
+  --clio-menubar-height: 20px;
+  --clio-menubar-bg: #dddddd;
+  --clio-menubar-border: 1px solid #000000;
+  --clio-menubar-shadow: inset 0 1px 0 #ffffff, inset 0 -1px 0 #999999;
+  --clio-menubar-padding: 0 8px;
+  --clio-menu-title-padding: 0 10px;
+  --clio-menu-title-active-bg: #333399;
+  --clio-menu-title-active-fg: #ffffff;
+  --clio-menu-title-active-shadow: inset 0 1px 0 #6666cc, inset 0 -1px 0 #000088;
+  --clio-menu-bg: #dddddd;
+  --clio-menu-border: 1px solid #000000;
+  --clio-menu-border-top-width: 0;
+  --clio-menu-shadow: inset 1px 1px 0 #ffffff, inset -1px -1px 0 #999999, 1px 1px 0 #222222;
+  --clio-menu-item-height: 16px;
+  --clio-menu-item-padding: 0 10px 0 21px;
+  --clio-menu-item-weight: 600;
+  --clio-menu-item-active-bg: #333399;
+  --clio-menu-item-active-fg: #ffffff;
+  --clio-menu-item-active-shadow: inset 1px 0 0 #6666cc, inset -1px 0 0 #000088;
+  --clio-menu-separator:
+    linear-gradient(#888888, #888888) 0 3px / 100% 1px no-repeat,
+    linear-gradient(#ffffff, #ffffff) 0 4px / 100% 1px no-repeat;
+  --clio-menu-separator-height: 8px;
+
+  /* Push buttons: bevel, 3px corners (P29 pressed) */
+  --clio-button-bg: #dddddd;
+  --clio-button-fg: #000000;
+  --clio-button-border: 1px solid #000000;
+  --clio-button-radius: 3px;
+  --clio-button-shadow:
+    inset 1px 1px 0 #dddddd,
+    inset 2px 2px 0 #ffffff,
+    inset -1px -1px 0 #777777,
+    inset -2px -2px 0 #aaaaaa;
+  --clio-button-padding: 0 10px;
+  --clio-button-min-width: 58px;
+  --clio-button-weight: 700;
+  --clio-button-active-bg: #666666;
+  --clio-button-active-fg: #ffffff;
+  --clio-button-active-shadow:
+    inset 1px 1px 0 #444444,
+    inset 2px 2px 0 #555555,
+    inset -1px -1px 0 #888888,
+    inset -2px -2px 0 #777777;
+  --clio-button-disabled-fg: #777777;
+  --clio-button-disabled-border: 1px solid #888888;
+
+  /* Check boxes (classic-stylesheets check) and radio buttons */
+  --clio-check-size: 12px;
+  --clio-check-bg: #dddddd;
+  --clio-check-border: 1px solid #000000;
+  --clio-check-shadow: inset -1px -1px 0 #888888, inset 1px 1px 0 #ffffff;
+  --clio-check-mark: var(--clio-art-p-check) center / 9px 8px no-repeat;
+  --clio-check-mark-origin: padding-box;
+  --clio-check-pressed-border-width: 1px;
+
+  /* Text fields (P30) */
+  --clio-field-bg: #ffffff;
+  --clio-field-border: 1px solid #000000;
+  --clio-field-shadow: -1px -1px 0 #888888, 1px 1px 0 #ffffff;
+  --clio-field-padding: 2px 3px;
+  --clio-field-focus-shadow: -1px -1px 0 #888888, 1px 1px 0 #ffffff;
+
+  /* Pop-up menus (P31) */
+  --clio-popup-bg: #dddddd;
+  --clio-popup-border: 1px solid #000000;
+  --clio-popup-radius: 3px;
+  --clio-popup-shadow: inset 1px 1px #ffffff, inset -1px -1px #aaaaaa;
+  --clio-popup-padding: 0 28px 0 7px;
+  --clio-popup-weight: 700;
+  --clio-popup-arrow:
+    var(--clio-art-p-dropdown) right 6px center / 7px 10px no-repeat,
+    linear-gradient(#ffffff, #ffffff) right 18px top 1px / 1px calc(100% - 2px) no-repeat,
+    linear-gradient(#aaaaaa, #aaaaaa) right 19px top 0 / 1px 100% no-repeat;
+
+  /* Scroll bars (P16, P17, P27) */
+  --clio-scrollbar-size: 16px;
+  --clio-scrollbar-track: #aaaaaa;
+  --clio-scrollbar-track-shadow: inset 1px 1px #777777, inset 2px 2px #888888, inset -1px -1px #cccccc, inset -2px -2px #bbbbbb;
+  --clio-scrollbar-thumb-bg: var(--clio-art-p-grip-v) center / 8px 8px no-repeat, #9999ff;
+  --clio-scrollbar-thumb-bg-horizontal: var(--clio-art-p-grip-h) center / 8px 8px no-repeat, #9999ff;
+  --clio-scrollbar-thumb-border: 1px solid #000000;
+  --clio-scrollbar-thumb-shadow: inset 1px 1px #ccccff, inset -1px -1px #6666cc;
+  --clio-scrollbar-button-bg: #dddddd;
+  --clio-scrollbar-button-shadow: inset 1px 1px #ffffff, inset -1px -1px #bbbbbb;
+  --clio-scrollbar-up: var(--clio-art-p-up);
+  --clio-scrollbar-up-on: var(--clio-art-p-up);
+  --clio-scrollbar-down: var(--clio-art-p-down);
+  --clio-scrollbar-down-on: var(--clio-art-p-down);
+  --clio-scrollbar-left: var(--clio-art-p-left);
+  --clio-scrollbar-left-on: var(--clio-art-p-left);
+  --clio-scrollbar-right: var(--clio-art-p-right);
+  --clio-scrollbar-right-on: var(--clio-art-p-right);
+  --clio-scrollbar-thumb-color: #9999ff;
+  --clio-scrollbar-track-color: #aaaaaa;
+
+  /* Dialogs (P06) */
+  --clio-dialog-bg: #dddddd;
+  --clio-modal-border: 1px solid #000000;
+  --clio-modal-frame:
+    inset 1px 1px 0 #dddddd,
+    inset 2px 2px 0 #ffffff,
+    inset 3px 3px 0 #ffffff,
+    inset -1px -1px 0 #555555,
+    inset -2px -2px 0 #999999,
+    inset -3px -3px 0 #aaaaaa,
+    1px 1px 0 #000000;
+  --clio-modal-padding: 16px 18px;
+  --clio-plain-dialog-border: 1px solid #000000;
+  --clio-plain-dialog-shadow: inset 1px 1px 0 #ffffff, inset -1px -1px 0 #999999, 1px 1px 0 #000000;
+
+  /* Bars, lists, groups, progress, tabs, icons */
+  --clio-details-bg: #dddddd;
+  --clio-details-border: 1px solid #000000;
+  --clio-details-shadow: inset 0 1px 0 #ffffff, inset 0 -1px 0 #aaaaaa;
+  --clio-list-bg: #ffffff;
+  --clio-list-border: 1px solid #000000;
+  --clio-list-shadow: -1px -1px 0 #888888, 1px 1px 0 #ffffff;
+  --clio-list-row: 16px;
+  --clio-group-border: 1px solid #888888;
+  --clio-group-shadow: inset 1px 1px 0 #ffffff, 1px 1px 0 #ffffff;
+  --clio-progress-height: 12px;
+  --clio-progress-bg: #bbbbbb;
+  --clio-progress-border: 1px solid #000000;
+  --clio-progress-shadow: 1px 1px #ffffff, -1px -1px #aaaaaa, inset 1px 1px #888888, inset -1px -1px #dddddd;
+  --clio-progress-fill: linear-gradient(to bottom, #333399 0 1px, #6666cc 1px 2px, #9999ff 2px 3px, #ccccff 3px 4px, #eeeeee 4px 5px, #ccccff 5px 6px, #9999ff 6px 7px, #6666cc 7px 8px, #333399 8px 9px, #000055 9px 10px);
+  --clio-tab-height: 23px;
+  --clio-tab-panel-bg: #eeeeee;
+  --clio-tab-panel-border: 1px solid #000000;
+  --clio-label-bg: rgba(255, 255, 255, 0.7);
+  --clio-label-fg: #000000;
+  --clio-label-selected-bg: #000000;
+  --clio-label-selected-fg: #ffffff;
+  --clio-icon-selected-filter: brightness(0.5);
+
+  /* Art: pop-up arrow, check mark and submenu arrow from classic-stylesheets
+     (MIT, Niels Sonnich Poulsen); scroll arrows, grips and tabs drawn here
+     (tabs: tooling/tab-art.py). */
+  --clio-art-p-dropdown: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='7' height='10' shape-rendering='crispEdges'%3E%3Cpath d='M3 0h1v1H3zM2 1h3v1H2zM1 2h5v1H1zM0 3h7v1H0zM0 6h7v1H0zM1 7h5v1H1zM2 8h3v1H2zM3 9h1v1H3z'/%3E%3C/svg%3E");
+  --clio-art-p-dropdown-off: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='7' height='10' shape-rendering='crispEdges'%3E%3Cpath fill='%23888' d='M3 0h1v1H3zM2 1h3v1H2zM1 2h5v1H1zM0 3h7v1H0zM0 6h7v1H0zM1 7h5v1H1zM2 8h3v1H2zM3 9h1v1H3z'/%3E%3C/svg%3E");
+  --clio-art-p-check: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='8'%3E%3Cpath d='M0 5.5 2.5 8 9 1.5V0h-.5L3 5 1 3 .5 4.25Z' fill-rule='evenodd' shape-rendering='crispEdges'/%3E%3C/svg%3E");
+  --clio-art-p-submenu: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='11'%3E%3Cpath d='m0 0 6 5.5L0 11Z'/%3E%3C/svg%3E");
+  --clio-art-p-submenu-on: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='11'%3E%3Cpath fill='%23fff' d='m0 0 6 5.5L0 11Z'/%3E%3C/svg%3E");
+  --clio-art-p-up: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' shape-rendering='crispEdges'%3E%3Cpath fill='%23000' d='M5 5h2v1h-2zM4 6h4v1h-4zM3 7h6v1h-6zM2 8h8v1h-8z'/%3E%3C/svg%3E");
+  --clio-art-p-up-off: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' shape-rendering='crispEdges'%3E%3Cpath fill='%23888' d='M5 5h2v1h-2zM4 6h4v1h-4zM3 7h6v1h-6zM2 8h8v1h-8z'/%3E%3C/svg%3E");
+  --clio-art-p-down: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' shape-rendering='crispEdges'%3E%3Cpath fill='%23000' d='M2 5h8v1h-8zM3 6h6v1h-6zM4 7h4v1h-4zM5 8h2v1h-2z'/%3E%3C/svg%3E");
+  --clio-art-p-down-off: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' shape-rendering='crispEdges'%3E%3Cpath fill='%23888' d='M2 5h8v1h-8zM3 6h6v1h-6zM4 7h4v1h-4zM5 8h2v1h-2z'/%3E%3C/svg%3E");
+  --clio-art-p-left: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' shape-rendering='crispEdges'%3E%3Cpath fill='%23000' d='M5 5h1v2h-1zM6 4h1v4h-1zM7 3h1v6h-1zM8 2h1v8h-1z'/%3E%3C/svg%3E");
+  --clio-art-p-left-off: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' shape-rendering='crispEdges'%3E%3Cpath fill='%23888' d='M5 5h1v2h-1zM6 4h1v4h-1zM7 3h1v6h-1zM8 2h1v8h-1z'/%3E%3C/svg%3E");
+  --clio-art-p-right: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' shape-rendering='crispEdges'%3E%3Cpath fill='%23000' d='M5 2h1v8h-1zM6 3h1v6h-1zM7 4h1v4h-1zM8 5h1v2h-1z'/%3E%3C/svg%3E");
+  --clio-art-p-right-off: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' shape-rendering='crispEdges'%3E%3Cpath fill='%23888' d='M5 2h1v8h-1zM6 3h1v6h-1zM7 4h1v4h-1zM8 5h1v2h-1z'/%3E%3C/svg%3E");
+  --clio-art-p-grip-v: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' shape-rendering='crispEdges'%3E%3Cpath fill='%23eee' d='M0 0h1v1H0zM0 2h1v1H0zM0 4h1v1H0zM0 6h1v1H0z'/%3E%3Cpath fill='%23ccf' d='M1 0h6v1H1zM1 2h6v1H1zM1 4h6v1H1zM1 6h6v1H1z'/%3E%3Cpath fill='%23339' d='M1 1h7v1H1zM1 3h7v1H1zM1 5h7v1H1zM1 7h7v1H1z'/%3E%3C/svg%3E");
+  --clio-art-p-grip-h: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' shape-rendering='crispEdges'%3E%3Cpath fill='%23eee' d='M0 0h1v1H0zM2 0h1v1H2zM4 0h1v1H4zM6 0h1v1H6z'/%3E%3Cpath fill='%23ccf' d='M0 1h1v6H0zM2 1h1v6H2zM4 1h1v6H4zM6 1h1v6H6z'/%3E%3Cpath fill='%23339' d='M1 1h1v7H1zM3 1h1v7H3zM5 1h1v7H5zM7 1h1v7H7z'/%3E%3C/svg%3E");
+  --clio-art-p-tab-selected: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='33' height='24' shape-rendering='crispEdges'%3E%3Cpath fill='%23222' d='M11 1h1v1h-1zM9 2h1v1h-1zM8 3h1v1h-1zM7 4h1v1h-1zM25 4h1v1h-1zM6 6h1v1h-1zM26 6h1v1h-1zM5 9h1v1h-1zM27 9h1v1h-1zM4 12h1v1h-1zM28 12h1v1h-1zM3 15h1v1h-1zM29 15h1v1h-1zM2 18h1v1h-1zM30 18h1v1h-1zM1 21h1v1h-1z'/%3E%3Cpath fill='%23000' d='M12 1h10v1h-10zM10 2h1v1h-1zM22 2h2v1h-2zM24 3h1v1h-1zM7 5h1v1h-1zM25 5h1v1h-1zM6 7h1v1h-1zM26 7h1v1h-1zM6 8h1v1h-1zM26 8h1v1h-1zM5 10h1v1h-1zM27 10h1v1h-1zM5 11h1v1h-1zM27 11h1v1h-1zM4 13h1v1h-1zM28 13h1v1h-1zM4 14h1v1h-1zM28 14h1v1h-1zM3 16h1v1h-1zM29 16h1v1h-1zM3 17h1v1h-1zM29 17h1v1h-1zM2 19h1v1h-1zM30 19h1v1h-1zM2 20h1v1h-1zM30 20h1v1h-1zM0 21h1v1h-1zM31 21h2v1h-2zM0 22h2v1h-2zM31 22h2v1h-2z'/%3E%3Cpath fill='%23bbb' d='M11 2h1v1h-1zM21 2h1v1h-1zM9 3h1v1h-1zM8 4h1v1h-1zM23 4h1v1h-1zM7 6h1v1h-1zM24 6h1v1h-1zM6 9h1v1h-1zM25 9h1v1h-1zM5 12h1v1h-1zM26 12h1v1h-1zM4 15h1v1h-1zM27 15h1v1h-1zM3 18h1v1h-1zM28 18h1v1h-1zM2 21h1v1h-1zM29 21h1v1h-1zM30 22h1v1h-1z'/%3E%3Cpath fill='%23ccc' d='M12 2h9v1h-9zM10 3h1v1h-1zM8 5h1v1h-1zM7 7h1v1h-1zM7 8h1v1h-1zM6 10h1v1h-1zM6 11h1v1h-1zM5 13h1v1h-1zM5 14h1v1h-1zM4 16h1v1h-1zM4 17h1v1h-1zM3 19h1v1h-1zM3 20h1v1h-1zM2 22h1v1h-1zM0 23h3v1h-3zM30 23h3v1h-3z'/%3E%3Cpath fill='%23fff' d='M11 3h11v1h-11zM9 4h2v1h-2zM9 5h1v1h-1zM8 6h1v1h-1zM8 7h1v1h-1zM8 8h1v1h-1zM7 9h1v1h-1zM7 10h1v1h-1zM7 11h1v1h-1zM6 12h1v1h-1zM6 13h1v1h-1zM6 14h1v1h-1zM5 15h1v1h-1zM5 16h1v1h-1zM5 17h1v1h-1zM4 18h1v1h-1zM4 19h1v1h-1zM4 20h1v1h-1zM3 21h1v1h-1zM3 22h1v1h-1z'/%3E%3Cpath fill='%23ddd' d='M22 3h1v1h-1zM23 5h1v1h-1zM24 7h1v1h-1zM24 8h1v1h-1zM25 10h1v1h-1zM25 11h1v1h-1zM26 13h1v1h-1zM26 14h1v1h-1zM27 16h1v1h-1zM27 17h1v1h-1zM28 19h1v1h-1zM28 20h1v1h-1zM29 22h1v1h-1z'/%3E%3Cpath fill='%23888' d='M23 3h1v1h-1zM24 5h1v1h-1zM25 7h1v1h-1zM25 8h1v1h-1zM26 10h1v1h-1zM26 11h1v1h-1zM27 13h1v1h-1zM27 14h1v1h-1zM28 16h1v1h-1zM28 17h1v1h-1zM29 19h1v1h-1zM29 20h1v1h-1z'/%3E%3Cpath fill='%23eee' d='M11 4h12v1h-12zM10 5h13v1h-13zM9 6h15v1h-15zM9 7h15v1h-15zM9 8h15v1h-15zM8 9h17v1h-17zM8 10h17v1h-17zM8 11h17v1h-17zM7 12h19v1h-19zM7 13h19v1h-19zM7 14h19v1h-19zM6 15h21v1h-21zM6 16h21v1h-21zM6 17h21v1h-21zM5 18h23v1h-23zM5 19h23v1h-23zM5 20h23v1h-23zM4 21h25v1h-25zM4 22h25v1h-25zM3 23h27v1h-27z'/%3E%3Cpath fill='%23444' d='M24 4h1v1h-1zM25 6h1v1h-1zM26 9h1v1h-1zM27 12h1v1h-1zM28 15h1v1h-1zM29 18h1v1h-1zM30 21h1v1h-1z'/%3E%3C/svg%3E");
+  --clio-art-p-tab: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='33' height='24' shape-rendering='crispEdges'%3E%3Cpath fill='%23222' d='M11 3h1v1h-1zM9 4h1v1h-1zM8 5h1v1h-1zM7 6h1v1h-1zM25 6h1v1h-1zM6 8h1v1h-1zM26 8h1v1h-1zM5 11h1v1h-1zM27 11h1v1h-1zM4 14h1v1h-1zM28 14h1v1h-1zM3 17h1v1h-1zM29 17h1v1h-1zM2 20h1v1h-1zM30 20h1v1h-1z'/%3E%3Cpath fill='%23000' d='M12 3h10v1h-10zM10 4h1v1h-1zM22 4h2v1h-2zM24 5h1v1h-1zM7 7h1v1h-1zM25 7h1v1h-1zM6 9h1v1h-1zM26 9h1v1h-1zM6 10h1v1h-1zM26 10h1v1h-1zM5 12h1v1h-1zM27 12h1v1h-1zM5 13h1v1h-1zM27 13h1v1h-1zM4 15h1v1h-1zM28 15h1v1h-1zM4 16h1v1h-1zM28 16h1v1h-1zM3 18h1v1h-1zM29 18h1v1h-1zM3 19h1v1h-1zM29 19h1v1h-1zM2 21h1v1h-1zM30 21h1v1h-1zM2 22h1v1h-1zM30 22h1v1h-1zM0 23h33v1h-33z'/%3E%3Cpath fill='%23bbb' d='M11 4h1v1h-1zM21 4h1v1h-1zM9 5h1v1h-1zM8 6h1v1h-1zM23 6h1v1h-1zM7 8h1v1h-1zM24 8h1v1h-1zM6 11h1v1h-1zM25 11h1v1h-1zM5 14h1v1h-1zM26 14h1v1h-1zM4 17h1v1h-1zM27 17h1v1h-1zM3 20h1v1h-1zM28 20h1v1h-1z'/%3E%3Cpath fill='%23ccc' d='M12 4h9v1h-9zM10 5h1v1h-1zM11 6h12v1h-12zM8 7h1v1h-1zM10 7h13v1h-13zM9 8h15v1h-15zM7 9h1v1h-1zM9 9h15v1h-15zM7 10h1v1h-1zM9 10h15v1h-15zM8 11h17v1h-17zM6 12h1v1h-1zM8 12h17v1h-17zM6 13h1v1h-1zM8 13h17v1h-17zM7 14h19v1h-19zM5 15h1v1h-1zM7 15h19v1h-19zM5 16h1v1h-1zM7 16h19v1h-19zM6 17h21v1h-21zM4 18h1v1h-1zM6 18h21v1h-21zM4 19h1v1h-1zM6 19h21v1h-21zM5 20h23v1h-23zM3 21h1v1h-1zM5 21h23v1h-23zM3 22h1v1h-1zM5 22h23v1h-23z'/%3E%3Cpath fill='%23ddd' d='M11 5h12v1h-12zM9 6h2v1h-2zM9 7h1v1h-1zM23 7h1v1h-1zM8 8h1v1h-1zM8 9h1v1h-1zM24 9h1v1h-1zM8 10h1v1h-1zM24 10h1v1h-1zM7 11h1v1h-1zM7 12h1v1h-1zM25 12h1v1h-1zM7 13h1v1h-1zM25 13h1v1h-1zM6 14h1v1h-1zM6 15h1v1h-1zM26 15h1v1h-1zM6 16h1v1h-1zM26 16h1v1h-1zM5 17h1v1h-1zM5 18h1v1h-1zM27 18h1v1h-1zM5 19h1v1h-1zM27 19h1v1h-1zM4 20h1v1h-1zM4 21h1v1h-1zM28 21h1v1h-1zM4 22h1v1h-1zM28 22h1v1h-1z'/%3E%3Cpath fill='%23888' d='M23 5h1v1h-1zM24 7h1v1h-1zM25 9h1v1h-1zM25 10h1v1h-1zM26 12h1v1h-1zM26 13h1v1h-1zM27 15h1v1h-1zM27 16h1v1h-1zM28 18h1v1h-1zM28 19h1v1h-1zM29 21h1v1h-1zM29 22h1v1h-1z'/%3E%3Cpath fill='%23444' d='M24 6h1v1h-1zM25 8h1v1h-1zM26 11h1v1h-1zM27 14h1v1h-1zM28 17h1v1h-1zM29 20h1v1h-1z'/%3E%3C/svg%3E");
+  --clio-art-p-tab-pressed: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='33' height='24' shape-rendering='crispEdges'%3E%3Cpath fill='%23222' d='M11 3h1v1h-1zM9 4h1v1h-1zM8 5h1v1h-1zM7 6h1v1h-1zM25 6h1v1h-1zM6 8h1v1h-1zM26 8h1v1h-1zM5 11h1v1h-1zM27 11h1v1h-1zM4 14h1v1h-1zM28 14h1v1h-1zM3 17h1v1h-1zM29 17h1v1h-1zM2 20h1v1h-1zM30 20h1v1h-1z'/%3E%3Cpath fill='%23000' d='M12 3h10v1h-10zM10 4h1v1h-1zM22 4h2v1h-2zM24 5h1v1h-1zM7 7h1v1h-1zM25 7h1v1h-1zM6 9h1v1h-1zM26 9h1v1h-1zM6 10h1v1h-1zM26 10h1v1h-1zM5 12h1v1h-1zM27 12h1v1h-1zM5 13h1v1h-1zM27 13h1v1h-1zM4 15h1v1h-1zM28 15h1v1h-1zM4 16h1v1h-1zM28 16h1v1h-1zM3 18h1v1h-1zM29 18h1v1h-1zM3 19h1v1h-1zM29 19h1v1h-1zM2 21h1v1h-1zM30 21h1v1h-1zM2 22h1v1h-1zM30 22h1v1h-1zM0 23h33v1h-33z'/%3E%3Cpath fill='%23bbb' d='M11 4h1v1h-1zM21 4h1v1h-1zM9 5h1v1h-1zM8 6h1v1h-1zM23 6h1v1h-1zM7 8h1v1h-1zM24 8h1v1h-1zM6 11h1v1h-1zM25 11h1v1h-1zM5 14h1v1h-1zM26 14h1v1h-1zM4 17h1v1h-1zM27 17h1v1h-1zM3 20h1v1h-1zM28 20h1v1h-1z'/%3E%3Cpath fill='%23ccc' d='M12 4h9v1h-9zM10 5h1v1h-1zM8 7h1v1h-1zM7 9h1v1h-1zM7 10h1v1h-1zM6 12h1v1h-1zM6 13h1v1h-1zM5 15h1v1h-1zM5 16h1v1h-1zM4 18h1v1h-1zM4 19h1v1h-1zM3 21h1v1h-1zM3 22h1v1h-1z'/%3E%3Cpath fill='%23888' d='M11 5h11v1h-11zM23 5h1v1h-1zM9 6h2v1h-2zM9 7h1v1h-1zM24 7h1v1h-1zM8 8h1v1h-1zM8 9h1v1h-1zM25 9h1v1h-1zM8 10h1v1h-1zM25 10h1v1h-1zM7 11h1v1h-1zM7 12h1v1h-1zM26 12h1v1h-1zM7 13h1v1h-1zM26 13h1v1h-1zM6 14h1v1h-1zM6 15h1v1h-1zM27 15h1v1h-1zM6 16h1v1h-1zM27 16h1v1h-1zM5 17h1v1h-1zM5 18h1v1h-1zM28 18h1v1h-1zM5 19h1v1h-1zM28 19h1v1h-1zM4 20h1v1h-1zM4 21h1v1h-1zM29 21h1v1h-1zM4 22h1v1h-1zM29 22h1v1h-1z'/%3E%3Cpath fill='%23ddd' d='M22 5h1v1h-1zM23 7h1v1h-1zM24 9h1v1h-1zM24 10h1v1h-1zM25 12h1v1h-1zM25 13h1v1h-1zM26 15h1v1h-1zM26 16h1v1h-1zM27 18h1v1h-1zM27 19h1v1h-1zM28 21h1v1h-1zM28 22h1v1h-1z'/%3E%3Cpath fill='%23666' d='M11 6h12v1h-12zM10 7h13v1h-13zM9 8h15v1h-15zM9 9h15v1h-15zM9 10h15v1h-15zM8 11h17v1h-17zM8 12h17v1h-17zM8 13h17v1h-17zM7 14h19v1h-19zM7 15h19v1h-19zM7 16h19v1h-19zM6 17h21v1h-21zM6 18h21v1h-21zM6 19h21v1h-21zM5 20h23v1h-23zM5 21h23v1h-23zM5 22h23v1h-23z'/%3E%3Cpath fill='%23444' d='M24 6h1v1h-1zM25 8h1v1h-1zM26 11h1v1h-1zM27 14h1v1h-1zM28 17h1v1h-1zM29 20h1v1h-1z'/%3E%3C/svg%3E");
+
+  color: #000000;
+}
+
+/* ---- Window ---------------------------------------------------------------- */
+/* The strip's inner edge below the title bar: #999 on the left, white on the
+   right and bottom (GUIdebook Appearance window, x=4 and x=width-5). */
+[data-era="platinum"] .window:not(.inactive) {
+  background:
+    linear-gradient(#999999, #999999) 3px 19px / 1px calc(100% - 22px) no-repeat,
+    linear-gradient(#ffffff, #ffffff) right 3px top 20px / 1px calc(100% - 23px) no-repeat,
+    linear-gradient(#ffffff, #ffffff) left 3px bottom 3px / calc(100% - 6px) 1px no-repeat,
+    var(--clio-window-bg);
+}
+
+[data-era="platinum"] .window-pane {
+  border: 1px solid #000000;
+  background: var(--clio-pane-bg);
+}
+
+[data-era="platinum"] .window > .title-bar + .window-pane,
+[data-era="platinum"] .window > .details-bar + .window-pane {
+  border-top: 0;
+}
+
+[data-era="platinum"] .window > .details-bar {
+  border-left: 1px solid #000000;
+  border-right: 1px solid #000000;
+}
+
+/* The ridged bar. Its covers read the slot sizes the .title-bar itself
+   computes, so this is a rule, not a token. */
+[data-era="platinum"] .title-bar {
+  background:
+    linear-gradient(#cccccc, #cccccc) left top / var(--clio-tb-close) 17px no-repeat,
+    linear-gradient(#cccccc, #cccccc) right top / calc(var(--clio-tb-zoom) + var(--clio-tb-shade) + 1px) 17px no-repeat,
+    linear-gradient(to bottom, #cccccc 0 1px, transparent 1px 13px, #cccccc 13px 17px, #999999 17px 18px),
+    repeating-linear-gradient(to bottom, #ffffff 0 1px, #777777 1px 2px) 0 1px / 100% 2px repeat-y,
+    #cccccc;
+}
+
+[data-era="platinum"] .window.inactive > .title-bar,
+[data-era="platinum"] .inactive-title-bar {
+  background: var(--clio-titlebar-inactive-bg);
+}
+
+/* The title is cut out of the ridges in the frame grey, drawn wide. */
+[data-era="platinum"] .title-bar > :is(.title, h1, h2, h3) {
+  transform: translate(-1px, -1px);
+}
+
+/* The close, zoom and collapse boxes: an 11px bevelled square sunk into the
+   ridges, no paper isolation. */
+[data-era="platinum"] .title-bar > :is(button, .close, .close-box, .resize, .resize-box, .zoom, .shade, .shade-box, .collapse) {
+  margin-top: 1px;
+  border-color: #222222;
+  background: linear-gradient(to bottom right, #999999, #ffffff);
+  box-shadow:
+    -1px -1px 0 #888888,
+    -1px 0 0 #888888,
+    0 -1px 0 #888888,
+    1px 1px 0 #ffffff,
+    1px 0 0 #ffffff,
+    0 1px 0 #ffffff,
+    inset 1px 1px 0 #cccccc,
+    inset -1px -1px 0 #888888;
+}
+
+[data-era="platinum"] .title-bar > :is(button, .close, .close-box, .resize, .resize-box, .zoom, .shade, .shade-box, .collapse):is(:active, .active) {
+  background: linear-gradient(to bottom right, #444444, #bbbbbb);
+  box-shadow: -1px -1px 0 #888888, 1px 1px 0 #ffffff, inset -1px -1px 0 #999999;
+}
+
+[data-era="platinum"] .title-bar > :is(.close, .close-box)::before {
+  display: none;
+}
+
+/* Zoom: a six-pixel lower-left corner inside the frame. */
+[data-era="platinum"] .title-bar > :is(.resize, .resize-box, .zoom)::before {
+  top: 0;
+  left: 0;
+  width: 6px;
+  height: 6px;
+  border: 0;
+  background:
+    linear-gradient(#222222, #222222) right top / 1px 6px no-repeat,
+    linear-gradient(#222222, #222222) left bottom / 6px 1px no-repeat;
+  opacity: 1;
+}
+
+/* WindowShade: two nine-pixel rules. */
+[data-era="platinum"] .title-bar > :is(.shade, .shade-box, .collapse)::before {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 0;
+  width: 9px;
+  height: 3px;
+  background:
+    linear-gradient(#222222, #222222) left top / 9px 1px no-repeat,
+    linear-gradient(#222222, #222222) left bottom / 9px 1px no-repeat;
+}
+
+/* Background window: flat grey, #555 frame, controls erased, title kept. */
+[data-era="platinum"] .window.inactive {
+  --clio-button-shadow: 0 0 0 0 transparent;
+  --clio-field-shadow: none;
+  --clio-check-shadow: none;
+  border-color: #555555;
+  background: #dddddd;
+  box-shadow: 1px 1px 0 #555555, inset 1px 1px 0 #eeeeee, inset -1px -1px 0 #999999;
+  color: #555555;
+}
+
+[data-era="platinum"] .window.inactive > .title-bar,
+[data-era="platinum"] .inactive-title-bar {
+  border-bottom-color: #555555;
+  --clio-title-bg: #dddddd;
+}
+
+[data-era="platinum"] .window.inactive > .title-bar > :is(.title, h1, h2, h3),
+[data-era="platinum"] .inactive-title-bar > :is(.title, h1, h2, h3) {
+  background: #dddddd;
+}
+
+/* ---- Default button ring: 1px black, a #aaa bevel band, 1px gap. -------- */
+[data-era="platinum"] :is(.default, .btn-default) {
+  position: relative;
+  box-shadow: var(--clio-button-shadow);
+}
+
+[data-era="platinum"] :is(.default, .btn-default):not(:disabled, .disabled):is(:active, .active) {
+  box-shadow: var(--clio-button-active-shadow);
+}
+
+[data-era="platinum"] :is(.default, .btn-default)::before {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border-radius: 3px;
+  box-shadow:
+    0 0 0 1px #000000,
+    inset 1px 1px 0 #dddddd,
+    inset -1px -1px 0 #777777,
+    inset 0 0 0 2px #aaaaaa;
+  pointer-events: none;
+}
+
+[data-era="platinum"] :is(.default, .btn-default):is(:disabled, .disabled)::before {
+  box-shadow: 0 0 0 1px #888888;
+}
+
+[data-era="platinum"] :is(button, .btn, .btn-default, input[type="button"], input[type="submit"], input[type="reset"]):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *):is(:disabled, .disabled) {
+  background: #dddddd;
+  box-shadow: none;
+}
+
+/* ---- Radio buttons: drawn, not cut from a screenshot ------------------------ */
+[data-era="platinum"] input[type="radio"] {
+  border: 1px solid #000000;
+  border-radius: 50%;
+  background: linear-gradient(to bottom right, #ffffff, #888888);
+  box-shadow: inset 1px 1px 0 #dddddd, inset -1px -1px 0 #888888;
+}
+
+[data-era="platinum"] input[type="radio"]:checked {
+  background:
+    radial-gradient(circle, #000000 0 2.5px, transparent 3px),
+    linear-gradient(to bottom right, #555555, #ffffff);
+}
+
+[data-era="platinum"] input[type="radio"]:not(:disabled):active {
+  background: linear-gradient(to bottom right, #444444, #bbbbbb);
+}
+
+[data-era="platinum"] input[type="radio"]:checked:not(:disabled):active {
+  background:
+    radial-gradient(circle, #000000 0 2.5px, transparent 3px),
+    linear-gradient(to bottom right, #444444, #bbbbbb);
+}
+
+[data-era="platinum"] input[type="checkbox"]:not(:disabled):active {
+  background-color: #777777;
+  box-shadow: inset 1px 1px 0 #555555, inset -1px -1px 0 #999999;
+}
+
+[data-era="platinum"] :is(input[type="checkbox"], input[type="radio"]):disabled {
+  border-color: #888888;
+  opacity: 0.6;
+}
+
+/* ---- Menus ------------------------------------------------------------------- */
+[data-era="platinum"] :is(.menu-bar, [role="menubar"], [role="menu-bar"]) > li > :is(button, a, span) {
+  font-weight: 700;
+}
+
+[data-era="platinum"] :is(.menu, [role="menu"]) > li:is(.checked, [aria-checked="true"])::before,
+[data-era="platinum"] :is(.menu, [role="menu"]) > li > :is([aria-checked="true"], .checked)::before {
+  left: 7px;
+  width: 9px;
+  height: 8px;
+  margin-top: -4px;
+  background: var(--clio-art-p-check) 0 0 / 9px 8px no-repeat;
+}
+
+[data-era="platinum"] :is(.menu, [role="menu"]) > li:is(.checked, [aria-checked="true"]):is(:hover, :focus-within, .active)::before,
+[data-era="platinum"] :is(.menu, [role="menu"]) > li > :is([aria-checked="true"], .checked):is(:hover, :focus-visible, .active)::before {
+  filter: invert(1);
+}
+
+[data-era="platinum"] :is(.menu, [role="menu"]) > li:has(> :is(.menu, ul[role="menu"]))::after,
+[data-era="platinum"] :is(.menu, [role="menu"]) > li > [aria-haspopup="true"]::after {
+  background-image: var(--clio-art-p-submenu);
+}
+
+[data-era="platinum"] :is(.menu, [role="menu"]) > li:has(> :is(.menu, ul[role="menu"])):is(:hover, :focus-within, .active)::after {
+  background-image: var(--clio-art-p-submenu-on);
+}
+
+[data-era="platinum"] :is(.menu, [role="menu"]) > li.divider {
+  border-bottom: 0;
+  box-shadow: inset 0 -2px 0 #dddddd, inset 0 -3px 0 #ffffff, inset 0 -4px 0 #888888;
+}
+
+/* ---- Tabs: drawn from the measured Mac OS 9 tab (tooling/tab-art.py) ------ */
+[data-era="platinum"] :is([role="tablist"], .tabs) {
+  gap: 0;
+  padding: 0 4px;
+}
+
+[data-era="platinum"] :is([role="tablist"], .tabs) > :is([role="tab"], li, button) {
+  min-width: 48px;
+  height: 24px;
+  min-height: 0;
+  margin: 0 -3px -1px 0;
+  padding: 3px 0 0;
+  border-style: solid;
+  border-width: 0 16px;
+  border-color: transparent;
+  border-radius: 0;
+  border-image: var(--clio-art-p-tab) 0 16 fill / 0 16px stretch;
+  background: transparent;
+  box-shadow: none;
+  font-weight: 700;
+  line-height: 18px;
+}
+
+[data-era="platinum"] :is([role="tablist"], .tabs) > :is([role="tab"], li, button):not(:disabled):active {
+  border-image-source: var(--clio-art-p-tab-pressed);
+  background: transparent;
+  color: #ffffff;
+}
+
+[data-era="platinum"] :is([role="tablist"], .tabs) > :is([role="tab"], li, button):is([aria-selected="true"], .active) {
+  z-index: 1;
+  padding-top: 0;
+  border-image-source: var(--clio-art-p-tab-selected);
+  background: transparent;
+  color: #000000;
+}
+
+[data-era="platinum"] :is([role="tabpanel"], .tab-panel) {
+  border-top: 0;
+  box-shadow: inset 1px 0 0 #ffffff, inset -1px -1px 0 #888888;
+}
+
+/* ---- Scroll arrow art sits on the bevelled box ---------------------------- */
+[data-era="platinum"] :is(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-button,
+[data-era="platinum"]:is(html.clio-scrollbars)::-webkit-scrollbar-button {
+  background-position: 1px 1px;
+  background-size: 14px 14px;
+}
+
+[data-era="platinum"] :is(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-button:active,
+[data-era="platinum"]:is(html.clio-scrollbars)::-webkit-scrollbar-button:active {
+  background-color: #666666;
+  box-shadow: inset 1px 1px #444444, inset -1px -1px #888888;
+}
+
+[data-era="platinum"] :is(fieldset) > legend {
+  background: var(--clio-pane-bg);
+}

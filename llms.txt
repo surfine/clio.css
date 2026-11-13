@@ -1,0 +1,38 @@
+# clio.css
+
+> CSS library for classic Mac OS interfaces: Macintosh System 6 and Mac OS 8/9 Platinum. Windows, title bars, menu bars and menus, push buttons, check boxes, radio buttons, text fields, pop-up menus, list boxes, scroll bars, dialogs and alerts, group boxes, progress bars, tabs and desktop icons. Pure CSS (no JavaScript), MIT licence, no Apple bitmaps or fonts. Every value is traced to measured pixels from AI System 6 or marked as inferred.
+
+Install: `npm install clio.css` or `<link rel="stylesheet" href="https://unpkg.com/clio.css@0.1.0/dist/clio.css">`.
+System 6 is the default; add `data-era="platinum"` to `<html>` or any element for Mac OS 9 Platinum. Single-era builds: `dist/clio.system6.css`, `dist/clio.platinum.css`.
+All rules use `:where()` or one class, so author CSS always wins; every value is a `--clio-*` custom property.
+Drop-in for system.css markup (.window, .title-bar button.close, .btn, .btn-default, .standard-dialog, .modal-dialog, .alert-box, .field-row, role="menu-bar").
+
+## Docs
+
+- [Documentation and live examples](https://surfine.github.io/clio.css/): every component with markup, tokens and evidence
+- [Component index (JSON)](https://surfine.github.io/clio.css/components.json): selectors, tokens, HTML and evidence per component
+- [Full reference for LLMs](https://surfine.github.io/clio.css/llms-full.txt): all component markup plus the complete stylesheet
+- [README](https://github.com/surfine/clio.css#readme)
+
+## Components
+
+- [Window](https://surfine.github.io/clio.css/#window): A document window: frame, title bar with close and zoom boxes (plus the WindowShade box in Platinum), an optional details bar and a scrolling pane.
+- [Menu bar and menus](https://surfine.github.io/clio.css/#menu): The menu bar across the top of the screen and its pull-down menus: items, keyboard shortcuts, check marks, separators, disabled items and submenus.
+- [Push button](https://surfine.github.io/clio.css/#button): Push buttons, the default button with its ring, the pressed state and the disabled state. Styles <button>, .btn and input buttons.
+- [Check box](https://surfine.github.io/clio.css/#checkbox): A check box drawn on the native <input type=checkbox>; no extra label markup needed.
+- [Radio button](https://surfine.github.io/clio.css/#radio): A radio button drawn on the native <input type=radio>.
+- [Text field](https://surfine.github.io/clio.css/#text-field): Single-line inputs and <textarea>.
+- [Pop-up menu](https://surfine.github.io/clio.css/#select): A <select> drawn as the era's pop-up menu; <select multiple> or size>1 becomes a list box.
+- [List box](https://surfine.github.io/clio.css/#listbox): A scrolling list with one or more selected rows, as in the Open dialog.
+- [Scroll bar](https://surfine.github.io/clio.css/#scrollbar): The era's scroll bar on every scroll area clio.css owns, on any element with .clio-scroll, or on the whole page with <html class="clio-scrollbars">.
+- [Dialogs and alerts](https://surfine.github.io/clio.css/#dialog): The modal dialog frame, the alert layout with an icon, and the plain shadowed box.
+- [Group box](https://surfine.github.io/clio.css/#fieldset): A <fieldset> with a <legend>, for grouping controls.
+- [Progress bar](https://surfine.github.io/clio.css/#progress): The native <progress> element as the era's thermometer.
+- [Tabs](https://surfine.github.io/clio.css/#tabs): A tab strip over a panel. Native in Platinum; an adaptation in System 6, which had no tab control.
+- [Desktop and icons](https://surfine.github.io/clio.css/#desktop): The desktop pattern and desktop icons with their name labels. Bring your own icon images; clio.css ships no Apple icons.
+- [Type and tokens](https://surfine.github.io/clio.css/#typography): The fonts, the palette and every --clio-* custom property you can override.
+
+## Optional
+
+- [EVIDENCE.md](https://github.com/surfine/clio.css/blob/main/EVIDENCE.md): where every value comes from (measured, inferred, adapted, third-party)
+- [THIRD-PARTY.md](https://github.com/surfine/clio.css/blob/main/THIRD-PARTY.md): fonts and art from system.css, classic-stylesheets, ChicagoFLF and Asap

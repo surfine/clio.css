@@ -1,0 +1,22 @@
+/* Fonts. Only two faces ship, both with a licence that allows it:
+   - ChicagoFLF: a public-domain outline revival of Chicago (Robin Casady).
+   - Asap (variable, wdth + wght): SIL OFL 1.1, Omnibus-Type. The legal
+     stand-in for Charcoal that AI System 6 measured its Platinum title bar
+     against (width axis 113 for text, 123 for titles).
+   Apple's own faces (Chicago, Geneva, Charcoal, Monaco) are never shipped;
+   the stacks below reach them only when the visitor already has them. */
+@font-face {
+  font-family: "ChicagoFLF";
+  src: url("fonts/ChicagoFLF.woff2") format("woff2"),
+       url("fonts/ChicagoFLF.woff") format("woff");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Clio Asap";
+  src: url("fonts/Asap-Variable.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 100 900;
+  font-stretch: 75% 125%;
+  font-display: swap;
+}

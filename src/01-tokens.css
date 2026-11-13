@@ -1,0 +1,225 @@
+/* Tokens: Macintosh System 6 is the default era.
+   Every value below is traceable in EVIDENCE.md. A value marked [M] there was
+   measured from real pixels; [I] is inferred; [A] is a deliberate web
+   adaptation (contrast, focus, touch). Platinum re-declares these tokens in
+   90-platinum.css under [data-era="platinum"]. */
+:root,
+[data-era="system6"] {
+  /* 1-bit palette. System 6 on a compact Mac had two colours. */
+  --clio-ink: #000000;
+  --clio-paper: #ffffff;
+  --clio-face: #ffffff;
+  /* [A] Disabled text: System 6 drew it through a 50% grey pattern; a solid
+     grey keeps 5.6:1 on white instead of a dither the browser would blur. */
+  --clio-disabled: #696969;
+  --clio-selection-bg: #000000;
+  --clio-selection-fg: #ffffff;
+
+  /* Type. Chicago 12 is the system font; Geneva is the application font. */
+  --clio-font-chrome: Chicago, "ChicagoFLF", Charcoal, Geneva, "Helvetica Neue", Arial, sans-serif;
+  --clio-font-text: Geneva, "Clio Asap", "Helvetica Neue", Arial, sans-serif;
+  --clio-font-mono: Monaco, Menlo, Consolas, "Courier New", monospace;
+  --clio-font-size: 12px;
+  --clio-font-size-small: 10px;
+  --clio-chrome-weight: 400;
+  --clio-font-stretch-text: normal;
+  --clio-font-stretch-title: normal;
+
+  /* Geometry */
+  --clio-line: 1px;
+  --clio-border: 1px solid var(--clio-ink);
+  --clio-radius: 0;
+  --clio-control-height: 20px;
+  --clio-field-height: 20px;
+  --clio-row-height: 16px;
+  --clio-gap: 8px;
+
+  /* Focus: [A] the era had no keyboard focus ring for buttons. A dotted frame
+     is how System 6 drew a dragged outline, so it reads as native and cannot
+     be confused with the default button's solid ring. */
+  --clio-focus-outline: 1px dotted var(--clio-ink);
+  --clio-focus-offset: 2px;
+
+  /* Desktop */
+  --clio-desktop: var(--clio-art-s6-desktop) 0 0 / 2px 2px repeat, #808080;
+
+  /* Window frame and title bar [M: measured at the emulator's exact 2x] */
+  --clio-window-bg: var(--clio-paper);
+  --clio-pane-bg: var(--clio-paper);
+  --clio-window-border: 1px solid var(--clio-ink);
+  --clio-window-shadow: 1px 1px 0 var(--clio-ink);
+  --clio-window-padding: 0;
+  --clio-titlebar-height: 17px;
+  --clio-titlebar-margin: 1px 0 0;
+  --clio-titlebar-padding: 2px 1px;
+  --clio-titlebar-border: 1px solid var(--clio-ink);
+  --clio-titlebar-row: 12px;
+  --clio-titlebar-stripe: 2px;
+  --clio-titlebar-bg:
+    linear-gradient(to bottom, var(--clio-ink) 0 1px, transparent 1px 2px)
+      0 0 / 100% var(--clio-titlebar-stripe) repeat-y content-box content-box,
+    var(--clio-paper);
+  --clio-titlebar-inactive-bg: var(--clio-paper);
+  --clio-title-font-size: 12px;
+  --clio-title-bg: var(--clio-paper);
+  --clio-title-fg: var(--clio-ink);
+  --clio-title-inactive-fg: var(--clio-ink);
+  --clio-title-padding: 0 0.5em;
+  --clio-titlebar-slot: 18px;
+  --clio-titlebar-shade-slot: 0px;
+  --clio-shade-display: none;
+  --clio-box-size: 11px;
+  --clio-box-inset: 7px;
+  --clio-box-isolation: 3px;
+
+  /* Menus */
+  --clio-menubar-height: 20px;
+  --clio-menubar-bg: var(--clio-paper);
+  --clio-menubar-border: 1px solid var(--clio-ink);
+  --clio-menubar-shadow: none;
+  --clio-menubar-padding: 0 8px;
+  --clio-menu-title-padding: 0 8px;
+  --clio-menu-title-active-bg: var(--clio-ink);
+  --clio-menu-title-active-fg: var(--clio-paper);
+  --clio-menu-title-active-shadow: none;
+  --clio-menu-bg: var(--clio-paper);
+  --clio-menu-border: 1px solid var(--clio-ink);
+  --clio-menu-border-top-width: 1px;
+  --clio-menu-shadow: 1px 1px 0 var(--clio-ink);
+  --clio-menu-item-height: 16px;
+  --clio-menu-item-padding: 0 12px 0 16px;
+  --clio-menu-item-weight: 400;
+  --clio-menu-item-active-bg: var(--clio-ink);
+  --clio-menu-item-active-fg: var(--clio-paper);
+  --clio-menu-item-active-shadow: none;
+  --clio-menu-separator:
+    repeating-linear-gradient(to right, var(--clio-ink) 0 1px, transparent 1px 2px) 0 50% / 100% 1px no-repeat;
+  --clio-menu-separator-height: 16px;
+
+  /* Push buttons */
+  --clio-button-bg: var(--clio-paper);
+  --clio-button-fg: var(--clio-ink);
+  --clio-button-border: 1px solid var(--clio-ink);
+  --clio-button-radius: 7px;
+  --clio-button-shadow: 0 0 0 0 transparent;
+  --clio-button-padding: 0 12px;
+  --clio-button-min-width: 59px;
+  --clio-button-weight: 400;
+  --clio-button-active-bg: var(--clio-ink);
+  --clio-button-active-fg: var(--clio-paper);
+  --clio-button-active-shadow: 0 0 0 0 transparent;
+  /* Default button: Inside Macintosh's recipe is PenSize(3,3) around the
+     button inset by -4, so a 1px gap then a 3px ring. */
+  --clio-button-default-ring: 0 0 0 1px var(--clio-paper), 0 0 0 4px var(--clio-ink);
+  --clio-button-default-radius: 8px;
+  --clio-button-disabled-fg: var(--clio-disabled);
+  --clio-button-disabled-border: 1px solid var(--clio-ink);
+
+  /* Check boxes and radio buttons */
+  --clio-check-size: 12px;
+  --clio-check-bg: var(--clio-paper);
+  --clio-check-border: 1px solid var(--clio-ink);
+  --clio-check-shadow: none;
+  --clio-check-mark: var(--clio-art-s6-check) 0 0 / 12px 12px no-repeat;
+  --clio-check-mark-origin: border-box;
+  --clio-check-pressed-border-width: 2px;
+  --clio-radio-size: 12px;
+  --clio-radio-off: var(--clio-art-s6-radio) 0 0 / 12px 12px no-repeat;
+  --clio-radio-on: var(--clio-art-s6-radio-dot) 3px 3px / 6px 6px no-repeat, var(--clio-art-s6-radio) 0 0 / 12px 12px no-repeat;
+  --clio-radio-pressed: var(--clio-art-s6-radio-focus) 0 0 / 12px 12px no-repeat;
+  --clio-radio-pressed-on: var(--clio-art-s6-radio-dot) 3px 3px / 6px 6px no-repeat, var(--clio-art-s6-radio-focus) 0 0 / 12px 12px no-repeat;
+
+  /* Text fields */
+  --clio-field-bg: var(--clio-paper);
+  --clio-field-border: 1px solid var(--clio-ink);
+  --clio-field-shadow: none;
+  --clio-field-padding: 2px 3px;
+  --clio-field-focus-shadow: none;
+
+  /* Pop-up menus */
+  --clio-popup-bg: var(--clio-paper);
+  --clio-popup-border: 1px solid var(--clio-ink);
+  --clio-popup-radius: 0;
+  --clio-popup-shadow: 1px 1px 0 var(--clio-ink);
+  --clio-popup-padding: 0 24px 0 6px;
+  --clio-popup-arrow: var(--clio-art-s6-popup) right 6px center / 11px 6px no-repeat;
+  --clio-popup-weight: 400;
+
+  /* Scroll bars */
+  --clio-scrollbar-size: 16px;
+  --clio-scrollbar-track: var(--clio-art-s6-desktop) 0 0 / 2px 2px repeat, #808080;
+  --clio-scrollbar-track-shadow: none;
+  --clio-scrollbar-thumb-bg: var(--clio-paper);
+  --clio-scrollbar-thumb-border: 1px solid var(--clio-ink);
+  --clio-scrollbar-thumb-shadow: none;
+  --clio-scrollbar-button-bg: var(--clio-paper);
+  --clio-scrollbar-button-shadow: none;
+  --clio-scrollbar-up: var(--clio-art-s6-up);
+  --clio-scrollbar-up-on: var(--clio-art-s6-up-on);
+  --clio-scrollbar-down: var(--clio-art-s6-down);
+  --clio-scrollbar-down-on: var(--clio-art-s6-down-on);
+  --clio-scrollbar-left: var(--clio-art-s6-left);
+  --clio-scrollbar-left-on: var(--clio-art-s6-left-on);
+  --clio-scrollbar-right: var(--clio-art-s6-right);
+  --clio-scrollbar-right-on: var(--clio-art-s6-right-on);
+
+  /* Dialogs */
+  --clio-dialog-bg: var(--clio-paper);
+  /* [I] dBoxProc: a 1px frame, a 1px paper gap, then a 2px ink border. */
+  --clio-modal-border: 1px solid var(--clio-ink);
+  --clio-modal-frame: inset 0 0 0 1px var(--clio-paper), inset 0 0 0 3px var(--clio-ink);
+  --clio-modal-padding: 16px 18px;
+  --clio-plain-dialog-border: 1px solid var(--clio-ink);
+  --clio-plain-dialog-shadow: 2px 2px 0 var(--clio-ink);
+
+  /* Bars, lists, groups, progress, tabs */
+  --clio-details-bg: var(--clio-paper);
+  /* [I] Finder's info line closes with two 1px rules. */
+  --clio-details-border: 3px double var(--clio-ink);
+  --clio-list-bg: var(--clio-paper);
+  --clio-list-border: 1px solid var(--clio-ink);
+  --clio-list-shadow: none;
+  --clio-list-row: 16px;
+  --clio-group-border: 1px solid var(--clio-ink);
+  --clio-group-shadow: none;
+  --clio-group-bg: transparent;
+  --clio-progress-height: 12px;
+  --clio-progress-bg: var(--clio-paper);
+  --clio-progress-border: 1px solid var(--clio-ink);
+  --clio-progress-shadow: none;
+  --clio-progress-fill: var(--clio-ink);
+  --clio-tab-height: 20px;
+  --clio-tab-bg: var(--clio-paper);
+  --clio-tab-active-bg: var(--clio-paper);
+  --clio-tab-panel-bg: var(--clio-paper);
+  --clio-tab-panel-border: 1px solid var(--clio-ink);
+  --clio-label-bg: var(--clio-paper);
+  --clio-label-fg: var(--clio-ink);
+  --clio-label-selected-bg: var(--clio-ink);
+  --clio-label-selected-fg: var(--clio-paper);
+}
+
+/* Inline art. Pixel-grid SVGs, never Apple bitmaps: the System 6 check, radio
+   ring and dot come from system.css (MIT, Sakun Acharige); Platinum's art lives
+   in 90-platinum.css; everything here is drawn for clio.css. See
+   THIRD-PARTY.md. */
+:root {
+  --clio-art-s6-check: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' shape-rendering='crispEdges'%3E%3Cpath d='M0 0h1v1h-1zM1 1h1v1h-1zM2 2h1v1h-1zM3 3h1v1h-1zM4 4h1v1h-1zM5 5h1v1h-1zM6 6h1v1h-1zM7 7h1v1h-1zM8 8h1v1h-1zM9 9h1v1h-1zM10 10h1v1h-1zM11 11h1v1h-1zM11 0h1v1h-1zM10 1h1v1h-1zM9 2h1v1h-1zM8 3h1v1h-1zM7 4h1v1h-1zM6 5h1v1h-1zM5 6h1v1h-1zM4 7h1v1h-1zM3 8h1v1h-1zM2 9h1v1h-1zM1 10h1v1h-1zM0 11h1v1h-1z'/%3E%3C/svg%3E");
+  --clio-art-s6-radio: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' shape-rendering='crispEdges'%3E%3Cpath d='M4 0h4v1H4zM0 4h1v4H0zM11 4h1v4h-1zM2 1h2v1H2zM8 1h2v1H8zM10 2h1v2h-1zM1 2h1v2H1zM4 11h4v1H4zM2 10h2v1H2zM8 10h2v1H8zM10 8h1v2h-1zM1 8h1v2H1z'/%3E%3C/svg%3E");
+  --clio-art-s6-radio-focus: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' shape-rendering='crispEdges'%3E%3Cpath d='M4 0h4v2H4zM0 4h2v4H0zM10 4h2v4h-2zM2 1h2v2H2zM8 1h2v2H8zM9 2h2v2H9zM1 2h2v2H1zM4 10h4v2H4zM2 9h2v2H2zM8 9h2v2H8zM9 8h2v2H9zM1 8h2v2H1z'/%3E%3C/svg%3E");
+  --clio-art-s6-radio-dot: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='6' shape-rendering='crispEdges'%3E%3Cpath d='M1 0h4v1H1zM1 5h4v1H1zM0 1h6v4H0z'/%3E%3C/svg%3E");
+  --clio-art-s6-up: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Cpolygon points='8.5,3.5 14.5,9.5 11.5,9.5 11.5,13.5 5.5,13.5 5.5,9.5 2.5,9.5' fill='%23fff' stroke='%23000' stroke-width='1' shape-rendering='crispEdges'/%3E%3C/svg%3E");
+  --clio-art-s6-up-on: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Cpolygon points='8.5,3.5 14.5,9.5 11.5,9.5 11.5,13.5 5.5,13.5 5.5,9.5 2.5,9.5' fill='%23000' stroke='%23000' stroke-width='1' shape-rendering='crispEdges'/%3E%3C/svg%3E");
+  --clio-art-s6-down: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Cpolygon points='8.5,13.5 14.5,7.5 11.5,7.5 11.5,3.5 5.5,3.5 5.5,7.5 2.5,7.5' fill='%23fff' stroke='%23000' stroke-width='1' shape-rendering='crispEdges'/%3E%3C/svg%3E");
+  --clio-art-s6-down-on: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Cpolygon points='8.5,13.5 14.5,7.5 11.5,7.5 11.5,3.5 5.5,3.5 5.5,7.5 2.5,7.5' fill='%23000' stroke='%23000' stroke-width='1' shape-rendering='crispEdges'/%3E%3C/svg%3E");
+  --clio-art-s6-left: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Cpolygon points='3.5,8.5 9.5,14.5 9.5,11.5 13.5,11.5 13.5,5.5 9.5,5.5 9.5,2.5' fill='%23fff' stroke='%23000' stroke-width='1' shape-rendering='crispEdges'/%3E%3C/svg%3E");
+  --clio-art-s6-left-on: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Cpolygon points='3.5,8.5 9.5,14.5 9.5,11.5 13.5,11.5 13.5,5.5 9.5,5.5 9.5,2.5' fill='%23000' stroke='%23000' stroke-width='1' shape-rendering='crispEdges'/%3E%3C/svg%3E");
+  --clio-art-s6-right: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Cpolygon points='13.5,8.5 7.5,14.5 7.5,11.5 3.5,11.5 3.5,5.5 7.5,5.5 7.5,2.5' fill='%23fff' stroke='%23000' stroke-width='1' shape-rendering='crispEdges'/%3E%3C/svg%3E");
+  --clio-art-s6-right-on: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Cpolygon points='13.5,8.5 7.5,14.5 7.5,11.5 3.5,11.5 3.5,5.5 7.5,5.5 7.5,2.5' fill='%23000' stroke='%23000' stroke-width='1' shape-rendering='crispEdges'/%3E%3C/svg%3E");
+  --clio-art-s6-popup: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='6' shape-rendering='crispEdges'%3E%3Cpath d='M0 0h11v1H0zM1 1h9v1H1zM2 2h7v1H2zM3 3h5v1H3zM4 4h3v1H4zM5 5h1v1H5z'/%3E%3C/svg%3E");
+  --clio-art-s6-submenu: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='11'%3E%3Cpath d='m0 0 6 5.5L0 11Z'/%3E%3C/svg%3E");
+  --clio-art-s6-submenu-on: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='11'%3E%3Cpath fill='%23fff' d='m0 0 6 5.5L0 11Z'/%3E%3C/svg%3E");
+  --clio-art-s6-menucheck: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' shape-rendering='crispEdges'%3E%3Cpath d='M9 0h1v2H9zM8 2h1v2H8zM7 4h1v2H7zM6 5h1v2H6zM5 6h1v3H5zM4 7h1v3H4zM3 6h1v3H3zM2 5h1v2H2zM1 4h1v2H1zM0 4h1v1H0z'/%3E%3C/svg%3E");
+  --clio-art-s6-menucheck-on: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' shape-rendering='crispEdges'%3E%3Cpath fill='%23fff' d='M9 0h1v2H9zM8 2h1v2H8zM7 4h1v2H7zM6 5h1v2H6zM5 6h1v3H5zM4 7h1v3H4zM3 6h1v3H3zM2 5h1v2H2zM1 4h1v2H1zM0 4h1v1H0z'/%3E%3C/svg%3E");
+  --clio-art-s6-desktop: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='2' height='2' shape-rendering='crispEdges'%3E%3Cpath d='M0 0h1v1H0zM1 1h1v1H1z'/%3E%3Cpath fill='%23fff' d='M1 0h1v1H1zM0 1h1v1H0z'/%3E%3C/svg%3E");
+}

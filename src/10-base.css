@@ -1,0 +1,94 @@
+/* Base. clio.css styles elements only inside its own components, plus bare
+   form controls through :where(), so every rule here has zero specificity and
+   your own CSS always wins. It never restyles <body> unless you ask with
+   .desktop. */
+:where(.desktop) {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--clio-desktop);
+  color: var(--clio-ink);
+}
+
+:where(.window, .menu-bar, [role="menubar"], [role="menu-bar"], .menu, [role="menu"],
+  .modal-dialog, .alert-box, .standard-dialog, .modeless-dialog, .clio) {
+  box-sizing: border-box;
+  color: var(--clio-ink);
+  font-family: var(--clio-font-chrome);
+  font-size: var(--clio-font-size);
+  font-weight: var(--clio-chrome-weight);
+  font-stretch: var(--clio-font-stretch-text);
+  font-synthesis: none;
+  line-height: 16px;
+  -webkit-font-smoothing: auto;
+}
+
+:where(.window, .modal-dialog, .alert-box, .standard-dialog, .modeless-dialog, .clio) *,
+:where(.window, .modal-dialog, .alert-box, .standard-dialog, .modeless-dialog, .clio) *::before,
+:where(.window, .modal-dialog, .alert-box, .standard-dialog, .modeless-dialog, .clio) *::after {
+  box-sizing: border-box;
+}
+
+/* Application text (Geneva role) for content areas. */
+:where(.window-pane, .modal-contents, .alert-contents, .text) {
+  font-family: var(--clio-font-text);
+  font-stretch: var(--clio-font-stretch-text);
+}
+
+:where(.window, .modal-dialog, .alert-box, .standard-dialog, .clio) :where(h1, h2, h3, h4, .heading) {
+  margin: 0 0 8px;
+  font-family: var(--clio-font-chrome);
+  font-size: var(--clio-font-size);
+  font-weight: var(--clio-chrome-weight);
+  line-height: 16px;
+}
+
+:where(.window, .modal-dialog, .alert-box, .standard-dialog, .clio) :where(p) {
+  margin: 0 0 8px;
+}
+
+:where(.window, .modal-dialog, .alert-box, .standard-dialog, .clio) :where(a) {
+  color: inherit;
+}
+
+:where(.window, .modal-dialog, .alert-box, .standard-dialog, .clio) :where(code, kbd, pre, samp) {
+  font-family: var(--clio-font-mono);
+}
+
+:where(.window, .modal-dialog, .alert-box, .standard-dialog, .clio) :where(hr) {
+  height: 0;
+  margin: 8px 0;
+  border: 0;
+  border-top: var(--clio-border);
+}
+
+:where(.window, .modal-dialog, .alert-box, .standard-dialog, .clio) ::selection {
+  background: var(--clio-selection-bg);
+  color: var(--clio-selection-fg);
+}
+
+/* A row of controls with their label (system.css name kept). */
+:where(.field-row, .field-row-stacked) {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+:where(.field-row-stacked) {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+:where(.field-row, .field-row-stacked) + :where(.field-row, .field-row-stacked) {
+  margin-top: 6px;
+}
+
+/* Hidden, still read aloud. */
+:where(.visually-hidden, .title-bar button > span) {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}

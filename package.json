@@ -1,0 +1,68 @@
+{
+  "name": "clio.css",
+  "version": "0.1.0",
+  "description": "CSS library for classic Mac OS interfaces: Macintosh System 6 and Mac OS 8/9 Platinum windows, menus, buttons, scroll bars and dialogs, with every value traced to measured pixels.",
+  "keywords": [
+    "css",
+    "css-framework",
+    "design-system",
+    "classic-mac",
+    "classic-macos",
+    "macintosh",
+    "system-6",
+    "mac-os-9",
+    "mac-os-8",
+    "platinum",
+    "retro",
+    "vintage",
+    "1-bit",
+    "chicago",
+    "ui",
+    "system.css"
+  ],
+  "homepage": "https://surfine.github.io/clio.css/",
+  "bugs": {
+    "url": "https://github.com/surfine/clio.css/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/surfine/clio.css.git"
+  },
+  "license": "MIT",
+  "author": "clio.css contributors",
+  "type": "module",
+  "main": "dist/clio.css",
+  "style": "dist/clio.css",
+  "unpkg": "dist/clio.css",
+  "jsdelivr": "dist/clio.css",
+  "exports": {
+    ".": "./dist/clio.css",
+    "./system6": "./dist/clio.system6.css",
+    "./platinum": "./dist/clio.platinum.css",
+    "./min": "./dist/clio.min.css",
+    "./system6.min": "./dist/clio.system6.min.css",
+    "./platinum.min": "./dist/clio.platinum.min.css",
+    "./components.json": "./dist/components.json",
+    "./dist/*": "./dist/*",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "llms.txt",
+    "EVIDENCE.md",
+    "THIRD-PARTY.md",
+    "AGENTS.md"
+  ],
+  "sideEffects": [
+    "*.css"
+  ],
+  "scripts": {
+    "build": "node tooling/build.mjs",
+    "test": "node tooling/build.mjs && node test/check.mjs",
+    "fidelity": "node tooling/fidelity.mjs",
+    "prepack": "node tooling/build.mjs && node test/check.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

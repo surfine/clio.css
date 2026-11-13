@@ -1,0 +1,42 @@
+/* Adaptations the historical machines never needed. Historical sizes are
+   calibration, not a cage: on a touch screen the controls grow to the
+   "coarse pointer" sizes from AI System 6's fidelity contract, without any
+   transform: scale() of the interface. */
+@media (pointer: coarse) {
+  :root,
+  [data-era] {
+    --clio-control-height: 36px;
+    --clio-field-height: 40px;
+    --clio-menubar-height: 32px;
+    --clio-menu-item-height: 32px;
+    --clio-list-row: 32px;
+    --clio-tab-height: 32px;
+  }
+
+  /* The title-bar boxes keep their 11px art; their hit area grows to 44px. */
+  .title-bar > :is(button, .close, .close-box, .resize, .resize-box, .zoom, .shade, .shade-box, .collapse)::after {
+    content: "";
+    position: absolute;
+    inset: -17px;
+  }
+}
+
+/* Windows High Contrast and other forced-colour modes: give the choice
+   controls back to the system so their state stays visible. */
+@media (forced-colors: active) {
+  :where(input[type="checkbox"], input[type="radio"]) {
+    appearance: auto;
+    -webkit-appearance: auto;
+  }
+
+  .title-bar,
+  .inactive-title-bar {
+    forced-color-adjust: none;
+  }
+}
+
+@media print {
+  :where(.window, .modal-dialog, .alert-box, .standard-dialog) {
+    box-shadow: none;
+  }
+}
