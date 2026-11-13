@@ -76,6 +76,11 @@
   --clio-button-active-bg: #cec6b5;
   --clio-button-active-fg: #313131;
   --clio-button-active-shadow: 1px 0 0 #555555, 2px 0 0 #999999, 0 1px 0 #999999, 2px 1px 0 #999999;
+  --clio-button-frame: none;
+  --clio-button-frame-held: none;
+  --clio-button-frame-disabled: none;
+  --clio-ring-frame: none;
+  --clio-popup-frame: none;
   --clio-popup-bg: #cec6b5;
   --clio-popup-border: 1px solid #555555;
   --clio-popup-radius: 0;
@@ -147,6 +152,7 @@
   --clio-list-border: 2px solid #9c9c63;
   --clio-list-shadow: inset 0 0 0 1px #e7ded6;
   --clio-group-border: 1px solid #777777;
+  --clio-group-bg: transparent;
   --clio-group-shadow: none;
   /* Progress bar (Finder copy window): 12px, a #756f66 pencil line (#333 on
      the left) round #ddd6c5; an indeterminate bar shows the theme's arrows.
@@ -245,7 +251,13 @@
 }
 
 [data-era="drawingboard"] .title-bar > :is(.title, h1, h2, h3) {
+  padding: var(--clio-title-padding);
+  background: transparent;
   transform: none;
+}
+
+[data-era="drawingboard"] .title-bar > :is(.title, h1, h2, h3)::after {
+  content: none;
 }
 
 /* Close, zoom and collapse boxes are the theme's 11px pictures. */
@@ -486,6 +498,7 @@
 /* Disabled pop-up menu: a lighter #9f9a94 pencil frame (#888 along the foot),
    the same face and hatch, the theme's dimmed arrow (Appearance, "Variation"). */
 [data-era="drawingboard"] select:disabled {
+  border-image: none;
   border-color: #9f9a94 #9f9a94 #888888;
   background:
     var(--clio-art-db-popup-arrow-off) right 5px top 4px / 7px 9px no-repeat,
@@ -531,4 +544,12 @@
 [data-era="drawingboard"] progress:indeterminate,
 [data-era="drawingboard"] progress:indeterminate::-webkit-progress-bar {
   background: var(--clio-art-db-progress-arrows) 0 center / 128px 5px repeat-x, #ddd6c5;
+}
+
+[data-era="drawingboard"] fieldset {
+  background: transparent;
+}
+
+[data-era="drawingboard"] fieldset > legend {
+  margin-left: 0;
 }

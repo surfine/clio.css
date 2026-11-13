@@ -31,10 +31,12 @@ const W = (width, title, extra = "", cls = "window", zoom = false) => `<div clas
   <div class="title-bar"><button class="close" aria-label="Close"></button><h2 class="title">${title}</h2>${zoom ? '<button class="resize" aria-label="Zoom"></button>' : ""}<button class="shade" aria-label="Collapse"></button></div>
   <div class="window-pane" style="height:40px">${extra}</div></div>`;
 const specimens = [
-  { id: "active-titlebar", html: W(476, "Appearance"), crop: [0, 0, 477, 22] },
-  { id: "inactive-titlebar", html: W(424, "Web Sharing", "", "window inactive", true), crop: [0, 0, 424, 22] },
-  { id: "default-ok", html: `<div style="padding:12px;background:#ddd"><button class="default" id="s" style="width:65px">OK</button></div>`, crop: [-4, -7, 73, 32] },
-  { id: "button-disabled", html: `<div style="padding:12px;background:#ddd"><button id="s" disabled style="width:80px">Eject</button></div>`, crop: [0, 0, 80, 20] },
+  // GUIdebook's Mac took these with font smoothing on, so its titles are antialiased:
+  // the title text is masked here and checked against Infinite Mac (p9-titlebar-*, 100%).
+  { id: "active-titlebar", html: W(476, "Appearance"), crop: [0, 0, 477, 22], mask: [[193, 3, 89, 14], [476, 0, 1, 2]] },   // and GUIdebook's white page beside the shadow
+  { id: "inactive-titlebar", html: W(423, "Web Sharing", "", "window inactive", true), crop: [0, 0, 424, 22], mask: [[169, 3, 83, 15], [423, 0, 1, 2]] },
+  { id: "default-ok", html: `<div style="padding:12px;background:#ddd"><button class="default" id="s" style="width:65px">OK</button></div>`, crop: [-4, -7, 73, 32], mask: [[27, 10, 20, 13]] },   // the label: GUIdebook's is antialiased
+  { id: "button-disabled", html: `<div style="padding:12px;background:#ddd"><button id="s" disabled style="width:80px">Eject</button></div>`, crop: [0, 0, 80, 20], mask: [[29, 4, 27, 12]] },
   { id: "checkbox-checked", html: `<div style="padding:12px;background:#ddd"><input type="checkbox" id="s" checked></div>`, crop: [0, 0, 12, 12] },
   { id: "checkbox-unchecked", html: `<div style="padding:12px;background:#ddd"><input type="checkbox" id="s"></div>`, crop: [0, 0, 12, 12] },
   { id: "selected-tab", html: `<div style="padding:12px;background:#ddd"><div role="tablist"><button role="tab" aria-selected="true" id="s" style="width:103px">Appearance</button></div></div>`, crop: [0, 0, 103, 24] },
@@ -146,12 +148,12 @@ specimens.push(
   // Appearance control panel (window outline 161..636 x 68..): title bar ends, "Set Desktop", the disabled pop-up.
   P9("p9-titlebar-left", `<div class="window" id="s" style="width:476px"><div class="title-bar"><button class="close" aria-label="Close"></button><h2 class="title">Appearance</h2><button class="shade" aria-label="Collapse"></button></div><div class="window-pane" style="height:40px"></div></div>`, [0, 0, 30, 22], "appearance", [161, 68, 30, 22]),
   P9("p9-titlebar-right", `<div class="window" id="s" style="width:476px"><div class="title-bar"><button class="close" aria-label="Close"></button><h2 class="title">Appearance</h2><button class="shade" aria-label="Collapse"></button></div><div class="window-pane" style="height:40px"></div></div>`, [438, 0, 36, 22], "appearance", [599, 68, 36, 22]),
-  P9("p9-button-end", `<div style="padding:12px;background:#dddddd"><button id="s" style="width:84px">Set Desktop</button></div>`, [64, 0, 20, 20], "appearance", [600, 369, 20, 20]),
-  P9("p9-popup-disabled", `<div style="padding:12px;background:#dddddd"><select id="s" style="width:194px" disabled><option>Position Automatically</option></select></div>`, [160, 0, 34, 20], "appearance", [566, 337, 34, 20]),
-  P9("p9-group-corner", `<div style="padding:12px;background:#eeeeee"><fieldset id="s" style="width:200px;height:60px"><legend>Desktop</legend></fieldset></div>`, [0, 0, 12, 30], "general-controls", [18, 51, 12, 30]),
-  P9("p9-menu-separator", `<div style="padding:12px;background:#fff"><ul class="menu" role="menu" style="width:176px"><li role="separator" id="s"></li></ul></div>`, [0, 0, 100, 6], "file-menu", [38, 100, 100, 6]),
-  P9("p9-popup-end", `<div style="padding:12px;background:#dddddd"><select id="s" style="width:178px"><option>Apple platinum</option></select></div>`, [154, 0, 24, 20], "appearance-tab", [444, 143, 24, 20]),
-  P9("p9-button-held", `<div style="padding:12px;background:#dddddd"><button class="active" id="s" style="width:84px">Set Desktop</button></div>`, [64, 0, 20, 20], "button-held", [600, 369, 20, 20]),
+  P9("p9-button-end", `<div style="padding:12px;background:#eeeeee"><button id="s" style="width:86px">Set Desktop</button></div>`, [0, 0, 86, 20], "appearance", [534, 369, 86, 20]),
+  P9("p9-popup-disabled", `<div style="padding:12px;background:#eeeeee"><select id="s" style="width:194px" disabled><option>Position Automatically</option></select></div>`, [160, 0, 34, 20], "appearance", [567, 337, 34, 20]),
+  P9("p9-group-corner", `<div style="padding:12px;background:#eeeeee;--clio-pane-bg:#eeeeee"><fieldset id="s" style="width:200px;height:60px"><legend>Desktop</legend></fieldset></div>`, [0, 0, 12, 30], "general-controls", [18, 51, 12, 30]),
+  P9("p9-menu-separator", `<div style="padding:12px;background:#fff"><ul class="menu" role="menu" style="width:176px"><li><span>Close Window</span></li><li role="separator" id="s"></li><li><span>Get Info</span></li></ul></div>`, [0, 0, 100, 6], "file-menu", [38, 100, 100, 6]),
+  P9("p9-popup-end", `<div style="padding:12px;background:#eeeeee"><select id="s" style="width:180px"><option>Apple platinum</option></select></div>`, [156, 0, 24, 20], "appearance-tab", [444, 143, 24, 20]),
+  P9("p9-button-held", `<div style="padding:12px;background:#eeeeee"><button class="active" id="s" style="width:86px">Set Desktop</button></div>`, [0, 0, 86, 20], "button-held", [534, 369, 86, 20]),
   // Control Strip, Finder desktop: end cap and the idle back-scroll cell (0..28), a module's frame, the tab.
   P9("p9-strip-start", strip("", "strip"), [0, 0, 29, 24], "strip-expanded", [0, 576, 29, 24]),
   P9("p9-strip-handle", `<div style="padding:12px;background:#9999cc">${strip("", "handle")}</div>`, [0, 0, 18, 24], "strip-expanded", [164, 576, 18, 24]),

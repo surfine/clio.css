@@ -43,21 +43,25 @@ while i < len(lines):
     else:
         i += 1
 
+LEVEL = '.123456789abcde#'
+def level(ch): return 15 if ch == '#' else max(0, LEVEL.find(ch))
+COVERAGE = any(ch in row for g in glyphs.values() for row in g[3] for ch in '123456789abcde')
+
 def name(cp): return 'space' if cp == 0x20 else 'uni%04X' % cp
 
 order = ['.notdef'] + [name(cp) for cp in sorted(glyphs)]
 cmap = {cp: name(cp) for cp in glyphs}
 cmap[0xA0] = 'space'
 
-def draw(adv, x0, top, rows):
+def draw(adv, x0, top, rows, keep=lambda ch: ch == '#'):
     pen = TTGlyphPen(None)
     for r, row in enumerate(rows):
         y = top - r                      # pixel row y spans [y, y+1) above the baseline
         x = 0
         while x < len(row):
-            if row[x] != '#': x += 1; continue
+            if not keep(row[x]): x += 1; continue
             n = 1
-            while x + n < len(row) and row[x + n] == '#': n += 1
+            while x + n < len(row) and keep(row[x + n]): n += 1
             l, rgt = (x0 + x) * PX, (x0 + x + n) * PX
             b, t = y * PX, (y + 1) * PX
             pen.moveTo((l, b)); pen.lineTo((l, t)); pen.lineTo((rgt, t)); pen.lineTo((rgt, b)); pen.closePath()
@@ -69,10 +73,28 @@ for (l, b, r, t) in ((100, 0, 600, 100), (100, 800, 600, 900), (100, 0, 200, 900
     notdef.moveTo((l, b)); notdef.lineTo((l, t)); notdef.lineTo((r, t)); notdef.lineTo((r, b)); notdef.closePath()
 glyf = {'.notdef': notdef.glyph()}
 hmtx = {'.notdef': (700, 100)}
+def lsb(x0, rows, keep):
+    """TrueType places a glyph by its own xMin, so each outline's left side
+    bearing is its leftmost kept pixel."""
+    xs = [x for row in rows for x, ch in enumerate(row) if keep(ch)]
+    return ((x0 + min(xs)) * PX) if xs else 0
+
+layers = {}
 for cp, (adv, x0, top, rows) in glyphs.items():
-    g = draw(adv, x0, top, rows)
+    # The plain outline (what a browser without colour fonts draws): every pixel
+    # at least half covered, the same threshold the bitmap was cut at before.
+    base = (lambda ch: level(ch) >= 8) if COVERAGE else (lambda ch: ch == '#')
+    g = draw(adv, x0, top, rows, base)
     glyf[name(cp)] = g
-    hmtx[name(cp)] = (adv * PX, (x0 * PX) if rows else 0)
+    hmtx[name(cp)] = (adv * PX, lsb(x0, rows, base))
+    if COVERAGE and rows:
+        # One layer per coverage level, painted in the text colour at that alpha.
+        for k in sorted({level(ch) for row in rows for ch in row} - {0}):
+            ln = '%s.l%d' % (name(cp), k)
+            glyf[ln] = draw(adv, x0, top, rows, lambda ch, k=k: level(ch) == k)
+            hmtx[ln] = (adv * PX, lsb(x0, rows, lambda ch, k=k: level(ch) == k))
+            order.append(ln)
+            layers.setdefault(name(cp), []).append((ln, k / 15))
 
 fb = FontBuilder(UPM, isTTF=True)
 fb.setupGlyphOrder(order)
@@ -97,6 +119,12 @@ fb.setupOS2(version=4, sTypoAscender=ASC * PX, sTypoDescender=-DESC * PX, sTypoL
 fb.setupPost(isFixedPitch=0, underlinePosition=-200, underlineThickness=100)
 fb.setupHead(unitsPerEm=UPM)
 fb.font['head'].flags |= 1 << 3   # integer ppem scaling
+if layers:
+    from fontTools.colorLib.builder import buildCOLR, buildCPAL
+    fb.font['COLR'] = buildCOLR({g: {'Format': 1, 'Layers': [
+        {'Format': 10, 'Glyph': ln, 'Paint': {'Format': 2, 'PaletteIndex': 0xFFFF, 'Alpha': a}} for ln, a in ls]}
+        for g, ls in layers.items()}, version=1)
+    fb.font['CPAL'] = buildCPAL([[(0.0, 0.0, 0.0, 1.0)]])
 fb.font.flavor = 'woff2'
 fb.save(OUT)
 print(OUT, os.path.getsize(OUT), 'bytes,', len(glyphs), 'glyphs')

@@ -18,6 +18,7 @@ gc, strip, tab = load('general-controls'), load('strip-expanded'), load('strip-c
 fmenu, aptab, popup = load('file-menu'), load('appearance-tab'), load('popup-open')
 rheld, cheld = load('radio-held'), load('checkbox-held')
 copying = load('copy-progress-5')
+appear = load('appearance')
 s7 = Image.open(os.path.join(ROOT, '.fidelity', 'system7', 'folder-window.png')).convert('RGB')
 
 def crop(im, x0, y0, w, h, clear=()):
@@ -51,6 +52,9 @@ art = {
     # Held with the mouse (frames radio-held, checkbox-held): the off radio, the empty box.
     'p9-radio-pressed': crop(rheld, 268, 282, 12, 12, (PANE,)),
     'p9-checkbox-pressed': crop(cheld, 33, 129, 12, 12),
+    # The close box's face inside its black frame (Appearance window): its own light
+    # and shade and the 2px diagonal steps of the grey, shared by zoom and collapse.
+    'p9-box-face': crop(appear, 167, 74, 9, 9),
     # The indeterminate progress bar's stripes inside the frame: one 16x10 period
     # (Finder copy window, "Preparing to copy…").
     'p9-progress-pole': crop(copying, 272, 165, 16, 10),
