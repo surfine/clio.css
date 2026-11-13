@@ -4,7 +4,8 @@
 // (https://infinitemac.org), drives the Finder with the mouse and keyboard, and
 // reads the emulator's 512x342 canvas pixel for pixel (no screenshot scaling).
 //
-//   npm run capture:keycaps        -> .fidelity/system6/kc-*.png (git-ignored)
+//   npm run capture:keycaps [-- chicago|geneva|geneva9]   -> .fidelity/system6/kc-<font>-*.png
+// geneva9 types into the Get Info comments box instead, which is set in Geneva 9.
 //
 // The frames are Apple's screen pixels: they are evidence for measurement and
 // the pixel check, and are never committed or published. Infinite Mac draws
@@ -54,10 +55,26 @@ const dump = async (name) => {
   console.log("captured", name);
 };
 
+const FONT = process.argv[2] || "chicago";
+const FONT_ROW = { chicago: 27, courier: 43, geneva: 59, monaco: 91 }[FONT]; // Key Caps menu rows
+const ink = (x, y, w, h) => page.evaluate(([x, y, w, h]) => {
+  const d = document.querySelector("canvas").getContext("2d").getImageData(x, y, w, h).data;
+  let k = 0; for (let i = 0; i < d.length; i += 4) if (d[i] < 128) k++; return k / (d.length / 4);
+}, [x, y, w, h]);
+if (FONT === "geneva9") {
+  // Select Welcome! on the desktop, Get Info, click into the comments box.
+  for (let i = 0; i < 5 && !(await ink(455, 126, 35, 6) > 0.6); i++) { await click(472, 104); await wait(800); }
+  await cmd("i"); await click(120, 250); await wait(600);
+} else {
 // Open Key Caps from the Apple menu.
 await move(11, 9); await page.mouse.down(); await wait(1200);
 await move(40, 120); await move(40, 171); await wait(800);
 await page.mouse.up(); await wait(4000);
+}
+if (FONT !== "chicago" && FONT !== "geneva9") {   // choose the font in the Key Caps menu
+  await move(116, 9); await page.mouse.down(); await wait(1200);
+  await move(130, 40); await move(130, FONT_ROW); await wait(700); await page.mouse.up(); await wait(1500);
+}
 const base = {};
 "abcdefghijklmnopqrstuvwxyz".split("").forEach((c) => (base[c] = ["Key" + c.toUpperCase(), false]));
 "0123456789".split("").forEach((c) => (base[c] = ["Digit" + c, false]));
@@ -73,14 +90,15 @@ const press = async (c) => {
   await wait(90);
 };
 const all = Object.keys(base).filter((c) => c !== "|").concat(Object.keys(opt));
-const batches = []; for (let i = 0; i < all.length; i += 18) batches.push(all.slice(i, i + 18));
+const batches = []; const per = FONT === "geneva9" ? 12 : 18;
+for (let i = 0; i < all.length; i += per) batches.push(all.slice(i, i + per));
 batches.unshift(["|", "|", "|", "|"]); // bar spacing
 const meta = [];
 for (const [n, b] of batches.entries()) {
   await press("|"); for (const c of b) { await press(c); await press("|"); }
-  await wait(700); await dump(`kc-${String(n).padStart(2, "0")}`); meta.push(b);
+  await wait(700); await dump(`kc-${FONT}-${String(n).padStart(2, "0")}`); meta.push(b);
   for (let i = 0; i < 2 * b.length + 3; i++) { await page.keyboard.press("Backspace"); await wait(40); }
   await wait(500);
 }
-writeFileSync(join(out, "kc-batches.json"), JSON.stringify(meta));
+writeFileSync(join(out, `kc-${FONT}-batches.json`), JSON.stringify(meta));
 await browser.close();

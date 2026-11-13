@@ -19,7 +19,10 @@
 
   /* Type. Chicago 12 is the system font; Geneva is the application font. */
   --clio-font-chrome: "Clio Sans '84", Chicago, "ChicagoFLF", Charcoal, Geneva, "Helvetica Neue", Arial, sans-serif;
-  --clio-font-text: Geneva, "Clio Asap", "Helvetica Neue", Arial, sans-serif;
+  --clio-font-text: "Clio Text '84", Geneva, "Helvetica Neue", Arial, sans-serif;
+  /* Geneva 9: the Finder info line, icon names, status lines. */
+  --clio-font-small: "Clio Text '84 9", Geneva, "Helvetica Neue", Arial, sans-serif;
+  --clio-text-smoothing: none;
   --clio-font-mono: Monaco, Menlo, Consolas, "Courier New", monospace;
   --clio-font-size: 12px;
   /* A bitmap face: no antialiasing, so a glyph on a half pixel stays 1-bit. */

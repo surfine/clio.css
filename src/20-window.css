@@ -181,7 +181,7 @@
   border-bottom: var(--clio-details-border);
   background: var(--clio-details-bg);
   box-shadow: var(--clio-details-shadow, none);
-  font-family: var(--clio-font-text);
+  font-family: var(--clio-font-small);
   font-size: var(--clio-details-font-size);
   line-height: var(--clio-details-height);
   white-space: nowrap;
@@ -200,7 +200,7 @@
   padding: 1px 8px;
   border-top: var(--clio-border);
   background: var(--clio-details-bg);
-  font-family: var(--clio-font-text);
+  font-family: var(--clio-font-small);
   font-size: var(--clio-font-size-small);
   line-height: 14px;
 }

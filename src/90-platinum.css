@@ -18,6 +18,8 @@
   --clio-font-text: Geneva, "Clio Asap", "Helvetica Neue", Arial, sans-serif;
   --clio-font-size: 12px;
   --clio-font-smoothing: auto;
+  --clio-text-smoothing: auto;
+  --clio-font-small: var(--clio-font-text);
   --clio-font-size-small: 10px;
   --clio-chrome-weight: 700;
   --clio-font-stretch-text: 113%;

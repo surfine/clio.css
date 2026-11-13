@@ -1,19 +1,28 @@
 """Build fonts/ClioSans84.woff2 from fonts-src/clio-sans-84.txt.
 
-Each pixel becomes a 100x100-unit square on a 1200-unit em, so at
-font-size: 12px (and whole multiples) every square lands on one device pixel
-and the text renders as the original bitmap. Needs fontTools and brotli:
+Each pixel becomes a 100x100-unit square on an em of 100 units per pixel of
+the original size (1200 for 12-point faces, 900 for 9-point), so at that
+font-size and its whole multiples every square lands on one device pixel. Needs fontTools and brotli:
   python3 -m venv .venv && .venv/bin/pip install fonttools brotli
   .venv/bin/python tooling/build-font.py
 """
-import os
+import os, sys
 from fontTools.fontBuilder import FontBuilder
 from fontTools.pens.ttGlyphPen import TTGlyphPen
 
 ROOT = os.path.join(os.path.dirname(__file__), '..')
-SRC = os.path.join(ROOT, 'fonts-src', 'clio-sans-84.txt')
-OUT = os.path.join(ROOT, 'fonts', 'ClioSans84.woff2')
-PX, UPM, FAMILY = 100, 1200, "Clio Sans '84"
+FONTS = {  # source -> (output, family, PostScript name, what it rebuilds)
+    'clio-sans-84': ('ClioSans84.woff2', "Clio Sans '84", 'ClioSans84-Regular', 'Chicago 12, designed by Susan Kare for Apple Computer, 1984'),
+    'clio-text-84': ('ClioText84.woff2', "Clio Text '84", 'ClioText84-Regular', 'Geneva 12, designed by Susan Kare for Apple Computer, 1984'),
+    'clio-text-84-9': ('ClioText84-9.woff2', "Clio Text '84 9", 'ClioText84-9-Regular', 'Geneva 9, designed by Susan Kare for Apple Computer, 1984'),
+}
+KEY = sys.argv[1] if len(sys.argv) > 1 else 'clio-sans-84'
+OUT_FILE, FAMILY, PS, ORIGIN = FONTS[KEY]
+SIZE = 9 if KEY.endswith('-9') else 12      # the pixel size the em is drawn for
+SRC = os.path.join(ROOT, 'fonts-src', KEY + '.txt')
+OUT = os.path.join(ROOT, 'fonts', OUT_FILE)
+PX = 100
+UPM = PX * SIZE
 
 lines = open(SRC).read().split('\n')
 metrics = next(l for l in lines if l.startswith('metrics'))
@@ -73,12 +82,12 @@ fb.setupHorizontalHeader(ascent=ASC * PX, descent=-DESC * PX, lineGap=0)
 fb.setupNameTable({
     'familyName': FAMILY,
     'styleName': 'Regular',
-    'uniqueFontIdentifier': "ClioSans84-Regular;clio.css",
+    'uniqueFontIdentifier': PS + ";clio.css",
     'fullName': FAMILY,
-    'psName': 'ClioSans84-Regular',
+    'psName': PS,
     'version': 'Version 1.000',
-    'copyright': 'Pixel reconstruction (c) 2026 clio.css contributors. Measured from Chicago 12 as drawn by System 6.0.8; the original bitmap design is by Susan Kare for Apple Computer, 1984.',
-    'licenseDescription': 'Distributed with clio.css under the MIT licence. Not affiliated with or endorsed by Apple Inc.; Chicago is a trademark of Apple Inc.',
+    'copyright': 'Pixel reconstruction (c) 2026 clio.css contributors, measured as drawn by System 6.0.8. The original bitmap design is ' + ORIGIN + '.',
+    'licenseDescription': 'Distributed with clio.css under the MIT licence. Not affiliated with or endorsed by Apple Inc.; Chicago and Geneva are trademarks of Apple Inc.',
     'licenseInfoURL': 'https://github.com/surfine/clio.css/blob/main/THIRD-PARTY.md',
 })
 fb.setupOS2(version=4, sTypoAscender=ASC * PX, sTypoDescender=-DESC * PX, sTypoLineGap=0,
