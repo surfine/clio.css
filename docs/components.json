@@ -1,6 +1,6 @@
 {
   "name": "clio.css",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "CSS library for classic Mac OS interfaces: Macintosh System 6 and Mac OS 8/9 Platinum windows, menus, buttons, scroll bars and dialogs, with every value traced to measured pixels.",
   "homepage": "https://surfine.github.io/clio.css/",
   "license": "MIT",
@@ -21,8 +21,8 @@
   ],
   "install": {
     "npm": "npm install clio.css",
-    "cdn": "https://unpkg.com/clio.css@0.2.0/dist/clio.css",
-    "jsdelivr": "https://cdn.jsdelivr.net/npm/clio.css@0.2.0/dist/clio.css"
+    "cdn": "https://unpkg.com/clio.css@0.2.1/dist/clio.css",
+    "jsdelivr": "https://cdn.jsdelivr.net/npm/clio.css@0.2.1/dist/clio.css"
   },
   "evidenceStatuses": {
     "measured": "read from real pixels of the era",
@@ -340,10 +340,17 @@
         },
         {
           "era": "system6",
-          "claim": "Pressed: the button inverts to ink with paper text",
-          "status": "inferred",
-          "source": "not captured",
-          "upstream": "System 6 button tracking"
+          "claim": "Pressed: the whole button inverts to ink with paper text",
+          "status": "measured",
+          "source": "clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame button-pressed (Cancel held in a TeachText alert)",
+          "upstream": "System 6.0.8"
+        },
+        {
+          "era": "system6",
+          "claim": "Disabled: the frame stays solid ink and the label is dithered 50% grey; clio.css draws the label solid #696969",
+          "status": "adapted",
+          "source": "clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame save-dialog (Eject)",
+          "upstream": "a dither blurs under browser scaling"
         },
         {
           "era": "system6",
@@ -353,11 +360,18 @@
           "upstream": "agrees with Inside Macintosh, Dialog Manager: PenSize(3,3), InsetRect(-4,-4), FrameRoundRect(16,16)"
         },
         {
-          "era": "both",
+          "era": "system6",
+          "claim": "Hovering over a button changes nothing; only a press inverts it",
+          "status": "measured",
+          "source": "clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frames locked-alert and button-hover",
+          "upstream": "agrees with docs/design/CLASSIC_PLATINUM_FIDELITY.md:210"
+        },
+        {
+          "era": "platinum",
           "claim": "Hover never changes a push button; pressed only on pointer-down, Space or Enter",
           "status": "inferred",
           "source": "docs/design/CLASSIC_PLATINUM_FIDELITY.md:210",
-          "upstream": "a 1987–1999 Mac had no hover state"
+          "upstream": "AI System 6 owner ruling: Platinum carries no hover state"
         },
         {
           "era": "system6",
@@ -424,10 +438,10 @@
         },
         {
           "era": "system6",
-          "claim": "Checked draws an X from corner to corner",
-          "status": "inferred",
-          "source": "not captured (the Locked box was unchecked)",
-          "upstream": "System 6 check box"
+          "claim": "Checked draws an X from corner to corner of the box",
+          "status": "measured",
+          "source": "clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame get-info-checked (Locked)",
+          "upstream": "the art is system.css's checkmark.svg (MIT), which matches"
         },
         {
           "era": "system6",
@@ -548,17 +562,10 @@
       "evidence": [
         {
           "era": "system6",
-          "claim": "A box with a 1px drop shadow",
-          "status": "inferred",
-          "source": "not measured",
-          "upstream": "System 6 pop-up menu CDEF"
-        },
-        {
-          "era": "system6",
-          "claim": "The down triangle",
-          "status": "adapted",
-          "source": "drawn for clio.css",
-          "upstream": "a System 7 convention, kept so the control reads as a menu"
+          "claim": "An 18px rectangle with a 1px frame and a 1px drop shadow and no arrow; the shadow is what marks it as a menu; held, it inverts",
+          "status": "measured",
+          "source": "clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frames save-dialog and popup-held (Standard File folder menu)",
+          "upstream": "the down triangle arrived with System 7"
         },
         {
           "era": "platinum",
@@ -608,10 +615,10 @@
       "evidence": [
         {
           "era": "system6",
-          "claim": "White list, 1px ink frame, 16px rows, selection inverts",
-          "status": "inferred",
-          "source": "not measured",
-          "upstream": "System 6 Standard File dialog"
+          "claim": "White list, 1px ink frame, 16px rows; a selected row inverts across the whole list width",
+          "status": "measured",
+          "source": "clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frames save-dialog and list-selected (Standard File)",
+          "upstream": "System 6.0.8 TeachText Save As"
         },
         {
           "era": "platinum",
@@ -679,10 +686,10 @@
         },
         {
           "era": "system6",
-          "claim": "Left and right arrows are the up and down arrows turned",
-          "status": "inferred",
-          "source": "tooling/s6-art.py",
-          "upstream": "the horizontal arrows were captured only partly"
+          "claim": "Left and right arrows: the up arrow turned, apex in the box's first column, tip in its last",
+          "status": "measured",
+          "source": "clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame hd-window (horizontal scroll bar)",
+          "upstream": "redrawn as pixels in tooling/s6-art.py"
         },
         {
           "era": "system6",
@@ -758,7 +765,7 @@
           "claim": "Plain box: 1px ink frame and a 2px drop shadow",
           "status": "inferred",
           "source": "not measured",
-          "upstream": "altDBoxProc"
+          "upstream": "altDBoxProc; none of the 6.0.8 Finder and TeachText dialogs opened for capture (alerts, Standard File, About the Finder) uses it"
         },
         {
           "era": "both",
@@ -793,10 +800,10 @@
       "evidence": [
         {
           "era": "system6",
-          "claim": "1px ink frame with the legend on paper",
-          "status": "inferred",
-          "source": "not measured",
-          "upstream": "System 6 control panels"
+          "claim": "System 6 had no group box; clio.css draws a 1px ink frame with the legend on paper",
+          "status": "adapted",
+          "source": "clio.css",
+          "upstream": "Control Panel divides its panes with plain 1px rules (clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame control-panel)"
         },
         {
           "era": "platinum",
@@ -825,10 +832,10 @@
       "evidence": [
         {
           "era": "system6",
-          "claim": "1px ink frame, ink fill",
-          "status": "inferred",
-          "source": "not measured",
-          "upstream": "System 6 Finder copy progress"
+          "claim": "12px tall, 1px ink frame, white track, fill in QuickDraw dkGray (one white dot in four)",
+          "status": "measured",
+          "source": "clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame copy-progress (Finder duplicating System Folder)",
+          "upstream": "redrawn as a pattern tile in tooling/s6-art.py"
         },
         {
           "era": "platinum",

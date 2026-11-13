@@ -55,6 +55,13 @@ specimens.push(
   S6("s6-radio-off", `<div style="padding:12px;background:#fff"><input type="radio" id="s"></div>`, [0, 0, 12, 12], "control-panel", [335, 109, 12, 12]),
   S6("s6-scroll-up", s6Scroll, [106, 0, 14, 14], "system-folder", [414, 102, 14, 14]),
   S6("s6-grow-box", s6Scroll, [106, 106, 14, 14], "system-folder", [414, 256, 14, 14]),
+  S6("s6-scroll-left", s6Scroll, [0, 106, 14, 14], "hd-window", [0, 137, 14, 14]),
+  S6("s6-scroll-right", s6Scroll, [91, 106, 14, 14], "hd-window", [209, 137, 14, 14]),
+  S6("s6-checkbox-checked", `<div style="padding:12px;background:#fff"><input type="checkbox" id="s" checked></div>`, [0, 0, 12, 12], "get-info-checked", [224, 52, 12, 12]),
+  S6("s6-button-pressed", `<div class="clio" style="padding:12px;background:#fff"><button class="active" id="s" style="width:60px">Cancel</button></div>`, [0, 0, 60, 20], "button-pressed", [164, 158, 60, 20]),
+  S6("s6-button-hover", `<div class="clio" style="padding:12px;background:#fff"><button id="s" style="width:60px">Cancel</button></div>`, [0, 0, 60, 20], "button-hover", [164, 158, 60, 20]),
+  S6("s6-popup-end", `<div class="clio" style="padding:12px;background:#fff"><select id="s" style="width:116px"><option>Macintosh HD</option></select></div>`, [105, 0, 12, 19], "save-dialog", [242, 107, 12, 19]),
+  S6("s6-progress-fill", `<div style="padding:12px;background:#fff"><progress id="s" max="100" value="60" style="width:228px"></progress></div>`, [0, 0, 12, 12], "copy-progress", [109, 93, 12, 12]),
   S6("s6-menu-separator", `<div style="padding:12px;background:#fff"><ul class="menu" role="menu" style="width:146px"><li role="separator" id="s"></li></ul></div>`, [0, 0, 136, 16], "file-menu", [34, 164, 136, 16]),
 );
 

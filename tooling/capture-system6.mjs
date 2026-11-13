@@ -53,15 +53,55 @@ const dump = async (name) => {
   console.log("captured", name);
 };
 
+// Ink share in a canvas rectangle (Infinite Mac draws black as #222).
+const ink = (x, y, w, h) => page.evaluate(([x, y, w, h]) => {
+  const d = document.querySelector("canvas").getContext("2d").getImageData(x, y, w, h).data;
+  let k = 0; for (let i = 0; i < d.length; i += 4) if (d[i] < 128) k++; return k / (d.length / 4);
+}, [x, y, w, h]);
+// Select the desktop document "Welcome!" and confirm its name tag inverted.
+const selectWelcome = async () => {
+  for (let i = 0; i < 5; i++) { await click(472, 104); await wait(800); if (await ink(455, 126, 35, 6) > 0.6) return; }
+  throw new Error("could not select Welcome! on the desktop");
+};
+const away = async () => { await move(300, 330); await wait(300); };
+
 // Desktop icon positions are those of Infinite Mac's System 6.0.8 image.
 await click(472, 50); await cmd("o"); await dump("hd-window");             // Macintosh HD, active
 await move(53, 9); await page.mouse.down(); await wait(1200);
 await move(70, 120); await move(70, 187); await wait(900); await dump("file-menu"); // File menu, Page Setup highlighted
 await page.mouse.up(); await wait(5000); await dump("alert");              // no printer: stop alert, default OK
 await page.keyboard.press("Enter"); await wait(2000);
+
+// Finder copy progress: duplicate System Folder; keep the first frame with the bar.
+await click(67, 95); await page.keyboard.down("Meta"); await page.keyboard.press("d"); await page.keyboard.up("Meta");
+for (let i = 0; i < 30; i++) {
+  await wait(200);
+  if (await ink(109, 93, 228, 1) > 0.95 && await ink(110, 95, 20, 8) > 0.5) { await dump("copy-progress"); break; }
+}
+await wait(12000);
+
 await click(67, 95); await cmd("o"); await dump("system-folder");         // active scroll bar and grow box
-await click(472, 112); await cmd("i"); await dump("get-info");            // Locked check box
+await selectWelcome(); await cmd("i"); await dump("get-info");             // Locked check box
+await click(229, 57); await away(); await wait(600); await dump("get-info-checked");
+await cmd("w", 1500);
 await move(11, 9); await page.mouse.down(); await wait(1200);
 await move(40, 100); await move(40, 140); await wait(800);
 await page.mouse.up(); await wait(6000); await dump("control-panel");      // radio buttons, edit text
+
+// TeachText: the locked document raises an alert with OK and Cancel.
+await selectWelcome(); await cmd("o", 6000); await dump("locked-alert");
+await move(193, 167); await wait(800); await dump("button-hover");
+await page.mouse.down(); await wait(900); await dump("button-pressed");
+await away(); await page.mouse.up(); await wait(600);
+await page.keyboard.press("Enter"); await wait(5000);
+await page.keyboard.press("Enter"); await wait(3000);                      // TeachText's own lock notice
+// Save As: Standard File with a list box, a pop-up and edit text.
+await move(53, 9); await page.mouse.down(); await wait(1200);
+await move(60, 60); await move(60, 107); await wait(800);
+await page.mouse.up(); await wait(4000); await dump("save-dialog");
+await click(160, 137); await wait(1200); await away(); await dump("list-selected");
+await move(195, 116); await page.mouse.down(); await wait(1200); await dump("popup-held");
+await away(); await page.mouse.up(); await wait(800);
+await click(343, 266); await wait(1500); await cmd("q", 4000);             // Cancel, quit TeachText
+
 await browser.close();

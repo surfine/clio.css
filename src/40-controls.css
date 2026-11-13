@@ -199,7 +199,7 @@
 /* ---- Pop-up menus (select) ------------------------------------------------ */
 :where(select) {
   box-sizing: border-box;
-  min-height: var(--clio-control-height);
+  min-height: var(--clio-popup-height, var(--clio-control-height));
   margin: 0;
   padding: var(--clio-popup-padding);
   border: var(--clio-popup-border);

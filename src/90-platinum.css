@@ -133,6 +133,7 @@
   --clio-popup-border: 1px solid #000000;
   --clio-popup-radius: 3px;
   --clio-popup-shadow: inset 1px 1px #ffffff, inset -1px -1px #aaaaaa;
+  --clio-popup-height: 20px;
   --clio-popup-padding: 0 28px 0 7px;
   --clio-popup-weight: 700;
   --clio-popup-arrow:

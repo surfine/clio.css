@@ -17,12 +17,19 @@ Infinite Mac tints black and white as #222222 and #eeeeee.
 | Specimen | Size | exact | off | mean |
 | --- | --- | ---: | ---: | ---: |
 | s6-titlebar | 240×19 | 96.3% | 3.7% | 9.45 |
-| s6-default-ok | 68×28 | 96.7% | 3.3% | 8.3 |
+| s6-default-ok | 68×28 | 96.3% | 3.7% | 9.51 |
 | s6-checkbox | 12×12 | 100.0% | 0.0% | 0 |
 | s6-radio-on | 12×12 | 100.0% | 0.0% | 0 |
 | s6-radio-off | 12×12 | 100.0% | 0.0% | 0 |
 | s6-scroll-up | 14×14 | 100.0% | 0.0% | 0 |
 | s6-grow-box | 14×14 | 100.0% | 0.0% | 0 |
+| s6-scroll-left | 14×14 | 100.0% | 0.0% | 0 |
+| s6-scroll-right | 14×14 | 100.0% | 0.0% | 0 |
+| s6-checkbox-checked | 12×12 | 100.0% | 0.0% | 0 |
+| s6-button-pressed | 60×20 | 85.8% | 14.2% | 36.34 |
+| s6-button-hover | 60×20 | 85.9% | 14.1% | 35.91 |
+| s6-popup-end | 12×19 | 87.3% | 12.7% | 32.43 |
+| s6-progress-fill | 12×12 | 100.0% | 0.0% | 0 |
 | s6-menu-separator | 136×16 | 100.0% | 0.0% | 0 |
 
 ## Mac OS 9 Platinum
