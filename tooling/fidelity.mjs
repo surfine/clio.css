@@ -99,36 +99,56 @@ specimens.push(
 // Drawing Board: crops of Mac OS 8.5 with the 8.5b6 theme from `npm run capture:drawingboard`.
 // The window is the Appearance control panel (outline at 161,68, 476px wide).
 const dbdir = join(root, ".fidelity/drawingboard");
+const ART = pathToFileURL(join(root, "dist/art/drawingboard")).href;
 const DB = (id, html, crop, file, ref) => ({ id, era: "drawingboard", html, crop, refFile: join(dbdir, file + ".png"), refCrop: ref });
+const dbPlain = `<div class="window" id="s" style="width:376px;height:369px"><div class="title-bar"><button class="close" aria-label="Close"></button><h2 class="title">Date &amp; Time</h2><button class="collapse" aria-label="Collapse"></button></div><div class="window-pane" style="flex:1"></div></div>`;
 const dbWindow = `<div class="window" id="s" style="width:476px;height:120px"><div class="title-bar"><button class="close" aria-label="Close"></button><h2 class="title">Appearance</h2><button class="collapse" aria-label="Collapse"></button></div><div class="window-pane" style="height:60px"></div></div>`;
 specimens.push(
   DB("db-close-box", dbWindow, [5, 5, 11, 11], "appearance", [166, 73, 11, 11]),
   DB("db-collapse-box", dbWindow, [460, 5, 11, 11], "appearance", [621, 73, 11, 11]),
-  DB("db-titlebar-left", dbWindow, [0, 0, 40, 26], "appearance", [161, 68, 40, 26]),
-  DB("db-titlebar-right", dbWindow, [436, 0, 40, 26], "appearance", [597, 68, 40, 26]),
+  // Frame corners on a plain window (Date & Time, 376x369): the Appearance
+  // window's body under its title is the tab control's, not the window paper.
+  DB("db-titlebar-left", dbPlain, [0, 0, 40, 26], "date-time", [210, 68, 40, 26]),
+  DB("db-titlebar-right", dbPlain, [336, 0, 40, 26], "date-time", [546, 68, 40, 26]),
+  { ...DB("db-window-bottom-left", dbPlain, [0, 329, 40, 40], "date-time", [210, 397, 40, 40]), mask: [[16, 4, 22, 21]] },   // the panel's help button
+  { ...DB("db-window-bottom-right", dbPlain, [336, 329, 40, 40], "date-time", [546, 397, 40, 40]), mask: [[0, 0, 15, 14]] },   // the panel's own size box
   DB("db-popup-end", `<div style="padding:12px;background:#e7ded6"><select id="s" style="width:180px"><option>Drawing Board</option></select></div>`, [140, 0, 40, 20], "appearance", [428, 143, 40, 20]),
   DB("db-menubar", `<ul class="menu-bar" role="menubar" id="s" style="width:600px"><li role="none"><button role="menuitem">File</button></li></ul>`, [300, 0, 200, 22], "file-menu", [300, 0, 200, 22]),
   // Themes tab: the "Save Theme…" button (518..619 x 370..389) and the theme list's scroll bar (192..585 x 297..312).
-  DB("db-button-end", `<div style="padding:12px;background:#e7ded6"><button id="s" style="width:102px">Save Theme…</button></div>`, [88, 0, 16, 21], "themes-tab", [606, 370, 16, 21]),
-  DB("db-scroll-start", `<div class="clio-scroll" id="s" style="width:394px;height:60px;overflow-x:scroll;overflow-y:hidden;background:#fff"><div style="width:40000px;height:20px"></div></div>`, [0, 44, 40, 16], "themes-tab", [192, 297, 40, 16]),
-  DB("db-scroll-track", `<div class="clio-scroll" id="s" style="width:394px;height:60px;overflow-x:scroll;overflow-y:hidden;background:#fff"><div style="width:40000px;height:20px"></div></div>`, [100, 44, 100, 16], "themes-tab", [300, 297, 100, 16]),
+  DB("db-button-whole", `<div style="padding:12px;background:#e7ded6"><button id="s" style="width:103px">Save Theme…</button></div>`, [0, 0, 103, 21], "themes-tab", [518, 370, 103, 21]),
+  DB("db-button-end", `<div style="padding:12px;background:#e7ded6"><button id="s" style="width:103px">Save Theme…</button></div>`, [88, 0, 16, 21], "themes-tab", [606, 370, 16, 21]),
+  // The Themes tab's list scroll bar (Mac OS drew its track half a tile along). Chromium will not draw
+  // a scroll box shorter than 26px (the theme's is 15 here), so the box's ends and grip are compared apart,
+  // without the track lines above and below them, which differ along the track.
+  DB("db-scroll-arrow", `<div class="clio-scroll" id="s" style="width:394px;height:60px;overflow-x:scroll;overflow-y:hidden;background:#fff;--clio-db-phase:64px"><div style="width:40000px;height:20px"></div></div>`, [0, 44, 16, 16], "themes-tab", [192, 297, 16, 16]),
+  DB("db-scroll-thumb-start", `<div class="clio-scroll" id="s" style="width:394px;height:60px;overflow-x:scroll;overflow-y:hidden;background:#fff;--clio-db-phase:64px"><div style="width:40000px;height:20px"></div></div>`, [16, 44, 6, 16], "themes-tab", [208, 297, 6, 16]),
+  DB("db-scroll-thumb-grip", `<div class="clio-scroll" id="s" style="width:394px;height:60px;overflow-x:scroll;overflow-y:hidden;background:#fff;--clio-db-phase:64px"><div style="width:40000px;height:20px"></div></div>`, [28, 45, 2, 14], "themes-tab", [214, 298, 2, 14]),
+  DB("db-scroll-thumb-end", `<div class="clio-scroll" id="s" style="width:394px;height:60px;overflow-x:scroll;overflow-y:hidden;background:#fff;--clio-db-phase:64px"><div style="width:40000px;height:20px"></div></div>`, [35, 45, 7, 14], "themes-tab", [216, 298, 7, 14]),
+  DB("db-scroll-track", `<div class="clio-scroll" id="s" style="width:394px;height:60px;overflow-x:scroll;overflow-y:hidden;background:#fff;--clio-db-phase:64px"><div style="width:40000px;height:20px"></div></div>`, [100, 44, 100, 16], "themes-tab", [292, 297, 100, 16]),
   // Energy Saver's start-up notice: an alert framed 164..632 x 201..412, "Close Message" the default button (441..579 x 375..394).
-  DB("db-default-button", `<div style="padding:12px;background:#e7ded6"><button class="default" id="s" style="width:139px">Close Message</button></div>`, [-3, -3, 16, 24], "energy-saver-alert", [438, 372, 16, 24]),
-  DB("db-alert-corner", `<div style="padding:12px;background:#ffffff"><div class="alert-box" id="s" style="width:469px;height:212px"></div></div>`, [-1, 0, 20, 12], "energy-saver-alert", [163, 201, 20, 12]),
-  DB("db-alert-shadow", `<div style="padding:12px;background:#ffffff"><div class="alert-box" id="s" style="width:469px;height:212px"></div></div>`, [455, 200, 14, 12], "energy-saver-alert", [618, 401, 14, 12]),
+  { ...DB("db-default-button", `<div style="padding:12px;background:#e7ded6"><button class="default" id="s" style="width:140px">Close Message</button></div>`, [-3, -3, 16, 24], "energy-saver-alert", [438, 372, 16, 24]), mask: [[0, 0, 16, 1], [0, 0, 1, 24]] },   // masked: the alert's paper beyond the band
+  // Alert at Energy Saver's notice place on screen: Mac OS draws its paper half a tile along (--clio-db-phase).
+  { ...DB("db-alert-corner", `<div style="padding:12px;background:#ffffff"><div class="alert-box" id="s" style="width:469px;height:212px;--clio-db-phase:64px"></div></div>`, [-1, 0, 20, 12], "energy-saver-alert", [163, 201, 20, 12]), mask: [[9, 9, 11, 3]] },   // masked: the message's first line
+  DB("db-alert-shadow", `<div style="padding:12px;background:#ffffff"><div class="alert-box" id="s" style="width:469px;height:212px;--clio-db-phase:64px"></div></div>`, [455, 200, 14, 12], "energy-saver-alert", [619, 401, 14, 12]),
   DB("db-popup-disabled", `<div style="padding:12px;background:#e7ded6"><select id="s" style="width:180px" disabled><option>Variation</option></select></div>`, [140, 0, 40, 20], "appearance", [428, 225, 40, 20]),
-  DB("db-button-held", `<div style="padding:12px;background:#e7ded6"><button class="active" id="s" style="width:102px">Save Theme…</button></div>`, [88, 0, 16, 21], "button-held", [606, 370, 16, 21]),
-  DB("db-listbox-corner", `<div style="padding:12px;background:#e7ded6"><div class="listbox" role="listbox" id="s" style="width:198px;height:134px;background:#fff"></div></div>`, [0, 126, 8, 8], "desktop-tab", [405, 280, 8, 8]),   // lower-left: the top row is the chosen one
+  DB("db-button-held", `<div style="padding:12px;background:#e7ded6"><button class="active" id="s" style="width:103px">Save Theme…</button></div>`, [88, 0, 16, 21], "button-held", [606, 370, 16, 21]),
+  DB("db-listbox-corner", `<div style="padding:12px;display:flex;align-items:flex-start;background:url(${ART}/tab-paper.png) -226px 12px"><div class="listbox" role="listbox" id="s" style="width:198px;height:134px"></div></div>`, [0, 126, 8, 8], "desktop-tab", [405, 280, 8, 8]),   // lower-left: the top row is the chosen one
   // General Controls and Date & Time.
   DB("db-checkbox-on", `<div style="padding:12px;background:#eeeeee"><input type="checkbox" id="s" checked></div>`, [0, 0, 14, 11], "general-controls", [33, 83, 14, 11]),
   DB("db-checkbox-off", `<div style="padding:12px;background:#eeeeee"><input type="checkbox" id="s"></div>`, [0, 0, 14, 11], "general-controls", [33, 131, 14, 11]),
-  DB("db-checkbox-disabled", `<div style="padding:12px;background:#e7ded6"><input type="checkbox" id="s" disabled></div>`, [0, 0, 14, 11], "date-time", [240, 230, 14, 11]),
+  DB("db-checkbox-disabled", `<div style="padding:12px;display:flex;align-items:flex-start;background:url(${ART}/paper.png) -12px 0"><input type="checkbox" id="s" style="margin:0" disabled></div>`, [0, 0, 14, 11], "date-time", [240, 230, 14, 11]),   // on the window paper as Date & Time has it there
+  DB("db-field-end", `<div style="padding:12px;background:url(${ART}/paper.png) -23px -19px"><input type="text" id="s" style="width:106px;height:25px;--clio-db-phase:64px" value=""></div>`, [94, 0, 12, 25], "date-time", [345, 121, 12, 25]),
   DB("db-radio-on", `<div style="padding:12px;background:#eeeeee"><input type="radio" id="s" checked></div>`, [0, 0, 16, 12], "general-controls", [266, 267, 16, 12]),
   DB("db-radio-off", `<div style="padding:12px;background:#eeeeee"><input type="radio" id="s"></div>`, [0, 0, 16, 12], "general-controls", [266, 250, 16, 12]),
-  DB("db-field-corner", `<div style="padding:12px;background:#e7ded6"><input type="text" id="s" style="width:106px;height:25px" value=""></div>`, [0, 0, 12, 25], "date-time", [251, 121, 12, 25]),
+  // On the window paper as Date & Time has it there; Mac OS draws this field's rows half a tile along.
+  { ...DB("db-field-corner", `<div style="padding:12px;background:url(${ART}/paper.png) -23px -19px"><input type="text" id="s" style="width:106px;height:25px;--clio-db-phase:64px" value=""></div>`, [0, 0, 12, 25], "date-time", [251, 121, 12, 25]), mask: [[5, 6, 7, 13]] },   // masked: the date's "11"
   // Control Panels submenu (194..350), Energy Saver chosen: row 175..192, underline 210..333 x 189..191.
-  DB("db-menu-underline", `<div style="padding:12px;background:#fff"><ul class="menu" role="menu" style="width:157px"><li role="none" class="active" id="s"><span role="menuitem">Energy Saver</span></li></ul></div>`, [15, 14, 124, 3], "control-panels-menu", [210, 189, 124, 3]),
-  DB("db-menu-separator", `<div style="padding:12px;background:#fff"><ul class="menu" role="menu" style="width:150px"><li role="separator" id="s"></li></ul></div>`, [0, 0, 100, 9], "file-menu", [41, 111, 100, 9]),
+  // Menus at the item's place in the real menu: the paper and pens run from the menu's corner.
+  { ...DB("db-menu-underline", `<div style="padding:12px;background:#fff"><ul class="menu" role="menu" style="width:157px"><li role="none" style="height:145px;min-height:0;padding:0"></li><li role="none" class="active" id="s"><span role="menuitem">Energy Saver</span></li></ul></div>`, [15, 14, 124, 3], "control-panels-menu", [209, 189, 124, 3]), mask: [[30, 0, 17, 3]] },   // masked: the pointer, and the icon's place (clio's item has no icon)
+  DB("db-menu-separator", `<div style="padding:12px;background:#fff"><ul class="menu" role="menu" style="width:150px;--clio-menu-border-top-width:0px;--clio-db-phase:64px"><li role="none" style="height:89px;min-height:0;padding:0"></li><li role="separator" id="s"></li></ul></div>`, [-1, 0, 100, 9], "file-menu", [35, 111, 100, 9]),
+  { ...DB("db-menu-corner", `<div style="padding:12px;background:#ccccff"><ul class="menu" role="menu" id="s" style="width:150px;height:289px;--clio-menu-border-top-width:0px;--clio-db-phase:64px"></ul></div>`, [130, 270, 24, 23], "file-menu", [165, 292, 24, 23]), mask: [[22, 0, 2, 14]] },   // the File menu's lower right, shade included; masked: the Finder window behind
+  { ...DB("db-menu-corner-left", `<div style="padding:12px;background:#ccccff"><ul class="menu" role="menu" id="s" style="width:150px;height:289px;--clio-menu-border-top-width:0px;--clio-db-phase:64px"></ul></div>`, [-2, 270, 24, 23], "file-menu", [33, 292, 24, 23]), mask: [[0, 0, 2, 14], [22, 3, 2, 9]] },   // masked: the window behind, "Print Desktop…"
+  { ...DB("db-menu-corner-top", `<div style="padding:12px;background:#9999cc"><ul class="menu" role="menu" id="s" style="width:150px;height:289px;--clio-menu-border-top-width:0px;--clio-db-phase:64px"></ul></div>`, [130, 0, 24, 12], "file-menu", [165, 22, 24, 12]), mask: [[0, 3, 6, 9], [22, 3, 2, 9]] },   // masked: the ⌘N shortcut, the window behind
 );
 
 // System 7.5.3's Control Strip (same frame as the scroll bar specimens).
@@ -155,7 +175,7 @@ specimens.push(
   P9("p9-group-corner", `<div style="padding:12px;background:#eeeeee;--clio-pane-bg:#eeeeee"><fieldset id="s" style="width:200px;height:60px"><legend>Desktop</legend></fieldset></div>`, [0, 0, 12, 30], "general-controls", [18, 51, 12, 30]),
   P9("p9-menu-separator", `<div style="padding:12px;background:#fff"><ul class="menu" role="menu" style="width:176px"><li><span>Close Window</span></li><li role="separator" id="s"></li><li><span>Get Info</span></li></ul></div>`, [0, 0, 100, 6], "file-menu", [38, 100, 100, 6]),
   P9("p9-popup-end", `<div style="padding:12px;background:#eeeeee"><select id="s" style="width:180px"><option>Apple platinum</option></select></div>`, [156, 0, 24, 20], "appearance-tab", [444, 143, 24, 20]),
-  P9("p9-button-held", `<div style="padding:12px;background:#eeeeee"><button class="active" id="s" style="width:86px">Set Desktop</button></div>`, [0, 0, 86, 20], "button-held", [534, 369, 86, 20]),
+  { ...P9("p9-button-held", `<div style="padding:12px;background:#eeeeee"><button class="active" id="s" style="width:86px">Set Desktop</button></div>`, [0, 0, 86, 20], "button-held", [534, 369, 86, 20]), mask: [[25, 1, 13, 19]] },   // the pointer, held on the label
   // Control Strip, Finder desktop: end cap and the idle back-scroll cell (0..28), a module's frame, the tab.
   P9("p9-strip-start", strip("", "strip"), [0, 0, 29, 24], "strip-expanded", [0, 576, 29, 24]),
   P9("p9-strip-handle", `<div style="padding:12px;background:#9999cc">${strip("", "handle")}</div>`, [0, 0, 18, 24], "strip-expanded", [164, 576, 18, 24]),
@@ -194,7 +214,7 @@ for (const s of specimens) {
     // Masked pixels (the mouse pointer in a held-state frame, say) are not part of the
     // interface: they are left out of every count.
     const masked = (i) => { const p = i / 4, x = p % w, y = Math.floor(p / w); return mask.some(([mx, my, mw, mh]) => x >= mx && x < mx + mw && y >= my && y < my + mh); };
-    let exact = 0, off = 0, sum = 0, n = 0;
+    let exact = 0, same = 0, off = 0, sum = 0, n = 0;
     const misses = [];
     const diff = document.createElement("canvas"); diff.width = w * 3; diff.height = h; const g = diff.getContext("2d");
     const put = (P, x) => { const d = g.createImageData(w, h); d.data.set(P); g.putImageData(d, x, 0); };
@@ -207,11 +227,12 @@ for (const s of specimens) {
       if (m > 8 && misses.length < 400) misses.push([(i / 4) % w, Math.floor(i / 4 / w), B[i], B[i + 1], B[i + 2], A[i], A[i + 1], A[i + 2]]);
       sum += (Math.abs(A[i] - B[i]) + Math.abs(A[i + 1] - B[i + 1]) + Math.abs(A[i + 2] - B[i + 2])) / 3;
       if (m <= 8) exact++;
+      if (m === 0) same++;
       if (m > 48) off++;
       d.data[i] = m > 48 ? 255 : m > 8 ? 255 : 255; d.data[i + 1] = m > 48 ? 0 : m > 8 ? 200 : 255; d.data[i + 2] = m > 48 ? 0 : m > 8 ? 0 : 255; d.data[i + 3] = 255;
     }
     g.putImageData(d, w * 2, 0);
-    return { name, size: [w, h], exact: +(exact / n).toFixed(4), structural: +(off / n).toFixed(4), meanAbs: +(sum / n).toFixed(2), misses, image: diff.toDataURL("image/png").split(",")[1] };
+    return { name, size: [w, h], same: +(same / n).toFixed(4), exact: +(exact / n).toFixed(4), structural: +(off / n).toFixed(4), meanAbs: +(sum / n).toFixed(2), misses, image: diff.toDataURL("image/png").split(",")[1] };
   }, [shot.toString("base64"), ref.toString("base64"), s.id, s.refCrop || null, !!s.mono, s.mask || []]);
   writeFileSync(join(out, `${s.id}-compare.png`), Buffer.from(metrics.image, "base64"));
   delete metrics.image;
@@ -220,18 +241,19 @@ for (const s of specimens) {
   results.push({ ...metrics, era: s.group || s.era || "platinum" });
 }
 await browser.close();
-console.log("specimen              size      exact   off>48  meanAbs   (reference | clio.css | diff in .fidelity/)");
-for (const r of results) console.log(`${r.name.padEnd(21)} ${r.size.join("x").padEnd(9)} ${String(r.exact).padEnd(7)} ${String(r.structural).padEnd(7)} ${r.meanAbs}`);
+console.log("specimen              size      same    exact   off>48  meanAbs   (reference | clio.css | diff in .fidelity/)");
+for (const r of results) console.log(`${r.name.padEnd(21)} ${r.size.join("x").padEnd(9)} ${String(r.same).padEnd(7)} ${String(r.exact).padEnd(7)} ${String(r.structural).padEnd(7)} ${r.meanAbs}`);
 writeFileSync(join(out, "results.json"), JSON.stringify(results, null, 2));
 const date = new Date().toISOString().slice(0, 10);
-const row = (r) => "| " + r.name + " | " + r.size.join("×") + " | " + (r.exact * 100).toFixed(1) + "% | " + (r.structural * 100).toFixed(1) + "% | " + r.meanAbs + " |";
-const table = (era) => "| Specimen | Size | exact | off | mean |\n| --- | --- | ---: | ---: | ---: |\n" + results.filter((r) => r.era === era).map(row).join("\n");
+const row = (r) => "| " + r.name + " | " + r.size.join("×") + " | " + (r.same * 100).toFixed(1) + "% | " + (r.exact * 100).toFixed(1) + "% | " + (r.structural * 100).toFixed(1) + "% | " + r.meanAbs + " |";
+const table = (era) => "| Specimen | Size | same | exact | off | mean |\n| --- | --- | ---: | ---: | ---: | ---: |\n" + results.filter((r) => r.era === era).map(row).join("\n");
 writeFileSync(join(root, "FIDELITY.md"), `# Pixel check
 
 Generated by \`npm run fidelity\` on ${date}. clio.css specimens are rendered at 1x in Chromium
 and compared pixel by pixel with real screens of each era. The real screens are Apple's pixels:
 they are evidence only and are not part of this repository.
 
+- **same**: share of pixels identical to the reference.
 - **exact**: share of pixels within 8/255 of the reference on every channel.
 - **off**: share of pixels more than 48/255 away (a different shape, not a shade).
 - **mean**: mean absolute difference per channel, 0–255.

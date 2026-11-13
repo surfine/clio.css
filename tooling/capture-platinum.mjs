@@ -70,7 +70,7 @@ await click(10, 586); await wait(1500); await away(); await dump("strip-expanded
 // 2. Control panels.
 await panel(83, "cp-menu");                // Appearance
 await away(); await dump("appearance");
-await hold(615, 378, "button-held");       // "Set Desktop"
+await hold(560, 371, "button-held");       // "Set Desktop", the pointer clear of its corners
 await click(295, 110); await wait(2500); await away(); await dump("appearance-tab");
 await hold(367, 152, "popup-open");
 await cmd("w");

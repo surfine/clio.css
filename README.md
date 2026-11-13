@@ -38,8 +38,13 @@ npm install clio.css
 | `*.min.css` | Minified builds |
 | `dist/components.json` | Machine-readable index: selectors, tokens, markup and evidence per component |
 
-The stylesheets load fonts from `dist/fonts/` with relative URLs, so serve the `dist`
-folder as a whole (the CDNs above do).
+The stylesheets load fonts from `dist/fonts/` and the Drawing Board theme's pictures and
+patterns from `dist/art/drawingboard/` with relative URLs, so serve the `dist` folder as a
+whole (the CDNs above do).
+
+Drawing Board draws its pencil lines with 128px patterns. Mac OS sometimes starts such a
+pattern half a tile along, depending on where the window sits on screen; clio.css starts it
+at the element, and `--clio-db-phase: 64px` on a window or control matches the other case.
 
 ## Quick start
 

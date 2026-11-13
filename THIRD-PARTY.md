@@ -14,16 +14,20 @@ presented as such:
 - Mac OS 9 check mark, radio buttons and Control Strip parts (end cap, scroll arrows, menu
   triangle, tab and folded tab) (`--clio-art-p9-*`): re-encoded as palette PNGs by
   `tooling/p9-art.py` from Mac OS 9.0 running in an emulator.
-- Drawing Board close, zoom and collapse boxes, check boxes, radio buttons, scroll arrows,
-  pop-up arrow, hatched button corner, grow box, tab ends and menu underlines
-  (`--clio-art-db-*`): re-encoded as palette PNGs by `tooling/db-art.py` from the
-  `pxm#` pixmaps of Apple's Mac OS 8.5b6 "Drawing Board" theme, each matched 1:1 against
-  the theme running in an emulator. The theme file is not included; the large paper
-  and sketch textures and the window-frame illustrations are not reproduced.
+- Drawing Board art (`dist/art/drawingboard/`, `--clio-art-db-*`): the `pxm#` pictures
+  (window, alert and modal frames, menu bar, boxes, check boxes, radio buttons, scroll
+  arrows and scroll box, pop-up arrow, hatched button corner, grow box, tab ends, menu
+  underlines) and `ppat` patterns (window, tab and menu papers, and the pattern pens the
+  theme draws its pencil lines with) of Apple's Mac OS 8.5b6 "Drawing Board" theme,
+  re-encoded as palette PNGs by `tooling/db-art.py` and `tooling/db-pens.py`, each matched
+  1:1 against the theme running in an emulator. A few corner pixels where the pens meet are
+  read from that screen by `tooling/db-pens.py`. The theme file is not included. The
+  textures and frame illustrations ship since 0.9.0, at the owner's decision.
 
 They are included to document the look of these interfaces at the size of a single
 control. If that does not suit your use, override the `--clio-art-s7-*`,
-`--clio-art-p9-*` and `--clio-art-db-*` custom properties with your own art.
+`--clio-art-p9-*` and `--clio-art-db-*` custom properties with your own art, or replace
+the files in `dist/art/drawingboard/`.
 
 ## Fonts
 

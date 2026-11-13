@@ -64,6 +64,12 @@ for (const [name, css] of Object.entries(outputs)) {
 }
 mkdirSync(join(root, "dist/fonts"), { recursive: true });
 for (const f of readdirSync(join(root, "fonts"))) copyFileSync(join(root, "fonts", f), join(root, "dist/fonts", f));
+// Drawing Board theme art: the files the stylesheets reference, beside them.
+const artFiles = [...new Set([...all.matchAll(/url\("(art\/[^"]+)"\)/g)].map((m) => m[1]))].sort();
+const copyArt = (to) => {
+  for (const f of artFiles) { mkdirSync(dirname(join(root, to, f)), { recursive: true }); copyFileSync(join(root, f), join(root, to, f)); }
+};
+copyArt("dist");
 
 // Machine-readable component index.
 const index = {
@@ -113,6 +119,7 @@ for (const f of readdirSync(join(root, "dist"))) {
   if (f.endsWith(".css")) copyFileSync(join(root, "dist", f), join(root, "docs/dist", f));
 }
 for (const f of readdirSync(join(root, "dist/fonts"))) copyFileSync(join(root, "dist/fonts", f), join(root, "docs/dist/fonts", f));
+copyArt("docs/dist");
 if (existsSync(join(root, "assets/og.png"))) copyFileSync(join(root, "assets/og.png"), join(root, "docs/og.png"));
 
 // Size report.
@@ -120,4 +127,4 @@ for (const f of readdirSync(join(root, "dist")).filter((f) => f.endsWith(".css")
   const buf = readFileSync(join(root, "dist", f));
   console.log(`${f.padEnd(24)} ${String(buf.length).padStart(7)} B  gzip ${String(gzipSync(buf).length).padStart(6)} B`);
 }
-console.log(`${components.length} components, ${components.reduce((n, c) => n + c.evidence.length, 0)} evidence rows`);
+console.log(`${components.length} components, ${components.reduce((n, c) => n + c.evidence.length, 0)} evidence rows, ${artFiles.length} art files`);

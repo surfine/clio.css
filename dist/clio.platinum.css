@@ -1,4 +1,4 @@
-/*! clio.css 0.8.0 (Platinum default) | MIT | https://surfine.github.io/clio.css/
+/*! clio.css 0.9.0 (Platinum default) | MIT | https://surfine.github.io/clio.css/
  * Classic Mac OS interface CSS: System 6, System 7, Mac OS 8.5 Drawing Board and Mac OS 9 Platinum.
  * Measured values traced to AI System 6; see EVIDENCE.md.
  * Includes art from system.css (MIT) and pixel reconstructions of Apple control art; see THIRD-PARTY.md. */
@@ -384,6 +384,7 @@
   --clio-art-frame-s6-button-held: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJAQMAAADaX5RTAAAABlBMVEUAAAAAAAClZ7nPAAAAAXRSTlMAQObYZgAAAB1JREFUeJxjkGFgSmZgYmBg/N/IxABiMNSDSRkGACm1Aqb7EOVpAAAAAElFTkSuQmCC");
   --clio-art-frame-s6-ring: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPAQMAAAABGAcJAAAABlBMVEUAAAAAAAClZ7nPAAAAAXRSTlMAQObYZgAAADRJREFUeJxjYD/AIP+BSYGDsYaB5csahg9yTB8+MDEwgJCAAFPDPyaeBAb7H0wPfjCwHwAAEpMM/gNXK+MAAAAASUVORK5CYII=");
   --clio-art-frame-p9-button: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJBAMAAAASvxsjAAAAGFBMVEUAAAAAAAB3d3fd3d27u7uqqqoiIiL///+EaqngAAAAAXRSTlMAQObYZgAAADxJREFUeJxjYEgUTGBgYnyk9JCBMUWYYa8O03qGPXIbmBj+MDAwMIERY8pFhbN2jIyOD/7fZ/ov/96eAQBghg8JraaOFgAAAABJRU5ErkJggg==");
+  --clio-art-frame-p9-button-held: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJBAMAAAASvxsjAAAAGFBMVEUAAAAAAAB3d3dVVVVmZmYiIiKIiIhEREQ39d/AAAAAAXRSTlMAQObYZgAAAD9JREFUeJxjYAgUDGBgYVRT+8XAGC5zgJ+PUVxG8NErJgZGBgYGJgaGfwwMLA6vH7i8YmRUdfg9n+m/9ur3DAAxwg5nPuolSwAAAABJRU5ErkJggg==");
   --clio-art-frame-p9-ring: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAANBAMAAACAxflPAAAAG1BMVEUAAAAAAAB3d3fd3d3MzMy7u7uqqqoiIiKIiIhznn7oAAAAAXRSTlMAQObYZgAAAFpJREFUeJxjZGDnYmB7ycDCwKPAwPjzAwujgjEDg+x6xuLDrx6oOXEwCCcxMDAlCTAx/GMAISYGCEDQTGAOUyKLAoOKQgIjY6gAA9PO+4wMElwMDO8+MELNBwCaGBDQEM8mggAAAABJRU5ErkJggg==");
   --clio-art-frame-p9-button-disabled: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJAgMAAACd/+6DAAAACVBMVEUAAACIiIjd3d2RXqmqAAAAAXRSTlMAQObYZgAAACFJREFUeJxjYA1hYBINZWAKYHRgYmBgQMYMUisZGFhDGAAtsQJ9dgAT/gAAAABJRU5ErkJggg==");
   --clio-art-frame-p9-popup: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHBAMAAAA2fErgAAAAGFBMVEUAAAAAAAB3d3fd3d27u7uqqqoiIiL///+EaqngAAAAAXRSTlMAQObYZgAAACtJREFUeJxjYEhMYGBi5H/IwJh+klWbQYCBQYAl/OQnOwbGAEUGpv+C9gwAea0HTcaLsPwAAAAASUVORK5CYII=");
@@ -1782,7 +1783,7 @@
   /* Push button, disabled button and default ring: the real pixel frames
      (tooling/frame-art.py: Mac OS 9.0 Appearance and GUIdebook's Mac OS 9.0). */
   --clio-button-frame: var(--clio-art-frame-p9-button);
-  --clio-button-frame-held: none;
+  --clio-button-frame-held: var(--clio-art-frame-p9-button-held);
   --clio-button-frame-disabled: var(--clio-art-frame-p9-button-disabled);
   --clio-ring-frame: var(--clio-art-frame-p9-ring);
   --clio-ring-frame-slice: 6;
@@ -1882,13 +1883,10 @@
   --clio-button-padding: 0 10px;
   --clio-button-min-width: 58px;
   --clio-button-weight: 700;
-  --clio-button-active-bg: #666666;
+  /* Held: the frame and its dark face cut from Mac OS 9.0 (frame-art.py). */
+  --clio-button-active-bg: transparent;
   --clio-button-active-fg: #ffffff;
-  --clio-button-active-shadow:
-    inset 1px 1px 0 #444444,
-    inset 2px 2px 0 #555555,
-    inset -1px -1px 0 #888888,
-    inset -2px -2px 0 #777777;
+  --clio-button-active-shadow: none;
   --clio-button-disabled-fg: #777777;
   --clio-button-disabled-border: 1px solid #888888;
 

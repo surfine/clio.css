@@ -1,6 +1,6 @@
 {
   "name": "clio.css",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "description": "CSS library for classic Mac OS interfaces: Macintosh System 6, System 7, Mac OS 8.5 Drawing Board and Mac OS 8/9 Platinum windows, menus, buttons, scroll bars and dialogs, with every value traced to measured pixels.",
   "homepage": "https://surfine.github.io/clio.css/",
   "license": "MIT",
@@ -33,8 +33,8 @@
   ],
   "install": {
     "npm": "npm install clio.css",
-    "cdn": "https://unpkg.com/clio.css@0.8.0/dist/clio.css",
-    "jsdelivr": "https://cdn.jsdelivr.net/npm/clio.css@0.8.0/dist/clio.css"
+    "cdn": "https://unpkg.com/clio.css@0.9.0/dist/clio.css",
+    "jsdelivr": "https://cdn.jsdelivr.net/npm/clio.css@0.9.0/dist/clio.css"
   },
   "evidenceStatuses": {
     "measured": "read from real pixels of the era",
@@ -227,10 +227,10 @@
         },
         {
           "era": "drawingboard",
-          "claim": "Window frame: 1px #222 outline, a 4px #cdc6bd frame, a #555 line round the content, #e7ded6 content; right and bottom a 6px #777 pencil band closed by a 1px #333 line",
+          "claim": "Window frame: the theme's nine Doc Window pictures (6176-6184, active and inactive) round the outline, placed as Mac OS 8.5 places them, the edges tiled from their ends; content on the window paper (ppat 7120) from the content's top-left; the frame is 6px inside the outline on each side",
           "status": "measured",
-          "source": "clio.css capture, Mac OS 8.5 with the 8.5b6 Drawing Board theme in Infinite Mac (npm run capture:drawingboard), frame appearance",
-          "upstream": "Appearance control panel window; columns 161-166 and 631-643"
+          "source": "clio.css capture, Mac OS 8.5 with the 8.5b6 Drawing Board theme in Infinite Mac (npm run capture:drawingboard), frames date-time and appearance; the theme file's ppat and pxm# resources, decoded by tooling/theme-resources.py, written by tooling/db-art.py and tooling/db-pens.py",
+          "upstream": "every piece found 1:1 round the Appearance and Date & Time windows; paper origin agrees in Date & Time and Finder Preferences"
         },
         {
           "era": "drawingboard",
@@ -248,10 +248,10 @@
         },
         {
           "era": "drawingboard",
-          "claim": "Frame and title bar paper texture and the sketch lines that overrun the boxes are not reproduced; surfaces use the dominant measured colour",
+          "claim": "Mac OS sometimes starts a 128px pattern half a tile (64px) earlier, depending on where the window or control sits on screen (the Appearance window, the File menu, the Energy Saver alert, the first Date & Time field, the Themes list's scroll bar); clio.css starts it at the element and offers --clio-db-phase: 64px to match a given screen",
           "status": "adapted",
           "source": "clio.css",
-          "upstream": "the theme's ppat 7065/7115 and Doc Window pixmaps are Apple artwork, not control parts"
+          "upstream": "the rule behind the shift was not found from these captures"
         }
       ]
     },
@@ -363,10 +363,10 @@
         },
         {
           "era": "drawingboard",
-          "claim": "Menu bar: 22px of #cec6b5 with no rule under it; menus #ddd with a #333 outline and 18px items; the separator is a 1px pencil line fading #888 to #b6ada5",
+          "claim": "Menu bar: the theme's 630x27 picture (pxm 6104) tiled from the screen's left, 22 rows shown; menus: paper (ppat 7125) from the inside top-left in a frame of pattern pens (ppat 129-133) tiled from the menu's corner, a 2px pencil shade, fixed pencil pixels where the pens meet; 18px items; the separator is ppat 133",
           "status": "measured",
-          "source": "clio.css capture, Mac OS 8.5 with the 8.5b6 Drawing Board theme in Infinite Mac (npm run capture:drawingboard), frame file-menu",
-          "upstream": "menu bar rows 0-21; File menu"
+          "source": "clio.css capture, Mac OS 8.5 with the 8.5b6 Drawing Board theme in Infinite Mac (npm run capture:drawingboard), frames file-menu, edit-menu and control-panels-menu; the theme file's ppat and pxm# resources, decoded by tooling/theme-resources.py, written by tooling/db-art.py and tooling/db-pens.py",
+          "upstream": "File, Edit, Apple and Control Panels menus agree"
         },
         {
           "era": "drawingboard",
@@ -377,10 +377,10 @@
         },
         {
           "era": "drawingboard",
-          "claim": "Menu paper grain (pink, peach and green flecks on #ddd) is not reproduced",
-          "status": "adapted",
-          "source": "clio.css",
-          "upstream": "texture, not a control part"
+          "claim": "Menu item underline: left 16px in, right 15px in, its middle piece tiled (the Appearance pop-up's ends 16px from both sides)",
+          "status": "measured",
+          "source": "clio.css capture, Mac OS 8.5 with the 8.5b6 Drawing Board theme in Infinite Mac (npm run capture:drawingboard), frames control-panels-menu and popup-open",
+          "upstream": "Energy Saver in the Control Panels menu"
         }
       ]
     },
@@ -507,23 +507,23 @@
         },
         {
           "era": "drawingboard",
-          "claim": "Push buttons: 20px; #cec6b5 face; pencil outline #777 top and left, #333 right, #111 bottom; a 2px #555 shade on the right and #777 below; the hatched ButtonFaceCorner (image 0) in the lower right of the face",
+          "claim": "Push buttons: four pattern pens (ppat 7070-7072, 7079) tiled so their pixel 0 is on the last column and row, the corner pixels they leave, the hatched ButtonFaceCorner (image 0) flush in the lower right of the #cec6b5 face, and a 1px pencil shade right and below; the label 1px lower than Platinum's",
           "status": "measured",
-          "source": "clio.css capture, Mac OS 8.5 with the 8.5b6 Drawing Board theme in Infinite Mac (npm run capture:drawingboard), frame themes-tab; the theme file's pxm# pixmaps, decoded by tooling/theme-resources.py and redrawn by tooling/db-art.py",
-          "upstream": "\"Save Theme…\" button; the face matches pixel for pixel, the hatch 394 of 432 pixels (the rest under the label)"
+          "source": "clio.css capture, Mac OS 8.5 with the 8.5b6 Drawing Board theme in Infinite Mac (npm run capture:drawingboard), frames themes-tab and energy-saver-alert; the theme file's ppat and pxm# resources, decoded by tooling/theme-resources.py, written by tooling/db-art.py and tooling/db-pens.py",
+          "upstream": "\"Save Theme…\" and \"Specify Settings\" agree"
         },
         {
           "era": "drawingboard",
-          "claim": "Default button: a second pencil line (#555 left and top, #111 right, #333 below) 2px out on the left and top, outside the shade on the right and below, with a #9f9a94 line between",
+          "claim": "Default button: a 3px band of pattern pens (ppat 7085 rows, 7086 columns) whose inner line is the box's edge, plus its corner pixels",
           "status": "measured",
-          "source": "clio.css capture, Mac OS 8.5 with the 8.5b6 Drawing Board theme in Infinite Mac (npm run capture:drawingboard), frame energy-saver-alert",
-          "upstream": "\"Close Message\" in Energy Saver's start-up notice"
+          "source": "clio.css capture, Mac OS 8.5 with the 8.5b6 Drawing Board theme in Infinite Mac (npm run capture:drawingboard), frame energy-saver-alert; the theme file's ppat and pxm# resources, decoded by tooling/theme-resources.py, written by tooling/db-art.py and tooling/db-pens.py",
+          "upstream": "\"Close Message\""
         },
         {
           "era": "drawingboard",
-          "claim": "Held buttons lose the hatch; the right pencil line steps 1px out (#555), the foot lightens to #756f66 and the shade becomes 1px of #999",
+          "claim": "Held buttons lose the hatch; the foot and right side take other pens (ppat 7126, 7127) tiled from the second column and row",
           "status": "measured",
-          "source": "clio.css capture, Mac OS 8.5 with Drawing Board (npm run capture:drawingboard), frame button-held",
+          "source": "clio.css capture, Mac OS 8.5 with the 8.5b6 Drawing Board theme in Infinite Mac (npm run capture:drawingboard), frame button-held; the theme file's ppat and pxm# resources, decoded by tooling/theme-resources.py, written by tooling/db-art.py and tooling/db-pens.py",
           "upstream": "\"Save Theme…\" held"
         },
         {
@@ -709,10 +709,10 @@
         },
         {
           "era": "drawingboard",
-          "claim": "Edit text: a 1px pencil line (#555 left, #888 top and right, #9f9a94 bottom), 1px of the panel colour inside it, then the white field",
+          "claim": "Edit text: a 1px line of pattern pens (ppat 7003-7006), the rows tiled from the white's left edge, the left column from its top and the right column from 1px higher; 1px of whatever is behind inside it, then white",
           "status": "measured",
-          "source": "clio.css capture, Mac OS 8.5 with the 8.5b6 Drawing Board theme in Infinite Mac (npm run capture:drawingboard), frame date-time",
-          "upstream": "the date field"
+          "source": "clio.css capture, Mac OS 8.5 with the 8.5b6 Drawing Board theme in Infinite Mac (npm run capture:drawingboard), frame date-time; the theme file's ppat and pxm# resources, decoded by tooling/theme-resources.py, written by tooling/db-art.py and tooling/db-pens.py",
+          "upstream": "both Date & Time fields agree"
         }
       ]
     },
@@ -771,10 +771,10 @@
         },
         {
           "era": "drawingboard",
-          "claim": "Pop-up menu: 20px, 1px pencil outline, #cec6b5 face; the 7x9 double arrow 5px from the right and 4px down; the hatched ButtonFaceCorner (image 2) ends 19px from the right, on the bottom edge",
+          "claim": "Pop-up menu: 20px, four pattern pens (ppat 7095-7098; disabled: their other rows) tiled from the last column and row, the corner pixels they leave, #cec6b5 face; the 7x9 double arrow 5px from the right and 4px down; the hatched ButtonFaceCorner (image 2, disabled image 3) ends 19px from the right",
           "status": "measured",
-          "source": "clio.css capture, Mac OS 8.5 with the 8.5b6 Drawing Board theme in Infinite Mac (npm run capture:drawingboard), frame appearance; the theme file's pxm# pixmaps, decoded by tooling/theme-resources.py and redrawn by tooling/db-art.py",
-          "upstream": "the Appearance pop-up; arrow and hatch found 1:1 in the capture"
+          "source": "clio.css capture, Mac OS 8.5 with the 8.5b6 Drawing Board theme in Infinite Mac (npm run capture:drawingboard), frame appearance; the theme file's ppat and pxm# resources, decoded by tooling/theme-resources.py, written by tooling/db-art.py and tooling/db-pens.py",
+          "upstream": "Appearance, Highlight Color and Variation pop-ups"
         }
       ]
     },
@@ -831,10 +831,10 @@
         },
         {
           "era": "drawingboard",
-          "claim": "List boxes: a 2px olive #9c9c63 line, 1px of the panel colour inside it, white rows, the chosen row #ccf with black text; its vertical scroll bar has #555 edges and a two-pixel #777 rail",
+          "claim": "List boxes: a 2px olive #9c9c63 line, 1px of whatever is behind inside it (the pane's paper), white rows, the chosen row #ccf with black text",
           "status": "measured",
-          "source": "clio.css capture, Mac OS 8.5 with Drawing Board (npm run capture:drawingboard), frame desktop-tab",
-          "upstream": "Appearance > Desktop pattern list; arrows and scroll box found 1:1"
+          "source": "clio.css capture, Mac OS 8.5 with the 8.5b6 Drawing Board theme in Infinite Mac (npm run capture:drawingboard), frame desktop-tab",
+          "upstream": "pattern list, lower-left corner"
         }
       ]
     },
@@ -937,10 +937,10 @@
         },
         {
           "era": "drawingboard",
-          "claim": "Track: #ece6e4 with a #aaa edge, a two-pixel pencil rail (#888, #555) through the middle and a #777 far edge; scroll box from the theme's ends, stretch and grip",
+          "claim": "Track: #ece6e4 ruled by pattern pens (ppat 7045-7049: the edges and a double centre line) tiled from the track's start; scroll box from the theme's ends, stretch and grip, whose colours Mac OS passes through 16 bits (5 per channel)",
           "status": "measured",
-          "source": "clio.css capture, Mac OS 8.5 with the 8.5b6 Drawing Board theme in Infinite Mac (npm run capture:drawingboard), frame themes-tab; the theme file's pxm# pixmaps, decoded by tooling/theme-resources.py and redrawn by tooling/db-art.py",
-          "upstream": "theme list scroll bar; HThumbLeft/Right/Center/Stretch found in place. Chromium will not draw a scroll box shorter than its own minimum, where the theme's is 15px"
+          "source": "clio.css capture, Mac OS 8.5 with the 8.5b6 Drawing Board theme in Infinite Mac (npm run capture:drawingboard), frames themes-tab and desktop-tab; the theme file's ppat and pxm# resources, decoded by tooling/theme-resources.py, written by tooling/db-art.py and tooling/db-pens.py",
+          "upstream": "the Themes list's horizontal bar and the pattern list's vertical bar"
         }
       ]
     },
@@ -1020,10 +1020,10 @@
         },
         {
           "era": "drawingboard",
-          "claim": "Alerts: a 1px brown pencil frame (#996633 top and left with #cc9966 outside, #993333 right and bottom) on #e7ded6, and a #777 band 7px wide on the right and 8px deep below",
+          "claim": "Alerts: the theme's eight Alert pictures (6127-6134) round the outline, edges tiled from their ends, on the window paper from 4px inside",
           "status": "measured",
-          "source": "clio.css capture, Mac OS 8.5 with the 8.5b6 Drawing Board theme in Infinite Mac (npm run capture:drawingboard), frame energy-saver-alert",
-          "upstream": "Energy Saver's start-up notice; the frame's shade drifts along the pencil line, which a flat colour does not follow"
+          "source": "clio.css capture, Mac OS 8.5 with the 8.5b6 Drawing Board theme in Infinite Mac (npm run capture:drawingboard), frame energy-saver-alert; the theme file's ppat and pxm# resources, decoded by tooling/theme-resources.py, written by tooling/db-art.py and tooling/db-pens.py",
+          "upstream": "every piece found 1:1 round Energy Saver's start-up notice"
         },
         {
           "era": "drawingboard",
@@ -1034,10 +1034,10 @@
         },
         {
           "era": "drawingboard",
-          "claim": "Modal and plain dialogs: the same geometry framed in grey (#333 with #999 outside on the left)",
+          "claim": "Modal dialogs: the Modal pictures (6135-6142), which have the alert's sizes, placed the same way",
           "status": "inferred",
-          "source": "the theme file's pxm# pixmaps, decoded by tooling/theme-resources.py and redrawn by tooling/db-art.py",
-          "upstream": "Modal_Left (#555/#999) and Modal_Right pixmaps; no modal dialog in the captures"
+          "source": "the theme file's ppat and pxm# resources, decoded by tooling/theme-resources.py, written by tooling/db-art.py and tooling/db-pens.py",
+          "upstream": "no modal dialog was on screen in the captures"
         }
       ]
     },

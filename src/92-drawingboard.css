@@ -4,11 +4,17 @@
    replaces its colours, geometry and art. clio.drawingboard.css is a build of
    this file with Drawing Board as the page default.
    Values: Infinite Mac, Mac OS 8.5 with the theme installed
-   (`npm run capture:drawingboard`), read 1:1; control art redrawn pixel for
-   pixel from the theme's own 'pxm#' resources (tooling/db-art.py), each part
-   found 1:1 in the capture. The theme's paper and sketch textures are not
-   reproduced: surfaces use their dominant measured colour. See EVIDENCE.md. */
+   (`npm run capture:drawingboard`), read 1:1. The art is the theme's own:
+   its 'pxm#' pictures and 'ppat' patterns (papers and the pattern pens the
+   theme draws its pencil lines with), written to art/drawingboard/ by
+   tooling/db-art.py and tooling/db-pens.py and placed as Mac OS places them,
+   each found 1:1 in the capture. The stylesheet loads them from art/ beside
+   itself, as it loads fonts/. See EVIDENCE.md. */
 [data-era="drawingboard"] {
+  /* Where a 128px theme pattern starts. Mac OS sometimes starts one half a
+     tile (64px) earlier, depending on where the window sits on screen; a page
+     matching a particular screen can set 64px on that window or control. */
+  --clio-db-phase: 0px;
   --clio-ink: #313131;
   --clio-paper: #e7ded6;
   --clio-face: #cdc6bd;
@@ -17,19 +23,20 @@
 
   --clio-border: 1px solid #555555;
 
-  /* Window: 1px #222 outline, a 4px #cdc6bd frame, a #555 line round the
-     content; right and bottom a 6px #777 pencil band closed by #333. */
+  /* Window: the theme's own nine frame pictures (see the Window rules), on
+     the content paper. The frame is 6px on each side inside the outline; the
+     title bar's 22 rows include the outline and the #555 rule. */
   --clio-window-bg: #cdc6bd;
   --clio-pane-bg: #e7ded6;
-  --clio-window-border: 1px solid #222222;
-  --clio-window-shadow: 6px 6px 0 #777777, 7px 7px 0 #333333;
-  --clio-window-padding: 0 4px 4px;
+  --clio-window-border: 0 none;
+  --clio-window-shadow: none;
+  --clio-window-padding: 0 6px 6px;
 
-  /* Title bar: 20px on the frame colour, then the #555 rule. Boxes 11px,
-     4px below the bar's top. */
-  --clio-titlebar-height: 21px;
-  --clio-titlebar-padding: 3px 0 0;
-  --clio-titlebar-border: 1px solid #555555;
+  /* Title bar: 22 rows of the frame picture. Boxes 11px, 5px below the top. */
+  --clio-titlebar-height: 22px;
+  --clio-titlebar-padding: 4px 0 0;
+  --clio-titlebar-margin: 0 -1px;
+  --clio-titlebar-border: 0 none;
   --clio-titlebar-row: 16px;
   --clio-titlebar-inactive-bg: #cdc6bd;
   --clio-title-bg: transparent;
@@ -38,51 +45,77 @@
 
   /* Menu bar: 22px of #cec6b5 paper, no rule under it. Menus: #ddd paper,
      #333 outline, 18px items (20px with an icon); the chosen title and item
-     are underlined in pencil: left, stretched centre and right pieces, 15px
-     in from the menu's sides and 1px above the item's foot. */
+     are underlined in pencil: left, stretched centre and right pieces, 16px
+     in from the menu's left, 15px from its right (Control Panels; the Appearance
+     pop-up's sits 16px from both), 1px above the item's foot. */
   --clio-menubar-height: 22px;
-  --clio-menubar-bg: #cec6b5;
+  --clio-menubar-bg: url("art/drawingboard/menubar.png") 0 0 / 630px 27px repeat-x, #cec6b5;
   --clio-menubar-border: 0 none;
   --clio-menubar-shadow: none;
   --clio-menu-title-active-bg:
     var(--clio-art-db-title-underline-left) left 0 bottom 3px / 15px 3px no-repeat,
     var(--clio-art-db-title-underline-right) right 0 bottom 3px / 16px 3px no-repeat,
-    var(--clio-art-db-title-underline) left 15px bottom 3px / calc(100% - 31px) 4px no-repeat;
+    var(--clio-art-db-title-underline-tiled) left 15px bottom 3px / calc(100% - 31px) 4px no-repeat;
   --clio-menu-title-active-fg: #313131;
   --clio-menu-title-active-shadow: none;
+  /* Menus: the theme's paper inside a pencil frame (see the Menus rules). */
   --clio-menu-bg: #dddddd;
-  --clio-menu-border: 1px solid #333333;
-  --clio-menu-shadow: 6px 6px 0 #777777;
+  --clio-menu-border: 1px solid transparent;
+  --clio-menu-border-top-width: 1px;
+  --clio-menu-shadow: none;
   --clio-menu-item-height: 18px;
   --clio-menu-item-active-bg:
-    var(--clio-art-db-menu-underline-left) left 15px bottom 1px / 29px 3px no-repeat,
+    var(--clio-art-db-menu-underline-left) left 16px bottom 1px / 29px 3px no-repeat,
     var(--clio-art-db-menu-underline-right) right 15px bottom 1px / 36px 3px no-repeat,
-    var(--clio-art-db-menu-underline) left 44px bottom 1px / calc(100% - 95px) 3px no-repeat;
+    var(--clio-art-db-menu-underline-tiled) left 45px bottom 1px / calc(100% - 96px) 3px no-repeat;
   --clio-menu-item-active-fg: #313131;
   --clio-menu-item-active-shadow: none;
-  --clio-menu-separator: linear-gradient(to right, #888888, #9f9a94 30%, #b6ada5) 0 4px / 100% 1px no-repeat;
+  --clio-menu-separator: none;
   --clio-menu-separator-height: 9px;
 
-  /* Push buttons and pop-up menus: 20px, a pencil outline (#777 top and left,
-     #333 right, #111 bottom; a 2px #555 shade on the right, #777 below) on #cec6b5,
-     with the hatched ButtonFaceCorner in the lower right of the face. */
-  --clio-button-bg: var(--clio-art-db-button-corner) right -1px bottom / 24px 24px no-repeat, #cec6b5;
+  /* Push buttons: four pattern pens (ppat 7070-7072, 7079) tiled from the last
+     column and row, the corner pixels they leave (tooling/db-pens.py), the
+     hatched ButtonFaceCorner in the lower right of the #cec6b5 face, and a
+     1px pencil shade right and below (the Buttons rules). Held: other pens
+     for the foot and right side, tiled from the second column and row, and no
+     hatch ("Save Theme…" held). */
+  --clio-button-bg:
+    url("art/drawingboard/pens/button-left.png") left 0 bottom 1px / 1px 16px repeat-y border-box,
+    url("art/drawingboard/pens/button-right.png") right 0 bottom 1px / 1px 16px repeat-y border-box,
+    url("art/drawingboard/pens/button-top.png") right 1px top 0 / 64px 1px repeat-x border-box,
+    url("art/drawingboard/pens/button-bottom.png") right 1px bottom 0 / 64px 1px repeat-x border-box,
+    var(--clio-art-db-button-corner) right 0 bottom / 24px 24px no-repeat padding-box,
+    #cec6b5;
   --clio-button-fg: #313131;
-  --clio-button-border: 1px solid #333333;
+  /* The label sits 1px lower than Platinum's (themes tab, "Save Theme…"). */
+  --clio-button-padding: 2px 10px 0;
+  --clio-button-border: 1px solid transparent;
   --clio-button-radius: 0;
-  --clio-button-shadow: 2px 0 0 #555555, 0 1px 0 #777777, 2px 1px 0 #777777;
-  /* Held ("Save Theme…"): the hatch goes, the right pencil line steps 1px
-     out (#555), the foot lightens to #756f66 and the shade is 1px of #999. */
-  --clio-button-active-bg: #cec6b5;
+  --clio-button-shadow: none;
+  --clio-button-active-bg:
+    url("art/drawingboard/pens/button-held-left.png") left 0 bottom 1px / 1px 16px repeat-y border-box,
+    url("art/drawingboard/pens/button-held-right.png") right 0 top 1px / 1px 16px repeat-y border-box,
+    url("art/drawingboard/pens/button-held-top.png") right 1px top 0 / 64px 1px repeat-x border-box,
+    url("art/drawingboard/pens/button-held-bottom.png") left 1px bottom 0 / 32px 1px repeat-x border-box,
+    #cec6b5;
   --clio-button-active-fg: #313131;
-  --clio-button-active-shadow: 1px 0 0 #555555, 2px 0 0 #999999, 0 1px 0 #999999, 2px 1px 0 #999999;
-  --clio-button-frame: none;
-  --clio-button-frame-held: none;
-  --clio-button-frame-disabled: none;
+  --clio-button-active-shadow: none;
+  --clio-button-frame: url("art/drawingboard/pens/button-corners.png");
+  --clio-button-frame-held: url("art/drawingboard/pens/button-held-corners.png");
+  --clio-button-frame-disabled: url("art/drawingboard/pens/button-corners.png");
+  --clio-button-frame-slice: 5;
   --clio-ring-frame: none;
-  --clio-popup-frame: none;
-  --clio-popup-bg: #cec6b5;
-  --clio-popup-border: 1px solid #555555;
+  /* Pop-up frame: four pattern pens (ppat 7095-7098) tiled from the last
+     column and row, and the corner pixels they leave (tooling/db-pens.py). */
+  --clio-popup-frame: url("art/drawingboard/pens/popup-corners.png");
+  --clio-popup-frame-slice: 5;
+  --clio-popup-bg:
+    url("art/drawingboard/pens/popup-left.png") left 0 bottom 1px / 1px 16px repeat-y border-box,
+    url("art/drawingboard/pens/popup-right.png") right 0 bottom 1px / 1px 16px repeat-y border-box,
+    url("art/drawingboard/pens/popup-top.png") right 1px top 0 / 64px 1px repeat-x border-box,
+    url("art/drawingboard/pens/popup-bottom.png") right 1px bottom 0 / 64px 1px repeat-x border-box,
+    #cec6b5;
+  --clio-popup-border: 1px solid transparent;
   --clio-popup-radius: 0;
   --clio-popup-shadow: none;
   --clio-popup-padding: 0 30px 0 7px;
@@ -94,12 +127,12 @@
   --clio-check-size: 14px;
   --clio-radio-size: 16px;
 
-  /* Edit text: a 1px pencil line (#555 left, #888 top and right, #9f9a94
-     bottom), 1px of the panel
-     colour inside it, then the white field (Date & Time). */
-  --clio-field-border: 1px solid #888888;
-  --clio-field-shadow: inset 0 0 0 1px #e7ded6;
-  --clio-field-focus-shadow: inset 0 0 0 1px #e7ded6;
+  /* Edit text: a 1px pencil line drawn with pattern pens, 1px of whatever is
+     behind (the paper) inside it, then the white field (Date & Time; the
+     Text fields rules). */
+  --clio-field-border: 2px solid transparent;
+  --clio-field-shadow: none;
+  --clio-field-focus-shadow: none;
   --clio-button-disabled-fg: #8c8c8c;
   --clio-button-disabled-border: 1px solid #888888;
 
@@ -135,22 +168,24 @@
   --clio-scrollbar-thumb-shadow: none;
   --clio-scrollbar-corner: var(--clio-art-db-grow) 0 0 / 16px 16px no-repeat, #cdc6bd;
 
-  /* Dialogs: a 1px pencil frame on #e7ded6 with a #777 band 7px wide on the
-     right and 8px deep below; alerts are framed in brown (Energy Saver's
-     start-up notice), modal dialogs in grey (Modal pixmaps). */
+  /* Dialogs: the theme's frame pictures (see the Dialogs rules); plain dialogs
+     keep a 1px pencil frame with a #777 band 7px wide on the right and 8px
+     deep below. */
   --clio-dialog-bg: #e7ded6;
-  --clio-modal-border: 1px solid #333333;
-  --clio-modal-frame: -1px 0 0 #999999, 7px 0 0 #777777, 0 8px 0 #777777, 7px 8px 0 #777777;
+  --clio-modal-border: 1px solid transparent;
+  --clio-modal-frame: none;
   --clio-plain-dialog-border: 1px solid #333333;
   --clio-plain-dialog-shadow: 7px 0 0 #777777, 0 8px 0 #777777, 7px 8px 0 #777777;
 
   --clio-details-bg: #e7ded6;
   --clio-details-border: 1px solid #555555;
   --clio-details-shadow: none;
-  /* List boxes (Desktop tab pattern list): a 2px olive #9c9c63 line with 1px
-     of the panel colour inside it; the chosen row #ccf. */
+  /* List boxes (Desktop tab pattern list): a 2px olive #9c9c63 line, 1px of
+     whatever is behind (the pane's paper) inside it, then white; the chosen
+     row #ccf. */
   --clio-list-border: 2px solid #9c9c63;
-  --clio-list-shadow: inset 0 0 0 1px #e7ded6;
+  --clio-list-shadow: none;
+  --clio-list-bg: #ffffff;
   --clio-group-border: 1px solid #777777;
   --clio-group-bg: transparent;
   --clio-group-shadow: none;
@@ -162,86 +197,220 @@
   --clio-progress-border: 1px solid #756f66;
   --clio-progress-shadow: none;
   --clio-tab-height: 27px;
-  --clio-tab-panel-bg: #e7ded6;
+  /* Tab pane paper (ppat 7115), from the pane's inner top-left. */
+  --clio-tab-panel-bg: url("art/drawingboard/tab-paper.png") 0 0 / 256px 64px, #e7ded6;
   --clio-tab-panel-border: 1px solid #555555;
 
   /* Art: redrawn from the theme's 'pxm#' pixmaps by tooling/db-art.py. */
-  --clio-art-db-close: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALBAMAAABbgmoVAAAAJ1BMVEV3d3eZmZnOvbXWxr0zMzNmZmZVVVXWx7XNxr0iIiKIiIhERESfmpT0HRw7AAAAWElEQVR4nAFNALL/AZmrV65Q9wSqRerv38gCBasGUBAABABQ+rP6DgIAAAcAVgAAZgrKHAawAUNA/rfwGAT/ALBSBbgEAQVQtQAIAgUAClAAAAJRwRDBYVA2qRiiC2SMKgAAAABJRU5ErkJggg==");
-  --clio-art-db-close-on: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALBAMAAABbgmoVAAAAJFBMVEV3d3eZmZnOvbXWxr1mZmZVVVXWx7XAvL7Nxr2IiIhERESfmpTF6FeSAAAAWElEQVR4nAFNALL/AYehAk76DgEjZfy0MBgBiKtX/gD4AThLAbT6TgJQAAcAVuAAVQm5GwWgBC4uyB0N4AT/AbBSBfgEAQVQtQBIArUACVAAAAFyxvJYBvj7eRmIxOwQoAAAAABJRU5ErkJggg==");
-  --clio-art-db-collapse: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALBAMAAABbgmoVAAAAJFBMVEVSUlLNxb3Vxb3Fvb0gICBBQUExMTFiYmLFtKzNvbRzc3NzamIa7F3hAAAAWElEQVR4nAFNALL/AXoxxeXv/ACxEREZkUAE8QF/AIA/Av9/AIAAAATGEP4zAfAEEpgACPg/BP5k3/AB8AAJGRmZGVABARh6/gC/AVHAAAcBNwTzRAAAAOtK0xpHEth5uwAAAABJRU5ErkJggg==");
-  --clio-art-db-collapse-on: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALBAMAAABbgmoVAAAAHlBMVEXNxb3Vxb3Fvb3NvaxBQUExMTFiYmLFtKzNvbQgICBPKo7xAAAAUklEQVR4nBXCoQ2AMBRF0fsJCU/+GZgAwx4oJDMgUBgqGYQ9mAZNZZM2DeHk4C5OmjUmJcw4CEAI4DZ7HXNB/NulPlMuTX/d7xYN7RVw6ARIMHwvfxQD4bPhrgAAAABJRU5ErkJggg==");
-  --clio-art-db-zoom: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALBAMAAABbgmoVAAAAIVBMVEV3d3fOvbXWxr1mZmYzMzNVVVV1b2bNxr0iIiKIiIhEREQ35tUyAAAAWElEQVR4nAFNALL/AISqOqMDMAL9aD20JGAAh3ciB3cAAVLVS/DFOQRVJfv1ANACq/sFAAAABDLm0vMAAAL9By7rSzACJgEFVbVAAtq1AABQAAQHgwAAAPYgKhldM5kKOgAAAABJRU5ErkJggg==");
-  --clio-art-db-zoom-on: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALBAMAAABbgmoVAAAAJFBMVEV3d3fOvbXWxr1VVVV1b2YzMzNmZmbWx7XAvL7Nxr0iIiJERERe15yOAAAAWElEQVR4nAFNALL/AZEHgaDQ9wCREpk5KXAAKZkiCZmQAJIpkkIpIAIHcAD3AHAE+QAHAACAAhO5vDAAAAERgAGQcP4ECAEHd5D3AviXAABwAAERcKjogP+tCBjRD2kaDAAAAABJRU5ErkJggg==");
-  --clio-art-db-check: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAALBAMAAAC9q6FRAAAAHlBMVEUAAADn3s13d3dVVVVmZmYzMzMRERGIiIifmpTd1s8+Ft1dAAAAAXRSTlMAQObYZgAAAD1JREFUeJxjYMAOGJNYFV9f/GjEqFjBUMHAwMrkwfCjgYGBgUXgR8cPkAJHwYmCgoKijGX3PwgyMDCi6wcABxcMUdKMKbcAAAAASUVORK5CYII=");
-  --clio-art-db-check-on: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAALBAMAAAC9q6FRAAAAMFBMVEUAAADn3s13d3fMMwBVVVVmZmYzMzPMZma8va4RERFmMzPMmZmIiIjMZjOfmpTd1s9AXe64AAAAAXRSTlMAQObYZgAAAFVJREFUeJxjYAADdkYwxZHBBKZXCzBO4gq6No3fmEHx/3/ByxclGeb/KfxrLCjJZMB4royLgYGpSfrfAROGv4wn5zp8vsDAzGLOIPtlOlgzdwEDAwMAUkYWALx+af8AAAAASUVORK5CYII=");
-  --clio-art-db-check-mixed: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAALBAMAAAC9q6FRAAAAIVBMVEUAAADn3s13d3dVVVVmZmYzMzMRERG8va6IiIifmpTd1s+bAJF9AAAAAXRSTlMAQObYZgAAAD9JREFUeJxjYMAOGJPYDLsEGY2Z9jsJvrvrsovJk+Fvu8ktFhbZW5fupFaxMroyay5gYGBhbDv/QZCBgQldPwBwWQ8kb+edKgAAAABJRU5ErkJggg==");
-  --clio-art-db-check-pressed: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAALBAMAAAC9q6FRAAAAHlBMVEUAAACtraR3d3dVVVVmZmYzMzMRERG1tamIiIifmpR3jb3yAAAAAXRSTlMAQObYZgAAAD9JREFUeJxjYMAOGJPYDF8d/GjMtN/wR99lJz4WD4YGjjgGBiaFHwx1DAwMLDsucDxgYPjP4iry4T4DAxO6fgCJMQ9weovSJQAAAABJRU5ErkJggg==");
-  --clio-art-db-check-on-pressed: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAALBAMAAAC9q6FRAAAAMFBMVEUAAACtraR3d3fMMwBVVVVmZmYzMzPMZma8va4RERG1talmMzPMmZmIiIjMZjOfmpQx/Bu9AAAAAXRSTlMAQObYZgAAAFRJREFUeJxjYAADdkYwxZHBBKZ3CzBO4k662s5nwqD4/6Ng8auVTHX/GthOH2BgcmA8sGYlAwNTkfDekscMfxlv9gY8vsDAwsDA0HccYhZPAQMDAwB9zxbKshk9awAAAABJRU5ErkJggg==");
-  --clio-art-db-check-disabled: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAALBAMAAAC9q6FRAAAAFVBMVEUAAADn3s13d3e8va6IiIifmpTd1s8NDXd/AAAAAXRSTlMAQObYZgAAADxJREFUeJxjYMAOGFX/OXxi+H+ORUeUYQ8DAzPTVYbfAQwMDCwCv7f+ZmBgYJLe4A1Wp6Ig+J6B4R+6fgA/Pg1k0hHPvAAAAABJRU5ErkJggg==");
-  --clio-art-db-check-on-disabled: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAALBAMAAAC9q6FRAAAAHlBMVEUAAADn3s13d3fMZma8va7MmZmIiIjMZjOfmpTd1s+i1wt3AAAAAXRSTlMAQObYZgAAAFdJREFUeJxjYAADViYwxegN4ToLsGj8KfjC8O8+S6QEQ6fbry9MK/7uaJE5wMCi8P/FoXsMDEwW9TYyMgwMjGoOSvcYGP4wMDCIhzIwMDAxMLz6zcDAAABjyhWPX3Js6AAAAABJRU5ErkJggg==");
-  --clio-art-db-radio: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAMBAMAAACZySCyAAAAIVBMVEUAAACtraR3d3fOxrURAABVVVUzMzNmZmaIiIhERETn3tZW+H80AAAAAXRSTlMAQObYZgAAAF9JREFUeJwVjLEJgDAQAO8/yQhWgkgcQHATGxvns7FzEbEXRVwjGuWb44rjADyAQBfzueFxQ6W7yadOPlBc/dCAFK32d7msQphSSCPKe3kOaySnLDZ755hPW0IwKOBMfix8F/2sz51YAAAAAElFTkSuQmCC");
-  --clio-art-db-radio-on: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAMBAMAAACZySCyAAAAJ1BMVEUAAAB3d3fOxrURAABVVVUzMzNERESIiIjMZjOfmpTMMzNmMwDn3tYxTsB6AAAAAXRSTlMAQObYZgAAAF5JREFUeJxjYGBgYGZgYGBgZGBQVPp3/wEDEwNT2KNnQQwMTAz/mdsW/wdJsaj8SZOKYWCaoj/Z3ZDfZBIjA0ub4v9fMQxMDH8/MDCcBSlm/MtwlxHJHBBgARFMMCsAgiwX8BM0Lm0AAAAASUVORK5CYII=");
-  --clio-art-db-radio-on-pressed: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAMBAMAAACZySCyAAAAJFBMVEUAAAB3d3fOxrURAABVVVUzMzNmZmaIiIhERETMMzOfmpTn3tZZBRjVAAAAAXRSTlMAQObYZgAAAGFJREFUeJxjYGBgYGZgYGBgZGBQVPp3/wEDCwNTmJzS7j4GJob/TMws/xkYmBiYFf4wODMwMC3Rn/Np7XmTRYwMLNt/Pv2dw8DE8PcAC8NdkBrGP7//MSKZAwIsIIIJZgUAmTMZsEI8SiQAAAAASUVORK5CYII=");
-  --clio-art-db-radio-disabled: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAMBAMAAACZySCyAAAAG1BMVEUAAACtraR3d3fOxrVmZma8va6IiIifmpTn3tZE/vr3AAAAAXRSTlMAQObYZgAAAGBJREFUeJxjYGBgYGSAEI0f//M3MDAxcEwRFZjBwMDE8JP5H/tPEIOt4B9DGQMDo6HhZrtHsu8/MTKwN/5m/V/JwMTw6wITwymQGva9f/4eBzF+5Hx8kwEyEmoyExQzAACtkRpJp3vSNQAAAABJRU5ErkJggg==");
-  --clio-art-db-radio-on-disabled: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAMBAMAAACZySCyAAAAIVBMVEUAAACtraR3d3fOxrVmZma8va6IiIjMZjPMMzOfmpTn3tb5qPl2AAAAAXRSTlMAQObYZgAAAFhJREFUeJxjYGBgYGSAEAs//udPYGBk4OJW+vXyGUhMXGK5IEiKU4NFSamdgdHQUOyu8q/znxgZOHliGDjaGZgYfjgtZ7sBMoBLtFxUCskcqKEMDExQzAAAkHUTriZpzUgAAAAASUVORK5CYII=");
-  --clio-art-db-up: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAM1BMVEWtraS2raXEtah3d3eZmZnOxrXOvbXWxr1mZmZVVVUzMzN1b2bNxr2IiIhERESfmpTGvq9YmzpvAAAAhklEQVR4nDXPUQ7DMAgD0HTMBq8O3f1POyVd/flkQIyKmE8iqkd5ByRAUn9IkzT5XQAYfF3c0SiscPYDsaehBpxgjdgNdE//wWkjWkXYfkAf6bhhOtOHWop1/xxzeSw4bawGnIeqQn3djXRK66N6P7C2VL94cYNBmD3XM5nnmC1CMwYlZZ4/hqcIqDHS20EAAAAASUVORK5CYII=");
-  --clio-art-db-up-on: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAAJFBMVEXGxsZ3d3eZmZlmZmZVVVWqqqozMzPu7u51b2bs5uSIiIhEREQ9BgGPAAAAaUlEQVR4nGMwlFqlpLVK0JrRMoEBBH4zgSkGBgYw4wCUwQiSZXrAwPCLgYHhP0iE/SdUqmESlKEN1jWB4R9rQQMDKxNI7QSIgY9fXJgJFrnwj62OgYGFgSH01zUdiC4OBxYI45sAAwMDAF/8GF0Uv0f/AAAAAElFTkSuQmCC");
-  --clio-art-db-up-off: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAM1BMVEWtraTGxsbe3tJ3d3eZmZnOxrXOvbXWxr1mZmZVVVWqqqru7u51b2a8va7s5uSIiIhERERYS2LJAAAAa0lEQVR4nF3PwRKDMAgE0DWsCm0M+f+vdRiSNsoFeLMcgIq4O0l3F9EObf8qrdkD2gLl84KLEyQHDNAJ5PUAkBmZQI6IwqN9AxBTTYiLvMlEBEBuvwRixwLjka0MKMsvFd7t2M0Fh5mdZ70B+2wK4E5cxqMAAAAASUVORK5CYII=");
-  --clio-art-db-down: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAOVBMVEW2raUzMzMREREiIiJERETEtajOxrVmZmZ1b2ZVVVW8va7Nxr3Gvq+traR3d3fOvbXWxr2IiIifmpSzzuf6AAAAkElEQVR4nE3OQQ7DMAhEUZwayNROfvH9D1slbaXOAqQnJMZqzypWpVpW7WmCAB5175WmOWHSBDC/YNm79tOZs0y4P1vrXXmwYlnHfUqZJ2CR1oDYu5Swxri/EJap+kIShGfXOWx8LoKIbGIcPwjIfveAHxw6WX8QUX4V/QM4uBuZbF2xxWu4m0zbtm3tGp+8AbCNCjItjRisAAAAAElFTkSuQmCC");
-  --clio-art-db-down-on: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAAKlBMVEXe3tJ3d3e7u7tVVVVmZmZ1b2YzMzPs5uS1takREREiIiKIiIhERESfmpR6hct0AAAAd0lEQVR4nC3NsRGCQBhE4XcrHHZgbmyAkSlVWId2cKQE2MKVYKahmTNGlGBqARA4/KNzwCb7Zc/dHvhXiSmAncAJGAP8BO2xiRSCc9Qeuec1v292mCL95QOow9dFArAeFnz9gvQT3gFwh4psBJsSzIl5mba2SvgDbx4cLrmbvaoAAAAASUVORK5CYII=");
-  --clio-art-db-down-off: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAAKlBMVEWtraTe3tKZmZnOvbVmZmZ1b2ZVVVUzMzO8va7s5uQRERGIiIhERESfmpQ/j6rRAAAAcElEQVR4nGPY6r35tlvJ7hDGTAMGEPjDBKYYGP6zMDA8X/Tv4Qx2JgaGSQxM6gxMTAkMDQz/Chm+M21g+McAUsj0gYGD4R+IwcDwEyLCwMDB8B/CADEZGFgYGBgS2KEMMUaoFJiG2cXAwij4lxnEAAC2bxZejbIxNAAAAABJRU5ErkJggg==");
-  --clio-art-db-left: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAOVBMVEW2raUzMzMAAACZmZkiIiJERETEtajOxrVmZmZ1b2ZVVVW8va61tanNxr2traR3d3fOvbWIiIifmpQ781XGAAAAeElEQVR4nH3OwQ4DIQgE0KGKBaw67v9/bONus6k9dC4kL0wAPrYYjFteN7RrzD/QKjoYN5RjuhMBq0+S9fCw4WCGMfWpIqLqoiowtukWYREjhyp8Fc6KhJD1hHW0IM1xQfu8sFLTBoVMkNa+V/IvdDzERExsxd39DeeyDGN6n3pqAAAAAElFTkSuQmCC");
-  --clio-art-db-left-on: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAANlBMVEWtraS2raXe3tJ3d3fEtaiZmZkAAADOvbVmZmZ1b2ZVVVUzMzO8va7s5uQiIiKIiIhERESfmpSufqxwAAAAZUlEQVR4nJWOQRKFMAhDaav+hFiL97/sH7qqG2fM8sEjGNsjMPRnPoGzWF3Adg+y126oc3rT0Vjmxm4jJEVQEUplEO5wb5dHGFP4pSJXtiSYR8s+2goyNWtXMB9L7x0cggQhQ5J/rSILCCS2pbkAAAAASUVORK5CYII=");
-  --clio-art-db-left-off: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAAMFBMVEWtraS2raXe3tJ3d3eZmZkAAABmZmZ1b2ZVVVUzMzO8va61tans5uQiIiKIiIhERERALJxGAAAAbUlEQVR4nGMsPsAAAswsP2eCGf+ZwBQDAzOMwQBhXDX7BWb8S/ZKYGFgYLiyxOHbUiaGexZLGBi4/jAxlDmAZNlYBNYwXFnCwPAbpFin7QBUO9OJaxDtDAyrGJgUICxOmBWfGSMFdBkuMAgyAAA6ABlGeCi9EwAAAABJRU5ErkJggg==");
-  --clio-art-db-right: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAP1BMVEW2raUzMzMREREAAACZmZkiIiJERETEtajOxrVVVVVmZmZ1b2a8va7Nxr3Gvq+traR3d3fOvbXWxr2IiIifmpSydKtyAAAAkklEQVR4nF2OUQ7EIAgFwW2xUNE+5f5n3WCT/VgTECcjQFJKycgspShVICKoghDkMOIBAO6ZZoSlgQPTA34BaQBomI4fcNyyYqSJDiP3Q9hE79VeIHKeLMKiH14rv4iIGjOradsACObTFmWTanmpxn69IMfGQM+O6GMbQKDWngXtPbb7D4Dcsw2jxzTPk1MuZvsCI2sL90wZjq0AAAAASUVORK5CYII=");
-  --clio-art-db-right-on: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAANlBMVEWtraQAAADe3tKZmZl3d3e2raXOxrXOvbVVVVVmZmZ1b2YzMzPs5uQREREiIiKIiIhERESfmpRENiuTAAAAaUlEQVR4nH2O4Q7CQAiDT52urHD03v9lDXO7ZInaAD8+mrRNEVFbVxFofpV9B/d9/jg25TgfBR6iCVseQOqdEoUbM90aJcFIwuAF3H2Q3fKTswNgnKlH7MyYPabhV/ULWAylJZ/r+iLtDULpC3IUFog5AAAAAElFTkSuQmCC");
-  --clio-art-db-right-off: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAANlBMVEWtraS2raXEtaje3tKZmZl3d3fOxrXOvbVVVVVmZmYzMzO8va7s5uQRERHNxr2IiIhERESfmpTPPDkEAAAAYUlEQVR4nG2OCw6AMAhD62cqo7h5/8sapjNz2gAJj0+KbGaeXrPZhpEvCWIPEsmpRAP6DcyAPmCnzq4bCTJZQIG4Tu5OQa0/2pOycTRP3ZiiM8Y6/7X+AUE2V0jDui4xygmR5Ao1ckGO5AAAAABJRU5ErkJggg==");
-  --clio-art-db-popup-arrow: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAJBAMAAAAMdiuQAAAAElBMVEUAAAB3d3dmZmZ1b2ZVVVWIiIhiQXa9AAAAAXRSTlMAQObYZgAAADFJREFUeJxjYGBiYGBiEDZgYGJkUGZgVH6n/IcBBBhN/j7iZWAOFWRg+vvgPwNIEQMAjI4ICZgc6TMAAAAASUVORK5CYII=");
-  --clio-art-db-popup-arrow-off: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAJAgMAAACDNt4wAAAACVBMVEUAAACfmpSIiIg52Fd9AAAAAXRSTlMAQObYZgAAACNJREFUeJxjYGRgYbFmEhBgceBnYGBgTH3PKGrN9OEDAyMDACaaBENs1FdBAAAAAElFTkSuQmCC");
-  --clio-art-db-submenu: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAALBAMAAACufOGlAAAAElBMVEUAAAB3d3dVVVV1b2ZmZmaIiIi1S2Z1AAAAAXRSTlMAQObYZgAAADNJREFUeJwFwbERgCAABLD4Z496Z2/BAA7h2GyCQ0hNY+ImgxybZLF6eqh5NfspplyfFH6CZAZ2ejIARwAAAABJRU5ErkJggg==");
-  --clio-art-db-grow: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAAMFBMVEWtraS2raV3d3fOxrXOvbXWxr1VVVUzMzNmZmZ1b2a8va4RERHAvL7Nxr2IiIifmpQPGnj1AAAAm0lEQVR4nAGQAG//AWvh+43nAAD7AITTPEQkQiTWAIxN1NJM0i3WAITdTQDUhNQmBP4Ag/f+WfWwBAL4NNkwyFspAY2zDQOF/QMBBADtDb0N0KggAvUg9dDlsIrwAv4A6/ejAJ/wAgyFIAr4ZO8ABPi79xFebfAgAIhEzu3ULV/mBAWZEeYCsCFIAvdx9wmX9C+QAYcAAQABEAD/yrZANB/FBGEAAAAASUVORK5CYII=");
-  --clio-art-db-popup-corner: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYBAMAAAASWSDLAAAAMFBMVEWtraS2raV3d3eZmZnOxrXOvbVmZmYzMzN1b2ZVVVW8va61tanNxr2IiIhERESfmpRirDAXAAAAsUlEQVR4nGN0YUAAJgYcnH/InEmMCD1svxAy3F1IehoLEJz/UxmY4Zxd9zm6WKDsP+wO237AZKoc2C4xIBmN6oIjSBxOGZgBDAwMxt8RMv+OsCA4kxg8QBwBBoYCBsmCf1uYGBjSPjCwTeCe/n+SKKML2y8G7taCh/K7XWczMUSBHPxvPicrYyoT+wIGzi0Mjxra3eo5GVkcGG6qM/3LnO5w8jiTAcNfdQZ5bnemY7JWAMZRLUehBHV0AAAAAElFTkSuQmCC");
-  --clio-art-db-button-corner: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYBAMAAAASWSDLAAAALVBMVEWtraS2raUAAAB3d3fOxrXOvbVmZmZVVVUzMzO8va4iIiKIiIhERESfmpTGvq90loRyAAAA1ElEQVR4nGN0YUAAJgYcHHYkzt9MRoSeT3wIGeY6BoSMyh0OuMx/VYZjcJnPvH+sYTLsfxn+nIRy/hYIhFvADPjDAkIQGc6JDJxTGL5AZC4Y/L1gzFQH5vxhYeBy2+C+E6TszxEBhtkbOHaygGQ4vzP8YeFSu5AOkmlnYChh6LxwYiajC8PMdIbrmv8/8humMbpw/vn9X/GB5fH3gvpMDO3eDBYPmNuZGzm1WNgL/zNxMtT+1Zu+8yTD1icu2108XLa7dD7fy8SSwB7LkHq+lu3QMlcArtNDTQfJPrAAAAAASUVORK5CYII=");
-  --clio-art-db-btn-tl: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAADBAMAAACt7Qj2AAAAGFBMVEUAAAC2raV3d3d1b2ZmZmZERETGvq+fmpTOeh1RAAAAAXRSTlMAQObYZgAAABVJREFUeJxjYBBgYGACEYzpbz78BQAItQNkaXXtagAAAABJRU5ErkJggg==");
-  --clio-art-db-btn-tr: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAADBAMAAABG2rP1AAAAD1BMVEUAAAC2raV3d3dVVVWfmpRgPRkMAAAAAXRSTlMAQObYZgAAABFJREFUeJxjUGBgEmBgNOIHAAHbAHVWrRcVAAAAAElFTkSuQmCC");
-  --clio-art-db-btn-br: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAGBAMAAAD51Ul4AAAAHlBMVEUAAAAAAAC2raV3d3dVVVVmZmZ1b2aIiIhERESfmpSsKKP1AAAAAXRSTlMAQObYZgAAACBJREFUeJxjFHGQYWhjYGC6xcDAYMDAwJTAwMCgwMAAACXAAob+NiTkAAAAAElFTkSuQmCC");
-  --clio-art-db-btn-bl: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAEBAMAAACw6DhOAAAAHlBMVEUAAACtraS2raUAAAB3d3cRAABVVVV1b2YRERGIiIgB19i+AAAAAXRSTlMAQObYZgAAABpJREFUeJxj1LS57MF0XchGgIFBgIGBCUQAACryAtv4KjPvAAAAAElFTkSuQmCC");
-  --clio-art-db-progress-arrows: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAAAFBAMAAAB/bfmTAAAAHlBMVEUAAABmZmYzMwAzMzN1b2ZVVVVmZjNmMzOIiIhERES5MUf9AAAAAXRSTlMAQObYZgAAADlJREFUeJxjYGBgYGBsAJG4aYKAyTIFL40PMLLEfv1vt4CB6TwO+jQxLmA2h9iEiyYI2KB+xUXjAwBb+xkS1czrnQAAAABJRU5ErkJggg==");
-  --clio-art-db-def-tl: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAFBAMAAABlfdtYAAAAIVBMVEUAAAC2raWZmZkzMzNVVVV1b2ZmZmaIiIhERESfmpTGvq8oZkmnAAAAAXRSTlMAQObYZgAAACRJREFUeJxjYFjAAAICDAwMjJL5awT+MD0/L3o3gIXhvb3MBQBU8ggKikU/0QAAAABJRU5ErkJggg==");
-  --clio-art-db-def-tr: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAEBAMAAABb34NNAAAAGFBMVEUAAAC2raV1b2ZVVVVERESIiIjGvq+fmpQgItkpAAAAAXRSTlMAQObYZgAAABRJREFUeJxjYChgdHnExKjF8v4PABBiA7SAnSY4AAAAAElFTkSuQmCC");
-  --clio-art-db-def-br: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAGBAMAAAD51Ul4AAAAG1BMVEUAAAAAAAC2raV3d3dVVVUzMzMRERGIiIifmpTHv11LAAAAAXRSTlMAQObYZgAAACBJREFUeJxjFPXnYYgQYGDi42BgOiXBwNDAwMCgwMAAACB5AnZBz2qhAAAAAElFTkSuQmCC");
-  --clio-art-db-def-bl: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAFBAMAAABlfdtYAAAAKlBMVEUAAAAAAAC2raWZmZnOxrURAABVVVUzMzN1b2YREREiIiKIiIhERESfmpRN4iyqAAAAAXRSTlMAQObYZgAAACZJREFUeJxjZCh7v6WciSGcY5cCo28k84fvDAwNCgwMDAwXGBgYAItxB85eOkhQAAAAAElFTkSuQmCC");
-  --clio-art-db-thumb-left: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAOBAMAAAARcxsoAAAAJ1BMVEXe3tVSUlLe3t4QEBDVxb0xMTGLi4ve1cXNzc1zamJzc3Pu5tXm3s0eHK1HAAAAKklEQVR4nGPczcDwlYmBgYGBKOI7iIjcycDy98CHr0xnPjAwMJo+/e8OAOBRC5TLG+mBAAAAAElFTkSuQmCC");
-  --clio-art-db-thumb-right: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAOBAMAAADgeEClAAAAKlBMVEW0rKRSUlIQEBDVxb3u5uZBQUGLi4tiYmKcnJTe1cVzamJzc3Pu5tXm3s16aRdHAAAAS0lEQVR4nGM8w8DAxsTAwJDKeIaB4RcTww8GViaGDoY/UC4DwxcWBgbunywMDFt/MzF84fnA8vfMbz4mJpuvvSxvz7uysXz4nMgMAHm8FeAKzGKWAAAAAElFTkSuQmCC");
-  --clio-art-db-thumb-hgrip: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAAOBAMAAAD3WtBsAAAAElBMVEWcYjFSUlJiYmKcnJTNzc3u5tU+4ML7AAAAFklEQVR4nGMIZWJgYGViQIMOTB8YhAAO4AGzmDYCUQAAAABJRU5ErkJggg==");
-  --clio-art-db-thumb-hstretch: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAOAQMAAADUjeQfAAAABlBMVEXu5tViYmKAE672AAAADElEQVR4nGNgwAkaAACcAIH+gZ16AAAAAElFTkSuQmCC");
-  --clio-art-db-thumb-top: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAHBAMAAADKaWEqAAAAFVBMVEUQEBDVxb2Li4tiYmJzc3Pu5tXm3s06bcgHAAAAHUlEQVR4nGMMZQABbiYwxbAZSttDaSYo/R+NZgAAVQADYPThS2gAAAAASUVORK5CYII=");
-  --clio-art-db-thumb-bottom: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAICAMAAAD+zz7+AAAANlBMVEW0rKTe3tVSUlLe3t4QEBDVxb1BQUGLi4u9vawxMTFiYmKcnJTe1cXNzc1zamJzc3Pu5tXm3s0XMJPvAAAARklEQVR4nE3LUQ6AMAgDUESGStms97+sIcaE/r20FbbIIU2gN4KI4v4tE1HcmINZHVw4n+pOIqgmc/w/Kkzs0lsXEMvM/AVnoQV4eb/dGwAAAABJRU5ErkJggg==");
-  --clio-art-db-thumb-vgrip: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAACBAMAAACapPCZAAAAFVBMVEWcYjHe3t6Li4vNzc1zamLu5tXm3s0W080sAAAAFUlEQVR4nGMIY2BgYGA0YQwF0Qx/AQpQAd92KSbWAAAAAElFTkSuQmCC");
-  --clio-art-db-thumb-vstretch: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAABAQMAAADU0A1HAAAABlBMVEXu5tViYmKAE672AAAAC0lEQVR4nGNgYAEAAAcABXOVhQMAAAAASUVORK5CYII=");
-  --clio-art-db-tab: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAbCAMAAABRPb9kAAAAUVBMVEUAAAC2raUzMzOqqqoRERHYzsGZmZnp59YiIiJERETd1s/GxsbMzMxVVVV1b2ZmZma8va61tanNxr2traTe3tJ3d3fOvbXWxr2IiIifmpTn3tZsCo1AAAAAAXRSTlMAQObYZgAAAKBJREFUeJxtkdEOwiAMRVmdE6bd5lU29P8/1JgyVlj70oST21PAOSl8nV2vrj25SFviowEsbYxDA/rc13A3E+46UQ0o9N57ZibyFfABuT68Vo55B5jiW4NyDoRNj1IgzaMNwOqWpEEXDlCWEv9WwLGUDNvsBFJZuQEoK1dyAM995TaBFG82AMnPnEH2t47iPyey30iIv3pE7TdBGuxR/8gPtGwZ7clr1VUAAAAASUVORK5CYII=");
-  --clio-art-db-tab-selected: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAbCAMAAABRPb9kAAAAVFBMVEUAAAC2raUzMzOqqqoRERHYzsGZmZnd3d3p59YiIiJERETd1s/GxsbMzMxVVVV1b2ZmZma8va61tanNxr2traTe3tJ3d3fOvbXWxr2IiIifmpTn3tZCTLmlAAAAAXRSTlMAQObYZgAAALRJREFUeJxtkdsSgyAMRDH1UrCNWipq9///s6NBuUheMpMz2d2AUlIWqlzfKp88pE3unQGW1rs2A7Xvi3kVN1QzUArI1FprZibSCdBmg9SPl8Rj9HNgcHMMzgUAZo2lwhzb2JcBOLqSYlCZAEwMMASXEGovy+ttoxF/NxelYK/IkXm3b33OyJkU+s09S1KAJfmZGzj94wNFzfvfN7x/8iSSTfyvR/SpGqA7/D3oUv+2IHUUtX9waCOnbQ2rswAAAABJRU5ErkJggg==");
-  --clio-art-db-tab-pressed: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAbBAMAAACUzVJlAAAAIVBMVEUAAADGxsbe3tLMzMzWxr3YzsG8va7Nxr3p59bd1s/n3tbxGf3wAAAAAXRSTlMAQObYZgAAAK5JREFUeJxNjrENwjAQRZ/sSDEdIzBCBBUdozACHSktsQAj0KfxKIgJUlKmw5JFQHeOwS4iv/x33wfQ3sjHyOde4ATYKjFNBS/W1cx4zNC058XRJA3DDqkRCI6+UzvPcFnAEiHaqxZE/RdWfw0OFSRdwuQlvZXIdBnCtmgO3g+BCYj4WcrNmDXG56/NwaeAiz6xwXROh/ACenF4wh592YuZZl92oydMBSTMmoKj/QIy7ynjlZqtFAAAAABJRU5ErkJggg==");
-  --clio-art-db-menu-underline-left: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB0AAAADBAMAAACdYRnXAAAAGFBMVEUAAADDtZrMZmbMmWbMMzPMmZnMZjO6qpS9YaMCAAAAAXRSTlMAQObYZgAAADtJREFUeJwBMADP/wEAAFPiHuDzPO6zIDDPAP4BVSC98AAEHgLcBCAg3gD8BCDbI94z/ATNEQDtEREAu8YmEj4HoscpAAAAAElFTkSuQmCC");
-  --clio-art-db-menu-underline: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAADBAMAAAAnwpG3AAAAElBMVEUAAADMZmbMmWbMmZnMZjPMMzOFAtjtAAAAAXRSTlMAQObYZgAAACJJREFUeJxjFGSAAMb/DMYMDAxnwWwBBgbGUKgENmCATRAAmjoCqut/JFgAAAAASUVORK5CYII=");
-  --clio-art-db-menu-underline-right: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAADBAMAAAAJh7AlAAAAJFBMVEUAAADDtZrWx7XMmWbMZmbYzsHMMzPMmZnMZjO6qpTPwKPWx61Z6J0JAAAAAXRSTlMAQObYZgAAADxJREFUeJxjNHdgYGDWP8ew+Bn7hEwG7asMDIxpDAwM91wY9jC8Z/X5NleGwV2NAQbYN2nvVg3avbFaGwCfIA7LqUnH+gAAAABJRU5ErkJggg==");
-  --clio-art-db-title-underline-left: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAADBAMAAAC+OkgCAAAAGFBMVEUAAADOvbXMZmbMmWbMmZnMZjO6qpTPwKPR/68IAAAAAXRSTlMAQObYZgAAAB9JREFUeJxjZGAoPnjGVPYfU7LqJkUlBWYGBgEGCAAAYHIFBAALBF8AAAAASUVORK5CYII=");
-  --clio-art-db-title-underline: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAEBAMAAAAdaSDnAAAAD1BMVEUAAADMZmbMmWbMmZnMZjOW1IuaAAAAAXRSTlMAQObYZgAAACBJREFUeJxjdGGAgP+MDAwM5/4rs0D5DCA+gxGMhw8AALzeA23Id2x2AAAAAElFTkSuQmCC");
-  --clio-art-db-title-underline-right: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAADBAMAAABon5JnAAAAHlBMVEUAAADOxrXMZmbMmWbWx7XMmZnMZjO6qpTGvaLWx636h/abAAAAAXRSTlMAQObYZgAAACBJREFUeJxjTLvwS5nJuoCRMY2B4YDN1f9SDGDA0sAAAHKyBtglbL3mAAAAAElFTkSuQmCC");
+  --clio-art-db-close: url("art/drawingboard/parts/close.png"); /* 11x11 */
+  --clio-art-db-close-on: url("art/drawingboard/parts/close-on.png"); /* 11x11 */
+  --clio-art-db-collapse: url("art/drawingboard/parts/collapse.png"); /* 11x11 */
+  --clio-art-db-collapse-on: url("art/drawingboard/parts/collapse-on.png"); /* 11x11 */
+  --clio-art-db-zoom: url("art/drawingboard/parts/zoom.png"); /* 11x11 */
+  --clio-art-db-zoom-on: url("art/drawingboard/parts/zoom-on.png"); /* 11x11 */
+  --clio-art-db-check: url("art/drawingboard/parts/check.png"); /* 14x11 */
+  --clio-art-db-check-on: url("art/drawingboard/parts/check-on.png"); /* 14x11 */
+  --clio-art-db-check-mixed: url("art/drawingboard/parts/check-mixed.png"); /* 14x11 */
+  --clio-art-db-check-pressed: url("art/drawingboard/parts/check-pressed.png"); /* 14x11 */
+  --clio-art-db-check-on-pressed: url("art/drawingboard/parts/check-on-pressed.png"); /* 14x11 */
+  --clio-art-db-check-disabled: url("art/drawingboard/parts/check-disabled.png"); /* 14x11 */
+  --clio-art-db-check-on-disabled: url("art/drawingboard/parts/check-on-disabled.png"); /* 14x11 */
+  --clio-art-db-radio: url("art/drawingboard/parts/radio.png"); /* 16x12 */
+  --clio-art-db-radio-on: url("art/drawingboard/parts/radio-on.png"); /* 16x12 */
+  --clio-art-db-radio-on-pressed: url("art/drawingboard/parts/radio-on-pressed.png"); /* 16x12 */
+  --clio-art-db-radio-disabled: url("art/drawingboard/parts/radio-disabled.png"); /* 16x12 */
+  --clio-art-db-radio-on-disabled: url("art/drawingboard/parts/radio-on-disabled.png"); /* 16x12 */
+  --clio-art-db-up: url("art/drawingboard/parts/up.png"); /* 16x16 */
+  --clio-art-db-up-on: url("art/drawingboard/parts/up-on.png"); /* 16x16 */
+  --clio-art-db-up-off: url("art/drawingboard/parts/up-off.png"); /* 16x16 */
+  --clio-art-db-down: url("art/drawingboard/parts/down.png"); /* 16x16 */
+  --clio-art-db-down-on: url("art/drawingboard/parts/down-on.png"); /* 16x16 */
+  --clio-art-db-down-off: url("art/drawingboard/parts/down-off.png"); /* 16x16 */
+  --clio-art-db-left: url("art/drawingboard/parts/left.png"); /* 16x16 */
+  --clio-art-db-left-on: url("art/drawingboard/parts/left-on.png"); /* 16x16 */
+  --clio-art-db-left-off: url("art/drawingboard/parts/left-off.png"); /* 16x16 */
+  --clio-art-db-right: url("art/drawingboard/parts/right.png"); /* 16x16 */
+  --clio-art-db-right-on: url("art/drawingboard/parts/right-on.png"); /* 16x16 */
+  --clio-art-db-right-off: url("art/drawingboard/parts/right-off.png"); /* 16x16 */
+  --clio-art-db-popup-arrow: url("art/drawingboard/parts/popup-arrow.png"); /* 7x9 */
+  --clio-art-db-popup-arrow-off: url("art/drawingboard/parts/popup-arrow-off.png"); /* 7x9 */
+  --clio-art-db-submenu: url("art/drawingboard/parts/submenu.png"); /* 6x11 */
+  --clio-art-db-grow: url("art/drawingboard/parts/grow.png"); /* 16x16 */
+  --clio-art-db-popup-corner: url("art/drawingboard/parts/popup-corner.png"); /* 24x24 */
+  --clio-art-db-popup-corner-off: url("art/drawingboard/parts/popup-corner-off.png"); /* 24x24 */
+  --clio-art-db-button-corner: url("art/drawingboard/parts/button-corner.png"); /* 24x24 */
+  --clio-art-db-btn-tl: url("art/drawingboard/parts/btn-tl.png"); /* 7x3 */
+  --clio-art-db-btn-tr: url("art/drawingboard/parts/btn-tr.png"); /* 4x3 */
+  --clio-art-db-btn-br: url("art/drawingboard/parts/btn-br.png"); /* 5x6 */
+  --clio-art-db-btn-br-held: url("art/drawingboard/parts/btn-br-held.png"); /* 5x6 */
+  --clio-art-db-btn-bl: url("art/drawingboard/parts/btn-bl.png"); /* 7x4 */
+  --clio-art-db-progress-arrows: url("art/drawingboard/parts/progress-arrows.png"); /* 128x5 */
+  --clio-art-db-def-tl: url("art/drawingboard/parts/def-tl.png"); /* 9x5 */
+  --clio-art-db-def-tr: url("art/drawingboard/parts/def-tr.png"); /* 4x4 */
+  --clio-art-db-def-br: url("art/drawingboard/parts/def-br.png"); /* 5x6 */
+  --clio-art-db-def-bl: url("art/drawingboard/parts/def-bl.png"); /* 9x5 */
+  --clio-art-db-thumb-left: url("art/drawingboard/parts/thumb-left.png"); /* 7x14 */
+  --clio-art-db-thumb-right: url("art/drawingboard/parts/thumb-right.png"); /* 8x14 */
+  --clio-art-db-thumb-hgrip: url("art/drawingboard/parts/thumb-hgrip.png"); /* 2x14 */
+  --clio-art-db-thumb-hstretch: url("art/drawingboard/parts/thumb-hstretch.png"); /* 1x14 */
+  --clio-art-db-thumb-top: url("art/drawingboard/parts/thumb-top.png"); /* 14x7 */
+  --clio-art-db-thumb-bottom: url("art/drawingboard/parts/thumb-bottom.png"); /* 14x8 */
+  --clio-art-db-thumb-vgrip: url("art/drawingboard/parts/thumb-vgrip.png"); /* 14x2 */
+  --clio-art-db-thumb-vstretch: url("art/drawingboard/parts/thumb-vstretch.png"); /* 14x1 */
+  --clio-art-db-tab: url("art/drawingboard/parts/tab.png"); /* 24x27 */
+  --clio-art-db-tab-selected: url("art/drawingboard/parts/tab-selected.png"); /* 24x27 */
+  --clio-art-db-tab-pressed: url("art/drawingboard/parts/tab-pressed.png"); /* 24x27 */
+  --clio-art-db-menu-underline-left: url("art/drawingboard/parts/menu-underline-left.png"); /* 29x3 */
+  --clio-art-db-menu-underline: url("art/drawingboard/parts/menu-underline.png"); /* 48x3 */
+  --clio-art-db-menu-underline-right: url("art/drawingboard/parts/menu-underline-right.png"); /* 36x3 */
+  --clio-art-db-title-underline-left: url("art/drawingboard/parts/title-underline-left.png"); /* 15x3 */
+  --clio-art-db-title-underline: url("art/drawingboard/parts/title-underline.png"); /* 32x4 */
+  --clio-art-db-title-underline-right: url("art/drawingboard/parts/title-underline-right.png"); /* 16x3 */
+  --clio-art-db-menu-underline-tiled: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='p' width='48' height='3' patternUnits='userSpaceOnUse'%3E%3Cimage width='48' height='3' href='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAADBAMAAAAnwpG3AAAAElBMVEUAAADMZmbMmWbMmZnMZjPMMzOFAtjtAAAAAXRSTlMAQObYZgAAACJJREFUeJxjFGSAAMb/DMYMDAxnwWwBBgbGUKgENmCATRAAmjoCqut/JFgAAAAASUVORK5CYII='/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100%' height='100%' fill='url(%23p)'/%3E%3C/svg%3E"); /* 48 px tile */
+  --clio-art-db-title-underline-tiled: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='p' width='32' height='4' patternUnits='userSpaceOnUse'%3E%3Cimage width='32' height='4' href='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAEBAMAAAAdaSDnAAAAD1BMVEUAAADMZmbMmWbMmZnMZjOW1IuaAAAAAXRSTlMAQObYZgAAACBJREFUeJxjdGGAgP+MDAwM5/4rs0D5DCA+gxGMhw8AALzeA23Id2x2AAAAAElFTkSuQmCC'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100%' height='100%' fill='url(%23p)'/%3E%3C/svg%3E"); /* 32 px tile */
 }
 
-/* ---- Window: no Platinum strip edges; the content line is #555. ----------- */
+/* ---- Window ----------------------------------------------------------------
+   Drawn as the theme draws it: the nine 'pxm#' frame pieces (6176-6184, active
+   and inactive sets), placed where Mac OS 8.5 puts them round a 476x338
+   outline (Appearance window, found 1:1 in the capture), with the edge pieces
+   tiled from their ends. Under them the window paper (ppat 7120): 128x128,
+   origin at the content's top-left, 6px in and 22px down (Date & Time, Finder
+   Preferences windows agree). Corners overrun the outline, so they sit on a
+   pseudo-element larger than the window; the tiled edges sit on one clipped
+   to where each edge runs. Files: art/drawingboard/ (tooling/db-art.py --files). */
+[data-era="drawingboard"] .window {
+  --db-tl: url("art/drawingboard/window-tl.png");
+  --db-top: url("art/drawingboard/window-top.png");
+  --db-tr: url("art/drawingboard/window-tr.png");
+  --db-ur: url("art/drawingboard/window-ur.png");
+  --db-right: url("art/drawingboard/window-right.png");
+  --db-br: url("art/drawingboard/window-br.png");
+  --db-bottom: url("art/drawingboard/window-bottom.png");
+  --db-bl: url("art/drawingboard/window-bl.png");
+  --db-left: url("art/drawingboard/window-left.png");
+  isolation: isolate;
+  min-width: 128px;
+  min-height: 60px;
+}
+
+[data-era="drawingboard"] .window.inactive {
+  --db-tl: url("art/drawingboard/window-tl-inactive.png");
+  --db-top: url("art/drawingboard/window-top-inactive.png");
+  --db-tr: url("art/drawingboard/window-tr-inactive.png");
+  --db-ur: url("art/drawingboard/window-ur-inactive.png");
+  --db-right: url("art/drawingboard/window-right-inactive.png");
+  --db-br: url("art/drawingboard/window-br-inactive.png");
+  --db-bottom: url("art/drawingboard/window-bottom-inactive.png");
+  --db-bl: url("art/drawingboard/window-bl-inactive.png");
+  --db-left: url("art/drawingboard/window-left-inactive.png");
+}
+
+[data-era="drawingboard"] .window,
 [data-era="drawingboard"] .window:not(.inactive) {
-  background: var(--clio-window-bg);
+  background: url("art/drawingboard/paper.png") calc(6px - var(--clio-db-phase, 0px)) 22px / 128px 128px;
+}
+
+[data-era="drawingboard"] .window::before,
+[data-era="drawingboard"] .window::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Edges: the box from 1px left of the outline to the shadow's far side. */
+[data-era="drawingboard"] .window::before {
+  inset: 0 -7px -8px -1px;
+  background:
+    var(--db-top) 25px 0 / 256px 22px repeat-x,
+    var(--db-left) 0 22px / 7px 214px repeat-y,
+    var(--db-right) right 0 top 54px / 13px 150px repeat-y,
+    var(--db-bottom) left 57px bottom 0 / 183px 14px repeat-x;
+  clip-path: polygon(25px 0, calc(100% - 13px) 0, calc(100% - 13px) 54px, 100% 54px,
+    100% calc(100% - 54px), calc(100% - 59px) calc(100% - 54px), calc(100% - 59px) 100%,
+    57px 100%, 57px calc(100% - 22px), 0 calc(100% - 22px), 0 22px, 25px 22px);
+}
+
+/* Corners, overrunning the outline by up to 10px. */
+[data-era="drawingboard"] .window::after {
+  inset: -10px -11px -18px -8px;
+  background:
+    var(--db-tl) 4px 5px / 28px 27px no-repeat,
+    var(--db-tr) right 1px top 0 / 16px 32px no-repeat,
+    var(--db-ur) right 4px top 32px / 13px 32px no-repeat,
+    var(--db-br) right 0 bottom 2px / 63px 62px no-repeat,
+    var(--db-bl) left 0 bottom 0 / 64px 32px no-repeat;
+}
+
+/* ---- Menus -----------------------------------------------------------------
+   The shade: 2px of pencil (ppat 130, 131) down the right from 3px below the
+   menu's top and along the foot from 4px in. A menu that is not a drop-down
+   becomes the shade's containing block. --clio-db-phase shifts the pens
+   along the menu (Mac OS drew the Finder's File menu 64px further along). */
+[data-era="drawingboard"] :is(.menu, ul[role="menu"]):not(li > *) {
+  position: relative;
+}
+
+/* Paper (ppat 7125) from the inside top-left, and a frame drawn with pattern
+   pens (ppat 129-132), each tiled from the menu's own corner: the left pen
+   and the top from the top-left, the right pen from 4px lower, the foot from
+   4px in. Rules, not tokens: the pens read this menu's own top line and phase. */
+[data-era="drawingboard"] :is(.menu, ul[role="menu"]) {
+  background:
+    url("art/drawingboard/menu-top.png") 0 calc(var(--clio-menu-border-top-width) - 1px) / 128px 1px repeat-x border-box,
+    url("art/drawingboard/menu-left.png") 0 calc(var(--clio-menu-border-top-width) - 1px) / 1px 128px repeat-y border-box,
+    url("art/drawingboard/menu-right.png") right 0 top calc(var(--clio-menu-border-top-width) + 3px) / 1px 128px repeat-y border-box,
+    url("art/drawingboard/menu-foot.png") calc(4px - var(--clio-db-phase, 0px)) 100% / 128px 1px repeat-x border-box,
+    url("art/drawingboard/menu-paper.png") 0 0 / 64px 64px padding-box,
+    #dddddd;
+}
+
+[data-era="drawingboard"] :is(.menu, [role="menu"]) > :is(li.separator, li[role="separator"], hr) {
+  background: url("art/drawingboard/menu-separator.png") calc(0px - var(--clio-db-phase, 0px)) 4px / 128px 1px repeat-x;
+}
+
+/* A menu bar's menu hangs from the bar's last row, which is its top line. */
+[data-era="drawingboard"] :is(.menu-bar, [role="menubar"], [role="menu-bar"]) > li > :is(.menu, ul[role="menu"]) {
+  --clio-menu-border-top-width: 0px;
+}
+
+[data-era="drawingboard"] :is(.menu, ul[role="menu"])::before {
+  content: "";
+  position: absolute;
+  top: 3px;      /* from the padding box: 4px below the top line */
+  right: -3px;
+  bottom: -3px;
+  left: 3px;
+  background:
+    url("art/drawingboard/menu-shade-right.png") right 0 top 0 / 2px 128px repeat-y,
+    url("art/drawingboard/menu-shade-foot.png") calc(0px - var(--clio-db-phase, 0px)) 100% / 128px 2px repeat-x;
+  pointer-events: none;
+}
+
+/* The fixed pencil pixels where the pens meet (File and Edit menus agree). */
+[data-era="drawingboard"] :is(.menu, ul[role="menu"])::after {
+  content: "";
+  position: absolute;
+  top: 1px;      /* from the padding box: 2px below the top line */
+  right: -3px;
+  bottom: -3px;
+  left: -1px;
+  background:
+    url("art/drawingboard/menu-corner-tr.png") right 0 top 0 / 3px 2px no-repeat,
+    url("art/drawingboard/menu-corner-br.png") right 0 bottom 0 / 3px 3px no-repeat,
+    url("art/drawingboard/menu-corner-bl.png") left 0 bottom 0 / 4px 3px no-repeat;
+  pointer-events: none;
 }
 
 [data-era="drawingboard"] .window-pane {
-  border-color: #555555;
+  border: 0;
+  background: transparent;
 }
 
 [data-era="drawingboard"] .window > .details-bar {
-  border-left-color: #555555;
-  border-right-color: #555555;
+  border-left: 0;
+  border-right: 0;
 }
 
 [data-era="drawingboard"] .title-bar,
@@ -292,11 +461,8 @@
   content: none;
 }
 
-/* Background window: same frame, grey title, boxes erased (base rule). */
+/* Background window: its own frame set, grey title, boxes erased (base rule). */
 [data-era="drawingboard"] .window.inactive {
-  border-color: #555555;
-  background: #cdc6bd;
-  box-shadow: 6px 6px 0 #888888, 7px 7px 0 #555555;
   color: #555555;
 }
 
@@ -305,13 +471,91 @@
   background: transparent;
 }
 
-[data-era="drawingboard"] :is(input:not([type]), input[type="text"], input[type="search"], input[type="email"], input[type="url"], input[type="password"], input[type="number"], input[type="tel"], textarea) {
-  border-color: #888888 #888888 #9f9a94 #555555;
+/* List boxes: the 1px between the olive line and the white is see-through. */
+[data-era="drawingboard"] :is(.listbox, ul[role="listbox"], ol[role="listbox"], div[role="listbox"], select[multiple], select[size]:not([size="1"])) {
+  padding: 1px;
+  background-clip: content-box;
 }
 
-[data-era="drawingboard"] .alert-box {
-  border-color: #996633 #993333 #993333 #996633;
-  box-shadow: -1px 0 0 #cc9966, 7px 0 0 #777777, 0 8px 0 #777777, 7px 8px 0 #777777;
+/* ---- Text fields ---------------------------------------------------------------
+   Pens (ppat 7003-7006): the rows tiled from the white's left edge, the left
+   column from its top, the right column from 1px higher (both of Date & Time's
+   fields agree), and the corner pixels they leave (tooling/db-pens.py). A rule,
+   not a token: the rows read the field's own --clio-db-phase. */
+[data-era="drawingboard"] :is(input:not([type]), input[type="text"], input[type="search"], input[type="email"], input[type="url"], input[type="password"], input[type="number"], input[type="tel"], textarea) {
+  border-image: url("art/drawingboard/pens/field-corners.png") 5 / 5px stretch;
+  background:
+    url("art/drawingboard/pens/field-left.png") left 0 top 2px / 1px 32px repeat-y border-box,
+    url("art/drawingboard/pens/field-right.png") right 0 top 1px / 1px 32px repeat-y border-box,
+    url("art/drawingboard/pens/field-top.png") calc(2px - var(--clio-db-phase, 0px)) 0 / 128px 1px repeat-x border-box,
+    url("art/drawingboard/pens/field-bottom.png") calc(2px - var(--clio-db-phase, 0px)) 100% / 128px 1px repeat-x border-box,
+    #ffffff padding-box;
+}
+
+/* ---- Dialogs -----------------------------------------------------------------
+   Alerts and modal dialogs are framed like windows: eight pictures round the
+   1px outline (Alert 6127-6134, found 1:1 round Energy Saver's start-up
+   notice; Modal 6135-6142, the same sizes, placed the same way, inferred),
+   edges tiled from their ends, on the window paper from 4px inside the
+   outline. Insets are from the padding box, inside the 1px border. */
+[data-era="drawingboard"] :is(.alert-box, .modal-dialog, dialog.modal) {
+  --db-tl: url("art/drawingboard/modal-tl.png");
+  --db-top: url("art/drawingboard/modal-top.png");
+  --db-tr: url("art/drawingboard/modal-tr.png");
+  --db-right: url("art/drawingboard/modal-right.png");
+  --db-right-h: 150px;
+  --db-br: url("art/drawingboard/modal-br.png");
+  --db-bottom: url("art/drawingboard/modal-bottom.png");
+  --db-bl: url("art/drawingboard/modal-bl.png");
+  --db-left: url("art/drawingboard/modal-left.png");
+  --db-left-h: 214px;
+  position: relative;
+  isolation: isolate;
+  background: url("art/drawingboard/paper.png") calc(4px - var(--clio-db-phase, 0px)) 4px / 128px 128px border-box;
+}
+
+[data-era="drawingboard"] :is(.alert-box, dialog.alert-box) {
+  --db-tl: url("art/drawingboard/alert-tl.png");
+  --db-top: url("art/drawingboard/alert-top.png");
+  --db-tr: url("art/drawingboard/alert-tr.png");
+  --db-right: url("art/drawingboard/alert-right.png");
+  --db-right-h: 43px;
+  --db-br: url("art/drawingboard/alert-br.png");
+  --db-bottom: url("art/drawingboard/alert-bottom.png");
+  --db-bl: url("art/drawingboard/alert-bl.png");
+  --db-left: url("art/drawingboard/alert-left.png");
+  --db-left-h: 106px;
+}
+
+[data-era="drawingboard"] :is(.alert-box, .modal-dialog, dialog.modal)::before,
+[data-era="drawingboard"] :is(.alert-box, .modal-dialog, dialog.modal)::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Edges: from 1px left of the outline to the shade's far side. */
+[data-era="drawingboard"] :is(.alert-box, .modal-dialog, dialog.modal)::before {
+  inset: -1px -8px -9px -2px;
+  background:
+    var(--db-top) 20px 0 / 256px 1px repeat-x,
+    var(--db-left) 0 22px / 2px var(--db-left-h) repeat-y,
+    var(--db-right) right 0 top 54px / 8px var(--db-right-h) repeat-y,
+    var(--db-bottom) left 57px bottom 0 / 183px 9px repeat-x;
+  clip-path: polygon(20px 0, calc(100% - 8px) 0, calc(100% - 8px) 54px, 100% 54px,
+    100% calc(100% - 54px), calc(100% - 59px) calc(100% - 54px), calc(100% - 59px) 100%,
+    57px 100%, 57px calc(100% - 22px), 0 calc(100% - 22px), 0 22px, 20px 22px);
+}
+
+/* Corners, overrunning the outline by up to 18px. */
+[data-era="drawingboard"] :is(.alert-box, .modal-dialog, dialog.modal)::after {
+  inset: -11px -12px -19px -9px;
+  background:
+    var(--db-tl) 5px 5px / 22px 27px no-repeat,
+    var(--db-tr) right 1px top 0 / 11px 64px no-repeat,
+    var(--db-br) right 0 bottom 2px / 63px 62px no-repeat,
+    var(--db-bl) left 0 bottom 0 / 64px 32px no-repeat;
 }
 
 /* ---- Default button: a second pencil line round the button and its shade,
@@ -325,9 +569,12 @@
   box-shadow: inset 0 0 0 1px #9f9a94;
 }
 
+/* Disabled push button: not captured; the plain button's frame and face with
+   the theme's grey label (inferred). */
 [data-era="drawingboard"] :is(button, .btn, .btn-default, input[type="button"], input[type="submit"], input[type="reset"]):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *):is(:disabled, .disabled) {
-  background: #cdc6bd;
+  background: var(--clio-button-bg);
   color: #9f9a94;
+  -webkit-text-fill-color: #9f9a94;
 }
 
 /* ---- Check boxes and radio buttons: one picture per state. ---------------- */
@@ -476,14 +723,29 @@
   min-height: 15px;
 }
 
-[data-era="drawingboard"] :is(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-track:horizontal,
-[data-era="drawingboard"]:is(html.clio-scrollbars)::-webkit-scrollbar-track:horizontal {
-  background: linear-gradient(to bottom, #aaaaaa 0 1px, #ece6e4 1px 7px, #888888 7px 8px, #555555 8px 9px, #ece6e4 9px 15px, #777777 15px);
+/* Tracks: #ece6e4 ruled by pattern pens (ppat 7045-7049) tiled from the
+   track's start: the edges and a double centre line. Rules, not tokens: the
+   pens read the scroller's own --clio-db-phase. */
+[data-era="drawingboard"] :is(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-track,
+[data-era="drawingboard"]:is(html.clio-scrollbars)::-webkit-scrollbar-track {
+  background:
+    url("art/drawingboard/track-v-left.png") 0 0 / 1px 128px repeat-y,
+    url("art/drawingboard/track-v-mid1.png") 7px 0 / 1px 256px repeat-y,
+    url("art/drawingboard/track-v-mid2.png") 8px 0 / 1px 256px repeat-y,
+    url("art/drawingboard/track-v-right.png") 15px 0 / 1px 128px repeat-y,
+    #ece6e4;
 }
 
-[data-era="drawingboard"] :is(button, .btn, .btn-default, input[type="button"], input[type="submit"], input[type="reset"]):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *) {
-  border-color: #777777 #333333 #111111 #777777;
+[data-era="drawingboard"] :is(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-track:horizontal,
+[data-era="drawingboard"]:is(html.clio-scrollbars)::-webkit-scrollbar-track:horizontal {
+  background:
+    url("art/drawingboard/track-h-top.png") calc(0px - var(--clio-db-phase, 0px)) 0 / 128px 1px repeat-x,
+    url("art/drawingboard/track-h-mid1.png") calc(0px - var(--clio-db-phase, 0px)) 7px / 256px 1px repeat-x,
+    url("art/drawingboard/track-h-mid2.png") calc(0px - var(--clio-db-phase, 0px)) 8px / 256px 1px repeat-x,
+    url("art/drawingboard/track-h-bottom.png") calc(0px - var(--clio-db-phase, 0px)) 15px / 128px 1px repeat-x,
+    #ece6e4;
 }
+
 [data-era="drawingboard"] :is(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-button,
 [data-era="drawingboard"]:is(html.clio-scrollbars)::-webkit-scrollbar-button,
 [data-era="drawingboard"] :is(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-button:active,
@@ -495,20 +757,71 @@
   box-shadow: none;
 }
 
-/* Disabled pop-up menu: a lighter #9f9a94 pencil frame (#888 along the foot),
-   the same face and hatch, the theme's dimmed arrow (Appearance, "Variation"). */
+/* Disabled pop-up menu: the pens' lighter rows, the theme's dimmed hatch and
+   arrow (Appearance, "Variation"). */
+/* The arrow and hatch stay inside the frame; the pens draw on it. */
+[data-era="drawingboard"] select,
 [data-era="drawingboard"] select:disabled {
-  border-image: none;
-  border-color: #9f9a94 #9f9a94 #888888;
+  background-clip: padding-box, padding-box, border-box, border-box, border-box, border-box, padding-box;
+}
+
+[data-era="drawingboard"] select:disabled {
+  border-image: url("art/drawingboard/pens/popup-disabled-corners.png") 5 / 5px stretch;
+  border-color: transparent;
   background:
-    var(--clio-art-db-popup-arrow-off) right 5px top 4px / 7px 9px no-repeat,
-    var(--clio-art-db-popup-corner) right 19px bottom / 24px 24px no-repeat,
+    var(--clio-art-db-popup-arrow-off) right 5px top 4px / 7px 9px no-repeat padding-box,
+    var(--clio-art-db-popup-corner-off) right 19px bottom / 24px 24px no-repeat padding-box,
+    url("art/drawingboard/pens/popup-disabled-left.png") left 0 bottom 1px / 1px 16px repeat-y border-box,
+    url("art/drawingboard/pens/popup-disabled-right.png") right 0 bottom 1px / 1px 16px repeat-y border-box,
+    url("art/drawingboard/pens/popup-disabled-top.png") right 1px top 0 / 64px 1px repeat-x border-box,
+    url("art/drawingboard/pens/popup-disabled-bottom.png") right 1px bottom 0 / 64px 1px repeat-x border-box,
     #cec6b5;
   color: #8c8c8c;
 }
 
-[data-era="drawingboard"] :is(button, .btn, .btn-default, input[type="button"], input[type="submit"], input[type="reset"]):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *):not(:disabled, .disabled):is(:active, .active) {
-  border-color: #777777 #cec6b5 #756f66 #777777;
+
+/* The 1px pencil shade right of and below a push button (ppat 7079, 7070 next
+   rows; held: 7127, 7126, tiled from the second column and row). A default
+   button instead wears a 3px pencil band (ppat 7085 rows, 7086 columns) whose
+   inner line is the box's edge, 2px outside it. Insets are from the padding box. */
+[data-era="drawingboard"] :is(button, .btn, .btn-default):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *)::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: -2px;
+  bottom: -2px;
+  left: 4px;
+  border: 0;
+  border-image: none;
+  box-shadow: none;
+  background:
+    url("art/drawingboard/pens/button-shade-right.png") right 0 bottom 2px / 1px 16px repeat-y,
+    url("art/drawingboard/pens/button-shade-bottom.png") right 2px bottom 0 / 64px 1px repeat-x;
+  pointer-events: none;
+}
+
+[data-era="drawingboard"] :is(button, .btn, .btn-default):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *, :disabled, .disabled):is(:active, .active)::before {
+  left: 0;
+  background:
+    url("art/drawingboard/pens/button-held-shade-right.png") right 0 top 0 / 1px 16px repeat-y,
+    url("art/drawingboard/pens/button-held-shade-bottom.png") left 0 bottom 0 / 32px 1px repeat-x;
+}
+
+[data-era="drawingboard"] :is(button, .btn, .btn-default):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *):is(.default, .btn-default)::before {
+  inset: -3px;
+  background:
+    url("art/drawingboard/pens/button-default-left-3.png") left 0 bottom 3px / 1px 16px repeat-y,
+    url("art/drawingboard/pens/button-default-left-2.png") left 1px bottom 3px / 1px 16px repeat-y,
+    url("art/drawingboard/pens/button-default-left.png") left 2px bottom 3px / 1px 16px repeat-y,
+    url("art/drawingboard/pens/button-default-right.png") right 2px bottom 3px / 1px 16px repeat-y,
+    url("art/drawingboard/pens/button-default-right-2.png") right 1px bottom 3px / 1px 16px repeat-y,
+    url("art/drawingboard/pens/button-default-right-3.png") right 0 bottom 3px / 1px 16px repeat-y,
+    url("art/drawingboard/pens/button-default-top-3.png") right 3px top 0 / 64px 1px repeat-x,
+    url("art/drawingboard/pens/button-default-top-2.png") right 3px top 1px / 64px 1px repeat-x,
+    url("art/drawingboard/pens/button-default-top.png") right 3px top 2px / 64px 1px repeat-x,
+    url("art/drawingboard/pens/button-default-bottom.png") right 3px bottom 2px / 64px 1px repeat-x,
+    url("art/drawingboard/pens/button-default-bottom-2.png") right 3px bottom 1px / 64px 1px repeat-x,
+    url("art/drawingboard/pens/button-default-bottom-3.png") right 3px bottom 0 / 64px 1px repeat-x;
 }
 
 /* The pencil overruns at a push button's corners, outside its box: Button*
@@ -523,14 +836,30 @@
   inset: -6px;   /* from the padding box: 5px outside the frame */
   background:
     var(--clio-art-db-btn-tl) left 3px top 3px / 7px 3px no-repeat,
-    var(--clio-art-db-btn-tr) right 1px top 3px / 4px 3px no-repeat,
-    var(--clio-art-db-btn-br) right 0 bottom 0 / 5px 6px no-repeat,
+    var(--clio-art-db-btn-tr) right 2px top 3px / 4px 3px no-repeat,
+    var(--clio-art-db-btn-br) right 1px bottom 0 / 5px 6px no-repeat,
     var(--clio-art-db-btn-bl) left 3px bottom 2px / 7px 4px no-repeat;
   pointer-events: none;
 }
 
+[data-era="drawingboard"] :is(button, .btn, .btn-default):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *, :disabled, .disabled):is(:active, .active)::after {
+  background:
+    var(--clio-art-db-btn-tl) left 3px top 3px / 7px 3px no-repeat,
+    var(--clio-art-db-btn-tr) right 2px top 3px / 4px 3px no-repeat,
+    var(--clio-art-db-btn-br-held) right 1px bottom 0 / 5px 6px no-repeat,
+    var(--clio-art-db-btn-bl) left 3px bottom 2px / 7px 4px no-repeat;
+}
+
+[data-era="drawingboard"] :is(button, .btn, .btn-default):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *):is(.default, .btn-default) {
+  border-image-source: none;
+}
+
 [data-era="drawingboard"] :is(button, .btn, .btn-default):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *):is(.default, .btn-default)::after {
   background:
+    url("art/drawingboard/pens/button-default-corner-tl.png") left 5px top 5px / 5px 5px no-repeat,
+    url("art/drawingboard/pens/button-default-corner-tr.png") right 5px top 5px / 5px 5px no-repeat,
+    url("art/drawingboard/pens/button-default-corner-bl.png") left 5px bottom 5px / 5px 5px no-repeat,
+    url("art/drawingboard/pens/button-default-corner-br.png") right 5px bottom 5px / 5px 5px no-repeat,
     var(--clio-art-db-def-tl) left 1px top 1px / 9px 5px no-repeat,
     var(--clio-art-db-def-tr) right 1px top 2px / 4px 4px no-repeat,
     var(--clio-art-db-def-br) right 0 bottom 0 / 5px 6px no-repeat,
