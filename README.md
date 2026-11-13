@@ -95,8 +95,9 @@ or a single class, so your own CSS always wins without `!important`.
 
 ## How faithful is it?
 
-[EVIDENCE.md](EVIDENCE.md) lists every value with its status and source: 50 of the 77
-rows are **measured** from real pixels, 13 are still **inferred** and say so.
+[EVIDENCE.md](EVIDENCE.md) lists every value with its status and source: 57 of the 78
+rows are **measured** from real pixels; 6 are still **inferred** and say so (one of them
+for System 6).
 
 [FIDELITY.md](FIDELITY.md) is a pixel check (`npm run fidelity`) against the real screens:
 
