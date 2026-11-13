@@ -2,8 +2,8 @@
 
 **A CSS library for classic Mac OS interfaces: Macintosh System 6, System 7, Mac OS 8.5 Drawing Board and Mac OS 8/9 Platinum.**
 Windows, title bars, menu bars, push buttons, check boxes, radio buttons, text fields,
-pop-up menus, list boxes, scroll bars, dialogs, group boxes, progress bars, tabs and
-desktop icons. Pure CSS, no JavaScript. MIT. No screenshots, icons, logos or Apple fonts.
+pop-up menus, list boxes, scroll bars, dialogs, group boxes, progress bars, tabs, the
+Control Strip and desktop icons. Pure CSS, no JavaScript. MIT. No screenshots, icons, logos or Apple fonts.
 
 Every value is traced to its source and labelled **measured** (read from real pixels of
 the era), **inferred**, **adapted** (a deliberate web change) or **third-party**. System 6
@@ -11,7 +11,8 @@ and System 7 are measured from System 6.0.8 and 7.5.3 running in
 [Infinite Mac](https://infinitemac.org), the screen read pixel for pixel; Drawing Board
 (the appearance theme Apple shipped in the Mac OS 8.5 betas and withdrew) from Mac OS 8.5
 with the theme installed, its control parts redrawn from the theme's own pixmaps; Platinum
-from Mac OS 9.0 captures measured by [AI System 6](https://github.com/surfine/AI-System-6).
+from Mac OS 9.0 captures measured by [AI System 6](https://github.com/surfine/AI-System-6),
+re-checked against Mac OS 9.0 running in Infinite Mac.
 
 ![A System 6 window and a Mac OS 9 Platinum window drawn with clio.css](assets/og.png)
 
@@ -24,7 +25,7 @@ npm install clio.css
 ```
 
 ```html
-<link rel="stylesheet" href="https://unpkg.com/clio.css@0.5.0/dist/clio.css">
+<link rel="stylesheet" href="https://unpkg.com/clio.css@0.6.0/dist/clio.css">
 ```
 
 | File | What it draws |

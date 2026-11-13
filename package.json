@@ -1,6 +1,6 @@
 {
   "name": "clio.css",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "CSS library for classic Mac OS interfaces: Macintosh System 6, System 7, Mac OS 8.5 Drawing Board and Mac OS 8/9 Platinum windows, menus, buttons, scroll bars and dialogs, with every value traced to measured pixels.",
   "keywords": [
     "css",
@@ -16,6 +16,7 @@
     "platinum",
     "drawing-board",
     "appearance-manager",
+    "control-strip",
     "retro",
     "vintage",
     "1-bit",
@@ -70,7 +71,8 @@
     "capture:keycaps": "node tooling/capture-keycaps.mjs",
     "build:font": "python3 tooling/extract-glyphs.py --font chicago && python3 tooling/extract-glyphs.py --font geneva && python3 tooling/extract-glyphs.py --font geneva9 && python3 tooling/build-font.py clio-sans-84 && python3 tooling/build-font.py clio-text-84 && python3 tooling/build-font.py clio-text-84-9",
     "capture:system7": "node tooling/capture-system7.mjs",
-    "capture:drawingboard": "node tooling/capture-drawingboard.mjs"
+    "capture:drawingboard": "node tooling/capture-drawingboard.mjs",
+    "capture:platinum": "node tooling/capture-platinum.mjs"
   },
   "engines": {
     "node": ">=18"

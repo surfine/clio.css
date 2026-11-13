@@ -124,7 +124,7 @@ export const components = [
       { era: "platinum", claim: "Menu bar: #ddd, white top line, #999 bottom line, 1px black rule, 20px; open title #333399 with #6666cc/#000088 lines", status: "measured", source: "apps/desktop/styles/65-appearance-themes.css:298, :45", upstream: "Mac OS 9 native menu bar captures 02/04" },
       { era: "platinum", claim: "Menu: no top rule, white/#999 inner bevel, #222 1px drop; 16px rows at weight 600; highlight #333399 with #6666cc/#000088 side columns", status: "measured", source: "apps/desktop/styles/65-appearance-themes.css:912 (P21), :917 (P24)", upstream: "GUIdebook Mac OS 9.0 Apple menu (Theme Lab specimen apple-menu)" },
       { era: "platinum", claim: "Separator: #888 over white, in an 8px row", status: "inferred", source: "apps/desktop/styles/65-appearance-themes.css (separator #888/white)", upstream: "the line pair is measured; the 8px row height is not" },
-      { era: "platinum", claim: "Check mark and submenu arrow art", status: "third-party", source: "classic-stylesheets macos9/checkmark.svg, menu-right.svg (MIT)", upstream: "nielssp/classic-stylesheets @9ebd2d8" },
+      { era: "platinum", claim: "Menu check mark and submenu arrow art", status: "third-party", source: "classic-stylesheets macos9/checkmark.svg, menu-right.svg (MIT)", upstream: "nielssp/classic-stylesheets @9ebd2d8" },
       { era: "drawingboard", claim: "Menu bar: 22px of #cec6b5 with no rule under it; menus #ddd with a #333 outline and 18px items; the separator is a 1px pencil line fading #888 to #b6ada5", status: "measured", source: "clio.css capture, Mac OS 8.5 with the 8.5b6 Drawing Board theme in Infinite Mac (npm run capture:drawingboard), frame file-menu", upstream: "menu bar rows 0-21; File menu" },
       { era: "drawingboard", claim: "The chosen menu title and item are underlined in pencil instead of inverted", status: "measured", source: "the theme file's pxm# pixmaps, decoded by tooling/theme-resources.py and redrawn by tooling/db-art.py", upstream: "Menu_Title_Underline_Center, Menu_Item_underline_center; the title underline is visible under File in the capture" },
       { era: "drawingboard", claim: "Menu paper grain (pink, peach and green flecks on #ddd) is not reproduced", status: "adapted", source: "clio.css", upstream: "texture, not a control part" },
@@ -182,7 +182,7 @@ export const components = [
       { era: "system6", claim: "Checked draws an X from corner to corner of the box", status: "measured", source: "clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame get-info-checked (Locked)", upstream: "the art is system.css's checkmark.svg (MIT), which matches" },
       { era: "system6", claim: "X art", status: "third-party", source: "apps/desktop/assets/themes/classic/controls/checkmark.svg", upstream: "system.css icon/checkmark.svg (MIT, Sakun Acharige)" },
       { era: "platinum", claim: "12px #ddd well, 1px black frame, white top-left and #888 bottom-right bevel", status: "measured", source: "apps/desktop/styles/65-appearance-themes.css:897 (P18)", upstream: "GUIdebook Mac OS 9.0 Appearance Options tab (checkbox specimens)" },
-      { era: "platinum", claim: "Check mark art", status: "third-party", source: "classic-stylesheets macos9/checkmark.svg (MIT)", upstream: "nielssp/classic-stylesheets @9ebd2d8" },
+      { era: "platinum", claim: "Check mark: Mac OS 9's grey-shaded mark inside the frame, overhanging its right edge by two pixels", status: "measured", source: "clio.css capture, Mac OS 9.0 in Infinite Mac (npm run capture:platinum), frame general-controls; redrawn by tooling/p9-art.py", upstream: "Show Desktop when in background; 96.4% identical (the frame 98.6%)" },
       { era: "drawingboard", claim: "Check box: the theme's 14x11 pictures; image 0 off, 1 on, 3 mixed, 4/5 pressed, 8/9 disabled", status: "measured", source: "clio.css capture, Mac OS 8.5 with the 8.5b6 Drawing Board theme in Infinite Mac (npm run capture:drawingboard), frames general-controls and date-time; the theme file's pxm# pixmaps, decoded by tooling/theme-resources.py and redrawn by tooling/db-art.py", upstream: "off, on and disabled found 1:1 (Show Desktop, Show Launcher, Daylight-Saving Time is in effect)" },
     ]
   },
@@ -204,7 +204,7 @@ export const components = [
     evidence: [
       { era: "system7", claim: "Identical to System 6", status: "measured", source: "clio.css capture, System 7.5.3 in Infinite Mac (npm run capture:system7), frame general-controls", upstream: "100% identical, on and off" },
       { era: "system6", claim: "12px ring and 6px dot: the real pixels match system.css's art exactly", status: "measured", source: "clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame control-panel (Rate of Insertion Point Blinking)", upstream: "art from system.css icon/radio-border.svg, radio-dot.svg (MIT, Sakun Acharige)" },
-      { era: "platinum", claim: "Radio drawn with CSS gradients: black ring, white to #888 well, 6px black dot", status: "adapted", source: "apps/desktop/styles/65-appearance-themes.css:291", upstream: "AI System 6 later replaced this with art cut from a capture (P19); clio.css ships no cut art" },
+      { era: "platinum", claim: "Radio button: Mac OS 9's shaded 12px ball, off and on; the held states are still drawn with CSS gradients", status: "measured", source: "clio.css capture, Mac OS 9.0 in Infinite Mac (npm run capture:platinum), frame general-controls; redrawn by tooling/p9-art.py", upstream: "Documents group; off and on 100% identical" },
       { era: "drawingboard", claim: "Radio button: the theme's 16x12 pictures; image 0 off, 1 on, 2 pressed, 3/4 disabled", status: "measured", source: "clio.css capture, Mac OS 8.5 with the 8.5b6 Drawing Board theme in Infinite Mac (npm run capture:drawingboard), frames general-controls and date-time; the theme file's pxm# pixmaps, decoded by tooling/theme-resources.py and redrawn by tooling/db-art.py", upstream: "off and on found 1:1 (Documents, Menu Bar Clock)" },
     ]
   },
@@ -402,6 +402,37 @@ export const components = [
       { era: "system6", claim: "Boxed labels that join the panel", status: "adapted", source: "clio.css", upstream: "System 6 had no tab control" },
       { era: "platinum", claim: "Tab art: sloped caps, #ccc tabs, the front tab #eee and 2px taller", status: "third-party", source: "classic-stylesheets macos9/tab*.svg (MIT)", upstream: "nielssp/classic-stylesheets @9ebd2d8; AI System 6 measured a 21-row tab (P01, 65-appearance-themes.css:742)" },
       { era: "drawingboard", claim: "Tabs: the theme's left end (6px) and right end (17px, 2px taller) with the right end's first column stretched between; the front tab is the content colour and opens into the panel", status: "measured", source: "clio.css capture, Mac OS 8.5 with the 8.5b6 Drawing Board theme in Infinite Mac (npm run capture:drawingboard), frame appearance; the theme file's pxm# pixmaps, decoded by tooling/theme-resources.py and redrawn by tooling/db-art.py", upstream: "NTabLeft and NTabRight found 1:1 at (244,96) and (327,94)" },
+    ]
+  },
+  {
+    id: "control-strip",
+    name: "Control Strip",
+    summary: "The Control Strip of System 7.5 to Mac OS 9: module buttons with menu triangles, scroll arrows and a tab that folds it away. Markup matches AI System 6's.",
+    selectors: [".control-strip", ".control-strip.is-collapsed", ".control-strip-scroll", ".control-strip-scroll-back", ".control-strip-scroll-forward", ".control-strip-modules", ".control-strip-module-track", ".control-strip-module", ".control-strip-handle"],
+    tokens: ["--clio-strip-height", "--clio-strip-bg", "--clio-strip-line", "--clio-strip-cell-shadow", "--clio-strip-sunken-shadow", "--clio-strip-pressed-bg", "--clio-strip-pressed-shadow", "--clio-strip-module-width", "--clio-strip-handle"],
+    accessibility: "role=toolbar on .control-strip-modules with an aria-label; every module and arrow is a <button> with an aria-label; a module that opens a menu carries aria-haspopup=\"menu\" and aria-expanded. Disable the scroll arrows when there is nothing to scroll. Folding (.is-collapsed) and positioning are up to your script.",
+    html: `<div class="control-strip">
+  <button class="control-strip-scroll control-strip-scroll-back" disabled aria-label="Scroll back"></button>
+  <div class="control-strip-modules" role="toolbar" aria-label="Control Strip">
+    <div class="control-strip-module-track">
+      <button class="control-strip-module" aria-haspopup="menu" aria-expanded="false" aria-label="Monitor bit depth"><svg viewBox='0 0 16 16' aria-hidden='true'><rect x='2' y='3' width='12' height='9' fill='none' stroke='currentColor'/><rect x='4' y='5' width='8' height='5' fill='#ff0000'/><rect x='6' y='12' width='4' height='2' fill='currentColor'/></svg></button>
+      <button class="control-strip-module" aria-haspopup="menu" aria-expanded="false" aria-label="Sound volume"><svg viewBox='0 0 16 16' aria-hidden='true'><rect x='2' y='3' width='12' height='9' fill='none' stroke='currentColor'/><rect x='4' y='5' width='8' height='5' fill='currentColor'/><rect x='6' y='12' width='4' height='2' fill='currentColor'/></svg></button>
+      <button class="control-strip-module" aria-haspopup="menu" aria-expanded="false" aria-label="File sharing"><svg viewBox='0 0 16 16' aria-hidden='true'><rect x='2' y='3' width='12' height='9' fill='none' stroke='currentColor'/><rect x='4' y='5' width='8' height='5' fill='#3366cc'/><rect x='6' y='12' width='4' height='2' fill='currentColor'/></svg></button>
+    </div>
+  </div>
+  <button class="control-strip-scroll control-strip-scroll-forward" disabled aria-label="Scroll forward"></button>
+  <button class="control-strip-handle" aria-label="Collapse Control Strip"></button>
+</div>`,
+    variants: [
+      { name: "Folded", note: "With .is-collapsed only the tab shows.", html: `<div class="control-strip is-collapsed"><button class="control-strip-handle" aria-label="Expand Control Strip"></button></div>` },
+    ],
+    evidence: [
+      { era: "platinum", claim: "24px: 1px black lines round every cell; #c0c0c0 cells with a #c0c0c0 then white light and a #a0a0a0 then #808080 shade; an end cap, 13px scroll cells (sunken while there is nothing to scroll), 30px modules with the 16px icon 2px in and a 4x7 menu triangle 3px from the right, then 2px of black and the tab", status: "measured", source: "clio.css capture, Mac OS 9.0 in Infinite Mac (npm run capture:platinum), frame strip-expanded", upstream: "Finder desktop; start of the strip 89.5% identical" },
+      { era: "platinum", claim: "Held module: #808080 face, 2px #404040 light and 2px #c0c0c0 shade", status: "measured", source: "clio.css capture, Mac OS 9.0 in Infinite Mac (npm run capture:platinum), frame strip-slider", upstream: "Sound module held" },
+      { era: "platinum", claim: "End-cap icon, scroll arrows, menu triangle, the tab and the folded tab", status: "measured", source: "tooling/p9-art.py, redrawn from frames strip-expanded and strip-collapsed", upstream: "tab and folded tab 100% identical" },
+      { era: "drawingboard", claim: "The Control Strip is not themed: Mac OS 8.5 under Drawing Board draws it exactly as Mac OS 9 does", status: "measured", source: "clio.css capture, Mac OS 8.5 with Drawing Board (npm run capture:drawingboard), frame finder", upstream: "same cells, bevels and tab, other modules" },
+      { era: "system6", claim: "System 6 had no Control Strip: drawn at the Mac OS 9 geometry in ink and paper, with 1-bit arrows, triangle and tab drawn for clio.css", status: "adapted", source: "clio.css", upstream: "AI System 6 shows its Control Strip in every era" },
+      { era: "system7", claim: "Uses the System 6 drawing; System 7.5's colour Control Strip is not yet captured", status: "inferred", source: "clio.css", upstream: "Control Strip shipped with System 7.5 PowerBooks" },
     ]
   },
   {

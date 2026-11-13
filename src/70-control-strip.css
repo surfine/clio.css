@@ -1,0 +1,159 @@
+/* Control Strip (System 7.5 to Mac OS 9): a row of module buttons with scroll
+   arrows and a tab that folds the strip away. Markup follows AI System 6:
+   .control-strip > button.control-strip-scroll.control-strip-scroll-back,
+   .control-strip-modules[role=toolbar] > .control-strip-module-track >
+   button.control-strip-module (an icon inside; aria-haspopup="menu" draws the
+   menu triangle), button.control-strip-scroll.control-strip-scroll-forward,
+   button.control-strip-handle. Add .is-collapsed to fold it to the tab, and
+   data-edge="right" for a strip on the right edge. Placement is yours
+   (AI System 6 fixes it to the screen's lower left). */
+:where(.control-strip) {
+  display: inline-flex;
+  align-items: stretch;
+  height: var(--clio-strip-height);
+  max-width: 100%;
+  vertical-align: bottom;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* The end cap, then every cell: one bevelled box between 1px lines. */
+:where(.control-strip)::before,
+:where(.control-strip) > :is(.control-strip-scroll, .control-strip-modules),
+:where(.control-strip-module) {
+  box-sizing: border-box;
+  border: var(--clio-strip-line);
+  border-left: 0;
+  background: var(--clio-strip-bg);
+  box-shadow: var(--clio-strip-cell-shadow);
+}
+
+:where(.control-strip)::before {
+  content: "";
+  flex: none;
+  width: calc(var(--clio-strip-cap-width) + 2px);
+  border-left: var(--clio-strip-line);
+  background: var(--clio-strip-cap) 2px 7px / 8px 8px no-repeat, var(--clio-strip-bg);
+}
+
+:where(.control-strip) > :is(.control-strip-scroll, .control-strip-handle) {
+  flex: none;
+  margin: 0;
+  padding: 0;
+  border-radius: 0;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: default;
+}
+
+/* Scroll arrows: 13px cells, sunken and hollow while there is nothing to scroll. */
+:where(.control-strip) > .control-strip-scroll {
+  width: calc(var(--clio-strip-scroll-width) + 1px);
+  min-width: 0;
+  height: auto;
+  min-height: 0;
+  background: var(--clio-strip-back) center / 10px 10px no-repeat, var(--clio-strip-bg);
+  box-shadow: var(--clio-strip-cell-shadow);
+}
+
+:where(.control-strip) > .control-strip-scroll-forward {
+  background-image: var(--clio-strip-forward);
+}
+
+:where(.control-strip) > .control-strip-scroll:disabled {
+  box-shadow: var(--clio-strip-sunken-shadow);
+}
+
+:where(.control-strip) > .control-strip-scroll:not(:disabled):active,
+:where(.control-strip-module):not(:disabled):is(:active, [aria-expanded="true"]) {
+  background-color: var(--clio-strip-pressed-bg);
+  box-shadow: var(--clio-strip-pressed-shadow);
+}
+
+:where(.control-strip-modules) {
+  display: flex;
+  min-width: 0;
+  overflow: hidden;
+  border: 0;
+  background: none;
+  box-shadow: none;
+}
+
+:where(.control-strip-module-track) {
+  display: flex;
+}
+
+/* A module: the 16px icon 2px in, the menu triangle 3px from the right. */
+:where(.control-strip-module) {
+  position: relative;
+  display: flex;
+  flex: none;
+  align-items: center;
+  width: calc(var(--clio-strip-module-width) + 1px);
+  min-width: 0;
+  height: var(--clio-strip-height);
+  min-height: 0;
+  margin: 0;
+  padding: 0 0 0 var(--clio-strip-icon-inset);
+  border-radius: 0;
+  color: var(--clio-ink);
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: default;
+}
+
+:where(.control-strip-module) > :is(svg, img, .sys-icon) {
+  width: 16px;
+  height: 16px;
+}
+
+:where(.control-strip-module)[aria-haspopup]::after {
+  content: "";
+  position: absolute;
+  top: var(--clio-strip-menu-top);
+  right: calc(var(--clio-strip-menu-inset) + 1px);
+  width: 4px;
+  height: 7px;
+  background: var(--clio-strip-menu) 0 0 / 4px 7px no-repeat;
+}
+
+:where(.control-strip-module):disabled {
+  color: var(--clio-disabled);
+  opacity: 0.5;
+}
+
+/* The tab: open, a slanted end with a grip; folded, the strip shrinks to it. */
+:where(.control-strip) > .control-strip-handle {
+  width: var(--clio-strip-handle-width);
+  min-width: 0;
+  height: var(--clio-strip-height);
+  min-height: 0;
+  border: 0;
+  background: var(--clio-strip-handle) 0 0 / 100% 100% no-repeat;
+  box-shadow: none;
+}
+
+:where(.control-strip.is-collapsed)::before,
+:where(.control-strip.is-collapsed) > :not(.control-strip-handle) {
+  display: none;
+}
+
+:where(.control-strip.is-collapsed) > .control-strip-handle {
+  width: var(--clio-strip-tab-width);
+  background-image: var(--clio-strip-tab);
+}
+
+:where(.control-strip)[data-edge="right"] {
+  flex-direction: row-reverse;
+}
+
+:where(.control-strip)[data-edge="right"]::before,
+:where(.control-strip)[data-edge="right"] > .control-strip-handle {
+  transform: scaleX(-1);
+}
+
+:where(.control-strip) > :focus-visible,
+:where(.control-strip-module):focus-visible {
+  outline: var(--clio-focus-outline);
+  outline-offset: -3px;
+}

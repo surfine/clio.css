@@ -229,14 +229,14 @@ export function renderSite({ pkg, components }) {
 
     <section id="evidence-policy" aria-labelledby="h-evidence" class="prose">
       <h2 id="h-evidence">Evidence policy</h2>
-      <p>The values come from <a href="https://github.com/surfine/AI-System-6">AI System 6</a>, a writing desktop that recreates these eras and measures them against real screens: System 6.0.8, System 7.5.3 and Mac OS 8.5 (with the 8.5b6 Drawing Board theme) in the Infinite Mac emulator, and Mac OS 9.0 captures from GUIdebook. Each value carries one of four labels:</p>
+      <p>The values come from <a href="https://github.com/surfine/AI-System-6">AI System 6</a>, a writing desktop that recreates these eras and measures them against real screens: System 6.0.8, System 7.5.3 and Mac OS 8.5 (with the 8.5b6 Drawing Board theme) in the Infinite Mac emulator, and Mac OS 9.0 in Infinite Mac and from GUIdebook captures. Each value carries one of four labels:</p>
       <ul>
         <li><span class="status status-measured">Measured</span> read from real pixels of the era.</li>
         <li><span class="status status-inferred">Inferred</span> reasoned from documentation or behaviour, not yet measured.</li>
         <li><span class="status status-adapted">Adapted</span> a deliberate change for the web: touch sizes, keyboard focus, contrast.</li>
         <li><span class="status status-third-party">Third-party</span> art or a font from a named, licensed project.</li>
       </ul>
-      <p>clio.css ships no screenshots, icons, logos or Apple fonts; screenshots stay evidence only. Small control parts for System 7 and Drawing Board (boxes, arrows, check boxes, tab ends) are redrawn pixel for pixel by a script, from measured pixels or the theme’s own resources, and labelled in the evidence; large textures are not reproduced. The fonts are ChicagoFLF (public domain) and Asap (SIL Open Font License). The full table is in <a href="${esc(pkg.repository.url.replace(/^git\+/, "").replace(/\.git$/, ""))}/blob/main/EVIDENCE.md">EVIDENCE.md</a>.</p>
+      <p>clio.css ships no screenshots, icons, logos or Apple fonts; screenshots stay evidence only. Small control parts for System 7, Mac OS 9 and Drawing Board (boxes, arrows, check boxes, tab ends) are redrawn pixel for pixel by a script, from measured pixels or the theme’s own resources, and labelled in the evidence; large textures are not reproduced. The fonts are ChicagoFLF (public domain) and Asap (SIL Open Font License). The full table is in <a href="${esc(pkg.repository.url.replace(/^git\+/, "").replace(/\.git$/, ""))}/blob/main/EVIDENCE.md">EVIDENCE.md</a>.</p>
     </section>
 
     <section id="for-agents" aria-labelledby="h-agents" class="prose">

@@ -111,6 +111,7 @@ specimens.push(
   DB("db-default-button", `<div style="padding:12px;background:#e7ded6"><button class="default" id="s" style="width:139px">Close Message</button></div>`, [-3, -3, 16, 24], "energy-saver-alert", [438, 372, 16, 24]),
   DB("db-alert-corner", `<div style="padding:12px;background:#ffffff"><div class="alert-box" id="s" style="width:469px;height:212px"></div></div>`, [-1, 0, 20, 12], "energy-saver-alert", [163, 201, 20, 12]),
   DB("db-alert-shadow", `<div style="padding:12px;background:#ffffff"><div class="alert-box" id="s" style="width:469px;height:212px"></div></div>`, [455, 200, 14, 12], "energy-saver-alert", [618, 401, 14, 12]),
+  DB("db-popup-disabled", `<div style="padding:12px;background:#e7ded6"><select id="s" style="width:180px" disabled><option>Variation</option></select></div>`, [140, 0, 40, 20], "appearance", [428, 225, 40, 20]),
   // General Controls and Date & Time.
   DB("db-checkbox-on", `<div style="padding:12px;background:#eeeeee"><input type="checkbox" id="s" checked></div>`, [0, 0, 14, 11], "general-controls", [33, 83, 14, 11]),
   DB("db-checkbox-off", `<div style="padding:12px;background:#eeeeee"><input type="checkbox" id="s"></div>`, [0, 0, 14, 11], "general-controls", [33, 131, 14, 11]),
@@ -121,6 +122,27 @@ specimens.push(
   // Control Panels submenu (194..350), Energy Saver chosen: row 175..192, underline 210..333 x 189..191.
   DB("db-menu-underline", `<div style="padding:12px;background:#fff"><ul class="menu" role="menu" style="width:157px"><li role="none" class="active" id="s"><span role="menuitem">Energy Saver</span></li></ul></div>`, [15, 14, 124, 3], "control-panels-menu", [210, 189, 124, 3]),
   DB("db-menu-separator", `<div style="padding:12px;background:#fff"><ul class="menu" role="menu" style="width:150px"><li role="separator" id="s"></li></ul></div>`, [0, 0, 100, 9], "file-menu", [41, 111, 100, 9]),
+);
+
+// Platinum, re-measured: crops of Mac OS 9.0 from `npm run capture:platinum`.
+const p9dir = join(root, ".fidelity/platinum9");
+const P9 = (id, html, crop, file, ref) => ({ id, era: "platinum", group: "platinum9", html, crop, refFile: join(p9dir, file + ".png"), refCrop: ref });
+const strip = (cls = "", id = "") => `<div class="control-strip${cls}" ${id === "strip" ? 'id="s"' : ""}><button class="control-strip-scroll control-strip-scroll-back" disabled aria-label="Scroll back"></button><div class="control-strip-modules" role="toolbar" aria-label="Control Strip"><div class="control-strip-module-track">${'<button class="control-strip-module" aria-haspopup="menu" aria-label="Module"></button>'.repeat(4)}</div></div><button class="control-strip-scroll control-strip-scroll-forward" disabled aria-label="Scroll forward"></button><button class="control-strip-handle" ${id === "handle" ? 'id="s"' : ""} aria-label="Collapse"></button></div>`;
+specimens.push(
+  P9("p9-checkbox-on", `<div style="padding:12px;background:#eeeeee"><input type="checkbox" id="s" checked></div>`, [0, 0, 14, 12], "general-controls", [33, 81, 14, 12]),
+  P9("p9-checkbox-off", `<div style="padding:12px;background:#eeeeee"><input type="checkbox" id="s"></div>`, [0, 0, 12, 12], "general-controls", [33, 129, 12, 12]),
+  P9("p9-radio-on", `<div style="padding:12px;background:#eeeeee"><input type="radio" id="s" checked></div>`, [0, 0, 12, 12], "general-controls", [268, 265, 12, 12]),
+  P9("p9-radio-off", `<div style="padding:12px;background:#eeeeee"><input type="radio" id="s"></div>`, [0, 0, 12, 12], "general-controls", [268, 282, 12, 12]),
+  // Appearance control panel (window outline 161..636 x 68..): title bar ends, "Set Desktop", the disabled pop-up.
+  P9("p9-titlebar-left", `<div class="window" id="s" style="width:476px"><div class="title-bar"><button class="close" aria-label="Close"></button><h2 class="title">Appearance</h2><button class="shade" aria-label="Collapse"></button></div><div class="window-pane" style="height:40px"></div></div>`, [0, 0, 30, 22], "appearance", [161, 68, 30, 22]),
+  P9("p9-titlebar-right", `<div class="window" id="s" style="width:476px"><div class="title-bar"><button class="close" aria-label="Close"></button><h2 class="title">Appearance</h2><button class="shade" aria-label="Collapse"></button></div><div class="window-pane" style="height:40px"></div></div>`, [438, 0, 36, 22], "appearance", [599, 68, 36, 22]),
+  P9("p9-button-end", `<div style="padding:12px;background:#dddddd"><button id="s" style="width:84px">Set Desktop</button></div>`, [64, 0, 20, 20], "appearance", [600, 369, 20, 20]),
+  P9("p9-popup-disabled", `<div style="padding:12px;background:#dddddd"><select id="s" style="width:194px" disabled><option>Position Automatically</option></select></div>`, [160, 0, 34, 20], "appearance", [566, 337, 34, 20]),
+  P9("p9-group-corner", `<div style="padding:12px;background:#eeeeee"><fieldset id="s" style="width:200px;height:60px"><legend>Desktop</legend></fieldset></div>`, [0, 0, 12, 30], "general-controls", [18, 51, 12, 30]),
+  // Control Strip, Finder desktop: end cap and the idle back-scroll cell (0..28), a module's frame, the tab.
+  P9("p9-strip-start", strip("", "strip"), [0, 0, 29, 24], "strip-expanded", [0, 576, 29, 24]),
+  P9("p9-strip-handle", `<div style="padding:12px;background:#9999cc">${strip("", "handle")}</div>`, [0, 0, 18, 24], "strip-expanded", [164, 576, 18, 24]),
+  P9("p9-strip-collapsed", `<div style="padding:12px;background:#9999cc">${strip(" is-collapsed", "strip")}</div>`, [0, 0, 18, 24], "strip-collapsed", [0, 576, 18, 24]),
 );
 
 const css = pathToFileURL(join(root, "dist/clio.css")).href;
@@ -170,7 +192,7 @@ for (const s of specimens) {
   }, [shot.toString("base64"), ref.toString("base64"), s.id, s.refCrop || null, !!s.mono]);
   writeFileSync(join(out, `${s.id}-compare.png`), Buffer.from(metrics.image, "base64"));
   delete metrics.image;
-  results.push({ ...metrics, era: s.era || "platinum" });
+  results.push({ ...metrics, era: s.group || s.era || "platinum" });
 }
 await browser.close();
 console.log("specimen              size      exact   off>48  meanAbs   (reference | clio.css | diff in .fidelity/)");
@@ -210,6 +232,13 @@ Reference: Mac OS 8.5 with the 8.5b6 Drawing Board theme installed, running in I
 the 800×600 colour canvas read 1:1 (\`npm run capture:drawingboard\`), compared in colour.
 
 ${table("drawingboard")}
+
+## Mac OS 9 Platinum, re-measured
+
+Reference: Mac OS 9.0 running in Infinite Mac, the 800×600 colour canvas read 1:1
+(\`npm run capture:platinum\`): General Controls and the Control Strip.
+
+${table("platinum9")}
 
 ## Mac OS 9 Platinum
 

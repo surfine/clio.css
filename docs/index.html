@@ -21,7 +21,7 @@
   <link rel="alternate" type="text/plain" title="llms.txt" href="llms.txt">
   <link rel="alternate" type="application/json" title="Component index" href="components.json">
   <link rel="stylesheet" href="dist/clio.css">
-  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"SoftwareSourceCode","@id":"https://surfine.github.io/clio.css/#software","name":"clio.css","description":"CSS library for classic Mac OS interfaces: System 6, System 7, Mac OS 8.5 Drawing Board and Mac OS 9 Platinum windows, menus, buttons and dialogs, measured from real pixels. MIT.","url":"https://surfine.github.io/clio.css/","codeRepository":"https://github.com/surfine/clio.css","programmingLanguage":"CSS","license":"https://opensource.org/licenses/MIT","version":"0.5.0","keywords":"css, css-framework, design-system, classic-mac, classic-macos, macintosh, system-6, system-7, mac-os-9, mac-os-8, platinum, drawing-board, appearance-manager, retro, vintage, 1-bit, chicago, ui, system.css","runtimePlatform":"Web browsers","isAccessibleForFree":true,"hasPart":[{"@type":"WebPageElement","name":"Window","url":"https://surfine.github.io/clio.css/#window"},{"@type":"WebPageElement","name":"Menu bar and menus","url":"https://surfine.github.io/clio.css/#menu"},{"@type":"WebPageElement","name":"Push button","url":"https://surfine.github.io/clio.css/#button"},{"@type":"WebPageElement","name":"Check box","url":"https://surfine.github.io/clio.css/#checkbox"},{"@type":"WebPageElement","name":"Radio button","url":"https://surfine.github.io/clio.css/#radio"},{"@type":"WebPageElement","name":"Text field","url":"https://surfine.github.io/clio.css/#text-field"},{"@type":"WebPageElement","name":"Pop-up menu","url":"https://surfine.github.io/clio.css/#select"},{"@type":"WebPageElement","name":"List box","url":"https://surfine.github.io/clio.css/#listbox"},{"@type":"WebPageElement","name":"Scroll bar","url":"https://surfine.github.io/clio.css/#scrollbar"},{"@type":"WebPageElement","name":"Dialogs and alerts","url":"https://surfine.github.io/clio.css/#dialog"},{"@type":"WebPageElement","name":"Group box","url":"https://surfine.github.io/clio.css/#fieldset"},{"@type":"WebPageElement","name":"Progress bar","url":"https://surfine.github.io/clio.css/#progress"},{"@type":"WebPageElement","name":"Tabs","url":"https://surfine.github.io/clio.css/#tabs"},{"@type":"WebPageElement","name":"Desktop and icons","url":"https://surfine.github.io/clio.css/#desktop"},{"@type":"WebPageElement","name":"Type and tokens","url":"https://surfine.github.io/clio.css/#typography"}]},{"@type":"WebSite","@id":"https://surfine.github.io/clio.css/#site","name":"clio.css","url":"https://surfine.github.io/clio.css/","inLanguage":"en"}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"SoftwareSourceCode","@id":"https://surfine.github.io/clio.css/#software","name":"clio.css","description":"CSS library for classic Mac OS interfaces: System 6, System 7, Mac OS 8.5 Drawing Board and Mac OS 9 Platinum windows, menus, buttons and dialogs, measured from real pixels. MIT.","url":"https://surfine.github.io/clio.css/","codeRepository":"https://github.com/surfine/clio.css","programmingLanguage":"CSS","license":"https://opensource.org/licenses/MIT","version":"0.6.0","keywords":"css, css-framework, design-system, classic-mac, classic-macos, macintosh, system-6, system-7, mac-os-9, mac-os-8, platinum, drawing-board, appearance-manager, control-strip, retro, vintage, 1-bit, chicago, ui, system.css","runtimePlatform":"Web browsers","isAccessibleForFree":true,"hasPart":[{"@type":"WebPageElement","name":"Window","url":"https://surfine.github.io/clio.css/#window"},{"@type":"WebPageElement","name":"Menu bar and menus","url":"https://surfine.github.io/clio.css/#menu"},{"@type":"WebPageElement","name":"Push button","url":"https://surfine.github.io/clio.css/#button"},{"@type":"WebPageElement","name":"Check box","url":"https://surfine.github.io/clio.css/#checkbox"},{"@type":"WebPageElement","name":"Radio button","url":"https://surfine.github.io/clio.css/#radio"},{"@type":"WebPageElement","name":"Text field","url":"https://surfine.github.io/clio.css/#text-field"},{"@type":"WebPageElement","name":"Pop-up menu","url":"https://surfine.github.io/clio.css/#select"},{"@type":"WebPageElement","name":"List box","url":"https://surfine.github.io/clio.css/#listbox"},{"@type":"WebPageElement","name":"Scroll bar","url":"https://surfine.github.io/clio.css/#scrollbar"},{"@type":"WebPageElement","name":"Dialogs and alerts","url":"https://surfine.github.io/clio.css/#dialog"},{"@type":"WebPageElement","name":"Group box","url":"https://surfine.github.io/clio.css/#fieldset"},{"@type":"WebPageElement","name":"Progress bar","url":"https://surfine.github.io/clio.css/#progress"},{"@type":"WebPageElement","name":"Tabs","url":"https://surfine.github.io/clio.css/#tabs"},{"@type":"WebPageElement","name":"Control Strip","url":"https://surfine.github.io/clio.css/#control-strip"},{"@type":"WebPageElement","name":"Desktop and icons","url":"https://surfine.github.io/clio.css/#desktop"},{"@type":"WebPageElement","name":"Type and tokens","url":"https://surfine.github.io/clio.css/#typography"}]},{"@type":"WebSite","@id":"https://surfine.github.io/clio.css/#site","name":"clio.css","url":"https://surfine.github.io/clio.css/","inLanguage":"en"}]}</script>
   <style>
     :root { --doc-ink: #111; --doc-muted: #555; --doc-rule: #d4d4d4; --doc-bg: #ffffff; --doc-tint: #f4f4f4; }
     html { background: var(--doc-bg); }
@@ -112,6 +112,7 @@
           <li><a href="#fieldset">Group box</a></li>
           <li><a href="#progress">Progress bar</a></li>
           <li><a href="#tabs">Tabs</a></li>
+          <li><a href="#control-strip">Control Strip</a></li>
           <li><a href="#desktop">Desktop and icons</a></li>
           <li><a href="#typography">Type and tokens</a></li>
           <li><a href="#evidence-policy">Evidence policy</a></li>
@@ -124,7 +125,7 @@
       <h2 id="h-start">Get started</h2>
       <div class="install">
         <pre><code>npm install clio.css</code></pre>
-        <pre><code>&lt;link rel="stylesheet" href="https://unpkg.com/clio.css@0.5.0/dist/clio.css"&gt;</code></pre>
+        <pre><code>&lt;link rel="stylesheet" href="https://unpkg.com/clio.css@0.6.0/dist/clio.css"&gt;</code></pre>
       </div>
       <p><code>clio.css</code> draws System 6 by default. Put <code>data-era="system7"</code>, <code>data-era="drawingboard"</code> or <code>data-era="platinum"</code> on <code>&lt;html&gt;</code>, or on any element, to switch everything inside it to that era. <code>clio.system6.css</code>, <code>clio.system7.css</code>, <code>clio.drawingboard.css</code> and <code>clio.platinum.css</code> are single-era builds. Every rule uses <code>:where()</code> or a single class, so your own CSS always wins, and every value is a <code>--clio-*</code> custom property.</p>
       <p>Coming from system.css? Its markup works unchanged: <code>.window</code>, <code>.title-bar</code> with <code>button.close</code> and <code>button.resize</code>, <code>.details-bar</code>, <code>.window-pane</code>, <code>.btn</code>, <code>.btn-default</code>, <code>.standard-dialog</code>, <code>.modal-dialog</code>, <code>.alert-box</code>, <code>.field-row</code> and <code>role="menu-bar"</code> menus.</p>
@@ -468,7 +469,7 @@
         </tr>
 <tr>
           <td>Platinum</td>
-          <td>Check mark and submenu arrow art</td>
+          <td>Menu check mark and submenu arrow art</td>
           <td><span class="status status-third-party">Third-party</span></td>
           <td><code>classic-stylesheets macos9/checkmark.svg, menu-right.svg (MIT)</code><br><span class="upstream">nielssp/classic-stylesheets @9ebd2d8</span></td>
         </tr>
@@ -702,9 +703,9 @@
         </tr>
 <tr>
           <td>Platinum</td>
-          <td>Check mark art</td>
-          <td><span class="status status-third-party">Third-party</span></td>
-          <td><code>classic-stylesheets macos9/checkmark.svg (MIT)</code><br><span class="upstream">nielssp/classic-stylesheets @9ebd2d8</span></td>
+          <td>Check mark: Mac OS 9's grey-shaded mark inside the frame, overhanging its right edge by two pixels</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, Mac OS 9.0 in Infinite Mac (npm run capture:platinum), frame general-controls; redrawn by tooling/p9-art.py</code><br><span class="upstream">Show Desktop when in background; 96.4% identical (the frame 98.6%)</span></td>
         </tr>
 <tr>
           <td>Drawing Board</td>
@@ -770,9 +771,9 @@
         </tr>
 <tr>
           <td>Platinum</td>
-          <td>Radio drawn with CSS gradients: black ring, white to #888 well, 6px black dot</td>
-          <td><span class="status status-adapted">Adapted</span></td>
-          <td><code>apps/desktop/styles/65-appearance-themes.css:291</code><br><span class="upstream">AI System 6 later replaced this with art cut from a capture (P19); clio.css ships no cut art</span></td>
+          <td>Radio button: Mac OS 9's shaded 12px ball, off and on; the held states are still drawn with CSS gradients</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, Mac OS 9.0 in Infinite Mac (npm run capture:platinum), frame general-controls; redrawn by tooling/p9-art.py</code><br><span class="upstream">Documents group; off and on 100% identical</span></td>
         </tr>
 <tr>
           <td>Drawing Board</td>
@@ -1413,6 +1414,104 @@
       </details>
     </section>
 
+    <section id="control-strip" aria-labelledby="h-control-strip">
+      <h2 id="h-control-strip"><a href="#control-strip">Control Strip</a></h2>
+      <p>The Control Strip of System 7.5 to Mac OS 9: module buttons with menu triangles, scroll arrows and a tab that folds it away. Markup matches AI System 6's.</p>
+      <div class="example">
+<div class="specimen clio">
+<div class="control-strip">
+  <button class="control-strip-scroll control-strip-scroll-back" disabled aria-label="Scroll back"></button>
+  <div class="control-strip-modules" role="toolbar" aria-label="Control Strip">
+    <div class="control-strip-module-track">
+      <button class="control-strip-module" aria-haspopup="menu" aria-expanded="false" aria-label="Monitor bit depth"><svg viewBox='0 0 16 16' aria-hidden='true'><rect x='2' y='3' width='12' height='9' fill='none' stroke='currentColor'/><rect x='4' y='5' width='8' height='5' fill='#ff0000'/><rect x='6' y='12' width='4' height='2' fill='currentColor'/></svg></button>
+      <button class="control-strip-module" aria-haspopup="menu" aria-expanded="false" aria-label="Sound volume"><svg viewBox='0 0 16 16' aria-hidden='true'><rect x='2' y='3' width='12' height='9' fill='none' stroke='currentColor'/><rect x='4' y='5' width='8' height='5' fill='currentColor'/><rect x='6' y='12' width='4' height='2' fill='currentColor'/></svg></button>
+      <button class="control-strip-module" aria-haspopup="menu" aria-expanded="false" aria-label="File sharing"><svg viewBox='0 0 16 16' aria-hidden='true'><rect x='2' y='3' width='12' height='9' fill='none' stroke='currentColor'/><rect x='4' y='5' width='8' height='5' fill='#3366cc'/><rect x='6' y='12' width='4' height='2' fill='currentColor'/></svg></button>
+    </div>
+  </div>
+  <button class="control-strip-scroll control-strip-scroll-forward" disabled aria-label="Scroll forward"></button>
+  <button class="control-strip-handle" aria-label="Collapse Control Strip"></button>
+</div>
+</div>
+      </div>
+      <div class="snippet">
+        <pre id="code-control-strip"><code>&lt;div class=&quot;control-strip&quot;&gt;
+  &lt;button class=&quot;control-strip-scroll control-strip-scroll-back&quot; disabled aria-label=&quot;Scroll back&quot;&gt;&lt;/button&gt;
+  &lt;div class=&quot;control-strip-modules&quot; role=&quot;toolbar&quot; aria-label=&quot;Control Strip&quot;&gt;
+    &lt;div class=&quot;control-strip-module-track&quot;&gt;
+      &lt;button class=&quot;control-strip-module&quot; aria-haspopup=&quot;menu&quot; aria-expanded=&quot;false&quot; aria-label=&quot;Monitor bit depth&quot;&gt;&lt;svg viewBox='0 0 16 16' aria-hidden='true'&gt;&lt;rect x='2' y='3' width='12' height='9' fill='none' stroke='currentColor'/&gt;&lt;rect x='4' y='5' width='8' height='5' fill='#ff0000'/&gt;&lt;rect x='6' y='12' width='4' height='2' fill='currentColor'/&gt;&lt;/svg&gt;&lt;/button&gt;
+      &lt;button class=&quot;control-strip-module&quot; aria-haspopup=&quot;menu&quot; aria-expanded=&quot;false&quot; aria-label=&quot;Sound volume&quot;&gt;&lt;svg viewBox='0 0 16 16' aria-hidden='true'&gt;&lt;rect x='2' y='3' width='12' height='9' fill='none' stroke='currentColor'/&gt;&lt;rect x='4' y='5' width='8' height='5' fill='currentColor'/&gt;&lt;rect x='6' y='12' width='4' height='2' fill='currentColor'/&gt;&lt;/svg&gt;&lt;/button&gt;
+      &lt;button class=&quot;control-strip-module&quot; aria-haspopup=&quot;menu&quot; aria-expanded=&quot;false&quot; aria-label=&quot;File sharing&quot;&gt;&lt;svg viewBox='0 0 16 16' aria-hidden='true'&gt;&lt;rect x='2' y='3' width='12' height='9' fill='none' stroke='currentColor'/&gt;&lt;rect x='4' y='5' width='8' height='5' fill='#3366cc'/&gt;&lt;rect x='6' y='12' width='4' height='2' fill='currentColor'/&gt;&lt;/svg&gt;&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;button class=&quot;control-strip-scroll control-strip-scroll-forward&quot; disabled aria-label=&quot;Scroll forward&quot;&gt;&lt;/button&gt;
+  &lt;button class=&quot;control-strip-handle&quot; aria-label=&quot;Collapse Control Strip&quot;&gt;&lt;/button&gt;
+&lt;/div&gt;</code></pre>
+        <button type="button" class="copy" data-copy="code-control-strip">Copy HTML</button>
+      </div>
+      <h3>Folded</h3>
+      <p>With .is-collapsed only the tab shows.</p>
+      <div class="example">
+<div class="specimen clio">
+<div class="control-strip is-collapsed"><button class="control-strip-handle" aria-label="Expand Control Strip"></button></div>
+</div>
+      </div>
+      <div class="snippet">
+        <pre id="code-control-strip-0"><code>&lt;div class=&quot;control-strip is-collapsed&quot;&gt;&lt;button class=&quot;control-strip-handle&quot; aria-label=&quot;Expand Control Strip&quot;&gt;&lt;/button&gt;&lt;/div&gt;</code></pre>
+        <button type="button" class="copy" data-copy="code-control-strip-0">Copy HTML</button>
+      </div>
+      <dl class="facts">
+        <dt>Selectors</dt><dd><code>.control-strip</code> <code>.control-strip.is-collapsed</code> <code>.control-strip-scroll</code> <code>.control-strip-scroll-back</code> <code>.control-strip-scroll-forward</code> <code>.control-strip-modules</code> <code>.control-strip-module-track</code> <code>.control-strip-module</code> <code>.control-strip-handle</code></dd>
+        <dt>Tokens</dt><dd><code>--clio-strip-height</code> <code>--clio-strip-bg</code> <code>--clio-strip-line</code> <code>--clio-strip-cell-shadow</code> <code>--clio-strip-sunken-shadow</code> <code>--clio-strip-pressed-bg</code> <code>--clio-strip-pressed-shadow</code> <code>--clio-strip-module-width</code> <code>--clio-strip-handle</code></dd>
+        <dt>Accessibility</dt><dd>role=toolbar on .control-strip-modules with an aria-label; every module and arrow is a &lt;button&gt; with an aria-label; a module that opens a menu carries aria-haspopup=&quot;menu&quot; and aria-expanded. Disable the scroll arrows when there is nothing to scroll. Folding (.is-collapsed) and positioning are up to your script.</dd>
+      </dl>
+      
+      <details class="evidence-details">
+        <summary>Evidence (6)</summary>
+      <table class="evidence">
+        <caption>Where each value comes from</caption>
+        <thead><tr><th scope="col">Era</th><th scope="col">Value</th><th scope="col">Status</th><th scope="col">Source</th></tr></thead>
+        <tbody>
+<tr>
+          <td>Platinum</td>
+          <td>24px: 1px black lines round every cell; #c0c0c0 cells with a #c0c0c0 then white light and a #a0a0a0 then #808080 shade; an end cap, 13px scroll cells (sunken while there is nothing to scroll), 30px modules with the 16px icon 2px in and a 4x7 menu triangle 3px from the right, then 2px of black and the tab</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, Mac OS 9.0 in Infinite Mac (npm run capture:platinum), frame strip-expanded</code><br><span class="upstream">Finder desktop; start of the strip 89.5% identical</span></td>
+        </tr>
+<tr>
+          <td>Platinum</td>
+          <td>Held module: #808080 face, 2px #404040 light and 2px #c0c0c0 shade</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, Mac OS 9.0 in Infinite Mac (npm run capture:platinum), frame strip-slider</code><br><span class="upstream">Sound module held</span></td>
+        </tr>
+<tr>
+          <td>Platinum</td>
+          <td>End-cap icon, scroll arrows, menu triangle, the tab and the folded tab</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>tooling/p9-art.py, redrawn from frames strip-expanded and strip-collapsed</code><br><span class="upstream">tab and folded tab 100% identical</span></td>
+        </tr>
+<tr>
+          <td>Drawing Board</td>
+          <td>The Control Strip is not themed: Mac OS 8.5 under Drawing Board draws it exactly as Mac OS 9 does</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, Mac OS 8.5 with Drawing Board (npm run capture:drawingboard), frame finder</code><br><span class="upstream">same cells, bevels and tab, other modules</span></td>
+        </tr>
+<tr>
+          <td>System 6</td>
+          <td>System 6 had no Control Strip: drawn at the Mac OS 9 geometry in ink and paper, with 1-bit arrows, triangle and tab drawn for clio.css</td>
+          <td><span class="status status-adapted">Adapted</span></td>
+          <td><code>clio.css</code><br><span class="upstream">AI System 6 shows its Control Strip in every era</span></td>
+        </tr>
+<tr>
+          <td>System 7</td>
+          <td>Uses the System 6 drawing; System 7.5's colour Control Strip is not yet captured</td>
+          <td><span class="status status-inferred">Inferred</span></td>
+          <td><code>clio.css</code><br><span class="upstream">Control Strip shipped with System 7.5 PowerBooks</span></td>
+        </tr>
+        </tbody>
+      </table>
+      </details>
+    </section>
+
     <section id="desktop" aria-labelledby="h-desktop">
       <h2 id="h-desktop"><a href="#desktop">Desktop and icons</a></h2>
       <p>The desktop pattern and desktop icons with their name labels. Bring your own icon images; clio.css ships no Apple icons.</p>
@@ -1581,14 +1680,14 @@
 
     <section id="evidence-policy" aria-labelledby="h-evidence" class="prose">
       <h2 id="h-evidence">Evidence policy</h2>
-      <p>The values come from <a href="https://github.com/surfine/AI-System-6">AI System 6</a>, a writing desktop that recreates these eras and measures them against real screens: System 6.0.8, System 7.5.3 and Mac OS 8.5 (with the 8.5b6 Drawing Board theme) in the Infinite Mac emulator, and Mac OS 9.0 captures from GUIdebook. Each value carries one of four labels:</p>
+      <p>The values come from <a href="https://github.com/surfine/AI-System-6">AI System 6</a>, a writing desktop that recreates these eras and measures them against real screens: System 6.0.8, System 7.5.3 and Mac OS 8.5 (with the 8.5b6 Drawing Board theme) in the Infinite Mac emulator, and Mac OS 9.0 in Infinite Mac and from GUIdebook captures. Each value carries one of four labels:</p>
       <ul>
         <li><span class="status status-measured">Measured</span> read from real pixels of the era.</li>
         <li><span class="status status-inferred">Inferred</span> reasoned from documentation or behaviour, not yet measured.</li>
         <li><span class="status status-adapted">Adapted</span> a deliberate change for the web: touch sizes, keyboard focus, contrast.</li>
         <li><span class="status status-third-party">Third-party</span> art or a font from a named, licensed project.</li>
       </ul>
-      <p>clio.css ships no screenshots, icons, logos or Apple fonts; screenshots stay evidence only. Small control parts for System 7 and Drawing Board (boxes, arrows, check boxes, tab ends) are redrawn pixel for pixel by a script, from measured pixels or the theme’s own resources, and labelled in the evidence; large textures are not reproduced. The fonts are ChicagoFLF (public domain) and Asap (SIL Open Font License). The full table is in <a href="https://github.com/surfine/clio.css/blob/main/EVIDENCE.md">EVIDENCE.md</a>.</p>
+      <p>clio.css ships no screenshots, icons, logos or Apple fonts; screenshots stay evidence only. Small control parts for System 7, Mac OS 9 and Drawing Board (boxes, arrows, check boxes, tab ends) are redrawn pixel for pixel by a script, from measured pixels or the theme’s own resources, and labelled in the evidence; large textures are not reproduced. The fonts are ChicagoFLF (public domain) and Asap (SIL Open Font License). The full table is in <a href="https://github.com/surfine/clio.css/blob/main/EVIDENCE.md">EVIDENCE.md</a>.</p>
     </section>
 
     <section id="for-agents" aria-labelledby="h-agents" class="prose">
@@ -1599,7 +1698,7 @@
   </div>
 
   <footer>
-    <p>clio.css 0.5.0 · MIT · Not affiliated with or endorsed by Apple Inc. Macintosh, Mac OS and Chicago are trademarks of Apple Inc., named here only to describe the eras recreated.</p>
+    <p>clio.css 0.6.0 · MIT · Not affiliated with or endorsed by Apple Inc. Macintosh, Mac OS and Chicago are trademarks of Apple Inc., named here only to describe the eras recreated.</p>
   </footer>
 
   <script>

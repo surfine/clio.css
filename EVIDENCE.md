@@ -2,14 +2,14 @@
 
 Generated from `components/index.mjs` by `npm run build`; edit there.
 
-Every value in clio.css 0.5.0 has a row here. Sources are paths in the AI System 6 development tree at commit `b75cd4ed` (public mirror: https://github.com/surfine/AI-System-6; some evidence folders such as `internal/` are private). The images measurements were taken from are evidence only; clio.css never ships them.
+Every value in clio.css 0.6.0 has a row here. Sources are paths in the AI System 6 development tree at commit `b75cd4ed` (public mirror: https://github.com/surfine/AI-System-6; some evidence folders such as `internal/` are private). The images measurements were taken from are evidence only; clio.css never ships them.
 
 | Status | Meaning | Rows |
 | --- | --- | ---: |
-| Measured | read from real pixels of the era | 93 |
-| Inferred | reasoned from documentation or behaviour, not measured | 11 |
+| Measured | read from real pixels of the era | 99 |
+| Inferred | reasoned from documentation or behaviour, not measured | 12 |
 | Adapted | a deliberate departure for the web (touch, focus, contrast) | 14 |
-| Third-party | art or font from a named, licensed project | 6 |
+| Third-party | art or font from a named, licensed project | 5 |
 
 Pixel check: `npm run fidelity` renders the Platinum specimens and compares them with AI System 6's GUIdebook Mac OS 9.0 reference crops (it needs a local AI System 6 checkout; see the script).
 
@@ -45,7 +45,7 @@ Pixel check: `npm run fidelity` renders the Platinum specimens and compares them
 | Menu bar and menus | Platinum | Menu bar: #ddd, white top line, #999 bottom line, 1px black rule, 20px; open title #333399 with #6666cc/#000088 lines | Measured | `apps/desktop/styles/65-appearance-themes.css:298, :45` — Mac OS 9 native menu bar captures 02/04 |
 | Menu bar and menus | Platinum | Menu: no top rule, white/#999 inner bevel, #222 1px drop; 16px rows at weight 600; highlight #333399 with #6666cc/#000088 side columns | Measured | `apps/desktop/styles/65-appearance-themes.css:912 (P21), :917 (P24)` — GUIdebook Mac OS 9.0 Apple menu (Theme Lab specimen apple-menu) |
 | Menu bar and menus | Platinum | Separator: #888 over white, in an 8px row | Inferred | `apps/desktop/styles/65-appearance-themes.css (separator #888/white)` — the line pair is measured; the 8px row height is not |
-| Menu bar and menus | Platinum | Check mark and submenu arrow art | Third-party | `classic-stylesheets macos9/checkmark.svg, menu-right.svg (MIT)` — nielssp/classic-stylesheets @9ebd2d8 |
+| Menu bar and menus | Platinum | Menu check mark and submenu arrow art | Third-party | `classic-stylesheets macos9/checkmark.svg, menu-right.svg (MIT)` — nielssp/classic-stylesheets @9ebd2d8 |
 | Menu bar and menus | Drawing Board | Menu bar: 22px of #cec6b5 with no rule under it; menus #ddd with a #333 outline and 18px items; the separator is a 1px pencil line fading #888 to #b6ada5 | Measured | `clio.css capture, Mac OS 8.5 with the 8.5b6 Drawing Board theme in Infinite Mac (npm run capture:drawingboard), frame file-menu` — menu bar rows 0-21; File menu |
 | Menu bar and menus | Drawing Board | The chosen menu title and item are underlined in pencil instead of inverted | Measured | `the theme file's pxm# pixmaps, decoded by tooling/theme-resources.py and redrawn by tooling/db-art.py` — Menu_Title_Underline_Center, Menu_Item_underline_center; the title underline is visible under File in the capture |
 | Menu bar and menus | Drawing Board | Menu paper grain (pink, peach and green flecks on #ddd) is not reproduced | Adapted | `clio.css` — texture, not a control part |
@@ -71,11 +71,11 @@ Pixel check: `npm run fidelity` renders the Platinum specimens and compares them
 | Check box | System 6 | Checked draws an X from corner to corner of the box | Measured | `clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame get-info-checked (Locked)` — the art is system.css's checkmark.svg (MIT), which matches |
 | Check box | System 6 | X art | Third-party | `apps/desktop/assets/themes/classic/controls/checkmark.svg` — system.css icon/checkmark.svg (MIT, Sakun Acharige) |
 | Check box | Platinum | 12px #ddd well, 1px black frame, white top-left and #888 bottom-right bevel | Measured | `apps/desktop/styles/65-appearance-themes.css:897 (P18)` — GUIdebook Mac OS 9.0 Appearance Options tab (checkbox specimens) |
-| Check box | Platinum | Check mark art | Third-party | `classic-stylesheets macos9/checkmark.svg (MIT)` — nielssp/classic-stylesheets @9ebd2d8 |
+| Check box | Platinum | Check mark: Mac OS 9's grey-shaded mark inside the frame, overhanging its right edge by two pixels | Measured | `clio.css capture, Mac OS 9.0 in Infinite Mac (npm run capture:platinum), frame general-controls; redrawn by tooling/p9-art.py` — Show Desktop when in background; 96.4% identical (the frame 98.6%) |
 | Check box | Drawing Board | Check box: the theme's 14x11 pictures; image 0 off, 1 on, 3 mixed, 4/5 pressed, 8/9 disabled | Measured | `clio.css capture, Mac OS 8.5 with the 8.5b6 Drawing Board theme in Infinite Mac (npm run capture:drawingboard), frames general-controls and date-time; the theme file's pxm# pixmaps, decoded by tooling/theme-resources.py and redrawn by tooling/db-art.py` — off, on and disabled found 1:1 (Show Desktop, Show Launcher, Daylight-Saving Time is in effect) |
 | Radio button | System 7 | Identical to System 6 | Measured | `clio.css capture, System 7.5.3 in Infinite Mac (npm run capture:system7), frame general-controls` — 100% identical, on and off |
 | Radio button | System 6 | 12px ring and 6px dot: the real pixels match system.css's art exactly | Measured | `clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame control-panel (Rate of Insertion Point Blinking)` — art from system.css icon/radio-border.svg, radio-dot.svg (MIT, Sakun Acharige) |
-| Radio button | Platinum | Radio drawn with CSS gradients: black ring, white to #888 well, 6px black dot | Adapted | `apps/desktop/styles/65-appearance-themes.css:291` — AI System 6 later replaced this with art cut from a capture (P19); clio.css ships no cut art |
+| Radio button | Platinum | Radio button: Mac OS 9's shaded 12px ball, off and on; the held states are still drawn with CSS gradients | Measured | `clio.css capture, Mac OS 9.0 in Infinite Mac (npm run capture:platinum), frame general-controls; redrawn by tooling/p9-art.py` — Documents group; off and on 100% identical |
 | Radio button | Drawing Board | Radio button: the theme's 16x12 pictures; image 0 off, 1 on, 2 pressed, 3/4 disabled | Measured | `clio.css capture, Mac OS 8.5 with the 8.5b6 Drawing Board theme in Infinite Mac (npm run capture:drawingboard), frames general-controls and date-time; the theme file's pxm# pixmaps, decoded by tooling/theme-resources.py and redrawn by tooling/db-art.py` — off and on found 1:1 (Documents, Menu Bar Clock) |
 | Text field | System 7 | As System 6: a 1px black frame with the text 3px in | Measured | `clio.css capture, System 7.5.3 in Infinite Mac (npm run capture:system7), frame numbers (Currency Symbol)` — System 7.5.3 |
 | Text field | System 6 | 1px ink frame, white, text inset 3px | Measured | `clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame control-panel (RAM Cache field), get-info (comments)` — System 6.0.8 |
@@ -125,6 +125,12 @@ Pixel check: `npm run fidelity` renders the Platinum specimens and compares them
 | Tabs | System 6 | Boxed labels that join the panel | Adapted | `clio.css` — System 6 had no tab control |
 | Tabs | Platinum | Tab art: sloped caps, #ccc tabs, the front tab #eee and 2px taller | Third-party | `classic-stylesheets macos9/tab*.svg (MIT)` — nielssp/classic-stylesheets @9ebd2d8; AI System 6 measured a 21-row tab (P01, 65-appearance-themes.css:742) |
 | Tabs | Drawing Board | Tabs: the theme's left end (6px) and right end (17px, 2px taller) with the right end's first column stretched between; the front tab is the content colour and opens into the panel | Measured | `clio.css capture, Mac OS 8.5 with the 8.5b6 Drawing Board theme in Infinite Mac (npm run capture:drawingboard), frame appearance; the theme file's pxm# pixmaps, decoded by tooling/theme-resources.py and redrawn by tooling/db-art.py` — NTabLeft and NTabRight found 1:1 at (244,96) and (327,94) |
+| Control Strip | Platinum | 24px: 1px black lines round every cell; #c0c0c0 cells with a #c0c0c0 then white light and a #a0a0a0 then #808080 shade; an end cap, 13px scroll cells (sunken while there is nothing to scroll), 30px modules with the 16px icon 2px in and a 4x7 menu triangle 3px from the right, then 2px of black and the tab | Measured | `clio.css capture, Mac OS 9.0 in Infinite Mac (npm run capture:platinum), frame strip-expanded` — Finder desktop; start of the strip 89.5% identical |
+| Control Strip | Platinum | Held module: #808080 face, 2px #404040 light and 2px #c0c0c0 shade | Measured | `clio.css capture, Mac OS 9.0 in Infinite Mac (npm run capture:platinum), frame strip-slider` — Sound module held |
+| Control Strip | Platinum | End-cap icon, scroll arrows, menu triangle, the tab and the folded tab | Measured | `tooling/p9-art.py, redrawn from frames strip-expanded and strip-collapsed` — tab and folded tab 100% identical |
+| Control Strip | Drawing Board | The Control Strip is not themed: Mac OS 8.5 under Drawing Board draws it exactly as Mac OS 9 does | Measured | `clio.css capture, Mac OS 8.5 with Drawing Board (npm run capture:drawingboard), frame finder` — same cells, bevels and tab, other modules |
+| Control Strip | System 6 | System 6 had no Control Strip: drawn at the Mac OS 9 geometry in ink and paper, with 1-bit arrows, triangle and tab drawn for clio.css | Adapted | `clio.css` — AI System 6 shows its Control Strip in every era |
+| Control Strip | System 7 | Uses the System 6 drawing; System 7.5's colour Control Strip is not yet captured | Inferred | `clio.css` — Control Strip shipped with System 7.5 PowerBooks |
 | Desktop and icons | System 7 | The desktop is a 1px #666/#aaa checker | Measured | `clio.css capture, System 7.5.3 in Infinite Mac (npm run capture:system7), every frame` — agrees with AI System 6 system-7-reference |
 | Desktop and icons | System 6 | The desktop is a 1px 50% checker | Measured | `clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), every frame` — AI System 6 draws an 8px stipple |
 | Desktop and icons | System 6 | Icon names: Geneva 9 on a white tag; a selected icon and its tag invert | Measured | `clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), desktop (Macintosh HD selected, Welcome! not)` — System 6.0.8 Finder |

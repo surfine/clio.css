@@ -292,7 +292,7 @@
   box-shadow: inset 0 0 0 1px #9f9a94;
 }
 
-[data-era="drawingboard"] :is(button, .btn, .btn-default, input[type="button"], input[type="submit"], input[type="reset"]):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *):is(:disabled, .disabled) {
+[data-era="drawingboard"] :is(button, .btn, .btn-default, input[type="button"], input[type="submit"], input[type="reset"]):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *):is(:disabled, .disabled) {
   background: #cdc6bd;
   color: #9f9a94;
 }
@@ -309,6 +309,10 @@
 
 [data-era="drawingboard"] input[type="checkbox"]:checked {
   background-image: var(--clio-art-db-check-on);
+}
+
+[data-era="drawingboard"] input[type="checkbox"]:checked::after {
+  content: none;
 }
 
 [data-era="drawingboard"] input[type="checkbox"]:indeterminate {
@@ -444,7 +448,7 @@
   background: linear-gradient(to bottom, #aaaaaa 0 1px, #ece6e4 1px 7px, #888888 7px 8px, #555555 8px 9px, #ece6e4 9px 15px, #777777 15px);
 }
 
-[data-era="drawingboard"] :is(button, .btn, .btn-default, input[type="button"], input[type="submit"], input[type="reset"]):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *) {
+[data-era="drawingboard"] :is(button, .btn, .btn-default, input[type="button"], input[type="submit"], input[type="reset"]):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *) {
   border-color: #777777 #333333 #111111 #777777;
 }
 [data-era="drawingboard"] :is(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-button,
@@ -456,4 +460,15 @@
   background-position: 0 0;
   background-size: 16px 16px;
   box-shadow: none;
+}
+
+/* Disabled pop-up menu: a lighter #9f9a94 pencil frame (#888 along the foot),
+   the same face and hatch, the theme's dimmed arrow (Appearance, "Variation"). */
+[data-era="drawingboard"] select:disabled {
+  border-color: #9f9a94 #9f9a94 #888888;
+  background:
+    var(--clio-art-db-popup-arrow-off) right 5px top 4px / 7px 9px no-repeat,
+    var(--clio-art-db-popup-corner) right 19px bottom / 24px 24px no-repeat,
+    #cec6b5;
+  color: #8c8c8c;
 }
