@@ -61,7 +61,7 @@
   overflow: hidden;
   background: var(--clio-title-bg);
   color: var(--clio-title-fg);
-  font-family: var(--clio-font-chrome);
+  font-family: var(--clio-font-window-title, var(--clio-font-chrome));
   font-size: var(--clio-title-font-size);
   font-stretch: var(--clio-font-stretch-title);
   font-weight: var(--clio-chrome-weight);

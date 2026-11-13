@@ -101,6 +101,7 @@ Reference: Mac OS 9.0 running in Infinite Mac, the 800×600 colour canvas read 1
 | p9-checkbox-off | 12×12 | 100.0% | 0.0% | 0 |
 | p9-radio-on | 12×12 | 100.0% | 0.0% | 0 |
 | p9-radio-off | 12×12 | 100.0% | 0.0% | 0 |
+| p9-titlebar | 477×22 | 100.0% | 0.0% | 0.01 |
 | p9-titlebar-left | 30×22 | 100.0% | 0.0% | 0 |
 | p9-titlebar-right | 36×22 | 100.0% | 0.0% | 0 |
 | p9-button-end | 86×20 | 100.0% | 0.0% | 0.03 |
@@ -125,7 +126,7 @@ Reference: GUIdebook Mac OS 9.0 captures, cropped by AI System 6 (`AIS6_DIR`).
 | button-disabled | 80×20 | 100.0% | 0.0% | 0 |
 | checkbox-checked | 12×12 | 100.0% | 0.0% | 0 |
 | checkbox-unchecked | 12×12 | 100.0% | 0.0% | 0 |
-| selected-tab | 103×24 | 99.5% | 0.0% | 0.11 |
+| selected-tab | 103×24 | 100.0% | 0.0% | 0 |
 
 ## What the remaining difference is
 
