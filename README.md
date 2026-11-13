@@ -28,7 +28,7 @@ npm install clio.css
 | File | What it draws |
 | --- | --- |
 | `dist/clio.css` | System 6 by default; `data-era="platinum"` on any element switches that subtree to Platinum |
-| `dist/clio.system6.css` | System 6 only (42 KB minified, 7 KB gzip) |
+| `dist/clio.system6.css` | System 6 only (45 KB minified, 7 KB gzip) |
 | `dist/clio.platinum.css` | Platinum as the page default |
 | `*.min.css` | Minified builds |
 | `dist/components.json` | Machine-readable index: selectors, tokens, markup and evidence per component |
