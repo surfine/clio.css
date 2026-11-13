@@ -16,8 +16,8 @@ Infinite Mac tints black and white as #222222 and #eeeeee.
 
 | Specimen | Size | exact | off | mean |
 | --- | --- | ---: | ---: | ---: |
-| s6-titlebar | 240×19 | 96.3% | 3.7% | 9.45 |
-| s6-default-ok | 68×28 | 96.3% | 3.7% | 9.51 |
+| s6-titlebar | 240×19 | 100.0% | 0.0% | 0 |
+| s6-default-ok | 68×28 | 99.7% | 0.3% | 0.8 |
 | s6-checkbox | 12×12 | 100.0% | 0.0% | 0 |
 | s6-radio-on | 12×12 | 100.0% | 0.0% | 0 |
 | s6-radio-off | 12×12 | 100.0% | 0.0% | 0 |
@@ -26,8 +26,8 @@ Infinite Mac tints black and white as #222222 and #eeeeee.
 | s6-scroll-left | 14×14 | 100.0% | 0.0% | 0 |
 | s6-scroll-right | 14×14 | 100.0% | 0.0% | 0 |
 | s6-checkbox-checked | 12×12 | 100.0% | 0.0% | 0 |
-| s6-button-pressed | 60×20 | 85.8% | 14.2% | 36.34 |
-| s6-button-hover | 60×20 | 85.9% | 14.1% | 35.91 |
+| s6-button-pressed | 60×20 | 97.0% | 3.0% | 7.65 |
+| s6-button-hover | 60×20 | 96.3% | 3.7% | 9.35 |
 | s6-popup-end | 12×19 | 87.3% | 12.7% | 32.43 |
 | s6-progress-fill | 12×12 | 100.0% | 0.0% | 0 |
 | s6-menu-separator | 136×16 | 100.0% | 0.0% | 0 |
@@ -48,10 +48,10 @@ Reference: GUIdebook Mac OS 9.0 captures, cropped by AI System 6 (`AIS6_DIR`).
 
 ## What the remaining difference is
 
-- Labels and titles: almost every off pixel in the title bars, buttons and the tab is text.
-  System 6's Chicago and Mac OS 9's Charcoal are Apple's bitmap and outline faces and are not
-  shipped; clio.css draws ChicagoFLF (public domain) and Asap (OFL). On a Mac that has the
-  original faces installed, the stacks use them.
+- System 6: text is drawn in Clio Sans '84, Chicago 12 rebuilt from the emulator, so labels
+  match too. The pressed and hovered button frames still contain the mouse pointer.
+- Platinum labels and titles: almost every off pixel is text. Charcoal is Apple's and is
+  not shipped; clio.css draws Asap (OFL). On a Mac that has Charcoal, the stack uses it.
 - Platinum: a few corner pixels of the default ring, the right edge of the inactive frame and
   the ragged end of the ridges; the check mark is classic-stylesheets' drawing (MIT); the box
   art is a smooth gradient where the original steps in 2px bands.

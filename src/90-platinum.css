@@ -17,6 +17,7 @@
   --clio-font-chrome: Charcoal, "Charcoal CY", "Clio Asap", Geneva, "Helvetica Neue", Arial, sans-serif;
   --clio-font-text: Geneva, "Clio Asap", "Helvetica Neue", Arial, sans-serif;
   --clio-font-size: 12px;
+  --clio-font-smoothing: auto;
   --clio-font-size-small: 10px;
   --clio-chrome-weight: 700;
   --clio-font-stretch-text: 113%;
@@ -360,6 +361,7 @@
 [data-era="platinum"] :is(.default, .btn-default)::before {
   content: "";
   position: absolute;
+  border: 0;
   inset: -3px;
   border-radius: 3px;
   box-shadow:

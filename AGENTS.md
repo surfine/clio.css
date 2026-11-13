@@ -37,4 +37,7 @@ For AI coding agents using or changing this repository.
   every token built from it.
 - Motion: none today. If added, animate `transform`/`opacity` only and honour
   `prefers-reduced-motion`.
+- Clio Sans '84 is generated: edit `fonts-src/clio-sans-84.txt` (or re-extract it with
+  `npm run capture:keycaps` then `npm run build:font`, which needs Python with fontTools
+  and brotli), never the WOFF2 by hand.
 - Keep `dist/clio.min.css` under the size budget in `test/check.mjs`.

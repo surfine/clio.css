@@ -6,6 +6,22 @@ following third-party material is included, each under its own licence.
 
 ## Fonts
 
+### Clio Sans '84 (`dist/fonts/ClioSans84.woff2`)
+
+A pixel reconstruction of Chicago 12, the Macintosh system font designed by Susan Kare
+for Apple Computer in 1984. clio.css read every glyph from System 6.0.8 running in an
+emulator (`npm run capture:keycaps`), wrote the bitmaps to `fonts-src/clio-sans-84.txt`
+and built the font from them (`npm run build:font`). No Apple font file was copied.
+
+It is not an original design and is not presented as one: the letterforms are Apple's.
+It ships under clio.css's MIT licence on the basis that, in the United States, typeface
+designs are not protected by copyright (37 CFR 202.1(e)); only font software is, and
+this font file is new software. Some countries protect typeface designs separately; if
+that matters for your use, use `clio.system6.css` with your own font stack. "Chicago" is
+a trademark of Apple Inc., which is why the font has another name.
+
+### Other fonts
+
 | File | Font | Author | Licence |
 | --- | --- | --- | --- |
 | `dist/fonts/ChicagoFLF.woff2`, `.woff` | ChicagoFLF | Robin Casady | Public domain: the author's own statement and Font Library's listing (https://fontlibrary.org/font/chicagoflf); some download sites say "personal use", which is not the author's term. File as distributed by system.css |

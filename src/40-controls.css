@@ -22,6 +22,7 @@
   font-size: var(--clio-font-size);
   font-stretch: var(--clio-font-stretch-text);
   font-weight: var(--clio-button-weight);
+  -webkit-font-smoothing: var(--clio-font-smoothing);
   line-height: 14px;
   text-align: center;
   text-decoration: none;
@@ -39,14 +40,21 @@
   color: var(--clio-button-active-fg);
 }
 
-/* Default button: the ring that says Return will press it. */
+/* Default button: the ring that says Return will press it. Drawn as its own
+   rounded rectangle (Inside Macintosh: PenSize(3,3), InsetRect(-4,-4),
+   FrameRoundRect(16,16)), so its corners do not follow the button's. */
 :where(.default, .btn-default, button[type="submit"].default) {
+  position: relative;
   border-radius: var(--clio-button-radius);
-  box-shadow: var(--clio-button-shadow), var(--clio-button-default-ring);
 }
 
-:where(.default, .btn-default):not(:disabled, .disabled):is(:active, .active) {
-  box-shadow: var(--clio-button-active-shadow), var(--clio-button-default-ring);
+:where(.default, .btn-default)::before {
+  content: "";
+  position: absolute;
+  inset: calc(-1px - var(--clio-button-default-gap) - var(--clio-button-default-width));
+  border: var(--clio-button-default-width) solid var(--clio-ink);
+  border-radius: var(--clio-button-default-radius);
+  pointer-events: none;
 }
 
 :where(button, .btn, .btn-default, .standard-button, input[type="button"], input[type="submit"], input[type="reset"]):is(:disabled, .disabled) {
@@ -211,6 +219,7 @@
   font-size: var(--clio-font-size);
   font-stretch: var(--clio-font-stretch-text);
   font-weight: var(--clio-popup-weight);
+  -webkit-font-smoothing: var(--clio-font-smoothing);
   line-height: 16px;
   appearance: none;
   -webkit-appearance: none;

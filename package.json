@@ -1,6 +1,6 @@
 {
   "name": "clio.css",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "CSS library for classic Mac OS interfaces: Macintosh System 6 and Mac OS 8/9 Platinum windows, menus, buttons, scroll bars and dialogs, with every value traced to measured pixels.",
   "keywords": [
     "css",
@@ -61,7 +61,9 @@
     "test": "node tooling/build.mjs && node test/check.mjs",
     "fidelity": "node tooling/fidelity.mjs",
     "prepack": "node tooling/build.mjs && node test/check.mjs",
-    "capture:system6": "node tooling/capture-system6.mjs"
+    "capture:system6": "node tooling/capture-system6.mjs",
+    "capture:keycaps": "node tooling/capture-keycaps.mjs",
+    "build:font": "python3 tooling/extract-glyphs.py && python3 tooling/build-font.py"
   },
   "engines": {
     "node": ">=18"

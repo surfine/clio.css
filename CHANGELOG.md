@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.3.0 — 2026-11-13
+
+- **Clio Sans '84**: Chicago 12 rebuilt pixel for pixel from System 6.0.8 (Key Caps), 108
+  glyphs including ⌘ and ✓, 2.9 KB. It is now the System 6 chrome font, drawn without
+  antialiasing so it stays 1-bit on half pixels. The System 6 title bar matches the real
+  screen 100%, the default OK button 99.7%.
+- The default button's ring is drawn as its own 8px-radius round rectangle, as Inside
+  Macintosh's FrameRoundRect(16,16) does.
+- `npm run capture:keycaps` and `npm run build:font` rebuild the font from the emulator.
+
 ## 0.2.1 — 2026-11-13
 
 The rest of System 6, measured from System 6.0.8 in Infinite Mac.

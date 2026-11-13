@@ -1,7 +1,7 @@
-# clio.css 0.2.1 — full reference
+# clio.css 0.3.0 — full reference
 
 Classic Mac OS interface CSS: System 6 (default) and Mac OS 8/9 Platinum (data-era="platinum").
-Install: npm install clio.css — or <link rel="stylesheet" href="https://unpkg.com/clio.css@0.2.1/dist/clio.css">
+Install: npm install clio.css — or <link rel="stylesheet" href="https://unpkg.com/clio.css@0.3.0/dist/clio.css">
 Rules have zero or one-class specificity; override any --clio-* custom property on any element.
 
 ## Window (#window)
@@ -92,7 +92,7 @@ Accessibility: Use role=menubar, role=menu and role=menuitem with aria-haspopup 
 Push buttons, the default button with its ring, the pressed state and the disabled state. Styles <button>, .btn and input buttons.
 
 Selectors: button, .btn, .default, .btn-default, button:active, button.active, button:disabled, input[type=submit]
-Tokens: --clio-button-bg, --clio-button-border, --clio-button-radius, --clio-button-shadow, --clio-button-active-bg, --clio-button-default-ring, --clio-control-height
+Tokens: --clio-button-bg, --clio-button-border, --clio-button-radius, --clio-button-shadow, --clio-button-active-bg, --clio-button-default-width, --clio-button-default-radius, --clio-control-height
 Accessibility: Hover never changes a button: it is pressed only by pointer-down, Space or Enter. Keyboard focus draws a dotted frame (System 6) or a 2px #6666cc ring (Platinum), separate from the default ring.
 
 ```html
@@ -322,7 +322,7 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
 
 ```html
 <div class="clio" style="padding: 12px; background: var(--clio-pane-bg)">
-  <h2 class="heading">Chicago is the system font</h2>
+  <h2 class="heading">Clio Sans '84 is the system font</h2>
   <p class="text">Geneva is the application font. Every value is a --clio-* custom property you can override on any element.</p>
 </div>
 ```
@@ -330,7 +330,16 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
 ## Stylesheet (dist/clio.css)
 
 ```css
-/* Fonts. Only two faces ship, both with a licence that allows it:
+/* Clio Sans '84: Chicago 12 rebuilt pixel for pixel from System 6.0.8
+   (fonts-src/clio-sans-84.txt). Every pixel is a square on a 1200-unit em, so
+   at 12px and its multiples it draws exactly the original bitmap. */
+@font-face {
+  font-family: "Clio Sans '84";
+  src: url("fonts/ClioSans84.woff2") format("woff2");
+  font-display: swap;
+}
+
+/* Other fonts, each with a licence that allows it:
    - ChicagoFLF: a public-domain outline revival of Chicago (Robin Casady).
    - Asap (variable, wdth + wght): SIL OFL 1.1, Omnibus-Type. The legal
      stand-in for Charcoal that AI System 6 measured its Platinum title bar
@@ -373,10 +382,12 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
   --clio-selection-fg: #ffffff;
 
   /* Type. Chicago 12 is the system font; Geneva is the application font. */
-  --clio-font-chrome: Chicago, "ChicagoFLF", Charcoal, Geneva, "Helvetica Neue", Arial, sans-serif;
+  --clio-font-chrome: "Clio Sans '84", Chicago, "ChicagoFLF", Charcoal, Geneva, "Helvetica Neue", Arial, sans-serif;
   --clio-font-text: Geneva, "Clio Asap", "Helvetica Neue", Arial, sans-serif;
   --clio-font-mono: Monaco, Menlo, Consolas, "Courier New", monospace;
   --clio-font-size: 12px;
+  /* A bitmap face: no antialiasing, so a glyph on a half pixel stays 1-bit. */
+  --clio-font-smoothing: none;
   /* Geneva 9: the Finder info line and icon names. */
   --clio-font-size-small: 9px;
   --clio-chrome-weight: 400;
@@ -476,7 +487,8 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
   --clio-button-active-shadow: 0 0 0 0 transparent;
   /* Default button: Inside Macintosh's recipe is PenSize(3,3) around the
      button inset by -4, so a 1px gap then a 3px ring. */
-  --clio-button-default-ring: 0 0 0 1px var(--clio-paper), 0 0 0 4px var(--clio-ink);
+  --clio-button-default-gap: 1px;
+  --clio-button-default-width: 3px;
   --clio-button-default-radius: 8px;
   --clio-button-disabled-fg: var(--clio-disabled);
   --clio-button-disabled-border: 1px solid var(--clio-ink);
@@ -627,7 +639,7 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
   font-stretch: var(--clio-font-stretch-text);
   font-synthesis: none;
   line-height: 16px;
-  -webkit-font-smoothing: auto;
+  -webkit-font-smoothing: var(--clio-font-smoothing);
 }
 
 :where(.window, .modal-dialog, .alert-box, .standard-dialog, .modeless-dialog, .clio) *,
@@ -636,10 +648,12 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
   box-sizing: border-box;
 }
 
-/* Application text (Geneva role) for content areas. */
-:where(.window-pane, .modal-contents, .alert-contents, .text) {
+/* Application text (Geneva role) for content areas. It is an outline face
+   until a Geneva reconstruction ships, so it keeps antialiasing. */
+:where(.window-pane, .modal-contents, .alert-contents, .text, .details-bar, .listbox, [role="listbox"], .status-bar, .icon, input, textarea) {
   font-family: var(--clio-font-text);
   font-stretch: var(--clio-font-stretch-text);
+  -webkit-font-smoothing: auto;
 }
 
 :where(.window, .modal-dialog, .alert-box, .standard-dialog, .clio) :where(h1, h2, h3, h4, .heading) {
@@ -1144,6 +1158,7 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
   font-size: var(--clio-font-size);
   font-stretch: var(--clio-font-stretch-text);
   font-weight: var(--clio-button-weight);
+  -webkit-font-smoothing: var(--clio-font-smoothing);
   line-height: 14px;
   text-align: center;
   text-decoration: none;
@@ -1161,14 +1176,21 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
   color: var(--clio-button-active-fg);
 }
 
-/* Default button: the ring that says Return will press it. */
+/* Default button: the ring that says Return will press it. Drawn as its own
+   rounded rectangle (Inside Macintosh: PenSize(3,3), InsetRect(-4,-4),
+   FrameRoundRect(16,16)), so its corners do not follow the button's. */
 :where(.default, .btn-default, button[type="submit"].default) {
+  position: relative;
   border-radius: var(--clio-button-radius);
-  box-shadow: var(--clio-button-shadow), var(--clio-button-default-ring);
 }
 
-:where(.default, .btn-default):not(:disabled, .disabled):is(:active, .active) {
-  box-shadow: var(--clio-button-active-shadow), var(--clio-button-default-ring);
+:where(.default, .btn-default)::before {
+  content: "";
+  position: absolute;
+  inset: calc(-1px - var(--clio-button-default-gap) - var(--clio-button-default-width));
+  border: var(--clio-button-default-width) solid var(--clio-ink);
+  border-radius: var(--clio-button-default-radius);
+  pointer-events: none;
 }
 
 :where(button, .btn, .btn-default, .standard-button, input[type="button"], input[type="submit"], input[type="reset"]):is(:disabled, .disabled) {
@@ -1333,6 +1355,7 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
   font-size: var(--clio-font-size);
   font-stretch: var(--clio-font-stretch-text);
   font-weight: var(--clio-popup-weight);
+  -webkit-font-smoothing: var(--clio-font-smoothing);
   line-height: 16px;
   appearance: none;
   -webkit-appearance: none;
@@ -1770,6 +1793,7 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
   --clio-font-chrome: Charcoal, "Charcoal CY", "Clio Asap", Geneva, "Helvetica Neue", Arial, sans-serif;
   --clio-font-text: Geneva, "Clio Asap", "Helvetica Neue", Arial, sans-serif;
   --clio-font-size: 12px;
+  --clio-font-smoothing: auto;
   --clio-font-size-small: 10px;
   --clio-chrome-weight: 700;
   --clio-font-stretch-text: 113%;
@@ -2113,6 +2137,7 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
 [data-era="platinum"] :is(.default, .btn-default)::before {
   content: "";
   position: absolute;
+  border: 0;
   inset: -3px;
   border-radius: 3px;
   box-shadow:

@@ -147,10 +147,10 @@ ${table("platinum")}
 
 ## What the remaining difference is
 
-- Labels and titles: almost every off pixel in the title bars, buttons and the tab is text.
-  System 6's Chicago and Mac OS 9's Charcoal are Apple's bitmap and outline faces and are not
-  shipped; clio.css draws ChicagoFLF (public domain) and Asap (OFL). On a Mac that has the
-  original faces installed, the stacks use them.
+- System 6: text is drawn in Clio Sans '84, Chicago 12 rebuilt from the emulator, so labels
+  match too. The pressed and hovered button frames still contain the mouse pointer.
+- Platinum labels and titles: almost every off pixel is text. Charcoal is Apple's and is
+  not shipped; clio.css draws Asap (OFL). On a Mac that has Charcoal, the stack uses it.
 - Platinum: a few corner pixels of the default ring, the right edge of the inactive frame and
   the ragged end of the ridges; the check mark is classic-stylesheets' drawing (MIT); the box
   art is a smooth gradient where the original steps in 2px bands.

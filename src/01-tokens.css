@@ -18,10 +18,12 @@
   --clio-selection-fg: #ffffff;
 
   /* Type. Chicago 12 is the system font; Geneva is the application font. */
-  --clio-font-chrome: Chicago, "ChicagoFLF", Charcoal, Geneva, "Helvetica Neue", Arial, sans-serif;
+  --clio-font-chrome: "Clio Sans '84", Chicago, "ChicagoFLF", Charcoal, Geneva, "Helvetica Neue", Arial, sans-serif;
   --clio-font-text: Geneva, "Clio Asap", "Helvetica Neue", Arial, sans-serif;
   --clio-font-mono: Monaco, Menlo, Consolas, "Courier New", monospace;
   --clio-font-size: 12px;
+  /* A bitmap face: no antialiasing, so a glyph on a half pixel stays 1-bit. */
+  --clio-font-smoothing: none;
   /* Geneva 9: the Finder info line and icon names. */
   --clio-font-size-small: 9px;
   --clio-chrome-weight: 400;
@@ -121,7 +123,8 @@
   --clio-button-active-shadow: 0 0 0 0 transparent;
   /* Default button: Inside Macintosh's recipe is PenSize(3,3) around the
      button inset by -4, so a 1px gap then a 3px ring. */
-  --clio-button-default-ring: 0 0 0 1px var(--clio-paper), 0 0 0 4px var(--clio-ink);
+  --clio-button-default-gap: 1px;
+  --clio-button-default-width: 3px;
   --clio-button-default-radius: 8px;
   --clio-button-disabled-fg: var(--clio-disabled);
   --clio-button-disabled-border: 1px solid var(--clio-ink);
