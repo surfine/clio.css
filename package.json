@@ -1,7 +1,7 @@
 {
   "name": "clio.css",
-  "version": "0.3.1",
-  "description": "CSS library for classic Mac OS interfaces: Macintosh System 6 and Mac OS 8/9 Platinum windows, menus, buttons, scroll bars and dialogs, with every value traced to measured pixels.",
+  "version": "0.4.0",
+  "description": "CSS library for classic Mac OS interfaces: Macintosh System 6, System 7 and Mac OS 8/9 Platinum windows, menus, buttons, scroll bars and dialogs, with every value traced to measured pixels.",
   "keywords": [
     "css",
     "css-framework",
@@ -10,6 +10,7 @@
     "classic-macos",
     "macintosh",
     "system-6",
+    "system-7",
     "mac-os-9",
     "mac-os-8",
     "platinum",
@@ -44,7 +45,9 @@
     "./platinum.min": "./dist/clio.platinum.min.css",
     "./components.json": "./dist/components.json",
     "./dist/*": "./dist/*",
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./system7": "./dist/clio.system7.css",
+    "./system7.min": "./dist/clio.system7.min.css"
   },
   "files": [
     "dist",
@@ -63,7 +66,8 @@
     "prepack": "node tooling/build.mjs && node test/check.mjs",
     "capture:system6": "node tooling/capture-system6.mjs",
     "capture:keycaps": "node tooling/capture-keycaps.mjs",
-    "build:font": "python3 tooling/extract-glyphs.py --font chicago && python3 tooling/extract-glyphs.py --font geneva && python3 tooling/extract-glyphs.py --font geneva9 && python3 tooling/build-font.py clio-sans-84 && python3 tooling/build-font.py clio-text-84 && python3 tooling/build-font.py clio-text-84-9"
+    "build:font": "python3 tooling/extract-glyphs.py --font chicago && python3 tooling/extract-glyphs.py --font geneva && python3 tooling/extract-glyphs.py --font geneva9 && python3 tooling/build-font.py clio-sans-84 && python3 tooling/build-font.py clio-text-84 && python3 tooling/build-font.py clio-text-84-9",
+    "capture:system7": "node tooling/capture-system7.mjs"
   },
   "engines": {
     "node": ">=18"

@@ -1,15 +1,15 @@
 # clio.css
 
-**A CSS library for classic Mac OS interfaces: Macintosh System 6 and Mac OS 8/9 Platinum.**
+**A CSS library for classic Mac OS interfaces: Macintosh System 6, System 7 and Mac OS 8/9 Platinum.**
 Windows, title bars, menu bars, push buttons, check boxes, radio buttons, text fields,
 pop-up menus, list boxes, scroll bars, dialogs, group boxes, progress bars, tabs and
 desktop icons. Pure CSS, no JavaScript. MIT. No Apple bitmaps, icons, logos or fonts.
 
 Every value is traced to its source and labelled **measured** (read from real pixels of
 the era), **inferred**, **adapted** (a deliberate web change) or **third-party**. System 6
-is measured from System 6.0.8 running in [Infinite Mac](https://infinitemac.org), its
-screen read pixel for pixel; Platinum from Mac OS 9.0 captures measured by
-[AI System 6](https://github.com/surfine/AI-System-6).
+and System 7 are measured from System 6.0.8 and 7.5.3 running in
+[Infinite Mac](https://infinitemac.org), the screen read pixel for pixel; Platinum from
+Mac OS 9.0 captures measured by [AI System 6](https://github.com/surfine/AI-System-6).
 
 ![A System 6 window and a Mac OS 9 Platinum window drawn with clio.css](assets/og.png)
 
@@ -22,13 +22,14 @@ npm install clio.css
 ```
 
 ```html
-<link rel="stylesheet" href="https://unpkg.com/clio.css@0.3.1/dist/clio.css">
+<link rel="stylesheet" href="https://unpkg.com/clio.css@0.4.0/dist/clio.css">
 ```
 
 | File | What it draws |
 | --- | --- |
-| `dist/clio.css` | System 6 by default; `data-era="platinum"` on any element switches that subtree to Platinum |
+| `dist/clio.css` | System 6 by default; `data-era="system7"` or `data-era="platinum"` on any element switches that subtree |
 | `dist/clio.system6.css` | System 6 only (45 KB minified, 7 KB gzip) |
+| `dist/clio.system7.css` | System 7 (colour) as the page default |
 | `dist/clio.platinum.css` | Platinum as the page default |
 | `*.min.css` | Minified builds |
 | `dist/components.json` | Machine-readable index: selectors, tokens, markup and evidence per component |
@@ -39,7 +40,7 @@ folder as a whole (the CDNs above do).
 ## Quick start
 
 ```html
-<html data-era="platinum">  <!-- omit for System 6 -->
+<html data-era="system7">  <!-- or "platinum"; omit for System 6 -->
 <div class="window" style="width: 320px">
   <div class="title-bar">
     <button class="close" aria-label="Close"></button>
@@ -86,7 +87,7 @@ unchanged: `.title-bar button.close`, `button.resize`, `.inactive-title-bar`,
 ## Customising
 
 Every value is a `--clio-*` custom property, declared on `:root` and re-declared under
-`[data-era="platinum"]`. Override any of them on any element. Every rule uses `:where()`
+`[data-era="system7"]` and `[data-era="platinum"]`. Override any of them on any element. Every rule uses `:where()`
 or a single class, so your own CSS always wins without `!important`.
 
 ```css
@@ -107,6 +108,7 @@ for System 6).
 | System 6 pressed and hovered button | identical apart from the mouse pointer in the capture |
 | System 6 default OK button | 99.7% |
 | System 6 title bar, Finder info line, TeachText text | 100% |
+| System 7 title bar (active and inactive), arrow boxes, grow box, alert frame | 99–100% |
 | Platinum title bar | 94.3% |
 | Platinum default OK button | 92.4% |
 
@@ -137,7 +139,7 @@ gets the era's scroll-bar colours only.
 | [XP.css](https://github.com/botoxparty/XP.css) | Windows XP | MIT |
 | [system.css](https://github.com/sakofchit/system.css) | Classic Apple (System 6 style) | MIT |
 | [Puppertino](https://github.com/codedgar/Puppertino) | Modern macOS / iOS | MIT |
-| **clio.css** | System 6 and Mac OS 8/9 Platinum, with per-value evidence | MIT |
+| **clio.css** | System 6, System 7 and Mac OS 8/9 Platinum, with per-value evidence | MIT |
 
 ## For AI agents
 

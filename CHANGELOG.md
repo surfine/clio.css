@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.4.0 — 2026-11-14
+
+**System 7** (colour, 7.5.3): `data-era="system7"` or `dist/clio.system7.css`.
+
+- Measured from System 7.5.3 in Infinite Mac (800×600 canvas read 1:1,
+  `npm run capture:system7`): the #eee/#777 title bar with its #ccf light and #99c shade,
+  the bevelled close and zoom boxes and their held state, the #555 background window,
+  the colour scroll bar (arrow boxes, grow box and grip redrawn from pixels by
+  `tooling/s7-art.py`), the 1px #666/#aaa desktop and the colour alert frame.
+- Geometry, fonts and black-and-white controls are System 6's, as in System 7.
+- Pixel check: title bar 99.1%, inactive title bar 99.98%, arrow boxes, grow box and
+  alert frame 100%.
+
 ## 0.3.1 — 2026-11-14
 
 - **Clio Text '84** (Geneva 12) and **Clio Text '84 9** (Geneva 9), rebuilt from System 6.0.8

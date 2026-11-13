@@ -1,9 +1,9 @@
 # clio.css
 
-> CSS library for classic Mac OS interfaces: Macintosh System 6 and Mac OS 8/9 Platinum. Windows, title bars, menu bars and menus, push buttons, check boxes, radio buttons, text fields, pop-up menus, list boxes, scroll bars, dialogs and alerts, group boxes, progress bars, tabs and desktop icons. Pure CSS (no JavaScript), MIT licence, no Apple bitmaps or fonts. Every value is traced to measured pixels from AI System 6 or marked as inferred.
+> CSS library for classic Mac OS interfaces: Macintosh System 6, System 7 and Mac OS 8/9 Platinum. Windows, title bars, menu bars and menus, push buttons, check boxes, radio buttons, text fields, pop-up menus, list boxes, scroll bars, dialogs and alerts, group boxes, progress bars, tabs and desktop icons. Pure CSS (no JavaScript), MIT licence, no Apple bitmaps or fonts. Every value is traced to measured pixels from AI System 6 or marked as inferred.
 
-Install: `npm install clio.css` or `<link rel="stylesheet" href="https://unpkg.com/clio.css@0.3.1/dist/clio.css">`.
-System 6 is the default; add `data-era="platinum"` to `<html>` or any element for Mac OS 9 Platinum. Single-era builds: `dist/clio.system6.css`, `dist/clio.platinum.css`.
+Install: `npm install clio.css` or `<link rel="stylesheet" href="https://unpkg.com/clio.css@0.4.0/dist/clio.css">`.
+System 6 is the default; add `data-era="system7"` or `data-era="platinum"` to `<html>` or any element. Single-era builds: `dist/clio.system6.css`, `dist/clio.system7.css`, `dist/clio.platinum.css`.
 All rules use `:where()` or one class, so author CSS always wins; every value is a `--clio-*` custom property.
 Drop-in for system.css markup (.window, .title-bar button.close, .btn, .btn-default, .standard-dialog, .modal-dialog, .alert-box, .field-row, role="menu-bar").
 
@@ -16,7 +16,7 @@ Drop-in for system.css markup (.window, .title-bar button.close, .btn, .btn-defa
 
 ## Components
 
-- [Window](https://surfine.github.io/clio.css/#window): A document window: frame, title bar with close and zoom boxes (plus the WindowShade box in Platinum), an optional details bar and a scrolling pane.
+- [Window](https://surfine.github.io/clio.css/#window): A document window: frame, title bar with close and zoom boxes (plus the WindowShade box in Platinum), an optional details bar and a scrolling pane. System 7 adds colour to the frame and title bar.
 - [Menu bar and menus](https://surfine.github.io/clio.css/#menu): The menu bar across the top of the screen and its pull-down menus: items, keyboard shortcuts, check marks, separators, disabled items and submenus.
 - [Push button](https://surfine.github.io/clio.css/#button): Push buttons, the default button with its ring, the pressed state and the disabled state. Styles <button>, .btn and input buttons.
 - [Check box](https://surfine.github.io/clio.css/#checkbox): A check box drawn on the native <input type=checkbox>; no extra label markup needed.

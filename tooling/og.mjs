@@ -10,7 +10,7 @@ let playwright;
 for (const base of [join(root, "package.json"), join(ais6, "package.json")]) { try { playwright = createRequire(base)("playwright"); break; } catch {} }
 if (!playwright) { console.error("Playwright not found."); process.exit(2); }
 const css = pathToFileURL(join(root, "dist/clio.css")).href;
-const win = (title, body) => `<div class="window" style="width:440px">
+const win = (title, body) => `<div class="window" style="width:360px">
   <div class="title-bar"><button class="close" aria-label="Close"></button><h2 class="title">${title}</h2><button class="resize" aria-label="Zoom"></button><button class="shade" aria-label="Collapse"></button></div>
   <div class="details-bar"><span>3 items</span><span>clio.css</span></div>
   <div class="window-pane" style="height:250px;font-size:12px">${body}</div></div>`;
@@ -24,9 +24,10 @@ const html = `<!doctype html><html data-era="system6"><head><link rel="styleshee
 .row{flex:1;display:flex;align-items:center;justify-content:center}
 .s6{background:var(--clio-desktop)}.half{flex:1;height:100%;display:flex;align-items:center;justify-content:center}
 h1{margin:0;padding:22px 40px 18px;font:400 44px/1 "ChicagoFLF";border-bottom:1px solid #000}h1 span{font:20px -apple-system,Helvetica,sans-serif;color:#444;margin-left:20px}</style></head>
-<body><h1>clio.css<span>System 6 and Mac OS 9 Platinum, measured</span></h1><div class="row">
-<div class="half s6">${win("System 6", body)}</div>
-<div class="half" data-era="platinum" style="background:var(--clio-desktop)">${win("Platinum", body)}</div></div></body></html>`;
+<body><h1>clio.css<span>System 6, System 7 and Mac OS 9 Platinum, measured</span></h1><div class="row">
+<div class="half s6">${win("System 6", body.replace('name="r"', 'name="r6"'))}</div>
+<div class="half" data-era="system7" style="background:var(--clio-desktop)">${win("System 7", body.replace('name="r"', 'name="r7"'))}</div>
+<div class="half" data-era="platinum" style="background:var(--clio-desktop)">${win("Platinum", body.replace('name="r"', 'name="r9"'))}</div></div></body></html>`;
 const file = join(root, ".fidelity/og.html");
 writeFileSync(file, html);
 const browser = await playwright.chromium.launch();

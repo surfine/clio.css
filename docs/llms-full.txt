@@ -1,12 +1,12 @@
-# clio.css 0.3.1 — full reference
+# clio.css 0.4.0 — full reference
 
-Classic Mac OS interface CSS: System 6 (default) and Mac OS 8/9 Platinum (data-era="platinum").
-Install: npm install clio.css — or <link rel="stylesheet" href="https://unpkg.com/clio.css@0.3.1/dist/clio.css">
+Classic Mac OS interface CSS: System 6 (default), System 7 (data-era="system7") and Mac OS 8/9 Platinum (data-era="platinum").
+Install: npm install clio.css — or <link rel="stylesheet" href="https://unpkg.com/clio.css@0.4.0/dist/clio.css">
 Rules have zero or one-class specificity; override any --clio-* custom property on any element.
 
 ## Window (#window)
 
-A document window: frame, title bar with close and zoom boxes (plus the WindowShade box in Platinum), an optional details bar and a scrolling pane.
+A document window: frame, title bar with close and zoom boxes (plus the WindowShade box in Platinum), an optional details bar and a scrolling pane. System 7 adds colour to the frame and title bar.
 
 Selectors: .window, .window.inactive, .title-bar, .title-bar > .title, .title-bar > .close, .title-bar > .resize, .title-bar > .shade, .details-bar, .window-pane, .status-bar, .separator, .inactive-title-bar
 Tokens: --clio-window-bg, --clio-window-border, --clio-window-shadow, --clio-titlebar-height, --clio-titlebar-bg, --clio-box-size, --clio-box-inset, --clio-box-isolation, --clio-pane-bg
@@ -384,7 +384,8 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
    adaptation (contrast, focus, touch). Platinum re-declares these tokens in
    90-platinum.css under [data-era="platinum"]. */
 :root,
-[data-era="system6"] {
+[data-era="system6"],
+[data-era="system7"] {
   /* 1-bit palette. System 6 on a compact Mac had two colours. */
   --clio-ink: #000000;
   --clio-paper: #ffffff;
@@ -1788,6 +1789,148 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
   :where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, html.clio-scrollbars, .clio-scrollbars *) {
     scrollbar-color: var(--clio-scrollbar-thumb-color, var(--clio-ink)) var(--clio-scrollbar-track-color, #c0c0c0);
   }
+}
+
+/* Macintosh System 7 in colour (7.5.3). System 7 keeps System 6's geometry,
+   fonts and black-and-white controls; colour reaches the window frame, the
+   title bar, the scroll bars and alerts. Applies inside data-era="system7";
+   clio.system7.css is a build with System 7 as the page default.
+   Every value: System 7.5.3 in Infinite Mac, the 800x600 canvas read 1:1
+   (npm run capture:system7); see EVIDENCE.md. */
+[data-era="system7"] {
+  /* 1px #666/#aaa checker desktop. */
+  --clio-desktop: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='2' height='2' shape-rendering='crispEdges'%3E%3Cpath fill='%23aaa' d='M0 0h1v1H0zM1 1h1v1H1z'/%3E%3Cpath fill='%23666' d='M1 0h1v1H1zM0 1h1v1H0z'/%3E%3C/svg%3E") 0 0 / 2px 2px repeat, #888888;
+
+  /* Title bar: S6 rows, #eee ground, six #777 stripes, #ccf light on the
+     top and left inside edges, #99c shade on the bottom and right. */
+  --clio-titlebar-height: 18px;
+  --clio-titlebar-margin: 0;
+  --clio-titlebar-padding: 3px 1px;
+  --clio-titlebar-bg:
+    linear-gradient(to bottom, #777777 0 1px, transparent 1px 2px)
+      0 0 / 100% 2px repeat-y content-box content-box,
+    #eeeeee;
+  --clio-title-bg: #eeeeee;
+  --clio-title-inactive-fg: #888888;
+  --clio-titlebar-inactive-bg: #ffffff;
+
+  /* Scroll bars */
+  --clio-scrollbar-track: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='2' shape-rendering='crispEdges'%3E%3Cpath fill='%23ddd' d='M0 0h4v2H0z'/%3E%3Cpath fill='%23777' d='M2 0h1v1H2zM0 1h1v1H0z'/%3E%3C/svg%3E") 0 0 / 4px 2px repeat, #dddddd;
+  /* The grip sits where System 7's fixed 16px scroll box has it: 3px from the
+     leading edge, whatever length the browser gives the box. */
+  --clio-scrollbar-thumb-bg: var(--clio-art-s7-grip-v) 50% 2px / 6px 10px no-repeat, #aaaaaa;
+  --clio-scrollbar-thumb-bg-horizontal: var(--clio-art-s7-grip-h) 2px 50% / 10px 6px no-repeat, #aaaaaa;
+  --clio-scrollbar-thumb-border: 0;
+  --clio-scrollbar-thumb-shadow: inset 1px 1px 0 #ccccff, inset -1px -1px 0 #333366;
+  --clio-scrollbar-button-bg: #dddddd;
+  --clio-scrollbar-up: var(--clio-art-s7-up);
+  --clio-scrollbar-up-on: var(--clio-art-s7-up);
+  --clio-scrollbar-down: var(--clio-art-s7-down);
+  --clio-scrollbar-down-on: var(--clio-art-s7-down);
+  --clio-scrollbar-left: var(--clio-art-s7-left);
+  --clio-scrollbar-left-on: var(--clio-art-s7-left);
+  --clio-scrollbar-right: var(--clio-art-s7-right);
+  --clio-scrollbar-right-on: var(--clio-art-s7-right);
+  --clio-scrollbar-corner: var(--clio-art-s7-grow) 0 0 / 14px 14px no-repeat, #eeeeee;
+  --clio-scrollbar-thumb-color: #aaaaaa;
+  --clio-scrollbar-track-color: #dddddd;
+
+  /* Alert and modal frame: 1px black, a raised #ccf/#669 ring, #bbb, a
+     sunken #669/#ccf ring, 1px black; the same 5px as System 6. */
+  --clio-modal-border: 1px solid #000000;
+  --clio-modal-frame:
+    inset 1px 1px 0 #ccccff,
+    inset -1px -1px 0 #666699,
+    inset 0 0 0 2px #bbbbbb,
+    inset 3px 3px 0 #666699,
+    inset -3px -3px 0 #ccccff,
+    inset 0 0 0 4px #000000;
+
+  /* Art redrawn from the captured pixels (tooling/s7-art.py). */
+  --clio-art-s7-up: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' shape-rendering='crispEdges'%3E%3Cpath fill='%23dddddd' d='M1 1h12v1h-12zM1 2h5v1h-5zM7 2h6v1h-6zM1 3h4v1h-4zM8 3h5v1h-5zM1 4h3v1h-3zM9 4h4v1h-4zM1 5h2v1h-2zM10 5h3v1h-3zM1 6h1v1h-1zM11 6h2v1h-2zM12 7h1v1h-1zM1 8h3v1h-3zM9 8h4v1h-4zM1 9h3v1h-3zM9 9h4v1h-4zM1 10h3v1h-3zM9 10h4v1h-4zM1 11h3v1h-3zM9 11h4v1h-4zM1 12h12v1h-12z'/%3E%3Cpath fill='%23333366' d='M6 2h1v1h-1zM5 3h1v1h-1zM7 3h1v1h-1zM4 4h1v1h-1zM8 4h1v1h-1zM3 5h1v1h-1zM9 5h1v1h-1zM2 6h1v1h-1zM10 6h1v1h-1zM1 7h4v1h-4zM8 7h4v1h-4zM4 8h1v1h-1zM8 8h1v1h-1zM4 9h1v1h-1zM8 9h1v1h-1zM4 10h1v1h-1zM8 10h1v1h-1zM4 11h5v1h-5z'/%3E%3Cpath fill='%239999cc' d='M6 3h1v1h-1zM5 4h3v1h-3zM4 5h5v1h-5zM3 6h7v1h-7zM5 7h3v1h-3zM5 8h3v1h-3zM5 9h3v1h-3zM5 10h3v1h-3z'/%3E%3Cpath fill='%23777777' d='M13 0h1v1h-1zM13 1h1v1h-1zM13 2h1v1h-1zM13 3h1v1h-1zM13 4h1v1h-1zM13 5h1v1h-1zM13 6h1v1h-1zM13 7h1v1h-1zM13 8h1v1h-1zM13 9h1v1h-1zM13 10h1v1h-1zM13 11h1v1h-1zM13 12h1v1h-1zM0 13h14v1h-14z'/%3E%3Cpath fill='%23ffffff' d='M0 0h13v1h-13zM0 1h1v1h-1zM0 2h1v1h-1zM0 3h1v1h-1zM0 4h1v1h-1zM0 5h1v1h-1zM0 6h1v1h-1zM0 7h1v1h-1zM0 8h1v1h-1zM0 9h1v1h-1zM0 10h1v1h-1zM0 11h1v1h-1zM0 12h1v1h-1z'/%3E%3C/svg%3E");
+  --clio-art-s7-down: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' shape-rendering='crispEdges'%3E%3Cpath fill='%23dddddd' d='M1 1h12v1h-12zM1 2h3v1h-3zM9 2h4v1h-4zM1 3h3v1h-3zM9 3h4v1h-4zM1 4h3v1h-3zM9 4h4v1h-4zM1 5h3v1h-3zM9 5h4v1h-4zM12 6h1v1h-1zM1 7h1v1h-1zM11 7h2v1h-2zM1 8h2v1h-2zM10 8h3v1h-3zM1 9h3v1h-3zM9 9h4v1h-4zM1 10h4v1h-4zM8 10h5v1h-5zM1 11h5v1h-5zM7 11h6v1h-6zM1 12h12v1h-12z'/%3E%3Cpath fill='%23333366' d='M4 2h5v1h-5zM4 3h1v1h-1zM8 3h1v1h-1zM4 4h1v1h-1zM8 4h1v1h-1zM4 5h1v1h-1zM8 5h1v1h-1zM1 6h4v1h-4zM8 6h4v1h-4zM2 7h1v1h-1zM10 7h1v1h-1zM3 8h1v1h-1zM9 8h1v1h-1zM4 9h1v1h-1zM8 9h1v1h-1zM5 10h1v1h-1zM7 10h1v1h-1zM6 11h1v1h-1z'/%3E%3Cpath fill='%239999cc' d='M5 3h3v1h-3zM5 4h3v1h-3zM5 5h3v1h-3zM5 6h3v1h-3zM3 7h7v1h-7zM4 8h5v1h-5zM5 9h3v1h-3zM6 10h1v1h-1z'/%3E%3Cpath fill='%23777777' d='M13 0h1v1h-1zM13 1h1v1h-1zM13 2h1v1h-1zM13 3h1v1h-1zM13 4h1v1h-1zM13 5h1v1h-1zM13 6h1v1h-1zM13 7h1v1h-1zM13 8h1v1h-1zM13 9h1v1h-1zM13 10h1v1h-1zM13 11h1v1h-1zM13 12h1v1h-1zM0 13h14v1h-14z'/%3E%3Cpath fill='%23ffffff' d='M0 0h13v1h-13zM0 1h1v1h-1zM0 2h1v1h-1zM0 3h1v1h-1zM0 4h1v1h-1zM0 5h1v1h-1zM0 6h1v1h-1zM0 7h1v1h-1zM0 8h1v1h-1zM0 9h1v1h-1zM0 10h1v1h-1zM0 11h1v1h-1zM0 12h1v1h-1z'/%3E%3C/svg%3E");
+  --clio-art-s7-left: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' shape-rendering='crispEdges'%3E%3Cpath fill='%23dddddd' d='M1 1h6v1h-6zM8 1h5v1h-5zM1 2h5v1h-5zM8 2h5v1h-5zM1 3h4v1h-4zM8 3h5v1h-5zM1 4h3v1h-3zM12 4h1v1h-1zM1 5h2v1h-2zM12 5h1v1h-1zM1 6h1v1h-1zM12 6h1v1h-1zM1 7h2v1h-2zM12 7h1v1h-1zM1 8h3v1h-3zM12 8h1v1h-1zM1 9h4v1h-4zM8 9h5v1h-5zM1 10h5v1h-5zM8 10h5v1h-5zM1 11h6v1h-6zM8 11h5v1h-5zM1 12h12v1h-12z'/%3E%3Cpath fill='%23333366' d='M7 1h1v1h-1zM6 2h2v1h-2zM5 3h1v1h-1zM7 3h1v1h-1zM4 4h1v1h-1zM7 4h5v1h-5zM3 5h1v1h-1zM11 5h1v1h-1zM2 6h1v1h-1zM11 6h1v1h-1zM3 7h1v1h-1zM11 7h1v1h-1zM4 8h1v1h-1zM7 8h5v1h-5zM5 9h1v1h-1zM7 9h1v1h-1zM6 10h2v1h-2zM7 11h1v1h-1z'/%3E%3Cpath fill='%239999cc' d='M6 3h1v1h-1zM5 4h2v1h-2zM4 5h7v1h-7zM3 6h8v1h-8zM4 7h7v1h-7zM5 8h2v1h-2zM6 9h1v1h-1z'/%3E%3Cpath fill='%23777777' d='M13 0h1v1h-1zM13 1h1v1h-1zM13 2h1v1h-1zM13 3h1v1h-1zM13 4h1v1h-1zM13 5h1v1h-1zM13 6h1v1h-1zM13 7h1v1h-1zM13 8h1v1h-1zM13 9h1v1h-1zM13 10h1v1h-1zM13 11h1v1h-1zM13 12h1v1h-1zM0 13h14v1h-14z'/%3E%3Cpath fill='%23ffffff' d='M0 0h13v1h-13zM0 1h1v1h-1zM0 2h1v1h-1zM0 3h1v1h-1zM0 4h1v1h-1zM0 5h1v1h-1zM0 6h1v1h-1zM0 7h1v1h-1zM0 8h1v1h-1zM0 9h1v1h-1zM0 10h1v1h-1zM0 11h1v1h-1zM0 12h1v1h-1z'/%3E%3C/svg%3E");
+  --clio-art-s7-right: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' shape-rendering='crispEdges'%3E%3Cpath fill='%23dddddd' d='M1 1h5v1h-5zM7 1h6v1h-6zM1 2h5v1h-5zM8 2h5v1h-5zM1 3h5v1h-5zM9 3h4v1h-4zM1 4h1v1h-1zM10 4h3v1h-3zM1 5h1v1h-1zM11 5h2v1h-2zM1 6h1v1h-1zM12 6h1v1h-1zM1 7h1v1h-1zM11 7h2v1h-2zM1 8h1v1h-1zM10 8h3v1h-3zM1 9h5v1h-5zM9 9h4v1h-4zM1 10h5v1h-5zM8 10h5v1h-5zM1 11h5v1h-5zM7 11h6v1h-6zM1 12h12v1h-12z'/%3E%3Cpath fill='%23333366' d='M6 1h1v1h-1zM6 2h2v1h-2zM6 3h1v1h-1zM8 3h1v1h-1zM2 4h5v1h-5zM9 4h1v1h-1zM2 5h1v1h-1zM10 5h1v1h-1zM2 6h1v1h-1zM11 6h1v1h-1zM2 7h1v1h-1zM10 7h1v1h-1zM2 8h5v1h-5zM9 8h1v1h-1zM6 9h1v1h-1zM8 9h1v1h-1zM6 10h2v1h-2zM6 11h1v1h-1z'/%3E%3Cpath fill='%239999cc' d='M7 3h1v1h-1zM7 4h2v1h-2zM3 5h7v1h-7zM3 6h8v1h-8zM3 7h7v1h-7zM7 8h2v1h-2zM7 9h1v1h-1z'/%3E%3Cpath fill='%23777777' d='M13 0h1v1h-1zM13 1h1v1h-1zM13 2h1v1h-1zM13 3h1v1h-1zM13 4h1v1h-1zM13 5h1v1h-1zM13 6h1v1h-1zM13 7h1v1h-1zM13 8h1v1h-1zM13 9h1v1h-1zM13 10h1v1h-1zM13 11h1v1h-1zM13 12h1v1h-1zM0 13h14v1h-14z'/%3E%3Cpath fill='%23ffffff' d='M0 0h13v1h-13zM0 1h1v1h-1zM0 2h1v1h-1zM0 3h1v1h-1zM0 4h1v1h-1zM0 5h1v1h-1zM0 6h1v1h-1zM0 7h1v1h-1zM0 8h1v1h-1zM0 9h1v1h-1zM0 10h1v1h-1zM0 11h1v1h-1zM0 12h1v1h-1z'/%3E%3C/svg%3E");
+  --clio-art-s7-grow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' shape-rendering='crispEdges'%3E%3Cpath fill='%23eeeeee' d='M0 0h14v1h-14zM0 1h14v1h-14zM0 2h2v1h-2zM8 2h6v1h-6zM0 3h2v1h-2zM12 3h2v1h-2zM0 4h2v1h-2zM12 4h2v1h-2zM0 5h2v1h-2zM12 5h2v1h-2zM0 6h2v1h-2zM12 6h2v1h-2zM0 7h2v1h-2zM12 7h2v1h-2zM0 8h3v1h-3zM12 8h2v1h-2zM0 9h3v1h-3zM12 9h2v1h-2zM0 10h3v1h-3zM12 10h2v1h-2zM0 11h3v1h-3zM12 11h2v1h-2zM0 12h14v1h-14zM0 13h14v1h-14z'/%3E%3Cpath fill='%23333366' d='M2 2h6v1h-6zM2 3h1v1h-1zM8 3h4v1h-4zM2 4h1v1h-1zM7 4h1v1h-1zM2 5h1v1h-1zM7 5h1v1h-1zM11 5h1v1h-1zM2 6h1v1h-1zM7 6h1v1h-1zM11 6h1v1h-1zM2 7h1v1h-1zM4 7h4v1h-4zM11 7h1v1h-1zM3 8h1v1h-1zM11 8h1v1h-1zM3 9h1v1h-1zM11 9h1v1h-1zM3 10h1v1h-1zM11 10h1v1h-1zM3 11h1v1h-1zM5 11h7v1h-7z'/%3E%3Cpath fill='%23aaaaaa' d='M8 5h3v1h-3zM8 6h3v1h-3zM8 7h3v1h-3zM5 8h6v1h-6zM5 9h6v1h-6zM5 10h6v1h-6z'/%3E%3Cpath fill='%23ccccff' d='M3 3h5v1h-5zM3 4h1v1h-1zM8 4h4v1h-4zM3 5h1v1h-1zM3 6h1v1h-1zM3 7h1v1h-1zM4 8h1v1h-1zM4 9h1v1h-1zM4 10h1v1h-1zM4 11h1v1h-1z'/%3E%3Cpath fill='%23bbbbbb' d='M4 4h3v1h-3zM4 5h3v1h-3zM4 6h3v1h-3z'/%3E%3C/svg%3E");
+  --clio-art-s7-grip-v: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='10' shape-rendering='crispEdges'%3E%3Cpath fill='%23ccccff' d='M0 1h6v1h-6zM0 3h6v1h-6zM0 5h6v1h-6zM0 7h6v1h-6zM0 9h6v1h-6z'/%3E%3Cpath fill='%23666699' d='M0 2h6v1h-6zM0 4h6v1h-6zM0 6h6v1h-6zM0 8h6v1h-6z'/%3E%3Cpath fill='%239999cc' d='M0 0h6v1h-6z'/%3E%3C/svg%3E");
+  --clio-art-s7-grip-h: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' shape-rendering='crispEdges'%3E%3Cpath fill='%23ccccff' d='M1 0h1v1h-1zM3 0h1v1h-1zM5 0h1v1h-1zM7 0h1v1h-1zM9 0h1v1h-1zM1 1h1v1h-1zM3 1h1v1h-1zM5 1h1v1h-1zM7 1h1v1h-1zM9 1h1v1h-1zM1 2h1v1h-1zM3 2h1v1h-1zM5 2h1v1h-1zM7 2h1v1h-1zM9 2h1v1h-1zM1 3h1v1h-1zM3 3h1v1h-1zM5 3h1v1h-1zM7 3h1v1h-1zM9 3h1v1h-1zM1 4h1v1h-1zM3 4h1v1h-1zM5 4h1v1h-1zM7 4h1v1h-1zM9 4h1v1h-1zM1 5h1v1h-1zM3 5h1v1h-1zM5 5h1v1h-1zM7 5h1v1h-1zM9 5h1v1h-1z'/%3E%3Cpath fill='%23666699' d='M2 0h1v1h-1zM4 0h1v1h-1zM6 0h1v1h-1zM8 0h1v1h-1zM2 1h1v1h-1zM4 1h1v1h-1zM6 1h1v1h-1zM8 1h1v1h-1zM2 2h1v1h-1zM4 2h1v1h-1zM6 2h1v1h-1zM8 2h1v1h-1zM2 3h1v1h-1zM4 3h1v1h-1zM6 3h1v1h-1zM8 3h1v1h-1zM2 4h1v1h-1zM4 4h1v1h-1zM6 4h1v1h-1zM8 4h1v1h-1zM2 5h1v1h-1zM4 5h1v1h-1zM6 5h1v1h-1zM8 5h1v1h-1z'/%3E%3Cpath fill='%239999cc' d='M0 0h1v1h-1zM0 1h1v1h-1zM0 2h1v1h-1zM0 3h1v1h-1zM0 4h1v1h-1zM0 5h1v1h-1z'/%3E%3C/svg%3E");
+}
+
+/* The title bar's light and shade edges. */
+[data-era="system7"] .title-bar {
+  /* The shade is drawn last: it owns the bottom-left and top-right corners. */
+  box-shadow: inset -1px -1px 0 #9999cc, inset 1px 1px 0 #ccccff;
+}
+
+/* Close and zoom boxes: an 11px square sunk into the bar (#336 above-left,
+   #ccf below-right) with a raised #ccf/#336 inner ring around #aaa, and 1px
+   of #eee between the box and the stripes. */
+[data-era="system7"] .title-bar > :is(button, .close, .close-box, .resize, .resize-box, .zoom) {
+  /* The outer ring is painted, not bordered: the whole top row and left column
+     are #336 (a CSS border would mitre the corners into a blend). */
+  border: 1px solid transparent;
+  background:
+    linear-gradient(#333366, #333366) 0 0 / 100% 1px no-repeat,
+    linear-gradient(#333366, #333366) 0 0 / 1px 100% no-repeat,
+    linear-gradient(#aaaaaa, #aaaaaa),
+    #ccccff;
+  background-origin: border-box, border-box, padding-box, border-box;
+  background-clip: border-box, border-box, padding-box, border-box;
+  box-shadow: inset 1px 1px 0 #ccccff, inset -1px -1px 0 #333366, 0 0 0 1px #eeeeee;
+}
+
+/* Zoom: a 5px square in the top-left of the grey centre, drawn #336. */
+[data-era="system7"] .title-bar > :is(.resize, .resize-box, .zoom)::before {
+  top: 1px;
+  left: 1px;
+  width: 5px;
+  height: 5px;
+  border-right: 1px solid #333366;
+  border-bottom: 1px solid #333366;
+}
+
+/* Held: a black square with a #99c face and the starburst. */
+[data-era="system7"] .title-bar > :is(.close, .close-box, .resize, .resize-box, .zoom):is(:active, .active) {
+  border-color: #000000;
+  background: var(--clio-art-s6-burst) 0 0 / 11px 11px no-repeat border-box, #9999cc;
+  background-clip: border-box;
+  box-shadow: 0 0 0 1px #eeeeee;
+}
+
+/* Background window: #555 frame, a plain white title bar, #888 title. */
+[data-era="system7"] .window.inactive {
+  border-color: #555555;
+}
+
+[data-era="system7"] .window.inactive > .title-bar,
+[data-era="system7"] .inactive-title-bar {
+  border-bottom-color: #555555;
+  box-shadow: none;
+  --clio-title-bg: #ffffff;
+}
+
+[data-era="system7"] .window.inactive > .title-bar > :is(.title, h1, h2, h3),
+[data-era="system7"] .inactive-title-bar > :is(.title, h1, h2, h3) {
+  background: #ffffff;
+}
+
+/* The scroll box's leading edge is a #555 line (16 rows in all, as in System 6). */
+[data-era="system7"] :is(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-thumb:vertical,
+[data-era="system7"]:is(html.clio-scrollbars)::-webkit-scrollbar-thumb:vertical {
+  border-top: 1px solid #555555;
+  border-left: 1px solid #000000;     /* the lane's own line, which the box covers */
+}
+
+[data-era="system7"] :is(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-thumb:horizontal,
+[data-era="system7"]:is(html.clio-scrollbars)::-webkit-scrollbar-thumb:horizontal {
+  border-left: 1px solid #555555;
+  border-top: 1px solid #000000;
+}
+
+/* The arrow art already carries its face, light and shade. */
+[data-era="system7"] :is(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-button,
+[data-era="system7"]:is(html.clio-scrollbars)::-webkit-scrollbar-button {
+  background-size: 14px 14px;
 }
 
 /* Mac OS 8/9 Platinum. Applies inside any element with data-era="platinum"
