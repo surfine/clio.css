@@ -111,7 +111,7 @@ export const components = [
 </ul>`,
     reserveHeight: 150,
     evidence: [
-      { era: "system7", claim: "Menus stay black and white with System 6's rows", status: "inferred", source: "clio.css capture, System 7.5.3 in Infinite Mac (npm run capture:system7), frame file-menu (looked at, not pixel-checked)", upstream: "System 7.5.3 Finder File menu" },
+      { era: "system7", claim: "Menus keep System 6's rows and black highlight; disabled items and the separator are solid #888 instead of a dither", status: "measured", source: "clio.css capture, System 7.5.3 in Infinite Mac (npm run capture:system7), frame file-menu", upstream: "separator row 100% identical" },
       { era: "system6", claim: "Menu bar: 20 rows with the rule on the last; an open title inverts rows 1–18, about 9px either side of the word", status: "measured", source: "clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame file-menu", upstream: "System 6.0.8 Finder File menu" },
       { era: "system6", claim: "Menu: hangs from the bar's rule with no top line; 1px ink frame and 1px drop shadow; 16px rows; text 15px in; the highlighted row inverts", status: "measured", source: "clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame file-menu", upstream: "System 6.0.8 Finder File menu" },
       { era: "system6", claim: "Separator: a full 16px row with a 1-on 1-off dotted rule on its ninth line", status: "measured", source: "clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame file-menu rows 164–179", upstream: "System 6.0.8 Finder File menu" },
@@ -165,7 +165,7 @@ export const components = [
   <label><input type="checkbox" checked disabled> Locked</label>
 </div>`,
     evidence: [
-      { era: "system7", claim: "Same as System 6 (System 7's controls draw in black and white)", status: "inferred", source: "not captured in System 7", upstream: "System 7.5.3 control definitions" },
+      { era: "system7", claim: "Identical to System 6: 12px, X when checked", status: "measured", source: "clio.css capture, System 7.5.3 in Infinite Mac (npm run capture:system7), frame general-controls", upstream: "100% identical, on and off" },
       { era: "system6", claim: "A 12px box with a 1px frame; held, the frame thickens to 2px", status: "measured", source: "clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame get-info (Locked)", upstream: "AI System 6 uses 13px" },
       { era: "system6", claim: "Checked draws an X from corner to corner of the box", status: "measured", source: "clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame get-info-checked (Locked)", upstream: "the art is system.css's checkmark.svg (MIT), which matches" },
       { era: "system6", claim: "X art", status: "third-party", source: "apps/desktop/assets/themes/classic/controls/checkmark.svg", upstream: "system.css icon/checkmark.svg (MIT, Sakun Acharige)" },
@@ -189,7 +189,7 @@ export const components = [
   </div>
 </fieldset>`,
     evidence: [
-      { era: "system7", claim: "Same as System 6 (System 7's controls draw in black and white)", status: "inferred", source: "not captured in System 7", upstream: "System 7.5.3 control definitions" },
+      { era: "system7", claim: "Identical to System 6", status: "measured", source: "clio.css capture, System 7.5.3 in Infinite Mac (npm run capture:system7), frame general-controls", upstream: "100% identical, on and off" },
       { era: "system6", claim: "12px ring and 6px dot: the real pixels match system.css's art exactly", status: "measured", source: "clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame control-panel (Rate of Insertion Point Blinking)", upstream: "art from system.css icon/radio-border.svg, radio-dot.svg (MIT, Sakun Acharige)" },
       { era: "platinum", claim: "Radio drawn with CSS gradients: black ring, white to #888 well, 6px black dot", status: "adapted", source: "apps/desktop/styles/65-appearance-themes.css:291", upstream: "AI System 6 later replaced this with art cut from a capture (P19); clio.css ships no cut art" }
     ]
@@ -208,7 +208,7 @@ export const components = [
   <textarea id="clio-notes" rows="3" style="width: 100%">Text areas scroll with the era's scroll bar.</textarea>
 </div>`,
     evidence: [
-      { era: "system7", claim: "Same as System 6 (System 7's controls draw in black and white)", status: "inferred", source: "not captured in System 7", upstream: "System 7.5.3 control definitions" },
+      { era: "system7", claim: "As System 6: a 1px black frame with the text 3px in", status: "measured", source: "clio.css capture, System 7.5.3 in Infinite Mac (npm run capture:system7), frame numbers (Currency Symbol)", upstream: "System 7.5.3" },
       { era: "system6", claim: "1px ink frame, white, text inset 3px", status: "measured", source: "clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame control-panel (RAM Cache field), get-info (comments)", upstream: "System 6.0.8" },
       { era: "platinum", claim: "White field, 1px black frame, #888 shadow above-left and white etch below-right", status: "measured", source: "apps/desktop/styles/65-appearance-themes.css:935 (P30)", upstream: "Infinite Mac Mac OS 9.0 capture" },
       { era: "platinum", claim: "Focus: a 2px #6666cc ring", status: "measured", source: "apps/desktop/styles/65-platinum-utility.css:38", upstream: "Mac OS 9 capture platinum-native/10b-fonts-tab" }
@@ -230,7 +230,7 @@ export const components = [
   </select>
 </div>`,
     evidence: [
-      { era: "system7", claim: "Same as System 6 (System 7's controls draw in black and white)", status: "inferred", source: "not captured in System 7", upstream: "System 7.5.3 control definitions" },
+      { era: "system7", claim: "An 18px box with an 11×6 black triangle 5px from the right edge, label 15px in, and a 1px shadow that starts 3px in from the corner", status: "measured", source: "clio.css capture, System 7.5.3 in Infinite Mac (npm run capture:system7), frame numbers (Number Format)", upstream: "100% identical; the triangle is System 7's addition" },
       { era: "system6", claim: "An 18px rectangle with a 1px frame and a 1px drop shadow and no arrow; the shadow is what marks it as a menu; held, it inverts", status: "measured", source: "clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frames save-dialog and popup-held (Standard File folder menu)", upstream: "the down triangle arrived with System 7" },
       { era: "platinum", claim: "#ddd, 3px corners, white/#aaa bevel, bold label, a separate bevelled arrow part with the 7x10 arrow", status: "measured", source: "apps/desktop/styles/65-appearance-themes.css:1916 (P31)", upstream: "GUIdebook Mac OS 9.0 (popup-normal specimen), native 09b" },
       { era: "platinum", claim: "The arrow part is drawn with background layers, approximating the measured bevel", status: "inferred", source: "clio.css", upstream: "select has no ::after in CSS" },
@@ -254,7 +254,7 @@ export const components = [
   <li role="option">SimpleText</li>
 </ul>`,
     evidence: [
-      { era: "system7", claim: "Same as System 6 (System 7's controls draw in black and white)", status: "inferred", source: "not captured in System 7", upstream: "System 7.5.3 control definitions" },
+      { era: "system7", claim: "As System 6: a selected row inverts across the list", status: "inferred", source: "seen in the Keyboard control panel during capture; not pixel-checked", upstream: "System 7.5.3" },
       { era: "system6", claim: "White list, 1px ink frame, 16px rows; a selected row inverts across the whole list width", status: "measured", source: "clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frames save-dialog and list-selected (Standard File)", upstream: "System 6.0.8 TeachText Save As" },
       { era: "platinum", claim: "Selection is lavender #ccccff with black text", status: "measured", source: "apps/desktop/styles/65-appearance-themes.css:128", upstream: "GUIdebook Mac OS 9.0 Open dialog (open-list-scrollbar specimen)" },
       { era: "platinum", claim: "Rows carry no divider", status: "measured", source: "apps/desktop/styles/65-appearance-themes.css:860 (P10)", upstream: "Mac OS 9 native list capture 21" }
@@ -313,7 +313,7 @@ export const components = [
       }
     ],
     evidence: [
-      { era: "system7", claim: "Alert frame: 1px black, a raised #ccf/#669 ring, #bbb, a sunken #669/#ccf ring, 1px black (5px, as in System 6)", status: "measured", source: "clio.css capture, System 7.5.3 in Infinite Mac (npm run capture:system7), frame page-setup", upstream: "100% identical" },
+      { era: "system7", claim: "Alert frame: 1px black, a raised #ccf/#669 ring, #bbb, a sunken #669/#ccf ring, 1px black (5px, as in System 6)", status: "measured", source: "clio.css capture, System 7.5.3 in Infinite Mac (npm run capture:system7), frame page-setup", upstream: "100% identical. An alert without a colour table keeps System 6's black frame (Monitors & Sound alert); clio.css draws the colour one" },
       { era: "system6", claim: "Modal frame: 1px ink, 2px paper, 2px ink, and no drop shadow", status: "measured", source: "clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame alert", upstream: "AI System 6 has two recipes, both off (84-clio-write.css:210 has a 1px gap)" },
       { era: "system6", claim: "Plain box: 1px ink frame and a 2px drop shadow", status: "inferred", source: "not measured", upstream: "altDBoxProc; none of the 6.0.8 Finder and TeachText dialogs opened for capture (alerts, Standard File, About the Finder) uses it" },
       { era: "both", claim: "The alert icon is drawn here, not Apple's", status: "adapted", source: "clio.css", upstream: "no Apple icons are shipped" },
@@ -332,7 +332,7 @@ export const components = [
   <div class="field-row"><label><input type="checkbox" checked> Play system alerts</label></div>
 </fieldset>`,
     evidence: [
-      { era: "system7", claim: "Same as System 6 (System 7's controls draw in black and white)", status: "inferred", source: "not captured in System 7", upstream: "System 7.5.3 control definitions" },
+      { era: "system7", claim: "Native group box: a 1px grey line with the legend on it; the original alternates #777 and #888, drawn #777 here", status: "measured", source: "clio.css capture, System 7.5.3 in Infinite Mac (npm run capture:system7), frames general-controls and numbers", upstream: "System 7.5.3 control panels" },
       { era: "system6", claim: "System 6 had no group box; clio.css draws a 1px ink frame with the legend on paper", status: "adapted", source: "clio.css", upstream: "Control Panel divides its panes with plain 1px rules (clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame control-panel)" },
       { era: "platinum", claim: "Etched: #888 line with a white line inside and below", status: "measured", source: "apps/desktop/styles/65-appearance-themes.css:909 (P20)", upstream: "Mac OS 9 native group box" }
     ]
@@ -349,7 +349,7 @@ export const components = [
   <progress id="clio-copy" max="100" value="62">62%</progress>
 </div>`,
     evidence: [
-      { era: "system7", claim: "Same as System 6 (System 7's controls draw in black and white)", status: "inferred", source: "not captured in System 7", upstream: "System 7.5.3 control definitions" },
+      { era: "system7", claim: "11px, 1px black frame, #ccf track, #444 fill", status: "measured", source: "clio.css capture, System 7.5.3 in Infinite Mac (npm run capture:system7), frame copy-progress", upstream: "100% identical" },
       { era: "system6", claim: "12px tall, 1px ink frame, white track, fill in QuickDraw dkGray (one white dot in four)", status: "measured", source: "clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame copy-progress (Finder duplicating System Folder)", upstream: "redrawn as a pattern tile in tooling/s6-art.py" },
       { era: "platinum", claim: "Barber-pole fill: ten 1px hard stops from #333399 through #eee to #000055", status: "measured", source: "apps/desktop/styles/65-appearance-themes.css:937 (P32)", upstream: "Mac OS 9 native progress bar" },
       { era: "platinum", claim: "#bbb track with white/#aaa outer and #888/#ddd inner bevel", status: "inferred", source: "apps/desktop/styles/65-appearance-themes.css:592", upstream: "AI System 6 token, not tagged as measured" }
@@ -375,7 +375,7 @@ export const components = [
   </div>
 </div>`,
     evidence: [
-      { era: "system7", claim: "Same as System 6 (System 7's controls draw in black and white)", status: "inferred", source: "not captured in System 7", upstream: "System 7.5.3 control definitions" },
+      { era: "system7", claim: "System 7 had no tab control; the System 6 adaptation is used", status: "adapted", source: "clio.css", upstream: "System 7.5.3" },
       { era: "system6", claim: "Boxed labels that join the panel", status: "adapted", source: "clio.css", upstream: "System 6 had no tab control" },
       { era: "platinum", claim: "Tab art: sloped caps, #ccc tabs, the front tab #eee and 2px taller", status: "third-party", source: "classic-stylesheets macos9/tab*.svg (MIT)", upstream: "nielssp/classic-stylesheets @9ebd2d8; AI System 6 measured a 21-row tab (P01, 65-appearance-themes.css:742)" }
     ]

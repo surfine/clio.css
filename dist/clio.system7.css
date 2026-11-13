@@ -1,4 +1,4 @@
-/*! clio.css 0.4.0 (System 7 default) | MIT | https://surfine.github.io/clio.css/
+/*! clio.css 0.4.1 (System 7 default) | MIT | https://surfine.github.io/clio.css/
  * Classic Mac OS interface CSS: System 6, System 7 and Mac OS 9 Platinum.
  * Measured values traced to AI System 6; see EVIDENCE.md.
  * Includes art from system.css (MIT) and classic-stylesheets (MIT); see THIRD-PARTY.md. */
@@ -1506,6 +1506,27 @@
   --clio-scrollbar-corner: var(--clio-art-s7-grow) 0 0 / 14px 14px no-repeat, #eeeeee;
   --clio-scrollbar-thumb-color: #aaaaaa;
   --clio-scrollbar-track-color: #dddddd;
+
+  /* Menus: disabled items and the separator are solid #888 (System 6 used a
+     50% dither); the separator is still a full 16px row, ruled on its ninth line. */
+  --clio-disabled: #888888;
+  --clio-menu-separator: linear-gradient(#888888, #888888) 0 8px / 100% 1px no-repeat;
+
+  /* Pop-up menu (Numbers control panel): an 18px box, a 1px shadow that starts
+     3px in from the corner, an 11x6 black triangle 5px from the right edge,
+     the label 15px in. */
+  --clio-popup-shadow: 2px 2px 0 -1px #000000;
+  --clio-popup-padding: 0 22px 0 14px;
+  --clio-popup-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='6' shape-rendering='crispEdges'%3E%3Cpath d='M0 0h11v1H0zM1 1h9v1H1zM2 2h7v1H2zM3 3h5v1H3zM4 4h3v1H4zM5 5h1v1H5z'/%3E%3C/svg%3E") right 5px center / 11px 6px no-repeat;
+
+  /* Progress (Finder copy): 11px, a 1px black frame, #ccf track, #444 fill. */
+  --clio-progress-height: 11px;
+  --clio-progress-bg: #ccccff;
+  --clio-progress-fill: #444444;
+
+  /* Group box (General Controls, Numbers): a grey 1px line (#777 and #888
+     alternate in the original; drawn #777 here). */
+  --clio-group-border: 1px solid #777777;
 
   /* Alert and modal frame: 1px black, a raised #ccf/#669 ring, #bbb, a
      sunken #669/#ccf ring, 1px black; the same 5px as System 6. */

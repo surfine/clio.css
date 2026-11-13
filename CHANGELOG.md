@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.4.1 — 2026-11-14
+
+System 7 made solid: its controls captured in 7.5.3 (General Controls, Numbers, Finder copy).
+
+- Pop-up menu: System 7's 11×6 triangle and the shadow that starts 3px in (100% identical).
+- Progress bar: 11px, #ccf track, #444 fill (100%).
+- Menus: disabled items and separators are solid #888 (separator 100%).
+- Native group box: a grey 1px line.
+- Check boxes, radio buttons and edit text confirmed identical to System 6.
+- `capture:system7` now also takes General Controls, Numbers and the copy progress.
+
 ## 0.4.0 — 2026-11-14
 
 **System 7** (colour, 7.5.3): `data-era="system7"` or `dist/clio.system7.css`.
