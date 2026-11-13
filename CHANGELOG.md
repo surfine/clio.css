@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.7.0 — 2026-11-14
+
+**Clio Sans '97**: Charcoal 12, the Mac OS 8 and 9 system font, rebuilt pixel for pixel from
+Mac OS 9.0 in Infinite Mac (`npm run capture:keycaps -- charcoal`, 107 glyphs, 3 KB).
+Platinum and Drawing Board chrome now use it when Charcoal is not installed, drawn without
+smoothing; Asap stays as the fallback.
+
+- Measured, not assumed: Charcoal's space is 3px (the Finder title "Infinite HD" and the
+  Apple menu's "About This Computer" agree); the "|" it was typed between is 2px wide.
+- Platinum pixel check against GUIdebook: selected tab 80.5% to 95.7%, disabled button
+  88.2% to 96.9%, default OK 92.4% to 95.2%, title bars 94.3% and 89.5% to 95.7% and 91.8%.
+
 ## 0.6.0 — 2026-11-14
 
 **Control Strip** (`.control-strip`), with AI System 6's markup, so the same HTML styles in

@@ -44,7 +44,8 @@ For AI coding agents using or changing this repository.
   every token built from it.
 - Motion: none today. If added, animate `transform`/`opacity` only and honour
   `prefers-reduced-motion`.
-- Clio Sans '84 is generated: edit `fonts-src/clio-sans-84.txt` (or re-extract it with
-  `npm run capture:keycaps` then `npm run build:font`, which needs Python with fontTools
-  and brotli), never the WOFF2 by hand.
+- Clio Sans '84, Clio Text '84 and Clio Sans '97 are generated: edit `fonts-src/*.txt`
+  (or re-extract with `npm run capture:keycaps [-- geneva|geneva9|charcoal]` then
+  `npm run build:font`, which needs Python with fontTools and brotli), never the WOFF2 by
+  hand. Clio Sans '97 (Charcoal 12) comes from Mac OS 9.0's Key Caps, whose bar is 2px.
 - Keep `dist/clio.min.css` under the size budget in `test/check.mjs`.

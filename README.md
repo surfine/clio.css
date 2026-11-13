@@ -25,7 +25,7 @@ npm install clio.css
 ```
 
 ```html
-<link rel="stylesheet" href="https://unpkg.com/clio.css@0.6.0/dist/clio.css">
+<link rel="stylesheet" href="https://unpkg.com/clio.css@0.7.0/dist/clio.css">
 ```
 
 | File | What it draws |
@@ -119,8 +119,8 @@ for System 6).
 System 6 text is drawn in **Clio Sans '84** (Chicago 12) and **Clio Text '84** (Geneva 12
 and 9), rebuilt pixel for pixel from the running system (about 3 KB each), so System 6
 titles, menus, buttons and body text match the real screen exactly.
-In Platinum nearly every remaining pixel is lettering, because Charcoal is still stood in
-for by Asap. `npm run capture:system6` re-takes the
+Platinum and Drawing Board chrome is drawn in **Clio Sans '97**, Charcoal 12 rebuilt the
+same way from Mac OS 9.0 (3 KB); Asap stays as the fallback. `npm run capture:system6` re-takes the
 System 6.0.8 reference frames from Infinite Mac; the frames are never committed.
 
 What the era never had is adapted, not imitated: keyboard focus rings, touch-size
@@ -163,7 +163,7 @@ npm run fidelity   # pixel check against AI System 6's references (needs a local
 ## Licence
 
 MIT, see [LICENSE](LICENSE). Bundled fonts and art are described in
-[THIRD-PARTY.md](THIRD-PARTY.md): Clio Sans '84 and Clio Text '84 (pixel reconstructions
+[THIRD-PARTY.md](THIRD-PARTY.md): Clio Sans '84, Clio Text '84 and Clio Sans '97 (pixel reconstructions
 of Chicago and Geneva, shipped under MIT; read the note there), ChicagoFLF (public domain), Asap (SIL OFL 1.1),
 and SVG art from system.css and classic-stylesheets (both MIT).
 

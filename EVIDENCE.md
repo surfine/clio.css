@@ -2,11 +2,11 @@
 
 Generated from `components/index.mjs` by `npm run build`; edit there.
 
-Every value in clio.css 0.6.0 has a row here. Sources are paths in the AI System 6 development tree at commit `b75cd4ed` (public mirror: https://github.com/surfine/AI-System-6; some evidence folders such as `internal/` are private). The images measurements were taken from are evidence only; clio.css never ships them.
+Every value in clio.css 0.7.0 has a row here. Sources are paths in the AI System 6 development tree at commit `b75cd4ed` (public mirror: https://github.com/surfine/AI-System-6; some evidence folders such as `internal/` are private). The images measurements were taken from are evidence only; clio.css never ships them.
 
 | Status | Meaning | Rows |
 | --- | --- | ---: |
-| Measured | read from real pixels of the era | 99 |
+| Measured | read from real pixels of the era | 100 |
 | Inferred | reasoned from documentation or behaviour, not measured | 12 |
 | Adapted | a deliberate departure for the web (touch, focus, contrast) | 14 |
 | Third-party | art or font from a named, licensed project | 5 |
@@ -141,7 +141,8 @@ Pixel check: `npm run fidelity` renders the Platinum specimens and compares them
 | Type and tokens | System 6 | Chrome text is Clio Sans '84: Chicago 12 rebuilt pixel for pixel (104 Key Caps characters, space, \|, ⌘ and ✓), ascent 11, descent 3, drawn without antialiasing | Measured | `clio.css capture, System 6.0.8 Key Caps (npm run capture:keycaps → tooling/extract-glyphs.py → fonts-src/clio-sans-84.txt)` — title bar 100% and default OK button 99.7% identical to the real screen |
 | Type and tokens | System 6 | Application text is Clio Text '84 (Geneva 12) and small text Clio Text '84 9 (Geneva 9: info line, icon names, status), rebuilt the same way and drawn without antialiasing | Measured | `clio.css capture, System 6.0.8 Key Caps (Geneva 12) and Get Info comments (Geneva 9) → fonts-src/clio-text-84.txt, clio-text-84-9.txt` — TeachText's first line and the Finder info line are 100% identical to the real screen |
 | Type and tokens | System 6 | ChicagoFLF stays in the stack as the outline fallback for sizes that are not multiples of 12px | Third-party | `vendor/system.css-reference/fonts/ChicagoFLF.woff2` — Robin Casady's ChicagoFLF (public domain), as shipped by system.css |
-| Type and tokens | Platinum | Charcoal when installed; otherwise Asap (OFL) at width 113 for text and 123 for titles, weights 400/600/700 | Measured | `apps/desktop/assets/fonts/platinum/README.md; 65-appearance-themes.css:25` — Asap matched to a measured Charcoal sample's x-height and advance width |
+| Type and tokens | Platinum | Charcoal when installed; Asap (OFL) as the last fallback at width 113 for text and 123 for titles, weights 400/600/700 | Measured | `apps/desktop/assets/fonts/platinum/README.md; 65-appearance-themes.css:25` — Asap matched to a measured Charcoal sample's x-height and advance width |
+| Type and tokens | Platinum | Clio Sans '97: Charcoal 12 rebuilt pixel for pixel from Mac OS 9.0 Key Caps (107 glyphs, 3px space from the Finder title and the Apple menu, command key from the File menu), used when Charcoal is not installed, drawn unsmoothed | Measured | `clio.css capture, Mac OS 9.0 in Infinite Mac (npm run capture:keycaps -- charcoal), fonts-src/clio-sans-97.txt` — GUIdebook selected tab 80.5% to 95.7%, disabled button 88.2% to 96.9% |
 | Type and tokens | Platinum | Palette #fff #ddd #ccc #999 #777 #000, accent #333399, lavender #ccccff | Measured | `tooling/classic-platinum-fidelity-contract.json (platinum.palette)` — Mac OS 9 captures |
 | Type and tokens | System 6 | Disabled text #696969 instead of a 50% dither | Adapted | `apps/desktop/styles/00-foundation.css (shade-dark)` — 5.6:1 on white; a dither blurs under browser scaling |
 | Type and tokens | Drawing Board | Chrome text is #313131; titles and labels are Charcoal, as in Platinum | Measured | `clio.css capture, Mac OS 8.5 with the 8.5b6 Drawing Board theme in Infinite Mac (npm run capture:drawingboard), frame appearance` — tab and title text ink |

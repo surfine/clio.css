@@ -61,7 +61,7 @@ const panel = async (y, peek) => {
 
 // 1. Finder: window, menus, the Control Strip.
 await away(); await dump("finder");
-await hold(52, 9, "file-menu");
+await hold(52, 9, "file-menu");      // retry the run if the menu is not open in this frame
 await hold(130, 586, "strip-slider");      // Sound volume module
 await hold(30, 586, "strip-menu");         // Keychain module
 await click(176, 586); await wait(1500); await away(); await dump("strip-collapsed");

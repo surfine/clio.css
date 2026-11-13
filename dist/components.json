@@ -1,6 +1,6 @@
 {
   "name": "clio.css",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "CSS library for classic Mac OS interfaces: Macintosh System 6, System 7, Mac OS 8.5 Drawing Board and Mac OS 8/9 Platinum windows, menus, buttons, scroll bars and dialogs, with every value traced to measured pixels.",
   "homepage": "https://surfine.github.io/clio.css/",
   "license": "MIT",
@@ -33,8 +33,8 @@
   ],
   "install": {
     "npm": "npm install clio.css",
-    "cdn": "https://unpkg.com/clio.css@0.6.0/dist/clio.css",
-    "jsdelivr": "https://cdn.jsdelivr.net/npm/clio.css@0.6.0/dist/clio.css"
+    "cdn": "https://unpkg.com/clio.css@0.7.0/dist/clio.css",
+    "jsdelivr": "https://cdn.jsdelivr.net/npm/clio.css@0.7.0/dist/clio.css"
   },
   "evidenceStatuses": {
     "measured": "read from real pixels of the era",
@@ -1380,10 +1380,17 @@
         },
         {
           "era": "platinum",
-          "claim": "Charcoal when installed; otherwise Asap (OFL) at width 113 for text and 123 for titles, weights 400/600/700",
+          "claim": "Charcoal when installed; Asap (OFL) as the last fallback at width 113 for text and 123 for titles, weights 400/600/700",
           "status": "measured",
           "source": "apps/desktop/assets/fonts/platinum/README.md; 65-appearance-themes.css:25",
           "upstream": "Asap matched to a measured Charcoal sample's x-height and advance width"
+        },
+        {
+          "era": "platinum",
+          "claim": "Clio Sans '97: Charcoal 12 rebuilt pixel for pixel from Mac OS 9.0 Key Caps (107 glyphs, 3px space from the Finder title and the Apple menu, command key from the File menu), used when Charcoal is not installed, drawn unsmoothed",
+          "status": "measured",
+          "source": "clio.css capture, Mac OS 9.0 in Infinite Mac (npm run capture:keycaps -- charcoal), fonts-src/clio-sans-97.txt",
+          "upstream": "GUIdebook selected tab 80.5% to 95.7%, disabled button 88.2% to 96.9%"
         },
         {
           "era": "platinum",
