@@ -118,7 +118,7 @@
 :where(html.clio-scrollbars)::-webkit-scrollbar-corner {
   border-top: 1px solid var(--clio-ink);
   border-left: 1px solid var(--clio-ink);
-  background: var(--clio-scrollbar-button-bg);
+  background: var(--clio-scrollbar-corner);
 }
 
 @supports not selector(::-webkit-scrollbar) {

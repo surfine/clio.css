@@ -40,14 +40,33 @@ const specimens = [
   { id: "selected-tab", html: `<div style="padding:12px;background:#ddd"><div role="tablist"><button role="tab" aria-selected="true" id="s" style="width:103px">Appearance</button></div></div>`, crop: [0, 0, 103, 24] },
 ];
 
+// System 6: crops of the System 6.0.8 frames from `npm run capture:system6`
+// (.fidelity/system6), compared after thresholding to 1-bit. `ref` is the crop
+// in the 512x342 frame; `crop` the same box around the clio.css element.
+const s6dir = join(root, ".fidelity/system6");
+const S6 = (id, html, crop, file, ref) => ({ id, era: "system6", html, crop, mono: true, refFile: join(s6dir, file + ".png"), refCrop: ref });
+const s6Window = `<div class="window" id="s" style="width:240px;position:relative"><div class="title-bar"><button class="close" aria-label="Close"></button><h2 class="title">Macintosh HD</h2><button class="resize" aria-label="Zoom"></button></div><div class="details-bar"><span>2 items</span></div><div class="window-pane" style="height:80px"></div></div>`;
+const s6Scroll = `<div class="clio-scroll" id="s" style="width:120px;height:120px;overflow:scroll;background:#fff"><div style="width:400px;height:400px"></div></div>`;
+specimens.push(
+  S6("s6-titlebar", s6Window, [1, 0, 240, 19], "hd-window", [0, 27, 240, 19]),
+  S6("s6-default-ok", `<div class="clio" style="padding:12px;background:#fff"><button class="default" id="s" style="width:60px">OK</button></div>`, [-4, -4, 68, 28], "alert", [80, 154, 68, 28]),
+  S6("s6-checkbox", `<div style="padding:12px;background:#fff"><input type="checkbox" id="s"></div>`, [0, 0, 12, 12], "get-info", [224, 52, 12, 12]),
+  S6("s6-radio-on", `<div style="padding:12px;background:#fff"><input type="radio" id="s" checked></div>`, [0, 0, 12, 12], "control-panel", [359, 109, 12, 12]),
+  S6("s6-radio-off", `<div style="padding:12px;background:#fff"><input type="radio" id="s"></div>`, [0, 0, 12, 12], "control-panel", [335, 109, 12, 12]),
+  S6("s6-scroll-up", s6Scroll, [106, 0, 14, 14], "system-folder", [414, 102, 14, 14]),
+  S6("s6-grow-box", s6Scroll, [106, 106, 14, 14], "system-folder", [414, 256, 14, 14]),
+  S6("s6-menu-separator", `<div style="padding:12px;background:#fff"><ul class="menu" role="menu" style="width:146px"><li role="separator" id="s"></li></ul></div>`, [0, 0, 136, 16], "file-menu", [34, 164, 136, 16]),
+);
+
 const css = pathToFileURL(join(root, "dist/clio.css")).href;
 const out = join(root, ".fidelity");
 mkdirSync(out, { recursive: true });
-const browser = await playwright.chromium.launch();
+const browser = await playwright.chromium.launch({ ignoreDefaultArgs: ["--hide-scrollbars"] });
 const page = await browser.newPage({ viewport: { width: 800, height: 400 }, deviceScaleFactor: 1 });
 const results = [];
 for (const s of specimens) {
-  const html = `<!doctype html><html data-era="platinum"><head><link rel="stylesheet" href="${css}"><style>body{margin:0;padding:24px;background:#4a71ab}</style></head><body>${s.html}</body></html>`;
+  if (s.refFile && !existsSync(s.refFile)) { console.log(`${s.id}: no reference (run npm run capture:system6)`); continue; }
+  const html = `<!doctype html><html data-era="${s.era || "platinum"}"><head><link rel="stylesheet" href="${css}"><style>body{margin:0;padding:24px;background:#4a71ab}</style></head><body>${s.html}</body></html>`;
   const file = join(out, `${s.id}.html`);
   writeFileSync(file, html);
   await page.goto(pathToFileURL(file).href);
@@ -55,16 +74,23 @@ for (const s of specimens) {
   const box = await page.locator("#s").boundingBox();
   const [x, y, w, h] = s.crop;
   const shot = await page.screenshot({ clip: { x: box.x + x, y: box.y + y, width: w, height: h } });
-  const ref = readFileSync(join(tiles, `${s.id}-reference.png`));
-  const metrics = await page.evaluate(async ([a, b, name]) => {
+  const ref = readFileSync(s.refFile || join(tiles, `${s.id}-reference.png`));
+  const metrics = await page.evaluate(async ([a, b, name, refCrop, mono]) => {
     const load = (b64) => new Promise((res) => { const i = new Image(); i.onload = () => res(i); i.src = "data:image/png;base64," + b64; });
-    const [ia, ib] = await Promise.all([load(a), load(b)]);
+    let [ia, ib] = await Promise.all([load(a), load(b)]);
+    if (refCrop) {
+      const c = document.createElement("canvas"); c.width = refCrop[2]; c.height = refCrop[3];
+      c.getContext("2d").drawImage(ib, refCrop[0], refCrop[1], refCrop[2], refCrop[3], 0, 0, refCrop[2], refCrop[3]);
+      ib = await load(c.toDataURL("image/png").split(",")[1]);
+    }
     const w = Math.min(ia.width, ib.width), h = Math.min(ia.height, ib.height);
     const px = (img) => { const c = document.createElement("canvas"); c.width = w; c.height = h; const g = c.getContext("2d"); g.drawImage(img, 0, 0); return g.getImageData(0, 0, w, h).data; };
     const A = px(ia), B = px(ib);
+    if (mono) for (const P of [A, B]) for (let i = 0; i < P.length; i += 4) { const v = (P[i] + P[i + 1] + P[i + 2]) / 3 < 128 ? 0 : 255; P[i] = P[i + 1] = P[i + 2] = v; }
     let exact = 0, off = 0, sum = 0;
     const diff = document.createElement("canvas"); diff.width = w * 3; diff.height = h; const g = diff.getContext("2d");
-    g.drawImage(ib, 0, 0); g.drawImage(ia, w, 0);
+    const put = (P, x) => { const d = g.createImageData(w, h); d.data.set(P); g.putImageData(d, x, 0); };
+    put(B, 0); put(A, w);
     const d = g.createImageData(w, h);
     for (let i = 0; i < A.length; i += 4) {
       const m = Math.max(Math.abs(A[i] - B[i]), Math.abs(A[i + 1] - B[i + 1]), Math.abs(A[i + 2] - B[i + 2]));
@@ -76,38 +102,49 @@ for (const s of specimens) {
     g.putImageData(d, w * 2, 0);
     const n = A.length / 4;
     return { name, size: [w, h], exact: +(exact / n).toFixed(4), structural: +(off / n).toFixed(4), meanAbs: +(sum / n).toFixed(2), image: diff.toDataURL("image/png").split(",")[1] };
-  }, [shot.toString("base64"), ref.toString("base64"), s.id]);
+  }, [shot.toString("base64"), ref.toString("base64"), s.id, s.refCrop || null, !!s.mono]);
   writeFileSync(join(out, `${s.id}-compare.png`), Buffer.from(metrics.image, "base64"));
   delete metrics.image;
-  results.push(metrics);
+  results.push({ ...metrics, era: s.era || "platinum" });
 }
 await browser.close();
 console.log("specimen              size      exact   off>48  meanAbs   (reference | clio.css | diff in .fidelity/)");
 for (const r of results) console.log(`${r.name.padEnd(21)} ${r.size.join("x").padEnd(9)} ${String(r.exact).padEnd(7)} ${String(r.structural).padEnd(7)} ${r.meanAbs}`);
 writeFileSync(join(out, "results.json"), JSON.stringify(results, null, 2));
 const date = new Date().toISOString().slice(0, 10);
+const row = (r) => "| " + r.name + " | " + r.size.join("×") + " | " + (r.exact * 100).toFixed(1) + "% | " + (r.structural * 100).toFixed(1) + "% | " + r.meanAbs + " |";
+const table = (era) => "| Specimen | Size | exact | off | mean |\n| --- | --- | ---: | ---: | ---: |\n" + results.filter((r) => r.era === era).map(row).join("\n");
 writeFileSync(join(root, "FIDELITY.md"), `# Pixel check
 
-Generated by \`npm run fidelity\` on ${date}: clio.css Platinum specimens rendered at 1x in Chromium,
-compared with the Mac OS 9.0 reference crops (GUIdebook captures) kept as evidence in AI System 6.
-The captures are Apple screenshots and are not part of this repository.
+Generated by \`npm run fidelity\` on ${date}. clio.css specimens are rendered at 1x in Chromium
+and compared pixel by pixel with real screens of each era. The real screens are Apple's pixels:
+they are evidence only and are not part of this repository.
 
 - **exact**: share of pixels within 8/255 of the reference on every channel.
 - **off**: share of pixels more than 48/255 away (a different shape, not a shade).
 - **mean**: mean absolute difference per channel, 0–255.
 
-| Specimen | Size | exact | off | mean |
-| --- | --- | ---: | ---: | ---: |
-${results.map((r) => "| " + r.name + " | " + r.size.join("×") + " | " + (r.exact * 100).toFixed(1) + "% | " + (r.structural * 100).toFixed(1) + "% | " + r.meanAbs + " |").join("\n")}
+## System 6
 
-What the remaining difference is, specimen by specimen:
+Reference: System 6.0.8 running in Infinite Mac, the emulator's 512×342 canvas read 1:1
+(\`npm run capture:system6\`). Both sides are thresholded to 1-bit before comparing, because
+Infinite Mac tints black and white as #222222 and #eeeeee.
 
-- Title bars, buttons and the tab: almost every off pixel is in the label; the rest are a few corner
-  pixels of the default ring and the right edge of the inactive frame, and the ragged end of the ridges. Charcoal is Apple's and is not shipped; the stand-in is Asap (OFL).
-  On a Mac with Charcoal installed the label uses Charcoal.
-- Check box, checked: the check mark is classic-stylesheets' drawing (MIT), not Apple's glyph.
-- Box art inside the close and WindowShade boxes is a smooth gradient; the original steps in 2px bands.
+${table("system6")}
 
-System 6 has no comparable check yet: AI System 6's System 6 board compares against its own frozen
-output, except the title bar, which was measured in an emulator at 2x.
+## Mac OS 9 Platinum
+
+Reference: GUIdebook Mac OS 9.0 captures, cropped by AI System 6 (\`AIS6_DIR\`).
+
+${table("platinum")}
+
+## What the remaining difference is
+
+- Labels and titles: almost every off pixel in the title bars, buttons and the tab is text.
+  System 6's Chicago and Mac OS 9's Charcoal are Apple's bitmap and outline faces and are not
+  shipped; clio.css draws ChicagoFLF (public domain) and Asap (OFL). On a Mac that has the
+  original faces installed, the stacks use them.
+- Platinum: a few corner pixels of the default ring, the right edge of the inactive frame and
+  the ragged end of the ridges; the check mark is classic-stylesheets' drawing (MIT); the box
+  art is a smooth gradient where the original steps in 2px bands.
 `);

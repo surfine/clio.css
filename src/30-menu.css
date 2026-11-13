@@ -85,7 +85,7 @@
 /* Inside a menu bar or a parent item, a menu is a drop-down. */
 :where(.menu-bar, [role="menubar"], [role="menu-bar"], .menu, [role="menu"]) li > :is(.menu, ul[role="menu"]) {
   position: absolute;
-  top: 100%;
+  top: calc(100% + 1px);
   left: 0;
   display: none;
 }
@@ -166,10 +166,10 @@
   position: absolute;
   top: 50%;
   left: 3px;
-  width: 10px;
-  height: 10px;
-  margin-top: -5px;
-  background: var(--clio-art-s6-menucheck) 0 0 / 10px 10px no-repeat;
+  width: 9px;
+  height: 8px;
+  margin-top: -4px;
+  background: var(--clio-art-s6-menucheck) 0 0 / 9px 8px no-repeat;
 }
 
 :where(.menu, [role="menu"]) > li:is(.checked, [aria-checked="true"]):is(:hover, :focus-within, .active)::before,
