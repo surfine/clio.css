@@ -38,6 +38,10 @@ Platinum push buttons (normal, held, disabled) and Drawing Board push buttons. A
 recolours those sets `--clio-font-window-title` or `--clio-font-button` to a stack without
 "Exact".
 
+**Safari**: Clio Sans '97 draws its antialiasing as COLRv1 colour layers, which Safari
+paints solid, so every word turned into blocks. Each Clio Sans '97 face now lists a Plain
+file (outlines only) after the colour one, chosen with `tech(color-COLRv1)`.
+
 ## 0.8.0 — 2026-11-14
 
 Classic Mac OS debts paid before Mac OS X.

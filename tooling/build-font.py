@@ -26,6 +26,11 @@ OUT_FILE, FAMILY, PS, ORIGIN = FONTS[KEY]
 # blends ((fg*a + bg*(255-a)) >> 8, a = 17 per level), which no alpha
 # compositing reproduces exactly. Palette 0 is black at those alphas.
 EXACT = '--exact' in sys.argv
+# '--plain': the glyph outlines alone, no colour layers, for browsers without
+# COLRv1 (Safari draws its alpha layers solid, every faint pixel black).
+PLAIN = '--plain' in sys.argv
+if PLAIN:
+    OUT_FILE = OUT_FILE.replace('.woff2', 'Plain.woff2'); FAMILY += ' Plain'; PS = PS.replace('-Regular', 'Plain-Regular')
 if EXACT:
     OUT_FILE = OUT_FILE.replace('.woff2', 'Exact.woff2'); FAMILY += ' Exact'; PS = PS.replace('-Regular', 'Exact-Regular')
 SIZE = 9 if KEY.endswith('-9') else 12      # the pixel size the em is drawn for
@@ -96,7 +101,7 @@ for cp, (adv, x0, top, rows) in glyphs.items():
     g = draw(adv, x0, top, rows, base)
     glyf[name(cp)] = g
     hmtx[name(cp)] = (adv * PX, lsb(x0, rows, base))
-    if COVERAGE and rows:
+    if COVERAGE and rows and not PLAIN:
         # One layer per coverage level, painted in the text colour at that alpha.
         for k in sorted({level(ch) for row in rows for ch in row} - {0}):
             ln = '%s.l%d' % (name(cp), k)
@@ -128,7 +133,7 @@ fb.setupOS2(version=4, sTypoAscender=ASC * PX, sTypoDescender=-DESC * PX, sTypoL
 fb.setupPost(isFixedPitch=0, underlinePosition=-200, underlineThickness=100)
 fb.setupHead(unitsPerEm=UPM)
 fb.font['head'].flags |= 1 << 3   # integer ppem scaling
-if layers:
+if layers and not PLAIN:
     from fontTools.colorLib.builder import buildCOLR, buildCPAL
     if EXACT:
         fb.font['COLR'] = buildCOLR({g: {'Format': 1, 'Layers': [
