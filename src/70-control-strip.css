@@ -67,7 +67,7 @@
   min-width: 0;
   height: auto;
   min-height: 0;
-  background: var(--clio-strip-back) center / 10px 10px no-repeat, var(--clio-strip-bg);
+  background: var(--clio-strip-back) 1px 6px / 10px 10px no-repeat, var(--clio-strip-bg);
   box-shadow: var(--clio-strip-cell-shadow);
 }
 
@@ -76,7 +76,15 @@
 }
 
 :where(.control-strip) > .control-strip-scroll:disabled {
+  background:
+    var(--clio-strip-back) 1px 6px / 10px 10px no-repeat,
+    var(--clio-strip-sunken-lines),
+    var(--clio-strip-bg);
   box-shadow: var(--clio-strip-sunken-shadow);
+}
+
+:where(.control-strip) > .control-strip-scroll-forward:disabled {
+  background-image: var(--clio-strip-forward);
 }
 
 :where(.control-strip) > .control-strip-scroll:not(:disabled):active,

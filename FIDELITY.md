@@ -17,7 +17,7 @@ Infinite Mac tints black and white as #222222 and #eeeeee.
 | Specimen | Size | exact | off | mean |
 | --- | --- | ---: | ---: | ---: |
 | s6-titlebar | 240×19 | 100.0% | 0.0% | 0 |
-| s6-default-ok | 68×28 | 99.7% | 0.3% | 0.8 |
+| s6-default-ok | 68×28 | 100.0% | 0.0% | 0 |
 | s6-checkbox | 12×12 | 100.0% | 0.0% | 0 |
 | s6-radio-on | 12×12 | 100.0% | 0.0% | 0 |
 | s6-radio-off | 12×12 | 100.0% | 0.0% | 0 |
@@ -26,9 +26,9 @@ Infinite Mac tints black and white as #222222 and #eeeeee.
 | s6-scroll-left | 14×14 | 100.0% | 0.0% | 0 |
 | s6-scroll-right | 14×14 | 100.0% | 0.0% | 0 |
 | s6-checkbox-checked | 12×12 | 100.0% | 0.0% | 0 |
-| s6-button-pressed | 60×20 | 97.0% | 3.0% | 7.65 |
-| s6-button-hover | 60×20 | 96.3% | 3.7% | 9.35 |
-| s6-popup-end | 12×19 | 87.3% | 12.7% | 32.43 |
+| s6-button-pressed | 60×20 | 100.0% | 0.0% | 0 |
+| s6-button-hover | 60×20 | 100.0% | 0.0% | 0 |
+| s6-popup-end | 6×19 | 100.0% | 0.0% | 0 |
 | s6-progress-fill | 12×12 | 100.0% | 0.0% | 0 |
 | s6-info-line | 60×17 | 100.0% | 0.0% | 0 |
 | s6-geneva-12 | 160×16 | 100.0% | 0.0% | 0 |
@@ -42,10 +42,10 @@ Reference: System 7.5.3 running in Infinite Mac, the 800×600 colour canvas read
 
 | Specimen | Size | exact | off | mean |
 | --- | --- | ---: | ---: | ---: |
-| s7-titlebar | 377×19 | 99.1% | 0.8% | 1.64 |
-| s7-titlebar-inactive | 377×16 | 100.0% | 0.0% | 0.01 |
+| s7-titlebar | 377×19 | 100.0% | 0.0% | 0 |
+| s7-titlebar-inactive | 377×16 | 100.0% | 0.0% | 0 |
 | s7-scroll-up | 14×14 | 100.0% | 0.0% | 0 |
-| s7-scroll-thumb | 14×16 | 93.8% | 6.3% | 6.83 |
+| s7-scroll-thumb | 14×15 | 100.0% | 0.0% | 0 |
 | s7-grow-box | 14×14 | 100.0% | 0.0% | 0 |
 | s7-alert-frame | 18×18 | 100.0% | 0.0% | 0 |
 | s7-checkbox-on | 12×12 | 100.0% | 0.0% | 0 |
@@ -56,8 +56,8 @@ Reference: System 7.5.3 running in Infinite Mac, the 800×600 colour canvas read
 | s7-progress-fill | 3×11 | 100.0% | 0.0% | 0 |
 | s7-progress-track | 8×11 | 100.0% | 0.0% | 0 |
 | s7-menu-separator | 100×16 | 100.0% | 0.0% | 0 |
-| s7-default-ok | 67×28 | 93.8% | 5.1% | 4.53 |
-| s7-strip-start | 29×24 | 95.1% | 4.9% | 5.96 |
+| s7-default-ok | 67×28 | 100.0% | 0.0% | 0 |
+| s7-strip-start | 29×24 | 100.0% | 0.0% | 0 |
 
 ## Mac OS 8.5 Drawing Board
 
@@ -109,7 +109,7 @@ Reference: Mac OS 9.0 running in Infinite Mac, the 800×600 colour canvas read 1
 | p9-menu-separator | 100×6 | 67.0% | 16.5% | 16.83 |
 | p9-popup-end | 24×20 | 96.7% | 2.1% | 2 |
 | p9-button-held | 20×20 | 68.8% | 28.0% | 38.36 |
-| p9-strip-start | 29×24 | 95.1% | 4.9% | 5.6 |
+| p9-strip-start | 29×24 | 100.0% | 0.0% | 0 |
 | p9-strip-handle | 18×24 | 100.0% | 0.0% | 0 |
 | p9-strip-collapsed | 18×24 | 100.0% | 0.0% | 0 |
 

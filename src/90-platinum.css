@@ -10,6 +10,9 @@
   --clio-face: #dddddd;
   --clio-disabled: #6f6f6f;
   --clio-disabled-dither: none;
+  --clio-button-frame: none;
+  --clio-button-frame-held: none;
+  --clio-ring-frame: none;
   --clio-disabled-fill: currentcolor;
   --clio-selection-bg: #ccccff;
   --clio-selection-fg: #000000;
@@ -233,7 +236,12 @@
   --clio-strip-bg: #c0c0c0;
   --clio-strip-line: 1px solid #000000;
   --clio-strip-cell-shadow: inset -1px -1px 0 #808080, inset -2px -2px 0 #a0a0a0, inset 1px 1px 0 #c0c0c0, inset 2px 2px 0 #ffffff;
-  --clio-strip-sunken-shadow: inset 1px 1px 0 #808080, inset -1px -1px 0 #ffffff;
+  --clio-strip-sunken-shadow: none;
+  --clio-strip-sunken-lines:
+    linear-gradient(#808080, #808080) 0 0 / calc(100% - 1px) 1px no-repeat,
+    linear-gradient(#808080, #808080) 0 0 / 1px calc(100% - 1px) no-repeat,
+    linear-gradient(#ffffff, #ffffff) 1px 100% / calc(100% - 1px) 1px no-repeat,
+    linear-gradient(#ffffff, #ffffff) 100% 1px / 1px calc(100% - 1px) no-repeat;
   --clio-strip-pressed-bg: #808080;
   --clio-strip-pressed-shadow: inset 2px 2px 0 #404040, inset -2px -2px 0 #c0c0c0;
   --clio-strip-cap: var(--clio-art-p9-strip-cap);
