@@ -1,4 +1,13 @@
-/* Fonts. Only two faces ship, both with a licence that allows it:
+/* Clio Sans '84: Chicago 12 rebuilt pixel for pixel from System 6.0.8
+   (fonts-src/clio-sans-84.txt). Every pixel is a square on a 1200-unit em, so
+   at 12px and its multiples it draws exactly the original bitmap. */
+@font-face {
+  font-family: "Clio Sans '84";
+  src: url("fonts/ClioSans84.woff2") format("woff2");
+  font-display: swap;
+}
+
+/* Other fonts, each with a licence that allows it:
    - ChicagoFLF: a public-domain outline revival of Chicago (Robin Casady).
    - Asap (variable, wdth + wght): SIL OFL 1.1, Omnibus-Type. The legal
      stand-in for Charcoal that AI System 6 measured its Platinum title bar

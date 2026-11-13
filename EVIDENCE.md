@@ -2,11 +2,11 @@
 
 Generated from `components/index.mjs` by `npm run build`; edit there.
 
-Every value in clio.css 0.2.1 has a row here. Sources are paths in the AI System 6 development tree at commit `b75cd4ed` (public mirror: https://github.com/surfine/AI-System-6; some evidence folders such as `internal/` are private). The images measurements were taken from are evidence only; clio.css never ships them.
+Every value in clio.css 0.3.0 has a row here. Sources are paths in the AI System 6 development tree at commit `b75cd4ed` (public mirror: https://github.com/surfine/AI-System-6; some evidence folders such as `internal/` are private). The images measurements were taken from are evidence only; clio.css never ships them.
 
 | Status | Meaning | Rows |
 | --- | --- | ---: |
-| Measured | read from real pixels of the era | 57 |
+| Measured | read from real pixels of the era | 58 |
 | Inferred | reasoned from documentation or behaviour, not measured | 6 |
 | Adapted | a deliberate departure for the web (touch, focus, contrast) | 9 |
 | Third-party | art or font from a named, licensed project | 6 |
@@ -89,7 +89,8 @@ Pixel check: `npm run fidelity` renders the Platinum specimens and compares them
 | Desktop and icons | System 6 | Icon names: Geneva 9 on a white tag; a selected icon and its tag invert | Measured | `clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), desktop (Macintosh HD selected, Welcome! not)` — System 6.0.8 Finder |
 | Desktop and icons | Platinum | 70% white tag with no edge; selected: black tag, white name, artwork darkened | Measured | `apps/desktop/styles/65-appearance-themes.css:882 (P12, P13)` — Mac OS 9 native capture 02 |
 | Desktop and icons | Platinum | Desktop colour #4a71ab | Inferred | `apps/desktop/styles/65-appearance-themes.css:85` — base colour of AI System 6's azul tile, generated from a 512 Pixels capture; the tile is not shipped |
-| Type and tokens | System 6 | ChicagoFLF, a public-domain revival of Chicago, for chrome | Third-party | `vendor/system.css-reference/fonts/ChicagoFLF.woff2` — Robin Casady's ChicagoFLF (public domain), as shipped by system.css |
+| Type and tokens | System 6 | Chrome text is Clio Sans '84: Chicago 12 rebuilt pixel for pixel (104 Key Caps characters, space, \|, ⌘ and ✓), ascent 11, descent 3, drawn without antialiasing | Measured | `clio.css capture, System 6.0.8 Key Caps (npm run capture:keycaps → tooling/extract-glyphs.py → fonts-src/clio-sans-84.txt)` — title bar 100% and default OK button 99.7% identical to the real screen |
+| Type and tokens | System 6 | ChicagoFLF stays in the stack as the outline fallback for sizes that are not multiples of 12px | Third-party | `vendor/system.css-reference/fonts/ChicagoFLF.woff2` — Robin Casady's ChicagoFLF (public domain), as shipped by system.css |
 | Type and tokens | Platinum | Charcoal when installed; otherwise Asap (OFL) at width 113 for text and 123 for titles, weights 400/600/700 | Measured | `apps/desktop/assets/fonts/platinum/README.md; 65-appearance-themes.css:25` — Asap matched to a measured Charcoal sample's x-height and advance width |
 | Type and tokens | Platinum | Palette #fff #ddd #ccc #999 #777 #000, accent #333399, lavender #ccccff | Measured | `tooling/classic-platinum-fidelity-contract.json (platinum.palette)` — Mac OS 9 captures |
 | Type and tokens | System 6 | Disabled text #696969 instead of a 50% dither | Adapted | `apps/desktop/styles/00-foundation.css (shade-dark)` — 5.6:1 on white; a dither blurs under browser scaling |

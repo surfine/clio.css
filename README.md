@@ -22,7 +22,7 @@ npm install clio.css
 ```
 
 ```html
-<link rel="stylesheet" href="https://unpkg.com/clio.css@0.2.1/dist/clio.css">
+<link rel="stylesheet" href="https://unpkg.com/clio.css@0.3.0/dist/clio.css">
 ```
 
 | File | What it draws |
@@ -104,14 +104,16 @@ for System 6).
 | Specimen | Pixels identical to the real screen |
 | --- | ---: |
 | System 6 check box (on and off), radio buttons, all four scroll arrows, grow box, progress fill, menu separator | 100% |
-| System 6 pressed and hovered button, pop-up menu | outline 100%; label differs |
-| System 6 default OK button | 96.7% |
-| System 6 title bar | 96.3% |
+| System 6 pressed and hovered button | identical apart from the mouse pointer in the capture |
+| System 6 default OK button | 99.7% |
+| System 6 title bar | 100% |
 | Platinum title bar | 94.3% |
 | Platinum default OK button | 92.4% |
 
-Nearly every remaining pixel is lettering: Chicago and Charcoal are Apple's fonts and are
-not shipped, so ChicagoFLF and Asap stand in. `npm run capture:system6` re-takes the
+System 6 text is drawn in **Clio Sans '84**, Chicago 12 rebuilt pixel for pixel from the
+running system (2.9 KB), so the System 6 title bar now matches the real screen exactly.
+In Platinum nearly every remaining pixel is lettering, because Charcoal is still stood in
+for by Asap. `npm run capture:system6` re-takes the
 System 6.0.8 reference frames from Infinite Mac; the frames are never committed.
 
 What the era never had is adapted, not imitated: keyboard focus rings, touch-size
@@ -153,9 +155,10 @@ npm run fidelity   # pixel check against AI System 6's references (needs a local
 
 ## Licence
 
-MIT, see [LICENSE](LICENSE). Bundled fonts and art keep their own licences, see
-[THIRD-PARTY.md](THIRD-PARTY.md): ChicagoFLF (public domain), Asap (SIL OFL 1.1), and
-SVG art from system.css and classic-stylesheets (both MIT).
+MIT, see [LICENSE](LICENSE). Bundled fonts and art are described in
+[THIRD-PARTY.md](THIRD-PARTY.md): Clio Sans '84 (a pixel reconstruction of Chicago 12,
+shipped under MIT; read the note there), ChicagoFLF (public domain), Asap (SIL OFL 1.1),
+and SVG art from system.css and classic-stylesheets (both MIT).
 
 clio.css is not affiliated with or endorsed by Apple Inc. Macintosh, Mac OS, Chicago,
 Geneva and Charcoal are trademarks of Apple Inc., named only to describe the eras
