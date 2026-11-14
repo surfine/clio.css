@@ -62,28 +62,28 @@
 :where(html.clio-scrollbars)::-webkit-scrollbar-button:vertical:decrement {
   border-left: 1px solid var(--clio-ink);
   border-bottom: 1px solid var(--clio-ink);
-  background-image: var(--clio-scrollbar-up);
+  background-image: var(--clio-scrollbar-up), var(--clio-scrollbar-button-bevel);
 }
 
 :where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-button:vertical:increment,
 :where(html.clio-scrollbars)::-webkit-scrollbar-button:vertical:increment {
   border-left: 1px solid var(--clio-ink);
   border-top: 1px solid var(--clio-ink);
-  background-image: var(--clio-scrollbar-down);
+  background-image: var(--clio-scrollbar-down), var(--clio-scrollbar-button-bevel);
 }
 
 :where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-button:horizontal:decrement,
 :where(html.clio-scrollbars)::-webkit-scrollbar-button:horizontal:decrement {
   border-top: 1px solid var(--clio-ink);
   border-right: 1px solid var(--clio-ink);
-  background-image: var(--clio-scrollbar-left);
+  background-image: var(--clio-scrollbar-left), var(--clio-scrollbar-button-bevel);
 }
 
 :where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-button:horizontal:increment,
 :where(html.clio-scrollbars)::-webkit-scrollbar-button:horizontal:increment {
   border-top: 1px solid var(--clio-ink);
   border-left: 1px solid var(--clio-ink);
-  background-image: var(--clio-scrollbar-right);
+  background-image: var(--clio-scrollbar-right), var(--clio-scrollbar-button-bevel);
 }
 
 :where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-button:vertical:decrement:active,

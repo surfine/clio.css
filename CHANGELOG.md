@@ -2,9 +2,22 @@
 
 ## Unreleased
 
+- **clio.js** (optional, `dist/clio.js`): held controls let go off the pointer; Return,
+  Esc and Cmd-. press the dialog's default and cancel buttons; scroll bars drawn as
+  elements with each era's fixed-length scroll box, held arrows that repeat, paging from
+  the lane, System 6/7's dragged outline and Mac OS 8/9's live drag and Smart Scrolling.
+  The element bars take every `::-webkit-scrollbar` rule (the build copies them), so the
+  two never drift; with both thumbs hidden they are pixel-identical in all four eras.
+  `npm run behaviour` checks the behaviour in Chromium (68 checks).
+- Platinum scroll bars re-measured from the Mac OS 9.0 Finder: 15px (a black line and
+  14px; the window frame closes it), not 16px; arrow and box bevels a pixel short of the
+  far corners; the lane shaded along the top, left and right only; the disabled bar flat
+  #eee. Four new specimens, all identical (110 in all).
+- System 7's scroll box keeps its black lane line in the corner (one blended pixel before).
+
 - Retina: at 2x, 3x and 4x the art scales by nearest neighbour (crisp Mac pixels); the
-  page's own images, video and canvas keep smoothing. At 2x 99 of 106 specimens are
-  identical to the magnified reference, up from 37 (`FIDELITY_DPR=2 npm run fidelity`).
+  page's own images, video and canvas keep smoothing. At 2x 103 of 110 specimens are
+  identical to the magnified reference (37 of 106 before) (`FIDELITY_DPR=2 npm run fidelity`).
 
 ## 0.10.0 — 2026-11-14
 

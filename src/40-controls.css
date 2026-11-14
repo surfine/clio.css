@@ -35,7 +35,7 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-:where(button, .btn, .btn-default, .standard-button, input[type="button"], input[type="submit"], input[type="reset"]):not(:disabled, .disabled):is(:active, .active) {
+:where(button, .btn, .btn-default, .standard-button, input[type="button"], input[type="submit"], input[type="reset"]):not(:disabled, .disabled):is(:active:where(:not([data-clio-off])), .active) {
   background: var(--clio-button-active-bg);
   box-shadow: var(--clio-button-active-shadow);
   border-image-source: var(--clio-button-frame-held);
@@ -107,7 +107,7 @@
   background-origin: var(--clio-check-mark-origin);
 }
 
-:where(input[type="checkbox"]):not(:disabled):active {
+:where(input[type="checkbox"]):not(:disabled):active:where(:not([data-clio-off])) {
   border-width: var(--clio-check-pressed-border-width);
 }
 
@@ -136,11 +136,11 @@
   background: var(--clio-radio-on);
 }
 
-:where(input[type="radio"]):not(:disabled):active {
+:where(input[type="radio"]):not(:disabled):active:where(:not([data-clio-off])) {
   background: var(--clio-radio-pressed);
 }
 
-:where(input[type="radio"]):checked:not(:disabled):active {
+:where(input[type="radio"]):checked:not(:disabled):active:where(:not([data-clio-off])) {
   background: var(--clio-radio-pressed-on);
 }
 

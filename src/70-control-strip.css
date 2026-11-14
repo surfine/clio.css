@@ -87,8 +87,8 @@
   background-image: var(--clio-strip-forward);
 }
 
-:where(.control-strip) > .control-strip-scroll:not(:disabled):active,
-:where(.control-strip-module):not(:disabled):is(:active, [aria-expanded="true"]) {
+:where(.control-strip) > .control-strip-scroll:not(:disabled):active:where(:not([data-clio-off])),
+:where(.control-strip-module):not(:disabled):is(:active:where(:not([data-clio-off])), [aria-expanded="true"]) {
   background-color: var(--clio-strip-pressed-bg);
   box-shadow: var(--clio-strip-pressed-shadow);
 }

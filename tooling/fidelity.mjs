@@ -206,7 +206,18 @@ specimens.push(
   P9("p9-strip-collapsed", `<div style="padding:12px;background:#9999cc">${strip(" is-collapsed", "strip")}</div>`, [0, 0, 18, 24], "strip-collapsed", [0, 576, 18, 24]),
 );
 
+// clio.js scroll bars (fixed-size scroll box, Smart Scrolling): Finder windows in
+// System 7.5.3 and Mac OS 9.0, frames hig/*/finder-scroll*.
+const jsScroll = (h, extra = "") => `<div class="clio-scroll" id="s" ${extra} style="width:200px;height:${h}px;overflow-x:hidden;overflow-y:scroll;background:#fff"><div style="height:4000px"></div></div>`;
+specimens.push(
+  { ...S7("s7-js-scroll-top", jsScroll(124), [185, 0, 15, 41], "../hig/system7/finder-scroll", [405, 110, 15, 41]), js: true },
+  { ...P9("p9-js-scroll-fixed", jsScroll(122), [185, 0, 15, 122], "../hig/platinum9/finder-scroll-fixed", [405, 111, 15, 122]), js: true },
+  { ...P9("p9-js-scroll-off-h", `<div class="clio-scroll" id="s" style="width:359px;height:60px;overflow-x:scroll;overflow-y:hidden;background:#fff"><div style="height:20px"></div></div>`, [0, 45, 359, 15], "../hig/platinum9/finder-scroll-fixed", [46, 233, 359, 15]), js: true },
+  { ...P9("p9-js-scroll-smart", jsScroll(122, 'data-clio-scrolling="smart"'), [185, 0, 15, 122], "../hig/platinum9/finder-scroll-smart", [405, 111, 15, 122]), js: true },
+);
+
 const css = pathToFileURL(join(root, "dist/clio.css")).href;
+const js = pathToFileURL(join(root, "dist/clio.js")).href;
 const out = join(root, ".fidelity");
 mkdirSync(out, { recursive: true });
 const browser = await playwright.chromium.launch({ ignoreDefaultArgs: ["--hide-scrollbars"] });
@@ -216,13 +227,16 @@ const browser = await playwright.chromium.launch({ ignoreDefaultArgs: ["--hide-s
 const DPR = Number(process.env.FIDELITY_DPR || 1);
 const page = await browser.newPage({ viewport: { width: 800, height: 400 }, deviceScaleFactor: DPR });
 const results = [];
+const ONLY = process.env.FIDELITY_ONLY ? new RegExp(process.env.FIDELITY_ONLY) : null;   // a quick look; writes no report
 for (const s of specimens) {
+  if (ONLY && !ONLY.test(s.id)) continue;
   if (s.refFile && !existsSync(s.refFile)) { console.log(`${s.id}: no reference (run npm run capture:system6)`); continue; }
-  const html = `<!doctype html><html data-era="${s.era || "platinum"}"><head><link rel="stylesheet" href="${css}"><style>body{margin:0;padding:24px;background:#4a71ab}</style></head><body>${s.html}</body></html>`;
+  const html = `<!doctype html><html data-era="${s.era || "platinum"}"><head><link rel="stylesheet" href="${css}"><style>body{margin:0;padding:24px;background:#4a71ab}</style></head><body>${s.html}${s.js ? `<script src="${js}"></script>` : ""}</body></html>`;
   const file = join(out, `${s.id}.html`);
   writeFileSync(file, html);
   await page.goto(pathToFileURL(file).href);
   await page.evaluate(() => document.fonts.ready);
+  if (s.js) await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))));
   const box = await page.locator("#s").boundingBox();
   const [x, y, w, h] = s.crop;
   const shot = await page.screenshot({ clip: { x: box.x + x, y: box.y + y, width: w, height: h } });
@@ -276,6 +290,7 @@ for (const s of specimens) {
 await browser.close();
 console.log("specimen              size      same    exact   off>48  meanAbs   (reference | clio.css | diff in .fidelity/)");
 for (const r of results) console.log(`${r.name.padEnd(21)} ${r.size.join("x").padEnd(9)} ${String(r.same).padEnd(7)} ${String(r.exact).padEnd(7)} ${String(r.structural).padEnd(7)} ${r.meanAbs}`);
+if (ONLY) process.exit(0);
 writeFileSync(join(out, DPR === 1 ? "results.json" : `results-${DPR}x.json`), JSON.stringify(results, null, 2));
 if (DPR !== 1) { console.log(`${results.filter((r) => r.same === 1).length} of ${results.length} identical at ${DPR}x`); process.exit(0); }
 const date = new Date().toISOString().slice(0, 10);

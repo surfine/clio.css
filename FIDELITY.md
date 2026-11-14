@@ -59,6 +59,7 @@ Reference: System 7.5.3 running in Infinite Mac, the 800×600 colour canvas read
 | s7-menu-separator | 100×16 | 100.0% | 100.0% | 0.0% | 0 |
 | s7-default-ok | 67×28 | 100.0% | 100.0% | 0.0% | 0 |
 | s7-strip-start | 29×24 | 100.0% | 100.0% | 0.0% | 0 |
+| s7-js-scroll-top | 15×41 | 100.0% | 100.0% | 0.0% | 0 |
 
 ## Mac OS 8.5 Drawing Board
 
@@ -140,6 +141,9 @@ Reference: Mac OS 9.0 running in Infinite Mac, the 800×600 colour canvas read 1
 | p9-strip-start | 29×24 | 100.0% | 100.0% | 0.0% | 0 |
 | p9-strip-handle | 18×24 | 100.0% | 100.0% | 0.0% | 0 |
 | p9-strip-collapsed | 18×24 | 100.0% | 100.0% | 0.0% | 0 |
+| p9-js-scroll-fixed | 15×122 | 100.0% | 100.0% | 0.0% | 0 |
+| p9-js-scroll-off-h | 359×15 | 100.0% | 100.0% | 0.0% | 0 |
+| p9-js-scroll-smart | 15×122 | 100.0% | 100.0% | 0.0% | 0 |
 
 ## Mac OS 9 Platinum
 

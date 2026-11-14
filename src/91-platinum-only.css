@@ -1,0 +1,48 @@
+/* Mac OS 9 Platinum only (not Drawing Board, whose theme draws its own):
+   scroll-bar details read from the Mac OS 9.0 Finder (frames hig/platinum9/
+   finder-scroll-*). The build leaves this file out of clio.drawingboard.css. */
+
+/* ---- The scroll box's far side is the window's frame (Mac OS 9.0 Finder) --- */
+:is([data-era="platinum"]) :is(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-thumb:vertical {
+  border-right-width: 0;
+}
+
+:is([data-era="platinum"]) :is(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-thumb:horizontal {
+  border-bottom-width: 0;
+}
+
+/* Smart Scrolling (clio.js bars): the up and left arrows move to the far end
+   and take their black line on the lane's side (frame finder-scroll-smart). */
+[data-era="platinum"] .clio-sb-host > .clio-sb-anchor > .clio-sb-v.clio-sb-smart > .clio-sb-dec {
+  border-top: 1px solid #000000;
+  border-bottom-width: 0;
+}
+
+[data-era="platinum"] .clio-sb-host > .clio-sb-anchor > .clio-sb-h.clio-sb-smart > .clio-sb-dec {
+  border-left: 1px solid #000000;
+  border-right-width: 0;
+}
+
+/* Nothing to scroll (clio.js bars): a flat #eee lane and dimmed arrows, the
+   bevels gone (Finder, frame finder-scroll-fixed, its horizontal bar). */
+[data-era="platinum"] .clio-sb-host > .clio-sb-anchor > .clio-sb.clio-sb-off > .clio-sb-track {
+  background: #eeeeee;
+  box-shadow: none;
+}
+
+[data-era="platinum"] .clio-sb-host > .clio-sb-anchor > .clio-sb.clio-sb-off > .clio-sb-button {
+  background-color: #eeeeee;
+  box-shadow: none;
+}
+
+[data-era="platinum"] .clio-sb-host > .clio-sb-anchor > .clio-sb-v.clio-sb-off > .clio-sb-button.clio-sb-dec { background-image: var(--clio-art-p-up-off); }
+[data-era="platinum"] .clio-sb-host > .clio-sb-anchor > .clio-sb-v.clio-sb-off > .clio-sb-button.clio-sb-inc { background-image: var(--clio-art-p-down-off); }
+[data-era="platinum"] .clio-sb-host > .clio-sb-anchor > .clio-sb-h.clio-sb-off > .clio-sb-button.clio-sb-dec { background-image: var(--clio-art-p-left-off); }
+[data-era="platinum"] .clio-sb-host > .clio-sb-anchor > .clio-sb-h.clio-sb-off > .clio-sb-button.clio-sb-inc { background-image: var(--clio-art-p-right-off); }
+
+/* ...and the lines between the arrows and the lane dim to #555, drawn as
+   shadows so the black line across keeps the corner. */
+[data-era="platinum"] .clio-sb-host > .clio-sb-anchor > .clio-sb-h.clio-sb-off > .clio-sb-button.clio-sb-dec { border-right-width: 0; box-shadow: inset -1px 0 #555555; }
+[data-era="platinum"] .clio-sb-host > .clio-sb-anchor > .clio-sb-h.clio-sb-off > .clio-sb-button.clio-sb-inc { border-left-width: 0; box-shadow: inset 1px 0 #555555; background-position: 1px 1px; }
+[data-era="platinum"] .clio-sb-host > .clio-sb-anchor > .clio-sb-v.clio-sb-off > .clio-sb-button.clio-sb-dec { border-bottom-width: 0; box-shadow: inset 0 -1px #555555; }
+[data-era="platinum"] .clio-sb-host > .clio-sb-anchor > .clio-sb-v.clio-sb-off > .clio-sb-button.clio-sb-inc { border-top-width: 0; box-shadow: inset 0 1px #555555; background-position: 1px 1px; }

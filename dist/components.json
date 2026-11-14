@@ -471,6 +471,20 @@
       "html": "<div class=\"field-row\" style=\"gap: 16px\">\n  <button>Cancel</button>\n  <button class=\"default\">OK</button>\n  <button class=\"active\">Pressed</button>\n  <button disabled>Eject</button>\n</div>",
       "evidence": [
         {
+          "era": "both",
+          "claim": "clio.js: a held button draws pressed only while the pointer is on it; released elsewhere it does nothing",
+          "status": "inferred",
+          "source": "Inside Macintosh: Macintosh Toolbox Essentials (1992), TrackControl",
+          "upstream": "data-clio-off turns the held look off; browsers already click only on release over the button"
+        },
+        {
+          "era": "both",
+          "claim": "clio.js: Return or Enter presses the default button, Esc or Cmd-. the Cancel button, after showing it pressed for 8 ticks",
+          "status": "inferred",
+          "source": "Macintosh Human Interface Guidelines (1992), ch. 6 (keyboard equivalents for buttons); the 8-tick flash is the Toolbox's usual Delay(8)",
+          "upstream": "not measured on screen"
+        },
+        {
           "era": "system7",
           "claim": "Push buttons and the default ring stay black and white, as in System 6",
           "status": "measured",
@@ -972,10 +986,45 @@
         },
         {
           "era": "both",
-          "claim": "The scroll box grows with the visible fraction instead of a fixed 16px square",
+          "claim": "Without clio.js the scroll box grows with the visible fraction instead of keeping its fixed length",
           "status": "adapted",
           "source": "clio.css",
-          "upstream": "browsers size ::-webkit-scrollbar-thumb themselves"
+          "upstream": "browsers size ::-webkit-scrollbar-thumb themselves; load dist/clio.js for the fixed box"
+        },
+        {
+          "era": "system7",
+          "claim": "clio.js: the scroll box is the #555 line and 15 rows, 16 in all, right after the arrow's black line; dragged, it leaves a 14x16 outline in which the lane's #ddd turns black and its #777 dots stay, and the content scrolls on release",
+          "status": "measured",
+          "source": "clio.css capture, System 7.5.3 in Infinite Mac (frames hig/system7/finder-scroll and finder-thumb-drag)",
+          "upstream": "specimen s7-js-scroll-top 100% identical"
+        },
+        {
+          "era": "platinum",
+          "claim": "clio.js: a 15-row box between black lines that it shares with the arrows; the bar is a black line and 14px, the window's frame closing it; lane shaded #777/#888 along the top and left and #bbb/#ccc down the right, and again just past the box; arrow and box bevels stop a pixel short of the far corners; dragged live",
+          "status": "measured",
+          "source": "clio.css capture, Mac OS 9.0 in Infinite Mac with Smart Scrolling off (frames hig/platinum9/finder-scroll-fixed, finder-thumb-drag)",
+          "upstream": "specimen p9-js-scroll-fixed 100% identical; the 16px bar before 0.11 was a pixel too wide and tall"
+        },
+        {
+          "era": "platinum",
+          "claim": "clio.js, data-clio-scrolling=\"smart\": both arrows at the far end, the up arrow first with its black line on the lane's side; the box sized to the visible share",
+          "status": "measured",
+          "source": "clio.css capture, Mac OS 9.0 in Infinite Mac, Appearance > Options > Smart Scrolling on (frame hig/platinum9/finder-scroll-smart)",
+          "upstream": "specimen p9-js-scroll-smart 100% identical; off by default, as in Apple's own Mac OS 9.0 screenshots"
+        },
+        {
+          "era": "platinum",
+          "claim": "clio.js: with nothing to scroll the lane is flat #eee, the arrows dimmed, the lines beside them #555",
+          "status": "measured",
+          "source": "clio.css capture, Mac OS 9.0 in Infinite Mac (frame hig/platinum9/finder-scroll-fixed, horizontal bar)",
+          "upstream": "specimen p9-js-scroll-off-h 100% identical"
+        },
+        {
+          "era": "both",
+          "claim": "clio.js: an arrow scrolls one step at once, waits about 0.2 s, then repeats while held and the pointer is on it",
+          "status": "inferred",
+          "source": "clio.css capture, Mac OS 9.0 Finder in Infinite Mac (held down arrow, frames 0.1 s apart)",
+          "upstream": "the pause is measured; step (16px) and rate (every 50 ms) are chosen, since the emulator runs faster than the hardware"
         },
         {
           "era": "platinum",

@@ -50,7 +50,7 @@
 
 :where(.menu-bar, [role="menubar"], [role="menu-bar"]) > li > :is(button, a, span):is([aria-expanded="true"], .active),
 :where(.menu-bar, [role="menubar"], [role="menu-bar"]) > li.open > :is(button, a, span),
-:where(.menu-bar, [role="menubar"], [role="menu-bar"]) > li > :is(button, a):active,
+:where(.menu-bar, [role="menubar"], [role="menu-bar"]) > li > :is(button, a):active:where(:not([data-clio-off])),
 :where([role="menu-bar"]) > [role="menu-item"]:is(:focus, :focus-within) {
   background: var(--clio-menu-title-active-bg);
   box-shadow: var(--clio-menu-title-active-shadow);

@@ -185,11 +185,11 @@
   content: none;
 }
 
-:where(.little-arrows):has(> .up:active) {
+:where(.little-arrows):has(> .up:active:where(:not([data-clio-off]))) {
   background-image: var(--clio-art-little-arrows-up, var(--clio-art-little-arrows));
 }
 
-:where(.little-arrows):has(> .down:active) {
+:where(.little-arrows):has(> .down:active:where(:not([data-clio-off]))) {
   background-image: var(--clio-art-little-arrows-down, var(--clio-art-little-arrows));
 }
 
@@ -223,7 +223,7 @@
   cursor: default;
 }
 
-:where(.bevel):is(:active, .active, [aria-pressed="true"]):not(:disabled) {
+:where(.bevel):is(:active:where(:not([data-clio-off])), .active, [aria-pressed="true"]):not(:disabled) {
   border-image-source: var(--clio-art-bevel-held);
 }
 
