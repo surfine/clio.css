@@ -59,9 +59,26 @@ Inc., which is why the fonts have other names.
 | `dist/fonts/ChicagoFLF.woff2`, `.woff` | ChicagoFLF | Robin Casady | Public domain: the author's own statement and Font Library's listing (https://fontlibrary.org/font/chicagoflf); some download sites say "personal use", which is not the author's term. File as distributed by system.css |
 | `dist/fonts/Asap-Variable.woff2` | Asap (variable, wdth + wght) | Omnibus-Type | SIL Open Font License 1.1, full text in `dist/fonts/OFL-Asap.txt`; upstream github.com/Omnibus-Type/Asap at commit 2de32f20, SHA-256 3f230328…498f |
 
-Asap is a fallback stand-in for Charcoal and is not presented as an Apple font. Virtue
-(Scooter Graphics, 1997), another Charcoal look-alike, is not included: its page offers it
-free with a copyright notice and states no redistribution terms.
+Asap is a fallback stand-in for Charcoal and is not presented as an Apple font.
+
+### Virtue (`dist/fonts/Virtue.woff2`)
+
+Virtue 3.2.1, © 1997–1999 Marty P. Pfeiffer, [Scooter Graphics](https://www.scootergraphics.com/)
+(https://www.scootergraphics.com/virtue/). A TrueType reworking of Charcoal, used when a page
+sets `data-clio-font="virtue"`. The file is Virtue 3.2.1 for the Mac (the `sfnt` resource of
+`virtue321tt.sit`) wrapped as WOFF2 by `tooling/virtue-woff2.py`, which checks that
+every one of its 16 tables, copyright notice included, is byte for byte the original.
+
+Virtue's own licence (the `eul.htm` in its download) does not allow redistribution or
+embedding. clio.css ships it by the author's written permission, which reads in part:
+"I'm happy to grant you permission to convert Virtue 3.2.1 into WOFF2 format and distribute
+it as part of clio.css, including through GitHub, npm and the public CDNs you mentioned,
+provided that the font itself remains unchanged. Please retain the original copyright notice
+and include a credit to Scooter Graphics with a link to scootergraphics.com in your
+documentation and third-party notices. This permission applies to the use of Virtue in
+clio.css under the conditions described in your letter. All other rights remain reserved."
+The permission covers clio.css only: using Virtue outside clio.css, or changing the file,
+needs the author's own licence.
 
 ## Art from system.css (MIT)
 
