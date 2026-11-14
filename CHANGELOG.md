@@ -2,6 +2,22 @@
 
 ## Unreleased
 
+Timings read from the Mac OS ROMs and checked in the emulator (ROADMAP 7–9 closed). The
+values come from the Menu, Control and Dialog Manager code in the Mac IIx, Quadra 650 and
+New World ROMs; no Apple code or resources are in the repository.
+
+- Submenus: clio.js follows the Menu Manager's rule. Leaving the parent item, the submenu
+  stays while the pointer is inside the wedge from the last point in the item to the
+  submenu's two near corners, for 60 ticks (MenuDrag) from leaving the item; further moves
+  do not extend it, and moving back away switches at once. Before, a cone from the previous
+  pointer position, re-armed on every move.
+- Scroll bars: a held arrow or lane repeats with no pause in System 6 and 7 (TrackControl
+  had none) and after about 0.2 s in Mac OS 8 and 9 (`--clio-scrollbar-repeat-delay`).
+- The watch cursor (System 7.5.3 and Mac OS 9.0, identical) for `aria-busy="true"`
+  (`--clio-cursor-wait`).
+- Evidence: the default button's 8-tick flash and the insertion point's 32 ticks (Mac OS 9's
+  default about 48) measured.
+
 Safari and Firefox, checked: `CLIO_ENGINE=webkit|firefox` runs the pixel check and
 `npm run behaviour` in Playwright's WebKit and Firefox as well as Chromium.
 

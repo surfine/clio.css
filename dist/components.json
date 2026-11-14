@@ -198,6 +198,13 @@
           "upstream": "System 6 and Drawing Board assumed the same (inferred); the watch was not captured"
         },
         {
+          "era": "both",
+          "claim": "Cursors: the watch (11x16, first frame of the spinning watch, hot spot 8,8) for aria-busy=\"true\", redrawn at 1x, 2x and 3x; its crown's two inverting pixels drawn black",
+          "status": "measured",
+          "source": "clio.css capture, System 7.5.3 and Mac OS 9.0 in Infinite Mac opening a Finder folder (identical frames; four of eight hand positions seen); tooling/cursor-art.py",
+          "upstream": "the animation is not drawn; System 6's watch not captured"
+        },
+        {
           "era": "system7",
           "claim": "Title bar: System 6's rows on #eee with six #777 stripes, #ccf light on the top and left inside edges and #99c shade on the bottom and right (the shade owns the corners)",
           "status": "measured",
@@ -439,18 +446,18 @@
           "upstream": "MenuFlash 3"
         },
         {
-          "era": "platinum",
-          "claim": "clio.js: a submenu opens 9 ticks after its item lights",
+          "era": "both",
+          "claim": "clio.js: a submenu opens 9 ticks after its item lights (MenuDelay 8 ticks, polled)",
           "status": "measured",
-          "source": "clio.css capture, Mac OS 9.0 in Infinite Mac, Apple menu > Control Panels (150 ms in two runs)",
-          "upstream": "applies to every era (inferred for System 6 and 7)"
+          "source": "clio.css capture, Mac OS 9.0 in Infinite Mac, Apple menu > Control Panels (150 ms in two runs); MenuDelay's default read from the Menu Manager in the Mac IIx, Quadra 650 and New World ROMs (extended PRAM $7E, 8 ticks when zero)",
+          "upstream": "the same code in System 6, System 7 and Mac OS 9"
         },
         {
           "era": "both",
-          "claim": "clio.js: moving from a parent item towards its submenu keeps the submenu for up to 1.2 s",
-          "status": "inferred",
-          "source": "clio.css capture, Mac OS 9.0 in Infinite Mac: some moves held the submenu 1.15-1.2 s, a move straight up switched at once",
-          "upstream": "the direction test is a cone to the submenu's near edge; Apple's own rule was not pinned down"
+          "claim": "clio.js: leaving a parent item keeps its submenu while the pointer stays in the wedge from the last point inside the item to the submenu's two near corners (whole degrees) and does not move back away from it, for 60 ticks from leaving the item, not extended by further moves; outside the wedge the item under the pointer lights at once",
+          "status": "measured",
+          "source": "the Menu Manager's MenuSelect in the Mac IIx, Quadra 650 and New World ROMs (MenuDrag: extended PRAM $7F, 60 ticks when zero; DeltaPoint, FixRatio, AngleFromSlope); clio.css capture, System 7.5.3 in Infinite Mac (into the wedge: held 1.18-1.53 s; down or left: switched in 0.19-0.27 s, the emulator's input lag) and Mac OS 9.0 (held 1.42-1.46 s; outside 0.14-0.52 s)",
+          "upstream": "replaces the cone from the previous pointer position, re-armed on every move (0.11.0)"
         },
         {
           "era": "platinum",
@@ -627,9 +634,9 @@
         {
           "era": "both",
           "claim": "clio.js: Return or Enter presses the default button, Esc or Cmd-. the Cancel button, after showing it pressed for 8 ticks",
-          "status": "inferred",
-          "source": "Macintosh Human Interface Guidelines (1992), ch. 6 (keyboard equivalents for buttons); the 8-tick flash is the Toolbox's usual Delay(8)",
-          "upstream": "not measured on screen"
+          "status": "measured",
+          "source": "the Dialog Manager in the Mac IIx, Quadra 650 and New World ROMs (HiliteControl, Delay(8), HiliteControl); clio.css capture, System 7.5.3 in Infinite Mac, Find File's Find button after Return (dark at 76 ms, back at 211 ms)",
+          "upstream": "Esc and Cmd-. from the Macintosh Human Interface Guidelines (1992), ch. 6"
         },
         {
           "era": "system7",
@@ -930,6 +937,13 @@
           "status": "measured",
           "source": "clio.css capture, Mac OS 9.0 in Infinite Mac (frames in .fidelity/hig/platinum9), frame date-time-edit",
           "upstream": "100% identical"
+        },
+        {
+          "era": "both",
+          "claim": "The insertion point blinks every 32 ticks (CaretTime) in System 6 and 7; Mac OS 9's General Controls default blinks about every 48 ticks",
+          "status": "measured",
+          "source": "clio.css capture in Infinite Mac: System 6.0.8 Find File (mean 533 ms over 15 changes), System 7.5.3 Find File (516-634 ms), Mac OS 9.0 General Controls' preview at its middle setting (731-867 ms, mean 795 ms); CaretTime = (PRAM misc & 15) x 4 with factory misc $88, Mac IIx and Quadra 650 ROMs",
+          "upstream": "the browser draws the caret; CSS cannot set its blink"
         }
       ]
     },
@@ -1217,10 +1231,17 @@
         },
         {
           "era": "both",
-          "claim": "clio.js: an arrow scrolls one step at once, waits about 0.2 s, then repeats while held and the pointer is on it",
-          "status": "inferred",
-          "source": "clio.css capture, Mac OS 9.0 Finder in Infinite Mac (held down arrow, frames 0.1 s apart)",
-          "upstream": "the pause is measured; step (16px) and rate (every 50 ms) are chosen, since the emulator runs faster than the hardware"
+          "claim": "clio.js: a held arrow or lane steps at once and keeps stepping while held, with no pause in System 6 and 7 and a pause of about 0.2 s after the first step in Mac OS 8 and 9 (--clio-scrollbar-repeat-delay)",
+          "status": "measured",
+          "source": "TrackControl in the Mac IIx and Quadra 650 ROMs calls the action procedure on every pass while the button is down; clio.css capture, Mac OS 9.0 Finder in Infinite Mac (held down arrow)",
+          "upstream": "Drawing Board assumed as Mac OS 9 (inferred)"
+        },
+        {
+          "era": "both",
+          "claim": "clio.js: an arrow step is 16px and a lane step the visible height less 16px; repeats every 50 ms",
+          "status": "adapted",
+          "source": "clio.css capture, System 6.0.8 Finder list in Infinite Mac: one click scrolled one 16px row; the Mac stepped as fast as the application could scroll (no fixed rate in the Toolbox), so the rate is chosen",
+          "upstream": "applications chose their own step and page"
         },
         {
           "era": "platinum",

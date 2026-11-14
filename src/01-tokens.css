@@ -199,6 +199,9 @@
   --clio-scrollbar-thumb-tracking: outline;
   --clio-scrollbar-thumb-overlap: 0px;
   --clio-scrollbar-thumb-after: none;
+  /* clio.js: a held arrow or lane repeats at once (System 6 and 7's TrackControl
+     calls the action on every pass while the button is down) */
+  --clio-scrollbar-repeat-delay: 0ms;
   /* clio.js menus: System 6 and 7 menus stay open only while the button is held */
   --clio-menu-sticky: 0;
   /* clio.js: the grey outline of a dragged window (System 6.0.8 and 7.5.3: 1px) */

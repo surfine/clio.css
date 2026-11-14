@@ -86,7 +86,8 @@ for (const era of Object.keys(lengths)) {
   ok(first === 16, `${era}: pressing the down arrow scrolls one step at once (${first})`);
   await page.waitForTimeout(120);
   const pause = await page.evaluate(() => { const s = window.steps.find(([, top]) => top > 16); return s ? Math.round(s[0] - window.pressed) : Infinity; });
-  ok(pause >= 150, `${era}: then waits before repeating (${pause} ms)`);
+  const waits = era === "platinum" || era === "drawingboard";   // Mac OS 9's Finder paused; System 6 and 7's TrackControl did not
+  ok(waits ? pause >= 150 : pause < 120, `${era}: then ${waits ? "waits before repeating" : "repeats without a pause"} (${pause} ms)`);
   await page.waitForTimeout(400);
   const later = await page.evaluate(() => document.querySelector("#s").scrollTop);
   ok(later > 48, `${era}: and repeats while held (${later})`);
@@ -126,6 +127,47 @@ ok(!(await page.evaluate(() => document.querySelector("#s .clio-sb-v").classList
 // Nothing to scroll: the box goes, the lane stays.
 await load("platinum", box("", 200, 150, 50).replace("width:800px", "width:50px"));
 ok(await page.evaluate(() => getComputedStyle(document.querySelector("#s .clio-sb-v > .clio-sb-thumb")).display) === "none", "platinum: no scroll box when nothing scrolls");
+
+// 4b. Heading for a submenu (the Menu Manager's MenuDrag rule): inside the wedge from the
+// last point in the item to the submenu's near corners the submenu stays for 60 ticks from
+// leaving the item, not extended by further moves; a move back away switches at once.
+const wedgeBar = `<ul class="menu-bar" role="menubar" style="width:400px"><li role="none"><button role="menuitem" id="wt" aria-haspopup="true" aria-expanded="false">File</button>
+  <ul class="menu" role="menu" id="wm">
+    <li role="none" id="wp"><button role="menuitem" aria-haspopup="true">Recent</button>
+      <ul class="menu" role="menu" id="ws">${[1, 2, 3, 4, 5, 6].map((i) => `<li role="none"><button role="menuitem">Item ${i}</button></li>`).join("")}</ul></li>
+    <li role="none" id="wb"><button role="menuitem">Below</button></li>
+    <li role="none"><button role="menuitem">Last</button></li>
+  </ul></li></ul>`;
+const vis = (sel) => page.evaluate((q) => { const e = document.querySelector(q); return !!e && getComputedStyle(e).display !== "none"; }, sel);
+for (const era of ["system7", "platinum"]) {
+  await load(era, wedgeBar);
+  const [tx, ty] = await center("#wt");
+  const open = async () => {
+    await page.mouse.move(tx, ty); await page.mouse.down();
+    const p = await page.locator("#wp").boundingBox();
+    await page.mouse.move(p.x + p.width - 10, p.y + p.height / 2, { steps: 3 });
+    await page.waitForTimeout(250);
+    return p;
+  };
+  const lit = () => page.evaluate(() => document.querySelector("#wb").classList.contains("active"));
+  let p = await open();
+  ok(await vis("#ws"), `${era}: the submenu is open before the move`);
+  const b = await page.locator("#wb").boundingBox();
+  await page.mouse.move(p.x + p.width - 6, b.y + b.height / 2);   // down and right, inside the wedge
+  const left = Date.now();
+  await page.waitForTimeout(150);
+  ok(await vis("#ws") && !(await lit()), `${era}: moving into the wedge keeps the submenu`);
+  await page.waitForTimeout(450);
+  await page.mouse.move(p.x + p.width - 5, b.y + b.height / 2);   // still inside: does not extend the 60 ticks
+  await page.waitForTimeout(Math.max(0, 1150 - (Date.now() - left)));
+  ok(!(await vis("#ws")) && await lit(), `${era}: after 60 ticks from leaving the item the item under the pointer lights`);
+  await page.mouse.move(600, 500); await page.mouse.up(); await page.waitForTimeout(100);
+  p = await open();
+  await page.mouse.move(p.x + 20, b.y + b.height / 2);   // down and to the left: away from the submenu
+  await page.waitForTimeout(60);
+  ok(!(await vis("#ws")) && await lit(), `${era}: moving away from the submenu switches at once`);
+  await page.mouse.move(600, 500); await page.mouse.up(); await page.waitForTimeout(100);
+}
 
 // 4. Menus.
 const bar = (extra = "") => `<ul class="menu-bar" role="menubar" ${extra} style="width:400px">

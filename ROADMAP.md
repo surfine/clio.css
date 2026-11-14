@@ -13,11 +13,14 @@ can be measured in an emulator. Launch posts wait until Aqua is done. Method:
 - 131 pixel specimens. Chromium: 129 identical (the two others are Drawing Board's open
   pop-up menu, 96.2%: text antialiased over the paper). WebKit 127 of 131, Firefox 119 of
   126 (+5 that do not apply): the rest are centred labels on a half pixel. 2x and 3x: 121.
-- Behaviour: 145 checks in Chromium and WebKit, 143 in Firefox (no base-select), with
+- Behaviour: 154 checks in Chromium and WebKit, 152 in Firefox (no base-select), with
   `dist/clio.js` and `dist/clio.min.js`; `tooling/outline-check.mjs`: dragged outlines
   pixel for pixel in System 6, 7 and Mac OS 9, 1333 of 1349 in Drawing Board;
   `tooling/min-check.mjs`: minified builds parse to the same rules.
-- clio.js behaviour measured in all four eras: `tooling/emulator/measure-classic.sh`.
+- clio.js behaviour measured in all four eras: `tooling/emulator/measure-classic.sh`;
+  the timings the emulator could not settle (submenu rule, MenuDelay and MenuDrag, caret,
+  default button, scroll repeat) read from the Menu, Control and Dialog Manager code in the
+  Mac IIx, Quadra 650 and New World ROMs (numbers and rules only).
 
 ## Classic Mac OS: the "must close" items (all closed)
 
@@ -54,11 +57,9 @@ can be measured in an emulator. Launch posts wait until Aqua is done. Method:
 - **Touch on a physical iPhone**: checked in the iOS Simulator's Safari only (pop-ups,
   menus, scrolling, window dragging; see CHANGELOG).
 
-7. **M: The watch cursor.** Never stayed on screen long enough; try a long Finder copy.
-8. **M: The submenu direction rule.** Measured holds of about 1.2 s, but not which moves
-   count as "towards the submenu"; clio.js uses a cone.
-9. **Inferred for good: rates that depend on CPU speed** (scroll repeat step and rate,
-   paging), and the insertion point (drawn by the browser; CSS cannot set its blink).
+7. **Closed: the watch cursor.** Captured opening a Finder folder in System 7.5.3 and Mac OS 9.0 (identical); `aria-busy="true"` shows its first frame. Not drawn: the animation; not captured: System 6.
+8. **Closed: the submenu rule.** Read from the Menu Manager in the System 6, 7 and Mac OS 9 ROMs and checked in the emulator: a wedge from the last point in the item to the submenu's near corners, MenuDelay 8 ticks, MenuDrag 60 ticks from leaving the item.
+9. **Closed: timings.** Default button flash 8 ticks and insertion point 32 ticks (System 6/7; Mac OS 9 about 48) from the ROMs and the emulator; held arrows repeat with no pause in System 6/7 (TrackControl) and 0.2 s in Mac OS 9. No fixed repeat rate existed (as fast as the application scrolled), so clio.js's 50 ms stays a choice; the insertion point's blink is the browser's (clio.js can draw it with these values).
 10. **Not drawn**: rounded-corner (`rDocProc`) and side-title windows, placards, split
     bars, dials. No captured screen shows one; draw them only if a page needs them.
 11. **B: Retina residue.** Six specimens differ at 2x and 3x by one device pixel where layout
