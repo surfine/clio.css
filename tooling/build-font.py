@@ -145,7 +145,9 @@ if layers and not PLAIN:
             {'Format': 10, 'Glyph': ln, 'Paint': {'Format': 2, 'PaletteIndex': 0xFFFF, 'Alpha': a}} for ln, a in ls]}
             for g, ls in layers.items()}, version=1)
         fb.font['CPAL'] = buildCPAL([[(0.0, 0.0, 0.0, 1.0)]])
-if PLAIN and COVERAGE:
+# Off: real iPhones drew no text at all from these SVG glyphs (0.9.2); the
+# simulator drew them. Kept for study with --svg.
+if PLAIN and COVERAGE and '--svg' in sys.argv:
     # Safari has no COLRv1 but draws OpenType-SVG glyphs: the same 16 levels
     # as squares in the text colour at each level's opacity.
     from fontTools.ttLib import newTable
