@@ -80,13 +80,14 @@
   // is chosen when the button comes up, blinking first. Mac OS 8 and 9 also
   // keep a clicked menu open (--clio-menu-sticky: 1). Measured in Mac OS 9.0:
   // 3 blinks of 3 ticks off and 3 on; a submenu opens 9 ticks after its item
-  // lights and survives a move towards it for up to about 1.2 s.
+  // lights. Leaving the item towards the submenu keeps it as the Menu Manager
+  // did (System 6, 7 and Mac OS 9 ROMs: MenuDelay 8 ticks, MenuDrag 60 ticks).
   const BAR = ".menu-bar, [role=menubar], [role=menu-bar]";
   const MENU = ".menu, [role=menu]";
   const TITLE = ":scope > li > :is(button, a, span)";
   const BLINK = "data-clio-blink";
   const SUBMENU_DELAY = 9 * TICK;
-  const DRAG_HOLD = 1200;
+  const DRAG_HOLD = 60 * TICK;   // MenuDrag: counted from leaving the item, never extended
   const reduced = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
   const sticky = (el) => getComputedStyle(el).getPropertyValue("--clio-menu-sticky").trim() === "1";
   const usable = (li) => li && li.matches(`:is(${MENU}) > li`) && !li.matches(".disabled, [aria-disabled=true], .separator, [role=separator], .scroll-up, .scroll-down") && !li.querySelector(":scope > :is(a, button):is(:disabled, [aria-disabled=true])");
@@ -126,16 +127,18 @@
     if (submenuOf(li)) track.timer = setTimeout(() => { li.classList.add("open"); }, SUBMENU_DELAY);
   }
   function closeSub(li) { li.classList.remove("open", "active"); for (const x of li.querySelectorAll("li.open, li.active")) x.classList.remove("open", "active"); }
-  // Moving from an open parent item towards its submenu keeps it (a cone from
-  // the pointer to the submenu's near edge), for up to DRAG_HOLD.
-  function towardsSub(parent, from, to) {
+  // Leaving an open parent item keeps its submenu while the pointer stays inside
+  // the wedge from the last point in the item (the anchor) to the submenu's two
+  // near corners, angles compared in whole degrees as AngleFromSlope gave them,
+  // and never moves back away from the submenu.
+  const degrees = (dx, dy) => Math.round(Math.atan2(Math.abs(dx), -dy) * 180 / Math.PI);
+  function inWedge(parent, anchor, to) {
     const sub = submenuOf(parent); if (!sub || !parent.classList.contains("open")) return false;
     const r = sub.getBoundingClientRect();
-    const right = r.left >= from.x, edge = right ? r.left : r.right;
-    const dx = to.x - from.x;
-    if (right ? dx <= 0 : dx >= 0) return false;
-    const k = Math.abs(dx) / Math.abs(edge - from.x || 1);
-    return to.y >= from.y + (r.top - from.y) * k - 1 && to.y <= from.y + (r.bottom - from.y) * k + 1;
+    const right = r.left >= anchor.x, edge = right ? r.left : r.right;
+    if (right ? to.x < anchor.x : to.x > anchor.x) return false;
+    const a = degrees(to.x - anchor.x, to.y - anchor.y);
+    return a >= degrees(edge - anchor.x, r.top - anchor.y) && a <= degrees(edge - anchor.x, r.bottom - anchor.y);
   }
   function itemAt(x, y) {
     const el = document.elementFromPoint(x, y);
@@ -194,14 +197,18 @@
     }
     const li = el.closest(`:is(${MENU}) > li`);
     if (li && !track.bar.contains(li)) return;
-    // keep a parent's submenu while heading for it
+    // keep a parent's submenu while heading for it, for MenuDrag from leaving the item
     const parent = track.hot && submenuOf(track.hot) ? track.hot : null;
-    if (parent && li !== parent && !(li && parent.contains(li)) && towardsSub(parent, from, at)) {
-      clearTimeout(track.hold);
-      track.hold = setTimeout(() => { if (track) light(itemAt(track.last.x, track.last.y)); }, DRAG_HOLD);
-      return;
+    if (parent && li !== parent && !(li && parent.contains(li)) && parent.classList.contains("open")) {
+      const now = performance.now();
+      if (track.left == null) {
+        track.left = now;
+        track.hold = setTimeout(() => { if (track) { track.left = null; light(itemAt(track.last.x, track.last.y)); } }, DRAG_HOLD);
+      }
+      if (now - track.left < DRAG_HOLD && inWedge(parent, track.anchor || from, at)) return;
     }
-    clearTimeout(track.hold);
+    clearTimeout(track.hold); track.left = null;
+    if (li) track.anchor = at;   // the last point inside an item
     if (li) light(li);
     else if (track.hot && !submenuOf(track.hot)) light(null);
   }, true);
@@ -441,9 +448,12 @@
 
   /* ---- Scroll bars -------------------------------------------------------- */
   const HOSTS = ".window-pane, div.listbox, div[role=listbox], ul[role=listbox], .clio-scroll";
-  const LINE = 16;            // one step of an arrow (inferred; applications chose their own)
-  const REPEAT_DELAY = 200;   // Mac OS 9.0 Finder: one step, about 0.2 s, then steps until the button comes up
-  const REPEAT_EVERY = 50;    // inferred: the emulator runs faster than the hardware did
+  const LINE = 16;            // one step of an arrow: one row of the Finder's list (System 6.0.8)
+  // A held arrow or lane steps at once, then after --clio-scrollbar-repeat-delay
+  // (0 in System 6 and 7, whose TrackControl had none; 0.2 s in Mac OS 9's Finder).
+  // The Mac then stepped as fast as the application could scroll: no fixed rate
+  // existed, so this one is chosen.
+  const REPEAT_EVERY = 50;
   const px = (v) => parseFloat(v) || 0;
   const make = (cls, parent) => { const d = document.createElement("div"); d.className = cls; parent.appendChild(d); return d; };
   const hosts = new WeakMap();
@@ -490,6 +500,7 @@
         size: px(cs.getPropertyValue("--clio-scrollbar-size")) || 15,
         len: px(cs.getPropertyValue("--clio-scrollbar-thumb-length")) || 16,
         live: cs.getPropertyValue("--clio-scrollbar-thumb-tracking").trim() === "live",
+        delay: parseFloat(cs.getPropertyValue("--clio-scrollbar-repeat-delay")) || 0,
         smart: !!h.closest('[data-clio-scrolling="smart"]'),
         overlap: px(cs.getPropertyValue("--clio-scrollbar-thumb-overlap")),
         // the padding box's place on the page: QuickDraw aligned a lane's pattern with the
@@ -561,7 +572,7 @@
 
       const repeat = (fn, test) => {
         fn();
-        timer = setTimeout(function again() { if (test()) fn(); timer = setTimeout(again, REPEAT_EVERY); }, REPEAT_DELAY);
+        timer = setTimeout(function again() { if (test()) fn(); timer = setTimeout(again, REPEAT_EVERY); }, m.delay || REPEAT_EVERY);
       };
 
       if (target === p.dec || target === p.inc) {
@@ -913,13 +924,12 @@
 
   /* ---- Insertion point ---------------------------------------------------- */
   // TextEdit's caret: a 1px line drawn in XOR (black on white, white on black)
-  // as tall as the line, on for GetCaretTime() ticks and off as long (System
-  // 7.5.3, Find File's field: 1px, 16px tall, 567 ms on and off, about 34 ticks). clio.js draws it in text fields inside .window; the
+  // as tall as the line, on for GetCaretTime() ticks and off as long: 32 in
+  // System 6 and 7, about 48 in Mac OS 8 and 9 (--clio-caret-ticks; measured). clio.js draws it in text fields inside .window; the
   // browser's own caret comes back while text is selected or an input method is
   // composing, and the caret stays lit under reduced motion. Its place is
   // measured when the text, the selection, a scroll or the size change, never
   // per frame. data-clio-caret="off" (or data-clio-js="off") keeps the browser's.
-  const CARET_TICKS = 34;
   const FIELD = "input:is([type=text], [type=search], [type=password], [type=email], [type=url], [type=tel], [type=number], :not([type])), textarea";
   const MIRROR = ["boxSizing", "width", "paddingTop", "paddingRight", "paddingBottom", "paddingLeft", "borderTopWidth", "borderRightWidth", "borderBottomWidth", "borderLeftWidth", "fontFamily", "fontSize", "fontWeight", "fontStyle", "fontStretch", "letterSpacing", "wordSpacing", "lineHeight", "textTransform", "textIndent", "tabSize"];
   let caretEl = null, caretField = null, caretTimer = 0, composing = false, caretQueued = false;
@@ -960,7 +970,8 @@
     // each move shows the caret and starts the blink again (TEBlink after TEKey/TEClick)
     caretEl.classList.remove("clio-caret-off");
     clearInterval(caretTimer); caretTimer = 0;
-    if (!reduced()) caretTimer = setInterval(() => caretEl && caretEl.classList.toggle("clio-caret-off"), CARET_TICKS * TICK);
+    const ticks = px(cs.getPropertyValue("--clio-caret-ticks")) || 32;
+    if (!reduced()) caretTimer = setInterval(() => caretEl && caretEl.classList.toggle("clio-caret-off"), ticks * TICK);
   }
   const queueCaret = () => { if (!caretQueued) { caretQueued = true; requestAnimationFrame(caretUpdate); } };
   // (Firefox fires no selectionchange for a field's own selection: a click or a key moves it too)

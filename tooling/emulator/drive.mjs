@@ -7,8 +7,8 @@
 // Append commands (one per line) to <dir>/cmd; results in <dir>/log.
 //  move x y | down | up | click x y | dbl x y | drag x1 y1 x2 y2 | slowdrag x1 y1 x2 y2 | key K | type TEXT | cmd K | wait ms
 //  shot NAME (canvas png) | ctrlclick x y | ctrlup | dropzip FILE (drop a .zip onto the emulator)
-//  rec x y w h ms [up | X Y]   every animation frame of a crop, as [ms, hash] at each change -> rec.json (timing)
-//  film x y w h ms [up | dbl X Y]  every changed frame of a crop as film/NNN-<ms>.png (animations)
+//  rec x y w h ms [up | down | key K | X Y]   every animation frame of a crop, as [ms, hash] at each change -> rec.json (timing)
+//  film x y w h ms [up | down | dbl X Y]  every changed frame of a crop as film/NNN-<ms>.png (animations)
 //  quit
 import { createRequire } from "node:module";
 import { readFileSync, writeFileSync, appendFileSync, existsSync } from "node:fs";
@@ -58,7 +58,7 @@ for (;;) {
         }, [zip, name]);
       }
       else if (c === "rec") {
-        // rec x y w h ms [moveX moveY | up]: record a crop every animation frame; optional action at start
+        // rec x y w h ms [moveX moveY | up | down | key K]: record a crop every animation frame; optional action at start
         const [x, y, w, h, ms] = a.slice(0, 5).map(Number); const act = a.slice(5);
         const p = page.evaluate(([x, y, w, h, ms]) => new Promise((res) => {
           const cv = document.querySelector("canvas"); const g = document.createElement("canvas").getContext("2d", { willReadFrequently: true });
@@ -68,6 +68,8 @@ for (;;) {
           requestAnimationFrame(step);
         }), [x, y, w, h, ms]);
         if (act[0] === "up") { await page.waitForTimeout(30); await page.mouse.up(); }
+        else if (act[0] === "down") { await page.waitForTimeout(30); await page.mouse.down(); }
+        else if (act[0] === "key") { await page.waitForTimeout(30); await page.keyboard.press(act[1]); }
         else if (act.length === 2) { await page.waitForTimeout(30); await page.mouse.move(...await at(act[0], act[1]), { steps: 2 }); }
         writeFileSync(`${dir}/rec.json`, JSON.stringify(await p));
       }
@@ -82,6 +84,7 @@ for (;;) {
           requestAnimationFrame(step);
         }), [x, y, w, h, ms]);
         if (act[0] === "up") { await page.waitForTimeout(30); await page.mouse.up(); }
+        if (act[0] === "down") { await page.waitForTimeout(30); await page.mouse.down(); }
         if (act[0] === "dbl") { await page.waitForTimeout(30); await page.mouse.move(...await at(act[1], act[2]), { steps: 2 }); for (let i = 0; i < 2; i++) { await page.mouse.down(); await page.waitForTimeout(60); await page.mouse.up(); await page.waitForTimeout(60); } }
         const frames = await p; const fs = await import("node:fs"); fs.mkdirSync(`${dir}/film`, { recursive: true });
         frames.forEach(([t, url], i) => fs.writeFileSync(`${dir}/film/${String(i).padStart(3, "0")}-${t}.png`, Buffer.from(url.split(",")[1], "base64")));
