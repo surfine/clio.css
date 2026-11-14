@@ -320,6 +320,11 @@
   // the menu bar's. Touch keeps the system's picker.
   const POPUP = "select:not([multiple]):not([size]), select[size='1']";
   const baseSelect = !!(window.CSS && CSS.supports && CSS.supports("appearance", "base-select")) && matchMedia("(pointer: fine)").matches;   // as the stylesheet: touch keeps the system picker
+  // Drawing Board's menus need their pencil shade and corner pixels, which the
+  // browser's picker cannot carry: with clio.js there, the stylesheet hands those
+  // pop-ups back (data-clio-popups) and clio.js draws them as it does elsewhere.
+  if (baseSelect) document.documentElement.setAttribute("data-clio-popups", "");
+  const drawn = (sel) => baseSelect && getComputedStyle(sel).appearance === "base-select";
   const rowOf = (el) => px(getComputedStyle(el).getPropertyValue("--clio-menu-item-height")) || 16;
   const borderTop = (el) => px(getComputedStyle(el).getPropertyValue("--clio-menu-border-top-width")) || 1;
   const blink = (li, done) => {
@@ -354,6 +359,8 @@
     const cs = getComputedStyle(sel), trim = px(cs.getPropertyValue("--clio-popup-menu-trim")), atTop = cs.getPropertyValue("--clio-popup-menu-align").trim() === "top";
     const row = atTop ? Math.round(r.top) : Math.round(r.top + (r.height - h) / 2) - borderTop(sel);
     Object.assign(menu.style, { position: "fixed", left: `${Math.round(r.left)}px`, top: `${row - Math.max(0, sel.selectedIndex) * h}px`, minWidth: `${Math.round(r.width) - trim}px`, zIndex: "2147483000" });
+    const phase = cs.getPropertyValue("--clio-db-phase").trim();   // the pens keep the button's place along them
+    if (phase) menu.style.setProperty("--clio-db-phase", phase);
     host.appendChild(menu);
     // keep it on screen, as the Menu Manager does
     const m = menu.getBoundingClientRect();
@@ -392,7 +399,7 @@
     }
     const sel = e.target.closest(POPUP);
     if (!sel || sel.disabled || optedOut(sel)) return;
-    if (baseSelect) { alignPicker(sel); return; }
+    if (drawn(sel)) { alignPicker(sel); return; }
     if (e.pointerType === "touch") return;
     e.preventDefault();
     sel.focus({ preventScroll: true });
@@ -401,7 +408,7 @@
   }, true);
   document.addEventListener("keydown", (e) => {
     const f = document.activeElement;
-    if (baseSelect && f instanceof Element && f.matches(POPUP)) alignPicker(f);
+    if (f instanceof Element && f.matches(POPUP) && drawn(f)) alignPicker(f);
     if (popup && e.key === "Escape") { e.preventDefault(); closePopup(); }
   }, true);
   document.addEventListener("pointermove", (e) => {

@@ -128,6 +128,13 @@
           "upstream": "Drawing Board assumed the same (inferred)"
         },
         {
+          "era": "drawingboard",
+          "claim": "clio.js: the dragged outline is the same 2px band of the gray, round the frame alone (the theme draws no drop shadow)",
+          "status": "measured",
+          "source": "clio.css capture, Mac OS 8.5 with the 8.5b6 Drawing Board theme in Infinite Mac, Infinite HD dragged by 80,116 (frames before and during, diffed); tooling/outline-check.mjs: 1275 of the Mac's 1349 pixels in all three engines",
+          "upstream": "the theme's structure region also takes in its sketch lines' overshoots (74 pixels) and two shaped corners (13), which a rectangle does not follow"
+        },
+        {
           "era": "system7",
           "claim": "clio.zoomRects(): 8 outlines, one per tick, each edge eased by 1.6^k, the last four on screen at once",
           "status": "measured",
@@ -140,6 +147,13 @@
           "status": "measured",
           "source": "clio.css capture, Mac OS 9.0 in Infinite Mac, Games opened from Infinite HD, every changed frame recorded (outlines at 393-477 ms, the window at 493 ms)",
           "upstream": "each edge within a pixel of the fit (the Finder's rounding is not known); opacity only, none under prefers-reduced-motion"
+        },
+        {
+          "era": "drawingboard",
+          "claim": "clio.zoomRects(): as Mac OS 9: 6 outlines in the 2px band, one per tick, at about 1.4^(k-7) of the way",
+          "status": "measured",
+          "source": "clio.css capture, Mac OS 8.5 with the theme in Infinite Mac, Developer opened, every changed frame recorded (outlines at 530-613 ms, the window at 646 ms)",
+          "upstream": "the Finder of 8.5 and 9.0 agree"
         },
         {
           "era": "both",
@@ -388,6 +402,13 @@
           "status": "measured",
           "source": "clio.css capture, Mac OS 9.0 in Infinite Mac, Apple menu, each animation frame of the emulator's canvas recorded (release at 30 ms; dark at 59, 159, 276 ms; gone at 375 ms)",
           "upstream": "General Controls' default Menu Blinking"
+        },
+        {
+          "era": "drawingboard",
+          "claim": "clio.js: as Mac OS 9: 3 blinks of about 3 ticks; a menu opened with a click stays open",
+          "status": "measured",
+          "source": "clio.css capture, Mac OS 8.5 with the theme in Infinite Mac, Edit > Show Clipboard released (changes at 59, 126, 177, 227, 277, 327 ms; gone at 376 ms)",
+          "upstream": "Appearance > Options in 8.5: Smart Scrolling and double-click collapse both off"
         },
         {
           "era": "system6",
@@ -971,6 +992,13 @@
           "status": "measured",
           "source": "clio.css capture, Mac OS 8.5 with the 8.5b6 Drawing Board theme in Infinite Mac (npm run capture:drawingboard), frame appearance; the theme file's ppat and pxm# resources, decoded by tooling/theme-resources.py, written by tooling/db-art.py and tooling/db-pens.py",
           "upstream": "Appearance, Highlight Color and Variation pop-ups"
+        },
+        {
+          "era": "drawingboard",
+          "claim": "Open pop-up menu: drawn by clio.js wherever it runs (the browser's picker cannot carry the theme's shade and corner pixels; without clio.js, base-select draws it plain): its top on the button's, as wide as the button less 20px of arrows, the top pen shifted with the button's phase, text 18px in and a pixel higher than in pull-down menus, the check 1px in, the underline on the item's last rows",
+          "status": "measured",
+          "source": "clio.css capture, Mac OS 8.5 with the theme in Infinite Mac, Appearance > Appearance held (frame popup-open)",
+          "upstream": "specimens db-js-popup-open and db-popup-open 96.2% same, 98.9% within 8/255: the text's edge levels over the paper differ by a step"
         }
       ]
     },
@@ -1200,6 +1228,20 @@
           "status": "measured",
           "source": "clio.css capture, Mac OS 8.5 with the 8.5b6 Drawing Board theme in Infinite Mac (npm run capture:drawingboard), frames themes-tab and desktop-tab; the theme file's ppat and pxm# resources, decoded by tooling/theme-resources.py, written by tooling/db-art.py and tooling/db-pens.py",
           "upstream": "the Themes list's horizontal bar and the pattern list's vertical bar"
+        },
+        {
+          "era": "drawingboard",
+          "claim": "clio.js: the scroll box keeps the theme's 15px whatever share of the content shows (Smart Scrolling off, the 8.5 default)",
+          "status": "measured",
+          "source": "clio.css capture, Mac OS 8.5 with the theme in Infinite Mac, Infinite HD at three sizes: the horizontal box 15px in each",
+          "upstream": "the browser's own bar sizes it by the share (adapted)"
+        },
+        {
+          "era": "drawingboard",
+          "claim": "clio.js, data-clio-scrolling=\"smart\": both arrows at the far end are one theme picture (ScrollArrowsDbl, pxm# 334 and 324), each button showing its half; dimmed and held states from the same resource",
+          "status": "measured",
+          "source": "clio.css capture, Mac OS 8.5 with the theme, Smart Scrolling on (frame smart-scroll); the theme file's pxm#",
+          "upstream": "specimen db-js-smart-arrows 100% identical in all three engines; which held state belongs to which arrow (1 the second, 4 the first) is read from the resource order, not from a held frame (inferred)"
         }
       ]
     },

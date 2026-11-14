@@ -91,6 +91,9 @@ the 800×600 colour canvas read 1:1 (`npm run capture:drawingboard`), compared i
 | db-scroll-track | 100×16 | 100.0% | 100.0% | 0.0% | 0 |
 | db-js-scroll-arrow | 16×16 | 100.0% | 100.0% | 0.0% | 0 |
 | db-js-scroll-thumb | 15×14 | 100.0% | 100.0% | 0.0% | 0 |
+| db-js-smart-arrows | 32×16 | 100.0% | 100.0% | 0.0% | 0 |
+| db-js-popup-open | 162×40 | 96.2% | 98.9% | 0.5% | 0.39 |
+| db-popup-open | 162×40 | 96.2% | 98.9% | 0.5% | 0.39 |
 | db-default-button | 16×24 | 100.0% | 100.0% | 0.0% | 0 |
 | db-alert-corner | 20×12 | 100.0% | 100.0% | 0.0% | 0 |
 | db-alert-shadow | 14×12 | 100.0% | 100.0% | 0.0% | 0 |
@@ -156,6 +159,7 @@ Reference: Mac OS 9.0 running in Infinite Mac, the 800×600 colour canvas read 1
 | p9-js-scroll-off-h | 359×15 | 100.0% | 100.0% | 0.0% | 0 |
 | p9-js-scroll-smart | 15×122 | 100.0% | 100.0% | 0.0% | 0 |
 | p9-js-popup-open | 142×115 | 100.0% | 100.0% | 0.0% | 0 |
+| p9-popup-open | 142×115 | 100.0% | 100.0% | 0.0% | 0 |
 | p9-js-scroll-arrow-held | 14×14 | 100.0% | 100.0% | 0.0% | 0 |
 
 ## Mac OS 9 Platinum
@@ -178,18 +182,20 @@ Reference: GUIdebook Mac OS 9.0 captures, cropped by AI System 6 (`AIS6_DIR`).
 and Firefox (results in `.fidelity/results-<engine>.json`). Firefox has no `::-webkit-scrollbar`:
 its scroll-bar specimens load clio.js, whose element bars take the same rules.
 
-- WebKit: 121 of 123 identical; not identical: button-disabled (98.8%), p9-titlebar (97.3%)
-- Firefox: 115 of 121 identical; not identical: active-titlebar (100.0%), button-disabled (98.8%), s6-default-ok (98.4%), s6-button-pressed (95.4%), s6-button-hover (95.3%), p9-titlebar (97.3%)
+- WebKit: 123 of 127 identical; not identical: button-disabled (98.8%), db-js-popup-open (96.2%), db-popup-open (96.2%), p9-titlebar (97.3%)
+- Firefox: 116 of 123 identical; not identical: active-titlebar (100.0%), button-disabled (98.8%), s6-default-ok (98.4%), s6-button-pressed (95.4%), s6-button-hover (95.3%), db-js-popup-open (96.2%), p9-titlebar (97.3%)
 
-Every pixel that differs in those specimens is in a centred label or title whose spare width is odd,
-so its text starts on a half pixel. The Mac rounds that down; Chromium snaps the same way, WebKit
-draws the text on the half pixel (blended) and Firefox rounds it up. CSS cannot read a text's width
-to round it, so this stays an engine difference.
+Apart from the Drawing Board pop-up menu (below), every pixel that differs in those specimens is in
+a centred label or title whose spare width is odd, so its text starts on a half pixel. The Mac rounds
+that down; Chromium snaps the same way, WebKit draws the text on the half pixel (blended) and Firefox
+rounds it up. CSS cannot read a text's width to round it, so this stays an engine difference.
 
 ## What the remaining difference is
 
 - System 6: text is drawn in Clio Sans '84, Chicago 12 rebuilt from the emulator, so labels
   match too. The pressed and hovered button frames still contain the mouse pointer.
+- Drawing Board's open pop-up menu (db-js-popup-open, db-popup-open): its text is antialiased over
+  the paper's texture, so no palette can give every edge level; they land within a step.
 - Drawing Board: control parts are the theme's own pixmaps and match exactly; frames,
   bars and fields are flat colours where the theme draws paper grain, sketch lines and a
   pencil line whose shade drifts, so those specimens sit at 60–90%. The scroll-start and

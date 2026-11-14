@@ -5,7 +5,8 @@
 Safari and Firefox, checked: `CLIO_ENGINE=webkit|firefox` runs the pixel check and
 `npm run behaviour` in Playwright's WebKit and Firefox as well as Chromium.
 
-- Pixel check: Chromium 123 of 123 identical, WebKit 121 of 123, Firefox 115 of 121 (FIDELITY.md). What
+- Pixel check: Chromium 125 of 127 identical, WebKit 123 of 127, Firefox 116 of 123 (FIDELITY.md;
+  the two Chromium misses are Drawing Board's open pop-up menu, 96.2%, text over the paper). What
   still differs is a centred label whose text starts on a half pixel: the Mac and Chromium
   round it down, WebKit blends it, Firefox rounds it up. Behaviour checks: 145 in Chromium
   and WebKit, 143 in Firefox (the two base-select checks do not apply).
@@ -53,8 +54,20 @@ Safari and Firefox, checked: `CLIO_ENGINE=webkit|firefox` runs the pixel check a
     identically (`p9-js-popup-open`, `p9-popup-open`). The Platinum check mark is now
     10x8 (the old art had lost a column).
   - The slider's thumb stops 3px inside the track at both ends (Firefox now too).
-- Size: the minifier shortens `#aabbcc` to `#abc`; shared bevel token `--clio-p9-bevel`;
-  `clio.min.css` 198.8 KB of the 200 KB budget (see ROADMAP item 6).
+- **Drawing Board (Mac OS 8.5 with the 8.5b6 theme), measured**: the dragged outline is the 2px
+  band round the frame alone (no shadow); zoom rects, menu blinking and click-opened menus as
+  Mac OS 9; the scroll box keeps its 15px whatever the content (Smart Scrolling off, the 8.5
+  default). With Smart Scrolling the two arrows at the far end are the theme's one picture
+  (new art `hpair`, `vpair`; specimen `db-js-smart-arrows`).
+- **Drawing Board pop-up menus**: with clio.js loaded, clio.js draws them in every browser
+  (`data-clio-popups` hands them back from base-select, whose picker cannot carry the theme's
+  shade and corner pixels), now laid like the real one: top on the button's, as wide as the
+  button less its arrows, the top pen in the button's phase, text and check placed as measured.
+  clio.js passes the select's `--clio-db-phase` to the menu it draws.
+- Size: the minifier shortens `#aabbcc` to `#abc` and drops spaces around `>` and after a
+  declaration's colon (`tooling/min-check.mjs` checks the minified builds parse to the same rules
+  in all three engines); shared bevel token `--clio-p9-bevel`. `clio.min.css` 198.5 KB of the
+  200 KB budget (see ROADMAP item 6).
 - Tooling: the specimen pages declare UTF-8 (WebKit read "…" as Latin-1), crops snap to
   the pixel the box was drawn on, and fonts are waited for after layout.
 

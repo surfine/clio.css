@@ -142,6 +142,15 @@ specimens.push(
   // The same bar drawn by clio.js, which keeps the theme's 15px box: compared whole.
   { ...DB("db-js-scroll-arrow", `<div class="clio-scroll" id="s" style="width:394px;height:60px;overflow-x:scroll;overflow-y:hidden;background:#fff;--clio-db-phase:64px"><div style="width:40000px;height:20px"></div></div>`, [0, 44, 16, 16], "themes-tab", [192, 297, 16, 16]), js: true },
   { ...DB("db-js-scroll-thumb", `<div class="clio-scroll" id="s" style="width:394px;height:60px;overflow-x:scroll;overflow-y:hidden;background:#fff;--clio-db-phase:64px"><div style="width:40000px;height:20px"></div></div>`, [16, 45, 15, 14], "themes-tab", [208, 298, 15, 14]), js: true },
+  // Smart Scrolling on (Appearance > Options), Infinite HD (frame smart-scroll): the arrows together at the far
+  // end of the horizontal bar as one picture.
+  { ...DB("db-js-smart-arrows", `<div data-clio-scrolling="smart"><div class="clio-scroll" id="s" style="width:339px;height:120px;overflow:scroll;background:#fff;--clio-db-phase:64px"><div style="width:452px;height:40px"></div></div></div>`, [291, 104, 32, 16], "smart-scroll", [401, 463, 32, 16]), js: true, mask: [[0, 15, 32, 1]] },   // the last row is the window's frame there
+  // The open pop-up menu (Appearance > Appearance held, the pointer on the current item; frame popup-open):
+  // clio.js draws it with the theme's paper and pens, and so does base-select.
+  { ...DB("db-js-popup-open", `<script>{ const f = CSS.supports.bind(CSS); CSS.supports = (a, b) => (a === "appearance" && b === "base-select") ? false : f(a, b); }</script><div class="clio" style="padding:30px 0 60px 12px;background:#e7ded6;width:300px;--clio-db-phase:64px"><select id="s" style="width:180px"><option>Apple platinum</option><option selected>Drawing Board</option></select></div>`, [0, -18, 162, 40], "popup-open", [288, 125, 162, 40]), js: true, mask: [[78, 26, 20, 14]],
+    act: async (page, b) => { await page.mouse.move(b.x + 80, b.y + 10); await page.mouse.down(); await page.mouse.move(b.x + 84, b.y + 12, { steps: 2 }); } },
+  { ...DB("db-popup-open", `<div class="clio" style="padding:30px 0 60px 12px;background:#e7ded6;width:300px;--clio-db-phase:64px"><select id="s" style="width:180px"><option>Apple platinum</option><option selected>Drawing Board</option></select></div>`, [0, -18, 162, 40], "popup-open", [288, 125, 162, 40]), js: true, baseSelect: true, mask: [[78, 26, 20, 14]],
+    act: async (page, b) => { await page.mouse.move(b.x + 80, b.y + 10); await page.mouse.down(); await page.mouse.move(b.x + 84, b.y + 12, { steps: 2 }); } },
   // Energy Saver's start-up notice: an alert framed 164..632 x 201..412, "Close Message" the default button (441..579 x 375..394).
   { ...DB("db-default-button", `<div style="padding:12px;background:#e7ded6"><button class="default" id="s" style="width:140px">Close Message</button></div>`, [-3, -3, 16, 24], "energy-saver-alert", [438, 372, 16, 24]), mask: [[0, 0, 16, 1], [0, 0, 1, 24]] },   // masked: the alert's paper beyond the band
   // Alert at Energy Saver's notice place on screen: Mac OS draws its paper half a tile along (--clio-db-phase).
@@ -276,7 +285,7 @@ for (const s of specimens) {
   // 26px box do not apply; db-js-scroll-thumb compares that 15px box whole.
   if (ENGINE === "firefox" && /^db-scroll-thumb-(grip|end)$/.test(s.id)) { console.log(`${s.id}: n/a in firefox (see db-js-scroll-thumb)`); continue; }
   if (ENGINE === "firefox" && !s.js && /scroll|grow-box/.test(s.id)) s.js = s.viaJs = true;
-  if (s.baseSelect && !(await page.evaluate(() => CSS.supports("appearance", "base-select")))) { console.log(`${s.id}: n/a in ${ENGINE} (no base-select)`); continue; }
+  if (s.baseSelect && !(await page.goto("about:blank").then(() => page.evaluate(() => CSS.supports("appearance", "base-select"))))) { console.log(`${s.id}: n/a in ${ENGINE} (no base-select)`); continue; }
   const html = `<!doctype html><html data-era="${s.era || "platinum"}"><head><meta charset="utf-8"><link rel="stylesheet" href="${css}"><style>body{margin:0;padding:24px;background:#4a71ab}${process.env.FIDELITY_CSS || ""}</style></head><body>${s.html}${s.js ? `<script src="${js}"></script>` : ""}</body></html>`;
   const file = join(out, `${s.id}${tag}.html`);
   writeFileSync(file, html);
@@ -358,10 +367,10 @@ function others() {
   }
   return out.join("\n") + `
 
-Every pixel that differs in those specimens is in a centred label or title whose spare width is odd,
-so its text starts on a half pixel. The Mac rounds that down; Chromium snaps the same way, WebKit
-draws the text on the half pixel (blended) and Firefox rounds it up. CSS cannot read a text's width
-to round it, so this stays an engine difference.`;
+Apart from the Drawing Board pop-up menu (below), every pixel that differs in those specimens is in
+a centred label or title whose spare width is odd, so its text starts on a half pixel. The Mac rounds
+that down; Chromium snaps the same way, WebKit draws the text on the half pixel (blended) and Firefox
+rounds it up. CSS cannot read a text's width to round it, so this stays an engine difference.`;
 }
 const row = (r) => "| " + r.name + " | " + r.size.join("×") + " | " + (r.same * 100).toFixed(1) + "% | " + (r.exact * 100).toFixed(1) + "% | " + (r.structural * 100).toFixed(1) + "% | " + r.meanAbs + " |";
 const table = (era) => "| Specimen | Size | same | exact | off | mean |\n| --- | --- | ---: | ---: | ---: | ---: |\n" + results.filter((r) => r.era === era).map(row).join("\n");
@@ -423,6 +432,8 @@ ${others()}
 
 - System 6: text is drawn in Clio Sans '84, Chicago 12 rebuilt from the emulator, so labels
   match too. The pressed and hovered button frames still contain the mouse pointer.
+- Drawing Board's open pop-up menu (db-js-popup-open, db-popup-open): its text is antialiased over
+  the paper's texture, so no palette can give every edge level; they land within a step.
 - Drawing Board: control parts are the theme's own pixmaps and match exactly; frames,
   bars and fields are flat colours where the theme draws paper grain, sketch lines and a
   pencil line whose shade drifts, so those specimens sit at 60–90%. The scroll-start and
