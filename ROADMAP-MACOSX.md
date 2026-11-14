@@ -1,4 +1,4 @@
-# Roadmap: the Mac OS X phase
+# Roadmap: the Mac OS X phase (decided 2026-11-14)
 
 Plan for taking clio.css from the Classic Mac OS eras to Mac OS X and NeXTSTEP, written
 2026-11-14 from the state of the repository at 0.11.0. It starts when the Classic phase
@@ -42,35 +42,38 @@ The OS X HIG (2014) is in Apple's documentation archive; the 2020 macOS HIG is i
 Wayback Machine. Fetch each into `.notes/hig/` (git-ignored) at the start of its phase
 and cite page numbers in COVERAGE.md.
 
-## 2. Decisions for the owner before P1
+## 2. Owner's decisions (2026-11-14)
 
-- **D1 Scope.** AGENTS.md limits clio.css to Mac OS X 10.0–10.4 and NeXTSTEP. AI System
-  6 also ships Snow Leopard, Lion, Yosemite and Big Sur, and Virtual Intel Mac makes all
-  four measurable. Recommendation: extend the scope to macOS 11 (phase P5), so all eleven
-  measurable appearances can be fed back; Dewfall stays out.
-- **D2 Lion or Mountain Lion.** AI System 6's `lion` appearance is dated 2011 (10.7);
-  the owner has also called it 10.8. The two differ (10.8 dropped Lion's linen
-  textures in places and redrew some controls). Pick one release to measure.
-- **D3 Fonts.** Lucida Grande (10.0–10.9), Helvetica Neue (10.10) and SF (11) are
-  Apple's or licensed to Apple; they are antialiased outline faces, so they cannot be
-  rebuilt from pixels the way Chicago and Charcoal were. Options: local-only names with
-  an OFL fallback fitted to measured metrics (the Asap precedent), or an OFL face
-  chosen per era. Chinese chrome: STHeiti (华文黑体) is what 10.2–10.10 shipped; PingFang
-  from 10.11. Same rule: local names only.
-- **D4 Artwork.** Aqua's gel buttons, traffic lights, pinstripes and brushed metal are
-  drawn bitmaps in the system's theme files (`Extras.rsrc`, later `ArtFile.bin`), not
-  Quartz geometry. The Classic rule (art redrawn from measured pixels by a script,
-  never a screenshot) still applies, but Aqua art is richer and more clearly authored.
-  Decide how far reconstruction goes: per-pixel palette art for small parts (lamps,
-  arrows, check marks) like Drawing Board, and fitted gradients for large surfaces.
-- **D5 Builds and size.** Classic is at 193 KB of a 200 KB all-eras budget. Mac OS X
-  ships as separate files: `clio.classic.css` (the four Classic eras), one file per Mac
-  OS X era (`clio.aqua.css`, `clio.tiger.css`, …) and `clio.nextstep.css`;
-  `clio.css` stays the Classic bundle for compatibility. Each Mac OS X era gets its own
-  budget in `test/check.mjs`.
-- **D6 Licence of the emulated systems.** Mac OS X client licences did not permit
-  virtualisation. Screens are used as measurement evidence only and never shipped,
-  as with Classic. The owner accepts or rejects this.
+- **D1 Scope: up to macOS 11.** Snow Leopard, Lion, Yosemite and Big Sur join Aqua,
+  Tiger and NeXTSTEP (phase P5), so every measurable AI System 6 appearance is fed
+  back. Dewfall stays out.
+- **D2 Lion is 10.7.** Measure Mac OS X 10.7 Lion, matching AI System 6's `lion`
+  (2011). 10.8 is not measured.
+- **D3 Fonts: local names plus a fitted OFL fallback.** Lucida Grande (10.0–10.9),
+  Helvetica Neue (10.10) and SF (11) are named locally only; other platforms get an
+  OFL face fitted to the measured advance widths and x-height (the Asap precedent).
+  Chinese chrome: STHeiti (华文黑体) for 10.2–10.10, PingFang for 11, local names only.
+  Text is a known, reported difference in the pixel check.
+- **D4 Artwork: everything redrawn pixel by pixel.** Gel buttons, traffic lights,
+  pinstripes, brushed metal, scroll thumbs and every other Aqua-era part are redrawn
+  from measured pixels by scripts in `tooling/` (palette PNG or SVG, nine-slice where
+  the part stretches), as Drawing Board's theme resources were. Never a screenshot or a
+  crop; each part's evidence row names the frame it was measured from. This replaces
+  the Classic-phase limit on large textures for the Mac OS X eras.
+- **D5 Builds: one file per era.** `clio.css` stays the Classic bundle for
+  compatibility; `clio.classic.css`, `clio.aqua.css`, `clio.tiger.css`,
+  `clio.snowleopard.css`, `clio.lion.css`, `clio.yosemite.css`, `clio.bigsur.css` and
+  `clio.nextstep.css`, each with its own budget in `test/check.mjs`. AI System 6 takes
+  only the era it needs.
+- **D6 Licence: accepted, Classic rules.** Guests run only on this machine; frames stay
+  in git-ignored folders and on TiPlus 7100; the repository holds only redrawn art and
+  evidence descriptions.
+- **NeXTSTEP: measure 3.3.** Find NeXTSTEP 3.3 for Intel to match AI System 6's 1995
+  date; OPENSTEP 4.2 (already on the drive) is the cross-check.
+- **Pocket Desk: full link-up** (section 8): measure each era at its laptop's native
+  resolution, ship integer-scale "machine screen" presets, and move the laptop shells
+  into clio.css, with lids, bezels and keyboard decks as faithful as a costume maker
+  would make them.
 
 ## 3. What AI System 6 needs from each era
 
@@ -249,6 +252,10 @@ Lab fidelity). Each change: pin the clio.css release, add the token map for that
 era's primitives and capabilities, compare Theme Lab before and after, record in AI
 System 6's appearance evidence ledger that the values now come from clio.css.
 
+### P7 Machines and Pocket Desk (runs alongside P1–P5)
+
+See section 8.
+
 ## 6. Definition of done for an era
 
 - Every row of that era in COVERAGE.md is yes, inferred or adapted; any "—" has a reason.
@@ -260,6 +267,61 @@ System 6's appearance evidence ledger that the values now come from clio.css.
 - AI System 6 primitives and capabilities for the era all mapped; its Theme Lab passes.
 - EVIDENCE.md rows for every value; README, llms.txt and components.json list the era.
 - The era's single file is under its budget.
+
+## 8. Machines: the laptops behind Pocket Desk
+
+AI System 6's Pocket Desk turns an iPhone Duo folded like a laptop into the portable
+Mac of the current appearance (`62-duo-pocket-desk.css`, `duo-pocket-desk.js`): twelve
+machines from the PowerBook 170 to the 14-inch MacBook Pro, each with a lid (A side),
+a screen and bezel (B side) and a keyboard deck (C side). The owner's decision: make
+them part of clio.css and make them faithful.
+
+**Screens: measured at each machine's native resolution.** Every era's guest also runs
+at the resolution of the laptop Pocket Desk shows for it, so a frame is "what that
+machine's screen showed". `clio.machines.css` gives each machine a screen preset: native
+width and height in era pixels and the largest whole-number scale that fits the Duo's
+segment, with `image-rendering: pixelated` at that scale, so the era's 1px lines stay 1
+device pixel times an integer. Where no integer fits, the preset says so and falls back
+to the nearest integer below with letterboxing, never a fractional scale.
+
+| AI System 6 era | Machine in Pocket Desk | Native resolution to measure at |
+| --- | --- | --- |
+| System 6 | PowerBook 170 | 640×400 (1-bit) |
+| System 7 | PowerBook 5300 | 640×480 |
+| Drawing Board, Platinum | PowerBook G3 Wallstreet / Lombard | 1024×768 |
+| Aqua | PowerBook G4 Titanium | 1152×768 |
+| Tiger | PowerBook G4 Aluminum | 1280×854 (15-inch) |
+| Snow Leopard | MacBook Pro unibody | 1440×900 |
+| Lion | MacBook Air 2011 | 1440×900 (13-inch) |
+| Yosemite | MacBook Pro Retina 2014 | 2560×1600, UI at 1280×800 points |
+| Big Sur | MacBook Air M1 | 2560×1600, UI at 1440×900 points |
+| NeXTSTEP | (none yet in Pocket Desk) | 1120×832 (NeXT MegaPixel) |
+
+Check each against Apple's technical specifications and Pocket Desk's own table before
+measuring; the rows above are the plan, not measurements.
+
+**Shells: A, B and C sides, drawn like a costume maker would.**
+
+- **Sources**: Apple's published dimensions and specifications (outline, thickness,
+  screen diagonal, bezel and keyboard layout); Apple's developer notes for each model;
+  many photographs per machine, compared, never traced or shipped; teardown measurements
+  (iFixit and similar) for key pitch, trackpad size and hinge position. Status per
+  value: **inferred** (from specifications and photographs), never measured, since
+  there is no emulator for hardware.
+- **What is drawn**: the lid with its logo area left blank (no Apple logo, a mark of
+  the user's choice), material and finish (Titanium's paint, Aluminum's anodising and
+  bead blasting, unibody chamfers); the bezel with camera, microphone and badge
+  positions; the keyboard deck with the era's key shapes, legends set in an OFL face,
+  trackpad or trackball, speaker grilles, status lights, ports where they show.
+- **How**: CSS and SVG generated by a script from a per-machine spec file
+  (`machines/<id>.json`: dimensions, radii, materials, key grid), so each value can be
+  traced to a source in EVIDENCE.md. Fills are fitted gradients and noise, the same
+  rule as D4.
+- **Fold**: the Duo's crease crosses the hinge; the shell stays decoration that takes no
+  pointer, and only working surfaces obey safe areas (AI System 6's FORM-FACTORS.md).
+- **Feed back**: AI System 6's Pocket Desk switches from its own drawings to
+  `clio.machines.css` per machine, keeping its module, poses and tokens
+  (`--duo-fold-y`, `--duo-page-w`, `data-duo-machine`).
 
 ## 7. Risks
 
