@@ -2,12 +2,12 @@
 
 Generated from `components/index.mjs` by `npm run build`; edit there.
 
-Every value in clio.css 0.10.0 has a row here. Sources are paths in the AI System 6 development tree at commit `b75cd4ed` (public mirror: https://github.com/surfine/AI-System-6; some evidence folders such as `internal/` are private). The images measurements were taken from are evidence only; clio.css never ships them.
+Every value in clio.css 0.11.0 has a row here. Sources are paths in the AI System 6 development tree at commit `b75cd4ed` (public mirror: https://github.com/surfine/AI-System-6; some evidence folders such as `internal/` are private). The images measurements were taken from are evidence only; clio.css never ships them.
 
 | Status | Meaning | Rows |
 | --- | --- | ---: |
-| Measured | read from real pixels of the era | 152 |
-| Inferred | reasoned from documentation or behaviour, not measured | 19 |
+| Measured | read from real pixels of the era | 156 |
+| Inferred | reasoned from documentation or behaviour, not measured | 20 |
 | Adapted | a deliberate departure for the web (touch, focus, contrast) | 22 |
 | Third-party | art or font from a named, licensed project | 2 |
 
@@ -15,6 +15,11 @@ Pixel check: `npm run fidelity` renders the Platinum specimens and compares them
 
 | Component | Era | Value | Status | Source — upstream evidence |
 | --- | --- | --- | --- | --- |
+| Window | System 7 | clio.js: dragging the title bar moves a 1px grey outline (the pattern inverting what lies under it) and the window follows on release | Measured | `clio.css capture, System 7.5.3 in Infinite Mac, Finder window dragged (frames before and during, diffed)` — QuickDraw DragGrayRgn; System 6 assumed the same (inferred) |
+| Window | Platinum | clio.js: the dragged outline is a 2px band of the grey pattern | Measured | `clio.css capture, Mac OS 9.0 in Infinite Mac, Finder window dragged (frames before and during, diffed)` — Drawing Board assumed the same (inferred) |
+| Window | System 7 | clio.zoomRects(): 8 outlines, one per tick, each edge eased by 1.6^k, the last four on screen at once | Measured | `clio.css capture, System 7.5.3 in Infinite Mac, the Finder opening the Infinite HD icon, every animation frame recorded (rectangle edges per frame)` — opacity only; none under prefers-reduced-motion |
+| Window | Platinum | clio.js: the collapse box folds the window to its title bar; a double click on the title bar does only with data-clio-shade="dblclick" | Inferred | `Mac OS 9.0 in Infinite Mac, Appearance > Options: "Double-click title bar to collapse windows" off` — the collapsed window's look is not compared to a capture |
+| Window | All eras | Cursors: the arrow (11x16, white outline, hot spot 1,1) and the I-beam (7x16, black, no cross bar, hot spot 3,4), redrawn at 1x, 2x and 3x; links and buttons in clio.css windows keep the arrow (the Mac had no pointing hand) | Measured | `clio.css capture, System 7.5.3 and Mac OS 9.0 in Infinite Mac (identical arrows), Mac OS 9.0 Stickies (I-beam); tooling/cursor-art.py` — System 6 and Drawing Board assumed the same (inferred); the watch was not captured |
 | Window | System 7 | Title bar: System 6's rows on #eee with six #777 stripes, #ccf light on the top and left inside edges and #99c shade on the bottom and right (the shade owns the corners) | Measured | `clio.css capture, System 7.5.3 in Infinite Mac (npm run capture:system7), frame hd-window` — 99.1% identical; agrees with AI System 6 internal/evidence/drafts/system-7-reference |
 | Window | System 7 | Close and zoom boxes: 11px, sunk #336/#ccf outer ring, raised #ccf/#336 inner ring, #aaa centre, 1px #eee gap; zoom adds a 5px #336 square; held: black square, #99c face and the starburst | Measured | `clio.css capture, System 7.5.3 in Infinite Mac (npm run capture:system7), frames hd-window, held-close, held-zoom` — System 7.5.3 Finder window Infinite HD |
 | Window | System 7 | Background window: #555 frame, plain white title bar, #888 title, black drop shadow | Measured | `clio.css capture, System 7.5.3 in Infinite Mac (npm run capture:system7), frame folder-window` — 99.98% identical |

@@ -101,3 +101,20 @@
   mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
   pointer-events: none;
 }
+
+/* clio.js outlines (a dragged window, zoom rects): QuickDraw's grey pattern,
+   inverting what lies under it, in step with the screen. */
+.clio-outline {
+  position: fixed;
+  z-index: 2147483000;
+  box-sizing: border-box;
+  margin: 0;
+  background: repeating-conic-gradient(#ffffff 0 25%, transparent 0 50%) 0 0 / 2px 2px fixed;
+  mix-blend-mode: difference;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  pointer-events: none;
+  image-rendering: pixelated;
+}
+

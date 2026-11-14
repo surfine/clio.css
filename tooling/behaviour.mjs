@@ -245,6 +245,64 @@ for (const era of ["system7", "platinum"]) {
   } else ok(!open, "system7: a clicked pop-up closes (the button must be held)");
 }
 
+// 6. Windows: dragged outline, collapse, zoom rects; cursors; sounds.
+const win = (pos = "absolute", extra = "") => `<div class="window" id="w" ${extra} style="position:${pos};left:100px;top:100px;width:240px;height:160px;background:#fff"><div class="title-bar"><button class="close" aria-label="Close"></button><h1 class="title" id="title">Untitled</h1><button class="shade" aria-label="Collapse"></button></div><div class="window-pane" id="pane">Text</div></div>`;
+for (const [era, width] of [["system7", 1], ["platinum", 2]]) {
+  await load(era, `<div style="background:#fff;width:800px;height:500px"></div>` + win());
+  const [x, y] = await center("#title");
+  await page.mouse.move(x, y); await page.mouse.down(); await page.mouse.move(x + 60, y + 40, { steps: 4 });
+  const mid = await page.evaluate(() => { const o = document.querySelector(".clio-outline"); const w = document.querySelector("#w").getBoundingClientRect(); return o && { pad: o.style.padding, at: o.getBoundingClientRect().left, left: w.left }; });
+  ok(mid && mid.pad === `${width}px` && mid.left === 100 && mid.at === 160, `${era}: dragging a title bar moves a ${width}px grey outline; the window waits (${JSON.stringify(mid)})`);
+  const line = await page.screenshot({ clip: { x: 170, y: 140, width: 40, height: 1 } });
+  const dark = await page.evaluate(async (b64) => { const i = new Image(); i.src = "data:image/png;base64," + b64; await i.decode(); const c = document.createElement("canvas"); c.width = i.width; c.height = 1; const g = c.getContext("2d"); g.drawImage(i, 0, 0); const d = g.getImageData(0, 0, c.width, 1).data; let n = 0; for (let k = 0; k < d.length; k += 4) if (d[k] < 128) n++; return n / c.width; }, line.toString("base64"));
+  ok(dark > 0.4 && dark < 0.6, `${era}: the outline is QuickDraw's grey, every other pixel inverted (${dark})`);
+  await page.mouse.up();
+  const after = await page.evaluate(() => { const r = document.querySelector("#w").getBoundingClientRect(); return [r.left, r.top, !!document.querySelector(".clio-outline")]; });
+  ok(after[0] === 160 && after[1] === 140 && !after[2], `${era}: on release the window moves there (${after})`);
+  if (era !== "platinum") continue;   // the collapse box is Mac OS 8's
+  // collapse box
+  await page.click("#w .shade");
+  ok(await page.evaluate(() => document.querySelector("#w").classList.contains("collapsed") && getComputedStyle(document.querySelector("#pane")).display === "none"), `${era}: the collapse box folds the window to its title bar`);
+  await page.click("#w .shade");
+  ok(await page.evaluate(() => !document.querySelector("#w").classList.contains("collapsed")), `${era}: and unfolds it`);
+  await page.dblclick("#title");
+  ok(await page.evaluate(() => !document.querySelector("#w").classList.contains("collapsed")), `${era}: a double click on the title bar does nothing by default`);
+}
+await load("platinum", win("absolute", 'data-clio-shade="dblclick"'));
+await page.dblclick("#title");
+ok(await page.evaluate(() => document.querySelector("#w").classList.contains("collapsed")), 'data-clio-shade="dblclick": a double click collapses');
+await load("platinum", win("static"));
+{ const [x, y] = await center("#title"); await page.mouse.move(x, y); await page.mouse.down(); await page.mouse.move(x + 40, y + 40, { steps: 3 });
+  ok(!(await page.$(".clio-outline")), "a window in the page's flow is not dragged"); await page.mouse.up(); }
+// zoom rects
+await load("system7", `<div id="a" style="position:absolute;left:600px;top:60px;width:32px;height:32px"></div><div id="b" style="position:absolute;left:80px;top:80px;width:300px;height:200px"></div>`);
+const zr = await page.evaluate(async () => {
+  const seen = []; let done = false;
+  const p = clio.zoomRects(document.querySelector("#a"), document.querySelector("#b")).then(() => { done = true; });
+  const total = document.querySelectorAll(".clio-outline").length;
+  await new Promise((r) => { const t0 = performance.now(); const s = () => { seen.push([...document.querySelectorAll(".clio-outline")].filter((o) => o.style.opacity === "1").length); if (!done && performance.now() - t0 < 1000) requestAnimationFrame(s); else r(); }; s(); });
+  await p; return { total, most: Math.max(...seen), left: document.querySelectorAll(".clio-outline").length };
+});
+ok(zr.total === 8 && zr.most <= 4 && zr.most >= 3 && zr.left === 0, `zoom rects: 8 outlines, at most 4 at once, gone after (${JSON.stringify(zr)})`);
+// cursors
+await load("platinum", `<div class="window"><div class="window-pane"><button id="cb">OK</button><textarea id="ct"></textarea></div></div>`);
+const cur = await page.evaluate(() => [getComputedStyle(document.documentElement).cursor, getComputedStyle(document.querySelector("#cb")).cursor, getComputedStyle(document.querySelector("#ct")).cursor]);
+ok(cur[0].includes("arrow.png") && cur[1].includes("arrow.png") && cur[2].includes("ibeam.png"), "cursors: the Mac's arrow on the page and buttons, its I-beam in text");
+// sounds
+await load("platinum", `<div id="host"></div>`);
+const played = await page.evaluate(async () => {
+  const log = []; window.Audio = class { constructor(u) { this.u = u; } play() { log.push(this.u); return Promise.resolve(); } };
+  clio.sounds.alert = "beep.wav";
+  document.querySelector("#host").innerHTML = '<div class="alert-box">Hi</div>';
+  await new Promise((r) => setTimeout(r, 50));
+  const off = log.length;
+  document.documentElement.setAttribute("data-clio-sounds", "");
+  document.querySelector("#host").innerHTML = '<div class="alert-box">Again</div>';
+  await new Promise((r) => setTimeout(r, 50));
+  return [off, log.length];
+});
+ok(played[0] === 0 && played[1] === 1, `sounds: silent by default, an alert plays "alert" with data-clio-sounds (${played})`);
+
 ok(errors.length === 0, "no page errors: " + errors.join("; "));
 await browser.close();
 console.log(failed ? `FAIL ${failed} of ${passed + failed} behaviour checks` : `ok ${passed} behaviour checks`);

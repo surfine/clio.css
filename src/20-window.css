@@ -89,7 +89,7 @@
   font-size: 0;
   appearance: none;
   -webkit-appearance: none;
-  cursor: default;
+  cursor: var(--clio-cursor-arrow);
   touch-action: manipulation;
 }
 
@@ -210,3 +210,15 @@
   font-size: var(--clio-font-size-small);
   line-height: 14px;
 }
+
+/* Collapsed (WindowShade; clio.js toggles .collapsed from the collapse box):
+   only the title bar stays. */
+:where(.window.collapsed) {
+  height: auto !important;
+  min-height: 0 !important;
+}
+
+:where(.window.collapsed) > :not(.title-bar) {
+  display: none !important;
+}
+

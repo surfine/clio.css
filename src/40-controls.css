@@ -30,7 +30,7 @@
   white-space: nowrap;
   appearance: none;
   -webkit-appearance: none;
-  cursor: default;
+  cursor: var(--clio-cursor-arrow);
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
 }
@@ -99,7 +99,7 @@
   vertical-align: -2px;
   appearance: none;
   -webkit-appearance: none;
-  cursor: default;
+  cursor: var(--clio-cursor-arrow);
 }
 
 :where(input[type="checkbox"]):checked {
@@ -129,7 +129,7 @@
   vertical-align: -2px;
   appearance: none;
   -webkit-appearance: none;
-  cursor: default;
+  cursor: var(--clio-cursor-arrow);
 }
 
 :where(input[type="radio"]):checked {
@@ -243,7 +243,7 @@
   line-height: 16px;
   appearance: none;
   -webkit-appearance: none;
-  cursor: default;
+  cursor: var(--clio-cursor-arrow);
 }
 
 :where(select):focus-visible {
@@ -373,7 +373,7 @@
   padding: 0 4px;
   line-height: var(--clio-list-row);
   white-space: nowrap;
-  cursor: default;
+  cursor: var(--clio-cursor-arrow);
 }
 
 :where(.listbox, [role="listbox"]) > :is(li, [role="option"]):is([aria-selected="true"], .selected) {
@@ -459,7 +459,7 @@
   font-family: var(--clio-font-chrome);
   font-size: var(--clio-font-size);
   font-weight: var(--clio-chrome-weight);
-  cursor: default;
+  cursor: var(--clio-cursor-arrow);
 }
 
 :where([role="tablist"], .tabs) > :is([role="tab"], li, button):is([aria-selected="true"], .active) {
@@ -495,7 +495,7 @@
   font-family: var(--clio-font-small);
   font-size: var(--clio-font-size-small);
   text-align: center;
-  cursor: default;
+  cursor: var(--clio-cursor-arrow);
 }
 
 :where(.icon) > :is(img, svg, .icon-image) {
