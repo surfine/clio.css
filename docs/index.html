@@ -21,6 +21,7 @@
   <link rel="alternate" type="text/plain" title="llms.txt" href="llms.txt">
   <link rel="alternate" type="application/json" title="Component index" href="components.json">
   <link rel="stylesheet" href="dist/clio.css">
+  <script src="dist/clio.js" defer></script>
   <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"SoftwareSourceCode","@id":"https://surfine.github.io/clio.css/#software","name":"clio.css","description":"CSS library for classic Mac OS interfaces: System 6, System 7, Mac OS 8.5 Drawing Board and Mac OS 9 Platinum windows, menus, buttons and dialogs, measured from real pixels. MIT.","url":"https://surfine.github.io/clio.css/","codeRepository":"https://github.com/surfine/clio.css","programmingLanguage":"CSS","license":"https://opensource.org/licenses/MIT","version":"0.10.0","keywords":"css, css-framework, design-system, classic-mac, classic-macos, macintosh, system-6, system-7, mac-os-9, mac-os-8, platinum, drawing-board, appearance-manager, control-strip, retro, vintage, 1-bit, chicago, ui, system.css","runtimePlatform":"Web browsers","isAccessibleForFree":true,"hasPart":[{"@type":"WebPageElement","name":"Window","url":"https://surfine.github.io/clio.css/#window"},{"@type":"WebPageElement","name":"Menu bar and menus","url":"https://surfine.github.io/clio.css/#menu"},{"@type":"WebPageElement","name":"Push button","url":"https://surfine.github.io/clio.css/#button"},{"@type":"WebPageElement","name":"Check box","url":"https://surfine.github.io/clio.css/#checkbox"},{"@type":"WebPageElement","name":"Radio button","url":"https://surfine.github.io/clio.css/#radio"},{"@type":"WebPageElement","name":"Text field","url":"https://surfine.github.io/clio.css/#text-field"},{"@type":"WebPageElement","name":"Pop-up menu","url":"https://surfine.github.io/clio.css/#select"},{"@type":"WebPageElement","name":"List box","url":"https://surfine.github.io/clio.css/#listbox"},{"@type":"WebPageElement","name":"Scroll bar","url":"https://surfine.github.io/clio.css/#scrollbar"},{"@type":"WebPageElement","name":"Dialogs and alerts","url":"https://surfine.github.io/clio.css/#dialog"},{"@type":"WebPageElement","name":"Group box","url":"https://surfine.github.io/clio.css/#fieldset"},{"@type":"WebPageElement","name":"Progress bar","url":"https://surfine.github.io/clio.css/#progress"},{"@type":"WebPageElement","name":"Tabs","url":"https://surfine.github.io/clio.css/#tabs"},{"@type":"WebPageElement","name":"Control Strip","url":"https://surfine.github.io/clio.css/#control-strip"},{"@type":"WebPageElement","name":"Desktop and icons","url":"https://surfine.github.io/clio.css/#desktop"},{"@type":"WebPageElement","name":"Disclosure triangle","url":"https://surfine.github.io/clio.css/#disclosure"},{"@type":"WebPageElement","name":"List view","url":"https://surfine.github.io/clio.css/#list-view"},{"@type":"WebPageElement","name":"Slider","url":"https://surfine.github.io/clio.css/#slider"},{"@type":"WebPageElement","name":"Little arrows","url":"https://surfine.github.io/clio.css/#little-arrows"},{"@type":"WebPageElement","name":"Bevel button","url":"https://surfine.github.io/clio.css/#bevel-button"},{"@type":"WebPageElement","name":"Chasing arrows","url":"https://surfine.github.io/clio.css/#chasing-arrows"},{"@type":"WebPageElement","name":"Help button","url":"https://surfine.github.io/clio.css/#help-button"},{"@type":"WebPageElement","name":"Image well","url":"https://surfine.github.io/clio.css/#image-well"},{"@type":"WebPageElement","name":"Help balloon","url":"https://surfine.github.io/clio.css/#balloon"},{"@type":"WebPageElement","name":"Type and tokens","url":"https://surfine.github.io/clio.css/#typography"}]},{"@type":"WebSite","@id":"https://surfine.github.io/clio.css/#site","name":"clio.css","url":"https://surfine.github.io/clio.css/","inLanguage":"en"}]}</script>
   <style>
     :root { --doc-ink: #111; --doc-muted: #555; --doc-rule: #d4d4d4; --doc-bg: #ffffff; --doc-tint: #f4f4f4; }
@@ -135,6 +136,8 @@
       <div class="install">
         <pre><code>npm install clio.css</code></pre>
         <pre><code>&lt;link rel="stylesheet" href="https://unpkg.com/clio.css@0.10.0/dist/clio.css"&gt;</code></pre>
+        <p>Optional behaviour (held controls, Return and Esc in dialogs, scroll bars with the era's fixed scroll box):</p>
+        <pre><code>&lt;script src="https://unpkg.com/clio.css@0.10.0/dist/clio.js" defer&gt;&lt;/script&gt;</code></pre>
       </div>
       <p><code>clio.css</code> draws System 6 by default. Put <code>data-era="system7"</code>, <code>data-era="drawingboard"</code> or <code>data-era="platinum"</code> on <code>&lt;html&gt;</code>, or on any element, to switch everything inside it to that era. <code>clio.system6.css</code>, <code>clio.system7.css</code>, <code>clio.drawingboard.css</code> and <code>clio.platinum.css</code> are single-era builds. Every rule uses <code>:where()</code> or a single class, so your own CSS always wins, and every value is a <code>--clio-*</code> custom property.</p>
       <p>Coming from system.css? Its markup works unchanged: <code>.window</code>, <code>.title-bar</code> with <code>button.close</code> and <code>button.resize</code>, <code>.details-bar</code>, <code>.window-pane</code>, <code>.btn</code>, <code>.btn-default</code>, <code>.standard-dialog</code>, <code>.modal-dialog</code>, <code>.alert-box</code>, <code>.field-row</code> and <code>role="menu-bar"</code> menus.</p>
@@ -577,11 +580,23 @@
       </dl>
       <p class="aliases">Also accepts: system.css markup (<code>.btn</code>, <code>.btn-default</code>, <code>.standard-button</code>); AI System 6 markup (<code>.btn.default</code>).</p>
       <details class="evidence-details">
-        <summary>Evidence (17)</summary>
+        <summary>Evidence (19)</summary>
       <table class="evidence">
         <caption>Where each value comes from</caption>
         <thead><tr><th scope="col">Era</th><th scope="col">Value</th><th scope="col">Status</th><th scope="col">Source</th></tr></thead>
         <tbody>
+<tr>
+          <td>All eras</td>
+          <td>clio.js: a held button draws pressed only while the pointer is on it; released elsewhere it does nothing</td>
+          <td><span class="status status-inferred">Inferred</span></td>
+          <td><code>Inside Macintosh: Macintosh Toolbox Essentials (1992), TrackControl</code><br><span class="upstream">data-clio-off turns the held look off; browsers already click only on release over the button</span></td>
+        </tr>
+<tr>
+          <td>All eras</td>
+          <td>clio.js: Return or Enter presses the default button, Esc or Cmd-. the Cancel button, after showing it pressed for 8 ticks</td>
+          <td><span class="status status-inferred">Inferred</span></td>
+          <td><code>Macintosh Human Interface Guidelines (1992), ch. 6 (keyboard equivalents for buttons); the 8-tick flash is the Toolbox's usual Delay(8)</code><br><span class="upstream">not measured on screen</span></td>
+        </tr>
 <tr>
           <td>System 7</td>
           <td>Push buttons and the default ring stay black and white, as in System 6</td>
@@ -1089,7 +1104,7 @@
       </dl>
       
       <details class="evidence-details">
-        <summary>Evidence (12)</summary>
+        <summary>Evidence (17)</summary>
       <table class="evidence">
         <caption>Where each value comes from</caption>
         <thead><tr><th scope="col">Era</th><th scope="col">Value</th><th scope="col">Status</th><th scope="col">Source</th></tr></thead>
@@ -1144,9 +1159,39 @@
         </tr>
 <tr>
           <td>All eras</td>
-          <td>The scroll box grows with the visible fraction instead of a fixed 16px square</td>
+          <td>Without clio.js the scroll box grows with the visible fraction instead of keeping its fixed length</td>
           <td><span class="status status-adapted">Adapted</span></td>
-          <td><code>clio.css</code><br><span class="upstream">browsers size ::-webkit-scrollbar-thumb themselves</span></td>
+          <td><code>clio.css</code><br><span class="upstream">browsers size ::-webkit-scrollbar-thumb themselves; load dist/clio.js for the fixed box</span></td>
+        </tr>
+<tr>
+          <td>System 7</td>
+          <td>clio.js: the scroll box is the #555 line and 15 rows, 16 in all, right after the arrow's black line; dragged, it leaves a 14x16 outline in which the lane's #ddd turns black and its #777 dots stay, and the content scrolls on release</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, System 7.5.3 in Infinite Mac (frames hig/system7/finder-scroll and finder-thumb-drag)</code><br><span class="upstream">specimen s7-js-scroll-top 100% identical</span></td>
+        </tr>
+<tr>
+          <td>Platinum</td>
+          <td>clio.js: a 15-row box between black lines that it shares with the arrows; the bar is a black line and 14px, the window's frame closing it; lane shaded #777/#888 along the top and left and #bbb/#ccc down the right, and again just past the box; arrow and box bevels stop a pixel short of the far corners; dragged live</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, Mac OS 9.0 in Infinite Mac with Smart Scrolling off (frames hig/platinum9/finder-scroll-fixed, finder-thumb-drag)</code><br><span class="upstream">specimen p9-js-scroll-fixed 100% identical; the 16px bar before 0.11 was a pixel too wide and tall</span></td>
+        </tr>
+<tr>
+          <td>Platinum</td>
+          <td>clio.js, data-clio-scrolling=&quot;smart&quot;: both arrows at the far end, the up arrow first with its black line on the lane's side; the box sized to the visible share</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, Mac OS 9.0 in Infinite Mac, Appearance &gt; Options &gt; Smart Scrolling on (frame hig/platinum9/finder-scroll-smart)</code><br><span class="upstream">specimen p9-js-scroll-smart 100% identical; off by default, as in Apple's own Mac OS 9.0 screenshots</span></td>
+        </tr>
+<tr>
+          <td>Platinum</td>
+          <td>clio.js: with nothing to scroll the lane is flat #eee, the arrows dimmed, the lines beside them #555</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, Mac OS 9.0 in Infinite Mac (frame hig/platinum9/finder-scroll-fixed, horizontal bar)</code><br><span class="upstream">specimen p9-js-scroll-off-h 100% identical</span></td>
+        </tr>
+<tr>
+          <td>All eras</td>
+          <td>clio.js: an arrow scrolls one step at once, waits about 0.2 s, then repeats while held and the pointer is on it</td>
+          <td><span class="status status-inferred">Inferred</span></td>
+          <td><code>clio.css capture, Mac OS 9.0 Finder in Infinite Mac (held down arrow, frames 0.1 s apart)</code><br><span class="upstream">the pause is measured; step (16px) and rate (every 50 ms) are chosen, since the emulator runs faster than the hardware</span></td>
         </tr>
 <tr>
           <td>Platinum</td>

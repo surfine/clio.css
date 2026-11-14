@@ -72,6 +72,29 @@ Form controls are styled on the native elements (`button`, `input`, `select`,
 `textarea`, `fieldset`, `progress`), so keyboard, form and screen-reader behaviour stay
 the browser's.
 
+### clio.js (optional)
+
+```html
+<script src="https://unpkg.com/clio.css/dist/clio.js" defer></script>
+```
+
+A small script (no dependencies) for what a stylesheet cannot do. clio.css works without
+it; with it:
+
+- A pressed button, check box, radio button or title-bar box lets go while the pointer is
+  off it, presses again on return, and does nothing if released outside, as the Mac's
+  control tracking does.
+- Return or Enter clicks a dialog's `.default` button and Esc or Cmd-. its cancel button
+  (`data-clio-cancel` or `value="cancel"`), each after showing it pressed for 8 ticks.
+- Scroll areas (`.window-pane`, list boxes, `.clio-scroll`) get scroll bars drawn as
+  elements with the same rules as the browser's: the scroll box keeps the era's fixed
+  length, arrows repeat while held, a click in the lane pages, and System 6 and 7 drag an
+  outline of the box while Mac OS 8 and 9 scroll live. `data-clio-scrolling="smart"`
+  turns on Mac OS 8/9's Smart Scrolling (both arrows at the end, a proportional box).
+  The scroller becomes `box-sizing: border-box` and gets a first child,
+  `.clio-sb-anchor`; flex and grid scrollers, `textarea` and `select` keep the browser's
+  bar. `data-clio-js="off"` on any element leaves it alone.
+
 ## Components
 
 | Component | Markup |
@@ -154,8 +177,8 @@ forced-colours mode. The chasing arrows are the only animation, and they stop un
 On Retina and other whole-number pixel ratios (2x, 3x) the art is magnified by nearest
 neighbour, so every Mac pixel is a solid 2×2 or 3×3 block; at fractional ratios (1.25x,
 1.5x, browser zoom) the browser's smoothing stays. `FIDELITY_DPR=2 npm run fidelity`
-checks the specimens against the references magnified the same way: 99 of 106 are
-identical at 2x and 96 at 3x. The rest are parts the layout puts on a half pixel (centred
+checks the specimens against the references magnified the same way: 103 of 110 are
+identical at 2x and 100 at 3x. The rest are parts the layout puts on a half pixel (centred
 text with an odd spare width, controls aligned to a line's middle), which the browser
 rounds away at 1x and draws one device pixel over at 2x and 3x.
 

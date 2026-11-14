@@ -114,7 +114,7 @@
 
 /* Held close or zoom box: System 6 draws the same starburst in both
    (measured, 6.0.8); the zoom box's inner square goes while it is held. */
-.title-bar > :is(.close, .close-box, .resize, .resize-box, .zoom):is(:active, .active) {
+.title-bar > :is(.close, .close-box, .resize, .resize-box, .zoom):is(:active:where(:not([data-clio-off])), .active) {
   background: var(--clio-art-s6-burst) 0 0 / 11px 11px no-repeat border-box, var(--clio-paper);
 }
 
@@ -132,7 +132,7 @@
   box-sizing: border-box;
 }
 
-.title-bar > :is(.resize, .resize-box, .zoom):is(:active, .active)::before {
+.title-bar > :is(.resize, .resize-box, .zoom):is(:active:where(:not([data-clio-off])), .active)::before {
   opacity: 0;
 }
 

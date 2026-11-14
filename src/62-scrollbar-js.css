@@ -1,0 +1,103 @@
+/* Scroll bars drawn by clio.js (optional): the same parts as the browser's
+   scroll bar, as elements, so the scroll box keeps its era's fixed length, an
+   arrow repeats while held and a dragged box can leave an outline behind.
+   The parts take every ::-webkit-scrollbar rule (the build copies each one onto
+   .clio-sb-*); this file only places them. clio.js sets each bar's geometry. */
+.clio-sb-host {
+  box-sizing: border-box;   /* the bar comes out of the box, as the browser's does (everything in a clio.css window already is) */
+  scrollbar-width: none;
+}
+
+.clio-sb-host::-webkit-scrollbar {
+  display: none;
+}
+
+/* The bar sits in the scroller's padding, which grows by the bar's width. */
+.clio-sb-host.clio-sb-y {
+  padding-right: calc(var(--clio-sb-pr, 0px) + var(--clio-scrollbar-size));
+}
+
+.clio-sb-host.clio-sb-x {
+  padding-bottom: calc(var(--clio-sb-pb, 0px) + var(--clio-scrollbar-size));
+}
+
+/* A zero-size first child that sticks to the scroller's corner, so the bars
+   inside it stay put while the content moves. */
+.clio-sb-anchor {
+  position: sticky;
+  top: var(--clio-sb-pt, 0px);
+  left: var(--clio-sb-pl, 0px);
+  z-index: 2;
+  display: block;
+  width: 0;
+  height: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  float: none;
+}
+
+.clio-sb-anchor > :is(.clio-sb, .clio-sb-corner) {
+  position: absolute;
+  box-sizing: border-box;
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
+}
+
+.clio-sb-anchor > .clio-sb > * {
+  position: absolute;
+  box-sizing: border-box;
+  margin: 0;
+}
+
+.clio-sb-anchor > .clio-sb-v > .clio-sb-dec { top: 0; left: 0; }
+.clio-sb-anchor > .clio-sb-v > .clio-sb-inc { bottom: 0; left: 0; }
+.clio-sb-anchor > .clio-sb-v > .clio-sb-track { top: var(--clio-scrollbar-size); bottom: var(--clio-scrollbar-size); left: 0; right: 0; }
+.clio-sb-anchor > .clio-sb-v > .clio-sb-thumb { top: var(--clio-scrollbar-size); left: 0; right: 0; }
+.clio-sb-anchor > .clio-sb-h > .clio-sb-dec { left: 0; top: 0; }
+.clio-sb-anchor > .clio-sb-h > .clio-sb-inc { right: 0; top: 0; }
+.clio-sb-anchor > .clio-sb-h > .clio-sb-track { left: var(--clio-scrollbar-size); right: var(--clio-scrollbar-size); top: 0; bottom: 0; }
+.clio-sb-anchor > .clio-sb-h > .clio-sb-thumb { left: var(--clio-scrollbar-size); top: 0; bottom: 0; }
+
+/* Smart Scrolling (Mac OS 8/9, Appearance > Options): both arrows at the far
+   end, the up or left arrow first. */
+.clio-sb-anchor > .clio-sb-v.clio-sb-smart > .clio-sb-dec { top: auto; bottom: var(--clio-scrollbar-size); }
+.clio-sb-anchor > .clio-sb-v.clio-sb-smart > .clio-sb-track { top: 0; bottom: calc(2 * var(--clio-scrollbar-size)); }
+.clio-sb-anchor > .clio-sb-v.clio-sb-smart > .clio-sb-thumb { top: 0; }
+.clio-sb-anchor > .clio-sb-h.clio-sb-smart > .clio-sb-dec { left: auto; right: var(--clio-scrollbar-size); }
+.clio-sb-anchor > .clio-sb-h.clio-sb-smart > .clio-sb-track { left: 0; right: calc(2 * var(--clio-scrollbar-size)); }
+.clio-sb-anchor > .clio-sb-h.clio-sb-smart > .clio-sb-thumb { left: 0; }
+
+/* The arrows lie over the box's ends and its shadow. */
+.clio-sb-anchor > .clio-sb > .clio-sb-button { z-index: 1; }
+
+/* Mac OS 8/9: the lane's top shading also falls just past the box's far end
+   (--clio-scrollbar-thumb-after, drawn only by clio.js's bars). */
+.clio-sb-anchor > .clio-sb > .clio-sb-thumb::after {
+  content: "";
+  position: absolute;
+  background: var(--clio-scrollbar-thumb-after, none);
+}
+
+.clio-sb-anchor > .clio-sb-v > .clio-sb-thumb::after { top: calc(100% + 1px); left: 0; right: 0; height: 2px; }   /* past the box's end line */
+.clio-sb-anchor > .clio-sb-h > .clio-sb-thumb::after { left: calc(100% + 1px); top: 0; bottom: 0; width: 2px; }
+
+/* Nothing to scroll: the lane stays, the box goes (as on the Mac). */
+.clio-sb-anchor > .clio-sb.clio-sb-off > .clio-sb-thumb {
+  display: none;
+}
+
+/* The outline a dragged scroll box leaves in System 6 and 7: the box's frame,
+   drawn over the lane, until the button comes up. */
+.clio-sb-anchor > .clio-sb > .clio-sb-ghost {
+  z-index: 1;
+  padding: 1px;
+  background: var(--clio-scrollbar-ghost, #000000);
+  background-position: var(--clio-sb-gx, 0px) var(--clio-sb-gy, 0px);   /* in step with the lane's pattern */
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  pointer-events: none;
+}

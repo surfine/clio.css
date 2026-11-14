@@ -192,12 +192,20 @@
      QuickDraw's ltGray, one dot in four. */
   --clio-scrollbar-size: 15px;
   --clio-scrollbar-track: var(--clio-art-s6-ltgray) 0 0 / 4px 2px repeat, #ffffff;
+  /* clio.js scroll bars: System 6 and 7 drag an outline of the box and scroll
+     on release; the box keeps one length, whatever the document's. */
+  --clio-scrollbar-thumb-length: 16px;
+  --clio-scrollbar-thumb-tracking: outline;
+  --clio-scrollbar-thumb-overlap: 0px;
+  --clio-scrollbar-thumb-after: none;
+  --clio-scrollbar-ghost: var(--clio-disabled-dither, #000000) 0 0 / 2px 2px repeat;
   --clio-scrollbar-track-shadow: none;
   --clio-scrollbar-thumb-bg: var(--clio-paper);
   --clio-scrollbar-thumb-border: 1px solid var(--clio-ink);
   --clio-scrollbar-thumb-shadow: none;
   --clio-scrollbar-button-bg: var(--clio-paper);
   --clio-scrollbar-button-shadow: none;
+  --clio-scrollbar-button-bevel: none;
   --clio-scrollbar-up: var(--clio-art-s6-up);
   --clio-scrollbar-up-on: var(--clio-art-s6-up-on);
   --clio-scrollbar-down: var(--clio-art-s6-down);

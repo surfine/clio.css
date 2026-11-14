@@ -203,15 +203,45 @@
     linear-gradient(#aaaaaa, #aaaaaa) left 0 bottom 0 / calc(100% - 21px) 1px no-repeat;
 
   /* Scroll bars (P16, P17, P27) */
-  --clio-scrollbar-size: 16px;
+  --clio-scrollbar-size: 15px;
+  /* Mac OS 9.0 Finder (frames hig/platinum9/finder-*): a 15-row box between
+     black lines, dragged live; the bar is its black line and 14px, the window's
+     frame closing it. The arrow boxes' light and shade stop a pixel short of
+     the far corners. */
+  --clio-scrollbar-thumb-length: 17px;
+  --clio-scrollbar-thumb-overlap: 1px;
+  --clio-scrollbar-thumb-after:
+    linear-gradient(#cccccc, #cccccc) 100% 0 / 1px 2px no-repeat,
+    linear-gradient(#bbbbbb, #bbbbbb) calc(100% - 1px) 1px / 1px 1px no-repeat,
+    linear-gradient(#777777, #777777) 0 0 / 100% 1px no-repeat,
+    linear-gradient(#777777, #777777) 0 0 / 1px 2px no-repeat,
+    #888888;
+  --clio-scrollbar-button-bevel: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' shape-rendering='crispEdges'%3E%3Cpath fill='%23fff' d='M0 0h13v1H0zM0 1h1v12H0z'/%3E%3Cpath fill='%23bbb' d='M1 13h13v1H1zM13 1h1v12h-1z'/%3E%3C/svg%3E");
+  --clio-scrollbar-thumb-tracking: live;
   --clio-scrollbar-track: #aaaaaa;
-  --clio-scrollbar-track-shadow: inset 1px 1px #777777, inset 2px 2px #888888, inset -1px -1px #cccccc, inset -2px -2px #bbbbbb;
-  --clio-scrollbar-thumb-bg: var(--clio-art-p-grip-v) center / 8px 8px no-repeat, #9999ff;
-  --clio-scrollbar-thumb-bg-horizontal: var(--clio-art-p-grip-h) center / 8px 8px no-repeat, #9999ff;
+  /* The lane: #777 and #888 along the top and left, #bbb and #ccc down the
+     right, nothing along the bottom (frames finder-scroll-*). */
+  --clio-scrollbar-track-shadow: inset -1px 0 #cccccc, inset 1px 1px #777777, inset -2px 0 #bbbbbb, inset 2px 2px #888888;
+  /* The box: light and shade a pixel short of the far corners, a #eee corner;
+     the grip rounds up and left, as QuickDraw's halving does. */
+  --clio-scrollbar-thumb-bg: var(--clio-art-p-grip-v) 50% calc(50% - 0.5px) / 8px 8px no-repeat,
+    linear-gradient(#eeeeee, #eeeeee) 0 0 / 1px 1px no-repeat,
+    linear-gradient(#ccccff, #ccccff) 1px 0 / calc(100% - 2px) 1px no-repeat,
+    linear-gradient(#ccccff, #ccccff) 0 1px / 1px calc(100% - 2px) no-repeat,
+    linear-gradient(#6666cc, #6666cc) 100% 1px / 1px calc(100% - 1px) no-repeat,
+    linear-gradient(#6666cc, #6666cc) 1px 100% / calc(100% - 1px) 1px no-repeat,
+    #9999ff;
+  --clio-scrollbar-thumb-bg-horizontal: var(--clio-art-p-grip-h) calc(50% - 0.5px) 50% / 8px 8px no-repeat,
+    linear-gradient(#eeeeee, #eeeeee) 0 0 / 1px 1px no-repeat,
+    linear-gradient(#ccccff, #ccccff) 1px 0 / calc(100% - 2px) 1px no-repeat,
+    linear-gradient(#ccccff, #ccccff) 0 1px / 1px calc(100% - 2px) no-repeat,
+    linear-gradient(#6666cc, #6666cc) 100% 1px / 1px calc(100% - 1px) no-repeat,
+    linear-gradient(#6666cc, #6666cc) 1px 100% / calc(100% - 1px) 1px no-repeat,
+    #9999ff;
   --clio-scrollbar-thumb-border: 1px solid #000000;
-  --clio-scrollbar-thumb-shadow: inset 1px 1px #ccccff, inset -1px -1px #6666cc;
+  --clio-scrollbar-thumb-shadow: none;
   --clio-scrollbar-button-bg: #dddddd;
-  --clio-scrollbar-button-shadow: inset 1px 1px #ffffff, inset -1px -1px #bbbbbb;
+  --clio-scrollbar-button-shadow: none;
   --clio-scrollbar-up: var(--clio-art-p-up);
   --clio-scrollbar-up-on: var(--clio-art-p-up);
   --clio-scrollbar-down: var(--clio-art-p-down);
@@ -410,7 +440,7 @@
     0 1px 0 #ffffff;
 }
 
-:is([data-era="platinum"], [data-era="drawingboard"]) .title-bar > :is(button, .close, .close-box, .resize, .resize-box, .zoom, .shade, .shade-box, .collapse):is(:active, .active) {
+:is([data-era="platinum"], [data-era="drawingboard"]) .title-bar > :is(button, .close, .close-box, .resize, .resize-box, .zoom, .shade, .shade-box, .collapse):is(:active:where(:not([data-clio-off])), .active) {
   background: linear-gradient(to bottom right, #444444, #bbbbbb);
   box-shadow: -1px -1px 0 #888888, 1px 1px 0 #ffffff, inset -1px -1px 0 #999999;
 }
@@ -469,7 +499,7 @@
   box-shadow: var(--clio-button-shadow);
 }
 
-:is([data-era="platinum"], [data-era="drawingboard"]) :is(.default, .btn-default):not(:disabled, .disabled):is(:active, .active) {
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(.default, .btn-default):not(:disabled, .disabled):is(:active:where(:not([data-clio-off])), .active) {
   box-shadow: var(--clio-button-active-shadow);
 }
 
@@ -519,24 +549,24 @@
   background: var(--clio-art-p9-radio-on) 0 0 / 12px 12px no-repeat;
 }
 
-:is([data-era="platinum"], [data-era="drawingboard"]) input[type="radio"]:not(:disabled):active {
+:is([data-era="platinum"], [data-era="drawingboard"]) input[type="radio"]:not(:disabled):active:where(:not([data-clio-off])) {
   background: var(--clio-art-p9-radio-pressed) 0 0 / 12px 12px no-repeat;
 }
 
 /* Held while on: not captured; the on ball stays (inferred). */
-:is([data-era="platinum"], [data-era="drawingboard"]) input[type="radio"]:checked:not(:disabled):active {
+:is([data-era="platinum"], [data-era="drawingboard"]) input[type="radio"]:checked:not(:disabled):active:where(:not([data-clio-off])) {
   background: var(--clio-art-p9-radio-on) 0 0 / 12px 12px no-repeat;
 }
 
 /* Held while checked: the mark over the held box (inferred; only the empty
    box was captured held). */
-:is([data-era="platinum"], [data-era="drawingboard"]) input[type="checkbox"]:checked:not(:disabled):active {
+:is([data-era="platinum"], [data-era="drawingboard"]) input[type="checkbox"]:checked:not(:disabled):active:where(:not([data-clio-off])) {
   background:
     var(--clio-art-p9-check) 0 0 / 10px 10px no-repeat padding-box,
     var(--clio-art-p9-checkbox-pressed) -1px -1px / 12px 12px no-repeat;
 }
 
-:is([data-era="platinum"], [data-era="drawingboard"]) input[type="checkbox"]:not(:disabled):active {
+:is([data-era="platinum"], [data-era="drawingboard"]) input[type="checkbox"]:not(:disabled):active:where(:not([data-clio-off])) {
   border-color: transparent;
   background: var(--clio-art-p9-checkbox-pressed) -1px -1px / 12px 12px no-repeat;
   box-shadow: none;
@@ -603,7 +633,7 @@
   line-height: 18px;
 }
 
-:is([data-era="platinum"], [data-era="drawingboard"]) :is([role="tablist"], .tabs) > :is([role="tab"], li, button):not(:disabled):active {
+:is([data-era="platinum"], [data-era="drawingboard"]) :is([role="tablist"], .tabs) > :is([role="tab"], li, button):not(:disabled):active:where(:not([data-clio-off])) {
   border-image-source: var(--clio-art-p-tab-pressed);
   background: transparent;
   color: #ffffff;
@@ -623,10 +653,14 @@
 }
 
 /* ---- Scroll arrow art sits on the bevelled box ---------------------------- */
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-button:horizontal {
+  background-position: 0 1px, 0 0;   /* the vertical boxes' art one pixel to the right, the horizontal one pixel down */
+}
+
 :is([data-era="platinum"], [data-era="drawingboard"]) :is(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-button,
 :is([data-era="platinum"], [data-era="drawingboard"]):is(html.clio-scrollbars)::-webkit-scrollbar-button {
-  background-position: 1px 1px;
-  background-size: 14px 14px;
+  background-position: 1px 0, 0 0;
+  background-size: 14px 14px, 100% 100%;
 }
 
 :is([data-era="platinum"], [data-era="drawingboard"]) :is(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-button:active,
@@ -710,7 +744,7 @@
   font-palette: --clio-aa-p9-button;
 }
 
-:is([data-era="platinum"], [data-era="drawingboard"]) :is(button, .btn, .btn-default, input[type="button"], input[type="submit"], input[type="reset"]):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *, .disclosure, .little-arrows > *, .help-button):not(:disabled, .disabled):is(:active, .active) {
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(button, .btn, .btn-default, input[type="button"], input[type="submit"], input[type="reset"]):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *, .disclosure, .little-arrows > *, .help-button):not(:disabled, .disabled):is(:active:where(:not([data-clio-off])), .active) {
   font-palette: --clio-aa-p9-button-held;
 }
 

@@ -130,6 +130,7 @@ export function renderSite({ pkg, components }) {
   <link rel="alternate" type="text/plain" title="llms.txt" href="llms.txt">
   <link rel="alternate" type="application/json" title="Component index" href="components.json">
   <link rel="stylesheet" href="dist/clio.css">
+  <script src="dist/clio.js" defer></script>
   <script type="application/ld+json">${JSON.stringify(jsonld)}</script>
   <style>
     :root { --doc-ink: #111; --doc-muted: #555; --doc-rule: #d4d4d4; --doc-bg: #ffffff; --doc-tint: #f4f4f4; }
@@ -220,6 +221,8 @@ export function renderSite({ pkg, components }) {
       <div class="install">
         <pre><code>npm install ${esc(pkg.name)}</code></pre>
         <pre><code>&lt;link rel="stylesheet" href="https://unpkg.com/${esc(pkg.name)}@${esc(pkg.version)}/dist/clio.css"&gt;</code></pre>
+        <p>Optional behaviour (held controls, Return and Esc in dialogs, scroll bars with the era's fixed scroll box):</p>
+        <pre><code>&lt;script src="https://unpkg.com/${esc(pkg.name)}@${esc(pkg.version)}/dist/clio.js" defer&gt;&lt;/script&gt;</code></pre>
       </div>
       <p><code>clio.css</code> draws System 6 by default. Put <code>data-era="system7"</code>, <code>data-era="drawingboard"</code> or <code>data-era="platinum"</code> on <code>&lt;html&gt;</code>, or on any element, to switch everything inside it to that era. <code>clio.system6.css</code>, <code>clio.system7.css</code>, <code>clio.drawingboard.css</code> and <code>clio.platinum.css</code> are single-era builds. Every rule uses <code>:where()</code> or a single class, so your own CSS always wins, and every value is a <code>--clio-*</code> custom property.</p>
       <p>Coming from system.css? Its markup works unchanged: <code>.window</code>, <code>.title-bar</code> with <code>button.close</code> and <code>button.resize</code>, <code>.details-bar</code>, <code>.window-pane</code>, <code>.btn</code>, <code>.btn-default</code>, <code>.standard-dialog</code>, <code>.modal-dialog</code>, <code>.alert-box</code>, <code>.field-row</code> and <code>role="menu-bar"</code> menus.</p>

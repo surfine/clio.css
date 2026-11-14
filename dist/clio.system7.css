@@ -484,12 +484,20 @@
      QuickDraw's ltGray, one dot in four. */
   --clio-scrollbar-size: 15px;
   --clio-scrollbar-track: var(--clio-art-s6-ltgray) 0 0 / 4px 2px repeat, #ffffff;
+  /* clio.js scroll bars: System 6 and 7 drag an outline of the box and scroll
+     on release; the box keeps one length, whatever the document's. */
+  --clio-scrollbar-thumb-length: 16px;
+  --clio-scrollbar-thumb-tracking: outline;
+  --clio-scrollbar-thumb-overlap: 0px;
+  --clio-scrollbar-thumb-after: none;
+  --clio-scrollbar-ghost: var(--clio-disabled-dither, #000000) 0 0 / 2px 2px repeat;
   --clio-scrollbar-track-shadow: none;
   --clio-scrollbar-thumb-bg: var(--clio-paper);
   --clio-scrollbar-thumb-border: 1px solid var(--clio-ink);
   --clio-scrollbar-thumb-shadow: none;
   --clio-scrollbar-button-bg: var(--clio-paper);
   --clio-scrollbar-button-shadow: none;
+  --clio-scrollbar-button-bevel: none;
   --clio-scrollbar-up: var(--clio-art-s6-up);
   --clio-scrollbar-up-on: var(--clio-art-s6-up-on);
   --clio-scrollbar-down: var(--clio-art-s6-down);
@@ -922,7 +930,7 @@
 
 /* Held close or zoom box: System 6 draws the same starburst in both
    (measured, 6.0.8); the zoom box's inner square goes while it is held. */
-.title-bar > :is(.close, .close-box, .resize, .resize-box, .zoom):is(:active, .active) {
+.title-bar > :is(.close, .close-box, .resize, .resize-box, .zoom):is(:active:where(:not([data-clio-off])), .active) {
   background: var(--clio-art-s6-burst) 0 0 / 11px 11px no-repeat border-box, var(--clio-paper);
 }
 
@@ -940,7 +948,7 @@
   box-sizing: border-box;
 }
 
-.title-bar > :is(.resize, .resize-box, .zoom):is(:active, .active)::before {
+.title-bar > :is(.resize, .resize-box, .zoom):is(:active:where(:not([data-clio-off])), .active)::before {
   opacity: 0;
 }
 
@@ -1071,7 +1079,7 @@
 
 :where(.menu-bar, [role="menubar"], [role="menu-bar"]) > li > :is(button, a, span):is([aria-expanded="true"], .active),
 :where(.menu-bar, [role="menubar"], [role="menu-bar"]) > li.open > :is(button, a, span),
-:where(.menu-bar, [role="menubar"], [role="menu-bar"]) > li > :is(button, a):active,
+:where(.menu-bar, [role="menubar"], [role="menu-bar"]) > li > :is(button, a):active:where(:not([data-clio-off])),
 :where([role="menu-bar"]) > [role="menu-item"]:is(:focus, :focus-within) {
   background: var(--clio-menu-title-active-bg);
   box-shadow: var(--clio-menu-title-active-shadow);
@@ -1301,7 +1309,7 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-:where(button, .btn, .btn-default, .standard-button, input[type="button"], input[type="submit"], input[type="reset"]):not(:disabled, .disabled):is(:active, .active) {
+:where(button, .btn, .btn-default, .standard-button, input[type="button"], input[type="submit"], input[type="reset"]):not(:disabled, .disabled):is(:active:where(:not([data-clio-off])), .active) {
   background: var(--clio-button-active-bg);
   box-shadow: var(--clio-button-active-shadow);
   border-image-source: var(--clio-button-frame-held);
@@ -1373,7 +1381,7 @@
   background-origin: var(--clio-check-mark-origin);
 }
 
-:where(input[type="checkbox"]):not(:disabled):active {
+:where(input[type="checkbox"]):not(:disabled):active:where(:not([data-clio-off])) {
   border-width: var(--clio-check-pressed-border-width);
 }
 
@@ -1402,11 +1410,11 @@
   background: var(--clio-radio-on);
 }
 
-:where(input[type="radio"]):not(:disabled):active {
+:where(input[type="radio"]):not(:disabled):active:where(:not([data-clio-off])) {
   background: var(--clio-radio-pressed);
 }
 
-:where(input[type="radio"]):checked:not(:disabled):active {
+:where(input[type="radio"]):checked:not(:disabled):active:where(:not([data-clio-off])) {
   background: var(--clio-radio-pressed-on);
 }
 
@@ -1896,11 +1904,11 @@
   content: none;
 }
 
-:where(.little-arrows):has(> .up:active) {
+:where(.little-arrows):has(> .up:active:where(:not([data-clio-off]))) {
   background-image: var(--clio-art-little-arrows-up, var(--clio-art-little-arrows));
 }
 
-:where(.little-arrows):has(> .down:active) {
+:where(.little-arrows):has(> .down:active:where(:not([data-clio-off]))) {
   background-image: var(--clio-art-little-arrows-down, var(--clio-art-little-arrows));
 }
 
@@ -1934,7 +1942,7 @@
   cursor: default;
 }
 
-:where(.bevel):is(:active, .active, [aria-pressed="true"]):not(:disabled) {
+:where(.bevel):is(:active:where(:not([data-clio-off])), .active, [aria-pressed="true"]):not(:disabled) {
   border-image-source: var(--clio-art-bevel-held);
 }
 
@@ -2209,8 +2217,19 @@
   background: var(--clio-paper);
 }
 
+:where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *) > .clio-sb-anchor > .clio-sb {
+  width: var(--clio-scrollbar-size);
+  height: var(--clio-scrollbar-size);
+  background: var(--clio-paper);
+}
+
 :where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-track,
 :where(html.clio-scrollbars)::-webkit-scrollbar-track {
+  background: var(--clio-scrollbar-track);
+  box-shadow: var(--clio-scrollbar-track-shadow);
+}
+
+:where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *) > .clio-sb-anchor > .clio-sb > .clio-sb-track {
   background: var(--clio-scrollbar-track);
   box-shadow: var(--clio-scrollbar-track-shadow);
 }
@@ -2220,8 +2239,16 @@
   border-left: 1px solid var(--clio-ink);
 }
 
+:where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *) > .clio-sb-anchor > .clio-sb.clio-sb-v > .clio-sb-track {
+  border-left: 1px solid var(--clio-ink);
+}
+
 :where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-track:horizontal,
 :where(html.clio-scrollbars)::-webkit-scrollbar-track:horizontal {
+  border-top: 1px solid var(--clio-ink);
+}
+
+:where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *) > .clio-sb-anchor > .clio-sb.clio-sb-h > .clio-sb-track {
   border-top: 1px solid var(--clio-ink);
 }
 
@@ -2234,8 +2261,21 @@
   box-shadow: var(--clio-scrollbar-thumb-shadow);
 }
 
+:where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *) > .clio-sb-anchor > .clio-sb > .clio-sb-thumb {
+  min-width: var(--clio-scrollbar-size);
+  min-height: var(--clio-scrollbar-size);
+  border: var(--clio-scrollbar-thumb-border);
+  background: var(--clio-scrollbar-thumb-bg);
+  box-shadow: var(--clio-scrollbar-thumb-shadow);
+}
+
 :where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-thumb:horizontal,
 :where(html.clio-scrollbars)::-webkit-scrollbar-thumb:horizontal {
+  background: var(--clio-scrollbar-thumb-bg-horizontal, var(--clio-scrollbar-thumb-bg));
+  box-shadow: var(--clio-scrollbar-thumb-shadow-horizontal, var(--clio-scrollbar-thumb-shadow));
+}
+
+:where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *) > .clio-sb-anchor > .clio-sb.clio-sb-h > .clio-sb-thumb {
   background: var(--clio-scrollbar-thumb-bg-horizontal, var(--clio-scrollbar-thumb-bg));
   box-shadow: var(--clio-scrollbar-thumb-shadow-horizontal, var(--clio-scrollbar-thumb-shadow));
 }
@@ -2253,36 +2293,75 @@
   box-shadow: var(--clio-scrollbar-button-shadow);
 }
 
+:where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *) > .clio-sb-anchor > .clio-sb > .clio-sb-button:not(.clio-sb-never).clio-sb-dec,
+:where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *) > .clio-sb-anchor > .clio-sb > .clio-sb-button:not(.clio-sb-never).clio-sb-inc {
+  display: block;
+  width: var(--clio-scrollbar-size);
+  height: var(--clio-scrollbar-size);
+  background-color: var(--clio-scrollbar-button-bg);
+  background-position: center;
+  background-repeat: no-repeat;
+  box-shadow: var(--clio-scrollbar-button-shadow);
+}
+
 :where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-button:vertical:decrement,
 :where(html.clio-scrollbars)::-webkit-scrollbar-button:vertical:decrement {
   border-left: 1px solid var(--clio-ink);
   border-bottom: 1px solid var(--clio-ink);
-  background-image: var(--clio-scrollbar-up);
+  background-image: var(--clio-scrollbar-up), var(--clio-scrollbar-button-bevel);
+}
+
+:where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *) > .clio-sb-anchor > .clio-sb.clio-sb-v > .clio-sb-button.clio-sb-dec {
+  border-left: 1px solid var(--clio-ink);
+  border-bottom: 1px solid var(--clio-ink);
+  background-image: var(--clio-scrollbar-up), var(--clio-scrollbar-button-bevel);
 }
 
 :where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-button:vertical:increment,
 :where(html.clio-scrollbars)::-webkit-scrollbar-button:vertical:increment {
   border-left: 1px solid var(--clio-ink);
   border-top: 1px solid var(--clio-ink);
-  background-image: var(--clio-scrollbar-down);
+  background-image: var(--clio-scrollbar-down), var(--clio-scrollbar-button-bevel);
+}
+
+:where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *) > .clio-sb-anchor > .clio-sb.clio-sb-v > .clio-sb-button.clio-sb-inc {
+  border-left: 1px solid var(--clio-ink);
+  border-top: 1px solid var(--clio-ink);
+  background-image: var(--clio-scrollbar-down), var(--clio-scrollbar-button-bevel);
 }
 
 :where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-button:horizontal:decrement,
 :where(html.clio-scrollbars)::-webkit-scrollbar-button:horizontal:decrement {
   border-top: 1px solid var(--clio-ink);
   border-right: 1px solid var(--clio-ink);
-  background-image: var(--clio-scrollbar-left);
+  background-image: var(--clio-scrollbar-left), var(--clio-scrollbar-button-bevel);
+}
+
+:where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *) > .clio-sb-anchor > .clio-sb.clio-sb-h > .clio-sb-button.clio-sb-dec {
+  border-top: 1px solid var(--clio-ink);
+  border-right: 1px solid var(--clio-ink);
+  background-image: var(--clio-scrollbar-left), var(--clio-scrollbar-button-bevel);
 }
 
 :where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-button:horizontal:increment,
 :where(html.clio-scrollbars)::-webkit-scrollbar-button:horizontal:increment {
   border-top: 1px solid var(--clio-ink);
   border-left: 1px solid var(--clio-ink);
-  background-image: var(--clio-scrollbar-right);
+  background-image: var(--clio-scrollbar-right), var(--clio-scrollbar-button-bevel);
+}
+
+:where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *) > .clio-sb-anchor > .clio-sb.clio-sb-h > .clio-sb-button.clio-sb-inc {
+  border-top: 1px solid var(--clio-ink);
+  border-left: 1px solid var(--clio-ink);
+  background-image: var(--clio-scrollbar-right), var(--clio-scrollbar-button-bevel);
 }
 
 :where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-button:vertical:decrement:active,
 :where(html.clio-scrollbars)::-webkit-scrollbar-button:vertical:decrement:active {
+  background-image: var(--clio-scrollbar-up-on);
+}
+
+:where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *) > .clio-sb-anchor > .clio-sb.clio-sb-v > .clio-sb-button.clio-sb-dec.clio-held {
   background-image: var(--clio-scrollbar-up-on);
 }
 
@@ -2291,13 +2370,25 @@
   background-image: var(--clio-scrollbar-down-on);
 }
 
+:where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *) > .clio-sb-anchor > .clio-sb.clio-sb-v > .clio-sb-button.clio-sb-inc.clio-held {
+  background-image: var(--clio-scrollbar-down-on);
+}
+
 :where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-button:horizontal:decrement:active,
 :where(html.clio-scrollbars)::-webkit-scrollbar-button:horizontal:decrement:active {
   background-image: var(--clio-scrollbar-left-on);
 }
 
+:where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *) > .clio-sb-anchor > .clio-sb.clio-sb-h > .clio-sb-button.clio-sb-dec.clio-held {
+  background-image: var(--clio-scrollbar-left-on);
+}
+
 :where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-button:horizontal:increment:active,
 :where(html.clio-scrollbars)::-webkit-scrollbar-button:horizontal:increment:active {
+  background-image: var(--clio-scrollbar-right-on);
+}
+
+:where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *) > .clio-sb-anchor > .clio-sb.clio-sb-h > .clio-sb-button.clio-sb-inc.clio-held {
   background-image: var(--clio-scrollbar-right-on);
 }
 
@@ -2316,10 +2407,120 @@
   background: var(--clio-scrollbar-corner);
 }
 
+:where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *) > .clio-sb-anchor > .clio-sb-corner {
+  border-top: 1px solid var(--clio-ink);
+  border-left: 1px solid var(--clio-ink);
+  background: var(--clio-scrollbar-corner);
+}
+
 @supports not selector(::-webkit-scrollbar) {
   :where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, html.clio-scrollbars, .clio-scrollbars *) {
     scrollbar-color: var(--clio-scrollbar-thumb-color, var(--clio-ink)) var(--clio-scrollbar-track-color, #c0c0c0);
   }
+}
+
+/* Scroll bars drawn by clio.js (optional): the same parts as the browser's
+   scroll bar, as elements, so the scroll box keeps its era's fixed length, an
+   arrow repeats while held and a dragged box can leave an outline behind.
+   The parts take every ::-webkit-scrollbar rule (the build copies each one onto
+   .clio-sb-*); this file only places them. clio.js sets each bar's geometry. */
+.clio-sb-host {
+  box-sizing: border-box;   /* the bar comes out of the box, as the browser's does (everything in a clio.css window already is) */
+  scrollbar-width: none;
+}
+
+.clio-sb-host::-webkit-scrollbar {
+  display: none;
+}
+
+/* The bar sits in the scroller's padding, which grows by the bar's width. */
+.clio-sb-host.clio-sb-y {
+  padding-right: calc(var(--clio-sb-pr, 0px) + var(--clio-scrollbar-size));
+}
+
+.clio-sb-host.clio-sb-x {
+  padding-bottom: calc(var(--clio-sb-pb, 0px) + var(--clio-scrollbar-size));
+}
+
+/* A zero-size first child that sticks to the scroller's corner, so the bars
+   inside it stay put while the content moves. */
+.clio-sb-anchor {
+  position: sticky;
+  top: var(--clio-sb-pt, 0px);
+  left: var(--clio-sb-pl, 0px);
+  z-index: 2;
+  display: block;
+  width: 0;
+  height: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  float: none;
+}
+
+.clio-sb-anchor > :is(.clio-sb, .clio-sb-corner) {
+  position: absolute;
+  box-sizing: border-box;
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
+}
+
+.clio-sb-anchor > .clio-sb > * {
+  position: absolute;
+  box-sizing: border-box;
+  margin: 0;
+}
+
+.clio-sb-anchor > .clio-sb-v > .clio-sb-dec { top: 0; left: 0; }
+.clio-sb-anchor > .clio-sb-v > .clio-sb-inc { bottom: 0; left: 0; }
+.clio-sb-anchor > .clio-sb-v > .clio-sb-track { top: var(--clio-scrollbar-size); bottom: var(--clio-scrollbar-size); left: 0; right: 0; }
+.clio-sb-anchor > .clio-sb-v > .clio-sb-thumb { top: var(--clio-scrollbar-size); left: 0; right: 0; }
+.clio-sb-anchor > .clio-sb-h > .clio-sb-dec { left: 0; top: 0; }
+.clio-sb-anchor > .clio-sb-h > .clio-sb-inc { right: 0; top: 0; }
+.clio-sb-anchor > .clio-sb-h > .clio-sb-track { left: var(--clio-scrollbar-size); right: var(--clio-scrollbar-size); top: 0; bottom: 0; }
+.clio-sb-anchor > .clio-sb-h > .clio-sb-thumb { left: var(--clio-scrollbar-size); top: 0; bottom: 0; }
+
+/* Smart Scrolling (Mac OS 8/9, Appearance > Options): both arrows at the far
+   end, the up or left arrow first. */
+.clio-sb-anchor > .clio-sb-v.clio-sb-smart > .clio-sb-dec { top: auto; bottom: var(--clio-scrollbar-size); }
+.clio-sb-anchor > .clio-sb-v.clio-sb-smart > .clio-sb-track { top: 0; bottom: calc(2 * var(--clio-scrollbar-size)); }
+.clio-sb-anchor > .clio-sb-v.clio-sb-smart > .clio-sb-thumb { top: 0; }
+.clio-sb-anchor > .clio-sb-h.clio-sb-smart > .clio-sb-dec { left: auto; right: var(--clio-scrollbar-size); }
+.clio-sb-anchor > .clio-sb-h.clio-sb-smart > .clio-sb-track { left: 0; right: calc(2 * var(--clio-scrollbar-size)); }
+.clio-sb-anchor > .clio-sb-h.clio-sb-smart > .clio-sb-thumb { left: 0; }
+
+/* The arrows lie over the box's ends and its shadow. */
+.clio-sb-anchor > .clio-sb > .clio-sb-button { z-index: 1; }
+
+/* Mac OS 8/9: the lane's top shading also falls just past the box's far end
+   (--clio-scrollbar-thumb-after, drawn only by clio.js's bars). */
+.clio-sb-anchor > .clio-sb > .clio-sb-thumb::after {
+  content: "";
+  position: absolute;
+  background: var(--clio-scrollbar-thumb-after, none);
+}
+
+.clio-sb-anchor > .clio-sb-v > .clio-sb-thumb::after { top: calc(100% + 1px); left: 0; right: 0; height: 2px; }   /* past the box's end line */
+.clio-sb-anchor > .clio-sb-h > .clio-sb-thumb::after { left: calc(100% + 1px); top: 0; bottom: 0; width: 2px; }
+
+/* Nothing to scroll: the lane stays, the box goes (as on the Mac). */
+.clio-sb-anchor > .clio-sb.clio-sb-off > .clio-sb-thumb {
+  display: none;
+}
+
+/* The outline a dragged scroll box leaves in System 6 and 7: the box's frame,
+   drawn over the lane, until the button comes up. */
+.clio-sb-anchor > .clio-sb > .clio-sb-ghost {
+  z-index: 1;
+  padding: 1px;
+  background: var(--clio-scrollbar-ghost, #000000);
+  background-position: var(--clio-sb-gx, 0px) var(--clio-sb-gy, 0px);   /* in step with the lane's pattern */
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  pointer-events: none;
 }
 
 /* Control Strip (System 7.5 to Mac OS 9): a row of module buttons with scroll
@@ -2411,8 +2612,8 @@
   background-image: var(--clio-strip-forward);
 }
 
-:where(.control-strip) > .control-strip-scroll:not(:disabled):active,
-:where(.control-strip-module):not(:disabled):is(:active, [aria-expanded="true"]) {
+:where(.control-strip) > .control-strip-scroll:not(:disabled):active:where(:not([data-clio-off])),
+:where(.control-strip-module):not(:disabled):is(:active:where(:not([data-clio-off])), [aria-expanded="true"]) {
   background-color: var(--clio-strip-pressed-bg);
   box-shadow: var(--clio-strip-pressed-shadow);
 }
@@ -2535,10 +2736,14 @@
 
   /* Scroll bars */
   --clio-scrollbar-track: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='2' shape-rendering='crispEdges'%3E%3Cpath fill='%23ddd' d='M0 0h4v2H0z'/%3E%3Cpath fill='%23777' d='M2 0h1v1H2zM0 1h1v1H0z'/%3E%3C/svg%3E") 0 0 / 4px 2px repeat, #dddddd;
+  /* System 7.5.3 Finder, scroll box dragged (frame hig/system7/finder-thumb-drag):
+     a 14x16 frame in which the lane's #ddd turns black and its #777 dots stay. */
+  --clio-scrollbar-thumb-length: 16px;   /* the #555 line and 15 rows (frame finder-scroll) */
+  --clio-scrollbar-ghost: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='2' shape-rendering='crispEdges'%3E%3Cpath fill='%23000' d='M0 0h4v2H0z'/%3E%3Cpath fill='%23777' d='M2 0h1v1H2zM0 1h1v1H0z'/%3E%3C/svg%3E") 0 0 / 4px 2px repeat;
   /* The grip sits where System 7's fixed 16px scroll box has it: 3px from the
      leading edge, whatever length the browser gives the box. */
-  --clio-scrollbar-thumb-bg: var(--clio-art-s7-grip-v) 50% 2px / 6px 10px no-repeat, #aaaaaa;
-  --clio-scrollbar-thumb-bg-horizontal: var(--clio-art-s7-grip-h) 2px 50% / 10px 6px no-repeat, #aaaaaa;
+  --clio-scrollbar-thumb-bg: var(--clio-art-s7-grip-v) 50% 3px / 6px 10px no-repeat, #aaaaaa;
+  --clio-scrollbar-thumb-bg-horizontal: var(--clio-art-s7-grip-h) 3px 50% / 10px 6px no-repeat, #aaaaaa;
   --clio-scrollbar-thumb-border: 0;
   --clio-scrollbar-thumb-shadow: inset -1px -1px 0 #333366, inset 1px 1px 0 #ccccff;   /* the shade owns the corners */
   --clio-scrollbar-button-bg: #dddddd;
@@ -2655,7 +2860,7 @@
 }
 
 /* Held: a black square with a #99c face and the starburst. */
-:root .title-bar > :is(.close, .close-box, .resize, .resize-box, .zoom):is(:active, .active) {
+:root .title-bar > :is(.close, .close-box, .resize, .resize-box, .zoom):is(:active:where(:not([data-clio-off])), .active) {
   border-color: #000000;
   background: var(--clio-art-s6-burst) 0 0 / 11px 11px no-repeat border-box, #9999cc;
   background-clip: border-box;
@@ -2683,20 +2888,40 @@
 :root :is(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-thumb:vertical,
 :root:is(html.clio-scrollbars)::-webkit-scrollbar-thumb:vertical {
   min-height: 17px;                   /* the lane's black line, then 16 rows of box */
-  border-top: 1px solid #555555;
   border-left: 1px solid #000000;     /* the lane's own line, which the box covers */
+  /* the #555 line as a shadow, so the black line keeps the corner (two borders
+     would split it into a blend) */
+  box-shadow: inset 0 1px 0 #555555, inset -1px -1px 0 #333366, inset 1px 2px 0 #ccccff;
+}
+
+:root :is(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *) > .clio-sb-anchor > .clio-sb.clio-sb-v > .clio-sb-thumb {
+  min-height: 17px;                   /* the lane's black line, then 16 rows of box */
+  border-left: 1px solid #000000;     /* the lane's own line, which the box covers */
+  /* the #555 line as a shadow, so the black line keeps the corner (two borders
+     would split it into a blend) */
+  box-shadow: inset 0 1px 0 #555555, inset -1px -1px 0 #333366, inset 1px 2px 0 #ccccff;
 }
 
 :root :is(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-thumb:horizontal,
 :root:is(html.clio-scrollbars)::-webkit-scrollbar-thumb:horizontal {
   min-width: 17px;
-  border-left: 1px solid #555555;
   border-top: 1px solid #000000;
+  box-shadow: inset 1px 0 0 #555555, inset -1px -1px 0 #333366, inset 2px 1px 0 #ccccff;
+}
+
+:root :is(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *) > .clio-sb-anchor > .clio-sb.clio-sb-h > .clio-sb-thumb {
+  min-width: 17px;
+  border-top: 1px solid #000000;
+  box-shadow: inset 1px 0 0 #555555, inset -1px -1px 0 #333366, inset 2px 1px 0 #ccccff;
 }
 
 /* The arrow art already carries its face, light and shade. */
 :root :is(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-button,
 :root:is(html.clio-scrollbars)::-webkit-scrollbar-button {
+  background-size: 14px 14px;
+}
+
+:root :is(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *) > .clio-sb-anchor > .clio-sb > .clio-sb-button {
   background-size: 14px 14px;
 }
 

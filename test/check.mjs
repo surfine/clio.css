@@ -33,7 +33,11 @@ const noComments = css.replace(/\/\*[\s\S]*?\*\//g, "");
 const declared = new Set([...noComments.matchAll(/(--clio-[\w-]+)\s*:/g)].map((m) => m[1]));
 const used = new Set([...noComments.matchAll(/var\((--clio-[\w-]+)/g)].map((m) => m[1]));
 const optional = new Set(["--clio-details-shadow", "--clio-icon-selected-filter", "--clio-scrollbar-thumb-bg-horizontal", "--clio-scrollbar-thumb-shadow-horizontal", "--clio-scrollbar-thumb-color", "--clio-scrollbar-track-color"]);
-for (const v of used) ok(declared.has(v) || optional.has(v), `read but never declared: ${v}`);
+// clio.js sets these on the scrollers it draws bars for (js/clio.js).
+const js = readFileSync(join(root, "dist/clio.js"), "utf8");
+const fromJs = (v) => /^--clio-sb-/.test(v) && js.includes(v.replace(/^--clio-sb-/, ""));
+for (const v of used) ok(declared.has(v) || optional.has(v) || fromJs(v), `read but never declared: ${v}`);
+ok(/^\/\*! clio\.js/.test(js) && !js.includes("0.11.0-dev"), "dist/clio.js carries its banner and the package version");
 for (const v of optional) ok(noComments.includes(`var(${v},`), `${v} is optional but read without a fallback`);
 
 // 4. System 6 build has no Platinum; Platinum build has no data-era scope left.

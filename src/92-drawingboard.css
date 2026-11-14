@@ -11,6 +11,10 @@
    each found 1:1 in the capture. The stylesheet loads them from art/ beside
    itself, as it loads fonts/. See EVIDENCE.md. */
 [data-era="drawingboard"] {
+  --clio-scrollbar-size: 16px;
+  --clio-scrollbar-button-bevel: none;
+  --clio-scrollbar-thumb-overlap: 0px;
+  --clio-scrollbar-thumb-after: none;
   /* Titles sit on the textured title bar, where no palette can know the
      background: they keep Clio Sans '97 Title in the text colour. */
   --clio-font-window-title: Charcoal, "Charcoal CY", "Clio Sans '97 Title", "Clio Sans '97", "Clio Asap", Geneva, "Helvetica Neue", Arial, sans-serif;
@@ -166,6 +170,8 @@
   --clio-field-focus-shadow: none;
   --clio-button-disabled-fg: #8c8c8c;
   --clio-button-disabled-border: 1px solid #888888;
+  /* The theme's scroll box at its shortest, 7px end and 8px end. */
+  --clio-scrollbar-thumb-length: 15px;
 
   /* Scroll bars: the theme's 16px arrow boxes; a #ece6e4 track with a #aaa
      edge, a two-pixel pencil rail down the middle and a #777 far edge; the
@@ -475,16 +481,16 @@
   background-image: var(--clio-art-db-collapse);
 }
 
-[data-era="drawingboard"] .title-bar > :is(button, .close, .close-box):is(:active, .active) {
+[data-era="drawingboard"] .title-bar > :is(button, .close, .close-box):is(:active:where(:not([data-clio-off])), .active) {
   background: var(--clio-art-db-close-on) 0 0 / 11px 11px no-repeat;
   box-shadow: none;
 }
 
-[data-era="drawingboard"] .title-bar > :is(.resize, .resize-box, .zoom):is(:active, .active) {
+[data-era="drawingboard"] .title-bar > :is(.resize, .resize-box, .zoom):is(:active:where(:not([data-clio-off])), .active) {
   background: var(--clio-art-db-zoom-on) 0 0 / 11px 11px no-repeat;
 }
 
-[data-era="drawingboard"] .title-bar > :is(.shade, .shade-box, .collapse):is(:active, .active) {
+[data-era="drawingboard"] .title-bar > :is(.shade, .shade-box, .collapse):is(:active:where(:not([data-clio-off])), .active) {
   background: var(--clio-art-db-collapse-on) 0 0 / 11px 11px no-repeat;
 }
 
@@ -630,12 +636,12 @@
   background-image: var(--clio-art-db-check-mixed);
 }
 
-[data-era="drawingboard"] input[type="checkbox"]:not(:disabled):active {
+[data-era="drawingboard"] input[type="checkbox"]:not(:disabled):active:where(:not([data-clio-off])) {
   background: var(--clio-art-db-check-pressed) 0 0 / 14px 11px no-repeat;
   box-shadow: none;
 }
 
-[data-era="drawingboard"] input[type="checkbox"]:checked:not(:disabled):active {
+[data-era="drawingboard"] input[type="checkbox"]:checked:not(:disabled):active:where(:not([data-clio-off])) {
   background-image: var(--clio-art-db-check-on-pressed);
 }
 
@@ -648,7 +654,7 @@
 }
 
 [data-era="drawingboard"] input[type="radio"],
-[data-era="drawingboard"] input[type="radio"]:not(:disabled):active {
+[data-era="drawingboard"] input[type="radio"]:not(:disabled):active:where(:not([data-clio-off])) {
   width: 16px;
   height: 12px;
   border: 0;
@@ -661,7 +667,7 @@
   background: var(--clio-art-db-radio-on) 0 0 / 16px 12px no-repeat;
 }
 
-[data-era="drawingboard"] input[type="radio"]:checked:not(:disabled):active {
+[data-era="drawingboard"] input[type="radio"]:checked:not(:disabled):active:where(:not([data-clio-off])) {
   background: var(--clio-art-db-radio-on-pressed) 0 0 / 16px 12px no-repeat;
 }
 
@@ -708,7 +714,7 @@
   line-height: 20px;
 }
 
-[data-era="drawingboard"] :is([role="tablist"], .tabs) > :is([role="tab"], li, button):not(:disabled):active {
+[data-era="drawingboard"] :is([role="tablist"], .tabs) > :is([role="tab"], li, button):not(:disabled):active:where(:not([data-clio-off])) {
   border-image-source: var(--clio-art-db-tab-pressed);
   color: #313131;
 }
@@ -831,7 +837,7 @@
   pointer-events: none;
 }
 
-[data-era="drawingboard"] :is(button, .btn, .btn-default):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *, .disclosure, .little-arrows > *, .help-button, :disabled, .disabled):is(:active, .active)::before {
+[data-era="drawingboard"] :is(button, .btn, .btn-default):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *, .disclosure, .little-arrows > *, .help-button, :disabled, .disabled):is(:active:where(:not([data-clio-off])), .active)::before {
   left: 0;
   background:
     url("art/drawingboard/pens/button-held-shade-right.png") right 0 top 0 / 1px 16px repeat-y,
@@ -873,7 +879,7 @@
   pointer-events: none;
 }
 
-[data-era="drawingboard"] :is(button, .btn, .btn-default):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *, .disclosure, .little-arrows > *, .help-button, :disabled, .disabled):is(:active, .active)::after {
+[data-era="drawingboard"] :is(button, .btn, .btn-default):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *, .disclosure, .little-arrows > *, .help-button, :disabled, .disabled):is(:active:where(:not([data-clio-off])), .active)::after {
   background:
     var(--clio-art-db-btn-tl) left 3px top 3px / 7px 3px no-repeat,
     var(--clio-art-db-btn-tr) right 2px top 3px / 4px 3px no-repeat,
@@ -917,7 +923,7 @@
 /* ---- Antialiasing as Mac OS blends it: #333 labels on #cec6b5 (their solid
    pixels #313131, from a 16-bit buffer); grey when disabled. */
 [data-era="drawingboard"] :is(button, .btn, .btn-default, input[type="button"], input[type="submit"], input[type="reset"]):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *, .disclosure, .little-arrows > *, .help-button),
-[data-era="drawingboard"] :is(button, .btn, .btn-default, input[type="button"], input[type="submit"], input[type="reset"]):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *, .disclosure, .little-arrows > *, .help-button):not(:disabled, .disabled):is(:active, .active) {
+[data-era="drawingboard"] :is(button, .btn, .btn-default, input[type="button"], input[type="submit"], input[type="reset"]):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *, .disclosure, .little-arrows > *, .help-button):not(:disabled, .disabled):is(:active:where(:not([data-clio-off])), .active) {
   font-palette: --clio-aa-db-button;
 }
 
@@ -977,7 +983,7 @@
   background: var(--clio-button-bg);
 }
 
-[data-era="drawingboard"] .bevel:is(:active, .active, [aria-pressed="true"]):not(:disabled) {
+[data-era="drawingboard"] .bevel:is(:active:where(:not([data-clio-off])), .active, [aria-pressed="true"]):not(:disabled) {
   border-image-source: url("art/drawingboard/pens/button-held-corners.png");
   background: var(--clio-button-active-bg);
 }
