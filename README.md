@@ -135,13 +135,14 @@ levels take the very colours the real screen shows for clio.css's own title and 
 colours (`@font-palette-values`); recolour them and set `--clio-font-window-title` or
 `--clio-font-button` to a stack without "Exact".
 
-Two Charcoal look-alikes clio.css does not ship can take over Platinum and Drawing Board
-chrome: `data-clio-font="virtue"` uses [Virtue](https://www.scootergraphics.com/virtue/)
-(Marty P. Pfeiffer's free TrueType reworking of Charcoal, 1997–99, no redistribution terms
-stated) and `data-clio-font="truth"` uses Truth FB (David Berlow's own expansion of
-Charcoal, 2005, sold by Font Bureau). Install the font or add your own `@font-face`, then
-set the attribute on `<html>` or any ancestor; Clio Sans '97 stays as the fallback. They are
-outline fonts drawn by the browser, not the measured pixels. `npm run capture:system6` re-takes the
+Two Charcoal look-alikes can take over Platinum and Drawing Board chrome, set with an
+attribute on `<html>` or any ancestor:
+`data-clio-font="virtue"` uses [Virtue](https://www.scootergraphics.com/virtue/) by Marty P.
+Pfeiffer, © [Scooter Graphics](https://www.scootergraphics.com/), a TrueType reworking of
+Charcoal from 1997–99, which clio.css ships unchanged with the author's permission
+(THIRD-PARTY.md); `data-clio-font="truth"` uses Truth FB (David Berlow's own expansion of
+Charcoal, 2005, sold by Font Bureau), which you install or load yourself. Clio Sans '97
+stays as the fallback. They are outline fonts drawn by the browser, not the measured pixels. `npm run capture:system6` re-takes the
 System 6.0.8 reference frames from Infinite Mac; the frames are never committed.
 
 What the era never had is adapted, not imitated: keyboard focus rings, touch-size
