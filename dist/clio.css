@@ -4689,6 +4689,21 @@
   }
 }
 
+/* Retina and other whole-number pixel ratios: every Mac pixel becomes a solid
+   2x2 or 3x3 block (nearest neighbour), as a 1x screen magnified would show it.
+   At fractional ratios (1.25, 1.5, browser zoom) the browser's smoothing stays:
+   nearest neighbour there gives uneven pixel widths. image-rendering inherits,
+   so the page's own pictures, video and canvas are handed back to smoothing. */
+@media (resolution: 2dppx), (resolution: 3dppx), (resolution: 4dppx) {
+  :root {
+    image-rendering: pixelated;
+  }
+
+  :where(img, picture, video, canvas, iframe, object, embed) {
+    image-rendering: auto;
+  }
+}
+
 /* Optional chrome faces for Platinum and Drawing Board:
      data-clio-font="virtue"  Virtue 3.2.1, Marty P. Pfeiffer's 1997-99 TrueType
                               reworking of Charcoal, (c) Scooter Graphics

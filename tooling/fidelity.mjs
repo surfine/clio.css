@@ -210,7 +210,11 @@ const css = pathToFileURL(join(root, "dist/clio.css")).href;
 const out = join(root, ".fidelity");
 mkdirSync(out, { recursive: true });
 const browser = await playwright.chromium.launch({ ignoreDefaultArgs: ["--hide-scrollbars"] });
-const page = await browser.newPage({ viewport: { width: 800, height: 400 }, deviceScaleFactor: 1 });
+// FIDELITY_DPR=2 (or 3) renders at that device pixel ratio and compares against the
+// reference scaled up by nearest neighbour: every Mac pixel must become a solid 2x2
+// (3x3) block. Results go to results-<n>x.json; FIDELITY.md stays the 1x table.
+const DPR = Number(process.env.FIDELITY_DPR || 1);
+const page = await browser.newPage({ viewport: { width: 800, height: 400 }, deviceScaleFactor: DPR });
 const results = [];
 for (const s of specimens) {
   if (s.refFile && !existsSync(s.refFile)) { console.log(`${s.id}: no reference (run npm run capture:system6)`); continue; }
@@ -223,12 +227,17 @@ for (const s of specimens) {
   const [x, y, w, h] = s.crop;
   const shot = await page.screenshot({ clip: { x: box.x + x, y: box.y + y, width: w, height: h } });
   const ref = readFileSync(s.refFile || join(tiles, `${s.id}-reference.png`));
-  const metrics = await page.evaluate(async ([a, b, name, refCrop, mono, mask]) => {
+  const metrics = await page.evaluate(async ([a, b, name, refCrop, mono, mask, dpr]) => {
     const load = (b64) => new Promise((res) => { const i = new Image(); i.onload = () => res(i); i.src = "data:image/png;base64," + b64; });
     let [ia, ib] = await Promise.all([load(a), load(b)]);
     if (refCrop) {
       const c = document.createElement("canvas"); c.width = refCrop[2]; c.height = refCrop[3];
       c.getContext("2d").drawImage(ib, refCrop[0], refCrop[1], refCrop[2], refCrop[3], 0, 0, refCrop[2], refCrop[3]);
+      ib = await load(c.toDataURL("image/png").split(",")[1]);
+    }
+    if (dpr !== 1) {
+      const c = document.createElement("canvas"); c.width = ib.width * dpr; c.height = ib.height * dpr;
+      const g = c.getContext("2d"); g.imageSmoothingEnabled = false; g.drawImage(ib, 0, 0, c.width, c.height);
       ib = await load(c.toDataURL("image/png").split(",")[1]);
     }
     const w = Math.min(ia.width, ib.width), h = Math.min(ia.height, ib.height);
@@ -257,17 +266,18 @@ for (const s of specimens) {
     }
     g.putImageData(d, w * 2, 0);
     return { name, size: [w, h], same: +(same / n).toFixed(4), exact: +(exact / n).toFixed(4), structural: +(off / n).toFixed(4), meanAbs: +(sum / n).toFixed(2), misses, image: diff.toDataURL("image/png").split(",")[1] };
-  }, [shot.toString("base64"), ref.toString("base64"), s.id, s.refCrop || null, !!s.mono, s.mask || []]);
-  writeFileSync(join(out, `${s.id}-compare.png`), Buffer.from(metrics.image, "base64"));
+  }, [shot.toString("base64"), ref.toString("base64"), s.id, s.refCrop || null, !!s.mono, (s.mask || []).map((m) => m.map((v) => v * DPR)), DPR]);
+  writeFileSync(join(out, `${s.id}${DPR === 1 ? "" : "@" + DPR + "x"}-compare.png`), Buffer.from(metrics.image, "base64"));
   delete metrics.image;
-  writeFileSync(join(out, `${s.id}-misses.json`), JSON.stringify(metrics.misses));   // [x, y, ref rgb, clio rgb]
+  writeFileSync(join(out, `${s.id}${DPR === 1 ? "" : "@" + DPR + "x"}-misses.json`), JSON.stringify(metrics.misses));   // [x, y, ref rgb, clio rgb]
   delete metrics.misses;
   results.push({ ...metrics, era: s.group || s.era || "platinum" });
 }
 await browser.close();
 console.log("specimen              size      same    exact   off>48  meanAbs   (reference | clio.css | diff in .fidelity/)");
 for (const r of results) console.log(`${r.name.padEnd(21)} ${r.size.join("x").padEnd(9)} ${String(r.same).padEnd(7)} ${String(r.exact).padEnd(7)} ${String(r.structural).padEnd(7)} ${r.meanAbs}`);
-writeFileSync(join(out, "results.json"), JSON.stringify(results, null, 2));
+writeFileSync(join(out, DPR === 1 ? "results.json" : `results-${DPR}x.json`), JSON.stringify(results, null, 2));
+if (DPR !== 1) { console.log(`${results.filter((r) => r.same === 1).length} of ${results.length} identical at ${DPR}x`); process.exit(0); }
 const date = new Date().toISOString().slice(0, 10);
 const row = (r) => "| " + r.name + " | " + r.size.join("×") + " | " + (r.same * 100).toFixed(1) + "% | " + (r.exact * 100).toFixed(1) + "% | " + (r.structural * 100).toFixed(1) + "% | " + r.meanAbs + " |";
 const table = (era) => "| Specimen | Size | same | exact | off | mean |\n| --- | --- | ---: | ---: | ---: | ---: |\n" + results.filter((r) => r.era === era).map(row).join("\n");
