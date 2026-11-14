@@ -29,6 +29,35 @@
   --clio-font-display: Charcoal, "Charcoal CY", "Clio Sans '97 Display", "Clio Asap", "Helvetica Neue", Arial, sans-serif;
   --clio-font-window-title: Charcoal, "Charcoal CY", "Clio Sans '97 Title Exact", "Clio Sans '97 Title", "Clio Sans '97", "Clio Asap", Geneva, "Helvetica Neue", Arial, sans-serif;
   --clio-font-button: Charcoal, "Charcoal CY", "Clio Sans '97 Exact", "Clio Sans '97", "Clio Asap", Geneva, "Helvetica Neue", Arial, sans-serif;
+  /* List view (Finder, Mac OS 9.0): 21px bevelled headers, the sorted one sunk
+     dark; the sorted column's rows #ddd, the others #eee, 19px rows. Drawn
+     with background lines (List view rules), not tokens alone. */
+  --clio-list-view-bg: #eeeeee;
+  --clio-list-view-row: 19px;
+  --clio-list-view-header-height: 21px;
+  --clio-list-view-header-padding: 3px 4px 0;
+  --clio-list-view-sorted-decoration: none;
+  --clio-list-view-sorted-bg: #dddddd;
+  --clio-list-view-sort-width: 15px;
+  /* Keyboard focus on a field or list: a 2px ring of the highlight colour's
+     dark (#6666cc for Purple), its outer corners left out (Date & Time). */
+  --clio-focus-ring-colour: #6666cc;
+  --clio-focus-ring: 0 -1px 0 1px var(--clio-focus-ring-colour), 0 1px 0 1px var(--clio-focus-ring-colour), -1px 0 0 1px var(--clio-focus-ring-colour), 1px 0 0 1px var(--clio-focus-ring-colour);
+  --clio-field-focus-shadow: var(--clio-focus-ring);
+  --clio-field-focus-outline: none;
+  --clio-list-focus-shadow: var(--clio-focus-ring);
+  /* Little arrows (Date & Time, Mac OS 9.0): 13x23; dimmed while their field is
+     not being edited. Held states were under the pointer and keep the normal. */
+  --clio-little-arrows-width: 13px;
+  --clio-little-arrows-height: 23px;
+  --clio-art-little-arrows: url("art/platinum/little-arrows.png");
+  --clio-art-little-arrows-up: url("art/platinum/little-arrows.png");
+  --clio-art-little-arrows-down: url("art/platinum/little-arrows.png");
+  --clio-art-little-arrows-disabled: url("art/platinum/little-arrows-disabled.png");
+  /* Disclosure triangle: 13px with its shadow (Finder list view, Mac OS 9.0). */
+  --clio-disclosure-size: 13px;
+  --clio-art-disclosure: url("art/platinum/disclosure.png");
+  --clio-art-disclosure-open: url("art/platinum/disclosure-open.png");
   --clio-font-text: Geneva, "Clio Asap", "Helvetica Neue", Arial, sans-serif;
   --clio-font-size: 12px;
   --clio-font-smoothing: none;
@@ -143,7 +172,6 @@
   --clio-field-border: 1px solid #000000;
   --clio-field-shadow: -1px -1px 0 #888888, 1px 1px 0 #ffffff;
   --clio-field-padding: 2px 3px;
-  --clio-field-focus-shadow: -1px -1px 0 #888888, 1px 1px 0 #ffffff;
 
   /* Pop-up menus, measured from Mac OS 9.0 (Appearance tab, "Apple platinum"):
      20px, black frame, #ddd face with a white top line and #aaa foot; a #aaa
@@ -684,4 +712,59 @@
 
 :is([data-era="platinum"], [data-era="drawingboard"]) :is(button, .btn, .btn-default, input[type="button"], input[type="submit"], input[type="reset"]):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *):is(:disabled, .disabled) {
   font-palette: --clio-aa-p9-button-disabled;
+}
+
+/* ---- List view headers -----------------------------------------------------
+   Measured row by row (Finder list view, Mac OS 9.0). A header: #666 above,
+   white light along its top and left, #ccc, #888 shade and a #333 rule below;
+   the #666 column on its left is the divider. The sorted header is sunk:
+   #111 top and left, #444 right and below (#222 at the two odd corners), a
+   #555 then #aaa inner bevel round #888. The sort-direction cell adds an #888
+   shade on its right. */
+:is([data-era="platinum"], [data-era="drawingboard"]) .list-view th {
+  background:
+    linear-gradient(#666666, #666666) 0 0 / 100% 1px no-repeat,
+    linear-gradient(#666666, #666666) 0 0 / 1px calc(100% - 1px) no-repeat,
+    linear-gradient(#555555, #555555) 0 100% / 1px 1px no-repeat,
+    linear-gradient(#333333, #333333) 1px 100% / 100% 1px no-repeat,
+    linear-gradient(#ffffff, #ffffff) 1px 1px / 100% 1px no-repeat,
+    linear-gradient(#ffffff, #ffffff) 1px 1px / 1px calc(100% - 3px) no-repeat,
+    linear-gradient(#888888, #888888) 2px calc(100% - 1px) / 100% 1px no-repeat,
+    #cccccc;
+}
+
+:is([data-era="platinum"], [data-era="drawingboard"]) .list-view th[aria-sort]:not([aria-sort="none"]) {
+  background:
+    linear-gradient(#222222, #222222) 100% 0 / 1px 1px no-repeat,
+    linear-gradient(#222222, #222222) 0 100% / 1px 1px no-repeat,
+    linear-gradient(#111111, #111111) 0 0 / calc(100% - 1px) 1px no-repeat,
+    linear-gradient(#111111, #111111) 0 0 / 1px calc(100% - 1px) no-repeat,
+    linear-gradient(#444444, #444444) 100% 1px / 1px 100% no-repeat,
+    linear-gradient(#444444, #444444) 1px 100% / 100% 1px no-repeat,
+    linear-gradient(#777777, #777777) calc(100% - 1px) 1px / 1px 1px no-repeat,
+    linear-gradient(#777777, #777777) 1px calc(100% - 1px) / 1px 1px no-repeat,
+    linear-gradient(#555555, #555555) 1px 1px / calc(100% - 3px) 1px no-repeat,
+    linear-gradient(#555555, #555555) 1px 1px / 1px calc(100% - 3px) no-repeat,
+    linear-gradient(#aaaaaa, #aaaaaa) calc(100% - 1px) 2px / 1px calc(100% - 3px) no-repeat,
+    linear-gradient(#aaaaaa, #aaaaaa) 2px calc(100% - 1px) / calc(100% - 3px) 1px no-repeat,
+    #888888;
+}
+
+:is([data-era="platinum"], [data-era="drawingboard"]) .list-view th.sort-direction {
+  background:
+    linear-gradient(#888888, #888888) 100% 2px / 1px calc(100% - 3px) no-repeat,
+    linear-gradient(#cccccc, #cccccc) 100% 1px / 1px 1px no-repeat,
+    linear-gradient(#666666, #666666) 0 0 / 100% 1px no-repeat,
+    linear-gradient(#666666, #666666) 0 0 / 1px calc(100% - 1px) no-repeat,
+    linear-gradient(#555555, #555555) 0 100% / 1px 1px no-repeat,
+    linear-gradient(#333333, #333333) 1px 100% / 100% 1px no-repeat,
+    linear-gradient(#ffffff, #ffffff) 1px 1px / 100% 1px no-repeat,
+    linear-gradient(#ffffff, #ffffff) 1px 1px / 1px calc(100% - 3px) no-repeat,
+    linear-gradient(#888888, #888888) 2px calc(100% - 1px) / 100% 1px no-repeat,
+    url("art/platinum/sort-direction.png") 4px 6px / 8px 7px no-repeat,
+    #cccccc;
+}
+
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(input:not([type]), input[type="text"], input[type="search"], input[type="email"], input[type="url"], input[type="password"], input[type="number"], input[type="tel"], textarea):focus-visible {
+  box-shadow: var(--clio-field-focus-shadow);
 }
