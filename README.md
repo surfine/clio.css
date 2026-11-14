@@ -113,7 +113,7 @@ it; with it:
   The collapse box folds a window to its title bar (`data-clio-shade="dblclick"` adds the
   double click). `clio.zoomRects(from, to)` draws the Finder's zoom rectangles.
 - Text fields inside a `.window` get TextEdit's insertion point: a 1px line that inverts
-  what is under it, a line tall, blinking every 34 ticks as measured in System 7.5.3 (lit
+  what is under it, a line tall, blinking at the era's rate (32 ticks in System 6 and 7, 48 in Mac OS 8 and 9; lit
   and still under reduced motion). The browser's own caret comes back while text is
   selected or an input method is composing; `data-clio-caret="off"` keeps it everywhere.
 - Centred labels (buttons, tabs, window titles) whose text would start on a half pixel get

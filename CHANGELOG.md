@@ -2,6 +2,55 @@
 
 ## Unreleased
 
+The Classic final batch: the last pixel tails, the dimmed pop-up menu and TextEdit's
+insertion point, each measured in Infinite Mac.
+
+- **Platinum's window shadow** is a 1px line from the frame's third row and column, a notch
+  at both corners (`::after` border lines; a box-shadow could only start 1px in), #555 behind
+  another window. System 7's shaded window is 19px: the title bar's bottom line is the foot.
+  The title bar and collapsed specimens no longer mask anything (100% in all three engines).
+- **Drawing Board's dragged outline** matches all 1349 pixels and inverts none more: the
+  structure region's top-left and bottom-left pieces lie 1px right of the drawn pieces
+  (fitted in `tooling/db-outline.py`; `tooling/outline-check.mjs` allows nothing now).
+- **Drawing Board's Smart Scrolling pair held**, measured in Mac OS 8.5: each arrow lights
+  alone (specimens `db-js-smart-held-left`, `-right`).
+- **System 6/7 dimmed pop-up menus**: the whole control drawn through the 50% gray (System
+  7.5.3, Memory's Select Hard Disk); browsers no longer fade a disabled `<select>`. The arrow
+  is centred at `floor(spare / 2)`. WebKit ignores `mask-clip: no-clip`, so its dimmed pop-up
+  has no shadow.
+- **clio.js draws the insertion point** in text fields inside a `.window`: a 1px line that
+  inverts what is under it, 16px tall (`--clio-caret-height`), in the pixel left of the
+  character, blinking every `--clio-caret-ticks` (32 in System 6/7, 48 in Mac OS 8/9). The
+  browser's caret returns while text is selected or an input method composes; lit and still
+  under reduced motion; the system's in forced colours; `data-clio-caret="off"` keeps the
+  browser's. Specimen `s7-js-caret` identical in all three engines.
+- **clio.js centres labels on whole pixels**: where a button, tab or window title's text
+  would start on a half pixel, one more pixel at its end gives QuickDraw's `floor(spare / 2)`
+  in every engine (measured on font load and resize, `data-clio-centre="off"`).
+- **Colour fonts declared twice** (the Plain file alone, then with `tech(color-COLRv1)`), so a
+  browser that cannot parse `tech()` keeps the font instead of losing it.
+- **Touch bench**: `docs/touch.html`, twelve checks with expected results and an automatic
+  environment report, for the owner's iPhone SE (iOS 15.8.8) and iPhone 18 Pro (iOS 27.3).
+- README: the unpkg example names 0.12.0; clio.js's caret and centring are documented.
+
+### Timings from the ROMs
+
+Timings read from the Mac OS ROMs and checked in the emulator (ROADMAP 7–9 closed). The
+values come from the Menu, Control and Dialog Manager code in the Mac IIx, Quadra 650 and
+New World ROMs; no Apple code or resources are in the repository.
+
+- Submenus: clio.js follows the Menu Manager's rule. Leaving the parent item, the submenu
+  stays while the pointer is inside the wedge from the last point in the item to the
+  submenu's two near corners, for 60 ticks (MenuDrag) from leaving the item; further moves
+  do not extend it, and moving back away switches at once. Before, a cone from the previous
+  pointer position, re-armed on every move.
+- Scroll bars: a held arrow or lane repeats with no pause in System 6 and 7 (TrackControl
+  had none) and after about 0.2 s in Mac OS 8 and 9 (`--clio-scrollbar-repeat-delay`).
+- The watch cursor (System 7.5.3 and Mac OS 9.0, identical) for `aria-busy="true"`
+  (`--clio-cursor-wait`).
+- Evidence: the default button's 8-tick flash and the insertion point's 32 ticks (Mac OS 9's
+  default about 48) measured.
+
 Safari and Firefox, checked: `CLIO_ENGINE=webkit|firefox` runs the pixel check and
 `npm run behaviour` in Playwright's WebKit and Firefox as well as Chromium.
 

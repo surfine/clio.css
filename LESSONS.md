@@ -165,6 +165,22 @@ A behaviour test must look at the result the user sees: a test that only read
   the Apple menu rows are 20px and the Control Panels submenu starts at y=37; quitting
   Appearance with Command-Q froze Mac OS 8.5 once (close its window instead).
 
+- A shape fitted to inverted gray shows only every other pixel of the region: fit offsets
+  against the measured set (Python, no browser) and say in the evidence that it is a fit.
+- A dimmed control in System 7 is the control drawn and then grayed as a whole, shadow
+  included; check what a CSS mask clips (the shadow lies outside the border box, and WebKit
+  does not honour `mask-clip: no-clip`).
+- Use the era's 2x2 pattern picture for masks, not a conic gradient: Firefox smooths a
+  gradient at 2x and 3x.
+- Before keeping a measured rate, look for the ROM's constant: a 567 ms blink in the
+  emulator is CaretTime's 32 ticks (PRAM $88), and the emulator's ticks run a little slow.
+- Name the screenshot moment: a blinking thing photographed late is "off"; specimens pin
+  the lit state (reduced motion) rather than racing the timer.
+- An emulator driver's `ready` line can be stale from an earlier run in the same folder:
+  start each run in a fresh folder or clear the log first.
+- Firefox fires no `selectionchange` for a field's own selection: listen to pointerup,
+  keyup and select as well.
+
 ## 8. Process
 
 - Work in batches that each end pushed and green: build, `npm test`, the pixel check and

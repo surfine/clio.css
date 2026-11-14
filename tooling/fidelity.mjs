@@ -33,7 +33,8 @@ const W = (width, title, extra = "", cls = "window", zoom = false) => `<div clas
 // What lies beside a window's shadow in the reference, behind the specimen (no mask needed):
 // a flat colour, or System 7's desktop gray (#666 on even pixels, #aaa on odd ones).
 const beside = (bg, html) => `<div style="width:fit-content;padding:0 2px 2px 0;background:${bg}">${html}</div>`;
-const S7DESK = "repeating-conic-gradient(#666666 0 25%, #aaaaaa 0 50%) 1px 0 / 2px 2px";
+// a crisp picture: WebKit dithers a gradient by one level
+const S7DESK = "url(data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%272%27%20height%3D%272%27%20shape-rendering%3D%27crispEdges%27%3E%3Cpath%20fill%3D%27%23666666%27%20d%3D%27M0%200h2v2H0z%27%2F%3E%3Cpath%20fill%3D%27%23aaaaaa%27%20d%3D%27M1%200h1v1H1zM0%201h1v1H0z%27%2F%3E%3C%2Fsvg%3E) 0 0 / 2px 2px";
 const specimens = [
   // GUIdebook's Mac took these with font smoothing on, so its titles are antialiased:
   // the title text is masked here and checked against Infinite Mac (p9-titlebar-*, 100%).
@@ -398,10 +399,11 @@ function others() {
   }
   return out.join("\n") + `
 
-Apart from the Drawing Board pop-up menu (below), every pixel that differs in those specimens is in
-a centred label or title whose spare width is odd, so its text starts on a half pixel. The Mac rounds
-that down; Chromium snaps the same way, WebKit draws the text on the half pixel (blended) and Firefox
-rounds it up. CSS cannot read a text's width to round it, so this stays an engine difference.`;
+Two differences are left. The Drawing Board pop-up menu (below) is text antialiased over the paper.
+WebKit's dimmed System 7 pop-up menu has no shadow: the shadow lies outside the border box, and
+WebKit does not honour \`mask-clip: no-clip\`, so the 50% gray mask cuts it off. A centred label
+whose text starts on a half pixel (each engine rounds it its own way) is moved onto a whole pixel by
+clio.js; the specimens load it.`;
 }
 const row = (r) => "| " + r.name + " | " + r.size.join("×") + " | " + (r.same * 100).toFixed(1) + "% | " + (r.exact * 100).toFixed(1) + "% | " + (r.structural * 100).toFixed(1) + "% | " + r.meanAbs + " |";
 const table = (era) => "| Specimen | Size | same | exact | off | mean |\n| --- | --- | ---: | ---: | ---: | ---: |\n" + results.filter((r) => r.era === era).map(row).join("\n");

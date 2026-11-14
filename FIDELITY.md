@@ -190,13 +190,14 @@ Reference: GUIdebook Mac OS 9.0 captures, cropped by AI System 6 (`AIS6_DIR`).
 and Firefox (results in `.fidelity/results-<engine>.json`). Firefox has no `::-webkit-scrollbar`:
 its scroll-bar specimens load clio.js, whose element bars take the same rules.
 
-- WebKit: 131 of 135 identical; not identical: s7-collapsed (100.0%), s7-popup-disabled (96.1%), db-js-popup-open (96.2%), db-popup-open (96.2%)
+- WebKit: 132 of 135 identical; not identical: s7-popup-disabled (96.1%), db-js-popup-open (96.2%), db-popup-open (96.2%)
 - Firefox: 129 of 130 identical; not identical: db-js-popup-open (96.2%)
 
-Apart from the Drawing Board pop-up menu (below), every pixel that differs in those specimens is in
-a centred label or title whose spare width is odd, so its text starts on a half pixel. The Mac rounds
-that down; Chromium snaps the same way, WebKit draws the text on the half pixel (blended) and Firefox
-rounds it up. CSS cannot read a text's width to round it, so this stays an engine difference.
+Two differences are left. The Drawing Board pop-up menu (below) is text antialiased over the paper.
+WebKit's dimmed System 7 pop-up menu has no shadow: the shadow lies outside the border box, and
+WebKit does not honour `mask-clip: no-clip`, so the 50% gray mask cuts it off. A centred label
+whose text starts on a half pixel (each engine rounds it its own way) is moved onto a whole pixel by
+clio.js; the specimens load it.
 
 ## What the remaining difference is
 
