@@ -102,6 +102,12 @@ def five_bit(im):
 # The scroll box and the collapse box (the close box shows its own colours; the
 # zoom box was not on screen and keeps its own).
 for k in [k for k in art if k.startswith(('db-thumb-', 'db-collapse'))]: art[k] = five_bit(art[k])
+# Disclosure triangles (Finder list view): closed as drawn, open through 16 bits.
+art['db-disclosure'] = pxm[340][0]; art['db-disclosure-open'] = five_bit(pxm[343][0])
+# Slider thumb pointing down (Keyboard, Key Repeat Rate), through 16 bits.
+art['db-slider-thumb'] = five_bit(pxm[1106][0])
+# Little arrows (Date & Time): normal, up held, down held, dimmed; through 16 bits.
+for i, st in enumerate(('', '-up', '-down', '-disabled')): art['db-little-arrows' + st] = five_bit(pxm[350][i])
 # Larger theme art ships as PNG files beside the stylesheet (art/drawingboard/),
 # not inside it: the document window's nine frame pieces (active, and the
 # inactive ones where the theme has them) and the paper pattern behind content.
@@ -167,6 +173,7 @@ if '--files' in sys.argv:
     # track's start (a list's vertical bar; the Themes tab's horizontal bar,
     # which Mac OS drew half a tile along): edges ppat 7049 / 7046, the double
     # centre line ppat 7048 / 7045.
+    save(rows(ppats[7024], 0), 'slider-track')   # the slider's 1px pencil track (Keyboard)
     save(rows(ppats[7049], 0), 'track-h-top'); save(rows(ppats[7049], 1), 'track-h-bottom')
     save(rows(ppats[7048], 0), 'track-h-mid1'); save(rows(ppats[7048], 1), 'track-h-mid2')
     save(cols(ppats[7046], 0), 'track-v-left'); save(cols(ppats[7046], 1), 'track-v-right')

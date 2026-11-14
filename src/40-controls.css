@@ -204,7 +204,7 @@
 }
 
 :where(input, textarea):focus-visible {
-  outline: var(--clio-focus-outline);
+  outline: var(--clio-field-focus-outline, var(--clio-focus-outline));
   outline-offset: var(--clio-focus-offset);
   box-shadow: var(--clio-field-focus-shadow);
 }
