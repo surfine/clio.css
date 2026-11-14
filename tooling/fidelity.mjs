@@ -56,6 +56,10 @@ specimens.push(
   S6("s6-radio-on", `<div style="padding:12px;background:#fff"><input type="radio" id="s" checked></div>`, [0, 0, 12, 12], "control-panel", [359, 109, 12, 12]),
   S6("s6-radio-off", `<div style="padding:12px;background:#fff"><input type="radio" id="s"></div>`, [0, 0, 12, 12], "control-panel", [335, 109, 12, 12]),
   S6("s6-scroll-up", s6Scroll, [106, 0, 14, 14], "system-folder", [414, 102, 14, 14]),
+  // clio.js: the scroll box dragged 56px down (frame scroll-box-drag: System Folder's list, the box
+  // pressed at 124 and held at 180; the pointer is masked). Its frame XORed with dkGray stays behind.
+  { ...S6("s6-js-scroll-drag", `<div class="clio-scroll" id="s" style="width:120px;height:160px;overflow-y:scroll;overflow-x:hidden;background:#fff"><div style="height:2000px"></div></div>`, [105, 15, 15, 90], "scroll-box-drag", [413, 117, 15, 90]), js: true, mask: [[5, 62, 10, 16]],
+    act: async (page, b) => { await page.mouse.move(b.x + 113, b.y + 22); await page.mouse.down(); await page.mouse.move(b.x + 113, b.y + 78, { steps: 4 }); } },
   S6("s6-grow-box", s6Scroll, [106, 106, 14, 14], "system-folder", [414, 256, 14, 14]),
   S6("s6-scroll-left", s6Scroll, [0, 106, 14, 14], "hd-window", [0, 137, 14, 14]),
   S6("s6-scroll-right", s6Scroll, [91, 106, 14, 14], "hd-window", [209, 137, 14, 14]),
@@ -79,10 +83,19 @@ const s7Window = (cls, title) => `<div class="${cls}" id="s" style="width:376px"
 specimens.push(
   { ...S7("s7-titlebar", s7Window("window", "Infinite HD"), [0, 0, 377, 19], "hd-window", [29, 55, 377, 19]), mask: [[218, 7, 14, 13], [376, 0, 1, 1]] },   // the pointer, and desktop beside the shadow
   { ...S7("s7-titlebar-inactive", s7Window("window inactive", "Infinite HD"), [0, 0, 377, 16], "folder-window", [29, 55, 377, 16]), mask: [[376, 0, 1, 1]] },   // desktop beside the shadow
+  // WindowShade (clicks set to 2, the Infinite HD window double-clicked): the title bar alone, closed by the frame.
+  { ...S7("s7-collapsed", `<div class="window collapsed" id="s" style="width:228px"><div class="title-bar"><button class="close" aria-label="Close"></button><h2 class="title">Infinite HD</h2><button class="resize" aria-label="Zoom"></button></div><div class="window-pane" style="height:40px"></div></div>`, [0, 0, 229, 20], "shaded", [109, 171, 229, 20]), mask: [[228, 0, 1, 1], [0, 19, 1, 1]] },
   S7("s7-scroll-up", s6Scroll, [106, 0, 14, 14], "folder-window", [406, 110, 14, 14]),
   // Content long enough that the scroll box is System 7's 16 rows.
   S7("s7-scroll-thumb", `<div class="clio-scroll" id="s" style="width:120px;height:120px;overflow:scroll;background:#fff"><div style="width:400px;height:562px"></div></div>`, [106, 15, 14, 15], "folder-window", [406, 125, 14, 15]),   // the box's drawing; its length is Chromium's (26px at least, see EVIDENCE: scroll box)
   S7("s7-grow-box", s6Scroll, [106, 106, 14, 14], "folder-window", [406, 234, 14, 14]),
+  // The horizontal bar (frame hbar: the Infinite HD window narrowed until it scrolls sideways).
+  S7("s7-scroll-left", s6Scroll, [0, 106, 14, 14], "hbar", [110, 394, 14, 14]),
+  S7("s7-scroll-right", s6Scroll, [91, 106, 14, 14], "hbar", [307, 394, 14, 14]),
+  S7("s7-hscroll-thumb", `<div class="clio-scroll" id="s" style="width:120px;height:120px;overflow:scroll;background:#fff"><div style="width:562px;height:400px"></div></div>`, [15, 106, 15, 14], "hbar", [125, 394, 15, 14]),
+  // The lane's pattern keeps to the screen, which only clio.js can follow (it keeps it to the page):
+  // the scroller sits where its page position has the frame's screen position's phase (mod 8).
+  { ...S7("s7-js-hscroll-lane", `<div style="padding-left:6px"><div class="clio-scroll" id="s" style="width:120px;height:120px;overflow-x:scroll;overflow-y:hidden;background:#fff"><div style="width:4000px;height:20px"></div></div></div>`, [50, 106, 40, 14], "hbar", [160, 394, 40, 14]), js: true },
   S7("s7-alert-frame", `<div class="alert-box" id="s" style="width:200px;height:80px"></div>`, [0, 0, 18, 18], "page-setup", [208, 110, 18, 18]),
   S7("s7-checkbox-on", `<div style="padding:12px;background:#fff"><input type="checkbox" id="s" checked></div>`, [0, 0, 12, 12], "general-controls", [33, 81, 12, 12]),
   S7("s7-checkbox-off", `<div style="padding:12px;background:#fff"><input type="checkbox" id="s"></div>`, [0, 0, 12, 12], "general-controls", [33, 129, 12, 12]),
@@ -239,6 +252,7 @@ const results = [];
 const ONLY = process.env.FIDELITY_ONLY ? new RegExp(process.env.FIDELITY_ONLY) : null;   // a quick look; writes no report
 for (const s of specimens) {
   if (ONLY && !ONLY.test(s.id)) continue;
+  await page.mouse.up().catch(() => {});
   if (s.refFile && !existsSync(s.refFile)) { console.log(`${s.id}: no reference (run npm run capture:system6)`); continue; }
   // Firefox has no ::-webkit-scrollbar: there the era's scroll bars are the ones clio.js
   // draws, so scroll-bar specimens load it (and say so in the table).
@@ -255,6 +269,8 @@ for (const s of specimens) {
   await page.evaluate(async () => { void document.body.offsetHeight; await document.fonts.ready; await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))); });
   if (s.js) await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))));
   const box = await page.locator("#s").boundingBox();
+  // act(page, box): a held state the frame shows (the button stays down for the shot).
+  if (s.act) { await s.act(page, box); await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)))); }
   const [x, y, w, h] = s.crop;
   // Engines snap a box at a fractional position to the pixel grid in their own way, and
   // a fractional clip is rounded differently again: crop at the pixel the box snapped to.
