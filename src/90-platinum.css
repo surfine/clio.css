@@ -894,3 +894,39 @@
   position: relative;
   z-index: 1;
 }
+
+/* ---- Movable modal window (Navigation Services "Open", Mac OS 9.0) --------------
+   A title bar with no close box over a dialog body: no frame band, the black
+   rule under the title bar runs the whole width, and the body has the modal
+   dialog's white light and #999/#555 shade inside the outline. */
+:is([data-era="platinum"], [data-era="drawingboard"]) .window.movable-modal {
+  padding: 2px 0 0;
+  background:
+    linear-gradient(#ffffff, #ffffff) 1px 22px / calc(100% - 3px) 1px no-repeat,
+    linear-gradient(#ffffff, #ffffff) 1px 22px / 1px calc(100% - 23px) no-repeat,
+    linear-gradient(#999999, #999999) calc(100% - 1px) 23px / 1px calc(100% - 24px) no-repeat,
+    linear-gradient(#555555, #555555) 100% 22px / 1px calc(100% - 22px) no-repeat,
+    linear-gradient(#ffffff, #ffffff) 0 0 / 100% 1px no-repeat,
+    linear-gradient(#ffffff, #ffffff) 0 0 / 1px 19px no-repeat,
+    linear-gradient(#cccccc, #cccccc) 0 19px / 1px 1px no-repeat,
+    linear-gradient(#000000, #000000) 0 20px / 1px 1px no-repeat,
+    linear-gradient(#cccccc, #cccccc) 1px 1px / 100% 1px no-repeat,
+    #dddddd;
+}
+
+:is([data-era="platinum"], [data-era="drawingboard"]) .window.movable-modal > .title-bar {
+  --clio-tb-close: 3px;
+  margin: 0 0 0 1px;
+  border-bottom: 1px solid #000000;
+  box-shadow: none;
+}
+
+/* the frame's light down the title bar's first column, above its #999 row */
+:is([data-era="platinum"], [data-era="drawingboard"]) .window.movable-modal {
+  --clio-mm-light: linear-gradient(#ffffff, #ffffff) 1px 1px / 1px 19px no-repeat;
+}
+
+:is([data-era="platinum"], [data-era="drawingboard"]) .window.movable-modal > .window-pane {
+  border: 0;
+  background: transparent;
+}

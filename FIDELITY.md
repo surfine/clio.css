@@ -132,6 +132,7 @@ Reference: Mac OS 9.0 running in Infinite Mac, the 800×600 colour canvas read 1
 | p9-help-button | 21×20 | 100.0% | 100.0% | 0.0% | 0 |
 | p9-utility-left | 40×15 | 100.0% | 100.0% | 0.0% | 0 |
 | p9-utility-right | 35×15 | 100.0% | 100.0% | 0.0% | 0 |
+| p9-movable-modal-left | 40×22 | 100.0% | 100.0% | 0.0% | 0 |
 | p9-disclosure | 13×13 | 100.0% | 100.0% | 0.0% | 0 |
 | p9-disclosure-open | 13×13 | 100.0% | 100.0% | 0.0% | 0 |
 | p9-strip-start | 29×24 | 100.0% | 100.0% | 0.0% | 0 |
