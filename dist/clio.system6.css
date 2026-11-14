@@ -2809,6 +2809,13 @@
   outline-offset: -1px;
 }
 
+
+/* clio.js: a movable window's title bar takes a finger's drag itself (on a
+   touch screen the browser would otherwise pan the page and cancel the drag). */
+.clio-drag-bar {
+  touch-action: none;
+}
+
 /* Control Strip (System 7.5 to Mac OS 9): a row of module buttons with scroll
    arrows and a tab that folds the strip away. Markup follows AI System 6:
    .control-strip > button.control-strip-scroll.control-strip-scroll-back,

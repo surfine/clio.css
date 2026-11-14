@@ -209,7 +209,12 @@
     if (!track || track.mode !== "press" || e.button !== 0) return;
     const el = document.elementFromPoint(e.clientX, e.clientY);
     const li = el && el.closest(`:is(${MENU}) > li`);
-    if (li && track.bar.contains(li) && usable(li) && !submenuOf(li)) { e.preventDefault(); choose(li); return; }
+    if (li && track.bar.contains(li) && usable(li) && !submenuOf(li)) {
+      // the press and release were both on the item (a click-opened menu, or a tap): the
+      // browser's own click follows and must not run the item a second time
+      document.addEventListener("click", (c) => { if (c.isTrusted && c.target instanceof Node && li.contains(c.target)) { c.preventDefault(); c.stopPropagation(); } }, { capture: true, once: true });
+      e.preventDefault(); choose(li); return;
+    }
     const tli = el && el.closest(`:is(${BAR}) > li`);
     if (tli === track.li && track.fresh && !el.closest(MENU) && sticky(track.bar)) { track.mode = "sticky"; return; }   // Mac OS 8: a click leaves the menu open
     closeAll();
@@ -696,7 +701,7 @@
     const o = outlineBox(r, outlineWidth(win), m);
     (win.closest("[data-era]") || document.body).appendChild(o);
     const x0 = e.clientX, y0 = e.clientY; let dx = 0, dy = 0;
-    const move = (ev) => { if (ev.pointerId !== e.pointerId) return; dx = ev.clientX - x0; dy = ev.clientY - y0; o.style.transform = `translate(${dx}px, ${dy}px)`; grayPhase(o, Math.round(r.left) + dx, Math.round(r.top) + dy); };
+    const move = (ev) => { if (ev.pointerId !== e.pointerId) return; dx = Math.round(ev.clientX - x0); dy = Math.round(ev.clientY - y0); /* a finger reports fractions */ o.style.transform = `translate(${dx}px, ${dy}px)`; grayPhase(o, Math.round(r.left) + dx, Math.round(r.top) + dy); };
     const up = (ev) => {
       if (ev.pointerId !== e.pointerId) return;
       document.removeEventListener("pointermove", move, true); document.removeEventListener("pointerup", up, true); document.removeEventListener("pointercancel", up, true);
@@ -738,6 +743,7 @@
   function handleFor(win) {
     const bar = win.querySelector(":scope > .title-bar");
     if (!bar || bar.querySelector(":scope > .clio-move")) return;
+    bar.classList.add("clio-drag-bar");   // a finger on it drags the window, not the page
     const b = document.createElement("button");
     b.type = "button"; b.className = "clio-move";
     b.setAttribute("aria-haspopup", "menu"); b.setAttribute("aria-expanded", "false");

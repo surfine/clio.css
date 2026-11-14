@@ -164,3 +164,9 @@
   outline-offset: -1px;
 }
 
+
+/* clio.js: a movable window's title bar takes a finger's drag itself (on a
+   touch screen the browser would otherwise pan the page and cancel the drag). */
+.clio-drag-bar {
+  touch-action: none;
+}
