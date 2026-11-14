@@ -148,7 +148,16 @@ System 6.0.8 reference frames from Infinite Mac; the frames are never committed.
 What the era never had is adapted, not imitated: keyboard focus rings, touch-size
 controls on `pointer: coarse` (title-bar boxes get a 45px hit area while their art stays
 11px), solid grey instead of a dithered disabled state, and system controls in
-forced-colours mode. No animation anywhere.
+forced-colours mode. The chasing arrows are the only animation, and they stop under
+`prefers-reduced-motion`.
+
+On Retina and other whole-number pixel ratios (2x, 3x) the art is magnified by nearest
+neighbour, so every Mac pixel is a solid 2×2 or 3×3 block; at fractional ratios (1.25x,
+1.5x, browser zoom) the browser's smoothing stays. `FIDELITY_DPR=2 npm run fidelity`
+checks the specimens against the references magnified the same way: 99 of 106 are
+identical at 2x and 96 at 3x. The rest are parts the layout puts on a half pixel (centred
+text with an odd spare width, controls aligned to a line's middle), which the browser
+rounds away at 1x and draws one device pixel over at 2x and 3x.
 
 ## Browser support
 

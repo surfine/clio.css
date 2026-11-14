@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+- Retina: at 2x, 3x and 4x the art scales by nearest neighbour (crisp Mac pixels); the
+  page's own images, video and canvas keep smoothing. At 2x 99 of 106 specimens are
+  identical to the magnified reference, up from 37 (`FIDELITY_DPR=2 npm run fidelity`).
+
 ## 0.10.0 — 2026-11-14
 
 Every control the classic guidelines define is now in clio.css. COVERAGE.md checks the
