@@ -75,6 +75,36 @@ and cite page numbers in COVERAGE.md.
   into clio.css, with lids, bezels and keyboard decks as faithful as a costume maker
   would make them.
 
+## 2b. Reuse AI System 6 first (owner, 2026-11-14)
+
+Do not rebuild what AI System 6 already has. Each era starts from AI System 6's
+existing work and measures only what is missing or wrong: the Pareto route, cheaper
+in time, effort and tokens.
+
+**What already exists in AI System 6** (paths in its repository):
+
+| Asset | Where | Use in clio.css |
+| --- | --- | --- |
+| Era stylesheets with tuned values for Aqua, Tiger, Snow Leopard, Lion, Yosemite, Big Sur, NeXTSTEP (about 4,800 lines) | `apps/desktop/styles/67-*.css`, `68-big-sur-appearance.css`, `69-nextstep-appearance.css`, `65-appearance-themes.css` | Starting values for every token. Port them as **inferred (AI System 6)**, then upgrade a value to measured only when the emulator check disagrees or confirms it. |
+| Theme Lab fidelity manifests with reference crops: Aqua 18 specimens (GUIdebook), Snow Leopard 19 (512 Pixels, Quaqua), Yosemite 17 (512 Pixels), Tiger and Lion 4 each, Big Sur and NeXTSTEP 5 each (authored) | `tests/visual/theme-lab-fidelity/*.json`, crops in `internal/evidence/drafts/theme-lab-fidelity/<era>/tiles/` | First-pass pixel check on day one, through the same `AIS6_DIR` route clio.css already uses for Platinum. The emulator replaces a reference only where it is better (1:1, factory settings). |
+| Traffic lights cut from each era's own screenshots, with positions, background-window and disabled states, hover symbols, the unsaved dot | `internal/evidence/drafts/lamp-fidelity/` and `SOURCES.md`; commit `dc457f347` | Measurements for the lamps' geometry and states; the art itself is redrawn under D4. |
+| The Tiger menu bar measured from 512 Pixels (21px white pillow gradient, `#c9c9c9` rule) | the tiger-menubar-fix session's change to `67-tiger-appearance.css` | Tiger menu bar values, then confirmed in the emulator. |
+| Appearance evidence ledger and authority order (native capture > Quaqua > period web CSS) | `docs/design/DESIGN.md`, "Appearance evidence ledger" | The source chain for each era's evidence rows. |
+| Quaqua 9.1 (Jaguar and Snow Leopard look-and-feels), Yosemite-gtk-theme | named in the ledger with versions | Geometry, size variants (regular/small/mini) and states where the emulator is slow to reach. |
+| Pocket Desk: twelve machines with bezel tables, materials and poses | `62-duo-pocket-desk.css`, `duo-pocket-desk.js`, `docs/design/FORM-FACTORS.md`, `internal/agents/HANDOFF-2026-11-11-DUO-POCKET-DESK-CLOSE.zh-CN.md` | Starting spec for `machines/<id>.json`; P7 adds sources and detail, it does not redraw from zero. |
+| Primitive fixture and Theme Lab | `tooling/verify-liquid-shapes.mjs --primitives`, Theme Lab | The P6 acceptance check: clio's values are proven inside AI System 6 with its own tooling. |
+| Twelve-appearance QA instrumentation | `docs/design/APPEARANCE-QA.md` | Which states and surfaces AI System 6 already checks, so clio.css covers the same set. |
+
+**Working rule for each era:**
+
+1. Port AI System 6's values and markup aliases into the era file (hours, not days).
+2. Run the existing reference crops through `npm run fidelity`; list what fails.
+3. Spend emulator time only on what failed, what is missing from the HIG coverage
+   table, and states no reference shows.
+4. Measure once, use twice: every emulator frame is filed so both clio.css and AI
+   System 6's Theme Lab can cite it.
+5. Feed back (P6) only the values that changed.
+
 ## 3. What AI System 6 needs from each era
 
 AI System 6 builds every window from a fixed list of primitives (DESIGN.md, "Object
