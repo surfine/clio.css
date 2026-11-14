@@ -157,6 +157,13 @@
         },
         {
           "era": "both",
+          "claim": "clio.js: on a touch screen a finger on a movable window's title bar drags the window (touch-action: none there), and a tapped menu item runs once",
+          "status": "adapted",
+          "source": "iOS Simulator (iPhone 18 Pro, Safari), driven by touch events",
+          "upstream": "not checked on a physical iPhone"
+        },
+        {
+          "era": "both",
           "claim": "clio.js: a movable window can be moved without dragging: a move button at the start of the title bar (hidden until it has keyboard focus, the title bar then ringed) takes arrow keys (16px, Shift 1px) and opens a menu of moves, as does a right click on the title bar; moves stay inside the page and a polite live region names them",
           "status": "adapted",
           "source": "modern-web-guidance drag guide; WCAG 2.5.7 Dragging Movements",

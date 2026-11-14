@@ -236,7 +236,7 @@
       </dl>
       <p class="aliases">Also accepts: system.css markup (<code>.title-bar button.close</code>, <code>.title-bar button.resize</code>, <code>.inactive-title-bar</code>, <code>.window-pane</code>, <code>.details-bar</code>, <code>.separator</code>); AI System 6 markup (<code>.close-box</code>, <code>.resize-box</code>, <code>.shade-box</code>, <code>.title-bar h1</code>, <code>.title-bar h2</code>).</p>
       <details class="evidence-details">
-        <summary>Evidence (37)</summary>
+        <summary>Evidence (38)</summary>
       <table class="evidence">
         <caption>Where each value comes from</caption>
         <thead><tr><th scope="col">Era</th><th scope="col">Value</th><th scope="col">Status</th><th scope="col">Source</th></tr></thead>
@@ -282,6 +282,12 @@
           <td>clio.zoomRects(): as Mac OS 9: 6 outlines in the 2px band, one per tick, at about 1.4^(k-7) of the way</td>
           <td><span class="status status-measured">Measured</span></td>
           <td><code>clio.css capture, Mac OS 8.5 with the theme in Infinite Mac, Developer opened, every changed frame recorded (outlines at 530-613 ms, the window at 646 ms)</code><br><span class="upstream">the Finder of 8.5 and 9.0 agree</span></td>
+        </tr>
+<tr>
+          <td>All eras</td>
+          <td>clio.js: on a touch screen a finger on a movable window's title bar drags the window (touch-action: none there), and a tapped menu item runs once</td>
+          <td><span class="status status-adapted">Adapted</span></td>
+          <td><code>iOS Simulator (iPhone 18 Pro, Safari), driven by touch events</code><br><span class="upstream">not checked on a physical iPhone</span></td>
         </tr>
 <tr>
           <td>All eras</td>

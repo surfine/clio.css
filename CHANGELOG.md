@@ -71,6 +71,12 @@ Safari and Firefox, checked: `CLIO_ENGINE=webkit|firefox` runs the pixel check a
     corners and shadow under the title bar); the window edges tile from SVG patterns.
   - Drawing Board: the dragged outline follows the frame and shadow and the pieces' overrun
     (corner patches from `tooling/db-outline.py`): 1333 of 1349 pixels (was 1275).
+- **Touch** (iOS Simulator, Safari, iPhone 18 Pro): `<select>` keeps the system picker;
+  menus open and choose with taps; scroll areas scroll under a finger with their clio.js bars
+  following. Fixed: a chosen menu item ran twice when press and release were both on it (a
+  tap, or a click in a click-opened Mac OS 8/9 menu: the browser's own click followed
+  clio.js's); a finger on a movable window's title bar now drags the window instead of the
+  page (`touch-action: none` on `.clio-drag-bar`). Not tested on a physical iPhone.
 - **`dist/clio.min.js`** (esbuild, 31 KB; the package exports `./js` and `./js.min`);
   `CLIO_JS=min npm run behaviour` checks it. **Budget**: `clio.min.css` may grow to 220 KB
   (owner, 2026-11-14); Mac OS X eras will ship as files of their own.

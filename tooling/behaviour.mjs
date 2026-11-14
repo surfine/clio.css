@@ -189,9 +189,11 @@ for (const era of ["system7", "platinum"]) {
   const stays = await shown("#m");
   if (era === "platinum") {
     ok(stays, "platinum: a clicked menu stays open (Mac OS 8)");
+    await page.evaluate(() => { window.runs = 0; document.querySelector("#new").addEventListener("click", () => window.runs++); });
     const [nx, ny] = await center("#new"); await page.mouse.move(nx, ny, { steps: 3 }); await page.mouse.click(nx, ny);
     await page.waitForTimeout(450);
     ok(await page.evaluate(() => window.chose) === "new" && !(await shown("#m")), "platinum: a click on an item of an open menu chooses it");
+    ok(await page.evaluate(() => window.runs) === 1, `platinum: and runs it once (${await page.evaluate(() => window.runs)})`);
     await page.mouse.click(tx, ty); await page.mouse.click(400, 500);
     ok(!(await shown("#m")), "platinum: a click elsewhere closes it");
   } else ok(!stays, "system7: a clicked menu closes again (the button must be held)");

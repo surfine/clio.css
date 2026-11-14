@@ -51,7 +51,8 @@ can be measured in an emulator. Launch posts wait until Aqua is done. Method:
 - **Drawing Board's dragged outline, 35 pixels**: the close box's cross overrunning above
   the frame (clio.css does not draw that overrun either) and a line below the bottom-left
   corner 2px along.
-- **Touch**: checked in the iOS Simulator's Safari, not on a real iPhone (see CHANGELOG).
+- **Touch on a physical iPhone**: checked in the iOS Simulator's Safari only (pop-ups,
+  menus, scrolling, window dragging; see CHANGELOG).
 
 7. **M: The watch cursor.** Never stayed on screen long enough; try a long Finder copy.
 8. **M: The submenu direction rule.** Measured holds of about 1.2 s, but not which moves
