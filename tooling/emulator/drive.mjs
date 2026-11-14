@@ -9,6 +9,7 @@
 //  shot NAME (canvas png) | ctrlclick x y | ctrlup | dropzip FILE (drop a .zip onto the emulator)
 //  rec x y w h ms [up | down | key K | X Y]   every animation frame of a crop, as [ms, hash] at each change -> rec.json (timing)
 //  film x y w h ms [up | down | dbl X Y]  every changed frame of a crop as film/NNN-<ms>.png (animations)
+//  pageshot NAME (the whole page, for the emulator's own controls) | pclick x y (page pixels) | ptext TEXT (click the page element with that text)
 //  quit
 import { createRequire } from "node:module";
 import { readFileSync, writeFileSync, appendFileSync, existsSync } from "node:fs";
@@ -89,6 +90,9 @@ for (;;) {
         const frames = await p; const fs = await import("node:fs"); fs.mkdirSync(`${dir}/film`, { recursive: true });
         frames.forEach(([t, url], i) => fs.writeFileSync(`${dir}/film/${String(i).padStart(3, "0")}-${t}.png`, Buffer.from(url.split(",")[1], "base64")));
       }
+      else if (c === "pageshot") await page.screenshot({ path: `${dir}/${a[0]}.png` });
+      else if (c === "pclick") await page.mouse.click(+a[0], +a[1]);
+      else if (c === "ptext") await page.getByText(a.join(" "), { exact: true }).first().click();
       else if (c === "quit") { log("bye"); await b.close(); process.exit(0); }
       log("ok " + lines[done - 1]);
     } catch (e) { log("ERR " + lines[done - 1] + " " + e.message.split("\n")[0]); }

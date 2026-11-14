@@ -61,6 +61,23 @@ Inc., which is why the fonts have other names.
 
 Asap is a fallback stand-in for Charcoal and is not presented as an Apple font.
 
+### Fusion Pixel Font (`dist/fonts/FusionPixel12-TC.woff2`, `-SC`, `-JA`, `-KO`)
+
+Fusion Pixel Font 12px proportional, release 2026.11.10, © 2022 TakWolf
+(https://github.com/TakWolf/fusion-pixel-font), SIL Open Font License 1.1 with no Reserved
+Font Name. It merges glyphs from Ark Pixel Font (© 2021 TakWolf, OFL-1.1), Cubic 11 (with
+JF Dot M+H 12 and the M+ bitmap fonts, free software) and Galmuri (© 2019–2025 Lee Minseo,
+OFL-1.1). The licences, as the release ships them, are in `dist/fonts/OFL-FusionPixel.txt`.
+The build code of the upstream project is MIT; clio.css uses only its released fonts.
+
+clio.css ships Modified Versions under the same licence: `tooling/cjk-fonts.py` takes the
+release's `otf.woff2` zip (SHA-256 4a0bab32…b075), keeps per language the characters of the
+period Mac's interface font (Big5 for `zh_tw`, GB 2312 for `zh_hans`, JIS X 0208 for `ja`,
+KS X 1001 for `ko`, plus ASCII) and sets the vertical metrics to Clio's own pixel fonts'
+(ascent 11px, descent 3px). Glyph outlines are unchanged; the names are the upstream ones.
+They stand in for Apple's Taipei, Beijing, Osaka and Seoul, which clio.css does not ship or
+extract, and are not presented as Apple fonts.
+
 ### Virtue (`dist/fonts/Virtue.woff2`)
 
 Virtue 3.2.1, © 1997–1999 Marty P. Pfeiffer, [Scooter Graphics](https://www.scootergraphics.com/)

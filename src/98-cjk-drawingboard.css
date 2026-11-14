@@ -1,0 +1,4 @@
+/* Drawing Board's own title stack (92-drawingboard.css), CJK first. */
+:is([data-era="drawingboard"] :is(:lang(zh), :lang(ja), :lang(ko)), [data-era="drawingboard"]:is(:lang(zh), :lang(ja), :lang(ko))) {
+  --clio-font-window-title: var(--clio-font-cjk), Charcoal, "Charcoal CY", "Clio Sans '97 Title", "Clio Sans '97", "Clio Asap", Geneva, "Helvetica Neue", Arial, sans-serif;
+}

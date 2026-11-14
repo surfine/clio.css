@@ -58,7 +58,7 @@ for (const m of noComments.matchAll(/url\(\s*["']?([^"')]+)/g)) {
   const u = m[1];
   const png = u.startsWith("data:image/png;base64,") && /--clio-(art-(db|p9|s7|frame)|db-outline)-[\w-]+:\s*$/.test(noComments.slice(Math.max(0, m.index - 60), m.index));
   if (u.startsWith("art/")) ok(existsSync(join(root, "dist", u)), `missing art file dist/${u}`);
-  ok(u.startsWith("data:image/svg+xml,") || png || /^fonts\/(ChicagoFLF\.woff2?|Asap-Variable\.woff2|ClioSans84\.woff2|ClioText84\.woff2|ClioText84-9\.woff2|ClioSans97\.woff2|ClioSans97Display\.woff2|ClioSans97Title\.woff2|ClioSans97Exact\.woff2|ClioSans97TitleExact\.woff2|ClioSans97Plain\.woff2|ClioSans97TitlePlain\.woff2|ClioSans97PlainExact\.woff2|ClioSans97TitlePlainExact\.woff2|Virtue\.woff2)$/.test(u) || /^art\/(drawingboard|platinum|system7|system6|cursors)\/(pens\/|parts\/)?[a-z0-9-]+\.png$/.test(u) || /^art\/drawingboard\/[a-z0-9-]+-tiled\.svg$/.test(u) || /^%23\w+$/.test(u), `unexpected url(): ${u.slice(0, 60)}`);
+  ok(u.startsWith("data:image/svg+xml,") || png || /^fonts\/(ChicagoFLF\.woff2?|Asap-Variable\.woff2|ClioSans84\.woff2|ClioText84\.woff2|ClioText84-9\.woff2|ClioSans97\.woff2|ClioSans97Display\.woff2|ClioSans97Title\.woff2|ClioSans97Exact\.woff2|ClioSans97TitleExact\.woff2|ClioSans97Plain\.woff2|ClioSans97TitlePlain\.woff2|ClioSans97PlainExact\.woff2|ClioSans97TitlePlainExact\.woff2|Virtue\.woff2|FusionPixel12-(TC|SC|JA|KO)\.woff2)$/.test(u) || /^art\/(drawingboard|platinum|system7|system6|cursors)\/(pens\/|parts\/)?[a-z0-9-]+\.png$/.test(u) || /^art\/drawingboard\/[a-z0-9-]+-tiled\.svg$/.test(u) || /^%23\w+$/.test(u), `unexpected url(): ${u.slice(0, 60)}`);
 }
 
 // 6. Component index: every component is documented, evidenced and styled.
@@ -116,6 +116,21 @@ ok(/^# clio\.css\n\n> .+/m.test(llms), "llms.txt: needs an H1 and a blockquote s
 ok(/^## /m.test(llms), "llms.txt: needs H2 link sections");
 ok(read("docs/llms.txt") === llms, "docs/llms.txt differs from llms.txt");
 ok(read("docs/llms-full.txt").includes("```css"), "llms-full.txt: stylesheet missing");
+
+// 9b. CJK stand-ins (owner decisions 9 and 10): each face has a unicode-range, and the
+// families are named only in --clio-font-cjk under :lang(), so pages without CJK text never
+// fetch them. The fonts are outside the CSS size budget.
+{
+  const all = read("dist/clio.css");
+  const faces = all.match(/@font-face\s*\{[^}]*Clio Pixel[^}]*\}/g) || [];
+  ok(faces.length === 4 && faces.every((f) => /unicode-range:/.test(f)), "the four Clio Pixel faces need a unicode-range");
+  const rest = all.replace(/@font-face\s*\{[^}]*\}/g, "");
+  const uses = rest.match(/[^;{}]*Clio Pixel[^;{}]*/g) || [];
+  ok(uses.length === 4 && uses.every((u) => /^\s*--clio-font-cjk:/.test(u)), "Clio Pixel named outside --clio-font-cjk");
+  for (const m of all.matchAll(/([^{}]*)\{\s*--clio-font-cjk:/g)) ok(/:lang\(/.test(m[1]), `--clio-font-cjk set outside :lang(): ${m[1].trim().slice(0, 60)}`);
+  for (const f of ["TC", "SC", "JA", "KO"]) ok(existsSync(join(root, `dist/fonts/FusionPixel12-${f}.woff2`)), `dist/fonts/FusionPixel12-${f}.woff2 missing`);
+  ok(existsSync(join(root, "dist/fonts/OFL-FusionPixel.txt")), "the Fusion Pixel licence must ship beside the fonts");
+}
 
 // 10. Package.
 const pkg = JSON.parse(read("package.json"));
