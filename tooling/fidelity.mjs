@@ -115,12 +115,17 @@ const dbdir = join(root, ".fidelity/drawingboard");
 const ART = pathToFileURL(join(root, "dist/art/drawingboard")).href;
 const DB = (id, html, crop, file, ref) => ({ id, era: "drawingboard", html, crop, refFile: join(dbdir, file + ".png"), refCrop: ref });
 const dbPlain = `<div class="window" id="s" style="width:376px;height:369px"><div class="title-bar"><button class="close" aria-label="Close"></button><h2 class="title">Date &amp; Time</h2><button class="collapse" aria-label="Collapse"></button></div><div class="window-pane" style="flex:1"></div></div>`;
+const dbCollapsed = `<div class=\"window collapsed\" id=\"s\" style=\"width:349px;height:200px\"><div class=\"title-bar\"><button class=\"close\" aria-label=\"Close\"></button><h2 class=\"title\">Infinite HD</h2><button class=\"resize\" aria-label=\"Zoom\"></button><button class=\"collapse\" aria-label=\"Collapse\"></button></div><div class=\"window-pane\" style=\"flex:1\"></div></div>`;
 const dbWindow = `<div class="window" id="s" style="width:476px;height:120px"><div class="title-bar"><button class="close" aria-label="Close"></button><h2 class="title">Appearance</h2><button class="collapse" aria-label="Collapse"></button></div><div class="window-pane" style="height:60px"></div></div>`;
 specimens.push(
   DB("db-close-box", dbWindow, [5, 5, 11, 11], "appearance", [166, 73, 11, 11]),
   DB("db-collapse-box", dbWindow, [460, 5, 11, 11], "appearance", [621, 73, 11, 11]),
   // Frame corners on a plain window (Date & Time, 376x369): the Appearance
   // window's body under its title is the tab control's, not the window paper.
+  // The collapse box clicked (Infinite HD; frame collapsed): the title bar over the frame's foot and shadow.
+  // (the box and its shadow only: around it the capture shows other windows)
+  { ...DB("db-collapsed-left", dbCollapsed, [0, 0, 40, 31], "collapsed", [104, 168, 40, 31]), mask: [[1, 23, 6, 8]] },   // a window behind, under the foot's start
+  DB("db-collapsed-right", dbCollapsed, [309, 0, 40, 31], "collapsed", [413, 168, 40, 31]),
   DB("db-titlebar-left", dbPlain, [0, 0, 40, 26], "date-time", [210, 68, 40, 26]),
   DB("db-titlebar-right", dbPlain, [336, 0, 40, 26], "date-time", [546, 68, 40, 26]),
   { ...DB("db-window-bottom-left", dbPlain, [0, 329, 40, 40], "date-time", [210, 397, 40, 40]), mask: [[16, 4, 22, 21]] },   // the panel's help button
@@ -248,9 +253,14 @@ specimens.push(
   { ...P9("p9-js-scroll-smart", jsScroll(122, 'data-clio-scrolling="smart"'), [185, 0, 15, 122], "../hig/platinum9/finder-scroll-smart", [405, 111, 15, 122]), js: true },
   // An open pop-up menu (Appearance > Fonts, Large System Font held, the pointer moved off the menu; frame
   // popup-open): clio.js draws it (base-select hidden from it), and where the browser draws it, base-select.
-  { ...P9("p9-js-popup-open", `<script>{ const f = CSS.supports.bind(CSS); CSS.supports = (a, b) => (a === "appearance" && b === "base-select") ? false : f(a, b); }</script><div class="clio" style="padding:12px 0 140px 12px;background:#dddddd;width:400px"><select id="s" style="width:163px"><option selected>Charcoal</option><option>Chicago</option><option>Capitals</option><option>Gadget</option><option>Sand</option><option>Techno</option><option>Textile</option></select></div>`, [0, 0, 142, 115], "fonts-popup-open", [333, 143, 142, 115]), js: true, mask: [[141, 0, 1, 2], [0, 114, 2, 1]],
+  { ...P9("p9-js-popup-open", `<script>{ const f = CSS.supports.bind(CSS); CSS.supports = (a, b) => (a === "appearance" && b === "base-select") ? false : f(a, b); }</script><div class="clio" style="padding:12px 0 140px 12px;background:#dddddd;width:400px"><select id="s" style="width:161px"><option selected>Charcoal</option><option>Chicago</option><option>Capitals</option><option>Gadget</option><option>Sand</option><option>Techno</option><option>Textile</option></select></div>`, [0, 0, 142, 115], "fonts-popup-open", [333, 143, 142, 115]), js: true, mask: [[141, 0, 1, 2], [0, 114, 2, 1]],
     act: async (page, b) => { await page.mouse.move(b.x + 80, b.y + 10); await page.mouse.down(); await page.mouse.move(b.x + 380, b.y + 10, { steps: 3 }); } },
-  { ...P9("p9-popup-open", `<div class="clio" style="padding:12px 0 140px 12px;background:#dddddd;width:400px"><select id="s" style="width:163px"><option selected>Charcoal</option><option>Chicago</option><option>Capitals</option><option>Gadget</option><option>Sand</option><option>Techno</option><option>Textile</option></select></div>`, [0, 0, 142, 115], "fonts-popup-open", [333, 143, 142, 115]), js: true, baseSelect: true, mask: [[141, 0, 1, 2], [0, 114, 2, 1]],
+  { ...P9("p9-popup-open", `<div class="clio" style="padding:12px 0 140px 12px;background:#dddddd;width:400px"><select id="s" style="width:161px"><option selected>Charcoal</option><option>Chicago</option><option>Capitals</option><option>Gadget</option><option>Sand</option><option>Techno</option><option>Textile</option></select></div>`, [0, 0, 142, 115], "fonts-popup-open", [333, 143, 142, 115]), js: true, baseSelect: true, mask: [[141, 0, 1, 2], [0, 114, 2, 1]],
+    act: async (page, b) => { await page.mouse.move(b.x + 80, b.y + 10); await page.mouse.down(); await page.mouse.move(b.x + 380, b.y + 10, { steps: 3 }); } },
+  // The same moment, the button's end: its arrows drawn pressed (the menu's frame and shadow at the left).
+  { ...P9("p9-js-popup-open-arrows", `<script>{ const f = CSS.supports.bind(CSS); CSS.supports = (a, b) => (a === "appearance" && b === "base-select") ? false : f(a, b); }</script><div class="clio" style="padding:12px 0 140px 12px;background:#dddddd;width:400px"><select id="s" style="width:161px"><option selected>Charcoal</option><option>Chicago</option><option>Capitals</option><option>Gadget</option><option>Sand</option><option>Techno</option><option>Textile</option></select></div>`, [140, 0, 21, 20], "fonts-popup-open", [473, 143, 21, 20]), js: true, mask: [[19, 0, 2, 2], [20, 2, 1, 1], [20, 17, 1, 3], [19, 19, 1, 1]],
+    act: async (page, b) => { await page.mouse.move(b.x + 80, b.y + 10); await page.mouse.down(); await page.mouse.move(b.x + 380, b.y + 10, { steps: 3 }); } },
+  { ...P9("p9-popup-open-arrows", `<div class="clio" style="padding:12px 0 140px 12px;background:#dddddd;width:400px"><select id="s" style="width:161px"><option selected>Charcoal</option><option>Chicago</option><option>Capitals</option><option>Gadget</option><option>Sand</option><option>Techno</option><option>Textile</option></select></div>`, [140, 0, 21, 20], "fonts-popup-open", [473, 143, 21, 20]), js: true, mask: [[19, 0, 2, 2], [20, 2, 1, 1], [20, 17, 1, 3], [19, 19, 1, 1]], baseSelect: true,
     act: async (page, b) => { await page.mouse.move(b.x + 80, b.y + 10); await page.mouse.down(); await page.mouse.move(b.x + 380, b.y + 10, { steps: 3 }); } },
   // The down arrow held (Mac OS 9.0 Finder, Smart Scrolling as Infinite Mac sets it; frame arrow-held,
   // the pointer in its corner masked).

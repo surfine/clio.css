@@ -236,7 +236,7 @@
       </dl>
       <p class="aliases">Also accepts: system.css markup (<code>.title-bar button.close</code>, <code>.title-bar button.resize</code>, <code>.inactive-title-bar</code>, <code>.window-pane</code>, <code>.details-bar</code>, <code>.separator</code>); AI System 6 markup (<code>.close-box</code>, <code>.resize-box</code>, <code>.shade-box</code>, <code>.title-bar h1</code>, <code>.title-bar h2</code>).</p>
       <details class="evidence-details">
-        <summary>Evidence (36)</summary>
+        <summary>Evidence (37)</summary>
       <table class="evidence">
         <caption>Where each value comes from</caption>
         <thead><tr><th scope="col">Era</th><th scope="col">Value</th><th scope="col">Status</th><th scope="col">Source</th></tr></thead>
@@ -261,9 +261,9 @@
         </tr>
 <tr>
           <td>Drawing Board</td>
-          <td>clio.js: the dragged outline is the same 2px band of the gray, round the frame alone (the theme draws no drop shadow)</td>
+          <td>clio.js: the dragged outline is the same 2px band of the gray, round the frame and its shadow (7px across, 8px down), following the frame pieces' overrun near the corners (patches written from the theme's pieces by tooling/db-outline.py)</td>
           <td><span class="status status-measured">Measured</span></td>
-          <td><code>clio.css capture, Mac OS 8.5 with the 8.5b6 Drawing Board theme in Infinite Mac, Infinite HD dragged by 80,116 (frames before and during, diffed); tooling/outline-check.mjs: 1275 of the Mac's 1349 pixels in all three engines</code><br><span class="upstream">the theme's structure region also takes in its sketch lines' overshoots (74 pixels) and two shaped corners (13), which a rectangle does not follow</span></td>
+          <td><code>clio.css capture, Mac OS 8.5 with the 8.5b6 Drawing Board theme in Infinite Mac, Infinite HD dragged by 80,116 (frames before and during, diffed); tooling/outline-check.mjs: 1333 of the Mac's 1349 pixels in all three engines</code><br><span class="upstream">the 16 + 19 pixels left: the close box's cross overrunning above the frame and a line below the bottom-left corner 2px along</span></td>
         </tr>
 <tr>
           <td>System 7</td>
@@ -300,6 +300,12 @@
           <td>clio.js, data-clio-shade=&quot;dblclick&quot;: WindowShade folds the window to its title bar, closed by the frame and shadow; there is no collapse box</td>
           <td><span class="status status-measured">Measured</span></td>
           <td><code>clio.css capture, System 7.5.3 in Infinite Mac: WindowShade control panel set to 2 clicks, Infinite HD double-clicked (frame shaded); specimen s7-collapsed 100% identical in Chromium, WebKit and Firefox</code><br><span class="upstream">Infinite Mac's WindowShade is set to Off clicks with sounds off, so the double click stays opt-in; the control panel's factory setting was not checked</span></td>
+        </tr>
+<tr>
+          <td>Drawing Board</td>
+          <td>Collapsed: the box is the title bar and the foot's black line; the bottom corners and the shadow lie under the title bar, which is drawn last</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, Mac OS 8.5 with the theme in Infinite Mac, Infinite HD's collapse box clicked (frame collapsed)</code><br><span class="upstream">specimens db-collapsed-left and db-collapsed-right 100% identical in all three engines (the box and its shadow; a window behind is masked)</span></td>
         </tr>
 <tr>
           <td>All eras</td>
@@ -1076,7 +1082,7 @@
       </dl>
       
       <details class="evidence-details">
-        <summary>Evidence (9)</summary>
+        <summary>Evidence (10)</summary>
       <table class="evidence">
         <caption>Where each value comes from</caption>
         <thead><tr><th scope="col">Era</th><th scope="col">Value</th><th scope="col">Status</th><th scope="col">Source</th></tr></thead>
@@ -1089,9 +1095,15 @@
         </tr>
 <tr>
           <td>Platinum</td>
-          <td>Open pop-up menu: its top on the button's top (the current item there), as wide as the button less its 22px of arrows, framed all round in black with the white and #999 bevel, the shadow starting 2px in; check mark 3px in, text 20px, each antialiasing level as the screen shows it</td>
+          <td>Open pop-up menu: its top on the button's top (the current item there), as wide as the button less its 20px of arrows, framed all round in black with the white and #999 bevel, the shadow starting 2px in; check mark 3px in, text 20px, each antialiasing level as the screen shows it</td>
           <td><span class="status status-measured">Measured</span></td>
-          <td><code>clio.css capture, Mac OS 9.0 in Infinite Mac, Appearance &gt; Fonts, Large System Font held with the pointer off the menu (frame fonts-popup-open)</code><br><span class="upstream">specimens p9-js-popup-open (clio.js, all three engines) and p9-popup-open (base-select, Chromium and WebKit) 100% identical; the button's arrows drawn pressed while it is open are not drawn yet</span></td>
+          <td><code>clio.css capture, Mac OS 9.0 in Infinite Mac, Appearance &gt; Fonts, Large System Font held with the pointer off the menu (frame fonts-popup-open)</code><br><span class="upstream">specimens p9-js-popup-open (clio.js, all three engines) and p9-popup-open (base-select, Chromium and WebKit) 100% identical</span></td>
+        </tr>
+<tr>
+          <td>Platinum</td>
+          <td>While its menu is open the pop-up button's arrows are drawn pressed: #444 top row, #555 then a #666 face, white arrows, #777 and #888 below and right, the frame's corners to match</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, Mac OS 9.0 in Infinite Mac (frame fonts-popup-open); tooling/p9-art.py and frame-art.py</code><br><span class="upstream">specimens p9-js-popup-open-arrows and p9-popup-open-arrows (select:open) 100% identical</span></td>
         </tr>
 <tr>
           <td>System 7</td>

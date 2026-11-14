@@ -14,10 +14,17 @@
   --clio-scrollbar-size: 16px;
   --clio-scrollbar-button-bevel: none;
   --clio-scrollbar-button-bevel-on: none;
-  /* clio.js: the dragged region is the frame alone (no drop shadow): a 2px band
-     round it, the gray on the odd pixels (Mac OS 8.5 with the theme, measured);
-     the theme's sketch lines also overshoot it, which a rectangle cannot follow */
-  --clio-drag-outline-extra: 0px;
+  /* clio.js: the dragged region is the frame and its shadow, 7px across and 8px
+     down, with the frame pieces' overrun near the corners (tooling/db-outline.py
+     writes those as patches; the outline gets a 12px margin to hold them) */
+  --clio-drag-outline-extra: 7px;
+  --clio-drag-outline-extra-y: 8px;
+  --clio-drag-outline-margin: 12px;
+  --clio-db-outline-tl: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAABQCAQAAAAkGDomAAAAR0lEQVR42u3VQQoAIAhFwfT+d6591LofzJzgoYJjALwxZ0ZHp0f3PSVjhp2+5v7jEreoyCwAMtX5uVUZDQAAAAAAAAAAcLUAGtUR+oNvwE8AAAAASUVORK5CYII=");
+  --clio-db-outline-tr: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAABQCAQAAAAkGDomAAAAZElEQVR42u3UwQ5AMBBF0Y74/1+ulSAS6YY8nLOTWFyjndZ4qd7H3pvSP0SgQIECb96Ec9birooJPKfETXD9xVvqaPQjcfsTeHxyi3+2ZuInWAnzu7q98RMEAAAAAAAAAAD4oAW4lBQeuypXEwAAAABJRU5ErkJggg==");
+  --clio-db-outline-bl: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAABQCAQAAAAkGDomAAAAfUlEQVR42u3UMQ7DIAwF0Bj1/ld2Z4agkkTFRO+tMHxs4+MAAAAAAAAAAACYFaPDzO5qrAj4qRRmQmYfObN/wP+0QfdLVLFVDjcIuKqhUxWsEbL8DMZZi/sargvbfnpFFNyDVzff05PbHp+ZKB7Qot5kUWvx6yu4gTrfhHu+5xggG695/FIAAAAASUVORK5CYII=");
+  --clio-db-outline-br: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAABQCAQAAAAkGDomAAAATUlEQVR42u3XwQkAIAwDQO3+O+sAiviMcjdBqGDT1gAAAAAAAOBkDDMAACC8su5Ka2U16jViZU2xdzcJ8PNWeOpbuQ1Y6W8hoIACQrgJSZMT/52XbkwAAAAASUVORK5CYII=");
+  /* outline patches: 176 pixels in four 80x80 corners (tooling/db-outline.py) */
   --clio-scrollbar-thumb-overlap: 0px;
   --clio-scrollbar-thumb-after: none;
   /* Titles sit on the textured title bar, where no palette can know the
@@ -326,6 +333,8 @@
 [data-era="drawingboard"] .window {
   --db-tl: url("art/drawingboard/window-tl.png");
   --db-top: url("art/drawingboard/window-top.png");
+  --db-top-tiled: url("art/drawingboard/window-top-tiled.svg");
+  --db-bottom-tiled: url("art/drawingboard/window-bottom-tiled.svg");
   --db-tr: url("art/drawingboard/window-tr.png");
   --db-ur: url("art/drawingboard/window-ur.png");
   --db-right: url("art/drawingboard/window-right.png");
@@ -341,6 +350,8 @@
 [data-era="drawingboard"] .window.inactive {
   --db-tl: url("art/drawingboard/window-tl-inactive.png");
   --db-top: url("art/drawingboard/window-top-inactive.png");
+  --db-top-tiled: url("art/drawingboard/window-top-inactive-tiled.svg");
+  --db-bottom-tiled: url("art/drawingboard/window-bottom-inactive-tiled.svg");
   --db-tr: url("art/drawingboard/window-tr-inactive.png");
   --db-ur: url("art/drawingboard/window-ur-inactive.png");
   --db-right: url("art/drawingboard/window-right-inactive.png");
@@ -385,6 +396,40 @@
     var(--db-ur) right 4px top 32px / 13px 32px no-repeat,
     var(--db-br) right 0 bottom 2px / 63px 62px no-repeat,
     var(--db-bl) left 0 bottom 0 / 64px 32px no-repeat;
+}
+
+/* Collapsed (Infinite HD's collapse box, Mac OS 8.5 with the theme; frame
+   collapsed): the theme draws the frame as for an empty window, the bottom
+   corners and the foot's shadow under the title bar, which is drawn last. The
+   box is the title bar and the foot's black line. Two layers do it: ::after is
+   the title bar's area alone (its paper, the top edge and the top corners);
+   ::before is everything outside that area (the corners' overrun, the bottom
+   corners and the shadow). The edges tile from SVG patterns, which stop where
+   their box does. The bottom right corner lies over the upper right edge here. */
+[data-era="drawingboard"] .window.collapsed {
+  padding-bottom: 1px;
+}
+
+[data-era="drawingboard"] .window.collapsed::after {
+  clip-path: inset(10px 11px calc(100% - 32px) 8px);
+  background:
+    var(--db-tl) 4px 5px / 28px 27px no-repeat,
+    var(--db-tr) right 1px top 0 / 16px 32px no-repeat,
+    var(--db-top-tiled) 32px 10px / calc(100% - 49px) 22px no-repeat,
+    url("art/drawingboard/paper.png") calc(14px - var(--clio-db-phase, 0px)) 32px / 128px 128px;
+}
+
+[data-era="drawingboard"] .window.collapsed::before {
+  inset: -10px -11px -18px -8px;
+  clip-path: polygon(evenodd, 0 0, 100% 0, 100% 100%, 0 100%, 0 0,
+    8px 10px, calc(100% - 11px) 10px, calc(100% - 11px) 32px, 8px 32px, 8px 10px);
+  background:
+    var(--db-tl) 4px 5px / 28px 27px no-repeat,
+    var(--db-tr) right 1px top 0 / 16px 32px no-repeat,
+    var(--db-br) right 0 bottom 2px / 63px 62px no-repeat,
+    var(--db-ur) right 4px top 32px / 13px 32px no-repeat,
+    var(--db-bl) left 0 bottom 0 / 64px 32px no-repeat,
+    var(--db-bottom-tiled) left 64px bottom 10px / calc(100% - 126px) 14px no-repeat;
 }
 
 /* ---- Menus -----------------------------------------------------------------
@@ -1090,4 +1135,16 @@
       appearance: none;
     }
   }
+}
+
+/* The dragged outline: the plain band round the frame and shadow (inside the
+   margin), with each corner's patch XORed in. */
+[data-era="drawingboard"] .clio-outline {
+  mask:
+    var(--clio-db-outline-tl) left 0 top 0 / 80px 80px no-repeat border-box exclude,
+    var(--clio-db-outline-tr) right 0 top 0 / 80px 80px no-repeat border-box exclude,
+    var(--clio-db-outline-bl) left 0 bottom 0 / 80px 80px no-repeat border-box exclude,
+    var(--clio-db-outline-br) right 0 bottom 0 / 80px 80px no-repeat border-box exclude,
+    linear-gradient(#000 0 0) content-box exclude,
+    linear-gradient(#000 0 0) 12px 12px / calc(100% - 24px) calc(100% - 24px) no-repeat border-box;
 }

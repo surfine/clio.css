@@ -51,12 +51,14 @@ ok(!strip(db).includes('[data-era="drawingboard"]') && !strip(db).includes('[dat
 //    theme art shipped beside the stylesheet (dist/art/drawingboard/, written by
 //    tooling/db-art.py and tooling/db-pens.py). PNG data URIs are allowed only for
 //    Mac OS 9 and frame art (--clio-art-p9-*, --clio-art-frame-*) and inside the
-//    SVG tiles of Drawing Board art; "%23p" is such a tile's own pattern reference.
+//    SVG tiles of Drawing Board art and Drawing Board's outline patches (a mask picture is
+//    fetched with CORS); "%23p" is such a tile's own pattern reference. The window edges'
+//    SVG pattern files (art/drawingboard/*-tiled.svg) carry their PNG inside.
 for (const m of noComments.matchAll(/url\(\s*["']?([^"')]+)/g)) {
   const u = m[1];
-  const png = u.startsWith("data:image/png;base64,") && /--clio-art-(db|p9|s7|frame)-[\w-]+:\s*$/.test(noComments.slice(Math.max(0, m.index - 60), m.index));
+  const png = u.startsWith("data:image/png;base64,") && /--clio-(art-(db|p9|s7|frame)|db-outline)-[\w-]+:\s*$/.test(noComments.slice(Math.max(0, m.index - 60), m.index));
   if (u.startsWith("art/")) ok(existsSync(join(root, "dist", u)), `missing art file dist/${u}`);
-  ok(u.startsWith("data:image/svg+xml,") || png || /^fonts\/(ChicagoFLF\.woff2?|Asap-Variable\.woff2|ClioSans84\.woff2|ClioText84\.woff2|ClioText84-9\.woff2|ClioSans97\.woff2|ClioSans97Display\.woff2|ClioSans97Title\.woff2|ClioSans97Exact\.woff2|ClioSans97TitleExact\.woff2|ClioSans97Plain\.woff2|ClioSans97TitlePlain\.woff2|ClioSans97PlainExact\.woff2|ClioSans97TitlePlainExact\.woff2|Virtue\.woff2)$/.test(u) || /^art\/(drawingboard|platinum|system7|system6|cursors)\/(pens\/|parts\/)?[a-z0-9-]+\.png$/.test(u) || /^%23\w+$/.test(u), `unexpected url(): ${u.slice(0, 60)}`);
+  ok(u.startsWith("data:image/svg+xml,") || png || /^fonts\/(ChicagoFLF\.woff2?|Asap-Variable\.woff2|ClioSans84\.woff2|ClioText84\.woff2|ClioText84-9\.woff2|ClioSans97\.woff2|ClioSans97Display\.woff2|ClioSans97Title\.woff2|ClioSans97Exact\.woff2|ClioSans97TitleExact\.woff2|ClioSans97Plain\.woff2|ClioSans97TitlePlain\.woff2|ClioSans97PlainExact\.woff2|ClioSans97TitlePlainExact\.woff2|Virtue\.woff2)$/.test(u) || /^art\/(drawingboard|platinum|system7|system6|cursors)\/(pens\/|parts\/)?[a-z0-9-]+\.png$/.test(u) || /^art\/drawingboard\/[a-z0-9-]+-tiled\.svg$/.test(u) || /^%23\w+$/.test(u), `unexpected url(): ${u.slice(0, 60)}`);
 }
 
 // 6. Component index: every component is documented, evidenced and styled.
@@ -118,8 +120,12 @@ ok(read("docs/llms-full.txt").includes("```css"), "llms-full.txt: stylesheet mis
 // 10. Package.
 const pkg = JSON.parse(read("package.json"));
 for (const [k, v] of Object.entries(pkg.exports)) if (!v.includes("*")) ok(existsSync(join(root, v)), `exports ${k} -> ${v} missing`);
-// 200 KB since 0.10.0, which added every control the classic guidelines define (COVERAGE.md).
-ok(statSync(join(root, "dist/clio.min.css")).size < 200000, "clio.min.css grew past 200 KB");
+// 200 KB since 0.10.0, which added every control the classic guidelines define (COVERAGE.md);
+// 220 KB from the Classic close (owner, 2026-11-14): the all-eras file keeps the four Classic
+// eras, and Mac OS X eras ship as files of their own.
+ok(statSync(join(root, "dist/clio.min.css")).size < 220000, "clio.min.css grew past 220 KB");
+const minJs = readFileSync(join(root, "dist/clio.min.js"), "utf8");
+ok(/^\/\*! clio\.js/.test(minJs) && minJs.length < js.length * 0.7, "dist/clio.min.js missing, without its banner, or not minified");
 
 if (failures.length) {
   console.error(`FAIL ${failures.length} of ${checks} checks`);

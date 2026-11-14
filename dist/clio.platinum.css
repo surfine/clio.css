@@ -762,6 +762,7 @@
   --clio-art-frame-p9-ring: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAANBAMAAACAxflPAAAAG1BMVEUAAAAAAAB3d3fd3d3MzMy7u7uqqqoiIiKIiIhznn7oAAAAAXRSTlMAQObYZgAAAFpJREFUeJxjZGDnYmB7ycDCwKPAwPjzAwujgjEDg+x6xuLDrx6oOXEwCCcxMDAlCTAx/GMAISYGCEDQTGAOUyKLAoOKQgIjY6gAA9PO+4wMElwMDO8+MELNBwCaGBDQEM8mggAAAABJRU5ErkJggg==");
   --clio-art-frame-p9-button-disabled: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJAgMAAACd/+6DAAAACVBMVEUAAACIiIjd3d2RXqmqAAAAAXRSTlMAQObYZgAAACFJREFUeJxjYA1hYBINZWAKYHRgYmBgQMYMUisZGFhDGAAtsQJ9dgAT/gAAAABJRU5ErkJggg==");
   --clio-art-frame-p9-popup: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHBAMAAAA2fErgAAAAGFBMVEUAAAAAAAB3d3fd3d27u7uqqqoiIiL///+EaqngAAAAAXRSTlMAQObYZgAAACtJREFUeJxjYEhMYGBi5H/IwJh+klWbQYCBQYAl/OQnOwbGAEUGpv+C9gwAea0HTcaLsPwAAAAASUVORK5CYII=");
+  --clio-art-frame-p9-popup-open: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHBAMAAAA2fErgAAAAGFBMVEUAAAAAAADd3d1mZmZEREQiIiKIiIj///+MKsksAAAAAXRSTlMAQObYZgAAACtJREFUeJxjEBQMYGBii//IwCjOKSbFIMDAIMAozun2iomB4fcGJgbG9wwAWK0GLJJZmp8AAAAASUVORK5CYII="); /* 7x7, slice 3 */
   --clio-art-frame-p9-popup-disabled: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHAgMAAAC5PL9AAAAACVBMVEUAAACIiIjd3d2RXqmqAAAAAXRSTlMAQObYZgAAAB1JREFUeJxjZLVmEg5gChBhcGBh0ljAtOENI6s1ACDmA/qjrWTUAAAAAElFTkSuQmCC");
   --clio-art-s6-gray50: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='2' height='2' shape-rendering='crispEdges'%3E%3Cpath d='M1 0h1v1H1zM0 1h1v1H0z'/%3E%3C/svg%3E");
   --clio-art-s6-menucheck-on: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='8' shape-rendering='crispEdges'%3E%3Cpath fill='%23fff' d='M8 0h1v1h-1zM7 1h2v1h-2zM6 2h2v1h-2zM5 3h2v1h-2zM0 4h1v1h-1zM4 4h2v1h-2zM0 5h2v1h-2zM3 5h2v1h-2zM1 6h3v1h-3zM2 7h1v1h-1z'/%3E%3C/svg%3E");
@@ -3375,6 +3376,7 @@
   --clio-art-p9-dropdown: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAKAQMAAABCAtZOAAAABlBMVEUAAAAAAAClZ7nPAAAAAXRSTlMAQObYZgAAABlJREFUeJxjEGDSYHJh+McAAv8YahgsGAQAHygDQTD2iPAAAAAASUVORK5CYII=");
   --clio-art-p9-dropdown-off: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAKAQMAAABCAtZOAAAABlBMVEUAAACIiIhaeOqmAAAAAXRSTlMAQObYZgAAABlJREFUeJxjEGDSYHJh+McAAv8YahgsGAQAHygDQTD2iPAAAAAASUVORK5CYII=");
   --clio-art-p9-menucheck: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAICAYAAADA+m62AAAATUlEQVR42o3MwQ2AIBAEwIkdaC2UYAsWZw2UIjXQCn4gIcSA+7ydPeYJuGFboAfH6lNB7I8nrg+UxnWqRehQxj7CWMsyQy35D1LLOEMvsWESqM0p+dQAAAAASUVORK5CYII="); /* 10x8 */
+  --clio-art-p9-popup-open-arrows: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAASBAMAAABLIvhaAAAAGFBMVEUAAAAAAABERERVVVVmZmZ3d3eIiIj////aSdSVAAAAAXRSTlMAQObYZgAAAFdJREFUeJxVjtENgDAIRF8LC7iCE3QCB3YXk07iBiRGaKmS+3i54whlZ8yt26ByLKTOnMCWKJLYwq4gLlCw61OLUZAGb1DBXLHQ6RPNzai5+buwPkvkfAD7IAw5cOa/LwAAAABJRU5ErkJggg=="); /* 19x18 */
 }
 
 /* ---- Window ---------------------------------------------------------------- */
@@ -4116,12 +4118,12 @@
 /* ---- The open pop-up menu (Mac OS 9.0, Appearance > Fonts, Large System Font
    held; frame popup-open) ----------------------------------------------------
    Laid with its top on the button's (the current item there), as wide as the
-   button less its arrows (22px), framed all round in black with a white and
+   button less its arrows (20px), framed all round in black with a white and
    #999 bevel whose other two corners stay #ddd, and its shadow starting 2px in
    (the clip takes the first pixel of each end). The check mark sits 3px in,
    the text 20px. */
 :root select {
-  --clio-popup-menu-trim: 22px;
+  --clio-popup-menu-trim: 20px;
   --clio-popup-menu-align: top;
 }
 
@@ -4152,7 +4154,7 @@
 /* The same menu where the browser draws it (base-select). */
 @supports (appearance: base-select) {
   :root select::picker(select) {
-    min-width: calc(anchor-size(width) - 22px);
+    min-width: calc(anchor-size(width) - 20px);
     border-top-width: 1px;
     background:
       var(--clio-p9-bevel),
@@ -4172,6 +4174,21 @@
 
   :root select option::checkmark {
     left: 3px;
+  }
+}
+
+/* While its menu is open the button's arrows are drawn pressed: a #444 top row,
+   #555 then a #666 face, the arrows white, #777 and #888 below and to the right
+   (frame fonts-popup-open). clio.js marks the select it opens a menu for. */
+:root select.clio-open {
+  background: var(--clio-art-p9-popup-open-arrows) right 0 top 0 / 19px 18px no-repeat, var(--clio-popup-arrow), var(--clio-popup-bg);
+  border-image-source: var(--clio-art-frame-p9-popup-open);   /* the arrows' corners pressed too */
+}
+
+@supports selector(:open) {
+  :root select:open {
+    background: var(--clio-art-p9-popup-open-arrows) right 0 top 0 / 19px 18px no-repeat, var(--clio-popup-arrow), var(--clio-popup-bg);
+    border-image-source: var(--clio-art-frame-p9-popup-open);
   }
 }
 

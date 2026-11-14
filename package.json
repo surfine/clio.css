@@ -50,7 +50,9 @@
     "./dist/*": "./dist/*",
     "./package.json": "./package.json",
     "./system7": "./dist/clio.system7.css",
-    "./system7.min": "./dist/clio.system7.min.css"
+    "./system7.min": "./dist/clio.system7.min.css",
+    "./js": "./dist/clio.js",
+    "./js.min": "./dist/clio.min.js"
   },
   "files": [
     "dist",
