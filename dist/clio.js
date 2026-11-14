@@ -140,10 +140,11 @@
     const el = document.elementFromPoint(x, y);
     return el ? el.closest(`:is(${MENU}) > li`) : null;
   }
-  function choose(li) {
+  function choose(li, after) {
     const done = () => {
       li.removeAttribute(BLINK); const c = control(li); c.removeAttribute(BLINK);
       closeAll();
+      if (after) after();
       play("menu");
       c.click();
     };
@@ -219,11 +220,49 @@
     if (e.isTrusted && e.target instanceof Element && e.target.closest(`:is(${BAR}) > li > :is(button, a, span)`) && !optedOut(e.target)) e.preventDefault();
   }, true);
 
-  // Keyboard: arrows move between titles and items, Return/Space chooses,
-  // Esc closes. Command-key equivalents (<kbd>⌘N</kbd>) work on menu bars
-  // marked data-clio-shortcuts, the title lighting while the item runs.
+  // Keyboard, as an application menu bar (WAI-ARIA APG): the bar is one Tab
+  // stop (roving tabindex), focusing a title previews its menu, Left and Right
+  // move between titles, Down/Return/Space/Home/End enter a menu, Up/Down/
+  // Home/End move inside it, Right and Left open and close submenus or move
+  // to the next title, Esc closes one level, Tab leaves and closes all. (Mac OS
+  // 8 and 9 had no keyboard menus; this is the web's.) Command-key
+  // equivalents (<kbd>⌘N</kbd>) work on menu bars marked data-clio-shortcuts.
   const items = (menu) => [...menu.children].filter(usable);
   const focusItem = (li) => { const c = control(li); if (c === li && !li.hasAttribute("tabindex")) li.tabIndex = -1; c.focus(); if (track) light(li); };
+  const titlesOf = (bar) => [...bar.children].filter((li) => titleOf(li));
+  const menuOf = (tli) => tli.querySelector(`:scope > :is(${MENU})`);
+  let quiet = false;   // focus coming back to a title from its own menu: no preview
+  function rove(bar, tli) { for (const li of titlesOf(bar)) { const t = titleOf(li); t.tabIndex = li === tli ? 0 : -1; } }
+  function toTitle(bar, tli, opts = {}) {
+    if (track) closeAll();
+    rove(bar, tli);
+    quiet = !!opts.quiet;
+    const t = titleOf(tli); if (t) t.focus({ preventScroll: true });
+    quiet = false;
+  }
+  function enter(bar, tli, last) {
+    if (!track || track.li !== tli) { closeAll(); track = { bar, li: tli, mode: "sticky", hot: null, last: { x: 0, y: 0 } }; }
+    openTitle(bar, tli);
+    const m = menuOf(tli), list = m ? items(m) : [];
+    if (list.length) focusItem(list[last ? list.length - 1 : 0]);
+  }
+  document.addEventListener("focusin", (e) => {
+    const t = e.target instanceof Element ? e.target : null;
+    const tli = t && t.matches(`:is(${BAR}) > li > :is(button, a, span)`) ? t.parentElement : null;
+    if (!tli || optedOut(tli) || quiet || (e.relatedTarget instanceof Node && tli.contains(e.relatedTarget))) return;
+    if (track && track.mode !== "preview") return;   // a pointer gesture is under way
+    const bar = tli.parentElement;
+    if (track) closeAll();
+    rove(bar, tli);
+    track = { bar, li: tli, mode: "preview", hot: null, last: { x: 0, y: 0 } };
+    openTitle(bar, tli);
+  });
+  document.addEventListener("focusout", (e) => {
+    if (!track || track.mode === "blink") return;
+    const to = e.relatedTarget;
+    if (to instanceof Node && track.bar.contains(to)) return;
+    if (track.mode === "preview" || track.mode === "sticky") closeAll();
+  });
   document.addEventListener("keydown", (e) => {
     if (e.defaultPrevented || e.isComposing) return;
     const f = document.activeElement instanceof Element ? document.activeElement : null;
@@ -231,22 +270,29 @@
     if (!f) return;
     const tli = f.closest(`:is(${BAR}) > li`);
     if (!tli || optedOut(tli)) return;
-    const bar = tli.parentElement;
+    const bar = tli.parentElement, titles = titlesOf(bar);
     const inMenu = f.closest(`:is(${MENU}) > li`);
-    const titles = [...bar.children];
-    const go = (fn) => { e.preventDefault(); fn(); };
+    const go = (fn) => { e.preventDefault(); e.stopPropagation(); fn(); };
+    const next = (d) => titles[(titles.indexOf(tli) + d + titles.length) % titles.length];
     if (!inMenu) {
-      if (["ArrowDown", "Enter", " "].includes(e.key)) return go(() => { track = { bar, li: tli, mode: "sticky", hot: null, last: { x: 0, y: 0 } }; openTitle(bar, tli); const m = tli.querySelector(`:scope > :is(${MENU})`); if (m && items(m)[0]) focusItem(items(m)[0]); });
-      if (e.key === "ArrowRight" || e.key === "ArrowLeft") return go(() => { const i = titles.indexOf(tli); const n = titles[(i + (e.key === "ArrowRight" ? 1 : titles.length - 1)) % titles.length]; const t = titleOf(n); if (t) t.focus(); });
+      if (["ArrowDown", "Enter", " ", "Home"].includes(e.key)) return go(() => enter(bar, tli, false));
+      if (e.key === "End" || e.key === "ArrowUp") return go(() => enter(bar, tli, true));
+      if (e.key === "ArrowRight" || e.key === "ArrowLeft") return go(() => toTitle(bar, next(e.key === "ArrowRight" ? 1 : -1)));
+      if (e.key === "Escape" && track) return go(() => toTitle(bar, tli, { quiet: true }));
       return;
     }
     if (!track) track = { bar, li: tli, mode: "sticky", hot: null, last: { x: 0, y: 0 } };
+    track.mode = track.mode === "preview" ? "sticky" : track.mode;
     const menu = inMenu.parentElement, list = items(menu), i = list.indexOf(inMenu);
+    const parentItem = menu.parentElement.closest(`:is(${MENU}) > li`);
     if (e.key === "ArrowDown" || e.key === "ArrowUp") return go(() => focusItem(list[(i + (e.key === "ArrowDown" ? 1 : list.length - 1)) % list.length]));
+    if (e.key === "Home" || e.key === "End") return go(() => focusItem(list[e.key === "Home" ? 0 : list.length - 1]));
     if (e.key === "ArrowRight" && submenuOf(inMenu)) return go(() => { inMenu.classList.add("open"); const s = items(submenuOf(inMenu)); if (s[0]) focusItem(s[0]); });
-    if (e.key === "ArrowLeft" && menu.parentElement.closest(`:is(${MENU}) > li`)) return go(() => { const p = menu.parentElement; closeSub(p); focusItem(p); });
-    if (e.key === "Escape") return go(() => { const t = titleOf(tli); closeAll(); if (t) t.focus(); });
-    if ((e.key === "Enter" || e.key === " ") && usable(inMenu) && !submenuOf(inMenu)) return go(() => choose(inMenu));
+    if (e.key === "ArrowRight") return go(() => toTitle(bar, next(1)));
+    if ((e.key === "ArrowLeft" || e.key === "Escape") && parentItem) return go(() => { closeSub(parentItem); focusItem(parentItem); });
+    if (e.key === "ArrowLeft") return go(() => toTitle(bar, next(-1)));
+    if (e.key === "Escape") return go(() => toTitle(bar, tli, { quiet: true }));
+    if ((e.key === "Enter" || e.key === " ") && usable(inMenu) && !submenuOf(inMenu)) return go(() => choose(inMenu, () => toTitle(bar, tli, { quiet: true })));
   }, true);
 
   function shortcut(e) {
@@ -273,7 +319,7 @@
   // lines it up; elsewhere it draws the era's .menu itself and tracks it like
   // the menu bar's. Touch keeps the system's picker.
   const POPUP = "select:not([multiple]):not([size]), select[size='1']";
-  const baseSelect = !!(window.CSS && CSS.supports && CSS.supports("appearance", "base-select"));
+  const baseSelect = !!(window.CSS && CSS.supports && CSS.supports("appearance", "base-select")) && matchMedia("(pointer: fine)").matches;   // as the stylesheet: touch keeps the system picker
   const rowOf = (el) => px(getComputedStyle(el).getPropertyValue("--clio-menu-item-height")) || 16;
   const borderTop = (el) => px(getComputedStyle(el).getPropertyValue("--clio-menu-border-top-width")) || 1;
   const blink = (li, done) => {
@@ -575,7 +621,14 @@
     return found;
   }
 
-  const claimBars = (root) => { for (const b of (root.querySelectorAll ? root.querySelectorAll(BAR) : [])) if (!optedOut(b)) b.setAttribute("data-clio-menus", ""); if (root instanceof Element && root.matches(BAR) && !optedOut(root)) root.setAttribute("data-clio-menus", ""); };
+  const claimBar = (b) => {
+    if (optedOut(b) || b.hasAttribute("data-clio-menus")) return;
+    b.setAttribute("data-clio-menus", "");
+    const ts = titlesOf(b), cur = ts.find((li) => titleOf(li).tabIndex === 0 && titleOf(li).hasAttribute("tabindex")) || ts[0];
+    if (cur) rove(b, cur);   // one Tab stop for the whole bar
+    for (const c of b.querySelectorAll(`:is(${MENU}) > li > :is(a, button)`)) if (!c.hasAttribute("tabindex")) c.tabIndex = -1;   // items are reached with the arrows
+  };
+  const claimBars = (root) => { for (const b of (root.querySelectorAll ? root.querySelectorAll(BAR) : [])) claimBar(b); if (root instanceof Element && root.matches(BAR)) claimBar(root); };
   function start() {
     scrollbars(document);
     claimBars(document);   // clio.js opens these menus; focus alone no longer does

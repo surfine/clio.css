@@ -93,11 +93,14 @@ it; with it:
 - Menus track the pointer: press a title and drag, release on an item to choose it (it
   blinks three times first, as Mac OS 9 does), drag across titles to switch menus;
   submenus open after 9 ticks and stay while you head for them. Mac OS 8 and 9 keep a
-  clicked menu open. Arrow keys, Return and Esc work in menus; Command-key equivalents
+  clicked menu open. From the keyboard the bar works as the web's application menu bar
+  (one Tab stop, a title's menu previewed on focus, arrow keys, Home/End, Esc one level
+  at a time, Tab out closes all); Command-key equivalents
   written as `<kbd>⌘N</kbd>` run their item on menu bars marked `data-clio-shortcuts`.
 - `<select>` opens as the era's pop-up menu over the button, the current item on the
   button's row: drawn by the browser where `appearance: base-select` is supported (Chrome
-  135, Safari 27), by clio.js elsewhere. Touch keeps the system picker.
+  135, Safari 27) and the pointer is a mouse or trackpad, by clio.js in other browsers.
+  Touch screens keep the system picker.
 - Windows positioned `absolute` or `fixed` (or marked `data-clio-drag`) drag by the title
   bar as the Mac did: a grey outline follows the pointer and the window moves on release.
   The collapse box folds a window to its title bar (`data-clio-shade="dblclick"` adds the

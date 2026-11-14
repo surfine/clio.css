@@ -10,6 +10,10 @@ Behaviour and details, measured where the emulators allow. The new optional
   `clio.zoomRects()` (8 outlines one per tick, eased by 1.6^k, measured).
 - **Cursors**: the Mac's arrow and I-beam, on by default, at 1x/2x/3x.
 - **Sounds** (clio.js): an interface only, silent unless you give it files.
+- Menu bars follow the web's application-menu-bar keyboard model (one Tab stop, preview
+  on focus, arrows between menus, Home/End, Tab out closes); the open `<select>` picker is
+  placed with `position-area` (the `anchor()` insets left it in the page corner) and is
+  used only with a fine pointer, so touch screens keep the system picker.
 
 - **Menus** (clio.js): press-drag-release and Mac OS 8/9 click-to-open menus, the chosen
   item blinking 3 times (3 ticks each, measured in Mac OS 9.0), submenus after 9 ticks
