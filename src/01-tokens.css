@@ -362,6 +362,27 @@
   --clio-bevel-arrow-width: 3px;
   --clio-bevel-arrow-height: 2px;
 
+  /* Chasing arrows: Platinum's three frames (Network Browser, Mac OS 9.0). */
+  --clio-art-chasing-arrows: url("art/platinum/chasing-arrows.png");
+  --clio-chasing-arrows-frames: 3;
+
+  /* Separator: a 1px ink line. */
+  --clio-separator-height: 1px;
+  --clio-separator-margin: 8px 0;
+  --clio-separator-bg: var(--clio-ink);
+
+  /* Help button: Platinum's (Keyboard control panel, Mac OS 9.0). */
+  --clio-art-help-button: url("art/platinum/help-button.png");
+  --clio-image-well-bg: #ffffff;
+
+  /* Utility window: the document window's parts at the size of System 7's
+     floating windows (inferred: none was on the captured screens). */
+  --clio-utility-titlebar-height: 13px;
+  --clio-utility-titlebar-row: 11px;
+  --clio-utility-box-size: 9px;
+  --clio-utility-slot: 13px;
+  --clio-utility-title-size: 9px;
+
   /* Frames cut from captures by tooling/frame-art.py. */
   --clio-art-frame-s6-button: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJAgMAAACd/+6DAAAACVBMVEUAAAAAAAD///+D3c/SAAAAAXRSTlMAQObYZgAAACpJREFUeJxjYAxgYBINZWBiYWFgCmB0YGJgYABhBqmVDEx//jAwMAYwAAA66QRtNyAoFwAAAABJRU5ErkJggg==");
   --clio-art-frame-s6-button-held: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJAQMAAADaX5RTAAAABlBMVEUAAAAAAAClZ7nPAAAAAXRSTlMAQObYZgAAAB1JREFUeJxjkGFgSmZgYmBg/N/IxABiMNSDSRkGACm1Aqb7EOVpAAAAAElFTkSuQmCC");

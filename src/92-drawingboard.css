@@ -33,6 +33,11 @@
   --clio-art-little-arrows-up: url("art/drawingboard/parts/little-arrows-up.png");
   --clio-art-little-arrows-down: url("art/drawingboard/parts/little-arrows-down.png");
   --clio-art-little-arrows-disabled: url("art/drawingboard/parts/little-arrows-disabled.png");
+  /* Chasing arrows: the theme's six frames (390). */
+  --clio-art-chasing-arrows: url("art/drawingboard/parts/chasing-arrows.png");
+  --clio-chasing-arrows-frames: 6;
+  /* Help button: as the Keyboard control panel draws it. */
+  --clio-art-help-button: url("art/drawingboard/help-button.png");
   /* Disclosure triangle: the theme's 11px pictures (closed 340, open 343, which
      Mac OS draws through 16 bits), Finder list view. */
   --clio-disclosure-size: 11px;
