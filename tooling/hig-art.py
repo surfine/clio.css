@@ -71,6 +71,47 @@ def strip(ims):
     for i in ims: out.paste(i, (x, 0)); x += i.width
     return out
 
+def balloon_body(im, x0, y0, w, h, c, noise=()):
+    """Clear everything reachable from the crop's corners without crossing black."""
+    crop = im.crop((x0, y0, x0 + w, y0 + h)).convert('RGBA')
+    for p in noise: crop.putpixel(p, (1, 2, 3, 255))   # text of the window behind, touching the outline
+    seen, todo = set(), [(0, 0), (w - 1, 0), (0, h - 1), (w - 1, h - 1)]
+    while todo:
+        x, y = todo.pop()
+        if (x, y) in seen or not (0 <= x < w and 0 <= y < h) or crop.getpixel((x, y))[:3] == (0, 0, 0): continue
+        seen.add((x, y)); todo += [(x + 1, y), (x - 1, y), (x, y + 1), (x, y - 1)]
+    for x, y in seen: crop.putpixel((x, y), (0, 0, 0, 0))
+    n = 2 * c + 1; out = Image.new('RGBA', (n, n))
+    for oy in range(n):
+        for ox in range(n):
+            sx = ox if ox < c else (60 if ox == c else w - (n - ox))
+            sy = oy if oy < c else (60 if oy == c else h - (n - oy))
+            out.putpixel((ox, oy), crop.getpixel((sx, sy)))
+    return out
+
+def balloon_tail(im):
+    out = Image.new('RGBA', (12, 14))
+    for y in range(14):
+        for x in range(12):
+            c = im.getpixel((737 + x, 136 + y))
+            if c in ((0, 0, 0), (255, 255, 255)): out.putpixel((x, y), c + (255,))
+    # keep only the wedge: clear what lies left of its left edge in each row
+    for y in range(14):
+        row = [out.getpixel((x, y)) for x in range(12)]
+        first = next((x for x in range(12) if row[x][:3] == (0, 0, 0) and row[x][3]), None)
+        for x in range(12):
+            if first is None or x < first: out.putpixel((x, y), (0, 0, 0, 0))
+    return out
+
+def grey_only(im, x0, y0, w, h):
+    """Keep the neutral greys darker than #aaa (a mark drawn on a textured paper)."""
+    out = Image.new('RGBA', (w, h))
+    for y in range(h):
+        for x in range(w):
+            c = im.getpixel((x0 + x, y0 + y))
+            if c[0] == c[1] == c[2] and c[0] < 0xaa: out.putpixel((x, y), c + (255,))
+    return out
+
 def held_bevel():
     im = p_nav_held.crop((490, 198, 526, 225)).copy()
     for x in range(1, 36): im.putpixel((x, 26), (0x44, 0x44, 0x44))
@@ -113,6 +154,16 @@ ART = {
     (P, 'utility-zoom'): fixed(p_sw, 747, 243, 10, 10),
     (P, 'utility-collapse'): fixed(p_sw, 758, 243, 10, 10),
     (P, 'utility-dots'): fixed(p_sw, 626, 244, 3, 3),
+    # Help balloon (Balloon Help over the Infinite HD icon): its body as a
+    # 10px-corner nine-slice, what lies outside the outline cleared.
+    (P, 'balloon'): balloon_body(load('platinum9', 'balloon'), 594, 149, 160, 121, 10, noise=((0, 0), (0, 1), (0, 2), (0, 3), (3, 0), (0, 118), (1, 119), (0, 120), (1, 120))),
+    # ...and its tail rising from the top edge (738..748 x 136..149); the tip
+    # beyond x=748 was under the pointer.
+    (P, 'balloon-tail'): balloon_tail(load('platinum9', 'balloon')),
+    # Scrolling menu arrow (the Control Panels submenu, longer than the screen).
+    ('system7', 'menu-scroll-down'): fixed(load('system7', 'cp'), 212, 577, 11, 6, (W,)),
+    # the up arrow was not on screen: the down arrow turned over (inferred)
+    ('system7', 'menu-scroll-up'): fixed(load('system7', 'cp'), 212, 577, 11, 6, (W,)).transpose(Image.FLIP_TOP_BOTTOM),
     ('system7', 'disclosure'): fixed(s_list, 32, 98, 11, 11, (W,)),
     ('system7', 'disclosure-open'): fixed(s_list_open, 32, 98, 11, 11, (W,)),
     # Little arrows (Memory, Cache Size): 15x25, an outlined rounded box.

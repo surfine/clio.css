@@ -110,6 +110,8 @@ art['db-slider-thumb'] = five_bit(pxm[1106][0])
 for i, st in enumerate(('', '-up', '-down', '-disabled')): art['db-little-arrows' + st] = five_bit(pxm[350][i])
 # Chasing arrows: the theme's six 16x16 frames side by side.
 art['db-chasing-arrows'] = hstack(*[pxm[390][i] for i in range(6)])
+# A menu's scroll arrows (Control Panels submenu): down 364, up 389.
+art['db-menu-scroll-down'] = pxm[364][0]; art['db-menu-scroll-up'] = pxm[389][0]
 # Larger theme art ships as PNG files beside the stylesheet (art/drawingboard/),
 # not inside it: the document window's nine frame pieces (active, and the
 # inactive ones where the theme has them) and the paper pattern behind content.

@@ -38,6 +38,9 @@
   --clio-chasing-arrows-frames: 6;
   /* Help button: as the Keyboard control panel draws it. */
   --clio-art-help-button: url("art/drawingboard/help-button.png");
+  /* Scrolling menu arrows: the theme's 364 and 389 (Control Panels submenu). */
+  --clio-art-menu-scroll-down: url("art/drawingboard/parts/menu-scroll-down.png");
+  --clio-art-menu-scroll-up: url("art/drawingboard/parts/menu-scroll-up.png");
   /* Disclosure triangle: the theme's 11px pictures (closed 340, open 343, which
      Mac OS draws through 16 bits), Finder list view. */
   --clio-disclosure-size: 11px;

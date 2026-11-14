@@ -631,6 +631,16 @@
   --clio-utility-slot: 13px;
   --clio-utility-title-size: 9px;
 
+  /* Help balloon: Mac OS 9.0's (Balloon Help), the same in every era. */
+  --clio-art-balloon: url("art/platinum/balloon.png");
+  --clio-art-balloon-tail: url("art/platinum/balloon-tail.png");
+
+  /* Scrolling menu arrows: System 6 and 7 (Control Panels submenu, System
+     7.5.3), black, 5px in from the item's left (up arrow inferred, mirrored). */
+  --clio-art-menu-scroll-down: url("art/system7/menu-scroll-down.png");
+  --clio-art-menu-scroll-up: url("art/system7/menu-scroll-up.png");
+  --clio-menu-scroll-left: 5px;
+
   /* Frames cut from captures by tooling/frame-art.py. */
   --clio-art-frame-s6-button: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJAgMAAACd/+6DAAAACVBMVEUAAAAAAAD///+D3c/SAAAAAXRSTlMAQObYZgAAACpJREFUeJxjYAxgYBINZWBiYWFgCmB0YGJgYABhBqmVDEx//jAwMAYwAAA66QRtNyAoFwAAAABJRU5ErkJggg==");
   --clio-art-frame-s6-button-held: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJAQMAAADaX5RTAAAABlBMVEUAAAAAAAClZ7nPAAAAAXRSTlMAQObYZgAAAB1JREFUeJxjkGFgSmZgYmBg/N/IxABiMNSDSRkGACm1Aqb7EOVpAAAAAElFTkSuQmCC");
@@ -1181,6 +1191,33 @@
 /* system.css divider items keep their label row and add the rule below. */
 :where(.menu, [role="menu"]) > li.divider {
   border-bottom: 1px dotted var(--clio-ink);
+}
+
+/* ---- Scrolling menus, menu bar extras, item icons ------------------------------
+   A menu longer than the screen ends in a scroll arrow row: <li class="scroll-down"
+   aria-hidden="true"> (or "scroll-up" at the top). Menu bar items pushed to
+   the right (the Help and Application menus) take class "menu-extras"; an
+   icon in a title or an item is an <img> 16px square. */
+:where(.menu, [role="menu"]) > :where(li.scroll-down, li.scroll-up) {
+  min-height: var(--clio-menu-item-height);
+  padding: 0;
+  background: var(--clio-art-menu-scroll-down) var(--clio-menu-scroll-left) 50% / auto no-repeat;
+}
+
+:where(.menu, [role="menu"]) > :where(li.scroll-up) {
+  background-image: var(--clio-art-menu-scroll-up);
+}
+
+:where(.menu-bar, [role="menubar"]) > :where(li.menu-extras) {
+  margin-left: auto;
+}
+
+:where(.menu-bar, [role="menubar"], .menu, [role="menu"]) :where(img) {
+  width: 16px;
+  height: 16px;
+  margin-right: 4px;
+  vertical-align: -3px;
+  image-rendering: pixelated;
 }
 
 /* Controls. Bare elements are styled through :where(), so the rules carry no
@@ -1990,6 +2027,40 @@
 
 :where(.window.utility) > :where(.title-bar) > :is(.title, h1, h2, h3) {
   font-size: var(--clio-utility-title-size, var(--clio-title-font-size));
+}
+
+/* ---- Help balloon ------------------------------------------------------------------
+   Balloon Help (HIG 1992, ch. 11; Mac OS 8 and 9 kept it): a white balloon
+   with a rounded outline, a 2px drop on the right and below, and a tail rising
+   from its top edge near the right towards the object it describes.
+   <div class="balloon" role="tooltip">…</div>. The tail's tip, under the
+   pointer in the capture, is inferred. */
+:where(.balloon) {
+  position: relative;
+  box-sizing: border-box;
+  width: max-content;
+  max-width: 260px;
+  margin-top: 14px;
+  padding: 8px 12px 10px 10px;
+  border: 10px solid transparent;
+  border-image: var(--clio-art-balloon) 10 fill / 10px stretch;
+  font-family: var(--clio-font-small);
+  font-size: var(--clio-font-size-small);
+  line-height: 13px;
+}
+
+:where(.balloon) {
+  padding: 0 2px 0 0;
+}
+
+:where(.balloon)::before {
+  content: "";
+  position: absolute;
+  top: -23px;
+  right: -5px;
+  width: 12px;
+  height: 14px;
+  background: var(--clio-art-balloon-tail) 0 0 / 12px 14px no-repeat;
 }
 
 /* Dialogs and alerts.
