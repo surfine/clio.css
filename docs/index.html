@@ -236,7 +236,7 @@
       </dl>
       <p class="aliases">Also accepts: system.css markup (<code>.title-bar button.close</code>, <code>.title-bar button.resize</code>, <code>.inactive-title-bar</code>, <code>.window-pane</code>, <code>.details-bar</code>, <code>.separator</code>); AI System 6 markup (<code>.close-box</code>, <code>.resize-box</code>, <code>.shade-box</code>, <code>.title-bar h1</code>, <code>.title-bar h2</code>).</p>
       <details class="evidence-details">
-        <summary>Evidence (33)</summary>
+        <summary>Evidence (34)</summary>
       <table class="evidence">
         <caption>Where each value comes from</caption>
         <thead><tr><th scope="col">Era</th><th scope="col">Value</th><th scope="col">Status</th><th scope="col">Source</th></tr></thead>
@@ -255,15 +255,21 @@
         </tr>
 <tr>
           <td>Platinum</td>
-          <td>clio.js: the dragged outline is a 2px band of the grey pattern</td>
+          <td>clio.js: the dragged outline is a 2px band of the grey pattern (the odd pixels) round the window and its shadow; the shadow starts 2px in from the top-right and bottom-left corners, so the band steps in there</td>
           <td><span class="status status-measured">Measured</span></td>
-          <td><code>clio.css capture, Mac OS 9.0 in Infinite Mac, Finder window dragged (frames before and during, diffed)</code><br><span class="upstream">Drawing Board assumed the same (inferred)</span></td>
+          <td><code>clio.css capture, Mac OS 9.0 in Infinite Mac, Infinite HD dragged by 80,116 (frames before and during, diffed); tooling/outline-check.mjs: the same 1260 pixels in Chromium, WebKit and Firefox</code><br><span class="upstream">Drawing Board assumed the same (inferred)</span></td>
         </tr>
 <tr>
           <td>System 7</td>
           <td>clio.zoomRects(): 8 outlines, one per tick, each edge eased by 1.6^k, the last four on screen at once</td>
           <td><span class="status status-measured">Measured</span></td>
           <td><code>clio.css capture, System 7.5.3 in Infinite Mac, the Finder opening the Infinite HD icon, every animation frame recorded (rectangle edges per frame)</code><br><span class="upstream">opacity only; none under prefers-reduced-motion</span></td>
+        </tr>
+<tr>
+          <td>Platinum</td>
+          <td>clio.zoomRects(): 6 outlines in the 2px gray band, one per tick, at 1.4^(k-7) of the way from the icon to the window, all kept until the window draws</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, Mac OS 9.0 in Infinite Mac, Games opened from Infinite HD, every changed frame recorded (outlines at 393-477 ms, the window at 493 ms)</code><br><span class="upstream">each edge within a pixel of the fit (the Finder's rounding is not known); opacity only, none under prefers-reduced-motion</span></td>
         </tr>
 <tr>
           <td>All eras</td>
@@ -274,8 +280,8 @@
 <tr>
           <td>Platinum</td>
           <td>clio.js: the collapse box folds the window to its title bar; a double click on the title bar does only with data-clio-shade=&quot;dblclick&quot;</td>
-          <td><span class="status status-inferred">Inferred</span></td>
-          <td><code>Mac OS 9.0 in Infinite Mac, Appearance &gt; Options: &quot;Double-click title bar to collapse windows&quot; off</code><br><span class="upstream">the collapsed window's look is not compared to a capture</span></td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>Mac OS 9.0 in Infinite Mac, Appearance &gt; Options: &quot;Double-click title bar to collapse windows&quot; off</code><br><span class="upstream">the collapsed look: the title bar, then the frame's #999 shade and black line across the whole width (frame collapsed; specimen p9-collapsed 100% identical in all three engines, the title and the desktop beside the shadow masked)</span></td>
         </tr>
 <tr>
           <td>System 7</td>
@@ -595,7 +601,7 @@
         </tr>
 <tr>
           <td>Platinum</td>
-          <td>Menu check mark (9x8, antialiased, recovered from the white-on-#339 chosen item) and the 6x11 submenu arrow, redrawn from Mac OS 9.0</td>
+          <td>Menu check mark (10x8, antialiased, read black on #ddd from an open pop-up menu; the 9x8 recovered before from the white-on-#339 chosen item had lost the tip's last column) and the 6x11 submenu arrow, redrawn from Mac OS 9.0</td>
           <td><span class="status status-measured">Measured</span></td>
           <td><code>clio.css capture, Mac OS 9.0 in Infinite Mac (npm run capture:platinum), frames popup-open and file-menu; tooling/p9-art.py</code><br><span class="upstream">replaces the classic-stylesheets art used before 0.8.0</span></td>
         </tr>
@@ -1052,7 +1058,7 @@
       </dl>
       
       <details class="evidence-details">
-        <summary>Evidence (7)</summary>
+        <summary>Evidence (8)</summary>
       <table class="evidence">
         <caption>Where each value comes from</caption>
         <thead><tr><th scope="col">Era</th><th scope="col">Value</th><th scope="col">Status</th><th scope="col">Source</th></tr></thead>
@@ -1062,6 +1068,12 @@
           <td>Open pop-up menu: the era's menu laid over the button, the current item on the button's row, checked</td>
           <td><span class="status status-inferred">Inferred</span></td>
           <td><code>clio.css capture, Mac OS 9.0 in Infinite Mac, SimpleText Text Style (frame platinum9/cl-size-popup)</code><br><span class="upstream">drawn with appearance: base-select where supported (Chrome 135, Safari 27; clio.js lines it up), by clio.js elsewhere; the row alignment is checked by npm run behaviour, not against pixels</span></td>
+        </tr>
+<tr>
+          <td>Platinum</td>
+          <td>Open pop-up menu: its top on the button's top (the current item there), as wide as the button less its 22px of arrows, framed all round in black with the white and #999 bevel, the shadow starting 2px in; check mark 3px in, text 20px, each antialiasing level as the screen shows it</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, Mac OS 9.0 in Infinite Mac, Appearance &gt; Fonts, Large System Font held with the pointer off the menu (frame fonts-popup-open)</code><br><span class="upstream">specimens p9-js-popup-open (clio.js, all three engines) and p9-popup-open (base-select, Chromium and WebKit) 100% identical; the button's arrows drawn pressed while it is open are not drawn yet</span></td>
         </tr>
 <tr>
           <td>System 7</td>
@@ -1200,7 +1212,7 @@
       </dl>
       
       <details class="evidence-details">
-        <summary>Evidence (20)</summary>
+        <summary>Evidence (21)</summary>
       <table class="evidence">
         <caption>Where each value comes from</caption>
         <thead><tr><th scope="col">Era</th><th scope="col">Value</th><th scope="col">Status</th><th scope="col">Source</th></tr></thead>
@@ -1306,6 +1318,12 @@
           <td>clio.js: an arrow scrolls one step at once, waits about 0.2 s, then repeats while held and the pointer is on it</td>
           <td><span class="status status-inferred">Inferred</span></td>
           <td><code>clio.css capture, Mac OS 9.0 Finder in Infinite Mac (held down arrow, frames 0.1 s apart)</code><br><span class="upstream">the pause is measured; step (16px) and rate (every 50 ms) are chosen, since the emulator runs faster than the hardware</span></td>
+        </tr>
+<tr>
+          <td>Platinum</td>
+          <td>A held scroll arrow: #777 face, #555 along the top and left, #999 along the bottom and right, the other two corners #777</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, Mac OS 9.0 in Infinite Mac, Finder, the down arrow held at its corner (frame arrow-held)</code><br><span class="upstream">specimen p9-js-scroll-arrow-held 100% identical in all three engines (the pointer masked)</span></td>
         </tr>
 <tr>
           <td>Platinum</td>
@@ -2014,7 +2032,7 @@
       </dl>
       
       <details class="evidence-details">
-        <summary>Evidence (4)</summary>
+        <summary>Evidence (6)</summary>
       <table class="evidence">
         <caption>Where each value comes from</caption>
         <thead><tr><th scope="col">Era</th><th scope="col">Value</th><th scope="col">Status</th><th scope="col">Source</th></tr></thead>
@@ -2024,6 +2042,18 @@
           <td>A 7-row track (light, black, three grey, black, white), a 15x16 thumb pointing down, tick marks of white, black and #888</td>
           <td><span class="status status-measured">Measured</span></td>
           <td><code>clio.css capture, Mac OS 9.0 in Infinite Mac (driven by hand, frames in .fidelity/hig/platinum9), frame mouse (Mouse Tracking); tooling/hig-art.py</code><br><span class="upstream">track and thumb 100% identical; the held thumb was not captured</span></td>
+        </tr>
+<tr>
+          <td>Platinum</td>
+          <td>The thumb stops 3px inside the track at both ends (Firefox's thumb is held there by padding)</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, Mac OS 9.0 in Infinite Mac (driven by hand, frames in .fidelity/hig/platinum9), Mouse Tracking dragged to each end (frames slider-min, slider-max)</code><br><span class="upstream">specimens p9-slider-min and p9-slider-max 100% identical in Chromium, WebKit and Firefox</span></td>
+        </tr>
+<tr>
+          <td>All eras</td>
+          <td>Tick marks fall on whole pixels, (width - run) / (count - 1) rounded</td>
+          <td><span class="status status-adapted">Adapted</span></td>
+          <td><code>clio.css</code><br><span class="upstream">each browser rounded a fractional spacing its own way; the Mac's tick placement was not measured</span></td>
         </tr>
 <tr>
           <td>Drawing Board</td>

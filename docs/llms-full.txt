@@ -1018,6 +1018,14 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
   --clio-drag-outline-width: 1px;
   /* ... around the window and its 1px shadow (both measured) */
   --clio-drag-outline-extra: 1px;
+  /* clio.zoomRects() (System 7.5.3, measured): 8 outlines at (1.6^k - 1) / (1.6^8 - 1)
+     of the way, 4 on screen at once */
+  --clio-zoom-count: 8;
+  --clio-zoom-steps: 8;
+  --clio-zoom-ratio: 1.6;
+  --clio-zoom-offset: 1;
+  --clio-zoom-keep: 4;
+  --clio-drag-outline-shadow-inset: 0px;   /* System 6: the region is the whole rectangle, though the shadow is drawn from a pixel in */
   /* clio.js: a dragged scroll box leaves its frame XORed with dkGray (System
      6.0.8, measured): white where dkGray is set, in step with the lane's ltGray,
      inverting what is under it, so over the lane it comes out solid black. */
@@ -2145,6 +2153,7 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
       translate: 0 var(--clio-picker-shift, 0px);
       border: var(--clio-menu-border);
       border-top-width: var(--clio-menu-border-top-width, 1px);
+      border-radius: 0;   /* Safari rounds its picker */
       background: var(--clio-menu-bg);
       box-shadow: var(--clio-menu-shadow);
       color: var(--clio-ink);
@@ -2531,7 +2540,20 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
   -webkit-appearance: none;
 }
 
-/* Firefox: the same track and thumb through its own parts. */
+/* Firefox: the same track and thumb through its own parts. Its thumb travels
+   the whole content box: the padding keeps it inside the track's ends, as
+   Chrome's and the Mac's (Mouse control panel at both ends), and the track
+   reaches back over the padding. */
+@supports selector(::-moz-range-thumb) {
+  :where(input[type="range"]) {
+    padding-inline: var(--clio-slider-track-slice);
+  }
+}
+
+:where(input[type="range"])::-moz-range-track {
+  margin-inline: calc(-1 * var(--clio-slider-track-slice));
+}
+
 :where(input[type="range"])::-moz-range-track {
   box-sizing: border-box;
   height: var(--clio-slider-track-height);
@@ -3042,38 +3064,38 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
 
 :where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-button:vertical:decrement:active,
 :where(html.clio-scrollbars)::-webkit-scrollbar-button:vertical:decrement:active {
-  background-image: var(--clio-scrollbar-up-on);
+  background-image: var(--clio-scrollbar-up-on), var(--clio-scrollbar-button-bevel-on, none);
 }
 
 :where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *) > .clio-sb-anchor > .clio-sb.clio-sb-v > .clio-sb-button.clio-sb-dec.clio-held {
-  background-image: var(--clio-scrollbar-up-on);
+  background-image: var(--clio-scrollbar-up-on), var(--clio-scrollbar-button-bevel-on, none);
 }
 
 :where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-button:vertical:increment:active,
 :where(html.clio-scrollbars)::-webkit-scrollbar-button:vertical:increment:active {
-  background-image: var(--clio-scrollbar-down-on);
+  background-image: var(--clio-scrollbar-down-on), var(--clio-scrollbar-button-bevel-on, none);
 }
 
 :where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *) > .clio-sb-anchor > .clio-sb.clio-sb-v > .clio-sb-button.clio-sb-inc.clio-held {
-  background-image: var(--clio-scrollbar-down-on);
+  background-image: var(--clio-scrollbar-down-on), var(--clio-scrollbar-button-bevel-on, none);
 }
 
 :where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-button:horizontal:decrement:active,
 :where(html.clio-scrollbars)::-webkit-scrollbar-button:horizontal:decrement:active {
-  background-image: var(--clio-scrollbar-left-on);
+  background-image: var(--clio-scrollbar-left-on), var(--clio-scrollbar-button-bevel-on, none);
 }
 
 :where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *) > .clio-sb-anchor > .clio-sb.clio-sb-h > .clio-sb-button.clio-sb-dec.clio-held {
-  background-image: var(--clio-scrollbar-left-on);
+  background-image: var(--clio-scrollbar-left-on), var(--clio-scrollbar-button-bevel-on, none);
 }
 
 :where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-button:horizontal:increment:active,
 :where(html.clio-scrollbars)::-webkit-scrollbar-button:horizontal:increment:active {
-  background-image: var(--clio-scrollbar-right-on);
+  background-image: var(--clio-scrollbar-right-on), var(--clio-scrollbar-button-bevel-on, none);
 }
 
 :where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *) > .clio-sb-anchor > .clio-sb.clio-sb-h > .clio-sb-button.clio-sb-inc.clio-held {
-  background-image: var(--clio-scrollbar-right-on);
+  background-image: var(--clio-scrollbar-right-on), var(--clio-scrollbar-button-bevel-on, none);
 }
 
 /* Only the single arrow box at each end, as on the Mac. */
@@ -3210,8 +3232,6 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
   background: var(--clio-scrollbar-ghost, #000000);
   background-position: calc(var(--clio-sb-px, 0px) + var(--clio-sb-gx, 0px)) calc(var(--clio-sb-py, 0px) + var(--clio-sb-gy, 0px));   /* in step with the lane's pattern */
   mix-blend-mode: var(--clio-scrollbar-ghost-blend, normal);
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
   mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
   pointer-events: none;
 }
@@ -3219,17 +3239,31 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
 /* clio.js outlines (a dragged window, zoom rects): QuickDraw's grey pattern,
    inverting what lies under it, in step with the screen. */
 .clio-outline {
+  /* The outline is the frame of the window's structure region (QuickDraw's
+     InsetRgn, rows and columns apart): the frame and its 1px shadow, which starts
+     --clio-drag-outline-shadow-inset in from the top-right and bottom-left corners,
+     so the region and the band step in there (all measured). e, k, w below. */
+  --e: var(--clio-drag-outline-extra, 0px);
+  --k: var(--clio-drag-outline-shadow-inset, 1px);
+  --w: var(--clio-drag-outline-width, 1px);
   position: fixed;
   z-index: 2147483000;
   box-sizing: border-box;
   margin: 0;
-  /* gray inverts the pixels whose x + y is odd on the screen (System 6.0.8 and
-     7.5.3, measured); clio.js sets the position that keeps it to the page */
+  /* gray inverts the pixels whose x + y is odd on the screen (System 6.0.8, 7.5.3
+     and Mac OS 9.0, measured); clio.js sets the position that keeps it to the page */
   background: repeating-conic-gradient(#ffffff 0 25%, transparent 0 50%) 0 0 / 2px 2px;
   mix-blend-mode: difference;
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  /* the band (box less content box), the region's two notches taken out and the
+     two pieces of the inset region they remove put back: every piece lies wholly
+     in or out of what is below it, so xor does each */
+  mask:
+    linear-gradient(#000 0 0) left 0 bottom 0 / var(--k) var(--e) no-repeat border-box exclude,
+    linear-gradient(#000 0 0) right 0 top 0 / var(--e) var(--k) no-repeat border-box exclude,
+    linear-gradient(#000 0 0) left var(--w) bottom var(--w) / var(--k) var(--e) no-repeat border-box exclude,
+    linear-gradient(#000 0 0) right var(--w) top var(--w) / var(--e) var(--k) no-repeat border-box exclude,
+    linear-gradient(#000 0 0) content-box exclude,
+    linear-gradient(#000 0 0) border-box;
   pointer-events: none;
   image-rendering: pixelated;
 }
@@ -3668,6 +3702,13 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
    (GUIdebook, Infinite Mac). P-numbers in comments are AI System 6's patch
    ids; see EVIDENCE.md. */
 :is([data-era="platinum"], [data-era="drawingboard"]) {
+  /* A raised edge: white along the top and left, #999 along the bottom and
+     right, the two other corners left to the face (windows, pop-up menus). */
+  --clio-p9-bevel:
+    linear-gradient(#ffffff, #ffffff) 0 0 / calc(100% - 1px) 1px no-repeat,
+    linear-gradient(#ffffff, #ffffff) 0 0 / 1px calc(100% - 1px) no-repeat,
+    linear-gradient(#999999, #999999) 1px 100% / calc(100% - 1px) 1px no-repeat,
+    linear-gradient(#999999, #999999) 100% 1px / 1px calc(100% - 1px) no-repeat;
   --clio-ink: #000000;
   --clio-paper: #dddddd;
   --clio-face: #dddddd;
@@ -3882,10 +3923,21 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
     linear-gradient(#777777, #777777) 0 0 / 1px 2px no-repeat,
     #888888;
   --clio-scrollbar-button-bevel: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' shape-rendering='crispEdges'%3E%3Cpath fill='%23fff' d='M0 0h13v1H0zM0 1h1v12H0z'/%3E%3Cpath fill='%23bbb' d='M1 13h13v1H1zM13 1h1v12h-1z'/%3E%3C/svg%3E");
+  /* held: #555 along the top and left, #999 along the bottom and right, the two
+     other corners left the face's #777 (Mac OS 9.0 Finder, frame arrow-held) */
+  --clio-scrollbar-button-bevel-on: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' shape-rendering='crispEdges'%3E%3Cpath fill='%23555' d='M0 0h13v1H0zM0 1h1v12H0z'/%3E%3Cpath fill='%23999' d='M1 13h13v1H1zM13 1h1v12h-1z'/%3E%3C/svg%3E");
   --clio-scrollbar-thumb-tracking: live;
   /* Mac OS 8 and 9 keep a clicked menu open (clio.js) */
   --clio-menu-sticky: 1;
   --clio-drag-outline-width: 2px;   /* Mac OS 9.0: a 2px band */
+  --clio-drag-outline-shadow-inset: 2px;   /* the shadow starts 2px in from the corners */
+  /* Zoom rects (Mac OS 9.0 opening Games, measured): 6 outlines in the 2px band at
+     1.4^(k - 7) of the way, all on screen until the window draws */
+  --clio-zoom-count: 6;
+  --clio-zoom-steps: 7;
+  --clio-zoom-ratio: 1.4;
+  --clio-zoom-offset: 0;
+  --clio-zoom-keep: 0;
   --clio-scrollbar-track: #aaaaaa;
   /* The lane: #777 and #888 along the top and left, #bbb and #ccc down the
      right, nothing along the bottom (frames finder-scroll-*). */
@@ -4025,7 +4077,7 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
   --clio-art-p9-submenu-on: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAALAQMAAABmnG7VAAAABlBMVEUAAAD///+l2Z/dAAAAAXRSTlMAQObYZgAAAB9JREFUeJxjaGA4wPCA4QPDD4Y/TH+YfjB9YHrAdAAAZSIJk3jnGdQAAAAASUVORK5CYII=");
   --clio-art-p9-dropdown: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAKAQMAAABCAtZOAAAABlBMVEUAAAAAAAClZ7nPAAAAAXRSTlMAQObYZgAAABlJREFUeJxjEGDSYHJh+McAAv8YahgsGAQAHygDQTD2iPAAAAAASUVORK5CYII=");
   --clio-art-p9-dropdown-off: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAKAQMAAABCAtZOAAAABlBMVEUAAACIiIhaeOqmAAAAAXRSTlMAQObYZgAAABlJREFUeJxjEGDSYHJh+McAAv8YahgsGAQAHygDQTD2iPAAAAAASUVORK5CYII=");
-  --clio-art-p9-menucheck: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAICAYAAAArzdW1AAAAP0lEQVR42mNgIAyMiFHwnxgFK2ECLgwMDKFYFJxB1nUGKmiEpOAOAwODALKilVCJ/7gUwMAdQgoYoBIrsSkAAK+iEhBS63EWAAAAAElFTkSuQmCC");
+  --clio-art-p9-menucheck: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAICAYAAADA+m62AAAATUlEQVR42o3MwQ2AIBAEwIkdaC2UYAsWZw2UIjXQCn4gIcSA+7ydPeYJuGFboAfH6lNB7I8nrg+UxnWqRehQxj7CWMsyQy35D1LLOEMvsWESqM0p+dQAAAAASUVORK5CYII="); /* 10x8 */
 }
 
 /* ---- Window ---------------------------------------------------------------- */
@@ -4033,10 +4085,7 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
    right and bottom (GUIdebook Appearance window, x=4 and x=width-5). */
 :is([data-era="platinum"], [data-era="drawingboard"]) .window:not(.inactive) {
   background:
-    linear-gradient(#ffffff, #ffffff) 0 0 / calc(100% - 1px) 1px no-repeat,
-    linear-gradient(#ffffff, #ffffff) 0 0 / 1px calc(100% - 1px) no-repeat,
-    linear-gradient(#999999, #999999) 1px 100% / calc(100% - 1px) 1px no-repeat,
-    linear-gradient(#999999, #999999) 100% 1px / 1px calc(100% - 1px) no-repeat,
+    var(--clio-p9-bevel),
     linear-gradient(#999999, #999999) 3px 19px / 1px calc(100% - 22px) no-repeat,
     linear-gradient(#ffffff, #ffffff) right 3px top 20px / 1px calc(100% - 23px) no-repeat,
     linear-gradient(#ffffff, #ffffff) left 3px bottom 3px / calc(100% - 6px) 1px no-repeat,
@@ -4254,11 +4303,11 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
 
 :is([data-era="platinum"], [data-era="drawingboard"]) :is(.menu, [role="menu"]) > li:is(.checked, [aria-checked="true"])::before,
 :is([data-era="platinum"], [data-era="drawingboard"]) :is(.menu, [role="menu"]) > li > :is([aria-checked="true"], .checked)::before {
-  left: 7px;
-  width: 9px;
+  left: 8px;   /* the art's first column is the glyph's (it used to start a column early) */
+  width: 10px;
   height: 8px;
   margin-top: -4px;
-  background: var(--clio-art-p-check) 0 0 / 9px 8px no-repeat;
+  background: var(--clio-art-p-check) 0 0 / 10px 8px no-repeat;
 }
 
 :is([data-era="platinum"], [data-era="drawingboard"]) :is(.menu, [role="menu"]) > li:is(.checked, [aria-checked="true"]):is(:hover, :focus-within, .active):where(:not([data-clio-blink]))::before,
@@ -4269,8 +4318,9 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
 /* The same check mark in an open pop-up menu drawn by the browser (base-select). */
 @supports (appearance: base-select) {
   :is([data-era="platinum"], [data-era="drawingboard"]) select option::checkmark {
-    left: 7px;
-    background: var(--clio-art-p-check) 0 0 / 9px 8px no-repeat;
+    left: 8px;
+    width: 10px;
+    background: var(--clio-art-p-check) 0 0 / 10px 8px no-repeat;
   }
 
   :is([data-era="platinum"], [data-era="drawingboard"]) select option:is(:hover, :focus-visible)::checkmark {
@@ -4356,13 +4406,17 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
 
 :is([data-era="platinum"], [data-era="drawingboard"]) :is(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-button:active,
 :is([data-era="platinum"], [data-era="drawingboard"]):is(html.clio-scrollbars)::-webkit-scrollbar-button:active {
-  background-color: #666666;
-  box-shadow: inset 1px 1px #444444, inset -1px -1px #888888;
+  /* Held (Mac OS 9.0 Finder, the down arrow held; frame arrow-held): a #777
+     face in --clio-scrollbar-button-bevel-on's #555 and #999 bevel. */
+  background-color: #777777;
+  box-shadow: none;
 }
 
 :is([data-era="platinum"], [data-era="drawingboard"]) :is(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *) > .clio-sb-anchor > .clio-sb > .clio-sb-button.clio-held {
-  background-color: #666666;
-  box-shadow: inset 1px 1px #444444, inset -1px -1px #888888;
+  /* Held (Mac OS 9.0 Finder, the down arrow held; frame arrow-held): a #777
+     face in --clio-scrollbar-button-bevel-on's #555 and #999 bevel. */
+  background-color: #777777;
+  box-shadow: none;
 }
 
 :is([data-era="platinum"], [data-era="drawingboard"]) :is(fieldset) > legend {
@@ -4742,6 +4796,88 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
 [data-era="platinum"] .clio-sb-host > .clio-sb-anchor > .clio-sb-v.clio-sb-off > .clio-sb-button.clio-sb-dec { border-bottom-width: 0; box-shadow: inset 0 -1px #555555; }
 [data-era="platinum"] .clio-sb-host > .clio-sb-anchor > .clio-sb-v.clio-sb-off > .clio-sb-button.clio-sb-inc { border-top-width: 0; box-shadow: inset 0 1px #555555; background-position: 1px 1px; }
 
+/* ---- Collapsed (WindowShade): the frame closes round the title bar --------
+   Mac OS 9.0, Games collapsed (frame collapsed): the title bar's last two rows
+   become the window's own #999 shade and black frame, which run under the side
+   bands too. */
+[data-era="platinum"] .window.collapsed {
+  padding-bottom: 1px;
+}
+
+/* the bevel only: the inner strip round the pane has gone with it */
+[data-era="platinum"] .window.collapsed:not(.inactive) {
+  background:
+    var(--clio-p9-bevel),
+    var(--clio-window-bg);
+}
+
+[data-era="platinum"] .window.collapsed > .title-bar {
+  height: calc(var(--clio-titlebar-height) - 2px);
+  border-bottom-width: 0;
+}
+
+/* ---- The open pop-up menu (Mac OS 9.0, Appearance > Fonts, Large System Font
+   held; frame popup-open) ----------------------------------------------------
+   Laid with its top on the button's (the current item there), as wide as the
+   button less its arrows (22px), framed all round in black with a white and
+   #999 bevel whose other two corners stay #ddd, and its shadow starting 2px in
+   (the clip takes the first pixel of each end). The check mark sits 3px in,
+   the text 20px. */
+[data-era="platinum"] select {
+  --clio-popup-menu-trim: 22px;
+  --clio-popup-menu-align: top;
+}
+
+[data-era="platinum"] .clio-popup-menu {
+  border-top-width: 1px;
+  background:
+    var(--clio-p9-bevel),
+    #dddddd;
+  box-shadow: 1px 1px 0 #222222;
+  clip-path: polygon(0 0, 100% 0, 100% 2px, calc(100% + 1px) 2px, calc(100% + 1px) calc(100% + 1px), 2px calc(100% + 1px), 2px 100%, 0 100%);
+}
+
+[data-era="platinum"] .clio-popup-menu > li {
+  padding-left: 20px;
+}
+
+/* Black on #ddd, every antialiasing level as the screen shows it (the push
+   buttons' palette: the same colours). */
+[data-era="platinum"] .clio-popup-menu > li:not(.disabled, .active, :hover) {
+  font-family: "Clio Sans '97 Exact", var(--clio-font-chrome);
+  font-palette: --clio-aa-p9-button;
+}
+
+[data-era="platinum"] .clio-popup-menu > li:is(.checked, [aria-checked="true"])::before {
+  left: 3px;
+}
+
+/* The same menu where the browser draws it (base-select). */
+@supports (appearance: base-select) {
+  [data-era="platinum"] select::picker(select) {
+    min-width: calc(anchor-size(width) - 22px);
+    border-top-width: 1px;
+    background:
+      var(--clio-p9-bevel),
+      #dddddd;
+    box-shadow: 1px 1px 0 #222222;
+    clip-path: polygon(0 0, 100% 0, 100% 2px, calc(100% + 1px) 2px, calc(100% + 1px) calc(100% + 1px), 2px calc(100% + 1px), 2px 100%, 0 100%);
+  }
+
+  [data-era="platinum"] select option {
+    padding-left: 20px;
+  }
+
+  [data-era="platinum"] select option:not(:disabled, :hover, :focus-visible) {
+    font-family: "Clio Sans '97 Exact", var(--clio-font-chrome);
+    font-palette: --clio-aa-p9-button;
+  }
+
+  [data-era="platinum"] select option::checkmark {
+    left: 3px;
+  }
+}
+
 /* Mac OS 8.5 "Drawing Board" (the beta theme Apple shipped in 8.5b6 and
    withdrew). Applies inside any element with data-era="drawingboard"; it shares
    the Platinum layer's structure (both are Appearance Manager themes) and
@@ -4757,6 +4893,7 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
 [data-era="drawingboard"] {
   --clio-scrollbar-size: 16px;
   --clio-scrollbar-button-bevel: none;
+  --clio-scrollbar-button-bevel-on: none;
   --clio-scrollbar-thumb-overlap: 0px;
   --clio-scrollbar-thumb-after: none;
   /* Titles sit on the textured title bar, where no palette can know the

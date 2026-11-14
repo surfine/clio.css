@@ -46,3 +46,85 @@
 [data-era="platinum"] .clio-sb-host > .clio-sb-anchor > .clio-sb-h.clio-sb-off > .clio-sb-button.clio-sb-inc { border-left-width: 0; box-shadow: inset 1px 0 #555555; background-position: 1px 1px; }
 [data-era="platinum"] .clio-sb-host > .clio-sb-anchor > .clio-sb-v.clio-sb-off > .clio-sb-button.clio-sb-dec { border-bottom-width: 0; box-shadow: inset 0 -1px #555555; }
 [data-era="platinum"] .clio-sb-host > .clio-sb-anchor > .clio-sb-v.clio-sb-off > .clio-sb-button.clio-sb-inc { border-top-width: 0; box-shadow: inset 0 1px #555555; background-position: 1px 1px; }
+
+/* ---- Collapsed (WindowShade): the frame closes round the title bar --------
+   Mac OS 9.0, Games collapsed (frame collapsed): the title bar's last two rows
+   become the window's own #999 shade and black frame, which run under the side
+   bands too. */
+[data-era="platinum"] .window.collapsed {
+  padding-bottom: 1px;
+}
+
+/* the bevel only: the inner strip round the pane has gone with it */
+[data-era="platinum"] .window.collapsed:not(.inactive) {
+  background:
+    var(--clio-p9-bevel),
+    var(--clio-window-bg);
+}
+
+[data-era="platinum"] .window.collapsed > .title-bar {
+  height: calc(var(--clio-titlebar-height) - 2px);
+  border-bottom-width: 0;
+}
+
+/* ---- The open pop-up menu (Mac OS 9.0, Appearance > Fonts, Large System Font
+   held; frame popup-open) ----------------------------------------------------
+   Laid with its top on the button's (the current item there), as wide as the
+   button less its arrows (22px), framed all round in black with a white and
+   #999 bevel whose other two corners stay #ddd, and its shadow starting 2px in
+   (the clip takes the first pixel of each end). The check mark sits 3px in,
+   the text 20px. */
+[data-era="platinum"] select {
+  --clio-popup-menu-trim: 22px;
+  --clio-popup-menu-align: top;
+}
+
+[data-era="platinum"] .clio-popup-menu {
+  border-top-width: 1px;
+  background:
+    var(--clio-p9-bevel),
+    #dddddd;
+  box-shadow: 1px 1px 0 #222222;
+  clip-path: polygon(0 0, 100% 0, 100% 2px, calc(100% + 1px) 2px, calc(100% + 1px) calc(100% + 1px), 2px calc(100% + 1px), 2px 100%, 0 100%);
+}
+
+[data-era="platinum"] .clio-popup-menu > li {
+  padding-left: 20px;
+}
+
+/* Black on #ddd, every antialiasing level as the screen shows it (the push
+   buttons' palette: the same colours). */
+[data-era="platinum"] .clio-popup-menu > li:not(.disabled, .active, :hover) {
+  font-family: "Clio Sans '97 Exact", var(--clio-font-chrome);
+  font-palette: --clio-aa-p9-button;
+}
+
+[data-era="platinum"] .clio-popup-menu > li:is(.checked, [aria-checked="true"])::before {
+  left: 3px;
+}
+
+/* The same menu where the browser draws it (base-select). */
+@supports (appearance: base-select) {
+  [data-era="platinum"] select::picker(select) {
+    min-width: calc(anchor-size(width) - 22px);
+    border-top-width: 1px;
+    background:
+      var(--clio-p9-bevel),
+      #dddddd;
+    box-shadow: 1px 1px 0 #222222;
+    clip-path: polygon(0 0, 100% 0, 100% 2px, calc(100% + 1px) 2px, calc(100% + 1px) calc(100% + 1px), 2px calc(100% + 1px), 2px 100%, 0 100%);
+  }
+
+  [data-era="platinum"] select option {
+    padding-left: 20px;
+  }
+
+  [data-era="platinum"] select option:not(:disabled, :hover, :focus-visible) {
+    font-family: "Clio Sans '97 Exact", var(--clio-font-chrome);
+    font-palette: --clio-aa-p9-button;
+  }
+
+  [data-era="platinum"] select option::checkmark {
+    left: 3px;
+  }
+}

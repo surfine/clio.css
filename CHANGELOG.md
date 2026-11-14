@@ -5,7 +5,7 @@
 Safari and Firefox, checked: `CLIO_ENGINE=webkit|firefox` runs the pixel check and
 `npm run behaviour` in Playwright's WebKit and Firefox as well as Chromium.
 
-- Pixel check: Chromium 118 of 118 identical, WebKit 116, Firefox 110 (FIDELITY.md). What
+- Pixel check: Chromium 123 of 123 identical, WebKit 121 of 123, Firefox 115 of 121 (FIDELITY.md). What
   still differs is a centred label whose text starts on a half pixel: the Mac and Chromium
   round it down, WebKit blends it, Firefox rounds it up. Behaviour checks: 145 in Chromium
   and WebKit, 143 in Firefox (the two base-select checks do not apply).
@@ -38,6 +38,23 @@ Safari and Firefox, checked: `CLIO_ENGINE=webkit|firefox` runs the pixel check a
     Black & White highlight colour checked against frames; new specimens
     `s7-scroll-left`, `s7-scroll-right`, `s7-hscroll-thumb`, `s7-js-hscroll-lane`,
     `s7-collapsed`.
+- **Mac OS 9.0, measured**:
+  - The dragged outline's 2px band follows the window's structure region, which steps
+    in at the top-right and bottom-left corners where the shadow starts 2px in
+    (`tooling/outline-check.mjs`: 1260 of 1260 pixels).
+  - `clio.zoomRects()` per era: Mac OS 9 draws 6 outlines in the 2px band at
+    1.4^(k−7) of the way and keeps them all until the window draws (`--clio-zoom-*`).
+  - The collapsed window closes with the frame's shade and black line across the whole
+    width; specimen `p9-collapsed`.
+  - A held scroll arrow is #777 with a #555/#999 bevel (`--clio-scrollbar-button-bevel-on`).
+  - The open pop-up menu: its top on the button's, as wide as the button less its arrows,
+    framed all round with corners left #ddd, the shadow 2px in, the check mark 3px in
+    and the text 20px, its text levels exact. clio.js and base-select draw it
+    identically (`p9-js-popup-open`, `p9-popup-open`). The Platinum check mark is now
+    10x8 (the old art had lost a column).
+  - The slider's thumb stops 3px inside the track at both ends (Firefox now too).
+- Size: the minifier shortens `#aabbcc` to `#abc`; shared bevel token `--clio-p9-bevel`;
+  `clio.min.css` 198.8 KB of the 200 KB budget (see ROADMAP item 6).
 - Tooling: the specimen pages declare UTF-8 (WebKit read "…" as Latin-1), crops snap to
   the pixel the box was drawn on, and fonts are waited for after layout.
 

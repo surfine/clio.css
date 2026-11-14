@@ -79,11 +79,14 @@ for (const era of Object.keys(lengths)) {
   ok(info.w === 200 && info.h === 150, `${era}: the scroller keeps its size (${info.w}x${info.h})`);
   ok(info.len === lengths[era], `${era}: the scroll box is ${lengths[era]}px whatever the content (${info.len})`);
   const [ax, ay] = await center("#s .clio-sb-v > .clio-sb-inc");
+  // the steps' times, taken in the page (a slow engine round trip must not decide the pause)
+  await page.evaluate(() => { const s = document.querySelector("#s"); window.steps = []; s.addEventListener("scroll", () => window.steps.push([performance.now(), s.scrollTop])); s.addEventListener("pointerdown", () => { window.pressed = performance.now(); }, true); });
   await page.mouse.move(ax, ay); await page.mouse.down();
   const first = await page.evaluate(() => document.querySelector("#s").scrollTop);
   ok(first === 16, `${era}: pressing the down arrow scrolls one step at once (${first})`);
   await page.waitForTimeout(120);
-  ok(await page.evaluate(() => document.querySelector("#s").scrollTop) === 16, `${era}: then waits before repeating`);
+  const pause = await page.evaluate(() => { const s = window.steps.find(([, top]) => top > 16); return s ? Math.round(s[0] - window.pressed) : Infinity; });
+  ok(pause >= 150, `${era}: then waits before repeating (${pause} ms)`);
   await page.waitForTimeout(400);
   const later = await page.evaluate(() => document.querySelector("#s").scrollTop);
   ok(later > 48, `${era}: and repeats while held (${later})`);
@@ -148,9 +151,11 @@ for (const era of ["system7", "platinum"]) {
   const [ox, oy] = await center("#open");
   await page.mouse.move(ox, oy, { steps: 4 });
   ok(await page.evaluate(() => document.querySelector("#open").parentElement.classList.contains("active")), `${era}: the item under the pointer lights`);
+  // count the blinks as they happen (sampling frames afterwards misses them on a busy machine)
+  await page.evaluate(() => { const li = document.querySelector("#open").parentElement; window.blinkLog = []; new MutationObserver(() => window.blinkLog.push(li.hasAttribute("data-clio-blink") ? 0 : 1)).observe(li, { attributes: true, attributeFilter: ["data-clio-blink"] }); });
   await page.mouse.up();
-  const blinks = await page.evaluate(() => new Promise((res) => { const li = document.querySelector("#open").parentElement; const seen = []; const t0 = performance.now();
-    const step = () => { seen.push(li.hasAttribute("data-clio-blink") ? 0 : 1); if (performance.now() - t0 < 400) requestAnimationFrame(step); else res(seen.join("")); }; step(); }));
+  await page.waitForTimeout(500);
+  const blinks = await page.evaluate(() => window.blinkLog.join(""));
   const offs = (blinks.match(/0+/g) || []).length;
   ok(offs === 3, `${era}: the chosen item blinks three times (${blinks})`);
   ok(await page.evaluate(() => window.chose) === "open", `${era}: then it runs`);
@@ -243,7 +248,7 @@ if (await page.evaluate(() => CSS.supports("appearance", "base-select"))) {
   const [sx, sy] = await center("#p");
   await page.mouse.move(sx, sy); await page.mouse.down(); await page.mouse.up();
   const shift = await page.evaluate(() => document.querySelector("#p").style.getPropertyValue("--clio-picker-shift"));
-  ok(shift === "-31px", `base-select: the picker moves up two rows and a border to put Monaco on the button (${shift})`);
+  ok(shift === "-32px", `base-select: the picker moves up two rows to put Monaco on the button, the menu's top on the button's as in Mac OS 9 (${shift})`);
   const placed = await page.evaluate(() => { const o = document.querySelectorAll("#p option")[2].getBoundingClientRect(), r = document.querySelector("#p").getBoundingClientRect(); return [Math.round(o.top + o.height / 2), Math.round(r.top + r.height / 2), Math.round(o.left - r.left)]; });
   ok(Math.abs(placed[0] - placed[1]) <= 1 && Math.abs(placed[2]) <= 1, `base-select: the open picker lies over the button, Monaco on its row (${placed})`);
   await page.keyboard.press("Escape");
@@ -317,8 +322,9 @@ await page.keyboard.press("Shift+ArrowDown");
 ok((await pos())[1] === 101, "move button: Shift moves 1px");
 for (let i = 0; i < 20; i++) await page.keyboard.press("ArrowLeft");
 ok((await pos())[0] === 0, "moves stay inside the page");
-await page.waitForTimeout(1100);
-ok(await page.evaluate(() => document.querySelector(".clio-live").textContent) === "", "the announcement clears after a second");
+// the last move's announcement clears a second after it (the key presses may arrive late)
+const cleared = await page.waitForFunction(() => document.querySelector(".clio-live").textContent === "", null, { timeout: 2500 }).then(() => true, () => false);
+ok(cleared, "the announcement clears after a second");
 await page.keyboard.press("Enter");
 ok(await page.evaluate(() => document.querySelectorAll(".clio-move-menu [role=menuitem]").length) === 4 && await page.evaluate(() => document.activeElement.textContent) === "Move left", "move button: Return opens a menu of moves on its first item");
 await page.keyboard.press("ArrowDown"); await page.keyboard.press("Enter");

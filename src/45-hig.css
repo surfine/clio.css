@@ -151,7 +151,20 @@
   -webkit-appearance: none;
 }
 
-/* Firefox: the same track and thumb through its own parts. */
+/* Firefox: the same track and thumb through its own parts. Its thumb travels
+   the whole content box: the padding keeps it inside the track's ends, as
+   Chrome's and the Mac's (Mouse control panel at both ends), and the track
+   reaches back over the padding. */
+@supports selector(::-moz-range-thumb) {
+  :where(input[type="range"]) {
+    padding-inline: var(--clio-slider-track-slice);
+  }
+}
+
+:where(input[type="range"])::-moz-range-track {
+  margin-inline: calc(-1 * var(--clio-slider-track-slice));
+}
+
 :where(input[type="range"])::-moz-range-track {
   box-sizing: border-box;
   height: var(--clio-slider-track-height);

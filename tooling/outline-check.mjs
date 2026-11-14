@@ -4,7 +4,7 @@
 //   CLIO_ENGINE=chromium|webkit|firefox node tooling/outline-check.mjs
 // Frames (git-ignored, see tooling/emulator/measure-classic.sh): .fidelity/system6/window-drag*.png
 // (System 6.0.8, Macintosh HD dragged by 80,113), .fidelity/system7/window-drag*.png (System
-// 7.5.3, Infinite HD dragged by 80,116).
+// 7.5.3, Infinite HD dragged by 80,116), .fidelity/platinum9/window-drag*.png (Mac OS 9.0, the same).
 import { createRequire } from "node:module";
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
@@ -21,6 +21,7 @@ const ENGINE = process.env.CLIO_ENGINE || "chromium";
 const cases = [
   { era: "system6", dir: "system6", win: [-1, 27, 240, 105], d: [80, 113], pointer: [[195, 33, 21, 28], [275, 146, 21, 25]] },
   { era: "system7", dir: "system7", win: [29, 55, 376, 218], d: [80, 116], pointer: [[295, 60, 21, 23], [375, 176, 21, 23]] },
+  { era: "platinum", dir: "platinum9", win: [24, 52, 386, 219], d: [80, 116], pointer: [[295, 56, 21, 25], [375, 172, 21, 25]] },
 ];
 const OFF = 100;   // the page offset of the screen: even, so every parity is kept
 const browser = await playwright[ENGINE].launch();
@@ -43,18 +44,18 @@ for (const c of cases) {
     const px = (img) => { const k = document.createElement("canvas"); k.width = img.width; k.height = img.height; const g = k.getContext("2d"); g.drawImage(img, 0, 0); return [g.getImageData(0, 0, img.width, img.height).data, img.width, img.height]; };
     const [A, W, H] = px(await load(a)), [B] = px(await load(b)), [S, SW] = px(await load(s));
     const skip = (x, y) => pointer.some(([px0, py0, pw, phh]) => x >= px0 && x < px0 + pw && y >= py0 && y < py0 + phh);
-    let both = 0, onlyRef = 0, onlyClio = 0;
+    let both = 0, onlyRef = 0, onlyClio = 0; const odd = [];
     for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
       if (skip(x, y)) continue;
       const i = (y * W + x) * 4, ref = A[i] !== B[i] || A[i + 1] !== B[i + 1] || A[i + 2] !== B[i + 2];
       const j = ((y + off) * SW + x + off) * 4, clio = x + off >= 0 && S[j] > 128;
-      if (ref && clio) both++; else if (ref) onlyRef++; else if (clio) onlyClio++;
+      if (ref && clio) both++; else if (ref || clio) { if (ref) onlyRef++; else onlyClio++; if (odd.length < 6) odd.push(`${ref ? "mac" : "clio"} ${x},${y}`); }
     }
-    return { both, onlyRef, onlyClio };
+    return { both, onlyRef, onlyClio, odd };
   }, [readFileSync(before).toString("base64"), readFileSync(during).toString("base64"), shot, c.pointer, OFF]);
   const ok = res.onlyRef === 0 && res.onlyClio === 0 && res.both > 0;
   if (!ok) failed++;
-  console.log(`${ok ? "ok  " : "FAIL"} ${c.era}: ${res.both} pixels inverted by both, ${res.onlyRef} only on the Mac, ${res.onlyClio} only by clio.js (${ENGINE})`);
+  console.log(`${ok ? "ok  " : "FAIL"} ${c.era}: ${res.both} pixels inverted by both, ${res.onlyRef} only on the Mac, ${res.onlyClio} only by clio.js (${ENGINE})${res.odd.length ? ": " + res.odd.join("; ") : ""}`);
 }
 await browser.close();
 process.exit(failed ? 1 : 0);

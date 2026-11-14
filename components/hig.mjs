@@ -48,6 +48,8 @@ export default [
 <input id="clio-rate" type="range" class="ticks" min="0" max="4" value="2" style="width: 120px; --clio-slider-tick-count: 5">`,
     evidence: [
       { era: "platinum", claim: "A 7-row track (light, black, three grey, black, white), a 15x16 thumb pointing down, tick marks of white, black and #888", status: "measured", source: P9 + ", frame mouse (Mouse Tracking); tooling/hig-art.py", upstream: "track and thumb 100% identical; the held thumb was not captured" },
+      { era: "platinum", claim: "The thumb stops 3px inside the track at both ends (Firefox's thumb is held there by padding)", status: "measured", source: P9 + ", Mouse Tracking dragged to each end (frames slider-min, slider-max)", upstream: "specimens p9-slider-min and p9-slider-max 100% identical in Chromium, WebKit and Firefox" },
+      { era: "both", claim: "Tick marks fall on whole pixels, (width - run) / (count - 1) rounded", status: "adapted", source: "clio.css", upstream: "each browser rounded a fractional spacing its own way; the Mac's tick placement was not measured" },
       { era: "drawingboard", claim: "The theme's 9x16 thumb (1106, through 16 bits) on a 1px pencil track (ppat 7024)", status: "measured", source: THEME + "; " + DB + ", frame keyboard", upstream: "thumb and track pen found 1:1; ticks not reproduced" },
       { era: "system7", claim: "System 7 had no slider in the Toolbox (each control panel drew its own); it uses Platinum's", status: "adapted", source: "clio.css", upstream: HIG92 + ", ch. 7: Controls Not Supported by the Toolbox" },
       { era: "system6", claim: "System 6 had none; it uses Platinum's", status: "adapted", source: "clio.css", upstream: "—" },

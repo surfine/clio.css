@@ -13,6 +13,7 @@
 [data-era="drawingboard"] {
   --clio-scrollbar-size: 16px;
   --clio-scrollbar-button-bevel: none;
+  --clio-scrollbar-button-bevel-on: none;
   --clio-scrollbar-thumb-overlap: 0px;
   --clio-scrollbar-thumb-after: none;
   /* Titles sit on the textured title bar, where no palette can know the

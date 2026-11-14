@@ -106,6 +106,7 @@ function minify(css) {
     .replace(/\s*([{};])\s*/g, "$1")
     .replace(/,\s+/g, ",")
     .replace(/;}/g, "}")
+    .replace(/#([0-9a-f])\1([0-9a-f])\2([0-9a-f])\3(?![0-9a-f])/gi, "#$1$2$3")   // #aabbcc -> #abc (data URIs spell # as %23)
     .replace(/\/\*![\s\S]*?\*\//, (m) => m + "\n")
     .trim() + "\n";
 }

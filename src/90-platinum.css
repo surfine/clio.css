@@ -5,6 +5,13 @@
    (GUIdebook, Infinite Mac). P-numbers in comments are AI System 6's patch
    ids; see EVIDENCE.md. */
 :is([data-era="platinum"], [data-era="drawingboard"]) {
+  /* A raised edge: white along the top and left, #999 along the bottom and
+     right, the two other corners left to the face (windows, pop-up menus). */
+  --clio-p9-bevel:
+    linear-gradient(#ffffff, #ffffff) 0 0 / calc(100% - 1px) 1px no-repeat,
+    linear-gradient(#ffffff, #ffffff) 0 0 / 1px calc(100% - 1px) no-repeat,
+    linear-gradient(#999999, #999999) 1px 100% / calc(100% - 1px) 1px no-repeat,
+    linear-gradient(#999999, #999999) 100% 1px / 1px calc(100% - 1px) no-repeat;
   --clio-ink: #000000;
   --clio-paper: #dddddd;
   --clio-face: #dddddd;
@@ -219,10 +226,21 @@
     linear-gradient(#777777, #777777) 0 0 / 1px 2px no-repeat,
     #888888;
   --clio-scrollbar-button-bevel: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' shape-rendering='crispEdges'%3E%3Cpath fill='%23fff' d='M0 0h13v1H0zM0 1h1v12H0z'/%3E%3Cpath fill='%23bbb' d='M1 13h13v1H1zM13 1h1v12h-1z'/%3E%3C/svg%3E");
+  /* held: #555 along the top and left, #999 along the bottom and right, the two
+     other corners left the face's #777 (Mac OS 9.0 Finder, frame arrow-held) */
+  --clio-scrollbar-button-bevel-on: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' shape-rendering='crispEdges'%3E%3Cpath fill='%23555' d='M0 0h13v1H0zM0 1h1v12H0z'/%3E%3Cpath fill='%23999' d='M1 13h13v1H1zM13 1h1v12h-1z'/%3E%3C/svg%3E");
   --clio-scrollbar-thumb-tracking: live;
   /* Mac OS 8 and 9 keep a clicked menu open (clio.js) */
   --clio-menu-sticky: 1;
   --clio-drag-outline-width: 2px;   /* Mac OS 9.0: a 2px band */
+  --clio-drag-outline-shadow-inset: 2px;   /* the shadow starts 2px in from the corners */
+  /* Zoom rects (Mac OS 9.0 opening Games, measured): 6 outlines in the 2px band at
+     1.4^(k - 7) of the way, all on screen until the window draws */
+  --clio-zoom-count: 6;
+  --clio-zoom-steps: 7;
+  --clio-zoom-ratio: 1.4;
+  --clio-zoom-offset: 0;
+  --clio-zoom-keep: 0;
   --clio-scrollbar-track: #aaaaaa;
   /* The lane: #777 and #888 along the top and left, #bbb and #ccc down the
      right, nothing along the bottom (frames finder-scroll-*). */
@@ -362,7 +380,7 @@
   --clio-art-p9-submenu-on: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAALAQMAAABmnG7VAAAABlBMVEUAAAD///+l2Z/dAAAAAXRSTlMAQObYZgAAAB9JREFUeJxjaGA4wPCA4QPDD4Y/TH+YfjB9YHrAdAAAZSIJk3jnGdQAAAAASUVORK5CYII=");
   --clio-art-p9-dropdown: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAKAQMAAABCAtZOAAAABlBMVEUAAAAAAAClZ7nPAAAAAXRSTlMAQObYZgAAABlJREFUeJxjEGDSYHJh+McAAv8YahgsGAQAHygDQTD2iPAAAAAASUVORK5CYII=");
   --clio-art-p9-dropdown-off: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAKAQMAAABCAtZOAAAABlBMVEUAAACIiIhaeOqmAAAAAXRSTlMAQObYZgAAABlJREFUeJxjEGDSYHJh+McAAv8YahgsGAQAHygDQTD2iPAAAAAASUVORK5CYII=");
-  --clio-art-p9-menucheck: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAICAYAAAArzdW1AAAAP0lEQVR42mNgIAyMiFHwnxgFK2ECLgwMDKFYFJxB1nUGKmiEpOAOAwODALKilVCJ/7gUwMAdQgoYoBIrsSkAAK+iEhBS63EWAAAAAElFTkSuQmCC");
+  --clio-art-p9-menucheck: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAICAYAAADA+m62AAAATUlEQVR42o3MwQ2AIBAEwIkdaC2UYAsWZw2UIjXQCn4gIcSA+7ydPeYJuGFboAfH6lNB7I8nrg+UxnWqRehQxj7CWMsyQy35D1LLOEMvsWESqM0p+dQAAAAASUVORK5CYII="); /* 10x8 */
 }
 
 /* ---- Window ---------------------------------------------------------------- */
@@ -370,10 +388,7 @@
    right and bottom (GUIdebook Appearance window, x=4 and x=width-5). */
 :is([data-era="platinum"], [data-era="drawingboard"]) .window:not(.inactive) {
   background:
-    linear-gradient(#ffffff, #ffffff) 0 0 / calc(100% - 1px) 1px no-repeat,
-    linear-gradient(#ffffff, #ffffff) 0 0 / 1px calc(100% - 1px) no-repeat,
-    linear-gradient(#999999, #999999) 1px 100% / calc(100% - 1px) 1px no-repeat,
-    linear-gradient(#999999, #999999) 100% 1px / 1px calc(100% - 1px) no-repeat,
+    var(--clio-p9-bevel),
     linear-gradient(#999999, #999999) 3px 19px / 1px calc(100% - 22px) no-repeat,
     linear-gradient(#ffffff, #ffffff) right 3px top 20px / 1px calc(100% - 23px) no-repeat,
     linear-gradient(#ffffff, #ffffff) left 3px bottom 3px / calc(100% - 6px) 1px no-repeat,
@@ -591,11 +606,11 @@
 
 :is([data-era="platinum"], [data-era="drawingboard"]) :is(.menu, [role="menu"]) > li:is(.checked, [aria-checked="true"])::before,
 :is([data-era="platinum"], [data-era="drawingboard"]) :is(.menu, [role="menu"]) > li > :is([aria-checked="true"], .checked)::before {
-  left: 7px;
-  width: 9px;
+  left: 8px;   /* the art's first column is the glyph's (it used to start a column early) */
+  width: 10px;
   height: 8px;
   margin-top: -4px;
-  background: var(--clio-art-p-check) 0 0 / 9px 8px no-repeat;
+  background: var(--clio-art-p-check) 0 0 / 10px 8px no-repeat;
 }
 
 :is([data-era="platinum"], [data-era="drawingboard"]) :is(.menu, [role="menu"]) > li:is(.checked, [aria-checked="true"]):is(:hover, :focus-within, .active):where(:not([data-clio-blink]))::before,
@@ -606,8 +621,9 @@
 /* The same check mark in an open pop-up menu drawn by the browser (base-select). */
 @supports (appearance: base-select) {
   :is([data-era="platinum"], [data-era="drawingboard"]) select option::checkmark {
-    left: 7px;
-    background: var(--clio-art-p-check) 0 0 / 9px 8px no-repeat;
+    left: 8px;
+    width: 10px;
+    background: var(--clio-art-p-check) 0 0 / 10px 8px no-repeat;
   }
 
   :is([data-era="platinum"], [data-era="drawingboard"]) select option:is(:hover, :focus-visible)::checkmark {
@@ -684,8 +700,10 @@
 
 :is([data-era="platinum"], [data-era="drawingboard"]) :is(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-button:active,
 :is([data-era="platinum"], [data-era="drawingboard"]):is(html.clio-scrollbars)::-webkit-scrollbar-button:active {
-  background-color: #666666;
-  box-shadow: inset 1px 1px #444444, inset -1px -1px #888888;
+  /* Held (Mac OS 9.0 Finder, the down arrow held; frame arrow-held): a #777
+     face in --clio-scrollbar-button-bevel-on's #555 and #999 bevel. */
+  background-color: #777777;
+  box-shadow: none;
 }
 
 :is([data-era="platinum"], [data-era="drawingboard"]) :is(fieldset) > legend {

@@ -123,6 +123,7 @@ Reference: Mac OS 9.0 running in Infinite Mac, the 800×600 colour canvas read 1
 | p9-radio-off | 12×12 | 100.0% | 100.0% | 0.0% | 0 |
 | p9-titlebar | 477×22 | 100.0% | 100.0% | 0.0% | 0 |
 | p9-titlebar-left | 30×22 | 100.0% | 100.0% | 0.0% | 0 |
+| p9-collapsed | 387×23 | 100.0% | 100.0% | 0.0% | 0 |
 | p9-titlebar-right | 36×22 | 100.0% | 100.0% | 0.0% | 0 |
 | p9-button-end | 86×20 | 100.0% | 100.0% | 0.0% | 0 |
 | p9-popup-disabled | 34×20 | 100.0% | 100.0% | 0.0% | 0 |
@@ -132,6 +133,8 @@ Reference: Mac OS 9.0 running in Infinite Mac, the 800×600 colour canvas read 1
 | p9-button-held | 86×20 | 100.0% | 100.0% | 0.0% | 0 |
 | p9-list-header | 374×21 | 100.0% | 100.0% | 0.0% | 0 |
 | p9-slider | 156×16 | 100.0% | 100.0% | 0.0% | 0 |
+| p9-slider-min | 156×16 | 100.0% | 100.0% | 0.0% | 0 |
+| p9-slider-max | 156×16 | 100.0% | 100.0% | 0.0% | 0 |
 | p9-bevel-menu | 36×27 | 100.0% | 100.0% | 0.0% | 0 |
 | p9-focus-field | 40×27 | 100.0% | 100.0% | 0.0% | 0 |
 | p9-little-arrows | 13×23 | 100.0% | 100.0% | 0.0% | 0 |
@@ -152,6 +155,8 @@ Reference: Mac OS 9.0 running in Infinite Mac, the 800×600 colour canvas read 1
 | p9-js-scroll-fixed | 15×122 | 100.0% | 100.0% | 0.0% | 0 |
 | p9-js-scroll-off-h | 359×15 | 100.0% | 100.0% | 0.0% | 0 |
 | p9-js-scroll-smart | 15×122 | 100.0% | 100.0% | 0.0% | 0 |
+| p9-js-popup-open | 142×115 | 100.0% | 100.0% | 0.0% | 0 |
+| p9-js-scroll-arrow-held | 14×14 | 100.0% | 100.0% | 0.0% | 0 |
 
 ## Mac OS 9 Platinum
 
@@ -173,8 +178,8 @@ Reference: GUIdebook Mac OS 9.0 captures, cropped by AI System 6 (`AIS6_DIR`).
 and Firefox (results in `.fidelity/results-<engine>.json`). Firefox has no `::-webkit-scrollbar`:
 its scroll-bar specimens load clio.js, whose element bars take the same rules.
 
-- WebKit: 116 of 118 identical; not identical: button-disabled (98.8%), p9-titlebar (97.3%)
-- Firefox: 110 of 116 identical; not identical: active-titlebar (100.0%), button-disabled (98.8%), s6-default-ok (98.4%), s6-button-pressed (95.4%), s6-button-hover (95.3%), p9-titlebar (97.3%)
+- WebKit: 121 of 123 identical; not identical: button-disabled (98.8%), p9-titlebar (97.3%)
+- Firefox: 115 of 121 identical; not identical: active-titlebar (100.0%), button-disabled (98.8%), s6-default-ok (98.4%), s6-button-pressed (95.4%), s6-button-hover (95.3%), p9-titlebar (97.3%)
 
 Every pixel that differs in those specimens is in a centred label or title whose spare width is odd,
 so its text starts on a half pixel. The Mac rounds that down; Chromium snaps the same way, WebKit

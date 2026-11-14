@@ -77,19 +77,21 @@ art['p9-submenu-on'] = shape(fmenu, 199, 108, 6, 11, '#ffffff')
 art['p9-dropdown'] = shape(aptab, 453, 148, 7, 10, '#000000')
 art['p9-dropdown-off'] = shape(aptab, 453, 148, 7, 10, '#888888')
 
+fontspop = load('fonts-popup-open')   # Appearance > Fonts, Large System Font held (measure-classic.sh)
+
 def check():
-    """Coverage of the white check over #333399, as black with alpha (9x8)."""
-    bg = (0x33, 0x33, 0x99)
-    pal, px = {}, {}
-    im = Image.new('RGBA', (9, 8))
-    for x in range(9):
+    """Coverage of the black check over #dddddd (an open pop-up menu's current
+    item, Mac OS 9.0), as black with alpha (10x8). The 9x8 taken before from the
+    white-on-#339 chosen item had lost the tip's last column."""
+    bg = 0xdd
+    im = Image.new('RGBA', (10, 8))
+    for x in range(10):
         for y in range(8):
-            c = popup.getpixel((291 + x, 148 + y))
-            a = max(0.0, min(1.0, ((c[0] - bg[0]) / (255 - bg[0]) + (c[1] - bg[1]) / (255 - bg[1])) / 2))
-            im.putpixel((x, y), (0, 0, 0, round(a * 255)))
+            c = fontspop.getpixel((337 + x, 148 + y))[0]
+            im.putpixel((x, y), (0, 0, 0, round(max(0, bg - c) / bg * 255)))
     buf = io.BytesIO(); im.save(buf, 'PNG', optimize=True)
     return 'url("data:image/png;base64,%s")' % base64.b64encode(buf.getvalue()).decode()
 
 for k, (px, w, h) in art.items():
     print('  --clio-art-%s: %s; /* %dx%d */' % (k, png(px, w, h), w, h))
-print('  --clio-art-p9-menucheck: %s; /* 9x8 */' % check())
+print('  --clio-art-p9-menucheck: %s; /* 10x8 */' % check())

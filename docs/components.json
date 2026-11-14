@@ -122,9 +122,9 @@
         },
         {
           "era": "platinum",
-          "claim": "clio.js: the dragged outline is a 2px band of the grey pattern",
+          "claim": "clio.js: the dragged outline is a 2px band of the grey pattern (the odd pixels) round the window and its shadow; the shadow starts 2px in from the top-right and bottom-left corners, so the band steps in there",
           "status": "measured",
-          "source": "clio.css capture, Mac OS 9.0 in Infinite Mac, Finder window dragged (frames before and during, diffed)",
+          "source": "clio.css capture, Mac OS 9.0 in Infinite Mac, Infinite HD dragged by 80,116 (frames before and during, diffed); tooling/outline-check.mjs: the same 1260 pixels in Chromium, WebKit and Firefox",
           "upstream": "Drawing Board assumed the same (inferred)"
         },
         {
@@ -133,6 +133,13 @@
           "status": "measured",
           "source": "clio.css capture, System 7.5.3 in Infinite Mac, the Finder opening the Infinite HD icon, every animation frame recorded (rectangle edges per frame)",
           "upstream": "opacity only; none under prefers-reduced-motion"
+        },
+        {
+          "era": "platinum",
+          "claim": "clio.zoomRects(): 6 outlines in the 2px gray band, one per tick, at 1.4^(k-7) of the way from the icon to the window, all kept until the window draws",
+          "status": "measured",
+          "source": "clio.css capture, Mac OS 9.0 in Infinite Mac, Games opened from Infinite HD, every changed frame recorded (outlines at 393-477 ms, the window at 493 ms)",
+          "upstream": "each edge within a pixel of the fit (the Finder's rounding is not known); opacity only, none under prefers-reduced-motion"
         },
         {
           "era": "both",
@@ -144,9 +151,9 @@
         {
           "era": "platinum",
           "claim": "clio.js: the collapse box folds the window to its title bar; a double click on the title bar does only with data-clio-shade=\"dblclick\"",
-          "status": "inferred",
+          "status": "measured",
           "source": "Mac OS 9.0 in Infinite Mac, Appearance > Options: \"Double-click title bar to collapse windows\" off",
-          "upstream": "the collapsed window's look is not compared to a capture"
+          "upstream": "the collapsed look: the title bar, then the frame's #999 shade and black line across the whole width (frame collapsed; specimen p9-collapsed 100% identical in all three engines, the title and the desktop beside the shadow masked)"
         },
         {
           "era": "system7",
@@ -489,7 +496,7 @@
         },
         {
           "era": "platinum",
-          "claim": "Menu check mark (9x8, antialiased, recovered from the white-on-#339 chosen item) and the 6x11 submenu arrow, redrawn from Mac OS 9.0",
+          "claim": "Menu check mark (10x8, antialiased, read black on #ddd from an open pop-up menu; the 9x8 recovered before from the white-on-#339 chosen item had lost the tip's last column) and the 6x11 submenu arrow, redrawn from Mac OS 9.0",
           "status": "measured",
           "source": "clio.css capture, Mac OS 9.0 in Infinite Mac (npm run capture:platinum), frames popup-open and file-menu; tooling/p9-art.py",
           "upstream": "replaces the classic-stylesheets art used before 0.8.0"
@@ -917,6 +924,13 @@
           "upstream": "drawn with appearance: base-select where supported (Chrome 135, Safari 27; clio.js lines it up), by clio.js elsewhere; the row alignment is checked by npm run behaviour, not against pixels"
         },
         {
+          "era": "platinum",
+          "claim": "Open pop-up menu: its top on the button's top (the current item there), as wide as the button less its 22px of arrows, framed all round in black with the white and #999 bevel, the shadow starting 2px in; check mark 3px in, text 20px, each antialiasing level as the screen shows it",
+          "status": "measured",
+          "source": "clio.css capture, Mac OS 9.0 in Infinite Mac, Appearance > Fonts, Large System Font held with the pointer off the menu (frame fonts-popup-open)",
+          "upstream": "specimens p9-js-popup-open (clio.js, all three engines) and p9-popup-open (base-select, Chromium and WebKit) 100% identical; the button's arrows drawn pressed while it is open are not drawn yet"
+        },
+        {
           "era": "system7",
           "claim": "An 18px box with an 11×6 black triangle 5px from the right edge, label 15px in, and a 1px shadow that starts 3px in from the corner",
           "status": "measured",
@@ -1158,6 +1172,13 @@
           "status": "inferred",
           "source": "clio.css capture, Mac OS 9.0 Finder in Infinite Mac (held down arrow, frames 0.1 s apart)",
           "upstream": "the pause is measured; step (16px) and rate (every 50 ms) are chosen, since the emulator runs faster than the hardware"
+        },
+        {
+          "era": "platinum",
+          "claim": "A held scroll arrow: #777 face, #555 along the top and left, #999 along the bottom and right, the other two corners #777",
+          "status": "measured",
+          "source": "clio.css capture, Mac OS 9.0 in Infinite Mac, Finder, the down arrow held at its corner (frame arrow-held)",
+          "upstream": "specimen p9-js-scroll-arrow-held 100% identical in all three engines (the pointer masked)"
         },
         {
           "era": "platinum",
@@ -1747,6 +1768,20 @@
           "status": "measured",
           "source": "clio.css capture, Mac OS 9.0 in Infinite Mac (driven by hand, frames in .fidelity/hig/platinum9), frame mouse (Mouse Tracking); tooling/hig-art.py",
           "upstream": "track and thumb 100% identical; the held thumb was not captured"
+        },
+        {
+          "era": "platinum",
+          "claim": "The thumb stops 3px inside the track at both ends (Firefox's thumb is held there by padding)",
+          "status": "measured",
+          "source": "clio.css capture, Mac OS 9.0 in Infinite Mac (driven by hand, frames in .fidelity/hig/platinum9), Mouse Tracking dragged to each end (frames slider-min, slider-max)",
+          "upstream": "specimens p9-slider-min and p9-slider-max 100% identical in Chromium, WebKit and Firefox"
+        },
+        {
+          "era": "both",
+          "claim": "Tick marks fall on whole pixels, (width - run) / (count - 1) rounded",
+          "status": "adapted",
+          "source": "clio.css",
+          "upstream": "each browser rounded a fractional spacing its own way; the Mac's tick placement was not measured"
         },
         {
           "era": "drawingboard",
