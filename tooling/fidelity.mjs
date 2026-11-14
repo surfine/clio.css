@@ -311,6 +311,59 @@ specimens.push(
     act: async (page, b) => { await page.mouse.move(b.x + 40, b.y + 10); await page.mouse.down(); await page.mouse.move(b.x + 47, b.y + 9, { steps: 3 }); } },
 );
 
+// The rare controls (ROADMAP "Can wait" 10), measured in Infinite Mac.
+// Rounded-corner window: the Calculator desk accessory, 106x168, in each system
+// (frames rdoc-calc*: System 6 over the Finder's white window, the others over the
+// desktop). The Calculator's own content (its keys, its heavy right and bottom
+// edge) is not the window's: crops keep to the title bar, the left frame and the
+// bottom-left corner. Pixels outside a corner's curve show what lay behind.
+const rdoc = (cls = "", bg = "#ffffff") => `<div style="padding:12px;background:${bg}"><div class="rounded-window${cls}" id="s" style="width:106px;height:168px"><div class="rounded-title"><button class="close" aria-label="Close"></button><h2>Calculator</h2></div></div></div>`;
+const rdocOut = [[0, 0, 5, 1], [0, 1, 3, 1], [0, 2, 2, 1], [0, 3, 1, 2], [101, 0, 5, 1], [103, 1, 3, 1], [104, 2, 2, 1], [105, 3, 1, 2]];
+const rdocIn = [[2, 0, 4, 2], [3, 2, 3, 1], [4, 3, 2, 1]];   // the Calculator's content inside the bottom-left curve
+// Mac OS 8.5 and 9.0 antialias the title: ten of its faintest edge pixels (level 3 of 15)
+// are not in Clio Sans '97 Title, whose levels were read from other captures.
+const rdocFaint = rdocOut.concat([[30, 5], [29, 6], [36, 9], [67, 9], [39, 10], [70, 10], [58, 11], [38, 12], [69, 12], [77, 12]].map(([x, y]) => [x, y, 1, 1]));
+specimens.push(
+  S6("s6-rdoc-title", rdoc(), [0, 0, 106, 19], "rdoc-calc", [203, 89, 106, 19]),
+  { ...S6("s6-rdoc-title-inactive", rdoc(" inactive"), [0, 0, 106, 19], "rdoc-calc-inactive", [203, 89, 106, 19]), mask: rdocOut },
+  S6("s6-rdoc-left", rdoc(), [0, 19, 1, 143], "rdoc-calc", [203, 108, 1, 143]),
+  { ...S6("s6-rdoc-bottom-left", rdoc(), [0, 162, 6, 6], "rdoc-calc", [203, 251, 6, 6]), mask: rdocIn },
+  { ...S7("s7-rdoc-title", rdoc(), [0, 0, 106, 19], "rdoc-calc", [587, 424, 106, 19]), mask: rdocOut },
+  S7("s7-rdoc-left", rdoc(), [0, 19, 1, 143], "rdoc-calc", [587, 443, 1, 143]),
+  { ...P9("p9-rdoc-title", rdoc(), [0, 0, 106, 19], "rdoc-calc", [547, 431, 106, 19]), mask: rdocFaint },
+  { ...P9("p9-rdoc-title-inactive", rdoc(" inactive"), [0, 0, 106, 19], "rdoc-calc-inactive", [547, 431, 106, 19]), mask: rdocFaint },
+  { ...DB("db-rdoc-title", rdoc(), [0, 0, 106, 19], "rdoc-calc", [347, 127, 106, 19]), mask: rdocFaint },
+);
+// Side-title utility window: the Appearance SDK's "Side Utility Window" in Mac OS 9.0
+// (frame side-utility: active at 490,454, 255x92 over the desktop; inactive at 90,129,
+// 315x82). Its content is the sample's list (a sunken frame), so crops keep to the
+// window's frame, bar and drop.
+const side = (cls, w, h, bg) => `<div style="padding:12px;background:${bg}"><div class="window utility side${cls}" id="s" style="width:${w}px;height:${h}px"><div class="title-bar"><button class="close" aria-label="Close"></button><h2 class="title">Tools</h2><button class="collapse" aria-label="Collapse"></button></div><div class="window-pane" style="flex:1;background:#ffffff"></div></div></div>`;
+specimens.push(
+  P9("p9-side-bar", side("", 255, 92, "#9999cc"), [0, 0, 12, 92], "side-utility", [490, 454, 12, 92]),
+  P9("p9-side-top", side("", 255, 92, "#9999cc"), [12, 0, 230, 2], "side-utility", [502, 454, 230, 2]),
+  P9("p9-side-right", side("", 255, 92, "#9999cc"), [253, 0, 4, 85], "side-utility", [743, 454, 4, 85]),
+  P9("p9-side-bottom", side("", 255, 92, "#9999cc"), [0, 90, 240, 4], "side-utility", [490, 544, 240, 4]),
+  P9("p9-side-inactive", side(" inactive", 315, 82, "#9999cc"), [0, 0, 12, 82], "side-utility", [90, 129, 12, 82]),
+);
+// Placard: the CDEF Tester's 100x50 placard (frames placard, placard-disabled) on the
+// window's #ddd. Drawing Board's pencil frame drifts in shade: its face is compared.
+const placard = (attr = "", bg = "#dddddd") => `<div style="padding:12px;background:${bg}"><span class="placard" id="s"${attr} style="width:100px;height:50px"></span></div>`;
+specimens.push(
+  P9("p9-placard", placard(), [0, 0, 100, 50], "placard", [204, 169, 100, 50]),
+  P9("p9-placard-disabled", placard(' aria-disabled="true"'), [0, 0, 100, 50], "placard-disabled", [204, 169, 100, 50]),
+  DB("db-placard-face", placard(), [1, 1, 98, 48], "placard", [205, 170, 98, 48]),
+  DB("db-placard-disabled-face", placard(' aria-disabled="true"'), [1, 1, 98, 48], "placard-disabled", [205, 170, 98, 48]),
+);
+// Split bar (BBEdit 5.1 in Mac OS 9.0): unsplit above the vertical scroll bar (frame
+// split-bar, rows 80..85 beside the white text area), and the split line of a window
+// split in two (frame split-line, rows 300..306).
+const splitView = (line) => `<div class="split-view" id="s" style="width:200px;height:100px"><div class="split-bar" role="separator"></div><div class="window-pane" style="flex:1;background:#ffffff"></div>${line ? '<div class="split-line" role="separator"></div><div class="window-pane" style="flex:1;background:#ffffff"></div>' : ""}</div>`;
+specimens.push(
+  P9("p9-split-bar", splitView(false), [184, 1, 16, 6], "split-bar", [678, 80, 16, 6]),
+  P9("p9-split-line", `<div style="height:7px;width:200px"></div>` + splitView(true).replace('id="s" ', "").replace('<div class="split-line" role="separator">', '<div class="split-line" id="s" role="separator">'), [85, 0, 115, 7], "split-line", [579, 300, 115, 7]),
+);
+
 const css = pathToFileURL(join(root, "dist/clio.css")).href;
 const js = pathToFileURL(join(root, "dist/clio.js")).href;
 const out = join(root, ".fidelity"), out0 = out;

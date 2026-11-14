@@ -65,11 +65,16 @@ Empty (owner, 2026-11-14: close everything for the Classic final, 0.12.0).
 - **Centred labels on a half pixel**: clio.js adds the pixel QuickDraw's `floor(spare / 2)` left.
 - **Watch cursor, submenu rule, timings** (items 7–9 below).
 - **Docs**: the README's unpkg example names 0.12.0.
+- **Rare controls**, found in software in Infinite Mac: the Calculator's rounded-corner
+  window (`.rounded-window`) in all four eras; the Appearance SDK's sample application for
+  the side-title utility window (`.window.utility.side`) and placards (`.placard`) in Mac OS
+  9.0 and 8.5; BBEdit 5.1's split bar (`.split-bar`, `.split-line`) in Mac OS 9.0. Drawn from
+  HIG92 (inferred): the System 6/7 split bar, which no application found had. A dial is a
+  slider (HIG92). Not drawn: Drawing Board's own side-window pieces (it shares the top-title
+  utility window's mixture), a held placard (the tester does not track it).
 
 ### Waiting (part of 0.12.0)
 
-- **Rare controls** (`rDocProc` and side-title windows, placards, split bars, dials): measured
-  in the emulator on branch `rare-controls`.
 - **CJK fonts and Chinese layout**: branches `cjk-fonts` (font stacks and an OFL pixel stand-in)
   and the Chinese-system measurements.
 - **Touch on the owner's phones**: `docs/touch.html` (iPhone SE on iOS 15.8.8, iPhone 18 Pro

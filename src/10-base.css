@@ -10,7 +10,7 @@
 }
 
 :where(.window, .menu-bar, [role="menubar"], [role="menu-bar"], .menu, [role="menu"],
-  .modal-dialog, .alert-box, .standard-dialog, .modeless-dialog, .clio) {
+  .modal-dialog, .alert-box, .standard-dialog, .modeless-dialog, .rounded-window, .clio) {
   box-sizing: border-box;
   color: var(--clio-ink);
   font-family: var(--clio-font-chrome);

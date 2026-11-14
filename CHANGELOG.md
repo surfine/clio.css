@@ -14,6 +14,15 @@
   (`ink` boxes in `tooling/fidelity.mjs`). clio.js's drawn pop-up rows keep their option's
   language. `--clio-font-cjk` overrides the stack.
 
+- **The rare controls** (ROADMAP "Can wait" 10), each found in software running in Infinite
+  Mac and compared pixel by pixel: the rounded-corner window `.rounded-window` (the
+  Calculator, the same in System 6, 7, Mac OS 8.5 and 9.0; corner masks and frame curves from
+  `tooling/rare-art.py`, its antialiased title levels in `tooling/aa-palettes.py`); the
+  side-title utility window `.window.utility.side` and placards `.placard` (the Appearance
+  SDK's sample, Mac OS 9.0 and 8.5); BBEdit 5.1's split bar `.split-bar` and split line
+  `.split-line` in a `.split-view` (Mac OS 9.0; System 6/7 from HIG92, inferred). A dial is a
+  slider. 20 new specimens, identical in Chromium, WebKit and Firefox.
+
 The Classic final batch: the last pixel tails, the dimmed pop-up menu and TextEdit's
 insertion point, each measured in Infinite Mac.
 

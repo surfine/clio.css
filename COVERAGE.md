@@ -24,9 +24,9 @@ P = Mac OS 8/9 Platinum. 0.10.0 added every row marked new in CHANGELOG.md.
 | Desktop and icons | HIG87 p.40; HIG92 ch. 8 | `.desktop`, `.icon` | yes | yes | yes | yes |
 | Document window: title bar, close, zoom, collapse (WindowShade) boxes, size box | HIG87 p.42-46; HIG92 ch. 5; IM-TE `documentProc`, `zoomDocProc` | `.window`, `.title-bar` | yes | yes | yes | yes |
 | Window without size box / zoom only (`noGrowDocProc`, `zoomNoGrow`) | IM-TE ch. 4 | `.window` (leave the boxes out) | yes | yes | yes | yes |
-| Rounded-corner window (`rDocProc`, desk accessories) | IM-TE ch. 4 | — | — | — | — | — |
+| Rounded-corner window (`rDocProc`, desk accessories) | IM-TE ch. 4 | `.rounded-window`, `.rounded-title` | yes | yes | yes | yes |
 | Utility (floating) window | HIG92 ch. 5; HIG8 ch. 5; `kWindowFloat*` | `.window.utility` | inferred | inferred | inferred | yes |
-| Side-title utility window (`kWindowFloatSide*`) | Toolbox Ref. | — | — | — | — | — |
+| Side-title utility window (`kWindowFloatSide*`) | Toolbox Ref. | `.window.utility.side` | adapted | adapted | adapted | yes |
 | Modal dialog (`dBoxProc`), plain box, shadowed box | HIG87 p.58; IM-TE ch. 4/6 | `.modal-dialog`, `.standard-dialog` | yes | yes | yes | yes |
 | Movable modal dialog (`movableDBoxProc`) | HIG92 ch. 6; HIG8 ch. 3 | `.window.movable-modal` | inferred | inferred | inferred | yes |
 | Alert: note, caution, stop | HIG87 p.60; IM-TE ch. 6 | `.alert-box`, `.alert-icon.note/.caution/.stop` | yes | yes | yes | yes |
@@ -47,7 +47,7 @@ P = Mac OS 8/9 Platinum. 0.10.0 added every row marked new in CHANGELOG.md.
 | Tab control | HIG8 ch. 2 | `[role=tablist]`, `[role=tabpanel]` | adapted | adapted | yes | yes |
 | Group box (primary, secondary, titled by a check box or pop-up) | HIG8 ch. 2 | `fieldset`, `fieldset.secondary` | yes | yes | yes | yes |
 | Separator line | HIG8 ch. 2 | `.separator`, `hr.separator` | inferred | yes | inferred | yes |
-| Placard | HIG8 ch. 2 | — | — | — | — | — |
+| Placard | HIG8 ch. 2 | `.placard` | adapted | adapted | yes | yes |
 | Image well | HIG8 ch. 2 | `.image-well` | inferred | inferred | inferred | inferred |
 | Window header (Finder info line) | HIG8 ch. 2 | `.details-bar` | yes | yes | yes | yes |
 | Progress bar, determinate and indeterminate | HIG8 ch. 2 | `progress` | yes | yes | yes | yes |
@@ -62,13 +62,18 @@ P = Mac OS 8/9 Platinum. 0.10.0 added every row marked new in CHANGELOG.md.
 | Contextual menu | HIG8 ch. 4 | `.menu` on its own | — | — | yes | yes |
 | Tear-off menu / palette | HIG87 p.90-91; HIG92 ch. 4 | `.window.utility` | inferred | inferred | inferred | yes |
 | Control Strip | Mac OS 7.5-9 | `.control-strip` | — | yes | yes | yes |
-| Split window / split bar, panels, dial | HIG87 p.53-57 | — | — | — | — | — |
+| Split window: split bar, split line, panes (panels) | HIG87 p.53-57; HIG92 ch. 5 | `.split-view`, `.split-bar`, `.split-line` | inferred | inferred | inferred | yes |
+| Dial (HIG92: "a slider (sometimes called a dial)") | HIG87 p.53-57; HIG92 ch. 7 | `input[type=range]` | adapted | adapted | yes | yes |
 | Cursors: arrow, I-beam | HIG87 p.93 | `--clio-cursor-arrow`, `--clio-cursor-text` (on by default) | inferred | yes | inferred | yes |
 | Cursor: watch | HIG87 p.93 | — (the browser's busy cursor) | — | — | — | — |
 | Window dragging (grey outline), zoom rects, collapse | HIG92 ch. 5; HIG8 ch. 5 | clio.js | inferred | yes | inferred | yes |
 | Chinese, Japanese, Korean text (WorldScript, Language Kits) | *Inside Macintosh: Text* (Script Manager, WorldScript) | `:lang()` font stacks (96-cjk.css), stand-in fonts | inferred | yes (ja) | inferred | yes (zh) |
 
-Not drawn (—): the rounded-corner and side-title windows, placards, split bars and
-dials are rare enough that no captured screen shows one; the watch cursor never stayed on
-screen long enough in the emulator to be captured. Evidence for every row is
+The rare controls were found in software running in Infinite Mac: the Calculator's
+rounded-corner window in all four eras, the Appearance SDK's sample application for the
+side-title window and placards (Mac OS 8.5 and 9.0), BBEdit 5.1's split bar (Mac OS 9.0).
+No System 6 or 7 application with a split bar was found, so there it is drawn from HIG92;
+side-title windows and placards came with the Appearance Manager, so the earlier eras
+adapt them. A dial is the guidelines' other name for a slider. Not drawn (—): the watch
+cursor never stayed on screen long enough in the emulator to be captured. Evidence for every row is
 in EVIDENCE.md; the pixel checks are in FIDELITY.md.

@@ -546,7 +546,7 @@
   box-shadow: 0 0 0 1px #888888;
 }
 
-:is([data-era="platinum"], [data-era="drawingboard"]) :is(button, .btn, .btn-default, input[type="button"], input[type="submit"], input[type="reset"]):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *, .disclosure, .little-arrows > *, .help-button):is(:disabled, .disabled) {
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(button, .btn, .btn-default, input[type="button"], input[type="submit"], input[type="reset"]):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .rounded-title > *, .control-strip *, .disclosure, .little-arrows > *, .help-button):is(:disabled, .disabled) {
   background: transparent;
   box-shadow: none;
   border-image: var(--clio-button-frame-disabled) var(--clio-button-frame-slice) fill / calc(var(--clio-button-frame-slice) * 1px) stretch;
@@ -785,16 +785,16 @@
   font-palette: --clio-aa-p9-title-inactive;
 }
 
-:is([data-era="platinum"], [data-era="drawingboard"]) :is(button, .btn, .btn-default, input[type="button"], input[type="submit"], input[type="reset"]):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *, .disclosure, .little-arrows > *, .help-button) {
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(button, .btn, .btn-default, input[type="button"], input[type="submit"], input[type="reset"]):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .rounded-title > *, .control-strip *, .disclosure, .little-arrows > *, .help-button) {
   font-family: var(--clio-font-button);
   font-palette: --clio-aa-p9-button;
 }
 
-:is([data-era="platinum"], [data-era="drawingboard"]) :is(button, .btn, .btn-default, input[type="button"], input[type="submit"], input[type="reset"]):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *, .disclosure, .little-arrows > *, .help-button):not(:disabled, .disabled):is(:active:where(:not([data-clio-off])), .active) {
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(button, .btn, .btn-default, input[type="button"], input[type="submit"], input[type="reset"]):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .rounded-title > *, .control-strip *, .disclosure, .little-arrows > *, .help-button):not(:disabled, .disabled):is(:active:where(:not([data-clio-off])), .active) {
   font-palette: --clio-aa-p9-button-held;
 }
 
-:is([data-era="platinum"], [data-era="drawingboard"]) :is(button, .btn, .btn-default, input[type="button"], input[type="submit"], input[type="reset"]):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *, .disclosure, .little-arrows > *, .help-button):is(:disabled, .disabled) {
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(button, .btn, .btn-default, input[type="button"], input[type="submit"], input[type="reset"]):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .rounded-title > *, .control-strip *, .disclosure, .little-arrows > *, .help-button):is(:disabled, .disabled) {
   font-palette: --clio-aa-p9-button-disabled;
 }
 
@@ -1029,4 +1029,145 @@
    pointer is in the submenu: its own items start from the black levels. */
 :is([data-era="platinum"], [data-era="drawingboard"]) :is(.menu, [role="menu"]) :is(.menu, [role="menu"]) {
   font-palette: normal;
+}
+
+/* ---- Side-title utility window (kWindowFloatSide*; Mac OS 9.0, the Appearance
+   SDK's sample "Side Utility Window", frames side3) ------------------------------
+   <div class="window utility side"> with the usual .title-bar (close box at the
+   top, collapse box at the foot; no title is drawn). The frame is the utility
+   window's: 1px black, white light on the top and left, #999 shade on the right
+   and the bottom, the drop from the second row and column. The bar is 10px of #ccc
+   down the left with the 3px dot pattern from 12px below its top to 12px above its
+   foot; the collapse box is the title-bar one transposed. */
+:is([data-era="platinum"], [data-era="drawingboard"]) .window.utility.side {
+  flex-direction: row;
+  background:
+    linear-gradient(#ffffff, #ffffff) 0 0 / calc(100% - 1px) 1px no-repeat,
+    linear-gradient(#ffffff, #ffffff) 0 0 / 1px calc(100% - 1px) no-repeat,
+    linear-gradient(#999999, #999999) 100% 1px / 1px calc(100% - 1px) no-repeat,
+    linear-gradient(#999999, #999999) 1px 100% / calc(100% - 1px) 1px no-repeat,
+    #cccccc;
+}
+
+:is([data-era="platinum"], [data-era="drawingboard"]) .window.utility.side > .title-bar {
+  display: block;
+  flex: none;
+  width: 10px;
+  height: auto;
+  margin: 1px 0 1px 1px;
+  padding: 0;
+  background: url("art/platinum/utility-dots.png") 1px 12px / 3px 3px repeat, #cccccc;
+  box-shadow: none;
+}
+
+/* The dots keep to columns 1 to 9 and rows 12 to 12 above the foot: a #ccc frame
+   painted over the pattern's edges. */
+:is([data-era="platinum"], [data-era="drawingboard"]) .window.utility.side > .title-bar::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-style: solid;
+  border-color: #cccccc;
+  border-width: 12px 0 12px 1px;
+  pointer-events: none;
+}
+
+:is([data-era="platinum"], [data-era="drawingboard"]) .window.utility.side > .title-bar::after {
+  content: none;
+}
+
+:is([data-era="platinum"], [data-era="drawingboard"]) .window.utility.side > .title-bar > :is(.title, h1, h2, h3) {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+:is([data-era="platinum"], [data-era="drawingboard"]) .window.utility.side > .title-bar > :is(.close, .close-box, .resize, .resize-box, .zoom, .shade, .shade-box, .collapse) {
+  top: 0;
+  right: auto;
+  left: 0;
+  z-index: 1;
+  box-shadow: none;
+}
+
+:is([data-era="platinum"], [data-era="drawingboard"]) .window.utility.side > .title-bar > :is(.shade, .shade-box, .collapse, .resize, .resize-box, .zoom) {
+  top: auto;
+  bottom: 0;
+  background-image: url("art/platinum/utility-collapse-side.png");
+}
+
+:is([data-era="platinum"], [data-era="drawingboard"]) .window.utility.side > .window-pane {
+  margin: 1px 1px 1px 0;
+}
+
+/* In the background: a #555 frame and drop on flat #ddd; no boxes, no dots. */
+:is([data-era="platinum"], [data-era="drawingboard"]) .window.utility.side.inactive {
+  border-color: #555555;
+  background: #dddddd;
+}
+
+:is([data-era="platinum"], [data-era="drawingboard"]) .window.utility.side.inactive::before {
+  background:
+    linear-gradient(#555555, #555555) 100% 0 / 1px 100% no-repeat,
+    linear-gradient(#555555, #555555) 0 100% / 100% 1px no-repeat;
+}
+
+:is([data-era="platinum"], [data-era="drawingboard"]) .window.utility.side.inactive > .title-bar {
+  background: #dddddd;
+}
+
+:is([data-era="platinum"], [data-era="drawingboard"]) .window.utility.side.inactive > .title-bar::before {
+  content: none;
+}
+
+/* ---- Placard (Mac OS 9.0, the Appearance SDK's CDEF Tester, frame placard) -----
+   1px black, white light on the top and left, #aaa shade on the right and the
+   bottom (the corners they would share stay #ddd), #ddd face. Disabled: a #555
+   frame on #eee, no light or shade (frame placard-disabled). */
+:is([data-era="platinum"], [data-era="drawingboard"]) .placard {
+  border-color: #000000;
+  background:
+    linear-gradient(#ffffff, #ffffff) 0 0 / calc(100% - 1px) 1px no-repeat,
+    linear-gradient(#ffffff, #ffffff) 0 0 / 1px calc(100% - 1px) no-repeat,
+    linear-gradient(#aaaaaa, #aaaaaa) 100% 1px / 1px calc(100% - 1px) no-repeat,
+    linear-gradient(#aaaaaa, #aaaaaa) 1px 100% / calc(100% - 1px) 1px no-repeat,
+    #dddddd;
+  color: #000000;
+}
+
+:is([data-era="platinum"], [data-era="drawingboard"]) .placard:is(:disabled, [aria-disabled="true"], .window.inactive *) {
+  border-color: #555555;
+  background: #eeeeee;
+  color: #555555;
+}
+
+/* ---- Split bar (BBEdit 5.1, Mac OS 9.0, frames bb3 and split-done) -------------
+   7 rows of black across the scroll bar's width; the split line puts its two
+   lines on the bar's fourth and sixth rows. */
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(.split-view, .split-bar, .split-line) {
+  --clio-split-bar-height: 7px;
+  --clio-split-bg: #ffffff;
+  --clio-split-ink: #000000;
+}
+
+:is([data-era="platinum"], [data-era="drawingboard"]) .split-line {
+  --clio-split-line-1: 3px;
+}
+
+/* ---- Rounded-corner window (the Calculator, Mac OS 9.0 and 8.5) ----------------
+   The old window definition draws it as in System 7, its title in the system font
+   antialiased: white on black, black on white in the background (levels measured,
+   tooling/aa-palettes.py). */
+:is([data-era="platinum"], [data-era="drawingboard"]) .rounded-window > .rounded-title {
+  font-family: Charcoal, "Charcoal CY", "Clio Sans '97 Title Exact", "Clio Sans '97 Title", "Clio Sans '97", "Clio Asap", Geneva, sans-serif;
+  padding-left: 16px;   /* Clio Sans '97 Title sets "Calculator" 2px narrower than the Mac's Charcoal: fitted to the capture */
+  font-size: 12px;
+  font-palette: --clio-aa-rdoc-title;
+}
+
+:is([data-era="platinum"], [data-era="drawingboard"]) .rounded-window.inactive > .rounded-title {
+  font-palette: --clio-aa-rdoc-title-inactive;
 }

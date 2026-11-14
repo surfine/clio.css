@@ -20,13 +20,18 @@ CONTEXTS = [  # name, family, text colour, background, 5-bit solid
     ('clio-aa-p9-button-disabled', "Clio Sans '97 Exact", '777777', 'dddddd', False),
     ('clio-aa-db-button', "Clio Sans '97 Exact", '333333', 'cec6b5', True),
     ('clio-aa-db-button-disabled', "Clio Sans '97 Exact", '9f9a94', 'cec6b5', True),
+    ('clio-aa-rdoc-title', "Clio Sans '97 Title Exact", 'ffffff', '000000', False),
+    ('clio-aa-rdoc-title-inactive', "Clio Sans '97 Title Exact", '000000', 'ffffff', False),
 ]
 # Level -> colour on the real screen. Platinum: Appearance's title bar and "Set
-# Desktop" (normal and held), Mac OS 9.0; Drawing Board: "Save Theme…", Mac OS 8.5.
+# Desktop" (normal and held), Mac OS 9.0; Drawing Board: "Save Theme…", Mac OS 8.5;
+# the Calculator's rounded window (white on black, black on white), Mac OS 9.0 and 8.5.
 MEASURED = {
     'clio-aa-p9-title': {1: 'bebebe', 2: 'b0b0b0', 4: '959595', 5: '878787', 6: '7a7a7a', 7: '6c6c6c', 8: '5f5f5f', 9: '515151', 10: '444444', 11: '363636', 12: '282828', 13: '1b1b1b', 14: '0d0d0d'},
     'clio-aa-p9-button': {1: 'cecece', 2: 'bfbfbf', 3: 'b0b0b0', 4: 'a2a2a2', 5: '939393', 6: '848484', 7: '757575', 8: '676767', 9: '585858', 10: '494949', 11: '3a3a3a', 12: '2c2c2c', 13: '1d1d1d', 14: '0e0e0e'},
     'clio-aa-p9-button-held': {1: '707070', 2: '7a7a7a', 3: '848484', 4: '8e8e8e', 5: '999999', 6: 'a3a3a3', 7: 'adadad', 8: 'b7b7b7', 9: 'c1c1c1', 10: 'cbcbcb', 11: 'd6d6d6', 12: 'e0e0e0', 13: 'eaeaea', 14: 'f4f4f4'},
+    'clio-aa-rdoc-title': {1: '101010', 2: '212121', 3: '323232', 4: '444444', 5: '555555', 6: '666666', 7: '777777', 8: '878787', 9: '989898', 10: 'a9a9a9', 11: 'bababa', 12: 'cccccc', 13: 'dddddd', 14: 'eeeeee'},
+    'clio-aa-rdoc-title-inactive': {1: 'eeeeee', 2: 'dddddd', 3: 'cccccc', 4: 'bababa', 5: 'a9a9a9', 6: '989898', 7: '878787', 8: '777777', 9: '666666', 10: '555555', 11: '444444', 12: '323232', 13: '212121', 14: '101010'},
     'clio-aa-db-button': {1: 'c3bcac', 2: 'b9b2a3', 3: 'aea89a', 4: 'a49e91', 5: '999488', 6: '8f8a80', 7: '848077', 8: '7a766e', 9: '6f6c65', 10: '65625d', 11: '5a5854', 12: '504e4b', 13: '454442', 14: '3b3a39'},
 }
 rgb = lambda h: [int(h[i:i + 2], 16) for i in (0, 2, 4)]
