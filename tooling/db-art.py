@@ -56,6 +56,10 @@ art = {
     'db-down': pxm[322][0], 'db-down-on': pxm[322][1], 'db-down-off': pxm[322][2],
     'db-left': pxm[331][0], 'db-left-on': pxm[331][1], 'db-left-off': pxm[331][2],
     'db-right': pxm[332][0], 'db-right-on': pxm[332][1], 'db-right-off': pxm[332][2],
+    # Smart Scrolling: both arrows in one picture at the far end (states as the single
+    # arrows': 0 normal, 1 the second arrow held, 2 dimmed, 4 the first held).
+    'db-hpair': pxm[334][0], 'db-hpair-inc-on': pxm[334][1], 'db-hpair-off': pxm[334][2], 'db-hpair-dec-on': pxm[334][4],
+    'db-vpair': pxm[324][0], 'db-vpair-inc-on': pxm[324][1], 'db-vpair-off': pxm[324][2], 'db-vpair-dec-on': pxm[324][4],
     'db-popup-arrow': pxm[356][0], 'db-popup-arrow-off': pxm[356][2],
     'db-submenu': pxm[250][0],
     'db-grow': pxm[452][0],

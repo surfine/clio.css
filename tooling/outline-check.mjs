@@ -18,9 +18,13 @@ const ENGINE = process.env.CLIO_ENGINE || "chromium";
 
 // era, frames, the window's frame rect on the screen (left, top, width, pane height), the
 // drag, and the pointer's boxes in the two frames (left out).
+const PH_DB = +(process.env.PH_DB || 226);
 const cases = [
   { era: "system6", dir: "system6", win: [-1, 27, 240, 105], d: [80, 113], pointer: [[195, 33, 21, 28], [275, 146, 21, 25]] },
   { era: "system7", dir: "system7", win: [29, 55, 376, 218], d: [80, 116], pointer: [[295, 60, 21, 23], [375, 176, 21, 23]] },
+  // Drawing Board: the theme's structure region also has its sketch lines' overshoots (74 pixels
+  // here) and two shaped corners (13), which a rectangle cannot follow: `allow` counts them.
+  { era: "drawingboard", dir: "drawingboard", win: [23, 52, 394, PH_DB], d: [80, 116], pointer: [[295, 57, 21, 24], [375, 173, 21, 24]], allow: [74, 13] },
   { era: "platinum", dir: "platinum9", win: [24, 52, 386, 219], d: [80, 116], pointer: [[295, 56, 21, 25], [375, 172, 21, 25]] },
 ];
 const OFF = 100;   // the page offset of the screen: even, so every parity is kept
@@ -53,7 +57,8 @@ for (const c of cases) {
     }
     return { both, onlyRef, onlyClio, odd };
   }, [readFileSync(before).toString("base64"), readFileSync(during).toString("base64"), shot, c.pointer, OFF]);
-  const ok = res.onlyRef === 0 && res.onlyClio === 0 && res.both > 0;
+  const [aRef, aClio] = c.allow || [0, 0];
+  const ok = res.onlyRef <= aRef && res.onlyClio <= aClio && res.both > 0;
   if (!ok) failed++;
   console.log(`${ok ? "ok  " : "FAIL"} ${c.era}: ${res.both} pixels inverted by both, ${res.onlyRef} only on the Mac, ${res.onlyClio} only by clio.js (${ENGINE})${res.odd.length ? ": " + res.odd.join("; ") : ""}`);
 }

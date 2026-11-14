@@ -41,5 +41,13 @@ platinum)
   # Appearance > Fonts, Large System Font held, the pointer off the menu (platinum9/fonts-popup-open)
   $S/d.sh $D "cmd q" "wait 2000"; $S/panel.sh $D 83 appearance
   $S/d.sh $D "click 372 110" "wait 2500" "move 420 152" "wait 400" "down" "wait 1200" "move 700 152" "wait 800" "shot fonts-popup-open" "move 700 400" "up" ;;
+drawingboard-install)
+  # Mac OS 8.5: drop the theme (zip built as tooling/capture-drawingboard.mjs builds it, passed as $3),
+  # route it into the System Folder, restart, choose it in Appearance
+  $S/d.sh $D "dropzip $3" "wait 15000" "click 753 228" "wait 800" "cmd o" "wait 4000" "click 45 88" "wait 800" "cmd o" "wait 4000" "click 45 88" "wait 800" "cmd o" "wait 4000" "click 45 88" "wait 800" "cmd o" "wait 4000"
+  $S/d.sh $D "slowdrag 200 33 560 336" "wait 1000" "click 737 55" "wait 800" "cmd o" "wait 4000" "slowdrag 407 388 193 152" "wait 4000" "key Enter" "wait 8000"
+  $S/d.sh $D "click 737 55" "wait 1200" "move 178 9" "down" "wait 1300" "move 190 60" "move 190 103" "wait 600" "up" "wait 60000" "wait 30000"
+  $S/d.sh $D "move 18 9" "wait 700" "down" "wait 1500" "move 60 120" "move 60 176" "wait 1500" "move 150 176" "move 240 177" "wait 1000" "move 240 120" "move 240 84" "wait 1000" "up" "wait 15000" "click 293 110" "wait 4000"
+  $S/d.sh $D "move 367 152" "wait 500" "down" "wait 1500" "move 367 160" "move 367 168" "wait 700" "up" "wait 20000" "cmd w" "wait 3000" ;;
 *) echo "usage: $0 system6|system7|platinum|drawingboard DIR"; exit 2 ;;
 esac

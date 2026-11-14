@@ -56,10 +56,11 @@ Emulator quirks that cost time:
 captured frame: **same** (identical pixels) is the target, **exact** (≤ 8/255) is not
 enough. Masks remove the pointer from held-state frames. `FIDELITY_DPR=2|3` renders at
 that ratio and compares with the reference magnified by nearest neighbour;
-`FIDELITY_ONLY=regex` runs a few specimens without rewriting the report. 110 specimens,
-all identical at 1x.
+`FIDELITY_ONLY=regex` runs a few specimens without rewriting the report; `act` holds a
+state (a pressed arrow, a dragged box, an open menu) for the shot. 127 specimens, all but
+Drawing Board's open pop-up identical at 1x in Chromium.
 
-`tooling/behaviour.mjs` (`npm run behaviour`) drives clio.js in Chromium: 145 checks
+`tooling/behaviour.mjs` (`npm run behaviour`) drives clio.js in all three engines: 145 checks
 of held controls, keys, menus, pop-ups, scroll bars, window moves, cursors, sounds.
 A behaviour test must look at the result the user sees: a test that only read
 `--clio-picker-shift` passed while the open picker sat in the page's corner.
@@ -127,10 +128,48 @@ A behaviour test must look at the result the user sees: a test that only read
   the picker in the page's corner, base-select taking over touch pickers, and a menu bar
   that was not one Tab stop.
 
-## 6. Process
+## 6. Three engines
 
-- Work in batches that each end pushed and green: build, `npm test`, the pixel check, the
-  behaviour check, then push and wait for GitHub Pages to serve the new file.
+- Run everything in WebKit and Firefox too (`CLIO_ENGINE`). What they taught:
+  - WebKit dithers a *tiled* gradient layer and one with a hard stop to `transparent` by one
+    step: give solid gradient layers `no-repeat` and an explicit size.
+  - WebKit's fieldset padding box starts below the whole legend; WebKit rounds
+    `::picker(select)`; Safari's COLRv0 file paints edge levels from the palette, so every
+    non-black text colour needs one.
+  - Firefox thickens pixel fonts on macOS unless `-moz-osx-font-smoothing: grayscale`; its
+    range thumb travels the whole content box and is centred in it.
+  - Chromium refuses a `::-webkit-scrollbar-thumb` shorter than 26px; WebKit honours the
+    min-width.
+  - A fixed background does not survive a transform: set the pattern's phase in script.
+  - Centred text on a half pixel: the Mac and Chromium round down, WebKit blends, Firefox
+    rounds up. CSS cannot fix it (it cannot read the text's width).
+- Test harness traps: declare UTF-8 in generated pages; crop at the pixel the box snapped
+  to; wait for fonts after layout; never sample a fast animation by polling afterwards
+  (record it in the page as it happens); a Tab-order test needs a field, not a button, in
+  Safari.
+
+## 7. Behaviour measurements of the close (System 6 to Mac OS 9)
+
+- QuickDraw's patterns keep to the *screen*: lanes, the drag gray. Keep them to the page.
+- A dragged outline is the frame of the window's structure region: the frame and the drop
+  shadow, notches included (the shadow starting 2px in makes Platinum's band step in).
+  Compare outlines as sets of inverted pixels (`tooling/outline-check.mjs`), not as crops.
+- Read every frame you would compare as XOR: the System 6 scroll box outline is dkGray
+  XOR, which over the ltGray lane comes out solid black.
+- Theme files have pictures for states you may not think of (Drawing Board's paired Smart
+  Scrolling arrows): dump them all (`theme-resources.py pxm`) and match before drawing.
+- **Never overwrite a capture frame.** Name every new frame for what it shows; a frame a
+  script reads (p9-art.py read `popup-open`) can only be restored by recapturing it with
+  the capture script's exact step and checking the script's output is unchanged.
+- Infinite Mac: hold the mouse a moment before a menu press or it misses; in Drawing Board
+  the Apple menu rows are 20px and the Control Panels submenu starts at y=37; quitting
+  Appearance with Command-Q froze Mac OS 8.5 once (close its window instead).
+
+## 8. Process
+
+- Work in batches that each end pushed and green: build, `npm test`, the pixel check and
+  `npm run behaviour` in all three engines, `tooling/outline-check.mjs`, then push and wait
+  for GitHub Pages to serve the new file.
 - Keep a task note (`.notes/`, git-ignored) with each measurement as it is taken; the
   conversation will be compacted, the note will not.
 - Generated files (`dist/`, `docs/`, `EVIDENCE.md`, `llms*.txt`) conflict on every rebase:

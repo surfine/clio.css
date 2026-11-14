@@ -103,7 +103,8 @@ it; with it:
 - `<select>` opens as the era's pop-up menu over the button, the current item on the
   button's row: drawn by the browser where `appearance: base-select` is supported (Chrome
   135, Safari 27) and the pointer is a mouse or trackpad, by clio.js in other browsers.
-  Touch screens keep the system picker.
+  Drawing Board's menus carry a pencil shade the browser's picker cannot, so clio.js draws
+  those in every browser. Touch screens keep the system picker.
 - Windows positioned `absolute` or `fixed` (or marked `data-clio-drag`) drag by the title
   bar as the Mac did: a grey outline follows the pointer and the window moves on release.
   Each movable window also gets a move button, out of sight until it has keyboard focus:

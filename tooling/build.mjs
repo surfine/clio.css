@@ -107,6 +107,8 @@ function minify(css) {
     .replace(/,\s+/g, ",")
     .replace(/;}/g, "}")
     .replace(/#([0-9a-f])\1([0-9a-f])\2([0-9a-f])\3(?![0-9a-f])/gi, "#$1$2$3")   // #aabbcc -> #abc (data URIs spell # as %23)
+    .replace(/ ?> ?/g, ">")    // combinators (data URIs spell > as %3E)
+    .replace(/: (?=[^;{}]*[;}])/g, ":")   // "prop: value" (selectors never put a space after a colon)
     .replace(/\/\*![\s\S]*?\*\//, (m) => m + "\n")
     .trim() + "\n";
 }

@@ -236,7 +236,7 @@
       </dl>
       <p class="aliases">Also accepts: system.css markup (<code>.title-bar button.close</code>, <code>.title-bar button.resize</code>, <code>.inactive-title-bar</code>, <code>.window-pane</code>, <code>.details-bar</code>, <code>.separator</code>); AI System 6 markup (<code>.close-box</code>, <code>.resize-box</code>, <code>.shade-box</code>, <code>.title-bar h1</code>, <code>.title-bar h2</code>).</p>
       <details class="evidence-details">
-        <summary>Evidence (34)</summary>
+        <summary>Evidence (36)</summary>
       <table class="evidence">
         <caption>Where each value comes from</caption>
         <thead><tr><th scope="col">Era</th><th scope="col">Value</th><th scope="col">Status</th><th scope="col">Source</th></tr></thead>
@@ -260,6 +260,12 @@
           <td><code>clio.css capture, Mac OS 9.0 in Infinite Mac, Infinite HD dragged by 80,116 (frames before and during, diffed); tooling/outline-check.mjs: the same 1260 pixels in Chromium, WebKit and Firefox</code><br><span class="upstream">Drawing Board assumed the same (inferred)</span></td>
         </tr>
 <tr>
+          <td>Drawing Board</td>
+          <td>clio.js: the dragged outline is the same 2px band of the gray, round the frame alone (the theme draws no drop shadow)</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, Mac OS 8.5 with the 8.5b6 Drawing Board theme in Infinite Mac, Infinite HD dragged by 80,116 (frames before and during, diffed); tooling/outline-check.mjs: 1275 of the Mac's 1349 pixels in all three engines</code><br><span class="upstream">the theme's structure region also takes in its sketch lines' overshoots (74 pixels) and two shaped corners (13), which a rectangle does not follow</span></td>
+        </tr>
+<tr>
           <td>System 7</td>
           <td>clio.zoomRects(): 8 outlines, one per tick, each edge eased by 1.6^k, the last four on screen at once</td>
           <td><span class="status status-measured">Measured</span></td>
@@ -270,6 +276,12 @@
           <td>clio.zoomRects(): 6 outlines in the 2px gray band, one per tick, at 1.4^(k-7) of the way from the icon to the window, all kept until the window draws</td>
           <td><span class="status status-measured">Measured</span></td>
           <td><code>clio.css capture, Mac OS 9.0 in Infinite Mac, Games opened from Infinite HD, every changed frame recorded (outlines at 393-477 ms, the window at 493 ms)</code><br><span class="upstream">each edge within a pixel of the fit (the Finder's rounding is not known); opacity only, none under prefers-reduced-motion</span></td>
+        </tr>
+<tr>
+          <td>Drawing Board</td>
+          <td>clio.zoomRects(): as Mac OS 9: 6 outlines in the 2px band, one per tick, at about 1.4^(k-7) of the way</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, Mac OS 8.5 with the theme in Infinite Mac, Developer opened, every changed frame recorded (outlines at 530-613 ms, the window at 646 ms)</code><br><span class="upstream">the Finder of 8.5 and 9.0 agree</span></td>
         </tr>
 <tr>
           <td>All eras</td>
@@ -498,7 +510,7 @@
       </dl>
       <p class="aliases">Also accepts: system.css markup (<code>ul[role=menu-bar]</code>, <code>[role=menu-item]</code>, <code>li.divider</code>).</p>
       <details class="evidence-details">
-        <summary>Evidence (23)</summary>
+        <summary>Evidence (24)</summary>
       <table class="evidence">
         <caption>Where each value comes from</caption>
         <thead><tr><th scope="col">Era</th><th scope="col">Value</th><th scope="col">Status</th><th scope="col">Source</th></tr></thead>
@@ -508,6 +520,12 @@
           <td>clio.js: a chosen item blinks 3 times, 3 ticks dark and 3 lit, before the menu closes and the command runs</td>
           <td><span class="status status-measured">Measured</span></td>
           <td><code>clio.css capture, Mac OS 9.0 in Infinite Mac, Apple menu, each animation frame of the emulator's canvas recorded (release at 30 ms; dark at 59, 159, 276 ms; gone at 375 ms)</code><br><span class="upstream">General Controls' default Menu Blinking</span></td>
+        </tr>
+<tr>
+          <td>Drawing Board</td>
+          <td>clio.js: as Mac OS 9: 3 blinks of about 3 ticks; a menu opened with a click stays open</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, Mac OS 8.5 with the theme in Infinite Mac, Edit &gt; Show Clipboard released (changes at 59, 126, 177, 227, 277, 327 ms; gone at 376 ms)</code><br><span class="upstream">Appearance &gt; Options in 8.5: Smart Scrolling and double-click collapse both off</span></td>
         </tr>
 <tr>
           <td>System 6</td>
@@ -1058,7 +1076,7 @@
       </dl>
       
       <details class="evidence-details">
-        <summary>Evidence (8)</summary>
+        <summary>Evidence (9)</summary>
       <table class="evidence">
         <caption>Where each value comes from</caption>
         <thead><tr><th scope="col">Era</th><th scope="col">Value</th><th scope="col">Status</th><th scope="col">Source</th></tr></thead>
@@ -1110,6 +1128,12 @@
           <td>Pop-up menu: 20px, four pattern pens (ppat 7095-7098; disabled: their other rows) tiled from the last column and row, the corner pixels they leave, #cec6b5 face; the 7x9 double arrow 5px from the right and 4px down; the hatched ButtonFaceCorner (image 2, disabled image 3) ends 19px from the right</td>
           <td><span class="status status-measured">Measured</span></td>
           <td><code>clio.css capture, Mac OS 8.5 with the 8.5b6 Drawing Board theme in Infinite Mac (npm run capture:drawingboard), frame appearance; the theme file's ppat and pxm# resources, decoded by tooling/theme-resources.py, written by tooling/db-art.py and tooling/db-pens.py</code><br><span class="upstream">Appearance, Highlight Color and Variation pop-ups</span></td>
+        </tr>
+<tr>
+          <td>Drawing Board</td>
+          <td>Open pop-up menu: drawn by clio.js wherever it runs (the browser's picker cannot carry the theme's shade and corner pixels; without clio.js, base-select draws it plain): its top on the button's, as wide as the button less 20px of arrows, the top pen shifted with the button's phase, text 18px in and a pixel higher than in pull-down menus, the check 1px in, the underline on the item's last rows</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, Mac OS 8.5 with the theme in Infinite Mac, Appearance &gt; Appearance held (frame popup-open)</code><br><span class="upstream">specimens db-js-popup-open and db-popup-open 96.2% same, 98.9% within 8/255: the text's edge levels over the paper differ by a step</span></td>
         </tr>
         </tbody>
       </table>
@@ -1212,7 +1236,7 @@
       </dl>
       
       <details class="evidence-details">
-        <summary>Evidence (21)</summary>
+        <summary>Evidence (23)</summary>
       <table class="evidence">
         <caption>Where each value comes from</caption>
         <thead><tr><th scope="col">Era</th><th scope="col">Value</th><th scope="col">Status</th><th scope="col">Source</th></tr></thead>
@@ -1342,6 +1366,18 @@
           <td>Track: #ece6e4 ruled by pattern pens (ppat 7045-7049: the edges and a double centre line) tiled from the track's start; scroll box from the theme's ends, stretch and grip, whose colours Mac OS passes through 16 bits (5 per channel); the grip lies over the ends at (length − 2) / 2 rounded down, so the 15px box shows 6px of its start, the grip and 7px of its end</td>
           <td><span class="status status-measured">Measured</span></td>
           <td><code>clio.css capture, Mac OS 8.5 with the 8.5b6 Drawing Board theme in Infinite Mac (npm run capture:drawingboard), frames themes-tab and desktop-tab; the theme file's ppat and pxm# resources, decoded by tooling/theme-resources.py, written by tooling/db-art.py and tooling/db-pens.py</code><br><span class="upstream">the Themes list's horizontal bar and the pattern list's vertical bar</span></td>
+        </tr>
+<tr>
+          <td>Drawing Board</td>
+          <td>clio.js: the scroll box keeps the theme's 15px whatever share of the content shows (Smart Scrolling off, the 8.5 default)</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, Mac OS 8.5 with the theme in Infinite Mac, Infinite HD at three sizes: the horizontal box 15px in each</code><br><span class="upstream">the browser's own bar sizes it by the share (adapted)</span></td>
+        </tr>
+<tr>
+          <td>Drawing Board</td>
+          <td>clio.js, data-clio-scrolling=&quot;smart&quot;: both arrows at the far end are one theme picture (ScrollArrowsDbl, pxm# 334 and 324), each button showing its half; dimmed and held states from the same resource</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, Mac OS 8.5 with the theme, Smart Scrolling on (frame smart-scroll); the theme file's pxm#</code><br><span class="upstream">specimen db-js-smart-arrows 100% identical in all three engines; which held state belongs to which arrow (1 the second, 4 the first) is read from the resource order, not from a held frame (inferred)</span></td>
         </tr>
         </tbody>
       </table>

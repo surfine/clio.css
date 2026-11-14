@@ -4894,6 +4894,10 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
   --clio-scrollbar-size: 16px;
   --clio-scrollbar-button-bevel: none;
   --clio-scrollbar-button-bevel-on: none;
+  /* clio.js: the dragged region is the frame alone (no drop shadow): a 2px band
+     round it, the gray on the odd pixels (Mac OS 8.5 with the theme, measured);
+     the theme's sketch lines also overshoot it, which a rectangle cannot follow */
+  --clio-drag-outline-extra: 0px;
   --clio-scrollbar-thumb-overlap: 0px;
   --clio-scrollbar-thumb-after: none;
   /* Titles sit on the textured title bar, where no palette can know the
@@ -5930,6 +5934,80 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
 [data-era="drawingboard"] :is(.menu, [role="menu"]) > li:is(.disabled, [aria-disabled="true"]),
 [data-era="drawingboard"] :is(.menu, [role="menu"]) > li > :is(a, button):is(:disabled, [aria-disabled="true"]) {
   font-palette: --clio-aa-8c8c8c !important;
+}
+
+/* ---- Smart Scrolling (clio.js bars, data-clio-scrolling="smart") ----------
+   Both arrows at the far end are one picture of the theme's (ScrollArrowsDbl,
+   pxm# 334 and 324), each button showing its half (Mac OS 8.5 with the theme,
+   Appearance > Options > Smart Scrolling, frame smart-scroll). Held, the
+   picture's held state for that arrow; nothing to scroll, the dimmed one. */
+[data-era="drawingboard"] .clio-sb-host > .clio-sb-anchor > .clio-sb.clio-sb-h.clio-sb-smart > .clio-sb-button {
+  border: 0;
+  background: url("art/drawingboard/parts/hpair.png") 0 0 / 32px 16px no-repeat;
+  box-shadow: none;
+}
+[data-era="drawingboard"] .clio-sb-host > .clio-sb-anchor > .clio-sb.clio-sb-h.clio-sb-smart > .clio-sb-button.clio-sb-inc { background-position: -16px 0; }
+[data-era="drawingboard"] .clio-sb-host > .clio-sb-anchor > .clio-sb.clio-sb-h.clio-sb-smart > .clio-sb-dec.clio-held { background-image: url("art/drawingboard/parts/hpair-dec-on.png"); }
+[data-era="drawingboard"] .clio-sb-host > .clio-sb-anchor > .clio-sb.clio-sb-h.clio-sb-smart > .clio-sb-inc.clio-held { background-image: url("art/drawingboard/parts/hpair-inc-on.png"); }
+[data-era="drawingboard"] .clio-sb-host > .clio-sb-anchor > .clio-sb.clio-sb-h.clio-sb-smart.clio-sb-off > .clio-sb-button { background-image: url("art/drawingboard/parts/hpair-off.png"); }
+
+[data-era="drawingboard"] .clio-sb-host > .clio-sb-anchor > .clio-sb.clio-sb-v.clio-sb-smart > .clio-sb-button {
+  border: 0;
+  background: url("art/drawingboard/parts/vpair.png") 0 0 / 16px 32px no-repeat;
+  box-shadow: none;
+}
+[data-era="drawingboard"] .clio-sb-host > .clio-sb-anchor > .clio-sb.clio-sb-v.clio-sb-smart > .clio-sb-button.clio-sb-inc { background-position: 0 -16px; }
+[data-era="drawingboard"] .clio-sb-host > .clio-sb-anchor > .clio-sb.clio-sb-v.clio-sb-smart > .clio-sb-dec.clio-held { background-image: url("art/drawingboard/parts/vpair-dec-on.png"); }
+[data-era="drawingboard"] .clio-sb-host > .clio-sb-anchor > .clio-sb.clio-sb-v.clio-sb-smart > .clio-sb-inc.clio-held { background-image: url("art/drawingboard/parts/vpair-inc-on.png"); }
+[data-era="drawingboard"] .clio-sb-host > .clio-sb-anchor > .clio-sb.clio-sb-v.clio-sb-smart.clio-sb-off > .clio-sb-button { background-image: url("art/drawingboard/parts/vpair-off.png"); }
+
+/* The open pop-up menu (Appearance > Appearance held; frame popup-open): its top
+   on the button's with the current item there, as wide as the button less its
+   20px of arrows. */
+[data-era="drawingboard"] select {
+  --clio-popup-menu-trim: 20px;
+  --clio-popup-menu-align: top;
+}
+
+/* In the open pop-up the top line is the pen shifted with the button's phase (a
+   full line: the menu hangs from no bar), the text a pixel higher and 18px in,
+   the check mark 1px in, and the chosen item's underline on its last rows. */
+[data-era="drawingboard"] ul.clio-popup-menu.menu {   /* outweighs the menus' :is(.menu, ul[role="menu"]) */
+  --clio-menu-item-active-bg:
+    var(--clio-art-db-menu-underline-left) left 16px bottom 0 / 29px 3px no-repeat,
+    var(--clio-art-db-menu-underline-right) right 15px bottom 0 / 36px 3px no-repeat,
+    var(--clio-art-db-menu-underline-tiled) left 45px bottom 0 / calc(100% - 96px) 3px no-repeat;
+  background:
+    url("art/drawingboard/menu-top.png") calc(0px - var(--clio-db-phase, 0px)) 0 / 128px 1px repeat-x border-box,
+    url("art/drawingboard/menu-left.png") 0 0 / 1px 128px repeat-y border-box,
+    url("art/drawingboard/menu-right.png") right 0 top 4px / 1px 128px repeat-y border-box,
+    url("art/drawingboard/menu-foot.png") calc(4px - var(--clio-db-phase, 0px)) 100% / 128px 1px repeat-x border-box,
+    url("art/drawingboard/menu-paper.png") 0 0 / 64px 64px padding-box,
+    #dddddd;
+}
+
+[data-era="drawingboard"] .clio-popup-menu > li {
+  min-height: 16px;
+  padding-left: 18px;
+  padding-bottom: 2px;
+  line-height: 16px;
+}
+
+[data-era="drawingboard"] .clio-popup-menu > li:is(.checked, [aria-checked="true"])::before {
+  left: 1px;
+  margin-top: -5px;
+}
+
+/* With clio.js there (data-clio-popups), Drawing Board's pop-ups are not the
+   browser's picker: clio.js draws the menu with the theme's paper, pens and
+   shade, which a picker cannot carry. Without clio.js, base-select still does. */
+@supports (appearance: base-select) {
+  @media (pointer: fine) {
+    :root[data-clio-popups] [data-era="drawingboard"] select:not([multiple], [size]:not([size="1"])),
+    :root[data-clio-popups][data-era="drawingboard"] select:not([multiple], [size]:not([size="1"])) {
+      appearance: none;
+    }
+  }
 }
 
 /* Adaptations the historical machines never needed. Historical sizes are
