@@ -24,6 +24,7 @@
   font-stretch: var(--clio-font-stretch-text);
   font-weight: var(--clio-button-weight);
   -webkit-font-smoothing: var(--clio-font-smoothing);
+  -moz-osx-font-smoothing: grayscale;   /* Firefox on macOS otherwise thickens the pixel squares with a grey fringe */
   line-height: 14px;
   text-align: center;
   text-decoration: none;
@@ -240,6 +241,7 @@
   font-stretch: var(--clio-font-stretch-text);
   font-weight: var(--clio-popup-weight);
   -webkit-font-smoothing: var(--clio-font-smoothing);
+  -moz-osx-font-smoothing: grayscale;   /* Firefox on macOS otherwise thickens the pixel squares with a grey fringe */
   line-height: 16px;
   appearance: none;
   -webkit-appearance: none;

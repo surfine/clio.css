@@ -134,7 +134,7 @@
   background:
     linear-gradient(#333366, #333366) 0 0 / 100% 1px no-repeat,
     linear-gradient(#333366, #333366) 0 0 / 1px 100% no-repeat,
-    linear-gradient(#aaaaaa, #aaaaaa),
+    linear-gradient(#aaaaaa, #aaaaaa) 0 0 / 100% 100% no-repeat,   /* tiled, WebKit dithers it ±1 */
     #ccccff;
   background-origin: border-box, border-box, padding-box, border-box;
   background-clip: border-box, border-box, padding-box, border-box;

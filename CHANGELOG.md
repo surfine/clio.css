@@ -1,5 +1,30 @@
 # Changelog
 
+## Unreleased
+
+Safari and Firefox, checked: `CLIO_ENGINE=webkit|firefox` runs the pixel check and
+`npm run behaviour` in Playwright's WebKit and Firefox as well as Chromium.
+
+- Pixel check: Chromium 112 of 112 identical, WebKit 110, Firefox 104 (FIDELITY.md). What
+  still differs is a centred label whose text starts on a half pixel: the Mac and Chromium
+  round it down, WebKit blends it, Firefox rounds it up. Behaviour checks: 145 in Chromium
+  and WebKit, 143 in Firefox (the two base-select checks do not apply).
+- Fixed for WebKit: group boxes (WebKit's fieldset padding box starts below the whole
+  legend, so the dotted frame filled the band under the title); Platinum title-bar ridges
+  and System 7's close and zoom boxes (WebKit dithers a tiled or translucent gradient
+  layer by one step).
+- Fixed for Safari's COLRv0 font file: Drawing Board's menu and dimmed menu text get
+  their edge levels in #313131 and #8c8c8c, not black.
+- Fixed for Firefox: sliders (`::-moz-range-track`, `::-moz-range-thumb`, the thumb
+  brought onto the track); Clio Sans '84 and '97 drawn without the grey fringe Firefox
+  adds on macOS (`-moz-osx-font-smoothing: grayscale`); slider tick spacing is a whole
+  number of pixels, so every engine puts the ticks in the same place.
+- Drawing Board scroll bars drawn by clio.js: the arrow art no longer sits a pixel low and
+  the grip shows on the theme's 15px scroll box (it now lies over the box's ends,
+  `(length − 2) / 2` rounded down from the start, as the Themes tab shows).
+- Tooling: the specimen pages declare UTF-8 (WebKit read "…" as Latin-1), crops snap to
+  the pixel the box was drawn on, and fonts are waited for after layout.
+
 ## 0.11.0 — 2026-11-14
 
 Behaviour and details, measured where the emulators allow. The new optional

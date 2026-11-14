@@ -190,15 +190,17 @@
   --clio-scrollbar-track: linear-gradient(to right, #555555 0 1px, #ece6e4 1px 7px, #777777 7px 9px, #ece6e4 9px 15px, #555555 15px);
   --clio-scrollbar-track-color: #ece6e4;
   --clio-scrollbar-track-shadow: none;
+  /* The grip lies over the ends, (length - 2) / 2 rounded down from the start:
+     on the 15px box it covers the start's last pixel (Themes tab list). */
   --clio-scrollbar-thumb-bg:
+    var(--clio-art-db-thumb-vgrip) 1px round(down, 50%, 1px) / 14px 2px no-repeat,
     var(--clio-art-db-thumb-top) 1px 0 / 14px 7px no-repeat,
     var(--clio-art-db-thumb-bottom) 1px 100% / 14px 8px no-repeat,
-    var(--clio-art-db-thumb-vgrip) 1px 50% / 14px 2px no-repeat,
     var(--clio-art-db-thumb-vstretch) 1px 0 / 14px 100% no-repeat;
   --clio-scrollbar-thumb-bg-horizontal:
+    var(--clio-art-db-thumb-hgrip) round(down, 50%, 1px) 1px / 2px 14px no-repeat,
     var(--clio-art-db-thumb-left) 0 1px / 7px 14px no-repeat,
     var(--clio-art-db-thumb-right) 100% 1px / 8px 14px no-repeat,
-    var(--clio-art-db-thumb-hgrip) 50% 1px / 2px 14px no-repeat,
     var(--clio-art-db-thumb-hstretch) 0 1px / 100% 14px no-repeat;
   --clio-scrollbar-thumb-color: #cdc6bd;
   --clio-scrollbar-thumb-border: 0 none;
@@ -786,7 +788,10 @@
 [data-era="drawingboard"] :is(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-button,
 [data-era="drawingboard"]:is(html.clio-scrollbars)::-webkit-scrollbar-button,
 [data-era="drawingboard"] :is(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-button:active,
-[data-era="drawingboard"]:is(html.clio-scrollbars)::-webkit-scrollbar-button:active {
+[data-era="drawingboard"]:is(html.clio-scrollbars)::-webkit-scrollbar-button:active,
+[data-era="drawingboard"] :is(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-button:horizontal,
+[data-era="drawingboard"]:is(html.clio-scrollbars)::-webkit-scrollbar-button:horizontal {
+  /* :horizontal outweighs the Platinum rule that moves that art a pixel down. */
   border: 0;
   background-color: transparent;
   background-position: 0 0;
@@ -974,6 +979,12 @@
   background: url("art/drawingboard/slider-track.png") calc(0px - var(--clio-db-phase, 0px)) 0 / 64px 1px repeat-x;
 }
 
+[data-era="drawingboard"] input[type="range"]::-moz-range-track {
+  border: 0;
+  border-image: none;
+  background: url("art/drawingboard/slider-track.png") calc(0px - var(--clio-db-phase, 0px)) 0 / 64px 1px repeat-x;
+}
+
 /* Bevel buttons: drawn as the theme's push button (its pens, corner pixels,
    hatch and shade); the Navigation Services bevel buttons were not matched
    pen for pen (inferred). */
@@ -989,9 +1000,15 @@
 }
 
 /* Drawing Board's chosen items stay #313131 (underlined, not inverted) and its
-   dimmed text is #8c8c8c: the default black edge levels serve. */
+   dimmed text is #8c8c8c. Browsers with COLRv1 draw the edge levels in the text
+   colour; Safari's COLRv0 file draws them from these palettes. */
 [data-era="drawingboard"] :is(.menu-bar, [role="menubar"], [role="menu-bar"]) > li > :is(button, a, span),
 [data-era="drawingboard"] :is(.menu, [role="menu"]) > li,
 [data-era="drawingboard"] :is(.menu, [role="menu"]) > li > :is(a, button) {
-  font-palette: normal !important;   /* outranks the shared chosen-item rule */
+  font-palette: --clio-aa-313131 !important;   /* outranks the shared chosen-item rule */
+}
+
+[data-era="drawingboard"] :is(.menu, [role="menu"]) > li:is(.disabled, [aria-disabled="true"]),
+[data-era="drawingboard"] :is(.menu, [role="menu"]) > li > :is(a, button):is(:disabled, [aria-disabled="true"]) {
+  font-palette: --clio-aa-8c8c8c !important;
 }

@@ -20,6 +20,7 @@
   font-synthesis: none;
   line-height: 16px;
   -webkit-font-smoothing: var(--clio-font-smoothing);
+  -moz-osx-font-smoothing: grayscale;   /* Firefox on macOS otherwise thickens the pixel squares with a grey fringe */
 }
 
 :where(.window, .modal-dialog, .alert-box, .standard-dialog, .modeless-dialog, .clio) *,
@@ -33,6 +34,7 @@
   font-family: var(--clio-font-text);
   font-stretch: var(--clio-font-stretch-text);
   -webkit-font-smoothing: var(--clio-text-smoothing);
+  -moz-osx-font-smoothing: var(--clio-text-smoothing-moz);
 }
 
 :where(.window, .modal-dialog, .alert-box, .standard-dialog, .clio) :where(h1, h2, h3, h4, .heading) {

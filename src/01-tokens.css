@@ -30,6 +30,7 @@
   /* Geneva 9: the Finder info line, icon names, status lines. */
   --clio-font-small: "Clio Text '84 9", Geneva, "Helvetica Neue", Arial, sans-serif;
   --clio-text-smoothing: none;
+  --clio-text-smoothing-moz: grayscale;   /* Firefox's nearest to none */
   --clio-font-mono: Monaco, Menlo, Consolas, "Courier New", monospace;
   /* Chrome type at sizes other than 12px and its multiples (.display): an
      outline face, smoothed. */

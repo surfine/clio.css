@@ -1,6 +1,7 @@
 // Behaviour checks for clio.js in a real browser (Chromium through Playwright):
 // held controls, default and cancel keys, and the scroll bars it draws.
 //   npm run behaviour      (needs Playwright, here or in AIS6_DIR)
+//   CLIO_ENGINE=webkit|firefox npm run behaviour   (default chromium)
 import { createRequire } from "node:module";
 import { writeFileSync, mkdirSync } from "node:fs";
 import { dirname, join } from "node:path";
@@ -18,7 +19,10 @@ const css = pathToFileURL(join(root, "dist/clio.css")).href;
 const js = pathToFileURL(join(root, "dist/clio.js")).href;
 const dir = join(root, ".fidelity/behaviour");
 mkdirSync(dir, { recursive: true });
-const browser = await playwright.chromium.launch();
+const ENGINE = process.env.CLIO_ENGINE || "chromium";
+if (!["chromium", "webkit", "firefox"].includes(ENGINE)) { console.error(`CLIO_ENGINE must be chromium, webkit or firefox, not ${ENGINE}`); process.exit(2); }
+console.log(`engine: ${ENGINE}`);
+const browser = await playwright[ENGINE].launch();
 const page = await browser.newPage({ viewport: { width: 800, height: 600 } });
 const errors = [];
 page.on("pageerror", (e) => errors.push(e.message));
@@ -26,8 +30,8 @@ let failed = 0, passed = 0;
 const ok = (cond, msg) => { if (cond) passed++; else { failed++; console.log("FAIL " + msg); } };
 
 async function load(era, body) {
-  const file = join(dir, `${era}.html`);
-  writeFileSync(file, `<!doctype html><html data-era="${era}"><head><link rel="stylesheet" href="${css}"></head><body style="margin:20px">${body}<script src="${js}"></script></body></html>`);
+  const file = join(dir, `${era}-${ENGINE}.html`);
+  writeFileSync(file, `<!doctype html><html data-era="${era}"><head><meta charset="utf-8"><link rel="stylesheet" href="${css}"></head><body style="margin:20px">${body}<script src="${js}"></script></body></html>`);
   await page.goto(pathToFileURL(file).href);
   await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))));
 }
@@ -202,7 +206,8 @@ await page.keyboard.press("Enter"); await page.keyboard.press("Enter"); await pa
 ok(await page.evaluate(() => window.chose) === "new", "keyboard: Return chooses");
 ok(await page.evaluate(() => document.activeElement.id) === "t" && !(await shown("#m")), "keyboard: after choosing, focus is back on the title and the menu stays closed");
 // app-menu bar model: one Tab stop, preview on focus, Left/Right between menus, Tab leaves
-await load("platinum", '<button id="before">before</button>' + bar() + '<button id="after">after</button>');
+// (a text field after the bar: Safari's Tab skips buttons that have no tabindex)
+await load("platinum", '<button id="before">before</button>' + bar() + '<input id="after" aria-label="after">');
 await page.focus("#before"); await page.keyboard.press("Tab");
 ok(await page.evaluate(() => document.activeElement.id) === "t" && await shown("#m") && !(await page.evaluate(() => document.activeElement.closest(".menu"))), "menu bar: Tab lands on the first title and previews its menu, no item focused");
 await page.keyboard.press("Tab");
@@ -221,8 +226,11 @@ ok(await page.evaluate(() => document.activeElement.id) === "t2" && !(await show
 await page.keyboard.press("Tab");
 ok(!(await page.evaluate(() => document.querySelector("#t").closest("li").classList.contains("open") || document.querySelector("#t2").closest("li").classList.contains("open"))), "menu bar: Tab out closes every menu");
 await load("platinum", bar("data-clio-shortcuts"));
+// The title is lit for 8 ticks: watch for it rather than read it after the key (WebKit's
+// key press takes longer than that).
+await page.evaluate(() => { const t = document.querySelector("#t"); new MutationObserver(() => { if (t.classList.contains("active")) window.lit = true; }).observe(t, { attributes: true }); });
 await page.keyboard.press("Meta+n");
-ok(await page.evaluate(() => window.chose) === "new" && await page.evaluate(() => document.querySelector("#t").classList.contains("active")), "Command-N runs the item and lights its title");
+ok(await page.evaluate(() => window.chose) === "new" && await page.evaluate(() => window.lit === true), "Command-N runs the item and lights its title");
 await load("platinum", bar());
 await page.keyboard.press("Meta+n");
 ok(!(await page.evaluate(() => window.chose)), "without data-clio-shortcuts, Command keys stay the browser's");
@@ -239,7 +247,7 @@ if (await page.evaluate(() => CSS.supports("appearance", "base-select"))) {
   const placed = await page.evaluate(() => { const o = document.querySelectorAll("#p option")[2].getBoundingClientRect(), r = document.querySelector("#p").getBoundingClientRect(); return [Math.round(o.top + o.height / 2), Math.round(r.top + r.height / 2), Math.round(o.left - r.left)]; });
   ok(Math.abs(placed[0] - placed[1]) <= 1 && Math.abs(placed[2]) <= 1, `base-select: the open picker lies over the button, Monaco on its row (${placed})`);
   await page.keyboard.press("Escape");
-}
+} else console.log(`skip 2 base-select checks (${ENGINE} has no appearance: base-select)`);
 // elsewhere clio.js draws the menu (forced here by hiding base-select from it)
 const noBase = `<script>{ const f = CSS.supports.bind(CSS); CSS.supports = (a, b) => (a === "appearance" && b === "base-select") ? false : f(a, b); }</script>`;
 for (const era of ["system7", "platinum"]) {
@@ -352,5 +360,5 @@ ok(played[0] === 0 && played[1] === 1, `sounds: silent by default, an alert play
 
 ok(errors.length === 0, "no page errors: " + errors.join("; "));
 await browser.close();
-console.log(failed ? `FAIL ${failed} of ${passed + failed} behaviour checks` : `ok ${passed} behaviour checks`);
+console.log(failed ? `FAIL ${failed} of ${passed + failed} behaviour checks (${ENGINE})` : `ok ${passed} behaviour checks (${ENGINE})`);
 process.exit(failed ? 1 : 0);

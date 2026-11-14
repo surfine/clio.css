@@ -252,6 +252,45 @@
     13 rgb(111 111 111 / 0.9333);
 }
 
+/* Drawing Board's menu text (#313131) and dimmed text (#8c8c8c), for Safari's COLRv0 file. */
+@font-palette-values --clio-aa-313131 {
+  font-family: "Clio Sans '97";
+  override-colors:
+    0 rgb(49 49 49 / 0.0667),
+    1 rgb(49 49 49 / 0.1333),
+    2 rgb(49 49 49 / 0.2000),
+    3 rgb(49 49 49 / 0.2667),
+    4 rgb(49 49 49 / 0.3333),
+    5 rgb(49 49 49 / 0.4000),
+    6 rgb(49 49 49 / 0.4667),
+    7 rgb(49 49 49 / 0.5333),
+    8 rgb(49 49 49 / 0.6000),
+    9 rgb(49 49 49 / 0.6667),
+    10 rgb(49 49 49 / 0.7333),
+    11 rgb(49 49 49 / 0.8000),
+    12 rgb(49 49 49 / 0.8667),
+    13 rgb(49 49 49 / 0.9333);
+}
+
+@font-palette-values --clio-aa-8c8c8c {
+  font-family: "Clio Sans '97";
+  override-colors:
+    0 rgb(140 140 140 / 0.0667),
+    1 rgb(140 140 140 / 0.1333),
+    2 rgb(140 140 140 / 0.2000),
+    3 rgb(140 140 140 / 0.2667),
+    4 rgb(140 140 140 / 0.3333),
+    5 rgb(140 140 140 / 0.4000),
+    6 rgb(140 140 140 / 0.4667),
+    7 rgb(140 140 140 / 0.5333),
+    8 rgb(140 140 140 / 0.6000),
+    9 rgb(140 140 140 / 0.6667),
+    10 rgb(140 140 140 / 0.7333),
+    11 rgb(140 140 140 / 0.8000),
+    12 rgb(140 140 140 / 0.8667),
+    13 rgb(140 140 140 / 0.9333);
+}
+
 /* Clio Sans '97 Display: Charcoal's outlines, traced from Mac OS 9.0 drawing it
    at 72 points (fonts/ClioSans97Display.woff2, tooling/trace-outline.py), for
    every size that is not 12px or a multiple of it. */
