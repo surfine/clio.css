@@ -60,6 +60,8 @@ Reference: System 7.5.3 running in Infinite Mac, the 800×600 colour canvas read
 | s7-radio-on | 12×12 | 100.0% | 100.0% | 0.0% | 0 |
 | s7-radio-off | 12×12 | 100.0% | 100.0% | 0.0% | 0 |
 | s7-popup-end | 26×20 | 100.0% | 100.0% | 0.0% | 0 |
+| s7-popup-disabled | 27×22 | 100.0% | 100.0% | 0.0% | 0 |
+| s7-js-caret | 8×20 | 100.0% | 100.0% | 0.0% | 0 |
 | s7-progress-fill | 3×11 | 100.0% | 100.0% | 0.0% | 0 |
 | s7-progress-track | 8×11 | 100.0% | 100.0% | 0.0% | 0 |
 | s7-menu-separator | 100×16 | 100.0% | 100.0% | 0.0% | 0 |
@@ -94,6 +96,8 @@ the 800×600 colour canvas read 1:1 (`npm run capture:drawingboard`), compared i
 | db-js-scroll-arrow | 16×16 | 100.0% | 100.0% | 0.0% | 0 |
 | db-js-scroll-thumb | 15×14 | 100.0% | 100.0% | 0.0% | 0 |
 | db-js-smart-arrows | 32×16 | 100.0% | 100.0% | 0.0% | 0 |
+| db-js-smart-held-left | 32×16 | 100.0% | 100.0% | 0.0% | 0 |
+| db-js-smart-held-right | 32×16 | 100.0% | 100.0% | 0.0% | 0 |
 | db-js-popup-open | 162×40 | 96.2% | 98.9% | 0.5% | 0.39 |
 | db-popup-open | 162×40 | 96.2% | 98.9% | 0.5% | 0.39 |
 | db-default-button | 16×24 | 100.0% | 100.0% | 0.0% | 0 |
@@ -186,8 +190,8 @@ Reference: GUIdebook Mac OS 9.0 captures, cropped by AI System 6 (`AIS6_DIR`).
 and Firefox (results in `.fidelity/results-<engine>.json`). Firefox has no `::-webkit-scrollbar`:
 its scroll-bar specimens load clio.js, whose element bars take the same rules.
 
-- WebKit: 127 of 131 identical; not identical: button-disabled (98.8%), db-js-popup-open (96.2%), db-popup-open (96.2%), p9-titlebar (97.3%)
-- Firefox: 119 of 126 identical; not identical: active-titlebar (100.0%), button-disabled (98.8%), s6-default-ok (98.4%), s6-button-pressed (95.4%), s6-button-hover (95.3%), db-js-popup-open (96.2%), p9-titlebar (97.3%)
+- WebKit: 131 of 135 identical; not identical: s7-collapsed (100.0%), s7-popup-disabled (96.1%), db-js-popup-open (96.2%), db-popup-open (96.2%)
+- Firefox: 129 of 130 identical; not identical: db-js-popup-open (96.2%)
 
 Apart from the Drawing Board pop-up menu (below), every pixel that differs in those specimens is in
 a centred label or title whose spare width is odd, so its text starts on a half pixel. The Mac rounds

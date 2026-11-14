@@ -8,6 +8,7 @@
  *   - menus that track the pointer (drag and release, blink, submenus, keys) and
  *     <select> opening as the era's pop-up menu
  *   - window dragging with a grey outline, the collapse box, clio.zoomRects()
+ *   - the era's insertion point in text fields (XOR, measured blink)
  *   - optional sounds you supply (clio.sounds, data-clio-sounds)
  * Opt out per element with data-clio-js="off". */
 (() => {
@@ -661,11 +662,12 @@
     claimWindows(document);
     scrollbars(document);
     claimBars(document);   // clio.js opens these menus; focus alone no longer does
+    queueCentre();
     new MutationObserver((records) => {
       for (const r of records) for (const n of r.addedNodes) if (n instanceof Element && !n.classList.contains("clio-sb-anchor") && !n.closest(".clio-sb-anchor")) { scrollbars(n); claimBars(n); if (!n.classList.contains("clio-move-menu") && !n.classList.contains("clio-outline") && !n.classList.contains("clio-live")) claimWindows(n); }
     }).observe(document.documentElement, { childList: true, subtree: true });
     // An era or Smart Scrolling switched anywhere: the bars' sizes come from the era.
-    new MutationObserver(() => { for (const b of live) if (b.host.isConnected) b.schedule(); })
+    new MutationObserver(() => { queueCentre(); for (const b of live) if (b.host.isConnected) b.schedule(); })
       .observe(document.documentElement, { attributes: true, subtree: true, attributeFilter: ["data-era", "data-clio-scrolling"] });
   }
 
@@ -867,6 +869,109 @@
     if (opt && /\bdblclick\b/.test(opt.getAttribute("data-clio-shade"))) collapse(bar.parentElement);
   });
 
+  /* ---- Centred labels ----------------------------------------------------- */
+  // QuickDraw centred a label at floor(spare / 2); a browser centres at spare / 2
+  // and, when the spare width is odd, puts the text on a half pixel, which each
+  // engine then rounds its own way (Chromium down, WebKit blends, Firefox up).
+  // Where a label's text starts on a half pixel, one more pixel at its end makes
+  // the spare even: buttons take it as padding, a title as margin. Measured when
+  // fonts load, on resize and when the page changes, never per frame; all reads
+  // come before all writes. data-clio-centre="off" (or data-clio-js="off") leaves
+  // a label alone.
+  const CENTRED = "button, .btn, .btn-default, .standard-button, .bevel, [role=tab], .title-bar > :is(.title, h1, h2, h3)";
+  const nudged = new Map();   // element -> the inline value it had
+  const isTitle = (el) => el.matches(".title-bar > *");
+  let centreQueued = false;
+  function centre() {
+    centreQueued = false;
+    // undo, so each label is measured as the stylesheet lays it out
+    for (const [el, was] of nudged) { if (isTitle(el)) el.style.marginRight = was; else el.style.paddingRight = was; }
+    nudged.clear();
+    const todo = [];
+    for (const el of document.querySelectorAll(CENTRED)) {
+      if (optedOut(el) || el.closest('[data-clio-centre="off"]') || !el.firstChild || !el.getClientRects().length) continue;
+      const cs = getComputedStyle(el);
+      if (cs.whiteSpace !== "nowrap" && el.getClientRects().length > 1) continue;
+      const range = document.createRange(); range.selectNodeContents(el);
+      const r = range.getBoundingClientRect();
+      if (!r.width) continue;
+      const frac = (r.left + scrollX) % 1;
+      if (Math.abs(frac - 0.5) < 0.26) todo.push([el, cs]);
+    }
+    for (const [el, cs] of todo) {
+      if (isTitle(el)) { nudged.set(el, el.style.marginRight); el.style.marginRight = `${(parseFloat(cs.marginRight) || 0) + 1}px`; }
+      else { nudged.set(el, el.style.paddingRight); el.style.paddingRight = `${(parseFloat(cs.paddingRight) || 0) + 1}px`; }
+    }
+  }
+  const queueCentre = () => { if (!centreQueued) { centreQueued = true; requestAnimationFrame(centre); } };
+  if (document.fonts) document.fonts.ready.then(queueCentre);
+  addEventListener("resize", queueCentre);
+  new MutationObserver((records) => {
+    for (const r of records) for (const n of r.addedNodes) if (n.nodeType === 3 || (n instanceof Element && !n.closest(".clio-sb-anchor, .clio-outline, .clio-popup-menu, .clio-live"))) return queueCentre();
+    for (const r of records) if (r.type === "characterData") return queueCentre();
+  }).observe(document.documentElement, { childList: true, subtree: true, characterData: true });
+
+  /* ---- Insertion point ---------------------------------------------------- */
+  // TextEdit's caret: a 1px line drawn in XOR (black on white, white on black)
+  // as tall as the line, on for GetCaretTime() ticks and off as long (System
+  // 7.5.3, Find File's field: 1px, 16px tall, 567 ms on and off, about 34 ticks). clio.js draws it in text fields inside .window; the
+  // browser's own caret comes back while text is selected or an input method is
+  // composing, and the caret stays lit under reduced motion. Its place is
+  // measured when the text, the selection, a scroll or the size change, never
+  // per frame. data-clio-caret="off" (or data-clio-js="off") keeps the browser's.
+  const CARET_TICKS = 34;
+  const FIELD = "input:is([type=text], [type=search], [type=password], [type=email], [type=url], [type=tel], [type=number], :not([type])), textarea";
+  const MIRROR = ["boxSizing", "width", "paddingTop", "paddingRight", "paddingBottom", "paddingLeft", "borderTopWidth", "borderRightWidth", "borderBottomWidth", "borderLeftWidth", "fontFamily", "fontSize", "fontWeight", "fontStyle", "fontStretch", "letterSpacing", "wordSpacing", "lineHeight", "textTransform", "textIndent", "tabSize"];
+  let caretEl = null, caretField = null, caretTimer = 0, composing = false, caretQueued = false;
+  const caretWanted = (f) => f instanceof HTMLElement && f.matches(FIELD) && !!f.closest(".window") && !optedOut(f) && !f.closest('[data-clio-caret="off"]') && !f.readOnly && !f.disabled;
+  function caretStop() {
+    clearInterval(caretTimer); caretTimer = 0;
+    if (caretEl) caretEl.remove();
+    if (caretField) caretField.classList.remove("clio-caret-field");
+    caretEl = caretField = null;
+  }
+  function caretUpdate() {
+    caretQueued = false;
+    const f = document.activeElement;
+    if (!caretWanted(f) || composing || f.selectionStart == null || f.selectionStart !== f.selectionEnd) return caretStop();
+    // reads: the field, and a hidden copy of it holding the text before the caret
+    const cs = getComputedStyle(f), r = f.getBoundingClientRect(), area = f.tagName === "TEXTAREA";
+    const m = document.createElement("div");
+    for (const k of MIRROR) m.style[k] = cs[k];
+    Object.assign(m.style, { position: "absolute", visibility: "hidden", left: "-9999px", top: "0", borderStyle: "solid", whiteSpace: area ? "pre-wrap" : "pre", overflowWrap: area ? "break-word" : "normal", height: "auto" });
+    const text = f.type === "password" ? "•".repeat(f.value.length) : f.value;
+    m.textContent = text.slice(0, f.selectionStart);
+    const mark = document.createElement("span"); mark.textContent = "​"; m.appendChild(mark);
+    document.body.appendChild(m);
+    const mx = mark.offsetLeft, my = mark.offsetTop, glyph = mark.offsetHeight;
+    m.remove();
+    // the caret is a line tall, and TextEdit drew it in the pixel left of the character
+    const h = px(cs.getPropertyValue("--clio-caret-height")) || Math.round(parseFloat(cs.lineHeight)) || glyph;
+    const bt = parseFloat(cs.borderTopWidth) || 0, bb = parseFloat(cs.borderBottomWidth) || 0;
+    const y = area ? my - Math.round((h - glyph) / 2) - f.scrollTop : bt + Math.floor((r.height - bt - bb - h) / 2);
+    const x = mx - 1 - f.scrollLeft;
+    const inside = x >= 0 && x <= r.width && y + h > 0 && y < r.height;
+    // writes
+    if (!inside) { if (caretEl) caretEl.hidden = true; return; }
+    if (caretField !== f) { caretStop(); caretField = f; f.classList.add("clio-caret-field"); }
+    if (!caretEl) { caretEl = document.createElement("div"); caretEl.className = "clio-caret"; caretEl.setAttribute("aria-hidden", "true"); document.body.appendChild(caretEl); }
+    caretEl.hidden = false;
+    Object.assign(caretEl.style, { left: `${Math.round(r.left + scrollX + x)}px`, top: `${Math.round(r.top + scrollY + y)}px`, height: `${h}px` });
+    // each move shows the caret and starts the blink again (TEBlink after TEKey/TEClick)
+    caretEl.classList.remove("clio-caret-off");
+    clearInterval(caretTimer); caretTimer = 0;
+    if (!reduced()) caretTimer = setInterval(() => caretEl && caretEl.classList.toggle("clio-caret-off"), CARET_TICKS * TICK);
+  }
+  const queueCaret = () => { if (!caretQueued) { caretQueued = true; requestAnimationFrame(caretUpdate); } };
+  // (Firefox fires no selectionchange for a field's own selection: a click or a key moves it too)
+  for (const t of ["focusin", "selectionchange", "input", "keyup", "pointerup", "select"]) document.addEventListener(t, queueCaret);
+  matchMedia("(prefers-reduced-motion: reduce)").addEventListener("change", () => { if (caretField) queueCaret(); });
+  document.addEventListener("focusout", () => requestAnimationFrame(() => { if (!caretWanted(document.activeElement)) caretStop(); }));
+  document.addEventListener("compositionstart", () => { composing = true; caretStop(); });
+  document.addEventListener("compositionend", () => { composing = false; queueCaret(); });
+  addEventListener("scroll", () => { if (caretField) queueCaret(); }, { capture: true, passive: true });
+  addEventListener("resize", () => { if (caretField) queueCaret(); });
+
   /* ---- Sounds ------------------------------------------------------------- */
   // None ship (the Mac's are Apple's recordings). Give clio.sounds a URL per
   // name and put data-clio-sounds on <html>: "alert" plays when an alert box
@@ -897,6 +1002,7 @@
     scrollbars,
     unscroll(el) { const b = hosts.get(el); if (b) { b.destroy(); hosts.delete(el); live.delete(b); } },
     refresh(el) { const b = hosts.get(el); if (b) b.layout(); },
+    centre,   // align centred labels again (after a change clio.js cannot see)
   };
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start, { once: true });
   else start();

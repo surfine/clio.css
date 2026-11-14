@@ -21,6 +21,12 @@
      fallback colour where background-clip: text is missing. */
   --clio-disabled-dither: var(--clio-art-s6-gray50);
   --clio-disabled-fill: transparent;
+  /* A dimmed pop-up menu: the whole control (frame, shadow, title, arrow) drawn
+     through the 50% gray, the ink where x + y is odd surviving (System 7.5.3,
+     Memory's Select Hard Disk with virtual memory off, measured). The pattern
+     starts at the control's corner, not the screen's. */
+  --clio-popup-disabled-mask: var(--clio-art-s6-gray50) 0 0 / 2px 2px;   /* a crisp 2x2 picture: a gradient blurs at 2x in Firefox */
+  --clio-popup-disabled-fg: var(--clio-ink);
   --clio-selection-bg: #000000;
   --clio-selection-fg: #ffffff;
 
@@ -50,6 +56,9 @@
   --clio-radius: 0;
   --clio-control-height: 20px;
   --clio-field-height: 20px;
+  /* clio.js's insertion point: the font's line height, 16px for 12pt (System
+     7.5.3, Find File's 20px field: rows 2-17), whatever the field's line-height. */
+  --clio-caret-height: 16px;
   --clio-row-height: 16px;
   --clio-gap: 8px;
 

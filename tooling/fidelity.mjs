@@ -30,11 +30,15 @@ if (!playwright) { console.error("Playwright not found (npm i -D playwright, or 
 const W = (width, title, extra = "", cls = "window", zoom = false) => `<div class="${cls}" id="s" style="width:${width}px">
   <div class="title-bar"><button class="close" aria-label="Close"></button><h2 class="title">${title}</h2>${zoom ? '<button class="resize" aria-label="Zoom"></button>' : ""}<button class="shade" aria-label="Collapse"></button></div>
   <div class="window-pane" style="height:40px">${extra}</div></div>`;
+// What lies beside a window's shadow in the reference, behind the specimen (no mask needed):
+// a flat colour, or System 7's desktop gray (#666 on even pixels, #aaa on odd ones).
+const beside = (bg, html) => `<div style="width:fit-content;padding:0 2px 2px 0;background:${bg}">${html}</div>`;
+const S7DESK = "repeating-conic-gradient(#666666 0 25%, #aaaaaa 0 50%) 1px 0 / 2px 2px";
 const specimens = [
   // GUIdebook's Mac took these with font smoothing on, so its titles are antialiased:
   // the title text is masked here and checked against Infinite Mac (p9-titlebar-*, 100%).
-  { id: "active-titlebar", html: W(476, "Appearance"), crop: [0, 0, 477, 22], mask: [[193, 3, 89, 14], [476, 0, 1, 2]] },   // and GUIdebook's white page beside the shadow
-  { id: "inactive-titlebar", html: W(423, "Web Sharing", "", "window inactive", true), crop: [0, 0, 424, 22], mask: [[169, 3, 83, 15], [423, 0, 1, 2]] },
+  { id: "active-titlebar", html: beside("#ffffff", W(476, "Appearance")), crop: [0, 0, 477, 22], mask: [[193, 3, 89, 14]] },   // GUIdebook's title in Charcoal
+  { id: "inactive-titlebar", html: beside("#63639c", W(423, "Web Sharing", "", "window inactive", true)), crop: [0, 0, 424, 22], mask: [[169, 3, 83, 15]] },
   { id: "default-ok", html: `<div style="padding:12px;background:#ddd"><button class="default" id="s" style="width:65px">OK</button></div>`, crop: [-4, -7, 73, 32], mask: [[27, 10, 20, 13]] },   // the label: GUIdebook's is antialiased
   { id: "button-disabled", html: `<div style="padding:12px;background:#ddd"><button id="s" disabled style="width:80px">Eject</button></div>`, crop: [0, 0, 80, 20], mask: [[29, 4, 27, 12]] },
   { id: "checkbox-checked", html: `<div style="padding:12px;background:#ddd"><input type="checkbox" id="s" checked></div>`, crop: [0, 0, 12, 12] },
@@ -81,10 +85,10 @@ const s7dir = join(root, ".fidelity/system7");
 const S7 = (id, html, crop, file, ref) => ({ id, era: "system7", html, crop, refFile: join(s7dir, file + ".png"), refCrop: ref });
 const s7Window = (cls, title) => `<div class="${cls}" id="s" style="width:376px"><div class="title-bar"><button class="close" aria-label="Close"></button><h2 class="title">${title}</h2><button class="resize" aria-label="Zoom"></button></div><div class="window-pane" style="height:40px"></div></div>`;
 specimens.push(
-  { ...S7("s7-titlebar", s7Window("window", "Infinite HD"), [0, 0, 377, 19], "hd-window", [29, 55, 377, 19]), mask: [[218, 7, 14, 13], [376, 0, 1, 1]] },   // the pointer, and desktop beside the shadow
-  { ...S7("s7-titlebar-inactive", s7Window("window inactive", "Infinite HD"), [0, 0, 377, 16], "folder-window", [29, 55, 377, 16]), mask: [[376, 0, 1, 1]] },   // desktop beside the shadow
+  { ...S7("s7-titlebar", beside(S7DESK, s7Window("window", "Infinite HD")), [0, 0, 377, 19], "hd-window", [29, 55, 377, 19]), mask: [[218, 7, 14, 13]] },   // the pointer
+  { ...S7("s7-titlebar-inactive", beside(S7DESK, s7Window("window inactive", "Infinite HD")), [0, 0, 377, 16], "folder-window", [29, 55, 377, 16]) },
   // WindowShade (clicks set to 2, the Infinite HD window double-clicked): the title bar alone, closed by the frame.
-  { ...S7("s7-collapsed", `<div class="window collapsed" id="s" style="width:228px"><div class="title-bar"><button class="close" aria-label="Close"></button><h2 class="title">Infinite HD</h2><button class="resize" aria-label="Zoom"></button></div><div class="window-pane" style="height:40px"></div></div>`, [0, 0, 229, 20], "shaded", [109, 171, 229, 20]), mask: [[228, 0, 1, 1], [0, 19, 1, 1]] },
+  { ...S7("s7-collapsed", beside(S7DESK, `<div class="window collapsed" id="s" style="width:228px"><div class="title-bar"><button class="close" aria-label="Close"></button><h2 class="title">Infinite HD</h2><button class="resize" aria-label="Zoom"></button></div><div class="window-pane" style="height:40px"></div></div>`), [0, 0, 229, 20], "shaded", [109, 171, 229, 20]) },
   S7("s7-scroll-up", s6Scroll, [106, 0, 14, 14], "folder-window", [406, 110, 14, 14]),
   // Content long enough that the scroll box is System 7's 16 rows.
   S7("s7-scroll-thumb", `<div class="clio-scroll" id="s" style="width:120px;height:120px;overflow:scroll;background:#fff"><div style="width:400px;height:562px"></div></div>`, [106, 15, 14, 15], "folder-window", [406, 125, 14, 15]),   // the box's drawing; its length is Chromium's (26px at least, see EVIDENCE: scroll box)
@@ -102,6 +106,12 @@ specimens.push(
   S7("s7-radio-on", `<div style="padding:12px;background:#fff"><input type="radio" id="s" checked></div>`, [0, 0, 12, 12], "general-controls", [429, 85, 12, 12]),
   S7("s7-radio-off", `<div style="padding:12px;background:#fff"><input type="radio" id="s"></div>`, [0, 0, 12, 12], "general-controls", [395, 85, 12, 12]),
   S7("s7-popup-end", `<div class="clio" style="padding:12px;background:#fff"><select id="s" style="width:138px"><option>U.S.</option></select></div>`, [114, 0, 26, 20], "numbers", [365, 71, 26, 20]),
+  // Dimmed (Memory, virtual memory off: Select Hard Disk): every part through the 50% gray. The end only:
+  // the reference shows a disk icon before its name.
+  S7("s7-popup-disabled", `<div class="clio" style="padding:12px;background:#fff"><select id="s" style="width:170px;height:21px" disabled><option>Macintosh HD</option></select></div>`, [144, 0, 27, 22], "memory", [416, 134, 27, 22]),
+  // clio.js's insertion point in an empty field (Find File, the caret lit; frame caret).
+  { ...S7("s7-js-caret", `<div class="window" style="width:200px"><div class="window-pane" style="padding:12px;background:#fff"><input type="text" id="s" style="width:136px;height:20px" value=""></div></div>`, [0, 0, 8, 20], "caret", [477, 174, 8, 20]), js: true,
+    act: async (page) => { await page.emulateMedia({ reducedMotion: "reduce" }); await page.focus("#s"); await page.waitForTimeout(120); } },   // lit: no blink under reduced motion
   // The capture holds a bar 2px into the copy: compare its filled start and an unfilled run.
   S7("s7-progress-fill", `<div style="padding:12px;background:#fff"><progress id="s" max="100" value="60" style="width:200px"></progress></div>`, [0, 0, 3, 11], "copy-progress", [270, 181, 3, 11]),
   S7("s7-progress-track", `<div style="padding:12px;background:#fff"><progress id="s" max="100" value="60" style="width:200px"></progress></div>`, [150, 0, 8, 11], "copy-progress", [273, 181, 8, 11]),
@@ -150,6 +160,12 @@ specimens.push(
   // Smart Scrolling on (Appearance > Options), Infinite HD (frame smart-scroll): the arrows together at the far
   // end of the horizontal bar as one picture.
   { ...DB("db-js-smart-arrows", `<div data-clio-scrolling="smart"><div class="clio-scroll" id="s" style="width:339px;height:120px;overflow:scroll;background:#fff;--clio-db-phase:64px"><div style="width:452px;height:40px"></div></div></div>`, [291, 104, 32, 16], "smart-scroll", [401, 463, 32, 16]), js: true, mask: [[0, 15, 32, 1]] },   // the last row is the window's frame there
+  // The pair held (Mac OS 8.5, Smart Scrolling on, Macintosh HD made small; frames smart-held-left, -right):
+  // each arrow of the one picture lights alone. Masked: the pointer on it, and the window's frame on the last row.
+  { ...DB("db-js-smart-held-left", `<div data-clio-scrolling="smart"><div class="clio-scroll" id="s" style="width:339px;height:120px;overflow:scroll;background:#fff;--clio-db-phase:64px"><div style="width:452px;height:40px"></div></div></div>`, [291, 104, 32, 16], "smart-held-left", [291, 292, 32, 16]), js: true, mask: [[7, 6, 12, 10], [0, 15, 32, 1]],
+    act: async (page, b) => { await page.mouse.move(b.x + 299, b.y + 111); await page.mouse.down(); await page.waitForTimeout(100); } },
+  { ...DB("db-js-smart-held-right", `<div data-clio-scrolling="smart"><div class="clio-scroll" id="s" style="width:339px;height:120px;overflow:scroll;background:#fff;--clio-db-phase:64px"><div style="width:452px;height:40px"></div></div></div>`, [291, 104, 32, 16], "smart-held-right", [291, 292, 32, 16]), js: true, mask: [[23, 6, 9, 10], [0, 15, 32, 1]],
+    act: async (page, b) => { await page.mouse.move(b.x + 315, b.y + 111); await page.mouse.down(); await page.waitForTimeout(100); } },
   // The open pop-up menu (Appearance > Appearance held, the pointer on the current item; frame popup-open):
   // clio.js draws it with the theme's paper and pens, and so does base-select.
   { ...DB("db-js-popup-open", `<script>{ const f = CSS.supports.bind(CSS); CSS.supports = (a, b) => (a === "appearance" && b === "base-select") ? false : f(a, b); }</script><div class="clio" style="padding:30px 0 60px 12px;background:#e7ded6;width:300px;--clio-db-phase:64px"><select id="s" style="width:180px"><option>Apple platinum</option><option selected>Drawing Board</option></select></div>`, [0, -18, 162, 40], "popup-open", [288, 125, 162, 40]), js: true, mask: [[78, 26, 20, 14]],
@@ -198,11 +214,11 @@ specimens.push(
   P9("p9-radio-off", `<div style="padding:12px;background:#eeeeee"><input type="radio" id="s"></div>`, [0, 0, 12, 12], "general-controls", [268, 282, 12, 12]),
   // Appearance control panel (window outline 161..636 x 68..): title bar ends, "Set Desktop", the disabled pop-up.
   // The whole bar with its title: Charcoal's antialiasing comes from window titles (capture:charcoal-ui).
-  { ...P9("p9-titlebar", `<div class="window" id="s" style="width:476px"><div class="title-bar"><button class="close" aria-label="Close"></button><h2 class="title">Appearance</h2><button class="shade" aria-label="Collapse"></button></div><div class="window-pane" style="height:40px"></div></div>`, [0, 0, 477, 22], "appearance", [161, 68, 477, 22]), mask: [[476, 0, 1, 2]] },   // desktop beside the shadow
+  { ...P9("p9-titlebar", beside("#ffff99", `<div class="window" id="s" style="width:476px"><div class="title-bar"><button class="close" aria-label="Close"></button><h2 class="title">Appearance</h2><button class="shade" aria-label="Collapse"></button></div><div class="window-pane" style="height:40px"></div></div>`), [0, 0, 477, 22], "appearance", [161, 68, 477, 22]) },
   P9("p9-titlebar-left", `<div class="window" id="s" style="width:476px"><div class="title-bar"><button class="close" aria-label="Close"></button><h2 class="title">Appearance</h2><button class="shade" aria-label="Collapse"></button></div><div class="window-pane" style="height:40px"></div></div>`, [0, 0, 30, 22], "appearance", [161, 68, 30, 22]),
   // The collapse box clicked (Games, Mac OS 9.0; frame collapsed): the title bar alone, closed by the
   // frame. The title (a folder icon and "Games") and the desktop by the shadow's notches are masked.
-  { ...P9("p9-collapsed", `<div class="window collapsed" id="s" style="width:386px"><div class="title-bar"><button class="close" aria-label="Close"></button><h2 class="title">Games</h2><button class="resize" aria-label="Zoom"></button><button class="shade" aria-label="Collapse"></button></div><div class="window-pane" style="height:40px"></div></div>`, [0, 0, 387, 23], "collapsed", [40, 68, 387, 23]), mask: [[150, 2, 90, 18], [386, 0, 1, 2], [0, 22, 2, 1]] },
+  { ...P9("p9-collapsed", beside("#9999cc", `<div class="window collapsed" id="s" style="width:386px"><div class="title-bar"><button class="close" aria-label="Close"></button><h2 class="title">Games</h2><button class="resize" aria-label="Zoom"></button><button class="shade" aria-label="Collapse"></button></div><div class="window-pane" style="height:40px"></div></div>`), [0, 0, 387, 23], "collapsed", [40, 68, 387, 23]), mask: [[150, 2, 90, 18]] },   // the title: a folder icon and "Games"
   P9("p9-titlebar-right", `<div class="window" id="s" style="width:476px"><div class="title-bar"><button class="close" aria-label="Close"></button><h2 class="title">Appearance</h2><button class="shade" aria-label="Collapse"></button></div><div class="window-pane" style="height:40px"></div></div>`, [438, 0, 36, 22], "appearance", [599, 68, 36, 22]),
   P9("p9-button-end", `<div style="padding:12px;background:#eeeeee"><button id="s" style="width:86px">Set Desktop</button></div>`, [0, 0, 86, 20], "appearance", [534, 369, 86, 20]),
   P9("p9-popup-disabled", `<div style="padding:12px;background:#eeeeee"><select id="s" style="width:194px" disabled><option>Position Automatically</option></select></div>`, [160, 0, 34, 20], "appearance", [567, 337, 34, 20]),
@@ -253,14 +269,16 @@ specimens.push(
   { ...P9("p9-js-scroll-smart", jsScroll(122, 'data-clio-scrolling="smart"'), [185, 0, 15, 122], "../hig/platinum9/finder-scroll-smart", [405, 111, 15, 122]), js: true },
   // An open pop-up menu (Appearance > Fonts, Large System Font held, the pointer moved off the menu; frame
   // popup-open): clio.js draws it (base-select hidden from it), and where the browser draws it, base-select.
-  { ...P9("p9-js-popup-open", `<script>{ const f = CSS.supports.bind(CSS); CSS.supports = (a, b) => (a === "appearance" && b === "base-select") ? false : f(a, b); }</script><div class="clio" style="padding:12px 0 140px 12px;background:#dddddd;width:400px"><select id="s" style="width:161px"><option selected>Charcoal</option><option>Chicago</option><option>Capitals</option><option>Gadget</option><option>Sand</option><option>Techno</option><option>Textile</option></select></div>`, [0, 0, 142, 115], "fonts-popup-open", [333, 143, 142, 115]), js: true, mask: [[141, 0, 1, 2], [0, 114, 2, 1]],
+  // Masked: only the panel behind the shadow's notch (#eeeeee there; the backdrop here is #dddddd).
+  { ...P9("p9-js-popup-open", `<script>{ const f = CSS.supports.bind(CSS); CSS.supports = (a, b) => (a === "appearance" && b === "base-select") ? false : f(a, b); }</script><div class="clio" style="padding:12px 0 140px 12px;background:#dddddd;width:400px"><select id="s" style="width:161px"><option selected>Charcoal</option><option>Chicago</option><option>Capitals</option><option>Gadget</option><option>Sand</option><option>Techno</option><option>Textile</option></select></div>`, [0, 0, 142, 115], "fonts-popup-open", [333, 143, 142, 115]), mask: [[0, 114, 2, 1]], js: true,
     act: async (page, b) => { await page.mouse.move(b.x + 80, b.y + 10); await page.mouse.down(); await page.mouse.move(b.x + 380, b.y + 10, { steps: 3 }); } },
-  { ...P9("p9-popup-open", `<div class="clio" style="padding:12px 0 140px 12px;background:#dddddd;width:400px"><select id="s" style="width:161px"><option selected>Charcoal</option><option>Chicago</option><option>Capitals</option><option>Gadget</option><option>Sand</option><option>Techno</option><option>Textile</option></select></div>`, [0, 0, 142, 115], "fonts-popup-open", [333, 143, 142, 115]), js: true, baseSelect: true, mask: [[141, 0, 1, 2], [0, 114, 2, 1]],
+  { ...P9("p9-popup-open", `<div class="clio" style="padding:12px 0 140px 12px;background:#dddddd;width:400px"><select id="s" style="width:161px"><option selected>Charcoal</option><option>Chicago</option><option>Capitals</option><option>Gadget</option><option>Sand</option><option>Techno</option><option>Textile</option></select></div>`, [0, 0, 142, 115], "fonts-popup-open", [333, 143, 142, 115]), mask: [[0, 114, 2, 1]], js: true, baseSelect: true,
     act: async (page, b) => { await page.mouse.move(b.x + 80, b.y + 10); await page.mouse.down(); await page.mouse.move(b.x + 380, b.y + 10, { steps: 3 }); } },
   // The same moment, the button's end: its arrows drawn pressed (the menu's frame and shadow at the left).
-  { ...P9("p9-js-popup-open-arrows", `<script>{ const f = CSS.supports.bind(CSS); CSS.supports = (a, b) => (a === "appearance" && b === "base-select") ? false : f(a, b); }</script><div class="clio" style="padding:12px 0 140px 12px;background:#dddddd;width:400px"><select id="s" style="width:161px"><option selected>Charcoal</option><option>Chicago</option><option>Capitals</option><option>Gadget</option><option>Sand</option><option>Techno</option><option>Textile</option></select></div>`, [140, 0, 21, 20], "fonts-popup-open", [473, 143, 21, 20]), js: true, mask: [[19, 0, 2, 2], [20, 2, 1, 1], [20, 17, 1, 3], [19, 19, 1, 1]],
+  // Masked: only the panel behind the button's rounded corners (#eeeeee there).
+  { ...P9("p9-js-popup-open-arrows", `<script>{ const f = CSS.supports.bind(CSS); CSS.supports = (a, b) => (a === "appearance" && b === "base-select") ? false : f(a, b); }</script><div class="clio" style="padding:12px 0 140px 12px;background:#dddddd;width:400px"><select id="s" style="width:161px"><option selected>Charcoal</option><option>Chicago</option><option>Capitals</option><option>Gadget</option><option>Sand</option><option>Techno</option><option>Textile</option></select></div>`, [140, 0, 21, 20], "fonts-popup-open", [473, 143, 21, 20]), mask: [[19, 0, 2, 2], [20, 18, 1, 2], [19, 19, 1, 1]], js: true,
     act: async (page, b) => { await page.mouse.move(b.x + 80, b.y + 10); await page.mouse.down(); await page.mouse.move(b.x + 380, b.y + 10, { steps: 3 }); } },
-  { ...P9("p9-popup-open-arrows", `<div class="clio" style="padding:12px 0 140px 12px;background:#dddddd;width:400px"><select id="s" style="width:161px"><option selected>Charcoal</option><option>Chicago</option><option>Capitals</option><option>Gadget</option><option>Sand</option><option>Techno</option><option>Textile</option></select></div>`, [140, 0, 21, 20], "fonts-popup-open", [473, 143, 21, 20]), js: true, mask: [[19, 0, 2, 2], [20, 2, 1, 1], [20, 17, 1, 3], [19, 19, 1, 1]], baseSelect: true,
+  { ...P9("p9-popup-open-arrows", `<div class="clio" style="padding:12px 0 140px 12px;background:#dddddd;width:400px"><select id="s" style="width:161px"><option selected>Charcoal</option><option>Chicago</option><option>Capitals</option><option>Gadget</option><option>Sand</option><option>Techno</option><option>Textile</option></select></div>`, [140, 0, 21, 20], "fonts-popup-open", [473, 143, 21, 20]), mask: [[19, 0, 2, 2], [20, 18, 1, 2], [19, 19, 1, 1]], js: true, baseSelect: true,
     act: async (page, b) => { await page.mouse.move(b.x + 80, b.y + 10); await page.mouse.down(); await page.mouse.move(b.x + 380, b.y + 10, { steps: 3 }); } },
   // The down arrow held (Mac OS 9.0 Finder, Smart Scrolling as Infinite Mac sets it; frame arrow-held,
   // the pointer in its corner masked).
@@ -293,6 +311,9 @@ for (const s of specimens) {
   // draws, so scroll-bar specimens load it (and say so in the table).
   // clio.js keeps the theme's 15px Drawing Board box, so the crops set for the browser's
   // 26px box do not apply; db-js-scroll-thumb compares that 15px box whole.
+  // clio.js comes with every specimen that does not test the browser's own scroll bars: it
+  // aligns centred labels as the Mac did (CLIO_CSS_ONLY=1 renders without it, where it is optional).
+  if (!process.env.CLIO_CSS_ONLY && !/overflow|clio-scroll|listbox|textarea/.test(s.html)) s.js = true;
   if (ENGINE === "firefox" && /^db-scroll-thumb-(grip|end)$/.test(s.id)) { console.log(`${s.id}: n/a in firefox (see db-js-scroll-thumb)`); continue; }
   if (ENGINE === "firefox" && !s.js && /scroll|grow-box/.test(s.id)) s.js = s.viaJs = true;
   if (s.baseSelect && !(await page.goto("about:blank").then(() => page.evaluate(() => CSS.supports("appearance", "base-select"))))) { console.log(`${s.id}: n/a in ${ENGINE} (no base-select)`); continue; }

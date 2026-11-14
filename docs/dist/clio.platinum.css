@@ -28,6 +28,16 @@
 /* Clio Sans '97: Charcoal 12 rebuilt the same way from Mac OS 9.0's Key Caps
    (fonts-src/clio-sans-97.txt). Charcoal has one weight, so the face covers
    every weight and the browser never thickens it. */
+/* Each colour face is declared twice: the Plain file alone first, then both. An
+   engine that cannot parse tech() (Safari before 17) drops the second rule and
+   keeps the first instead of losing the face. */
+@font-face {
+  font-family: "Clio Sans '97";
+  src: url("fonts/ClioSans97Plain.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+
 @font-face {
   font-family: "Clio Sans '97";
   src: url("fonts/ClioSans97.woff2") format("woff2") tech(color-COLRv1),
@@ -45,6 +55,13 @@
    pixels fewer than menus and buttons), for title bars only. */
 @font-face {
   font-family: "Clio Sans '97 Title";
+  src: url("fonts/ClioSans97TitlePlain.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Clio Sans '97 Title";
   src: url("fonts/ClioSans97Title.woff2") format("woff2") tech(color-COLRv1),
     url("fonts/ClioSans97TitlePlain.woff2") format("woff2");
   font-weight: 100 900;
@@ -60,8 +77,22 @@
    '97 in its colour, within one level of the real screen. */
 @font-face {
   font-family: "Clio Sans '97 Exact";
+  src: url("fonts/ClioSans97PlainExact.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Clio Sans '97 Exact";
   src: url("fonts/ClioSans97Exact.woff2") format("woff2") tech(color-COLRv1),
     url("fonts/ClioSans97PlainExact.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Clio Sans '97 Title Exact";
+  src: url("fonts/ClioSans97TitlePlainExact.woff2") format("woff2");
   font-weight: 100 900;
   font-display: swap;
 }
@@ -352,6 +383,12 @@
      fallback colour where background-clip: text is missing. */
   --clio-disabled-dither: var(--clio-art-s6-gray50);
   --clio-disabled-fill: transparent;
+  /* A dimmed pop-up menu: the whole control (frame, shadow, title, arrow) drawn
+     through the 50% gray, the ink where x + y is odd surviving (System 7.5.3,
+     Memory's Select Hard Disk with virtual memory off, measured). The pattern
+     starts at the control's corner, not the screen's. */
+  --clio-popup-disabled-mask: var(--clio-art-s6-gray50) 0 0 / 2px 2px;   /* a crisp 2x2 picture: a gradient blurs at 2x in Firefox */
+  --clio-popup-disabled-fg: var(--clio-ink);
   --clio-selection-bg: #000000;
   --clio-selection-fg: #ffffff;
 
@@ -381,6 +418,9 @@
   --clio-radius: 0;
   --clio-control-height: 20px;
   --clio-field-height: 20px;
+  /* clio.js's insertion point: the font's line height, 16px for 12pt (System
+     7.5.3, Find File's 20px field: rows 2-17), whatever the field's line-height. */
+  --clio-caret-height: 16px;
   --clio-row-height: 16px;
   --clio-gap: 8px;
 
@@ -1621,6 +1661,9 @@
   -webkit-font-smoothing: var(--clio-font-smoothing);
   -moz-osx-font-smoothing: grayscale;   /* Firefox on macOS otherwise thickens the pixel squares with a grey fringe */
   line-height: 16px;
+  white-space: nowrap;   /* one line, cut short with an ellipsis, as the Mac truncated a pop-up's title */
+  overflow: hidden;
+  text-overflow: ellipsis;
   appearance: none;
   -webkit-appearance: none;
   cursor: var(--clio-cursor-arrow);
@@ -1632,7 +1675,10 @@
 }
 
 :where(select):disabled {
-  color: var(--clio-disabled);
+  color: var(--clio-popup-disabled-fg, var(--clio-disabled));
+  opacity: 1;   /* Chrome fades a disabled select it draws itself; the Mac did not */
+  mask: var(--clio-popup-disabled-mask, none);
+  mask-clip: no-clip;   /* the shadow outside the frame is dimmed too */
 }
 
 /* The open pop-up menu. Where the browser lets CSS draw it (appearance:
@@ -2817,6 +2863,39 @@
   touch-action: none;
 }
 
+/* ---- clio.js: the insertion point --------------------------------------------
+   TextEdit inverted a 1px line for its caret, as tall as the line: white in a
+   difference blend inverts what is under it the same way. The field's own caret
+   is hidden only while clio.js draws this one. */
+.clio-caret {
+  position: absolute;
+  z-index: 2147483646;
+  width: 1px;
+  background: #ffffff;
+  mix-blend-mode: difference;
+  pointer-events: none;
+}
+
+.clio-caret-off,
+.clio-caret[hidden] {
+  visibility: hidden;
+}
+
+.clio-caret-field {
+  caret-color: transparent;
+}
+
+/* Forced colours repaint the line and may drop the blend: the system's caret instead. */
+@media (forced-colors: active) {
+  .clio-caret {
+    display: none;
+  }
+
+  .clio-caret-field {
+    caret-color: auto;
+  }
+}
+
 /* Control Strip (System 7.5 to Mac OS 9): a row of module buttons with scroll
    arrows and a tab that folds the strip away. Markup follows AI System 6:
    .control-strip > button.control-strip-scroll.control-strip-scroll-back,
@@ -3019,6 +3098,8 @@
   --clio-face: #dddddd;
   --clio-disabled: #6f6f6f;
   --clio-disabled-dither: none;
+  --clio-popup-disabled-mask: none;
+  --clio-popup-disabled-fg: var(--clio-disabled);
   /* Push button, disabled button and default ring: the real pixel frames
      (tooling/frame-art.py: Mac OS 9.0 Appearance and GUIdebook's Mac OS 9.0). */
   --clio-button-frame: var(--clio-art-frame-p9-button);
@@ -4197,6 +4278,64 @@
     background: var(--clio-art-p9-popup-open-arrows) right 0 top 0 / 19px 18px no-repeat, var(--clio-popup-arrow), var(--clio-popup-bg);
     border-image-source: var(--clio-art-frame-p9-popup-open);
   }
+}
+
+/* The title's line is 12px, not the 13px row: Charcoal's 11px ascent and 3px
+   descent then leave no half pixel above the baseline, which each browser
+   rounded its own way (Chromium up, WebKit and Firefox down a row). The box
+   keeps its 13px height. */
+:root .title-bar > :is(.title, h1, h2, h3) {
+  line-height: calc(var(--clio-titlebar-row) - 1px);
+}
+
+/* The column just past the cut-out covers the ridges' #777 rows (their cut is a
+   pixel to the right of the white rows'). It used to be an ::after outside the
+   title, shown through overflow-clip-margin, which WebKit lacks; now the title
+   is a pixel wider into it (a -1px margin keeps it centred where it was) and
+   paints that column itself. */
+:root .title-bar:not(.inactive-title-bar, .window.inactive > .title-bar) > :is(.title, h1, h2, h3) {
+  margin-right: -1px;
+  padding-right: 4px;
+  background:
+    repeating-linear-gradient(to bottom, transparent 0 1px, #777777 1px 2px) 0 0 / 1px 12px no-repeat,
+    repeating-linear-gradient(to bottom, transparent 0 1px, #cccccc 1px 2px) right 0 top 0 / 1px 12px no-repeat,
+    linear-gradient(#cccccc, #cccccc) 0 0 / calc(100% - 1px) 100% no-repeat;
+}
+
+:root .title-bar > :is(.title, h1, h2, h3)::after {
+  content: none;
+}
+
+/* ---- The window's drop shadow starts 2px in -------------------------------
+   Mac OS 9.0 (Infinite HD, measured): the 1px black shadow runs down the right
+   from the frame's third row and along the foot from its third column; a
+   box-shadow could only start it 1px in. Two border lines on a pseudo-element
+   draw it (the box itself stays clear); its offsets count from the padding box,
+   inside the 1px frame. */
+:root .window {
+  box-shadow: none;
+}
+
+:root .window::after {
+  content: "";
+  position: absolute;
+  top: 1px;
+  right: -2px;
+  bottom: -2px;
+  left: 1px;
+  border-right: 1px solid #000000;
+  border-bottom: 1px solid #000000;
+  pointer-events: none;
+}
+
+/* Behind another window the shadow turns #555555 and keeps the same notch
+   (Mac OS 9.0 Finder window, measured). */
+:root .window.inactive {
+  box-shadow: none;
+}
+
+:root .window.inactive::after {
+  border-color: #555555;
 }
 
 /* Adaptations the historical machines never needed. Historical sizes are

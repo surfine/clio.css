@@ -184,6 +184,8 @@ write("llms.txt", llms);
 write("docs/sitemap.xml", renderSitemap({ pkg }));
 write("docs/robots.txt", `User-agent: *\nAllow: /\n\nSitemap: ${pkg.homepage}sitemap.xml\n`);
 write("docs/.nojekyll", "");
+// the touch bench for real phones (test/touch.html; not indexed)
+copyFileSync(join(root, "test/touch.html"), join(root, "docs/touch.html"));
 write("EVIDENCE.md", renderEvidence({ pkg, components }));
 mkdirSync(join(root, "docs/dist/fonts"), { recursive: true });
 for (const f of readdirSync(join(root, "dist"))) {

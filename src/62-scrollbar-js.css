@@ -170,3 +170,36 @@
 .clio-drag-bar {
   touch-action: none;
 }
+
+/* ---- clio.js: the insertion point --------------------------------------------
+   TextEdit inverted a 1px line for its caret, as tall as the line: white in a
+   difference blend inverts what is under it the same way. The field's own caret
+   is hidden only while clio.js draws this one. */
+.clio-caret {
+  position: absolute;
+  z-index: 2147483646;
+  width: 1px;
+  background: #ffffff;
+  mix-blend-mode: difference;
+  pointer-events: none;
+}
+
+.clio-caret-off,
+.clio-caret[hidden] {
+  visibility: hidden;
+}
+
+.clio-caret-field {
+  caret-color: transparent;
+}
+
+/* Forced colours repaint the line and may drop the blend: the system's caret instead. */
+@media (forced-colors: active) {
+  .clio-caret {
+    display: none;
+  }
+
+  .clio-caret-field {
+    caret-color: auto;
+  }
+}

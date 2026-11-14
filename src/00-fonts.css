@@ -24,6 +24,16 @@
 /* Clio Sans '97: Charcoal 12 rebuilt the same way from Mac OS 9.0's Key Caps
    (fonts-src/clio-sans-97.txt). Charcoal has one weight, so the face covers
    every weight and the browser never thickens it. */
+/* Each colour face is declared twice: the Plain file alone first, then both. An
+   engine that cannot parse tech() (Safari before 17) drops the second rule and
+   keeps the first instead of losing the face. */
+@font-face {
+  font-family: "Clio Sans '97";
+  src: url("fonts/ClioSans97Plain.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+
 @font-face {
   font-family: "Clio Sans '97";
   src: url("fonts/ClioSans97.woff2") format("woff2") tech(color-COLRv1),
@@ -41,6 +51,13 @@
    pixels fewer than menus and buttons), for title bars only. */
 @font-face {
   font-family: "Clio Sans '97 Title";
+  src: url("fonts/ClioSans97TitlePlain.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Clio Sans '97 Title";
   src: url("fonts/ClioSans97Title.woff2") format("woff2") tech(color-COLRv1),
     url("fonts/ClioSans97TitlePlain.woff2") format("woff2");
   font-weight: 100 900;
@@ -56,8 +73,22 @@
    '97 in its colour, within one level of the real screen. */
 @font-face {
   font-family: "Clio Sans '97 Exact";
+  src: url("fonts/ClioSans97PlainExact.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Clio Sans '97 Exact";
   src: url("fonts/ClioSans97Exact.woff2") format("woff2") tech(color-COLRv1),
     url("fonts/ClioSans97PlainExact.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Clio Sans '97 Title Exact";
+  src: url("fonts/ClioSans97TitlePlainExact.woff2") format("woff2");
   font-weight: 100 900;
   font-display: swap;
 }

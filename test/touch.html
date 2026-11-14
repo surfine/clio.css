@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="zh-Hant-TW" data-era="platinum">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>clio.css 觸控測試台</title>
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="dist/clio.css">
+<style>
+  :root { --bench-bg: #9999cc; }
+  body { margin: 0; padding: 12px 16px 48px; background: var(--bench-bg); font: 15px/1.5 -apple-system, system-ui, sans-serif; color: #000; -webkit-text-size-adjust: 100%; }
+  h1 { font-size: 20px; margin: 4px 0 8px; }
+  h2 { font-size: 16px; margin: 0 0 4px; }
+  .bench { background: #ffffff; border: 1px solid #000; padding: 10px 12px; margin: 12px 0; max-width: 640px; }
+  .bench p { margin: 4px 0; }
+  .expect { color: #333; font-size: 14px; }
+  .stage { padding: 12px; margin-top: 8px; background: #dddddd; }
+  table { border-collapse: collapse; font: 13px/1.4 ui-monospace, Menlo, monospace; width: 100%; }
+  td { border-top: 1px solid #ccc; padding: 2px 4px; vertical-align: top; word-break: break-all; }
+  td:first-child { white-space: nowrap; width: 9em; }
+  #log { font: 13px/1.4 ui-monospace, Menlo, monospace; white-space: pre-wrap; background: #fff; border: 1px solid #000; padding: 6px; min-height: 4em; max-width: 640px; }
+  .float-host { position: relative; height: 230px; }
+</style>
+</head>
+<body>
+<h1>clio.css 觸控測試台</h1>
+<p>給 iPhone SE（iOS 15.8.8）與 iPhone 18 Pro（iOS 27.3）。照 1 到 12 做；每項做完截一張圖（含下方紀錄），連同第 0 項的環境表一起傳回。</p>
+
+<section class="bench">
+  <h2>0　環境（自動填入，請截圖）</h2>
+  <table id="env"></table>
+  <p><label>年代：
+    <select id="era" data-clio-js="off" style="appearance:auto;-webkit-appearance:menulist;font:15px system-ui;padding:2px;border:1px solid #888;background:#fff;color:#000;mask:none;width:auto;min-height:0;box-shadow:none;border-image:none;border-radius:4px">
+      <option value="system6">System 6</option><option value="system7">System 7</option><option value="platinum" selected>Mac OS 9（Platinum）</option><option value="drawingboard">Drawing Board</option>
+    </select></label></p>
+  <p class="expect">切換年代後，下面所有元件換成那個年代的樣子。第 1 到 12 項至少在 System 7 和 Mac OS 9 各做一次。</p>
+</section>
+
+<section class="bench">
+  <h2>1　選單：點一下</h2>
+  <div class="stage">
+    <ul class="menu-bar" role="menubar" aria-label="測試選單列">
+      <li role="none"><button role="menuitem" aria-haspopup="true" aria-expanded="false">File</button>
+        <ul class="menu" role="menu"><li role="none"><button role="menuitem" data-log="選單：New">New</button></li><li role="none"><button role="menuitem" data-log="選單：Open…">Open…</button></li><li role="none"><button role="menuitem" disabled>Print…</button></li></ul></li>
+      <li role="none"><button role="menuitem" aria-haspopup="true" aria-expanded="false">Edit</button>
+        <ul class="menu" role="menu"><li role="none"><button role="menuitem" data-log="選單：Copy">Copy</button></li><li role="none"><button role="menuitem" data-log="選單：Paste">Paste</button></li></ul></li>
+    </ul>
+  </div>
+  <p class="expect">預期：點 File 打開選單；再點 New，New 閃三下後選單關閉，紀錄只出現一行「選單：New」。Print… 是灰的，點了沒反應。點選單外面會關閉選單。</p>
+</section>
+
+<section class="bench">
+  <h2>2　選單：按住拖到項目再放開</h2>
+  <p class="expect">預期：手指按住 Edit 不放，往下滑到 Paste 放開，紀錄出現一行「選單：Paste」。頁面不應跟著捲動。</p>
+</section>
+
+<section class="bench">
+  <h2>3　彈出選單（select）</h2>
+  <div class="stage clio">
+    <select id="pop" data-log-change="彈出選單"><option>Chicago</option><option selected>Geneva</option><option>Monaco</option><option>New York</option></select>
+    <select disabled style="margin-left:8px"><option>停用</option></select>
+  </div>
+  <p class="expect">預期：觸控螢幕上打開的是系統自己的選擇器（iOS 的滾輪或清單），選 Monaco 後按鈕顯示 Monaco，紀錄出現「彈出選單：Monaco」。右邊停用的那個不變淡：System 7 是整個控制項都打成網點，Mac OS 9 是灰字。</p>
+</section>
+
+<section class="bench">
+  <h2>4　按鈕：按下、滑出去再放開</h2>
+  <div class="stage clio">
+    <button id="ok" class="default" data-log="按鈕：OK">OK</button>
+    <button data-log="按鈕：Cancel" style="margin-left:8px">Cancel</button>
+    <button disabled style="margin-left:8px">停用</button>
+  </div>
+  <p class="expect">預期：手指按著 OK 時顯示按下的樣子，放開後紀錄出現一行「按鈕：OK」。按著 Cancel 滑到按鈕外再放開，按下樣子消失，紀錄沒有新行。</p>
+</section>
+
+<section class="bench">
+  <h2>5　勾選框與圓鈕</h2>
+  <div class="stage clio">
+    <label><input type="checkbox" data-log-change="勾選框"> 勾選框</label>
+    <label style="margin-left:12px"><input type="radio" name="r" checked data-log-change="圓鈕 A"> A</label>
+    <label style="margin-left:8px"><input type="radio" name="r" data-log-change="圓鈕 B"> B</label>
+  </div>
+  <p class="expect">預期：點方框或文字都能切換，每次一行紀錄。按住時顯示按下的樣子。</p>
+</section>
+
+<section class="bench">
+  <h2>6　捲動區：手指滑、箭頭、軌道</h2>
+  <div class="float-host">
+    <div class="window" style="position:absolute;left:0;top:0;width:260px">
+      <div class="title-bar"><button class="close" aria-label="Close"></button><h2 class="title">捲動</h2></div>
+      <div class="window-pane clio-scroll" id="scroller" style="height:170px;overflow:auto"><div style="height:1200px;width:420px;padding:8px;background:repeating-linear-gradient(#fff 0 19px,#ddd 19px 20px)">從這裡往下滑。每一列 20px。</div></div>
+    </div>
+  </div>
+  <p class="expect">預期：在內容上用手指滑可以捲動（有慣性）。點一下下箭頭捲一步；按住箭頭會持續捲；點箭頭和捲動方塊之間的軌道會翻一頁。捲動方塊可以拖。紀錄最後一行顯示目前位置。</p>
+</section>
+
+<section class="bench">
+  <h2>7　視窗：拖標題列、收合、關閉</h2>
+  <div class="float-host">
+    <div class="window" id="win" style="position:absolute;left:10px;top:10px;width:240px">
+      <div class="title-bar"><button class="close" aria-label="Close" data-log="視窗：關閉鈕"></button><h2 class="title">拖我</h2><button class="shade" aria-label="Collapse"></button></div>
+      <div class="window-pane" style="height:120px;padding:8px">按住標題列拖動。</div>
+    </div>
+  </div>
+  <p class="expect">預期：手指按住標題列拖動時出現灰色外框跟著手指，頁面不捲動；放開後視窗移到外框的位置，紀錄出現「視窗移動」。點右上的收合鈕，視窗只剩標題列；再點一次展開。點左上的關閉鈕有一行紀錄（測試頁不真的關）。</p>
+</section>
+
+<section class="bench">
+  <h2>8　文字欄與插入點</h2>
+  <div class="float-host" style="height:150px">
+    <div class="window" style="position:absolute;left:0;top:0;width:280px">
+      <div class="title-bar"><h2 class="title">輸入</h2></div>
+      <div class="window-pane" style="padding:10px 12px;height:96px">
+        <input type="text" id="field" value="Macintosh HD" style="width:240px"><br><br>
+        <input type="text" placeholder="這一欄用系統插入點" data-clio-caret="off" style="width:240px">
+      </div>
+    </div>
+  </div>
+  <p class="expect">預期：點第一欄出現鍵盤，欄裡是 1px 黑色細線插入點，大約每 0.57 秒亮暗一次。打字時插入點跟著移動，而且一直亮著，停下後才繼續閃。長按選取文字時細線消失，換成系統的選取把手。用注音或拼音輸入時，組字期間是系統的插入點，選完字後細線回來。第二欄一律是系統插入點。</p>
+</section>
+
+<section class="bench">
+  <h2>9　減少動態效果</h2>
+  <p class="expect">到「設定 → 輔助使用 → 動作 → 減少動態效果」打開，回到這頁重新整理。預期：環境表的 reduced motion 顯示 reduce；第 8 項的插入點一直亮、不閃；第 1 項選單項目不閃三下；第 7 項沒有縮放框動畫。測完記得關回來。</p>
+</section>
+
+<section class="bench">
+  <h2>10　字型</h2>
+  <div class="stage clio" style="font-family:var(--clio-font-chrome);font-size:12px">Charcoal 12：The quick brown fox jumps over the lazy dog 0123456789</div>
+  <p class="expect">預期：上面那行是點陣字，邊緣清楚，不是系統的 San Francisco。環境表的「字型檔」列出實際載入的檔案：Chrome 應是 ClioSans97*.woff2（彩色版），Safari 是 *Plain*.woff2。iOS 15 若整行變成系統字，請一定截圖。</p>
+</section>
+
+<section class="bench">
+  <h2>11　旋轉與縮放</h2>
+  <p class="expect">把手機轉成橫向再轉回來；用兩指放大再縮回。預期：版面不錯位，第 6、7 項的視窗與外框跟著手指，不會停在舊位置。</p>
+</section>
+
+<section class="bench">
+  <h2>12　其他發現</h2>
+  <p class="expect">任何看起來不對、點不到、需要點兩下、頁面亂跳或字太小的地方，截圖並在紀錄附近標出來。</p>
+</section>
+
+<h2>紀錄</h2>
+<div id="log" aria-live="polite"></div>
+
+<script>
+  const logEl = document.getElementById("log");
+  const log = (s) => { logEl.textContent += `${new Date().toTimeString().slice(0, 8)}  ${s}\n`; };
+  document.addEventListener("click", (e) => { const t = e.target.closest("[data-log]"); if (t) log(t.dataset.log); });
+  document.addEventListener("change", (e) => {
+    const t = e.target.closest("[data-log-change]");
+    if (t) log(`${t.dataset.logChange}：${t.type === "checkbox" ? (t.checked ? "勾" : "不勾") : t.type === "radio" ? "選了" : t.value}`);
+  });
+  addEventListener("clio:move", () => log("視窗移動"));
+  addEventListener("clio:collapse", (e) => log(e.detail.collapsed ? "視窗收合" : "視窗展開"));
+  let lastScroll = 0;
+  document.getElementById("scroller").addEventListener("scroll", (e) => {
+    const now = performance.now(); if (now - lastScroll < 250) return; lastScroll = now;
+    log("捲動到 " + Math.round(e.target.scrollTop) + "px");
+  }, { passive: true });
+  document.getElementById("era").addEventListener("change", (e) => { document.documentElement.dataset.era = e.target.value; log("年代：" + e.target.value); fill(); });
+
+  function fill() {
+    const fonts = performance.getEntriesByType("resource").map((r) => r.name).filter((n) => /\/fonts\//.test(n)).map((n) => n.split("/").pop());
+    const loaded = [...document.fonts].filter((f) => f.status === "loaded").map((f) => f.family.replace(/"/g, ""));
+    const rows = [
+      ["User agent", navigator.userAgent],
+      ["視窗", `${innerWidth}×${innerHeight} CSS px，DPR ${devicePixelRatio}`],
+      ["觸控點", String(navigator.maxTouchPoints)],
+      ["pointer", matchMedia("(pointer: coarse)").matches ? "coarse" : "fine"],
+      ["base-select", String(CSS.supports("appearance", "base-select"))],
+      ["tech(COLRv1)", String(CSS.supports("font-tech(color-COLRv1)"))],
+      ["reduced motion", matchMedia("(prefers-reduced-motion: reduce)").matches ? "reduce" : "no-preference"],
+      ["字型檔", fonts.join(", ") || "（尚未載入）"],
+      ["已載入字族", [...new Set(loaded)].join(", ") || "（無）"],
+      ["clio.js", window.clio ? window.clio.version : "沒有載入"],
+      ["年代", document.documentElement.dataset.era],
+    ];
+    const t = document.getElementById("env");
+    t.replaceChildren(...rows.map(([k, v]) => { const tr = document.createElement("tr"); const a = document.createElement("td"); a.textContent = k; const b = document.createElement("td"); b.textContent = v; tr.append(a, b); return tr; }));
+  }
+  document.fonts.ready.then(() => setTimeout(fill, 300));
+  addEventListener("load", () => setTimeout(fill, 300));
+  addEventListener("resize", fill);
+</script>
+<script src="dist/clio.min.js" defer></script>
+</body>
+</html>

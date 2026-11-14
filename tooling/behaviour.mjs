@@ -366,6 +366,46 @@ const played = await page.evaluate(async () => {
 });
 ok(played[0] === 0 && played[1] === 1, `sounds: silent by default, an alert plays "alert" with data-clio-sounds (${played})`);
 
+// insertion point: drawn by clio.js in a window's field, blinking at the measured rate
+await load("system7", `<div class="window"><div class="window-pane"><input type="text" id="f1" value="Hello"><input type="text" id="f2" data-clio-caret="off" value="x"></div></div><input type="text" id="f3">`);
+const caret = await page.evaluate(async () => {
+  const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+  const frame = () => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+  const f1 = document.querySelector("#f1"), get = () => document.querySelector(".clio-caret");
+  f1.focus(); f1.setSelectionRange(5, 5); await frame();
+  const on = !!get() && !get().hidden && f1.classList.contains("clio-caret-field");
+  const flips = []; const mo = new MutationObserver(() => flips.push(performance.now()));
+  mo.observe(get(), { attributes: true, attributeFilter: ["class"] });
+  await sleep(1300); mo.disconnect();
+  const gap = flips.length >= 2 ? flips[1] - flips[0] : 0;
+  f1.setSelectionRange(1, 3); document.dispatchEvent(new Event("selectionchange")); await frame();
+  const selection = !get() && !f1.classList.contains("clio-caret-field");
+  f1.setSelectionRange(2, 2); document.dispatchEvent(new Event("selectionchange")); await frame();
+  f1.dispatchEvent(new CompositionEvent("compositionstart", { bubbles: true })); await frame();
+  const ime = !get();
+  f1.dispatchEvent(new CompositionEvent("compositionend", { bubbles: true })); await frame();
+  const back = !!get();
+  document.querySelector("#f2").focus(); await frame();
+  const optOut = !get();
+  document.querySelector("#f3").focus(); await frame();
+  const outside = !get();
+  return { on, flips: flips.length, gap: Math.round(gap), selection, ime, back, optOut, outside };
+});
+ok(caret.on && caret.flips >= 2 && caret.gap > 520 && caret.gap < 620, `insertion point: drawn in a window's field, blinking every 34 ticks (${JSON.stringify(caret)})`);
+ok(caret.selection && caret.ime && caret.back, "insertion point: the browser's caret while text is selected or an input method composes");
+ok(caret.optOut && caret.outside, "insertion point: data-clio-caret=\"off\" and fields outside a window keep the browser's");
+await page.emulateMedia({ reducedMotion: "reduce" });
+const still = await page.evaluate(async () => {
+  const f1 = document.querySelector("#f1"); f1.focus(); f1.setSelectionRange(1, 1);
+  await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+  const c = document.querySelector(".clio-caret"); let n = 0;
+  const mo = new MutationObserver(() => n++); mo.observe(c, { attributes: true, attributeFilter: ["class"] });
+  await new Promise((r) => setTimeout(r, 800)); mo.disconnect();
+  return n === 0 && !c.classList.contains("clio-caret-off");
+});
+await page.emulateMedia({ reducedMotion: "no-preference" });
+ok(still, "insertion point: lit and still under reduced motion");
+
 ok(errors.length === 0, "no page errors: " + errors.join("; "));
 await browser.close();
 console.log(failed ? `FAIL ${failed} of ${passed + failed} behaviour checks (${ENGINE})` : `ok ${passed} behaviour checks (${ENGINE})`);
