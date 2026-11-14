@@ -296,6 +296,31 @@ ok(await page.evaluate(() => document.querySelector("#w").classList.contains("co
 await load("platinum", win("static"));
 { const [x, y] = await center("#title"); await page.mouse.move(x, y); await page.mouse.down(); await page.mouse.move(x + 40, y + 40, { steps: 3 });
   ok(!(await page.$(".clio-outline")), "a window in the page's flow is not dragged"); await page.mouse.up(); }
+// moving a window without dragging: the move button, its keys and its menu
+await load("platinum", win() + win("static").replace('id="w"', 'id="w2"').replace('id="title"', 'id="title2"').replace('id="pane"', 'id="pane2"'));
+const mv = await page.evaluate(() => { const h = document.querySelector("#w .clio-move"); return { has: !!h, name: h && h.getAttribute("aria-label"), role: h && h.tagName, staticHas: !!document.querySelector("#w2 .clio-move"), live: document.querySelector(".clio-live")?.getAttribute("aria-live") }; });
+ok(mv.has && mv.role === "BUTTON" && /Untitled/.test(mv.name) && /Arrow keys/.test(mv.name) && !mv.staticHas && mv.live === "polite", `move button: a named button on movable windows only, and a polite live region from the start (${JSON.stringify(mv)})`);
+await page.focus("#w .clio-move");
+ok(await page.evaluate(() => getComputedStyle(document.querySelector("#w .title-bar")).outlineStyle) !== "none", "move button: with keyboard focus the title bar shows the ring");
+const pos = () => page.evaluate(() => { const r = document.querySelector("#w").getBoundingClientRect(); return [r.left, r.top]; });
+await page.keyboard.press("ArrowRight");
+ok((await pos())[0] === 116 && await page.evaluate(() => document.querySelector(".clio-live").textContent) === "Untitled moved right", "move button: Right moves the window 16px and says so");
+await page.keyboard.press("Shift+ArrowDown");
+ok((await pos())[1] === 101, "move button: Shift moves 1px");
+for (let i = 0; i < 20; i++) await page.keyboard.press("ArrowLeft");
+ok((await pos())[0] === 0, "moves stay inside the page");
+await page.waitForTimeout(1100);
+ok(await page.evaluate(() => document.querySelector(".clio-live").textContent) === "", "the announcement clears after a second");
+await page.keyboard.press("Enter");
+ok(await page.evaluate(() => document.querySelectorAll(".clio-move-menu [role=menuitem]").length) === 4 && await page.evaluate(() => document.activeElement.textContent) === "Move left", "move button: Return opens a menu of moves on its first item");
+await page.keyboard.press("ArrowDown"); await page.keyboard.press("Enter");
+ok((await pos())[0] === 16 && !(await page.$(".clio-move-menu")) && await page.evaluate(() => document.activeElement.classList.contains("clio-move")), "move menu: Move right moves 16px, closes and returns focus to the button");
+const [mx, my] = await center("#title");
+await page.mouse.click(mx, my, { button: "right" });
+ok(!!(await page.$(".clio-move-menu")), "a right click on the title bar opens the move menu (no dragging needed)");
+await page.keyboard.press("Escape");
+ok(!(await page.$(".clio-move-menu")), "Esc closes the move menu");
+
 // zoom rects
 await load("system7", `<div id="a" style="position:absolute;left:600px;top:60px;width:32px;height:32px"></div><div id="b" style="position:absolute;left:80px;top:80px;width:300px;height:200px"></div>`);
 const zr = await page.evaluate(async () => {

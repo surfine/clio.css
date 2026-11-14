@@ -103,6 +103,9 @@ it; with it:
   Touch screens keep the system picker.
 - Windows positioned `absolute` or `fixed` (or marked `data-clio-drag`) drag by the title
   bar as the Mac did: a grey outline follows the pointer and the window moves on release.
+  Each movable window also gets a move button, out of sight until it has keyboard focus:
+  arrow keys move the window 16px (Shift: 1px), Return opens a menu of moves, which a
+  right click on the title bar opens too, and a polite live region says where it went.
   The collapse box folds a window to its title bar (`data-clio-shade="dblclick"` adds the
   double click). `clio.zoomRects(from, to)` draws the Finder's zoom rectangles.
 - Sounds: none ship. Set `clio.sounds.alert` (and `menu`, `collapse`, `expand`) to URLs

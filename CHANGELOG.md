@@ -14,6 +14,9 @@ Behaviour and details, measured where the emulators allow. The new optional
   on focus, arrows between menus, Home/End, Tab out closes); the open `<select>` picker is
   placed with `position-area` (the `anchor()` insets left it in the page corner) and is
   used only with a fine pointer, so touch screens keep the system picker.
+- Movable windows can be moved without dragging: a move button (hidden until it has
+  keyboard focus) takes arrow keys and opens a menu of moves, as does a right click on
+  the title bar; moves stay inside the page and are announced. `npm run behaviour`: 145.
 
 - **Menus** (clio.js): press-drag-release and Mac OS 8/9 click-to-open menus, the chosen
   item blinking 3 times (3 ticks each, measured in Mac OS 9.0), submenus after 9 ticks

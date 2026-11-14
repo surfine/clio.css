@@ -630,10 +630,14 @@
   };
   const claimBars = (root) => { for (const b of (root.querySelectorAll ? root.querySelectorAll(BAR) : [])) claimBar(b); if (root instanceof Element && root.matches(BAR)) claimBar(root); };
   function start() {
+    liveRegion = document.createElement("div");
+    liveRegion.className = "clio-live"; liveRegion.setAttribute("aria-live", "polite");
+    document.body.appendChild(liveRegion);
+    claimWindows(document);
     scrollbars(document);
     claimBars(document);   // clio.js opens these menus; focus alone no longer does
     new MutationObserver((records) => {
-      for (const r of records) for (const n of r.addedNodes) if (n instanceof Element && !n.classList.contains("clio-sb-anchor") && !n.closest(".clio-sb-anchor")) { scrollbars(n); claimBars(n); }
+      for (const r of records) for (const n of r.addedNodes) if (n instanceof Element && !n.classList.contains("clio-sb-anchor") && !n.closest(".clio-sb-anchor")) { scrollbars(n); claimBars(n); if (!n.classList.contains("clio-move-menu") && !n.classList.contains("clio-outline") && !n.classList.contains("clio-live")) claimWindows(n); }
     }).observe(document.documentElement, { childList: true, subtree: true });
     // An era or Smart Scrolling switched anywhere: the bars' sizes come from the era.
     new MutationObserver(() => { for (const b of live) if (b.host.isConnected) b.schedule(); })
@@ -669,12 +673,107 @@
       document.removeEventListener("pointermove", move, true); document.removeEventListener("pointerup", up, true); document.removeEventListener("pointercancel", up, true);
       o.remove();
       if (ev.type === "pointercancel" || (!dx && !dy)) return;
-      const left = px(cs.left), top = px(cs.top);
-      win.style.left = `${Math.round(left + dx)}px`; win.style.top = `${Math.round(top + dy)}px`;
-      win.dispatchEvent(new CustomEvent("clio:move", { bubbles: true, detail: { dx, dy } }));
+      moveBy(win, dx, dy);
     };
     document.addEventListener("pointermove", move, true); document.addEventListener("pointerup", up, true); document.addEventListener("pointercancel", up, true);
   });
+
+  // One way to move, for the pointer, the keyboard and the move menu: kept
+  // inside the viewport (fixed) or the window's container (absolute).
+  function moveBy(win, dx, dy, say) {
+    const cs = getComputedStyle(win);
+    let left = px(cs.left) + dx, top = px(cs.top) + dy;
+    const op = win.offsetParent;
+    const box = cs.position === "fixed" || !op || op === document.body || op === document.documentElement ? { w: document.documentElement.clientWidth, h: innerHeight } : { w: op.clientWidth, h: op.clientHeight };
+    left = Math.max(0, Math.min(left, box.w - win.offsetWidth));
+    top = Math.max(0, Math.min(top, box.h - win.offsetHeight));
+    win.style.left = `${Math.round(left)}px`; win.style.top = `${Math.round(top)}px`;
+    if (say) announce(`${windowName(win)} ${say}`);
+    win.dispatchEvent(new CustomEvent("clio:move", { bubbles: true, detail: { dx, dy } }));
+  }
+  const windowName = (win) => { const t = win.querySelector(":scope > .title-bar :is(.title, h1, h2, h3)"); return (t && t.textContent.trim()) || "Window"; };
+  // A polite live region, there from the start so screen readers register it.
+  let liveRegion = null;
+  function announce(text) {
+    if (!liveRegion) return;
+    liveRegion.textContent = text;
+    clearTimeout(announce.t); announce.t = setTimeout(() => { liveRegion.textContent = ""; }, 1000);
+  }
+  // The keyboard and single-pointer way: a move button at the start of each
+  // movable window's title bar, out of sight until it has keyboard focus.
+  // Arrow keys move the window 16px (Shift: 1px); Return, Space, a click or a
+  // right click on the title bar open a menu of moves.
+  const STEP = 16;
+  const MOVES = [["Move left", -1, 0, "moved left"], ["Move right", 1, 0, "moved right"], ["Move up", 0, -1, "moved up"], ["Move down", 0, 1, "moved down"]];
+  function handleFor(win) {
+    const bar = win.querySelector(":scope > .title-bar");
+    if (!bar || bar.querySelector(":scope > .clio-move")) return;
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "clio-move";
+    b.setAttribute("aria-haspopup", "menu"); b.setAttribute("aria-expanded", "false");
+    b.setAttribute("aria-label", `Move ${windowName(win)}. Arrow keys move it.`);
+    bar.prepend(b);
+  }
+  const movable = (win) => { const p = getComputedStyle(win).position; return p === "absolute" || p === "fixed" || win.hasAttribute("data-clio-drag"); };
+  function claimWindows(root) {
+    const list = root instanceof Element && root.matches(".window") ? [root] : [];
+    if (root.querySelectorAll) list.push(...root.querySelectorAll(".window"));
+    for (const w of list) if (!optedOut(w) && movable(w)) handleFor(w);
+  }
+  let moveMenu = null;
+  function closeMoveMenu(refocus) {
+    if (!moveMenu) return;
+    const { menu, handle } = moveMenu; moveMenu = null;
+    menu.remove(); handle.setAttribute("aria-expanded", "false");
+    if (refocus) handle.focus({ preventScroll: true });
+  }
+  function openMoveMenu(win, at) {
+    closeMoveMenu(false);
+    const handle = win.querySelector(":scope > .title-bar > .clio-move");
+    const menu = document.createElement("ul");
+    menu.className = "menu clio-move-menu"; menu.setAttribute("role", "menu");
+    menu.setAttribute("aria-label", `Move ${windowName(win)}`);
+    for (const [label, x, y, say] of MOVES) {
+      const li = document.createElement("li"); li.setAttribute("role", "none");
+      const b = document.createElement("button"); b.type = "button"; b.setAttribute("role", "menuitem"); b.tabIndex = -1; b.textContent = label;
+      b.addEventListener("click", () => { closeMoveMenu(true); moveBy(win, x * STEP, y * STEP, say); });
+      li.appendChild(b); menu.appendChild(li);
+    }
+    const r = at || handle.getBoundingClientRect();
+    Object.assign(menu.style, { position: "fixed", left: `${Math.round(r.left)}px`, top: `${Math.round(r.top + (r.height || 0))}px`, zIndex: "2147483000" });
+    (win.closest("[data-era]") || document.body).appendChild(menu);
+    handle.setAttribute("aria-expanded", "true");
+    moveMenu = { menu, handle, win };
+    menu.querySelector("button").focus({ preventScroll: true });
+    menu.addEventListener("keydown", (e) => {
+      const bs = [...menu.querySelectorAll("button")], i = bs.indexOf(document.activeElement);
+      if (e.key === "ArrowDown" || e.key === "ArrowUp") { e.preventDefault(); bs[(i + (e.key === "ArrowDown" ? 1 : bs.length - 1)) % bs.length].focus(); }
+      else if (e.key === "Home" || e.key === "End") { e.preventDefault(); bs[e.key === "Home" ? 0 : bs.length - 1].focus(); }
+      else if (e.key === "Escape") { e.preventDefault(); e.stopPropagation(); closeMoveMenu(true); }
+      else if (e.key === "Tab") closeMoveMenu(false);
+    });
+    menu.addEventListener("focusout", (e) => { if (!(e.relatedTarget instanceof Node && menu.contains(e.relatedTarget))) setTimeout(() => { if (moveMenu && !moveMenu.menu.contains(document.activeElement)) closeMoveMenu(false); }); });
+  }
+  document.addEventListener("keydown", (e) => {
+    const h = e.target instanceof Element ? e.target.closest(".clio-move") : null;
+    if (!h || e.defaultPrevented) return;
+    const m = { ArrowLeft: [-1, 0, "moved left"], ArrowRight: [1, 0, "moved right"], ArrowUp: [0, -1, "moved up"], ArrowDown: [0, 1, "moved down"] }[e.key];
+    if (!m) return;
+    e.preventDefault();
+    const step = e.shiftKey ? 1 : STEP;
+    moveBy(h.closest(".window"), m[0] * step, m[1] * step, m[2]);
+  });
+  document.addEventListener("click", (e) => {
+    const h = e.target instanceof Element ? e.target.closest(".clio-move") : null;
+    if (h) { if (moveMenu && moveMenu.handle === h) closeMoveMenu(true); else openMoveMenu(h.closest(".window")); }
+  });
+  document.addEventListener("contextmenu", (e) => {
+    const bar = e.target instanceof Element ? e.target.closest(".window > .title-bar") : null;
+    if (!bar || !bar.querySelector(":scope > .clio-move") || e.target.closest("button:not(.clio-move)")) return;
+    e.preventDefault();
+    openMoveMenu(bar.parentElement, { left: e.clientX, top: e.clientY, height: 0 });
+  });
+  addEventListener("resize", () => requestAnimationFrame(() => { for (const h of document.querySelectorAll(".clio-move")) { const w = h.closest(".window"); if (w) moveBy(w, 0, 0); } }));
 
   // Zoom rects (the Finder opening a folder, System 7.5.3, measured frame by
   // frame): 8 outlines, one per tick, each edge eased by 1.6^k, the last four

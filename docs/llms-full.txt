@@ -3148,6 +3148,29 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
   image-rendering: pixelated;
 }
 
+/* clio.js: the move button of a movable window and the live region. Out of
+   sight but in reach; with keyboard focus the title bar shows the ring. */
+:is(.clio-move, .clio-live) {
+  /* !important: the title bar's own button rules (the close box's art and
+     place) must not reach it */
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  margin: -1px !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  clip-path: inset(50%) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+  background: none !important;
+  box-shadow: none !important;
+}
+
+.title-bar:has(> .clio-move:focus-visible) {
+  outline: var(--clio-focus-outline);
+  outline-offset: -1px;
+}
+
 /* Control Strip (System 7.5 to Mac OS 9): a row of module buttons with scroll
    arrows and a tab that folds the strip away. Markup follows AI System 6:
    .control-strip > button.control-strip-scroll.control-strip-scroll-back,
