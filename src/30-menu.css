@@ -45,7 +45,7 @@
   white-space: nowrap;
   appearance: none;
   -webkit-appearance: none;
-  cursor: default;
+  cursor: var(--clio-cursor-arrow);
 }
 
 :where(.menu-bar, [role="menubar"], [role="menu-bar"]) > li > :is(button, a, span):is([aria-expanded="true"], .active),
@@ -116,7 +116,7 @@
   font-weight: var(--clio-menu-item-weight);
   line-height: var(--clio-menu-item-height);
   white-space: nowrap;
-  cursor: default;
+  cursor: var(--clio-cursor-arrow);
 }
 
 :where(.menu, [role="menu"]) > li:has(> :is(a, button)) {
@@ -142,7 +142,7 @@
   text-decoration: none;
   appearance: none;
   -webkit-appearance: none;
-  cursor: default;
+  cursor: var(--clio-cursor-arrow);
 }
 
 :where(.menu, [role="menu"]) > li:not(.disabled, [aria-disabled="true"], .separator, [role="separator"]):is(:hover, :focus-within, .active):where(:not([data-clio-blink])),

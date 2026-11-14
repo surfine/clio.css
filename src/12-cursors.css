@@ -1,0 +1,23 @@
+/* Cursors: the arrow and the I-beam redrawn pixel for pixel from System 7.5.3
+   and Mac OS 9.0 (tooling/cursor-art.py; the arrow is the same in both), at
+   1x, 2x and 3x. On by default; class="clio-system-cursors" on <html> gives
+   the system's own back. The Mac had no pointing hand: links and buttons
+   inside clio.css's windows keep the arrow. */
+:where(:root) {
+  --clio-cursor-arrow: image-set(url("art/cursors/arrow.png") 1x, url("art/cursors/arrow-2x.png") 2x, url("art/cursors/arrow-3x.png") 3x) 1 1, default;
+  --clio-cursor-text: image-set(url("art/cursors/ibeam.png") 1x, url("art/cursors/ibeam-2x.png") 2x, url("art/cursors/ibeam-3x.png") 3x) 3 4, text;
+  cursor: var(--clio-cursor-arrow);
+}
+
+:where(:root.clio-system-cursors) {
+  --clio-cursor-arrow: default;
+  --clio-cursor-text: text;
+}
+
+:where(input:not([type="checkbox"], [type="radio"], [type="range"], [type="button"], [type="submit"], [type="reset"], [type="color"], [type="file"], [type="image"]), textarea, [contenteditable]:not([contenteditable="false"])) {
+  cursor: var(--clio-cursor-text);
+}
+
+:where(.window, .menu-bar, [role="menubar"], .menu, [role="menu"], .modal-dialog, .alert-box, .standard-dialog, .modeless-dialog, .control-strip, .clio, .desktop) :where(a:any-link, button, label, summary, select, [role="button"], [role="tab"]) {
+  cursor: var(--clio-cursor-arrow);
+}

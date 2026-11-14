@@ -1,6 +1,15 @@
 # Changelog
 
-## Unreleased
+## 0.11.0 — 2026-11-14
+
+Behaviour and details, measured where the emulators allow. The new optional
+`dist/clio.js` adds what a stylesheet cannot do; clio.css works without it.
+
+- **Windows** (clio.js): title-bar dragging with the grey outline (1px in System 7.5.3, a
+  2px band in Mac OS 9.0, both measured), the collapse box, an opt-in double click, and
+  `clio.zoomRects()` (8 outlines one per tick, eased by 1.6^k, measured).
+- **Cursors**: the Mac's arrow and I-beam, on by default, at 1x/2x/3x.
+- **Sounds** (clio.js): an interface only, silent unless you give it files.
 
 - **Menus** (clio.js): press-drag-release and Mac OS 8/9 click-to-open menus, the chosen
   item blinking 3 times (3 ticks each, measured in Mac OS 9.0), submenus after 9 ticks

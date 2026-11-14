@@ -5,6 +5,10 @@
  *     each after flashing it pressed
  *   - scroll bars with the era's fixed-size scroll box, arrows that repeat while held,
  *     paging from the lane, and System 6/7's dragged outline (Mac OS 8/9 drag live)
+ *   - menus that track the pointer (drag and release, blink, submenus, keys) and
+ *     <select> opening as the era's pop-up menu
+ *   - window dragging with a grey outline, the collapse box, clio.zoomRects()
+ *   - optional sounds you supply (clio.sounds, data-clio-sounds)
  * Opt out per element with data-clio-js="off". */
 (() => {
   "use strict";
@@ -140,6 +144,7 @@
     const done = () => {
       li.removeAttribute(BLINK); const c = control(li); c.removeAttribute(BLINK);
       closeAll();
+      play("menu");
       c.click();
     };
     track.mode = "blink";
@@ -582,8 +587,119 @@
       .observe(document.documentElement, { attributes: true, subtree: true, attributeFilter: ["data-era", "data-clio-scrolling"] });
   }
 
+  /* ---- Windows: dragged outline, zoom rects, collapse -------------------- */
+  // Dragging a title bar moves a grey outline (QuickDraw's DragGrayRgn: 1px in
+  // System 7.5.3, a 2px band in Mac OS 9.0, both measured) and the window
+  // follows when the button comes up. Only windows positioned absolute or
+  // fixed, or marked data-clio-drag, move.
+  const outlineBox = (r, width) => {
+    const d = document.createElement("div");
+    d.className = "clio-outline";
+    d.setAttribute("aria-hidden", "true");
+    Object.assign(d.style, { left: `${Math.round(r.left)}px`, top: `${Math.round(r.top)}px`, width: `${Math.round(r.width)}px`, height: `${Math.round(r.height)}px`, padding: `${width}px` });
+    return d;
+  };
+  const outlineWidth = (el) => px(getComputedStyle(el).getPropertyValue("--clio-drag-outline-width")) || 1;
+  document.addEventListener("pointerdown", (e) => {
+    if (e.button !== 0 || !(e.target instanceof Element)) return;
+    const bar = e.target.closest(".window > .title-bar");
+    if (!bar || e.target.closest("button, a, input, select, .close, .close-box, .resize, .resize-box, .zoom, .shade, .shade-box, .collapse") || optedOut(bar)) return;
+    const win = bar.parentElement, cs = getComputedStyle(win);
+    if (!(cs.position === "absolute" || cs.position === "fixed" || win.hasAttribute("data-clio-drag"))) return;
+    e.preventDefault();
+    const r = win.getBoundingClientRect(), o = outlineBox(r, outlineWidth(win));
+    (win.closest("[data-era]") || document.body).appendChild(o);
+    const x0 = e.clientX, y0 = e.clientY; let dx = 0, dy = 0;
+    const move = (ev) => { if (ev.pointerId !== e.pointerId) return; dx = ev.clientX - x0; dy = ev.clientY - y0; o.style.transform = `translate(${dx}px, ${dy}px)`; };
+    const up = (ev) => {
+      if (ev.pointerId !== e.pointerId) return;
+      document.removeEventListener("pointermove", move, true); document.removeEventListener("pointerup", up, true); document.removeEventListener("pointercancel", up, true);
+      o.remove();
+      if (ev.type === "pointercancel" || (!dx && !dy)) return;
+      const left = px(cs.left), top = px(cs.top);
+      win.style.left = `${Math.round(left + dx)}px`; win.style.top = `${Math.round(top + dy)}px`;
+      win.dispatchEvent(new CustomEvent("clio:move", { bubbles: true, detail: { dx, dy } }));
+    };
+    document.addEventListener("pointermove", move, true); document.addEventListener("pointerup", up, true); document.addEventListener("pointercancel", up, true);
+  });
+
+  // Zoom rects (the Finder opening a folder, System 7.5.3, measured frame by
+  // frame): 8 outlines, one per tick, each edge eased by 1.6^k, the last four
+  // on screen at once. clio.zoomRects(from, to) with elements or rects;
+  // { closing: true } runs it backwards. Opacity only; none under reduced motion.
+  function zoomRects(from, to, opts = {}) {
+    const rect = (x) => (x instanceof Element ? x.getBoundingClientRect() : x);
+    const a = rect(from), b = rect(to);
+    if (!a || !b || reduced()) return Promise.resolve();
+    const N = 8, Q = 1.6, host = (to instanceof Element && to.closest("[data-era]")) || document.body;
+    const boxes = [];
+    for (let k = 1; k <= N; k++) {
+      const p = (Q ** k - 1) / (Q ** N - 1), l = (u, v) => u + (v - u) * p;
+      const o = outlineBox({ left: l(a.left, b.left), top: l(a.top, b.top), width: l(a.width, b.width), height: l(a.height, b.height) }, 1);
+      o.style.opacity = "0";
+      host.appendChild(o); boxes.push(o);
+    }
+    if (opts.closing) boxes.reverse();
+    return new Promise((done) => {
+      let t = 0;
+      const step = () => {
+        boxes.forEach((o, i) => { o.style.opacity = i <= t && i > t - 4 ? "1" : "0"; });
+        if (++t < N + 3) setTimeout(step, TICK); else { boxes.forEach((o) => o.remove()); done(); }
+      };
+      step();
+    });
+  }
+
+  // The collapse box (WindowShade) folds a window to its title bar; with
+  // data-clio-shade="dblclick" on the window or an ancestor a double click on
+  // the title bar does too (Appearance > Options; off by default in Mac OS 9.0).
+  function collapse(win, on = !win.classList.contains("collapsed")) {
+    win.classList.toggle("collapsed", on);
+    const box = win.querySelector(":scope > .title-bar > :is(.shade, .shade-box, .collapse)");
+    if (box) box.setAttribute("aria-expanded", String(!on));
+    play(on ? "collapse" : "expand");
+    win.dispatchEvent(new CustomEvent("clio:collapse", { bubbles: true, detail: { collapsed: on } }));
+  }
+  document.addEventListener("click", (e) => {
+    if (!(e.target instanceof Element)) return;
+    const box = e.target.closest(".window > .title-bar > :is(.shade, .shade-box, .collapse)");
+    if (box && !optedOut(box) && !e.defaultPrevented) collapse(box.closest(".window"));
+  });
+  document.addEventListener("dblclick", (e) => {
+    if (!(e.target instanceof Element)) return;
+    const bar = e.target.closest(".window > .title-bar");
+    if (!bar || e.target.closest("button") || optedOut(bar)) return;
+    const opt = bar.closest("[data-clio-shade]");
+    if (opt && /\bdblclick\b/.test(opt.getAttribute("data-clio-shade"))) collapse(bar.parentElement);
+  });
+
+  /* ---- Sounds ------------------------------------------------------------- */
+  // None ship (the Mac's are Apple's recordings). Give clio.sounds a URL per
+  // name and put data-clio-sounds on <html>: "alert" plays when an alert box
+  // appears, "menu" when a menu item is chosen, "collapse" and "expand" with
+  // the collapse box. clio.play(name) plays one yourself.
+  const sounds = {};
+  function play(name) {
+    const url = sounds[name];
+    if (!url || !document.documentElement.hasAttribute("data-clio-sounds")) return;
+    try { const a = new Audio(url); a.play().catch(() => {}); } catch {}
+  }
+  const ALERT = ".alert-box, [role=alertdialog]";
+  const visible = (el) => el.isConnected && el.getClientRects().length > 0;
+  new MutationObserver((records) => {
+    if (!document.documentElement.hasAttribute("data-clio-sounds")) return;
+    for (const r of records) {
+      const els = r.type === "attributes" ? [r.target] : [...r.addedNodes].filter((n) => n instanceof Element);
+      for (const el of els) if ((el.matches(ALERT) || el.querySelector(ALERT)) && visible(el.matches(ALERT) ? el : el.querySelector(ALERT))) return play("alert");
+    }
+  }).observe(document.documentElement, { childList: true, subtree: true, attributes: true, attributeFilter: ["open", "hidden"] });
+
   window.clio = {
     version: "0.11.0-dev",
+    zoomRects,
+    collapse,
+    sounds,
+    play,
     scrollbars,
     unscroll(el) { const b = hosts.get(el); if (b) { b.destroy(); hosts.delete(el); live.delete(b); } },
     refresh(el) { const b = hosts.get(el); if (b) b.layout(); },

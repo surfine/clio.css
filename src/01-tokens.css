@@ -200,6 +200,8 @@
   --clio-scrollbar-thumb-after: none;
   /* clio.js menus: System 6 and 7 menus stay open only while the button is held */
   --clio-menu-sticky: 0;
+  /* clio.js: the grey outline of a dragged window (System 7.5.3: 1px) */
+  --clio-drag-outline-width: 1px;
   --clio-scrollbar-ghost: var(--clio-disabled-dither, #000000) 0 0 / 2px 2px repeat;
   --clio-scrollbar-track-shadow: none;
   --clio-scrollbar-thumb-bg: var(--clio-paper);

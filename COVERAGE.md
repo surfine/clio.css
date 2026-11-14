@@ -63,9 +63,11 @@ P = Mac OS 8/9 Platinum. 0.10.0 added every row marked new in CHANGELOG.md.
 | Tear-off menu / palette | HIG87 p.90-91; HIG92 ch. 4 | `.window.utility` | inferred | inferred | inferred | yes |
 | Control Strip | Mac OS 7.5-9 | `.control-strip` | — | yes | yes | yes |
 | Split window / split bar, panels, dial | HIG87 p.53-57 | — | — | — | — | — |
-| Cursors (arrow, I-beam, watch) | HIG87 p.93 | — | — | — | — | — |
+| Cursors: arrow, I-beam | HIG87 p.93 | `--clio-cursor-arrow`, `--clio-cursor-text` (on by default) | inferred | yes | inferred | yes |
+| Cursor: watch | HIG87 p.93 | — (the browser's busy cursor) | — | — | — | — |
+| Window dragging (grey outline), zoom rects, collapse | HIG92 ch. 5; HIG8 ch. 5 | clio.js | inferred | yes | inferred | yes |
 
 Not drawn (—): the rounded-corner and side-title windows, placards, split bars and
-dials are rare enough that no captured screen shows one, and cursors belong to the
-pointer, not to CSS (`cursor: default` is used throughout). Evidence for every row is
+dials are rare enough that no captured screen shows one; the watch cursor never stayed on
+screen long enough in the emulator to be captured. Evidence for every row is
 in EVIDENCE.md; the pixel checks are in FIDELITY.md.

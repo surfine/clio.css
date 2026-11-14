@@ -68,6 +68,10 @@ at the element, and `--clio-db-phase: 64px` on a window or control matches the o
 </div>
 ```
 
+The Mac's arrow and I-beam cursors are on by default (redrawn from System 7.5.3 and
+Mac OS 9.0, sharp at 2x and 3x); `class="clio-system-cursors"` on `<html>` brings the
+system's back.
+
 Form controls are styled on the native elements (`button`, `input`, `select`,
 `textarea`, `fieldset`, `progress`), so keyboard, form and screen-reader behaviour stay
 the browser's.
@@ -94,6 +98,12 @@ it; with it:
 - `<select>` opens as the era's pop-up menu over the button, the current item on the
   button's row: drawn by the browser where `appearance: base-select` is supported (Chrome
   135, Safari 27), by clio.js elsewhere. Touch keeps the system picker.
+- Windows positioned `absolute` or `fixed` (or marked `data-clio-drag`) drag by the title
+  bar as the Mac did: a grey outline follows the pointer and the window moves on release.
+  The collapse box folds a window to its title bar (`data-clio-shade="dblclick"` adds the
+  double click). `clio.zoomRects(from, to)` draws the Finder's zoom rectangles.
+- Sounds: none ship. Set `clio.sounds.alert` (and `menu`, `collapse`, `expand`) to URLs
+  and put `data-clio-sounds` on `<html>`; `clio.play(name)` plays one.
 - Scroll areas (`.window-pane`, list boxes, `.clio-scroll`) get scroll bars drawn as
   elements with the same rules as the browser's: the scroll box keeps the era's fixed
   length, arrows repeat while held, a click in the lane pages, and System 6 and 7 drag an

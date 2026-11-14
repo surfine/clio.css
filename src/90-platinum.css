@@ -220,6 +220,7 @@
   --clio-scrollbar-thumb-tracking: live;
   /* Mac OS 8 and 9 keep a clicked menu open (clio.js) */
   --clio-menu-sticky: 1;
+  --clio-drag-outline-width: 2px;   /* Mac OS 9.0: a 2px band */
   --clio-scrollbar-track: #aaaaaa;
   /* The lane: #777 and #888 along the top and left, #bbb and #ccc down the
      right, nothing along the bottom (frames finder-scroll-*). */

@@ -1,4 +1,4 @@
-/*! clio.css 0.10.0 (System 7 default) | MIT | https://surfine.github.io/clio.css/
+/*! clio.css 0.11.0 (System 7 default) | MIT | https://surfine.github.io/clio.css/
  * Classic Mac OS interface CSS: System 6, System 7, Mac OS 8.5 Drawing Board and Mac OS 9 Platinum.
  * Measured values traced to AI System 6; see EVIDENCE.md.
  * Includes art from system.css (MIT) and pixel reconstructions of Apple control art; see THIRD-PARTY.md. */
@@ -492,6 +492,8 @@
   --clio-scrollbar-thumb-after: none;
   /* clio.js menus: System 6 and 7 menus stay open only while the button is held */
   --clio-menu-sticky: 0;
+  /* clio.js: the grey outline of a dragged window (System 7.5.3: 1px) */
+  --clio-drag-outline-width: 1px;
   --clio-scrollbar-ghost: var(--clio-disabled-dither, #000000) 0 0 / 2px 2px repeat;
   --clio-scrollbar-track-shadow: none;
   --clio-scrollbar-thumb-bg: var(--clio-paper);
@@ -816,6 +818,30 @@
   white-space: nowrap;
 }
 
+/* Cursors: the arrow and the I-beam redrawn pixel for pixel from System 7.5.3
+   and Mac OS 9.0 (tooling/cursor-art.py; the arrow is the same in both), at
+   1x, 2x and 3x. On by default; class="clio-system-cursors" on <html> gives
+   the system's own back. The Mac had no pointing hand: links and buttons
+   inside clio.css's windows keep the arrow. */
+:where(:root) {
+  --clio-cursor-arrow: image-set(url("art/cursors/arrow.png") 1x, url("art/cursors/arrow-2x.png") 2x, url("art/cursors/arrow-3x.png") 3x) 1 1, default;
+  --clio-cursor-text: image-set(url("art/cursors/ibeam.png") 1x, url("art/cursors/ibeam-2x.png") 2x, url("art/cursors/ibeam-3x.png") 3x) 3 4, text;
+  cursor: var(--clio-cursor-arrow);
+}
+
+:where(:root.clio-system-cursors) {
+  --clio-cursor-arrow: default;
+  --clio-cursor-text: text;
+}
+
+:where(input:not([type="checkbox"], [type="radio"], [type="range"], [type="button"], [type="submit"], [type="reset"], [type="color"], [type="file"], [type="image"]), textarea, [contenteditable]:not([contenteditable="false"])) {
+  cursor: var(--clio-cursor-text);
+}
+
+:where(.window, .menu-bar, [role="menubar"], .menu, [role="menu"], .modal-dialog, .alert-box, .standard-dialog, .modeless-dialog, .control-strip, .clio, .desktop) :where(a:any-link, button, label, summary, select, [role="button"], [role="tab"]) {
+  cursor: var(--clio-cursor-arrow);
+}
+
 /* Windows.
    Markup: .window > .title-bar (> .close, .title, .resize [, .shade]) >
    optional .details-bar > .window-pane. system.css markup (.title-bar
@@ -907,7 +933,7 @@
   font-size: 0;
   appearance: none;
   -webkit-appearance: none;
-  cursor: default;
+  cursor: var(--clio-cursor-arrow);
   touch-action: manipulation;
 }
 
@@ -1029,6 +1055,17 @@
   line-height: 14px;
 }
 
+/* Collapsed (WindowShade; clio.js toggles .collapsed from the collapse box):
+   only the title bar stays. */
+:where(.window.collapsed) {
+  height: auto !important;
+  min-height: 0 !important;
+}
+
+:where(.window.collapsed) > :not(.title-bar) {
+  display: none !important;
+}
+
 /* Menu bar and menus.
    Markup: <ul role="menubar" class="menu-bar"> <li role="none"><button
    role="menuitem" aria-haspopup="true" aria-expanded="false">File</button>
@@ -1076,7 +1113,7 @@
   white-space: nowrap;
   appearance: none;
   -webkit-appearance: none;
-  cursor: default;
+  cursor: var(--clio-cursor-arrow);
 }
 
 :where(.menu-bar, [role="menubar"], [role="menu-bar"]) > li > :is(button, a, span):is([aria-expanded="true"], .active),
@@ -1147,7 +1184,7 @@
   font-weight: var(--clio-menu-item-weight);
   line-height: var(--clio-menu-item-height);
   white-space: nowrap;
-  cursor: default;
+  cursor: var(--clio-cursor-arrow);
 }
 
 :where(.menu, [role="menu"]) > li:has(> :is(a, button)) {
@@ -1173,7 +1210,7 @@
   text-decoration: none;
   appearance: none;
   -webkit-appearance: none;
-  cursor: default;
+  cursor: var(--clio-cursor-arrow);
 }
 
 :where(.menu, [role="menu"]) > li:not(.disabled, [aria-disabled="true"], .separator, [role="separator"]):is(:hover, :focus-within, .active):where(:not([data-clio-blink])),
@@ -1312,7 +1349,7 @@
   white-space: nowrap;
   appearance: none;
   -webkit-appearance: none;
-  cursor: default;
+  cursor: var(--clio-cursor-arrow);
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
 }
@@ -1381,7 +1418,7 @@
   vertical-align: -2px;
   appearance: none;
   -webkit-appearance: none;
-  cursor: default;
+  cursor: var(--clio-cursor-arrow);
 }
 
 :where(input[type="checkbox"]):checked {
@@ -1411,7 +1448,7 @@
   vertical-align: -2px;
   appearance: none;
   -webkit-appearance: none;
-  cursor: default;
+  cursor: var(--clio-cursor-arrow);
 }
 
 :where(input[type="radio"]):checked {
@@ -1525,7 +1562,7 @@
   line-height: 16px;
   appearance: none;
   -webkit-appearance: none;
-  cursor: default;
+  cursor: var(--clio-cursor-arrow);
 }
 
 :where(select):focus-visible {
@@ -1655,7 +1692,7 @@
   padding: 0 4px;
   line-height: var(--clio-list-row);
   white-space: nowrap;
-  cursor: default;
+  cursor: var(--clio-cursor-arrow);
 }
 
 :where(.listbox, [role="listbox"]) > :is(li, [role="option"]):is([aria-selected="true"], .selected) {
@@ -1741,7 +1778,7 @@
   font-family: var(--clio-font-chrome);
   font-size: var(--clio-font-size);
   font-weight: var(--clio-chrome-weight);
-  cursor: default;
+  cursor: var(--clio-cursor-arrow);
 }
 
 :where([role="tablist"], .tabs) > :is([role="tab"], li, button):is([aria-selected="true"], .active) {
@@ -1777,7 +1814,7 @@
   font-family: var(--clio-font-small);
   font-size: var(--clio-font-size-small);
   text-align: center;
-  cursor: default;
+  cursor: var(--clio-cursor-arrow);
 }
 
 :where(.icon) > :is(img, svg, .icon-image) {
@@ -1826,7 +1863,7 @@
   vertical-align: middle;
   appearance: none;
   -webkit-appearance: none;
-  cursor: default;
+  cursor: var(--clio-cursor-arrow);
 }
 
 :where(.disclosure):is([aria-expanded="true"], .open) {
@@ -1838,7 +1875,7 @@
   align-items: center;
   gap: var(--clio-disclosure-gap);
   list-style: none;
-  cursor: default;
+  cursor: var(--clio-cursor-arrow);
 }
 
 :where(details) > :where(summary)::-webkit-details-marker {
@@ -1924,7 +1961,7 @@
   background: transparent;
   appearance: none;
   -webkit-appearance: none;
-  cursor: default;
+  cursor: var(--clio-cursor-arrow);
 }
 
 :where(input[type="range"].ticks) {
@@ -2025,7 +2062,7 @@
   font: inherit;
   appearance: none;
   -webkit-appearance: none;
-  cursor: default;
+  cursor: var(--clio-cursor-arrow);
 }
 
 :where(.bevel):is(:active:where(:not([data-clio-off])), .active, [aria-pressed="true"]):not(:disabled) {
@@ -2117,7 +2154,7 @@
   font-size: 0;
   appearance: none;
   -webkit-appearance: none;
-  cursor: default;
+  cursor: var(--clio-cursor-arrow);
 }
 
 :where(.help-button)::before,
@@ -2609,6 +2646,22 @@
   pointer-events: none;
 }
 
+/* clio.js outlines (a dragged window, zoom rects): QuickDraw's grey pattern,
+   inverting what lies under it, in step with the screen. */
+.clio-outline {
+  position: fixed;
+  z-index: 2147483000;
+  box-sizing: border-box;
+  margin: 0;
+  background: repeating-conic-gradient(#ffffff 0 25%, transparent 0 50%) 0 0 / 2px 2px fixed;
+  mix-blend-mode: difference;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  pointer-events: none;
+  image-rendering: pixelated;
+}
+
 /* Control Strip (System 7.5 to Mac OS 9): a row of module buttons with scroll
    arrows and a tab that folds the strip away. Markup follows AI System 6:
    .control-strip > button.control-strip-scroll.control-strip-scroll-back,
@@ -2669,7 +2722,7 @@
   border-radius: 0;
   appearance: none;
   -webkit-appearance: none;
-  cursor: default;
+  cursor: var(--clio-cursor-arrow);
 }
 
 /* Scroll arrows: 13px cells, sunken and hollow while there is nothing to scroll. */
@@ -2733,7 +2786,7 @@
   color: var(--clio-ink);
   appearance: none;
   -webkit-appearance: none;
-  cursor: default;
+  cursor: var(--clio-cursor-arrow);
 }
 
 :where(.control-strip-module) > :is(svg, img, .sys-icon) {

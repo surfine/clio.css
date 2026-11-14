@@ -1,7 +1,7 @@
-# clio.css 0.10.0 — full reference
+# clio.css 0.11.0 — full reference
 
 Classic Mac OS interface CSS: System 6 (default), System 7 (data-era="system7"), Mac OS 8.5 Drawing Board (data-era="drawingboard") and Mac OS 8/9 Platinum (data-era="platinum").
-Install: npm install clio.css — or <link rel="stylesheet" href="https://unpkg.com/clio.css@0.10.0/dist/clio.css">
+Install: npm install clio.css — or <link rel="stylesheet" href="https://unpkg.com/clio.css@0.11.0/dist/clio.css">
 Rules have zero or one-class specificity; override any --clio-* custom property on any element.
 
 ## Window (#window)
@@ -974,6 +974,8 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
   --clio-scrollbar-thumb-after: none;
   /* clio.js menus: System 6 and 7 menus stay open only while the button is held */
   --clio-menu-sticky: 0;
+  /* clio.js: the grey outline of a dragged window (System 7.5.3: 1px) */
+  --clio-drag-outline-width: 1px;
   --clio-scrollbar-ghost: var(--clio-disabled-dither, #000000) 0 0 / 2px 2px repeat;
   --clio-scrollbar-track-shadow: none;
   --clio-scrollbar-thumb-bg: var(--clio-paper);
@@ -1298,6 +1300,30 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
   white-space: nowrap;
 }
 
+/* Cursors: the arrow and the I-beam redrawn pixel for pixel from System 7.5.3
+   and Mac OS 9.0 (tooling/cursor-art.py; the arrow is the same in both), at
+   1x, 2x and 3x. On by default; class="clio-system-cursors" on <html> gives
+   the system's own back. The Mac had no pointing hand: links and buttons
+   inside clio.css's windows keep the arrow. */
+:where(:root) {
+  --clio-cursor-arrow: image-set(url("art/cursors/arrow.png") 1x, url("art/cursors/arrow-2x.png") 2x, url("art/cursors/arrow-3x.png") 3x) 1 1, default;
+  --clio-cursor-text: image-set(url("art/cursors/ibeam.png") 1x, url("art/cursors/ibeam-2x.png") 2x, url("art/cursors/ibeam-3x.png") 3x) 3 4, text;
+  cursor: var(--clio-cursor-arrow);
+}
+
+:where(:root.clio-system-cursors) {
+  --clio-cursor-arrow: default;
+  --clio-cursor-text: text;
+}
+
+:where(input:not([type="checkbox"], [type="radio"], [type="range"], [type="button"], [type="submit"], [type="reset"], [type="color"], [type="file"], [type="image"]), textarea, [contenteditable]:not([contenteditable="false"])) {
+  cursor: var(--clio-cursor-text);
+}
+
+:where(.window, .menu-bar, [role="menubar"], .menu, [role="menu"], .modal-dialog, .alert-box, .standard-dialog, .modeless-dialog, .control-strip, .clio, .desktop) :where(a:any-link, button, label, summary, select, [role="button"], [role="tab"]) {
+  cursor: var(--clio-cursor-arrow);
+}
+
 /* Windows.
    Markup: .window > .title-bar (> .close, .title, .resize [, .shade]) >
    optional .details-bar > .window-pane. system.css markup (.title-bar
@@ -1389,7 +1415,7 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
   font-size: 0;
   appearance: none;
   -webkit-appearance: none;
-  cursor: default;
+  cursor: var(--clio-cursor-arrow);
   touch-action: manipulation;
 }
 
@@ -1511,6 +1537,17 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
   line-height: 14px;
 }
 
+/* Collapsed (WindowShade; clio.js toggles .collapsed from the collapse box):
+   only the title bar stays. */
+:where(.window.collapsed) {
+  height: auto !important;
+  min-height: 0 !important;
+}
+
+:where(.window.collapsed) > :not(.title-bar) {
+  display: none !important;
+}
+
 /* Menu bar and menus.
    Markup: <ul role="menubar" class="menu-bar"> <li role="none"><button
    role="menuitem" aria-haspopup="true" aria-expanded="false">File</button>
@@ -1558,7 +1595,7 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
   white-space: nowrap;
   appearance: none;
   -webkit-appearance: none;
-  cursor: default;
+  cursor: var(--clio-cursor-arrow);
 }
 
 :where(.menu-bar, [role="menubar"], [role="menu-bar"]) > li > :is(button, a, span):is([aria-expanded="true"], .active),
@@ -1629,7 +1666,7 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
   font-weight: var(--clio-menu-item-weight);
   line-height: var(--clio-menu-item-height);
   white-space: nowrap;
-  cursor: default;
+  cursor: var(--clio-cursor-arrow);
 }
 
 :where(.menu, [role="menu"]) > li:has(> :is(a, button)) {
@@ -1655,7 +1692,7 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
   text-decoration: none;
   appearance: none;
   -webkit-appearance: none;
-  cursor: default;
+  cursor: var(--clio-cursor-arrow);
 }
 
 :where(.menu, [role="menu"]) > li:not(.disabled, [aria-disabled="true"], .separator, [role="separator"]):is(:hover, :focus-within, .active):where(:not([data-clio-blink])),
@@ -1794,7 +1831,7 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
   white-space: nowrap;
   appearance: none;
   -webkit-appearance: none;
-  cursor: default;
+  cursor: var(--clio-cursor-arrow);
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
 }
@@ -1863,7 +1900,7 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
   vertical-align: -2px;
   appearance: none;
   -webkit-appearance: none;
-  cursor: default;
+  cursor: var(--clio-cursor-arrow);
 }
 
 :where(input[type="checkbox"]):checked {
@@ -1893,7 +1930,7 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
   vertical-align: -2px;
   appearance: none;
   -webkit-appearance: none;
-  cursor: default;
+  cursor: var(--clio-cursor-arrow);
 }
 
 :where(input[type="radio"]):checked {
@@ -2007,7 +2044,7 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
   line-height: 16px;
   appearance: none;
   -webkit-appearance: none;
-  cursor: default;
+  cursor: var(--clio-cursor-arrow);
 }
 
 :where(select):focus-visible {
@@ -2137,7 +2174,7 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
   padding: 0 4px;
   line-height: var(--clio-list-row);
   white-space: nowrap;
-  cursor: default;
+  cursor: var(--clio-cursor-arrow);
 }
 
 :where(.listbox, [role="listbox"]) > :is(li, [role="option"]):is([aria-selected="true"], .selected) {
@@ -2223,7 +2260,7 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
   font-family: var(--clio-font-chrome);
   font-size: var(--clio-font-size);
   font-weight: var(--clio-chrome-weight);
-  cursor: default;
+  cursor: var(--clio-cursor-arrow);
 }
 
 :where([role="tablist"], .tabs) > :is([role="tab"], li, button):is([aria-selected="true"], .active) {
@@ -2259,7 +2296,7 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
   font-family: var(--clio-font-small);
   font-size: var(--clio-font-size-small);
   text-align: center;
-  cursor: default;
+  cursor: var(--clio-cursor-arrow);
 }
 
 :where(.icon) > :is(img, svg, .icon-image) {
@@ -2308,7 +2345,7 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
   vertical-align: middle;
   appearance: none;
   -webkit-appearance: none;
-  cursor: default;
+  cursor: var(--clio-cursor-arrow);
 }
 
 :where(.disclosure):is([aria-expanded="true"], .open) {
@@ -2320,7 +2357,7 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
   align-items: center;
   gap: var(--clio-disclosure-gap);
   list-style: none;
-  cursor: default;
+  cursor: var(--clio-cursor-arrow);
 }
 
 :where(details) > :where(summary)::-webkit-details-marker {
@@ -2406,7 +2443,7 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
   background: transparent;
   appearance: none;
   -webkit-appearance: none;
-  cursor: default;
+  cursor: var(--clio-cursor-arrow);
 }
 
 :where(input[type="range"].ticks) {
@@ -2507,7 +2544,7 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
   font: inherit;
   appearance: none;
   -webkit-appearance: none;
-  cursor: default;
+  cursor: var(--clio-cursor-arrow);
 }
 
 :where(.bevel):is(:active:where(:not([data-clio-off])), .active, [aria-pressed="true"]):not(:disabled) {
@@ -2599,7 +2636,7 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
   font-size: 0;
   appearance: none;
   -webkit-appearance: none;
-  cursor: default;
+  cursor: var(--clio-cursor-arrow);
 }
 
 :where(.help-button)::before,
@@ -3091,6 +3128,22 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
   pointer-events: none;
 }
 
+/* clio.js outlines (a dragged window, zoom rects): QuickDraw's grey pattern,
+   inverting what lies under it, in step with the screen. */
+.clio-outline {
+  position: fixed;
+  z-index: 2147483000;
+  box-sizing: border-box;
+  margin: 0;
+  background: repeating-conic-gradient(#ffffff 0 25%, transparent 0 50%) 0 0 / 2px 2px fixed;
+  mix-blend-mode: difference;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  pointer-events: none;
+  image-rendering: pixelated;
+}
+
 /* Control Strip (System 7.5 to Mac OS 9): a row of module buttons with scroll
    arrows and a tab that folds the strip away. Markup follows AI System 6:
    .control-strip > button.control-strip-scroll.control-strip-scroll-back,
@@ -3151,7 +3204,7 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
   border-radius: 0;
   appearance: none;
   -webkit-appearance: none;
-  cursor: default;
+  cursor: var(--clio-cursor-arrow);
 }
 
 /* Scroll arrows: 13px cells, sunken and hollow while there is nothing to scroll. */
@@ -3215,7 +3268,7 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
   color: var(--clio-ink);
   appearance: none;
   -webkit-appearance: none;
-  cursor: default;
+  cursor: var(--clio-cursor-arrow);
 }
 
 :where(.control-strip-module) > :is(svg, img, .sys-icon) {
@@ -3715,6 +3768,7 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
   --clio-scrollbar-thumb-tracking: live;
   /* Mac OS 8 and 9 keep a clicked menu open (clio.js) */
   --clio-menu-sticky: 1;
+  --clio-drag-outline-width: 2px;   /* Mac OS 9.0: a 2px band */
   --clio-scrollbar-track: #aaaaaa;
   /* The lane: #777 and #888 along the top and left, #bbb and #ccc down the
      right, nothing along the bottom (frames finder-scroll-*). */
