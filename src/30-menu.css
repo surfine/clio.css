@@ -215,3 +215,30 @@
 :where(.menu, [role="menu"]) > li.divider {
   border-bottom: 1px dotted var(--clio-ink);
 }
+
+/* ---- Scrolling menus, menu bar extras, item icons ------------------------------
+   A menu longer than the screen ends in a scroll arrow row: <li class="scroll-down"
+   aria-hidden="true"> (or "scroll-up" at the top). Menu bar items pushed to
+   the right (the Help and Application menus) take class "menu-extras"; an
+   icon in a title or an item is an <img> 16px square. */
+:where(.menu, [role="menu"]) > :where(li.scroll-down, li.scroll-up) {
+  min-height: var(--clio-menu-item-height);
+  padding: 0;
+  background: var(--clio-art-menu-scroll-down) var(--clio-menu-scroll-left) 50% / auto no-repeat;
+}
+
+:where(.menu, [role="menu"]) > :where(li.scroll-up) {
+  background-image: var(--clio-art-menu-scroll-up);
+}
+
+:where(.menu-bar, [role="menubar"]) > :where(li.menu-extras) {
+  margin-left: auto;
+}
+
+:where(.menu-bar, [role="menubar"], .menu, [role="menu"]) :where(img) {
+  width: 16px;
+  height: 16px;
+  margin-right: 4px;
+  vertical-align: -3px;
+  image-rendering: pixelated;
+}

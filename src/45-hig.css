@@ -361,3 +361,37 @@
 :where(.window.utility) > :where(.title-bar) > :is(.title, h1, h2, h3) {
   font-size: var(--clio-utility-title-size, var(--clio-title-font-size));
 }
+
+/* ---- Help balloon ------------------------------------------------------------------
+   Balloon Help (HIG 1992, ch. 11; Mac OS 8 and 9 kept it): a white balloon
+   with a rounded outline, a 2px drop on the right and below, and a tail rising
+   from its top edge near the right towards the object it describes.
+   <div class="balloon" role="tooltip">…</div>. The tail's tip, under the
+   pointer in the capture, is inferred. */
+:where(.balloon) {
+  position: relative;
+  box-sizing: border-box;
+  width: max-content;
+  max-width: 260px;
+  margin-top: 14px;
+  padding: 8px 12px 10px 10px;
+  border: 10px solid transparent;
+  border-image: var(--clio-art-balloon) 10 fill / 10px stretch;
+  font-family: var(--clio-font-small);
+  font-size: var(--clio-font-size-small);
+  line-height: 13px;
+}
+
+:where(.balloon) {
+  padding: 0 2px 0 0;
+}
+
+:where(.balloon)::before {
+  content: "";
+  position: absolute;
+  top: -23px;
+  right: -5px;
+  width: 12px;
+  height: 14px;
+  background: var(--clio-art-balloon-tail) 0 0 / 12px 14px no-repeat;
+}

@@ -383,6 +383,16 @@
   --clio-utility-slot: 13px;
   --clio-utility-title-size: 9px;
 
+  /* Help balloon: Mac OS 9.0's (Balloon Help), the same in every era. */
+  --clio-art-balloon: url("art/platinum/balloon.png");
+  --clio-art-balloon-tail: url("art/platinum/balloon-tail.png");
+
+  /* Scrolling menu arrows: System 6 and 7 (Control Panels submenu, System
+     7.5.3), black, 5px in from the item's left (up arrow inferred, mirrored). */
+  --clio-art-menu-scroll-down: url("art/system7/menu-scroll-down.png");
+  --clio-art-menu-scroll-up: url("art/system7/menu-scroll-up.png");
+  --clio-menu-scroll-left: 5px;
+
   /* Frames cut from captures by tooling/frame-art.py. */
   --clio-art-frame-s6-button: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJAgMAAACd/+6DAAAACVBMVEUAAAAAAAD///+D3c/SAAAAAXRSTlMAQObYZgAAACpJREFUeJxjYAxgYBINZWBiYWFgCmB0YGJgYABhBqmVDEx//jAwMAYwAAA66QRtNyAoFwAAAABJRU5ErkJggg==");
   --clio-art-frame-s6-button-held: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJAQMAAADaX5RTAAAABlBMVEUAAAAAAAClZ7nPAAAAAXRSTlMAQObYZgAAAB1JREFUeJxjkGFgSmZgYmBg/N/IxABiMNSDSRkGACm1Aqb7EOVpAAAAAElFTkSuQmCC");
