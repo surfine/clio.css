@@ -973,3 +973,11 @@
   border-image-source: url("art/drawingboard/pens/button-held-corners.png");
   background: var(--clio-button-active-bg);
 }
+
+/* Drawing Board's chosen items stay #313131 (underlined, not inverted) and its
+   dimmed text is #8c8c8c: the default black edge levels serve. */
+[data-era="drawingboard"] :is(.menu-bar, [role="menubar"], [role="menu-bar"]) > li > :is(button, a, span),
+[data-era="drawingboard"] :is(.menu, [role="menu"]) > li,
+[data-era="drawingboard"] :is(.menu, [role="menu"]) > li > :is(a, button) {
+  font-palette: normal !important;   /* outranks the shared chosen-item rule */
+}
