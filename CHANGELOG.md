@@ -2,6 +2,18 @@
 
 ## Unreleased
 
+- **Chinese, Japanese and Korean** (owner decisions 9 and 10): `lang="zh-Hant|zh-Hans|ja|ko"`
+  gives the chrome and text a CJK stack: the period bitmap font (Taipei, Beijing, Osaka,
+  Seoul), then Clio Pixel TC/SC/JA/KO, Fusion Pixel Font 12px (OFL-1.1) cut to Big5, GB 2312,
+  JIS X 0208 or KS X 1001 with Clio's metrics (`tooling/cjk-fonts.py`, 170–320 KB each, loaded
+  only for text in that language, outside the CSS budget), then the period outline family.
+  Measured in KanjiTalk 7.5.3 and Mac OS 9.0 with the Chinese Language Kits
+  (`tooling/emulator/measure-cjk.sh`): rows, baselines and the ink's band are the Roman ones,
+  and a localized system draws Latin in its CJK font. Specimens `s7-ja-menu-items`,
+  `s7-ja-alert-text` and `p9-zh-popup-open` compare the ink rows with the glyphs masked
+  (`ink` boxes in `tooling/fidelity.mjs`). clio.js's drawn pop-up rows keep their option's
+  language. `--clio-font-cjk` overrides the stack.
+
 The Classic final batch: the last pixel tails, the dimmed pop-up menu and TextEdit's
 insertion point, each measured in Infinite Mac.
 

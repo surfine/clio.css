@@ -448,6 +448,22 @@ const still = await page.evaluate(async () => {
 await page.emulateMedia({ reducedMotion: "no-preference" });
 ok(still, "insertion point: lit and still under reduced motion");
 
+// CJK (96-cjk.css): a page without CJK text loads none of the stand-ins; a Traditional Chinese
+// option in a pop-up clio.js draws keeps its language, so its row gets the TC stand-in, and
+// only that one is fetched.
+{
+  const faces = () => page.evaluate(async () => { await document.fonts.ready; await new Promise((r) => setTimeout(r, 300)); return [...document.fonts].filter((f) => /Clio Pixel/.test(f.family) && f.status !== "unloaded").map((f) => f.family.replace(/"/g, "")).sort().join(","); });
+  await load("platinum", `<div class="clio" style="padding:20px;background:#ddd"><button>OK</button><p lang="en">Hello</p></div>`);
+  ok(await faces() === "", "cjk: a page without CJK text loads no stand-in");
+  await load("platinum", `${noBase}<div class="clio" style="padding:20px;background:#ddd"><select id="z" style="width:116px"><option selected>Roman</option><option lang="zh-Hant">繁體中文</option></select></div>`);
+  const [zx, zy] = await center("#z");
+  await page.mouse.move(zx, zy); await page.mouse.down();
+  const row = await page.evaluate(() => { const li = document.querySelectorAll(".clio-popup-menu li")[1]; return li ? [li.lang, getComputedStyle(li).fontFamily].join("|") : ""; });
+  ok(/^zh-Hant\|Taipei, "?Clio Pixel TC"?/.test(row), `cjk: the drawn pop-up's 繁體中文 row keeps zh-Hant and its stack (${row})`);
+  ok(await faces() === "Clio Pixel TC", "cjk: the open menu fetches the TC stand-in and no other");
+  await page.mouse.move(zx + 300, zy); await page.mouse.up();
+}
+
 ok(errors.length === 0, "no page errors: " + errors.join("; "));
 await browser.close();
 console.log(failed ? `FAIL ${failed} of ${passed + failed} behaviour checks (${ENGINE})` : `ok ${passed} behaviour checks (${ENGINE})`);

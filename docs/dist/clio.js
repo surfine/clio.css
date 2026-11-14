@@ -360,6 +360,10 @@
     for (const o of sel.options) {
       const li = document.createElement("li");
       li.textContent = o.label || o.text;
+      // The menu hangs off the era's root, outside the select: carry each option's language
+      // so :lang() gives a Chinese, Japanese or Korean item its font (96-cjk.css).
+      const lang = o.closest("[lang]");
+      if (lang) li.lang = lang.lang;
       li.dataset.index = o.index;
       if (o.disabled || (o.parentElement && o.parentElement.disabled)) li.classList.add("disabled");
       if (o.selected) li.classList.add("checked");

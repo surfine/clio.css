@@ -1,0 +1,12 @@
+/* CJK on the Appearance Manager eras: the same order as 96-cjk.css over the
+   Charcoal stacks. Measured on Mac OS 9.0 with the Chinese Language Kits: the Text
+   control panel's Script pop-up draws 繁體中文 and 简体中文 in 16px rows, ink 2px below
+   the row's top to 12px, 1-bit (frame p9-script-popup-open). */
+:is(:is([data-era="platinum"], [data-era="drawingboard"]) :is(:lang(zh), :lang(ja), :lang(ko)), :is([data-era="platinum"], [data-era="drawingboard"]):is(:lang(zh), :lang(ja), :lang(ko))) {
+  --clio-font-chrome: var(--clio-font-cjk), Charcoal, "Charcoal CY", "Clio Sans '97", "Clio Asap", Geneva, "Helvetica Neue", Arial, sans-serif;
+  --clio-font-display: var(--clio-font-cjk), Charcoal, "Charcoal CY", "Clio Sans '97 Display", "Clio Asap", "Helvetica Neue", Arial, sans-serif;
+  --clio-font-window-title: var(--clio-font-cjk), Charcoal, "Charcoal CY", "Clio Sans '97 Title Exact", "Clio Sans '97 Title", "Clio Sans '97", "Clio Asap", Geneva, "Helvetica Neue", Arial, sans-serif;
+  --clio-font-button: var(--clio-font-cjk), Charcoal, "Charcoal CY", "Clio Sans '97 Exact", "Clio Sans '97", "Clio Asap", Geneva, "Helvetica Neue", Arial, sans-serif;
+  --clio-font-text: var(--clio-font-cjk), Geneva, "Clio Asap", "Helvetica Neue", Arial, sans-serif;
+  --clio-font-small: Geneva, var(--clio-font-cjk), "Clio Asap", "Helvetica Neue", Arial, sans-serif;
+}

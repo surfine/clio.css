@@ -2503,6 +2503,7 @@
   <h2 class="heading">Clio Sans '84 is the system font</h2>
   <p class="text">Clio Text '84 (Geneva) is the application font. Every value is a --clio-* custom property you can override on any element.</p>
   <p class="display" style="font-size: 28px; line-height: 34px; margin: 0">Display: any other size</p>
+  <p class="text" lang="zh-Hant">繁體中文、<span lang="ja">日本語</span>、<span lang="ko">한국어</span>：lang 屬性換上像素字型</p>
 </div>
 </div>
       </div>
@@ -2511,18 +2512,19 @@
   &lt;h2 class=&quot;heading&quot;&gt;Clio Sans '84 is the system font&lt;/h2&gt;
   &lt;p class=&quot;text&quot;&gt;Clio Text '84 (Geneva) is the application font. Every value is a --clio-* custom property you can override on any element.&lt;/p&gt;
   &lt;p class=&quot;display&quot; style=&quot;font-size: 28px; line-height: 34px; margin: 0&quot;&gt;Display: any other size&lt;/p&gt;
+  &lt;p class=&quot;text&quot; lang=&quot;zh-Hant&quot;&gt;繁體中文、&lt;span lang=&quot;ja&quot;&gt;日本語&lt;/span&gt;、&lt;span lang=&quot;ko&quot;&gt;한국어&lt;/span&gt;：lang 屬性換上像素字型&lt;/p&gt;
 &lt;/div&gt;</code></pre>
         <button type="button" class="copy" data-copy="code-typography">Copy HTML</button>
       </div>
       
       <dl class="facts">
         <dt>Selectors</dt><dd><code>.clio</code> <code>.text</code> <code>.heading</code> <code>.display</code> <code>[data-era=system6]</code> <code>[data-era=platinum]</code></dd>
-        <dt>Tokens</dt><dd><code>--clio-ink</code> <code>--clio-paper</code> <code>--clio-font-chrome</code> <code>--clio-font-text</code> <code>--clio-font-display</code> <code>--clio-font-size</code> <code>--clio-selection-bg</code> <code>--clio-focus-outline</code></dd>
+        <dt>Tokens</dt><dd><code>--clio-ink</code> <code>--clio-paper</code> <code>--clio-font-chrome</code> <code>--clio-font-text</code> <code>--clio-font-display</code> <code>--clio-font-cjk</code> <code>--clio-font-size</code> <code>--clio-selection-bg</code> <code>--clio-focus-outline</code></dd>
         <dt>Accessibility</dt><dd>Text colours keep at least 4.5:1 on their grounds; disabled text keeps 3:1 or more.</dd>
       </dl>
       
       <details class="evidence-details">
-        <summary>Evidence (11)</summary>
+        <summary>Evidence (18)</summary>
       <table class="evidence">
         <caption>Where each value comes from</caption>
         <thead><tr><th scope="col">Era</th><th scope="col">Value</th><th scope="col">Status</th><th scope="col">Source</th></tr></thead>
@@ -2586,6 +2588,48 @@
           <td>Chrome text is #313131; titles and labels are Charcoal, as in Platinum</td>
           <td><span class="status status-measured">Measured</span></td>
           <td><code>clio.css capture, Mac OS 8.5 with the 8.5b6 Drawing Board theme in Infinite Mac (npm run capture:drawingboard), frame appearance</code><br><span class="upstream">tab and title text ink</span></td>
+        </tr>
+<tr>
+          <td>System 7</td>
+          <td>Japanese (KanjiTalk 7.5.3) draws at the Roman geometry: menu bar 20px, menu rows 16px with the text at 15px from the menu's edge, alert text 16px apart, the baseline where Chicago's is; Osaka 12's kanji run from 10px above the baseline to 1px below, as the stand-in's do (pixel specimens s7-ja-menu-items, s7-ja-alert-text compare the ink rows, glyphs masked)</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, KanjiTalk 7.5.3 in Infinite Mac (tooling/emulator/measure-cjk.sh), frames kt-file-menu, kt-page-setup</code><br><span class="upstream">Apple KanjiTalk 7.5.3</span></td>
+        </tr>
+<tr>
+          <td>System 7</td>
+          <td>A localized system's system font is the script's: KanjiTalk draws Latin in the chrome (the window title Infinite HD, OK, the clock) in Osaka, so under :lang(ja|zh|ko) the CJK fonts lead every font stack</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, KanjiTalk 7.5.3 in Infinite Mac, frames kt-hd-active, kt-page-setup</code><br><span class="upstream">Apple KanjiTalk 7.5.3</span></td>
+        </tr>
+<tr>
+          <td>Platinum</td>
+          <td>Chinese in Mac OS 9 menus: 16px pop-up rows, ink 2px below the row's top to 12px, 1-bit, 12px ideographs (pixel specimen p9-zh-popup-open compares the ink rows, glyphs masked); a Roman system with the Language Kits keeps Charcoal for Latin</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, Mac OS 9.0 with the Traditional and Simplified Chinese Language Kits from the Mac OS 9.0 CD in Infinite Mac (tooling/emulator/measure-cjk.sh), Text control panel, Script pop-up held open (frame p9-script-popup-open)</code><br><span class="upstream">Apple Mac OS 9.0 Language Kits</span></td>
+        </tr>
+<tr>
+          <td>All eras</td>
+          <td>CJK stand-in: Fusion Pixel 12px proportional per language (Clio Pixel TC, SC, JA, KO), cut to the bitmap interface font's character set (Big5 93.7%, GB 2312 99.1%, JIS X 0208 99.5%, KS X 1001 97.4% covered) with Clio's vertical metrics (ascent 11, descent 3); after the period names Taipei, Beijing, Osaka, Seoul, before the outline families (Apple LiGothic, Hei, AppleGothic), and fetched only for text in that language</td>
+          <td><span class="status status-third-party">Third-party</span></td>
+          <td><code>fonts/FusionPixel12-*.woff2, tooling/cjk-fonts.py, src/96-cjk.css</code><br><span class="upstream">Fusion Pixel Font 2026.11.10 (TakWolf, OFL-1.1, no Reserved Font Name)</span></td>
+        </tr>
+<tr>
+          <td>All eras</td>
+          <td>System 6, Drawing Board, and Chinese and Korean on System 7 take the same CJK stacks without a measurement: Infinite Mac has no KanjiTalk 6 and no Chinese or Korean system, and the Korean Language Kit did not fit the Mac OS 9.0 disk beside the Chinese ones</td>
+          <td><span class="status status-inferred">Inferred</span></td>
+          <td><code>src/96-cjk.css, 97-cjk-platinum.css, 98-cjk-drawingboard.css</code><br><span class="upstream">the measured KanjiTalk 7.5.3 and Mac OS 9.0 rows above</span></td>
+        </tr>
+<tr>
+          <td>All eras</td>
+          <td>Small text (9px) keeps the 9px Latin face and draws CJK in the 12px stand-in scaled down: KanjiTalk's Finder drew 8px kanji there from a 9-point Osaka clio.css does not have</td>
+          <td><span class="status status-adapted">Adapted</span></td>
+          <td><code>src/96-cjk.css (--clio-font-small)</code><br><span class="upstream">frame kt-hd-active (the window's information line)</span></td>
+        </tr>
+<tr>
+          <td>All eras</td>
+          <td>clio.js gives each row of a pop-up it draws its option's language, so :lang() reaches the menu, which hangs off the era's root</td>
+          <td><span class="status status-adapted">Adapted</span></td>
+          <td><code>js/clio.js openPopup; tooling/behaviour.mjs cjk checks</code><br><span class="upstream">web-only</span></td>
         </tr>
 <tr>
           <td>All eras</td>

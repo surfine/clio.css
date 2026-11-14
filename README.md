@@ -164,6 +164,20 @@ or a single class, so your own CSS always wins without `!important`.
 .my-app { --clio-selection-bg: #333399; --clio-button-radius: 4px; }
 ```
 
+### Chinese, Japanese and Korean
+
+Set `lang` (`zh-Hant`/`zh-TW`, `zh-Hans`/`zh`, `ja`, `ko`) on `<html>` or any element and the
+chrome and text take that language's fonts: the period bitmap interface font if it is
+installed (Taipei, Beijing, Osaka, Seoul), then a 12px pixel stand-in, Fusion Pixel Font
+(OFL-1.1, THIRD-PARTY.md), cut to the character set that font drew (Big5 93.7%, GB 2312
+99.1%, JIS X 0208 99.5%, KS X 1001 97.4% covered), then the period outline family. As on a
+localized Mac, Latin in that element is drawn by the CJK font too. Each language's file
+(170–320 KB) loads only for text in that language; pages without it load none. Rows, line
+heights and baselines do not change: KanjiTalk 7.5.3 and Mac OS 9.0 with the Chinese Language
+Kits draw CJK at the Roman geometry (EVIDENCE.md, specimens `s7-ja-*` and `p9-zh-popup-open`
+in FIDELITY.md, which compare the ink rows with the glyphs masked, since the stand-in's
+glyphs are not Apple's). Override the stack with `--clio-font-cjk`.
+
 ## How faithful is it?
 
 [EVIDENCE.md](EVIDENCE.md) lists every value with its status and source: 57 of the 78

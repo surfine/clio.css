@@ -1,0 +1,11 @@
+/* Pop-up items name "Clio Sans '97 Exact" ahead of the chrome stack for its palette
+   (91-platinum-only.css; Mac OS 9 only, as that file): in a CJK language the CJK fonts go first there too. */
+[data-era="platinum"] .clio-popup-menu > li:not(.disabled, .active, :hover):is(:lang(zh), :lang(ja), :lang(ko)) {
+  font-family: var(--clio-font-cjk), "Clio Sans '97 Exact", var(--clio-font-chrome);
+}
+
+@supports (appearance: base-select) {
+  [data-era="platinum"] select option:not(:disabled, :hover, :focus-visible):is(:lang(zh), :lang(ja), :lang(ko)) {
+    font-family: var(--clio-font-cjk), "Clio Sans '97 Exact", var(--clio-font-chrome);
+  }
+}

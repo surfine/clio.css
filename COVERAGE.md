@@ -66,6 +66,7 @@ P = Mac OS 8/9 Platinum. 0.10.0 added every row marked new in CHANGELOG.md.
 | Cursors: arrow, I-beam | HIG87 p.93 | `--clio-cursor-arrow`, `--clio-cursor-text` (on by default) | inferred | yes | inferred | yes |
 | Cursor: watch | HIG87 p.93 | — (the browser's busy cursor) | — | — | — | — |
 | Window dragging (grey outline), zoom rects, collapse | HIG92 ch. 5; HIG8 ch. 5 | clio.js | inferred | yes | inferred | yes |
+| Chinese, Japanese, Korean text (WorldScript, Language Kits) | *Inside Macintosh: Text* (Script Manager, WorldScript) | `:lang()` font stacks (96-cjk.css), stand-in fonts | inferred | yes (ja) | inferred | yes (zh) |
 
 Not drawn (—): the rounded-corner and side-title windows, placards, split bars and
 dials are rare enough that no captured screen shows one; the watch cursor never stayed on

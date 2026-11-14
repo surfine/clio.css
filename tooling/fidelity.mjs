@@ -287,6 +287,30 @@ specimens.push(
     act: async (page, b) => { await page.mouse.move(b.x + 190, b.y + 112); await page.mouse.down(); } },
 );
 
+// CJK (owner decisions 9 and 10): frames from tooling/emulator/measure-cjk.sh in .fidelity/cjk,
+// KanjiTalk 7.5.3 (System 7) and Mac OS 9.0 with the Chinese Language Kits. Clio's stand-in
+// (Fusion Pixel 12px) is not Osaka or Taipei, so each glyph run is an `ink` box: left out of
+// the pixel count, and checked instead for the rows that carry ink (the row height, the
+// baseline and the ink's band). The frame and the backgrounds around them are compared as usual.
+const cjkdir = join(root, ".fidelity/cjk");
+const CJ = (id, era, html, crop, file, ref) => ({ id, era, group: "cjk", html, crop, refFile: join(cjkdir, file + ".png"), refCrop: ref });
+// The stand-in alone: a Mac with an Osaka installed (current macOS has one) would draw the
+// Japanese specimens in it, ahead of the stand-in, as the stack intends for real pages.
+const standIn = `<style>:lang(ja) { --clio-font-cjk: "Clio Pixel JA"; } :lang(zh) { --clio-font-cjk: "Clio Pixel SC"; } :is(:lang(zh-Hant), :lang(zh-TW)) { --clio-font-cjk: "Clio Pixel TC"; }</style>`;
+const noBaseSelect = `<script>{ const f = CSS.supports.bind(CSS); CSS.supports = (a, b) => (a === "appearance" && b === "base-select") ? false : f(a, b); }</script>`;
+specimens.push(
+  // ファイル open: the first two items, the menu's left edge at 33 under the bar; the pointer, left on the title, masked.
+  { ...CJ("s7-ja-menu-items", "system7", `${standIn}<div style="padding:12px;background:#fff"><ul class="menu" role="menu" lang="ja" id="s" style="width:157px"><li role="none"><span role="menuitem">新規フォルダ</span></li><li role="none"><span role="menuitem">開く</span></li></ul></div>`, [0, 0, 90, 32], "kt-file-menu", [33, 20, 90, 32]), mask: [[27, 0, 9, 4]], ink: [[13, 0, 77, 16], [13, 16, 77, 16]] },
+  // The alert Page Setup gives without a printer: three lines of the system font, 16px apart.
+  { ...CJ("s7-ja-alert-text", "system7", `${standIn}<div style="padding:12px;background:#fff"><div lang="ja" id="s" style="font-family:var(--clio-font-chrome);font-size:12px;line-height:16px;white-space:nowrap;background:#fff">プリンタが選択されていません。セレクタを使って<br>プリンタを選択してください。したがって、用紙設<br>定ウインドウ は開くことができませんでした。</div></div>`, [0, 0, 280, 48], "kt-page-setup", [290, 128, 280, 48]), ink: [[0, 0, 280, 16], [0, 16, 280, 16], [0, 32, 280, 16]] },
+  // The Text control panel's Script pop-up held open on Roman (Charcoal), over 繁體中文 and 简体中文.
+  // Masked: the pointer, and a gap that is not CJK's: Mac OS 9 lights the top line of a highlighted
+  // first item (102,102,204) and the corner beside it, which clio.css's pop-ups do not draw yet.
+  { ...CJ("p9-zh-popup-open", "platinum", `${standIn}${noBaseSelect}<div class="clio" style="padding:12px 0 140px 12px;background:#dddddd;width:400px"><select id="s" style="width:116px"><option selected>Roman</option><option lang="zh-Hant">繁體中文</option><option lang="zh-Hans">简体中文</option></select></div>`, [0, 0, 97, 50], "p9-script-popup-open", [189, 138, 97, 50]), js: true,
+    ink: [[5, 17, 91, 16], [5, 33, 91, 16]], mask: [[44, 6, 13, 18], [1, 1, 95, 1], [96, 0, 1, 2]],
+    act: async (page, b) => { await page.mouse.move(b.x + 40, b.y + 10); await page.mouse.down(); await page.mouse.move(b.x + 47, b.y + 9, { steps: 3 }); } },
+);
+
 const css = pathToFileURL(join(root, "dist/clio.css")).href;
 const js = pathToFileURL(join(root, "dist/clio.js")).href;
 const out = join(root, ".fidelity"), out0 = out;
@@ -334,7 +358,7 @@ for (const s of specimens) {
   // a fractional clip is rounded differently again: crop at the pixel the box snapped to.
   const shot = await page.screenshot({ clip: { x: Math.round(box.x) + x, y: Math.round(box.y) + y, width: w, height: h } });
   const ref = readFileSync(s.refFile || join(tiles, `${s.id}-reference.png`));
-  const metrics = await page.evaluate(async ([a, b, name, refCrop, mono, mask, dpr]) => {
+  const metrics = await page.evaluate(async ([a, b, name, refCrop, mono, mask, dpr, ink]) => {
     const load = (b64) => new Promise((res) => { const i = new Image(); i.onload = () => res(i); i.src = "data:image/png;base64," + b64; });
     let [ia, ib] = await Promise.all([load(a), load(b)]);
     if (refCrop) {
@@ -353,6 +377,19 @@ for (const s of specimens) {
     if (mono) for (const P of [A, B]) for (let i = 0; i < P.length; i += 4) { const v = (P[i] + P[i + 1] + P[i + 2]) / 3 < 128 ? 0 : 255; P[i] = P[i + 1] = P[i + 2] = v; }
     // Masked pixels (the mouse pointer in a held-state frame, say) are not part of the
     // interface: they are left out of every count.
+    // Ink boxes: for each, the rows holding ink (pixels more than 64 from the box's commonest
+    // colour, masked pixels left out), in the reference and in clio.css. They must be the same rows.
+    const hidden = (x, y) => mask.some(([mx, my, mw, mh]) => x >= mx && x < mx + mw && y >= my && y < my + mh);
+    const inkRows = (P, [bx, by, bw, bh]) => {
+      const n = new Map(); const at = (x, y) => (y * w + x) * 4;
+      for (let y = by; y < by + bh; y++) for (let x = bx; x < bx + bw; x++) { if (hidden(x, y)) continue; const i = at(x, y), k = P[i] << 16 | P[i + 1] << 8 | P[i + 2]; n.set(k, (n.get(k) || 0) + 1); }
+      const bg = [...n].sort((p, q) => q[1] - p[1])[0][0], br = bg >> 16, bgc = bg >> 8 & 255, bb = bg & 255;
+      const rows = [];
+      for (let y = by; y < by + bh; y++) for (let x = bx; x < bx + bw; x++) { if (hidden(x, y)) continue; const i = at(x, y); if (Math.max(Math.abs(P[i] - br), Math.abs(P[i + 1] - bgc), Math.abs(P[i + 2] - bb)) > 64) { rows.push(y - by); break; } }
+      return rows;
+    };
+    const inkResult = ink.map((box) => { const r = inkRows(B, box), c = inkRows(A, box); return { ref: r.join(","), clio: c.join(","), match: r.join() === c.join() }; });
+    mask = mask.concat(ink);
     const masked = (i) => { const p = i / 4, x = p % w, y = Math.floor(p / w); return mask.some(([mx, my, mw, mh]) => x >= mx && x < mx + mw && y >= my && y < my + mh); };
     let exact = 0, same = 0, off = 0, sum = 0, n = 0;
     const misses = [];
@@ -372,8 +409,11 @@ for (const s of specimens) {
       d.data[i] = m > 48 ? 255 : m > 8 ? 255 : 255; d.data[i + 1] = m > 48 ? 0 : m > 8 ? 200 : 255; d.data[i + 2] = m > 48 ? 0 : m > 8 ? 0 : 255; d.data[i + 3] = 255;
     }
     g.putImageData(d, w * 2, 0);
-    return { name, size: [w, h], same: +(same / n).toFixed(4), exact: +(exact / n).toFixed(4), structural: +(off / n).toFixed(4), meanAbs: +(sum / n).toFixed(2), misses, image: diff.toDataURL("image/png").split(",")[1] };
-  }, [shot.toString("base64"), ref.toString("base64"), s.id, s.refCrop || null, !!s.mono, (s.mask || []).map((m) => m.map((v) => v * DPR)), DPR]);
+    const inkOk = inkResult.every((r) => r.match);
+    if (!n) { n = 1; same = exact = inkOk ? 1 : 0; }   // all ink: the rows decide
+    else if (!inkOk) same = 0;   // a geometry miss fails the specimen
+    return { name, size: [w, h], ...(ink.length ? { ink: inkResult } : {}), same: +(same / n).toFixed(4), exact: +(exact / n).toFixed(4), structural: +(off / n).toFixed(4), meanAbs: +(sum / n).toFixed(2), misses, image: diff.toDataURL("image/png").split(",")[1] };
+  }, [shot.toString("base64"), ref.toString("base64"), s.id, s.refCrop || null, !!s.mono, (s.mask || []).map((m) => m.map((v) => v * DPR)), DPR, (s.ink || []).map((m) => m.map((v) => v * DPR))]);
   writeFileSync(join(out, `${s.id}${tag}${DPR === 1 ? "" : "@" + DPR + "x"}-compare.png`), Buffer.from(metrics.image, "base64"));
   delete metrics.image;
   writeFileSync(join(out, `${s.id}${tag}${DPR === 1 ? "" : "@" + DPR + "x"}-misses.json`), JSON.stringify(metrics.misses));   // [x, y, ref rgb, clio rgb]
@@ -382,6 +422,7 @@ for (const s of specimens) {
 }
 await browser.close();
 console.log("specimen              size      same    exact   off>48  meanAbs   (reference | clio.css | diff in .fidelity/)");
+for (const r of results) if (r.ink) console.log(`${r.name}: ink rows ${r.ink.map((k) => k.match ? "same" : `ref ${k.ref} / clio ${k.clio}`).join("; ")}`);
 for (const r of results) console.log(`${r.name.padEnd(21)} ${r.size.join("x").padEnd(9)} ${String(r.same).padEnd(7)} ${String(r.exact).padEnd(7)} ${String(r.structural).padEnd(7)} ${r.meanAbs}${r.viaJs ? "  (clio.js bars)" : ""}`);
 if (ONLY) process.exit(0);
 writeFileSync(join(out, DPR === 1 ? `results${tag}.json` : `results${tag}-${DPR}x.json`), JSON.stringify(results, null, 2));
@@ -452,6 +493,18 @@ ${table("platinum9")}
 Reference: GUIdebook Mac OS 9.0 captures, cropped by AI System 6 (\`AIS6_DIR\`).
 
 ${table("platinum")}
+
+## Chinese, Japanese and Korean
+
+Reference: KanjiTalk 7.5.3, and Mac OS 9.0 with the Chinese Language Kits from its install CD,
+running in Infinite Mac (\`tooling/emulator/measure-cjk.sh\`). The stand-in font's glyphs are
+not Osaka's or Taipei's, so each run of CJK text is an ink box: left out of the pixel count and
+checked for the rows that carry ink (row height, baseline, the ink's band), which must be the
+same; a different row fails the specimen. In p9-zh-popup-open the rest is the pop-up itself:
+the pointer, and the lit top line of a highlighted first item that clio.css's pop-ups do not
+draw yet, are masked; Roman's antialiasing on the highlight is within 2/255.
+
+${table("cjk")}
 
 ## WebKit and Firefox
 

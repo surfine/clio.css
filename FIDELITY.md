@@ -184,14 +184,30 @@ Reference: GUIdebook Mac OS 9.0 captures, cropped by AI System 6 (`AIS6_DIR`).
 | checkbox-unchecked | 12×12 | 100.0% | 100.0% | 0.0% | 0 |
 | selected-tab | 103×24 | 100.0% | 100.0% | 0.0% | 0 |
 
+## Chinese, Japanese and Korean
+
+Reference: KanjiTalk 7.5.3, and Mac OS 9.0 with the Chinese Language Kits from its install CD,
+running in Infinite Mac (`tooling/emulator/measure-cjk.sh`). The stand-in font's glyphs are
+not Osaka's or Taipei's, so each run of CJK text is an ink box: left out of the pixel count and
+checked for the rows that carry ink (row height, baseline, the ink's band), which must be the
+same; a different row fails the specimen. In p9-zh-popup-open the rest is the pop-up itself:
+the pointer, and the lit top line of a highlighted first item that clio.css's pop-ups do not
+draw yet, are masked; Roman's antialiasing on the highlight is within 2/255.
+
+| Specimen | Size | same | exact | off | mean |
+| --- | --- | ---: | ---: | ---: | ---: |
+| s7-ja-menu-items | 90×32 | 100.0% | 100.0% | 0.0% | 0 |
+| s7-ja-alert-text | 280×48 | 100.0% | 100.0% | 0.0% | 0 |
+| p9-zh-popup-open | 97×50 | 97.1% | 100.0% | 0.0% | 0.03 |
+
 ## WebKit and Firefox
 
 `CLIO_ENGINE=webkit|firefox npm run fidelity` renders the same specimens in Playwright's WebKit
 and Firefox (results in `.fidelity/results-<engine>.json`). Firefox has no `::-webkit-scrollbar`:
 its scroll-bar specimens load clio.js, whose element bars take the same rules.
 
-- WebKit: 132 of 135 identical; not identical: s7-popup-disabled (96.1%), db-js-popup-open (96.2%), db-popup-open (96.2%)
-- Firefox: 129 of 130 identical; not identical: db-js-popup-open (96.2%)
+- WebKit: 134 of 138 identical; not identical: s7-popup-disabled (96.1%), db-js-popup-open (96.2%), db-popup-open (96.2%), p9-zh-popup-open (97.1%)
+- Firefox: 131 of 133 identical; not identical: db-js-popup-open (96.2%), p9-zh-popup-open (97.1%)
 
 Two differences are left. The Drawing Board pop-up menu (below) is text antialiased over the paper.
 WebKit's dimmed System 7 pop-up menu has no shadow: the shadow lies outside the border box, and

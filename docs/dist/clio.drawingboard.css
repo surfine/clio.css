@@ -5423,3 +5423,84 @@
   --clio-font-window-title: "Truth FB", Truth, "Clio Sans '97 Title", "Clio Sans '97", "Clio Asap", Geneva, "Helvetica Neue", Arial, sans-serif;
   --clio-font-button: "Truth FB", Truth, "Clio Sans '97", "Clio Asap", Geneva, "Helvetica Neue", Arial, sans-serif;
 }
+
+/* Chinese, Japanese and Korean (owner decisions 9 and 10, 2026-11-14).
+
+   Measured: KanjiTalk 7.5.3 and Mac OS 9.0 with the Chinese Language Kits draw CJK text
+   at the Roman geometry: 16px menu and text rows, the same baseline, 12px ideographs whose
+   ink runs from 10px above the baseline to 1px below (tooling/emulator/measure-cjk.sh).
+   So nothing moves; only the fonts change. A localized system's system font is the
+   script's font, Latin included (KanjiTalk draws "Infinite HD" and OK in Osaka), so the
+   CJK font leads every stack.
+
+   Each stack names the period bitmap interface font (Taipei, Beijing, Osaka, Seoul), then
+   Clio's stand-in, Fusion Pixel 12px proportional (OFL-1.1, THIRD-PARTY.md) cut to the
+   character set that bitmap font drew (Big5, GB 2312, JIS X 0208, KS X 1001), then an
+   outline family of the period. The outline families come after the stand-in because
+   current macOS still installs some of them (AppleGothic) as antialiased outlines.
+   A browser fetches a stand-in only for an element in that language that has text in
+   its unicode-range: pages without CJK text never load them. */
+@font-face {
+  font-family: "Clio Pixel TC";
+  src: url("fonts/FusionPixel12-TC.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+  unicode-range: U+20-F7, U+391-451, U+2013-203E, U+2103-2199, U+2460-247D, U+2500-2642, U+3000-3129, U+32A3, U+4E00-7E9C, U+7F36-8B9E, U+8C37-9483, U+9577-9FA4, U+FA0C-FA0D, U+FE30-FE4F, U+FF01-FFE3;
+}
+
+@font-face {
+  font-family: "Clio Pixel SC";
+  src: url("fonts/FusionPixel12-SC.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+  unicode-range: U+20-1DC, U+391-451, U+2015-203B, U+2103-2193, U+2312, U+2460-2642, U+3000-3129, U+3220-3229, U+4E00-7DAE, U+7E3B-8C98, U+8D1D-8ECE, U+8F66-91DC, U+9274-99A8, U+9A6C-9B54, U+9C7C-9CE2, U+9E1F-9FA0, U+FF01-FF5E, U+FFE0-FFE5;
+}
+
+@font-face {
+  font-family: "Clio Pixel JA";
+  src: url("fonts/FusionPixel12-JA.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+  unicode-range: U+20-F7, U+391-451, U+2010-203B, U+2103-21D4, U+2312, U+2500-266F, U+3000-30FE, U+4E00-7E9C, U+7F36-8B9A, U+8C37-9481, U+9577-9FA0, U+FF01-FFE5;
+}
+
+@font-face {
+  font-family: "Clio Pixel KO";
+  src: url("fonts/FusionPixel12-KO.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+  unicode-range: U+20-167, U+391-451, U+2015-21D4, U+2312, U+2460-266D, U+3000-318E, U+327F, U+4E00-7E9C, U+7F36-8B9A, U+8C37-947F, U+9577-9C57, U+9CE5-9F9C, U+AC00-D79D, U+F900-FA0B, U+FF01-FF5E, U+FFE0-FFE6;
+}
+
+:lang(zh) { --clio-font-cjk: Beijing, "Clio Pixel SC", Hei; }
+:is(:lang(zh-Hant), :lang(zh-TW), :lang(zh-HK), :lang(zh-MO)) { --clio-font-cjk: Taipei, "Clio Pixel TC", "Apple LiGothic"; }
+:lang(ja) { --clio-font-cjk: Osaka, "Clio Pixel JA"; }
+:lang(ko) { --clio-font-cjk: Seoul, "Clio Pixel KO", AppleGothic; }
+
+/* Declared beside --clio-font-cjk, on every element in the language, so var() resolves there. */
+:is(:lang(zh), :lang(ja), :lang(ko)) {
+  --clio-font-chrome: var(--clio-font-cjk), "Clio Sans '84", Chicago, "ChicagoFLF", Charcoal, Geneva, "Helvetica Neue", Arial, sans-serif;
+  --clio-font-text: var(--clio-font-cjk), "Clio Text '84", Geneva, "Helvetica Neue", Arial, sans-serif;
+  /* Small text keeps the 9px Latin face: the stand-in is a 12px font (KanjiTalk's Finder
+     drew 8px kanji here, from a 9-point Osaka clio.css does not have). */
+  --clio-font-small: "Clio Text '84 9", var(--clio-font-cjk), Geneva, "Helvetica Neue", Arial, sans-serif;
+  --clio-font-display: var(--clio-font-cjk), Chicago, "ChicagoFLF", Charcoal, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* CJK on the Appearance Manager eras: the same order as 96-cjk.css over the
+   Charcoal stacks. Measured on Mac OS 9.0 with the Chinese Language Kits: the Text
+   control panel's Script pop-up draws 繁體中文 and 简体中文 in 16px rows, ink 2px below
+   the row's top to 12px, 1-bit (frame p9-script-popup-open). */
+:is(:root :is(:lang(zh), :lang(ja), :lang(ko)), :root:is(:lang(zh), :lang(ja), :lang(ko))) {
+  --clio-font-chrome: var(--clio-font-cjk), Charcoal, "Charcoal CY", "Clio Sans '97", "Clio Asap", Geneva, "Helvetica Neue", Arial, sans-serif;
+  --clio-font-display: var(--clio-font-cjk), Charcoal, "Charcoal CY", "Clio Sans '97 Display", "Clio Asap", "Helvetica Neue", Arial, sans-serif;
+  --clio-font-window-title: var(--clio-font-cjk), Charcoal, "Charcoal CY", "Clio Sans '97 Title Exact", "Clio Sans '97 Title", "Clio Sans '97", "Clio Asap", Geneva, "Helvetica Neue", Arial, sans-serif;
+  --clio-font-button: var(--clio-font-cjk), Charcoal, "Charcoal CY", "Clio Sans '97 Exact", "Clio Sans '97", "Clio Asap", Geneva, "Helvetica Neue", Arial, sans-serif;
+  --clio-font-text: var(--clio-font-cjk), Geneva, "Clio Asap", "Helvetica Neue", Arial, sans-serif;
+  --clio-font-small: Geneva, var(--clio-font-cjk), "Clio Asap", "Helvetica Neue", Arial, sans-serif;
+}
+
+/* Drawing Board's own title stack (92-drawingboard.css), CJK first. */
+:is(:root :is(:lang(zh), :lang(ja), :lang(ko)), :root:is(:lang(zh), :lang(ja), :lang(ko))) {
+  --clio-font-window-title: var(--clio-font-cjk), Charcoal, "Charcoal CY", "Clio Sans '97 Title", "Clio Sans '97", "Clio Asap", Geneva, "Helvetica Neue", Arial, sans-serif;
+}
