@@ -768,3 +768,17 @@
 :is([data-era="platinum"], [data-era="drawingboard"]) :is(input:not([type]), input[type="text"], input[type="search"], input[type="email"], input[type="url"], input[type="password"], input[type="number"], input[type="tel"], textarea):focus-visible {
   box-shadow: var(--clio-field-focus-shadow);
 }
+
+/* Safari's COLRv0 edge levels in white and dimmed text (src/00-fonts.css). */
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(.menu-bar, [role="menubar"], [role="menu-bar"]) > li > :is(button, a, span):is([aria-expanded="true"], .active),
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(.menu-bar, [role="menubar"], [role="menu-bar"]) > li.open > :is(button, a, span),
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(.menu, [role="menu"]) > li:not(.disabled, [aria-disabled="true"], .separator, [role="separator"]):is(:hover, :focus-within, .active),
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(.menu, [role="menu"]) > li > :is(a, button):not([aria-disabled="true"], :disabled):is(:hover, :focus-visible, .active),
+:is([data-era="platinum"], [data-era="drawingboard"]) .icon:is(.selected, [aria-selected="true"], [aria-pressed="true"]) > :is(figcaption, span, .icon-label) {
+  font-palette: --clio-aa-white;
+}
+
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(.menu, [role="menu"]) > li:is(.disabled, [aria-disabled="true"]),
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(.menu, [role="menu"]) > li > :is(a, button):is(:disabled, [aria-disabled="true"]) {
+  font-palette: --clio-aa-6f6f6f;
+}
