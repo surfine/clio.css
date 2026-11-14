@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.9.3 — 2026-11-14
+
+Reverts 0.9.2's OpenType-SVG levels: on real iPhones Safari drew no Platinum or Drawing
+Board text at all (the iOS simulator drew it). Safari is back to 0.9.1's plain outlines.
+
 ## 0.9.2 — 2026-11-14
 
 **Safari smooths Charcoal as Mac OS 9 does.** The Plain files Safari loads now carry the 16
