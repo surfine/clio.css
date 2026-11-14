@@ -26,5 +26,20 @@ system7)
   # Control Panels > WindowShade (scrolled to the end of the menu), clicks set to 2, the window double-clicked (system7/shaded)
   $S/d.sh $D "move 18 9" "wait 600" "down" "wait 1500" "move 60 100" "move 60 150" "wait 1500" "move 150 150" "move 230 151" "wait 1000" "move 230 400" "move 230 578" "wait 3000" "move 230 579" "wait 500" "up" "wait 8000" "shot windowshade"
   $S/d.sh $D "click 250 92" "wait 800" "cmd w" "wait 1500" "click 260 180" "wait 800" "dbl 260 180" "wait 2500" "move 600 560" "wait 600" "shot shaded" ;;
+platinum)
+  # Infinite HD: window drag (platinum9/window-drag-before, window-drag)
+  $S/d.sh $D "click 300 61" "wait 800" "move 300 61" "wait 300" "shot wd-before" "down" "wait 400" "move 380 177" "wait 800" "shot wd-during" "up" "wait 2500"
+  # Games opened: every changed frame (platinum9/zoom-film/)
+  $S/d.sh $D "move 435 230" "wait 500" "film 0 0 800 600 4000 dbl 435 230" "wait 1500" "move 600 560" "wait 500"
+  # Games' collapse box (platinum9/collapsed)
+  $S/d.sh $D "click 414 78" "wait 1500" "move 600 560" "wait 600" "shot collapsed"
+  # Infinite HD made small, its down arrow held at the corner (platinum9/arrow-held)
+  $S/d.sh $D "click 300 177" "wait 800" "slowdrag 480 404 400 330" "wait 1500" "move 402 317" "wait 400" "down" "wait 1200" "shot arrow-held" "move 600 560" "wait 200" "up"
+  # Mouse: Mouse Tracking dragged to each end (platinum9/slider-min, slider-max)
+  $S/panel.sh $D 403 mouse-cp
+  $S/d.sh $D "click 128 52" "wait 1000" "slowdrag 139 133 30 133" "move 600 560" "wait 500" "shot slider-min" "slowdrag 62 133 260 133" "move 600 560" "wait 500" "shot slider-max"
+  # Appearance > Fonts, Large System Font held, the pointer off the menu (platinum9/fonts-popup-open)
+  $S/d.sh $D "cmd q" "wait 2000"; $S/panel.sh $D 83 appearance
+  $S/d.sh $D "click 372 110" "wait 2500" "move 420 152" "wait 400" "down" "wait 1200" "move 700 152" "wait 800" "shot fonts-popup-open" "move 700 400" "up" ;;
 *) echo "usage: $0 system6|system7|platinum|drawingboard DIR"; exit 2 ;;
 esac

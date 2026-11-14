@@ -329,8 +329,8 @@
     step();
   };
   const alignPicker = (sel) => {
-    const h = rowOf(sel), r = sel.getBoundingClientRect();
-    sel.style.setProperty("--clio-picker-shift", `${Math.round((r.height - h) / 2) - borderTop(sel) - Math.max(0, sel.selectedIndex) * h}px`);
+    const h = rowOf(sel), r = sel.getBoundingClientRect(), atTop = getComputedStyle(sel).getPropertyValue("--clio-popup-menu-align").trim() === "top";
+    sel.style.setProperty("--clio-picker-shift", `${(atTop ? 0 : Math.round((r.height - h) / 2) - borderTop(sel)) - Math.max(0, sel.selectedIndex) * h}px`);
   };
   let popup = null;   // { sel, menu, mode, hot, opened }
 
@@ -348,7 +348,12 @@
       menu.appendChild(li);
     }
     const host = sel.closest("[data-era]") || document.body;
-    Object.assign(menu.style, { position: "fixed", left: `${Math.round(r.left)}px`, top: `${Math.round(r.top + (r.height - h) / 2) - borderTop(sel) - Math.max(0, sel.selectedIndex) * h}px`, minWidth: `${Math.round(r.width)}px`, zIndex: "2147483000" });
+    // Per era: the current item on the button's row (centred), or, Mac OS 9.0, the menu's
+    // top on the button's with the current item there; as wide as the button less
+    // --clio-popup-menu-trim (Mac OS 9.0: the arrows stay in sight).
+    const cs = getComputedStyle(sel), trim = px(cs.getPropertyValue("--clio-popup-menu-trim")), atTop = cs.getPropertyValue("--clio-popup-menu-align").trim() === "top";
+    const row = atTop ? Math.round(r.top) : Math.round(r.top + (r.height - h) / 2) - borderTop(sel);
+    Object.assign(menu.style, { position: "fixed", left: `${Math.round(r.left)}px`, top: `${row - Math.max(0, sel.selectedIndex) * h}px`, minWidth: `${Math.round(r.width) - trim}px`, zIndex: "2147483000" });
     host.appendChild(menu);
     // keep it on screen, as the Menu Manager does
     const m = menu.getBoundingClientRect();
@@ -790,19 +795,25 @@
   });
   addEventListener("resize", () => requestAnimationFrame(() => { for (const h of document.querySelectorAll(".clio-move")) { const w = h.closest(".window"); if (w) moveBy(w, 0, 0); } }));
 
-  // Zoom rects (the Finder opening a folder, System 7.5.3, measured frame by
-  // frame): 8 outlines, one per tick, each edge eased by 1.6^k, the last four
-  // on screen at once. clio.zoomRects(from, to) with elements or rects;
+  // Zoom rects (the Finder opening a folder, measured frame by frame): one
+  // outline per tick. System 7.5.3: 8, each edge eased by 1.6^k, the last four on
+  // screen at once. Mac OS 9.0: 6 in a 2px band at 1.4^(k-7) of the way, all kept
+  // until the window draws. clio.zoomRects(from, to) with elements or rects;
   // { closing: true } runs it backwards. Opacity only; none under reduced motion.
   function zoomRects(from, to, opts = {}) {
     const rect = (x) => (x instanceof Element ? x.getBoundingClientRect() : x);
     const a = rect(from), b = rect(to);
     if (!a || !b || reduced()) return Promise.resolve();
-    const N = 8, Q = 1.6, host = (to instanceof Element && to.closest("[data-era]")) || document.body;
+    const host = (to instanceof Element && to.closest("[data-era]")) || (from instanceof Element && from.closest("[data-era]")) || document.body;
+    // Per era (tokens): N outlines, the k-th at (r^k - c) / (r^M - c) of the way, `keep` on
+    // screen at once (0: all, until the last is gone), drawn with the drag outline's width.
+    const cs = getComputedStyle(host), num = (n, d) => { const v = parseFloat(cs.getPropertyValue(n)); return Number.isFinite(v) ? v : d; };
+    const N = num("--clio-zoom-count", 8), M = num("--clio-zoom-steps", N), Q = num("--clio-zoom-ratio", 1.6), C = num("--clio-zoom-offset", 1), keep = num("--clio-zoom-keep", 4) || Infinity;
     const boxes = [];
     for (let k = 1; k <= N; k++) {
-      const p = (Q ** k - 1) / (Q ** N - 1), l = (u, v) => u + (v - u) * p;
-      const o = outlineBox({ left: l(a.left, b.left), top: l(a.top, b.top), width: l(a.width, b.width), height: l(a.height, b.height) }, 1);
+      const p = (Q ** k - C) / (Q ** M - C), l = (u, v) => u + (v - u) * p;
+      const o = outlineBox({ left: l(a.left, b.left), top: l(a.top, b.top), width: l(a.width, b.width), height: l(a.height, b.height) }, outlineWidth(host));
+      o.style.setProperty("--clio-drag-outline-extra", "0px");   // a plain rectangle
       o.style.opacity = "0";
       host.appendChild(o); boxes.push(o);
     }
@@ -810,8 +821,8 @@
     return new Promise((done) => {
       let t = 0;
       const step = () => {
-        boxes.forEach((o, i) => { o.style.opacity = i <= t && i > t - 4 ? "1" : "0"; });
-        if (++t < N + 3) setTimeout(step, TICK); else { boxes.forEach((o) => o.remove()); done(); }
+        boxes.forEach((o, i) => { o.style.opacity = i <= t && i > t - keep ? "1" : "0"; });
+        if (++t < N + (Number.isFinite(keep) ? keep - 1 : 0)) setTimeout(step, TICK); else { boxes.forEach((o) => o.remove()); done(); }
       };
       step();
     });

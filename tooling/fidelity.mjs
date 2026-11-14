@@ -186,6 +186,9 @@ specimens.push(
   // The whole bar with its title: Charcoal's antialiasing comes from window titles (capture:charcoal-ui).
   { ...P9("p9-titlebar", `<div class="window" id="s" style="width:476px"><div class="title-bar"><button class="close" aria-label="Close"></button><h2 class="title">Appearance</h2><button class="shade" aria-label="Collapse"></button></div><div class="window-pane" style="height:40px"></div></div>`, [0, 0, 477, 22], "appearance", [161, 68, 477, 22]), mask: [[476, 0, 1, 2]] },   // desktop beside the shadow
   P9("p9-titlebar-left", `<div class="window" id="s" style="width:476px"><div class="title-bar"><button class="close" aria-label="Close"></button><h2 class="title">Appearance</h2><button class="shade" aria-label="Collapse"></button></div><div class="window-pane" style="height:40px"></div></div>`, [0, 0, 30, 22], "appearance", [161, 68, 30, 22]),
+  // The collapse box clicked (Games, Mac OS 9.0; frame collapsed): the title bar alone, closed by the
+  // frame. The title (a folder icon and "Games") and the desktop by the shadow's notches are masked.
+  { ...P9("p9-collapsed", `<div class="window collapsed" id="s" style="width:386px"><div class="title-bar"><button class="close" aria-label="Close"></button><h2 class="title">Games</h2><button class="resize" aria-label="Zoom"></button><button class="shade" aria-label="Collapse"></button></div><div class="window-pane" style="height:40px"></div></div>`, [0, 0, 387, 23], "collapsed", [40, 68, 387, 23]), mask: [[150, 2, 90, 18], [386, 0, 1, 2], [0, 22, 2, 1]] },
   P9("p9-titlebar-right", `<div class="window" id="s" style="width:476px"><div class="title-bar"><button class="close" aria-label="Close"></button><h2 class="title">Appearance</h2><button class="shade" aria-label="Collapse"></button></div><div class="window-pane" style="height:40px"></div></div>`, [438, 0, 36, 22], "appearance", [599, 68, 36, 22]),
   P9("p9-button-end", `<div style="padding:12px;background:#eeeeee"><button id="s" style="width:86px">Set Desktop</button></div>`, [0, 0, 86, 20], "appearance", [534, 369, 86, 20]),
   P9("p9-popup-disabled", `<div style="padding:12px;background:#eeeeee"><select id="s" style="width:194px" disabled><option>Position Automatically</option></select></div>`, [160, 0, 34, 20], "appearance", [567, 337, 34, 20]),
@@ -197,6 +200,9 @@ specimens.push(
   { ...P9("p9-list-header", `<table class="list-view" id="s" style="width:374px;table-layout:fixed"><colgroup><col style="width:214px"><col style="width:145px"><col style="width:15px"></colgroup><thead><tr><th aria-sort="ascending"></th><th></th><th class="sort-direction"></th></tr></thead></table>`, [0, 0, 374, 21], "../hig/platinum9/list", [30, 95, 374, 21]), mask: [[40, 3, 40, 13], [216, 3, 90, 13]] },   // the header labels left out: the Finder's Geneva 10 is not among clio.css's fonts
   // Mouse control panel, "Mouse Tracking" slider (frame hig/platinum9/mouse).
   P9("p9-slider", `<div style="padding:12px;background:#dddddd;display:flex"><input type="range" id="s" min="0" max="141" value="78" style="width:156px"></div>`, [0, 0, 156, 16], "../hig/platinum9/mouse", [53, 127, 156, 16]),
+  // The same slider dragged to each end (frames slider-min, slider-max): the thumb stops 3px inside the track.
+  P9("p9-slider-min", `<div style="padding:12px;background:#dddddd;display:flex"><input type="range" id="s" min="0" max="141" value="0" style="width:156px"></div>`, [0, 0, 156, 16], "slider-min", [53, 127, 156, 16]),
+  P9("p9-slider-max", `<div style="padding:12px;background:#dddddd;display:flex"><input type="range" id="s" min="0" max="141" value="141" style="width:156px"></div>`, [0, 0, 156, 16], "slider-max", [53, 127, 156, 16]),
   // Navigation Services, the Shortcuts bevel button (frame hig/platinum9/nav); its icon masked.
   { ...P9("p9-bevel-menu", `<div style="padding:12px;background:#dddddd"><button class="bevel menu" id="s" style="width:36px;height:27px" aria-label="Shortcuts"></button></div>`, [0, 0, 36, 27], "../hig/platinum9/nav", [490, 198, 36, 27]), mask: [[9, 5, 23, 16]] },   // the icon
   // Date & Time while its date is edited (frame hig/platinum9/date-time-edit): the focus ring, the little arrows.
@@ -231,6 +237,16 @@ specimens.push(
   { ...P9("p9-js-scroll-fixed", jsScroll(122), [185, 0, 15, 122], "../hig/platinum9/finder-scroll-fixed", [405, 111, 15, 122]), js: true },
   { ...P9("p9-js-scroll-off-h", `<div class="clio-scroll" id="s" style="width:359px;height:60px;overflow-x:scroll;overflow-y:hidden;background:#fff"><div style="height:20px"></div></div>`, [0, 45, 359, 15], "../hig/platinum9/finder-scroll-fixed", [46, 233, 359, 15]), js: true },
   { ...P9("p9-js-scroll-smart", jsScroll(122, 'data-clio-scrolling="smart"'), [185, 0, 15, 122], "../hig/platinum9/finder-scroll-smart", [405, 111, 15, 122]), js: true },
+  // An open pop-up menu (Appearance > Fonts, Large System Font held, the pointer moved off the menu; frame
+  // popup-open): clio.js draws it (base-select hidden from it), and where the browser draws it, base-select.
+  { ...P9("p9-js-popup-open", `<script>{ const f = CSS.supports.bind(CSS); CSS.supports = (a, b) => (a === "appearance" && b === "base-select") ? false : f(a, b); }</script><div class="clio" style="padding:12px 0 140px 12px;background:#dddddd;width:400px"><select id="s" style="width:163px"><option selected>Charcoal</option><option>Chicago</option><option>Capitals</option><option>Gadget</option><option>Sand</option><option>Techno</option><option>Textile</option></select></div>`, [0, 0, 142, 115], "fonts-popup-open", [333, 143, 142, 115]), js: true, mask: [[141, 0, 1, 2], [0, 114, 2, 1]],
+    act: async (page, b) => { await page.mouse.move(b.x + 80, b.y + 10); await page.mouse.down(); await page.mouse.move(b.x + 380, b.y + 10, { steps: 3 }); } },
+  { ...P9("p9-popup-open", `<div class="clio" style="padding:12px 0 140px 12px;background:#dddddd;width:400px"><select id="s" style="width:163px"><option selected>Charcoal</option><option>Chicago</option><option>Capitals</option><option>Gadget</option><option>Sand</option><option>Techno</option><option>Textile</option></select></div>`, [0, 0, 142, 115], "fonts-popup-open", [333, 143, 142, 115]), js: true, baseSelect: true, mask: [[141, 0, 1, 2], [0, 114, 2, 1]],
+    act: async (page, b) => { await page.mouse.move(b.x + 80, b.y + 10); await page.mouse.down(); await page.mouse.move(b.x + 380, b.y + 10, { steps: 3 }); } },
+  // The down arrow held (Mac OS 9.0 Finder, Smart Scrolling as Infinite Mac sets it; frame arrow-held,
+  // the pointer in its corner masked).
+  { ...P9("p9-js-scroll-arrow-held", jsScroll(122, 'data-clio-scrolling="smart"'), [186, 108, 14, 14], "arrow-held", [390, 305, 14, 14]), js: true, mask: [[10, 11, 4, 3]],
+    act: async (page, b) => { await page.mouse.move(b.x + 190, b.y + 112); await page.mouse.down(); } },
 );
 
 const css = pathToFileURL(join(root, "dist/clio.css")).href;
@@ -260,6 +276,7 @@ for (const s of specimens) {
   // 26px box do not apply; db-js-scroll-thumb compares that 15px box whole.
   if (ENGINE === "firefox" && /^db-scroll-thumb-(grip|end)$/.test(s.id)) { console.log(`${s.id}: n/a in firefox (see db-js-scroll-thumb)`); continue; }
   if (ENGINE === "firefox" && !s.js && /scroll|grow-box/.test(s.id)) s.js = s.viaJs = true;
+  if (s.baseSelect && !(await page.evaluate(() => CSS.supports("appearance", "base-select")))) { console.log(`${s.id}: n/a in ${ENGINE} (no base-select)`); continue; }
   const html = `<!doctype html><html data-era="${s.era || "platinum"}"><head><meta charset="utf-8"><link rel="stylesheet" href="${css}"><style>body{margin:0;padding:24px;background:#4a71ab}${process.env.FIDELITY_CSS || ""}</style></head><body>${s.html}${s.js ? `<script src="${js}"></script>` : ""}</body></html>`;
   const file = join(out, `${s.id}${tag}.html`);
   writeFileSync(file, html);

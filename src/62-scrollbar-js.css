@@ -105,8 +105,6 @@
   background: var(--clio-scrollbar-ghost, #000000);
   background-position: calc(var(--clio-sb-px, 0px) + var(--clio-sb-gx, 0px)) calc(var(--clio-sb-py, 0px) + var(--clio-sb-gy, 0px));   /* in step with the lane's pattern */
   mix-blend-mode: var(--clio-scrollbar-ghost-blend, normal);
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
   mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
   pointer-events: none;
 }
@@ -114,17 +112,31 @@
 /* clio.js outlines (a dragged window, zoom rects): QuickDraw's grey pattern,
    inverting what lies under it, in step with the screen. */
 .clio-outline {
+  /* The outline is the frame of the window's structure region (QuickDraw's
+     InsetRgn, rows and columns apart): the frame and its 1px shadow, which starts
+     --clio-drag-outline-shadow-inset in from the top-right and bottom-left corners,
+     so the region and the band step in there (all measured). e, k, w below. */
+  --e: var(--clio-drag-outline-extra, 0px);
+  --k: var(--clio-drag-outline-shadow-inset, 1px);
+  --w: var(--clio-drag-outline-width, 1px);
   position: fixed;
   z-index: 2147483000;
   box-sizing: border-box;
   margin: 0;
-  /* gray inverts the pixels whose x + y is odd on the screen (System 6.0.8 and
-     7.5.3, measured); clio.js sets the position that keeps it to the page */
+  /* gray inverts the pixels whose x + y is odd on the screen (System 6.0.8, 7.5.3
+     and Mac OS 9.0, measured); clio.js sets the position that keeps it to the page */
   background: repeating-conic-gradient(#ffffff 0 25%, transparent 0 50%) 0 0 / 2px 2px;
   mix-blend-mode: difference;
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  /* the band (box less content box), the region's two notches taken out and the
+     two pieces of the inset region they remove put back: every piece lies wholly
+     in or out of what is below it, so xor does each */
+  mask:
+    linear-gradient(#000 0 0) left 0 bottom 0 / var(--k) var(--e) no-repeat border-box exclude,
+    linear-gradient(#000 0 0) right 0 top 0 / var(--e) var(--k) no-repeat border-box exclude,
+    linear-gradient(#000 0 0) left var(--w) bottom var(--w) / var(--k) var(--e) no-repeat border-box exclude,
+    linear-gradient(#000 0 0) right var(--w) top var(--w) / var(--e) var(--k) no-repeat border-box exclude,
+    linear-gradient(#000 0 0) content-box exclude,
+    linear-gradient(#000 0 0) border-box;
   pointer-events: none;
   image-rendering: pixelated;
 }

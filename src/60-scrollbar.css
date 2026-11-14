@@ -88,22 +88,22 @@
 
 :where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-button:vertical:decrement:active,
 :where(html.clio-scrollbars)::-webkit-scrollbar-button:vertical:decrement:active {
-  background-image: var(--clio-scrollbar-up-on);
+  background-image: var(--clio-scrollbar-up-on), var(--clio-scrollbar-button-bevel-on, none);
 }
 
 :where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-button:vertical:increment:active,
 :where(html.clio-scrollbars)::-webkit-scrollbar-button:vertical:increment:active {
-  background-image: var(--clio-scrollbar-down-on);
+  background-image: var(--clio-scrollbar-down-on), var(--clio-scrollbar-button-bevel-on, none);
 }
 
 :where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-button:horizontal:decrement:active,
 :where(html.clio-scrollbars)::-webkit-scrollbar-button:horizontal:decrement:active {
-  background-image: var(--clio-scrollbar-left-on);
+  background-image: var(--clio-scrollbar-left-on), var(--clio-scrollbar-button-bevel-on, none);
 }
 
 :where(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-button:horizontal:increment:active,
 :where(html.clio-scrollbars)::-webkit-scrollbar-button:horizontal:increment:active {
-  background-image: var(--clio-scrollbar-right-on);
+  background-image: var(--clio-scrollbar-right-on), var(--clio-scrollbar-button-bevel-on, none);
 }
 
 /* Only the single arrow box at each end, as on the Mac. */

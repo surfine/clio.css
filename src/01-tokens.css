@@ -205,6 +205,14 @@
   --clio-drag-outline-width: 1px;
   /* ... around the window and its 1px shadow (both measured) */
   --clio-drag-outline-extra: 1px;
+  /* clio.zoomRects() (System 7.5.3, measured): 8 outlines at (1.6^k - 1) / (1.6^8 - 1)
+     of the way, 4 on screen at once */
+  --clio-zoom-count: 8;
+  --clio-zoom-steps: 8;
+  --clio-zoom-ratio: 1.6;
+  --clio-zoom-offset: 1;
+  --clio-zoom-keep: 4;
+  --clio-drag-outline-shadow-inset: 0px;   /* System 6: the region is the whole rectangle, though the shadow is drawn from a pixel in */
   /* clio.js: a dragged scroll box leaves its frame XORed with dkGray (System
      6.0.8, measured): white where dkGray is set, in step with the lane's ltGray,
      inverting what is under it, so over the lane it comes out solid black. */
