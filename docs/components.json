@@ -1930,6 +1930,13 @@
           "status": "adapted",
           "source": "clio.css",
           "upstream": "—"
+        },
+        {
+          "era": "both",
+          "claim": "A dial is a slider: the 1992 guidelines' \"slider (sometimes called a dial)\", HIG87's indicator that shows and sets a value",
+          "status": "inferred",
+          "source": "Macintosh Human Interface Guidelines (1992), ch. 7: Sliders",
+          "upstream": "no other dial control was found in any era"
         }
       ]
     },
@@ -2174,6 +2181,208 @@
           "status": "adapted",
           "source": "clio.css",
           "upstream": "Macintosh Human Interface Guidelines (1992), ch. 11"
+        }
+      ]
+    },
+    {
+      "id": "rounded-window",
+      "name": "Rounded-corner window",
+      "summary": "The desk accessory's window (rDocProc): rounded corners and a black title bar, as the Calculator draws it in every Classic era.",
+      "selectors": [
+        ".rounded-window",
+        ".rounded-window.inactive",
+        ".rounded-title",
+        ".rounded-title > .close",
+        ".rounded-title > h2"
+      ],
+      "tokens": [
+        "--clio-rounded-bg",
+        "--clio-art-rdoc-mask-tl",
+        "--clio-art-rdoc-frame-tl"
+      ],
+      "accessibility": "Label the close box (aria-label=\"Close\") and keep the title a real heading. The corners are a mask: keep content 6px clear of them.",
+      "html": "<div class=\"rounded-window\" style=\"width: 160px; height: 90px\">\n  <div class=\"rounded-title\">\n    <button class=\"close\" aria-label=\"Close\"></button>\n    <h3>Calculator</h3>\n  </div>\n</div>",
+      "evidence": [
+        {
+          "era": "system6",
+          "claim": "A 1px black frame whose corners step in 5, 3, 2, 1, 1 pixels (the frame follows the same curve one pixel in); a 17-row black title bar ruled below; an 11px white close box at (9,4); the title in white, centred right of the close box. In the background: a white bar, a black title, no close box",
+          "status": "measured",
+          "source": "clio.css capture, System 6.0.8 in Infinite Mac (frames in .fidelity, see tooling/fidelity.mjs): the Calculator (Apple menu), frames rdoc-calc and rdoc-calc-inactive; tooling/rare-art.py",
+          "upstream": "specimens s6-rdoc-title, -title-inactive, -left, -bottom-left 100% identical"
+        },
+        {
+          "era": "system7",
+          "claim": "The same window in System 7.5.3",
+          "status": "measured",
+          "source": "clio.css capture, System 7.5.3 in Infinite Mac (frames in .fidelity, see tooling/fidelity.mjs): the Calculator, frame rdoc-calc",
+          "upstream": "specimens s7-rdoc-title and s7-rdoc-left 100% identical"
+        },
+        {
+          "era": "platinum",
+          "claim": "Mac OS 9.0 draws the old window unchanged, its title in the system font antialiased (white on black; black on white in the background)",
+          "status": "measured",
+          "source": "clio.css capture, Mac OS 9.0 in Infinite Mac (frames in .fidelity, see tooling/fidelity.mjs): the Calculator, frames rdoc-calc and rdoc-calc-inactive; levels in tooling/aa-palettes.py",
+          "upstream": "specimens p9-rdoc-title and -title-inactive 100% identical but for ten faint title pixels the font lacks (masked); the title's place fitted to this capture"
+        },
+        {
+          "era": "drawingboard",
+          "claim": "Drawing Board leaves it as Platinum does",
+          "status": "measured",
+          "source": "clio.css capture, Mac OS 8.5 with the 8.5b6 Drawing Board theme in Infinite Mac (frames in .fidelity, see tooling/fidelity.mjs): the Calculator, frame rdoc-calc",
+          "upstream": "specimen db-rdoc-title 100% identical (the same ten pixels masked)"
+        },
+        {
+          "era": "both",
+          "claim": "The Calculator's heavy right and bottom edge (3px) is its own drawing, not the window's",
+          "status": "inferred",
+          "source": "Inside Macintosh: Macintosh Toolbox Essentials (1992), ch. 4 (rDocProc drawn with a plain frame)",
+          "upstream": "the left edge is 1px in the same frames; no other rDocProc window was found"
+        }
+      ]
+    },
+    {
+      "id": "side-utility-window",
+      "name": "Side-title utility window",
+      "summary": "A floating window whose title bar runs down its left side (kWindowFloatSide*): close box at the top, collapse box at the foot.",
+      "selectors": [
+        ".window.utility.side",
+        ".window.utility.side.inactive"
+      ],
+      "tokens": [],
+      "accessibility": "The title is not drawn but stays in the markup for assistive technology; label both boxes.",
+      "html": "<div class=\"window utility side\" style=\"width: 200px; height: 80px\">\n  <div class=\"title-bar\">\n    <button class=\"close\" aria-label=\"Close\"></button>\n    <h3 class=\"title\">Tools</h3>\n    <button class=\"collapse\" aria-label=\"Collapse\"></button>\n  </div>\n  <div class=\"window-pane\"></div>\n</div>",
+      "evidence": [
+        {
+          "era": "platinum",
+          "claim": "The utility window's frame (1px black, white light top and left, #999 shade right and bottom, the drop from the second row and column); a 10px #ccc bar down the left with the 10x10 close box at its top, the dot pattern from 12px below it to 12px above the foot, and the collapse box turned on its diagonal at the foot; no title. In the background: #555 frame and drop on flat #ddd",
+          "status": "measured",
+          "source": "clio.css capture, Mac OS 9.0 in Infinite Mac (frames in .fidelity, see tooling/fidelity.mjs): the Appearance SDK's sample (Developer > Appearance SDK > Appearance Sample, Examples > Side Utility Window), frame side-utility; tooling/rare-art.py",
+          "upstream": "specimens p9-side-bar, -top, -right, -bottom, -inactive 100% identical"
+        },
+        {
+          "era": "both",
+          "claim": "Without a collapse box the dot pattern keeps the same 12px from the foot",
+          "status": "inferred",
+          "source": "clio.css",
+          "upstream": "the sample's window has both boxes"
+        },
+        {
+          "era": "drawingboard",
+          "claim": "As the top-title utility window: Platinum's bar and boxes inside the Drawing Board document window's paper and frame pieces; the theme's own side-window pieces (Util LSide pictures 6205-6214) are not reproduced",
+          "status": "adapted",
+          "source": "clio.css capture, Mac OS 8.5 with Drawing Board in Infinite Mac (frames in .fidelity, see tooling/fidelity.mjs): the same sample, frame side3 in the rc8 run",
+          "upstream": "captured, not drawn"
+        },
+        {
+          "era": "system7",
+          "claim": "System 7 had no side-title window in the Toolbox; the class keeps System 7's top-title utility window",
+          "status": "adapted",
+          "source": "clio.css",
+          "upstream": "Mac OS 8 Toolbox Reference: kWindowFloatSideProc came with the Appearance Manager"
+        },
+        {
+          "era": "system6",
+          "claim": "Likewise System 6",
+          "status": "adapted",
+          "source": "clio.css",
+          "upstream": "—"
+        }
+      ]
+    },
+    {
+      "id": "placard",
+      "name": "Placard",
+      "summary": "A framed strip for status or a small control at the foot of a window, beside the horizontal scroll bar.",
+      "selectors": [
+        ".placard",
+        ".placard[aria-disabled=true]"
+      ],
+      "tokens": [],
+      "accessibility": "A status placard that changes is a live region (role=status); a placard that acts is a <button class=\"placard\">.",
+      "html": "<span class=\"placard\" role=\"status\" style=\"width: 64px\">Page 1</span>",
+      "evidence": [
+        {
+          "era": "platinum",
+          "claim": "1px black, white light on the top and left, #aaa shade on the right and the bottom (the corners they would share left #ddd), a #ddd face. Disabled: a #555 frame on #eee",
+          "status": "measured",
+          "source": "clio.css capture, Mac OS 9.0 in Infinite Mac (frames in .fidelity, see tooling/fidelity.mjs): the Appearance SDK's CDEF Tester (CDEF Tester > Placard, 100x50, and Disable), frames placard and placard-disabled",
+          "upstream": "specimens p9-placard and p9-placard-disabled 100% identical; held not shown by the tester"
+        },
+        {
+          "era": "drawingboard",
+          "claim": "A #cebdb5 face in the pencil line (its commonest shade, #555; it drifts from #333 to #888); disabled, #cdc6bd with a faint #b6ada5 line along the top only",
+          "status": "adapted",
+          "source": "clio.css capture, Mac OS 8.5 with Drawing Board in Infinite Mac (frames in .fidelity, see tooling/fidelity.mjs): the CDEF Tester, frames placard and placard-disabled",
+          "upstream": "faces 100% identical (db-placard-face, -disabled-face); the drifting pencil drawn flat"
+        },
+        {
+          "era": "both",
+          "claim": "The text in the era's small font, 4px in",
+          "status": "inferred",
+          "source": "clio.css",
+          "upstream": "the tester's placard is empty"
+        },
+        {
+          "era": "system7",
+          "claim": "Before the Appearance Manager there was no placard control (applications drew their own); a 1px frame on the paper",
+          "status": "adapted",
+          "source": "clio.css",
+          "upstream": "Mac OS 8 Human Interface Guidelines (1997), ch. 2 (placards)"
+        },
+        {
+          "era": "system6",
+          "claim": "Likewise System 6",
+          "status": "adapted",
+          "source": "clio.css",
+          "upstream": "—"
+        }
+      ]
+    },
+    {
+      "id": "split-bar",
+      "name": "Split bar",
+      "summary": "The bar above a vertical scroll bar that splits a window into panes, and the split line between two panes.",
+      "selectors": [
+        ".split-view",
+        ".split-bar",
+        ".split-line"
+      ],
+      "tokens": [
+        "--clio-split-bar-height",
+        "--clio-split-line-1",
+        "--clio-split-bg",
+        "--clio-split-ink"
+      ],
+      "accessibility": "role=separator. If your script lets people move it, make it focusable with aria-valuenow and arrow keys; clio.css only draws it.",
+      "html": "<div class=\"split-view\" style=\"width: 220px; height: 120px\">\n  <div class=\"split-bar\" role=\"separator\" aria-label=\"Split\"></div>\n  <div style=\"flex: 1; padding: 0 8px\">Opening paragraphs…</div>\n  <div class=\"split-line\" role=\"separator\"></div>\n  <div style=\"flex: 1; padding: 4px 8px\">…and the conclusion.</div>\n</div>",
+      "evidence": [
+        {
+          "era": "platinum",
+          "claim": "7 rows of black across the scroll bar's width, at its top; split, the bar tops the lower pane's scroll bar and the split line runs across the content as two black lines on its fourth and sixth rows",
+          "status": "measured",
+          "source": "clio.css capture, Mac OS 9.0 in Infinite Mac (frames in .fidelity, see tooling/fidelity.mjs): BBEdit 5.1 (Developer folder), frames split-bar and split-line",
+          "upstream": "specimens p9-split-bar and p9-split-line 100% identical; the dragged 3-row grey outline is not drawn"
+        },
+        {
+          "era": "drawingboard",
+          "claim": "The same (the bar is the application's drawing, not the theme's)",
+          "status": "inferred",
+          "source": "clio.css",
+          "upstream": "BBEdit 5.1 not opened in Drawing Board"
+        },
+        {
+          "era": "system7",
+          "claim": "A control 5 pixels high by the width of the scroll bar at its top; the split line two lines with a one-pixel space",
+          "status": "inferred",
+          "source": "Macintosh Human Interface Guidelines (1992), ch. 5: Splitting a Window",
+          "upstream": "BBEdit 2.1.3 in System 7.5.3 has no split bar; no other application with one was found"
+        },
+        {
+          "era": "system6",
+          "claim": "The same as System 7",
+          "status": "inferred",
+          "source": "Macintosh Human Interface Guidelines (1992), ch. 5",
+          "upstream": "—"
         }
       ]
     },

@@ -1,0 +1,183 @@
+/* The rare controls (ROADMAP "Can wait" 10): the rounded-corner window, placards,
+   split bars and the side-title utility window (its Platinum drawing is in
+   90-platinum.css). Measured in Infinite Mac; see EVIDENCE.md. */
+
+/* ---- Rounded-corner window (rDocProc, desk accessories) ----------------------
+   <div class="rounded-window"> > <div class="rounded-title"> (> .close, h2) and
+   any content. The Calculator draws the same window in System 6.0.8, 7.5.3,
+   Mac OS 8.5 (Drawing Board) and 9.0: a 1px black frame whose corners step in
+   5, 3, 2, 1, 1 pixels; a 17-row black title bar ruled below, the title in
+   white centred in the space right of an 11px white close box at (9,4). In the
+   background the bar turns white, the title black, and the close box goes. */
+:where(.rounded-window) {
+  --clio-rounded-bg: #ffffff;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  min-width: 60px;
+  border: 1px solid #000000;
+  background: var(--clio-rounded-bg);
+  -webkit-mask:
+    var(--clio-art-rdoc-mask-tl) left top / 6px 6px no-repeat,
+    var(--clio-art-rdoc-mask-tr) right top / 6px 6px no-repeat,
+    var(--clio-art-rdoc-mask-bl) left bottom / 6px 6px no-repeat,
+    var(--clio-art-rdoc-mask-br) right bottom / 6px 6px no-repeat,
+    linear-gradient(#000000, #000000) 0 6px / 100% calc(100% - 12px) no-repeat,
+    linear-gradient(#000000, #000000) 6px 0 / calc(100% - 12px) 100% no-repeat;
+  mask:
+    var(--clio-art-rdoc-mask-tl) left top / 6px 6px no-repeat,
+    var(--clio-art-rdoc-mask-tr) right top / 6px 6px no-repeat,
+    var(--clio-art-rdoc-mask-bl) left bottom / 6px 6px no-repeat,
+    var(--clio-art-rdoc-mask-br) right bottom / 6px 6px no-repeat,
+    linear-gradient(#000000, #000000) 0 6px / 100% calc(100% - 12px) no-repeat,
+    linear-gradient(#000000, #000000) 6px 0 / calc(100% - 12px) 100% no-repeat;
+}
+
+/* The frame's curve inside each corner, over the title bar and the content. */
+.rounded-window::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  z-index: 1;
+  background:
+    var(--clio-art-rdoc-frame-tl) left top / 6px 6px no-repeat,
+    var(--clio-art-rdoc-frame-tr) right top / 6px 6px no-repeat,
+    var(--clio-art-rdoc-frame-bl) left bottom / 6px 6px no-repeat,
+    var(--clio-art-rdoc-frame-br) right bottom / 6px 6px no-repeat;
+  pointer-events: none;
+}
+
+.rounded-window > .rounded-title {
+  position: relative;
+  display: flex;
+  flex: none;
+  justify-content: center;
+  box-sizing: border-box;
+  height: 18px;
+  padding: 1px 1px 0 18px;
+  border-bottom: 1px solid #000000;
+  background: #000000;
+  color: #ffffff;
+  font-family: var(--clio-font-window-title, var(--clio-font-chrome));
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.rounded-window > .rounded-title > :is(.title, h1, h2, h3) {
+  margin: 0;
+  overflow: hidden;
+  color: inherit;
+  font: inherit;
+  font-size: var(--clio-title-font-size);
+  font-stretch: var(--clio-font-stretch-title);
+  font-weight: var(--clio-chrome-weight);
+  line-height: 16px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rounded-window > .rounded-title > :is(button.close, .close) {
+  position: absolute;
+  top: 3px;
+  left: 8px;
+  box-sizing: border-box;
+  width: 11px;
+  min-width: 0;
+  height: 11px;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  border: 1px solid #ffffff;
+  border-image: none;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  font-size: 0;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: var(--clio-cursor-arrow);
+}
+
+.rounded-window > .rounded-title > :is(button.close, .close)::before,
+.rounded-window > .rounded-title > :is(button.close, .close)::after {
+  content: none;
+}
+
+.rounded-window > .rounded-title > :is(button.close, .close):focus-visible {
+  outline: 1px dotted #ffffff;
+  outline-offset: 1px;
+}
+
+.rounded-window.inactive > .rounded-title {
+  background: #ffffff;
+  color: #000000;
+}
+
+.rounded-window.inactive > .rounded-title > :is(button.close, .close) {
+  visibility: hidden;
+}
+
+/* ---- Placard ------------------------------------------------------------------
+   A framed strip for status at the foot of a window, beside the horizontal scroll
+   bar (Mac OS 8 HIG: "Placards"). The control came with the Appearance Manager;
+   before it, the eras draw a 1px frame on the paper (adapted). */
+:where(.placard) {
+  display: inline-flex;
+  align-items: center;
+  box-sizing: border-box;
+  min-height: 16px;
+  margin: 0;
+  padding: 0 4px;
+  border: 1px solid var(--clio-ink);
+  border-radius: 0;
+  background: var(--clio-paper);
+  box-shadow: none;
+  color: var(--clio-ink);
+  font-family: var(--clio-font-small);
+  font-size: var(--clio-font-size-small, 9px);
+  line-height: 12px;
+  white-space: nowrap;
+}
+
+/* ---- Split bar and split line ---------------------------------------------------
+   <div class="split-view"> > .split-bar (above the vertical scroll bar), panes,
+   and a .split-line between two panes. Apple's guidelines (1992) give the split
+   bar as a control 5 pixels high by the width of the scroll bar, at its top, and
+   the split line as two lines with a one-pixel space; BBEdit 5.1 in Mac OS 9 draws
+   it 7 rows high (90-platinum.css). Moving it is the application's: clio.css only
+   draws it. */
+:where(.split-view) {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  background: var(--clio-split-bg, var(--clio-pane-bg));
+}
+
+:where(.split-view) > :where(.split-bar) {
+  align-self: flex-end;
+}
+
+:where(.split-bar) {
+  flex: none;
+  box-sizing: border-box;
+  width: var(--clio-scrollbar-size);
+  height: var(--clio-split-bar-height, 5px);
+  background: var(--clio-split-ink, var(--clio-ink));
+  cursor: row-resize;
+}
+
+:where(.split-line) {
+  --clio-split-line-1: 1px;
+  flex: none;
+  box-sizing: border-box;
+  height: var(--clio-split-bar-height, 5px);
+  margin: 0;
+  border: 0;
+  background:
+    linear-gradient(var(--clio-split-ink, var(--clio-ink)), var(--clio-split-ink, var(--clio-ink))) right top / var(--clio-scrollbar-size) 100% no-repeat,
+    linear-gradient(var(--clio-split-ink, var(--clio-ink)), var(--clio-split-ink, var(--clio-ink))) 0 var(--clio-split-line-1) / 100% 1px no-repeat,
+    linear-gradient(var(--clio-split-ink, var(--clio-ink)), var(--clio-split-ink, var(--clio-ink))) 0 calc(var(--clio-split-line-1) + 2px) / 100% 1px no-repeat,
+    var(--clio-split-bg, var(--clio-pane-bg));
+  cursor: row-resize;
+}

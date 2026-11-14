@@ -40,6 +40,10 @@ Drop-in for system.css markup (.window, .title-bar button.close, .btn, .btn-defa
 - [Help button](https://surfine.github.io/clio.css/#help-button): The square button with the help icon in a dialog's lower left.
 - [Image well](https://surfine.github.io/clio.css/#image-well): A sunken well holding a picture or an icon.
 - [Help balloon](https://surfine.github.io/clio.css/#balloon): Balloon Help: a white balloon with a tail pointing at what it describes.
+- [Rounded-corner window](https://surfine.github.io/clio.css/#rounded-window): The desk accessory's window (rDocProc): rounded corners and a black title bar, as the Calculator draws it in every Classic era.
+- [Side-title utility window](https://surfine.github.io/clio.css/#side-utility-window): A floating window whose title bar runs down its left side (kWindowFloatSide*): close box at the top, collapse box at the foot.
+- [Placard](https://surfine.github.io/clio.css/#placard): A framed strip for status or a small control at the foot of a window, beside the horizontal scroll bar.
+- [Split bar](https://surfine.github.io/clio.css/#split-bar): The bar above a vertical scroll bar that splits a window into panes, and the split line between two panes.
 - [Type and tokens](https://surfine.github.io/clio.css/#typography): The fonts, the palette and every --clio-* custom property you can override.
 
 ## Optional

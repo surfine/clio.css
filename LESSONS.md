@@ -161,6 +161,13 @@ A behaviour test must look at the result the user sees: a test that only read
 - **Never overwrite a capture frame.** Name every new frame for what it shows; a frame a
   script reads (p9-art.py read `popup-open`) can only be restored by recapturing it with
   the capture script's exact step and checking the script's output is unchanged.
+- Rare controls live in sample code: Infinite HD > Developer > Appearance SDK > Appearance
+  Sample Code > CodeWarrior Pro > Appearance Sample runs in Mac OS 8.5 and 9.0, and its CDEF
+  Tester draws any Appearance control on demand (placards came from it). The Calculator is
+  the one rounded-corner window in every era.
+- A driver started with a plain `&` inside an agent's shell dies when that command ends:
+  start it with `nohup … & disown`. Drawing Board's scripted install is position-dependent;
+  by hand: drop the theme on the System Folder, OK, Special > Restart, Appearance's pop-up.
 - Infinite Mac: hold the mouse a moment before a menu press or it misses; in Drawing Board
   the Apple menu rows are 20px and the Control Panels submenu starts at y=37; quitting
   Appearance with Command-Q froze Mac OS 8.5 once (close its window instead).

@@ -36,6 +36,10 @@ Infinite Mac tints black and white as #222222 and #eeeeee.
 | s6-geneva-12 | 160×16 | 100.0% | 100.0% | 0.0% | 0 |
 | s6-menu-disabled | 60×16 | 100.0% | 100.0% | 0.0% | 0 |
 | s6-menu-separator | 136×16 | 100.0% | 100.0% | 0.0% | 0 |
+| s6-rdoc-title | 106×19 | 100.0% | 100.0% | 0.0% | 0 |
+| s6-rdoc-title-inactive | 106×19 | 100.0% | 100.0% | 0.0% | 0 |
+| s6-rdoc-left | 1×143 | 100.0% | 100.0% | 0.0% | 0 |
+| s6-rdoc-bottom-left | 6×6 | 100.0% | 100.0% | 0.0% | 0 |
 
 ## System 7
 
@@ -68,6 +72,8 @@ Reference: System 7.5.3 running in Infinite Mac, the 800×600 colour canvas read
 | s7-default-ok | 67×28 | 100.0% | 100.0% | 0.0% | 0 |
 | s7-strip-start | 29×24 | 100.0% | 100.0% | 0.0% | 0 |
 | s7-js-scroll-top | 15×41 | 100.0% | 100.0% | 0.0% | 0 |
+| s7-rdoc-title | 106×19 | 100.0% | 100.0% | 0.0% | 0 |
+| s7-rdoc-left | 1×143 | 100.0% | 100.0% | 0.0% | 0 |
 
 ## Mac OS 8.5 Drawing Board
 
@@ -118,6 +124,9 @@ the 800×600 colour canvas read 1:1 (`npm run capture:drawingboard`), compared i
 | db-menu-corner | 24×23 | 100.0% | 100.0% | 0.0% | 0 |
 | db-menu-corner-left | 24×23 | 100.0% | 100.0% | 0.0% | 0 |
 | db-menu-corner-top | 24×12 | 100.0% | 100.0% | 0.0% | 0 |
+| db-rdoc-title | 106×19 | 100.0% | 100.0% | 0.0% | 0 |
+| db-placard-face | 98×48 | 100.0% | 100.0% | 0.0% | 0 |
+| db-placard-disabled-face | 98×48 | 100.0% | 100.0% | 0.0% | 0 |
 
 ## Mac OS 9 Platinum, re-measured
 
@@ -169,6 +178,17 @@ Reference: Mac OS 9.0 running in Infinite Mac, the 800×600 colour canvas read 1
 | p9-js-popup-open-arrows | 21×20 | 100.0% | 100.0% | 0.0% | 0 |
 | p9-popup-open-arrows | 21×20 | 100.0% | 100.0% | 0.0% | 0 |
 | p9-js-scroll-arrow-held | 14×14 | 100.0% | 100.0% | 0.0% | 0 |
+| p9-rdoc-title | 106×19 | 100.0% | 100.0% | 0.0% | 0 |
+| p9-rdoc-title-inactive | 106×19 | 100.0% | 100.0% | 0.0% | 0 |
+| p9-side-bar | 12×92 | 100.0% | 100.0% | 0.0% | 0 |
+| p9-side-top | 230×2 | 100.0% | 100.0% | 0.0% | 0 |
+| p9-side-right | 4×85 | 100.0% | 100.0% | 0.0% | 0 |
+| p9-side-bottom | 240×4 | 100.0% | 100.0% | 0.0% | 0 |
+| p9-side-inactive | 12×82 | 100.0% | 100.0% | 0.0% | 0 |
+| p9-placard | 100×50 | 100.0% | 100.0% | 0.0% | 0 |
+| p9-placard-disabled | 100×50 | 100.0% | 100.0% | 0.0% | 0 |
+| p9-split-bar | 16×6 | 100.0% | 100.0% | 0.0% | 0 |
+| p9-split-line | 115×7 | 100.0% | 100.0% | 0.0% | 0 |
 
 ## Mac OS 9 Platinum
 
@@ -206,8 +226,8 @@ draw yet, are masked; Roman's antialiasing on the highlight is within 2/255.
 and Firefox (results in `.fidelity/results-<engine>.json`). Firefox has no `::-webkit-scrollbar`:
 its scroll-bar specimens load clio.js, whose element bars take the same rules.
 
-- WebKit: 134 of 138 identical; not identical: s7-popup-disabled (96.1%), db-js-popup-open (96.2%), db-popup-open (96.2%), p9-zh-popup-open (97.1%)
-- Firefox: 131 of 133 identical; not identical: db-js-popup-open (96.2%), p9-zh-popup-open (97.1%)
+- WebKit: 154 of 158 identical; not identical: s7-popup-disabled (96.1%), db-js-popup-open (96.2%), db-popup-open (96.2%), p9-zh-popup-open (97.1%)
+- Firefox: 151 of 153 identical; not identical: db-js-popup-open (96.2%), p9-zh-popup-open (97.1%)
 
 Two differences are left. The Drawing Board pop-up menu (below) is text antialiased over the paper.
 WebKit's dimmed System 7 pop-up menu has no shadow: the shadow lies outside the border box, and

@@ -242,6 +242,46 @@
     14 #9c9c94;
 }
 
+@font-palette-values --clio-aa-rdoc-title {
+  font-family: "Clio Sans '97 Title Exact";
+  override-colors:
+    0 #101010,
+    1 #212121,
+    2 #323232,
+    3 #444444,
+    4 #555555,
+    5 #666666,
+    6 #777777,
+    7 #878787,
+    8 #989898,
+    9 #a9a9a9,
+    10 #bababa,
+    11 #cccccc,
+    12 #dddddd,
+    13 #eeeeee,
+    14 #ffffff;
+}
+
+@font-palette-values --clio-aa-rdoc-title-inactive {
+  font-family: "Clio Sans '97 Title Exact";
+  override-colors:
+    0 #eeeeee,
+    1 #dddddd,
+    2 #cccccc,
+    3 #bababa,
+    4 #a9a9a9,
+    5 #989898,
+    6 #878787,
+    7 #777777,
+    8 #666666,
+    9 #555555,
+    10 #444444,
+    11 #323232,
+    12 #212121,
+    13 #101010,
+    14 #000000;
+}
+
 /* COLRv0 edge levels in other text colours (Safari; Chrome's COLRv1 file
    follows the text colour by itself and ignores these): white for chosen
    menu titles, items and icon labels, #6f6f6f for dimmed items. */
