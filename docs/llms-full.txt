@@ -781,6 +781,7 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
   /* Edit text: 1px frame, text inset 3px (Control Panel RAM cache field). */
   --clio-field-padding: 3px;
   --clio-field-focus-shadow: none;
+  --clio-field-focus-outline: var(--clio-focus-outline);
 
   /* Pop-up menus */
   --clio-popup-bg: var(--clio-paper);
@@ -907,6 +908,68 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
   --clio-art-s6-grow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' shape-rendering='crispEdges'%3E%3Cpath fill='%23000' d='M2 2h7v1h-7zM2 3h1v1h-1zM8 3h1v1h-1zM2 4h1v1h-1zM8 4h5v1h-5zM2 5h1v1h-1zM8 5h1v1h-1zM12 5h1v1h-1zM2 6h1v1h-1zM8 6h1v1h-1zM12 6h1v1h-1zM2 7h1v1h-1zM8 7h1v1h-1zM12 7h1v1h-1zM2 8h7v1h-7zM12 8h1v1h-1zM4 9h1v1h-1zM12 9h1v1h-1zM4 10h1v1h-1zM12 10h1v1h-1zM4 11h1v1h-1zM12 11h1v1h-1zM4 12h9v1h-9z'/%3E%3C/svg%3E");
   --clio-art-s6-dkgray: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='2' shape-rendering='crispEdges'%3E%3Cpath fill='%23000' d='M0 0h1v1h-1zM2 0h2v1h-2zM0 1h3v1h-3z'/%3E%3Cpath fill='%23fff' d='M1 0h1v1h-1zM3 1h1v1h-1z'/%3E%3C/svg%3E");
   --clio-art-s6-menucheck: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='8' shape-rendering='crispEdges'%3E%3Cpath fill='%23000' d='M8 0h1v1h-1zM7 1h2v1h-2zM6 2h2v1h-2zM5 3h2v1h-2zM0 4h1v1h-1zM4 4h2v1h-2zM0 5h2v1h-2zM3 5h2v1h-2zM1 6h3v1h-3zM2 7h1v1h-1z'/%3E%3C/svg%3E");
+  /* Disclosure triangle: System 6 had none; it takes System 7's (Finder list
+     view, 11px, black with a blue and white checker). */
+  --clio-disclosure-size: 11px;
+  --clio-disclosure-gap: 4px;
+  --clio-art-disclosure: url("art/system7/disclosure.png");
+  --clio-art-disclosure-open: url("art/system7/disclosure-open.png");
+
+  /* List view (Finder, View by Name; System 7.5.3): headers on the window's
+     white, the sorted one underlined, a double rule (black, white, black) below. */
+  --clio-list-view-bg: var(--clio-paper);
+  --clio-list-view-row: 16px;
+  --clio-list-view-header-height: 20px;
+  --clio-list-view-header-padding: 0 4px 3px;
+  --clio-list-view-header-bg: linear-gradient(var(--clio-ink), var(--clio-ink)) 0 calc(100% - 2px) / 100% 1px no-repeat, linear-gradient(var(--clio-ink), var(--clio-ink)) 0 100% / 100% 1px no-repeat;
+  --clio-list-view-sorted-header-bg: var(--clio-list-view-header-bg);
+  --clio-list-view-sorted-decoration: underline;
+  --clio-list-view-sorted-bg: transparent;
+  --clio-list-view-sort-width: 0;
+
+  /* Slider: System 6 had none; it takes Platinum's (Mouse control panel,
+     Mac OS 9.0) until an era draws its own. */
+  --clio-slider-height: 16px;
+  --clio-slider-track-height: 7px;
+  --clio-slider-track-top: 3px;
+  --clio-slider-track-slice: 3px;
+  --clio-slider-track-slice-n: 3;
+  --clio-slider-thumb-width: 15px;
+  --clio-slider-thumb-height: 16px;
+  --clio-art-slider-track: url("art/platinum/slider-track.png");
+  --clio-art-slider-thumb: url("art/platinum/slider-thumb.png");
+  --clio-slider-tick-gap: 0px;
+  --clio-slider-tick-count: 5;
+  --clio-slider-tick-offset: 9px;
+  --clio-slider-tick-run: 18px;
+  --clio-slider-tick-light: #ffffff;
+  --clio-slider-tick-ink: #000000;
+  --clio-slider-tick-shade: #888888;
+
+  /* Little arrows: System 6 had none; it takes System 7's (Memory control
+     panel, Cache Size: 15x25). Held and dimmed states are not on System 7's
+     screens and keep the normal picture. */
+  --clio-little-arrows-width: 15px;
+  --clio-little-arrows-height: 25px;
+  --clio-art-little-arrows: url("art/system7/little-arrows.png");
+  --clio-art-little-arrows-up: var(--clio-art-little-arrows);
+  --clio-art-little-arrows-down: var(--clio-art-little-arrows);
+  --clio-art-little-arrows-disabled: var(--clio-art-little-arrows);
+
+  /* Bevel button: System 6 and 7 had none; they take Platinum's
+     (Navigation Services, Mac OS 9.0). */
+  --clio-bevel-min: 20px;
+  --clio-bevel-padding: 0 2px;
+  --clio-bevel-slice: 3px;
+  --clio-bevel-slice-n: 3;
+  --clio-art-bevel: url("art/platinum/bevel.png");
+  --clio-art-bevel-held: url("art/platinum/bevel-held.png");
+  --clio-art-bevel-menu-arrow: url("art/platinum/bevel-menu-arrow.png");
+  --clio-bevel-arrow-right: 5px;
+  --clio-bevel-arrow-bottom: 4px;
+  --clio-bevel-arrow-width: 3px;
+  --clio-bevel-arrow-height: 2px;
+
   /* Frames cut from captures by tooling/frame-art.py. */
   --clio-art-frame-s6-button: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJAgMAAACd/+6DAAAACVBMVEUAAAAAAAD///+D3c/SAAAAAXRSTlMAQObYZgAAACpJREFUeJxjYAxgYBINZWBiYWFgCmB0YGJgYABhBqmVDEx//jAwMAYwAAA66QRtNyAoFwAAAABJRU5ErkJggg==");
   --clio-art-frame-s6-button-held: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJAQMAAADaX5RTAAAABlBMVEUAAAAAAAClZ7nPAAAAAXRSTlMAQObYZgAAAB1JREFUeJxjkGFgSmZgYmBg/N/IxABiMNSDSRkGACm1Aqb7EOVpAAAAAElFTkSuQmCC");
@@ -1659,7 +1722,7 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
 }
 
 :where(input, textarea):focus-visible {
-  outline: var(--clio-focus-outline);
+  outline: var(--clio-field-focus-outline, var(--clio-focus-outline));
   outline-offset: var(--clio-focus-offset);
   box-shadow: var(--clio-field-focus-shadow);
 }
@@ -1896,6 +1959,263 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
 :where(.icon):is(.selected, [aria-selected="true"], [aria-pressed="true"]) > :is(figcaption, span, .icon-label) {
   background: var(--clio-label-selected-bg);
   color: var(--clio-label-selected-fg);
+}
+
+/* Controls the classic guidelines add to the first set (Macintosh Human
+   Interface Guidelines 1992, ch. 7; Mac OS 8 Human Interface Guidelines,
+   ch. 2), each drawn per era from tokens. COVERAGE.md lists them all. */
+
+/* ---- Disclosure triangle ---------------------------------------------------
+   Markup: <button class="disclosure" aria-expanded="false" aria-label="Show">
+   or <details><summary>…</summary>…</details>. System 7 brought it to the
+   Finder's list views; System 6 had none (it uses System 7's). */
+:where(.disclosure) {
+  display: inline-block;
+  box-sizing: border-box;
+  width: var(--clio-disclosure-size);
+  height: var(--clio-disclosure-size);
+  min-width: 0;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: var(--clio-art-disclosure) 0 0 / var(--clio-disclosure-size) var(--clio-disclosure-size) no-repeat;
+  box-shadow: none;
+  vertical-align: middle;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: default;
+}
+
+:where(.disclosure):is([aria-expanded="true"], .open) {
+  background-image: var(--clio-art-disclosure-open);
+}
+
+:where(details) > :where(summary) {
+  display: flex;
+  align-items: center;
+  gap: var(--clio-disclosure-gap);
+  list-style: none;
+  cursor: default;
+}
+
+:where(details) > :where(summary)::-webkit-details-marker {
+  display: none;
+}
+
+:where(details) > :where(summary)::before {
+  content: "";
+  flex: none;
+  width: var(--clio-disclosure-size);
+  height: var(--clio-disclosure-size);
+  background: var(--clio-art-disclosure) 0 0 / var(--clio-disclosure-size) var(--clio-disclosure-size) no-repeat;
+}
+
+:where(details[open]) > :where(summary)::before {
+  background-image: var(--clio-art-disclosure-open);
+}
+
+/* ---- List view --------------------------------------------------------------
+   The Finder's list view: column headers, the sorted column marked, rows of
+   name and details. Markup: <table class="list-view"> with <th aria-sort> on
+   the sorted column and an optional empty <th class="sort-direction">.
+   System 7: plain headers in the small font, the sorted one underlined, a
+   double rule below (Finder, View by Name). */
+:where(.list-view) {
+  border-collapse: collapse;
+  border-spacing: 0;
+  background: var(--clio-list-view-bg);
+  font-family: var(--clio-font-small);
+  font-size: var(--clio-font-size-small);
+  line-height: var(--clio-list-view-row);
+}
+
+:where(.list-view) :where(th, td) {
+  box-sizing: border-box;
+}
+
+:where(.list-view) :where(th) {
+  height: var(--clio-list-view-header-height);
+  padding: var(--clio-list-view-header-padding);
+  background: var(--clio-list-view-header-bg);
+  font-weight: normal;
+  line-height: 14px;
+  text-align: left;
+  vertical-align: top;
+  white-space: nowrap;
+}
+
+:where(.list-view) :where(th[aria-sort]:not([aria-sort="none"])) {
+  background: var(--clio-list-view-sorted-header-bg);
+  text-decoration: var(--clio-list-view-sorted-decoration);
+  text-underline-offset: 2px;
+}
+
+:where(.list-view) :where(td) {
+  height: var(--clio-list-view-row);
+  padding: 0 4px;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+:where(.list-view) :where(td.sorted) {
+  background: var(--clio-list-view-sorted-bg);
+}
+
+:where(.list-view) :where(.sort-direction) {
+  width: var(--clio-list-view-sort-width);
+  padding: 0;
+}
+
+/* ---- Slider ------------------------------------------------------------------
+   <input type="range">, the Appearance slider (Mac OS 8 HIG: "Sliders and Tick
+   Marks"). Add class "ticks" and --clio-slider-tick-count for tick marks under
+   the track. System 6 and System 7 had no slider in the Toolbox; System 7.5's
+   control panels drew their own (see the System 7 layer). */
+:where(input[type="range"]) {
+  box-sizing: border-box;
+  height: var(--clio-slider-height);
+  margin: 0;
+  /* Chrome centres the track in the content box: the padding puts it
+     --clio-slider-track-top below the thumb's top. */
+  padding: 0 0 calc(var(--clio-slider-height) - var(--clio-slider-track-height) - 2 * var(--clio-slider-track-top));
+  background: transparent;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: default;
+}
+
+:where(input[type="range"].ticks) {
+  --clio-slider-tick-spacing: calc((100% - var(--clio-slider-tick-run)) / (var(--clio-slider-tick-count) - 1));
+  height: calc(var(--clio-slider-height) + var(--clio-slider-tick-gap) + 4px);
+  background:
+    repeating-linear-gradient(to right, var(--clio-slider-tick-light) 0 1px, var(--clio-slider-tick-ink) 1px 2px, var(--clio-slider-tick-shade) 2px 3px, transparent 3px var(--clio-slider-tick-spacing)) var(--clio-slider-tick-offset) 100% / 100% 3px no-repeat,
+    repeating-linear-gradient(to right, var(--clio-slider-tick-light) 0 2px, transparent 2px var(--clio-slider-tick-spacing)) var(--clio-slider-tick-offset) calc(100% - 3px) / 100% 1px no-repeat;
+}
+
+:where(input[type="range"])::-webkit-slider-runnable-track {
+  box-sizing: border-box;
+  height: var(--clio-slider-track-height);
+  border-style: solid;
+  border-width: var(--clio-slider-track-slice);
+  border-color: transparent;
+  border-image: var(--clio-art-slider-track) var(--clio-slider-track-slice-n) fill / var(--clio-slider-track-slice) stretch;
+}
+
+:where(input[type="range"])::-webkit-slider-thumb {
+  width: var(--clio-slider-thumb-width);
+  height: var(--clio-slider-thumb-height);
+  /* the thumb sits in the track's content box, inside the border-image slice */
+  margin-top: calc(-1 * (var(--clio-slider-track-top) + var(--clio-slider-track-slice)));
+  border: 0;
+  background: var(--clio-art-slider-thumb) 0 0 / 100% 100% no-repeat;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+/* ---- Little arrows -----------------------------------------------------------
+   The up/down pair beside a number or clock field (Mac OS 8 HIG: "Little
+   Arrows"; System 7's control panels drew them too). Markup:
+   <span class="little-arrows" role="group" aria-label="Cache size">
+     <button class="up" aria-label="Increase"></button>
+     <button class="down" aria-label="Decrease"></button></span>
+   Add aria-disabled="true" (or disabled buttons) for the dimmed pair. */
+:where(.little-arrows) {
+  display: inline-flex;
+  flex-direction: column;
+  width: var(--clio-little-arrows-width);
+  height: var(--clio-little-arrows-height);
+  background: var(--clio-art-little-arrows) 0 0 / 100% 100% no-repeat;
+  vertical-align: middle;
+}
+
+:where(.little-arrows) > :where(button) {
+  flex: 1 1 50%;
+  min-width: 0;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-image: none;
+  background: transparent;
+  box-shadow: none;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+:where(.little-arrows) > :where(button)::before,
+:where(.little-arrows) > :where(button)::after {
+  content: none;
+}
+
+:where(.little-arrows):has(> .up:active) {
+  background-image: var(--clio-art-little-arrows-up, var(--clio-art-little-arrows));
+}
+
+:where(.little-arrows):has(> .down:active) {
+  background-image: var(--clio-art-little-arrows-down, var(--clio-art-little-arrows));
+}
+
+:where(.little-arrows):is([aria-disabled="true"], :has(> button:disabled)) {
+  background-image: var(--clio-art-little-arrows-disabled, var(--clio-art-little-arrows));
+}
+
+/* ---- Bevel button ------------------------------------------------------------
+   A square bevelled button for an icon or a short label, which can act as a
+   push button, a toggle (aria-pressed) or a menu (class "menu", aria-haspopup)
+   (Mac OS 8 HIG: "Bevel Buttons"). Earlier eras had none and use push buttons'
+   square cousin from Platinum. */
+:where(.bevel) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-width: var(--clio-bevel-min);
+  min-height: var(--clio-bevel-min);
+  margin: 0;
+  padding: var(--clio-bevel-padding);
+  border: var(--clio-bevel-slice) solid transparent;
+  border-radius: 0;
+  border-image: var(--clio-art-bevel) var(--clio-bevel-slice-n) fill / var(--clio-bevel-slice) stretch;
+  background: transparent;
+  box-shadow: none;
+  color: var(--clio-ink);
+  font: inherit;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: default;
+}
+
+:where(.bevel):is(:active, .active, [aria-pressed="true"]):not(:disabled) {
+  border-image-source: var(--clio-art-bevel-held);
+}
+
+:where(.bevel) {
+  position: relative;
+}
+
+:where(.bevel)::before,
+:where(.bevel)::after {
+  content: none;
+}
+
+/* The menu arrow, over the face (border-image fill paints over backgrounds). */
+:where(.bevel.menu, .bevel[aria-haspopup])::after {
+  content: "";
+  position: absolute;
+  right: calc(var(--clio-bevel-arrow-right) - var(--clio-bevel-slice));
+  bottom: calc(var(--clio-bevel-arrow-bottom) - var(--clio-bevel-slice));
+  width: var(--clio-bevel-arrow-width);
+  height: var(--clio-bevel-arrow-height);
+  background: var(--clio-art-bevel-menu-arrow) 0 0 / 100% 100% no-repeat;
+}
+
+/* ---- Keyboard focus on lists ---------------------------------------------------
+   Mac OS 8 draws the same ring round a list box that has the keyboard focus
+   (Appearance, Desktop tab, the pattern list); text fields take it from
+   --clio-field-focus-shadow. */
+:where(.listbox, [role="listbox"], select[multiple]):is(:focus-visible, :focus-within) {
+  box-shadow: var(--clio-list-focus-shadow, var(--clio-list-shadow));
 }
 
 /* Dialogs and alerts.
@@ -2517,6 +2837,35 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
   --clio-font-display: Charcoal, "Charcoal CY", "Clio Sans '97 Display", "Clio Asap", "Helvetica Neue", Arial, sans-serif;
   --clio-font-window-title: Charcoal, "Charcoal CY", "Clio Sans '97 Title Exact", "Clio Sans '97 Title", "Clio Sans '97", "Clio Asap", Geneva, "Helvetica Neue", Arial, sans-serif;
   --clio-font-button: Charcoal, "Charcoal CY", "Clio Sans '97 Exact", "Clio Sans '97", "Clio Asap", Geneva, "Helvetica Neue", Arial, sans-serif;
+  /* List view (Finder, Mac OS 9.0): 21px bevelled headers, the sorted one sunk
+     dark; the sorted column's rows #ddd, the others #eee, 19px rows. Drawn
+     with background lines (List view rules), not tokens alone. */
+  --clio-list-view-bg: #eeeeee;
+  --clio-list-view-row: 19px;
+  --clio-list-view-header-height: 21px;
+  --clio-list-view-header-padding: 3px 4px 0;
+  --clio-list-view-sorted-decoration: none;
+  --clio-list-view-sorted-bg: #dddddd;
+  --clio-list-view-sort-width: 15px;
+  /* Keyboard focus on a field or list: a 2px ring of the highlight colour's
+     dark (#6666cc for Purple), its outer corners left out (Date & Time). */
+  --clio-focus-ring-colour: #6666cc;
+  --clio-focus-ring: 0 -1px 0 1px var(--clio-focus-ring-colour), 0 1px 0 1px var(--clio-focus-ring-colour), -1px 0 0 1px var(--clio-focus-ring-colour), 1px 0 0 1px var(--clio-focus-ring-colour);
+  --clio-field-focus-shadow: var(--clio-focus-ring);
+  --clio-field-focus-outline: none;
+  --clio-list-focus-shadow: var(--clio-focus-ring);
+  /* Little arrows (Date & Time, Mac OS 9.0): 13x23; dimmed while their field is
+     not being edited. Held states were under the pointer and keep the normal. */
+  --clio-little-arrows-width: 13px;
+  --clio-little-arrows-height: 23px;
+  --clio-art-little-arrows: url("art/platinum/little-arrows.png");
+  --clio-art-little-arrows-up: url("art/platinum/little-arrows.png");
+  --clio-art-little-arrows-down: url("art/platinum/little-arrows.png");
+  --clio-art-little-arrows-disabled: url("art/platinum/little-arrows-disabled.png");
+  /* Disclosure triangle: 13px with its shadow (Finder list view, Mac OS 9.0). */
+  --clio-disclosure-size: 13px;
+  --clio-art-disclosure: url("art/platinum/disclosure.png");
+  --clio-art-disclosure-open: url("art/platinum/disclosure-open.png");
   --clio-font-text: Geneva, "Clio Asap", "Helvetica Neue", Arial, sans-serif;
   --clio-font-size: 12px;
   --clio-font-smoothing: none;
@@ -2631,7 +2980,6 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
   --clio-field-border: 1px solid #000000;
   --clio-field-shadow: -1px -1px 0 #888888, 1px 1px 0 #ffffff;
   --clio-field-padding: 2px 3px;
-  --clio-field-focus-shadow: -1px -1px 0 #888888, 1px 1px 0 #ffffff;
 
   /* Pop-up menus, measured from Mac OS 9.0 (Appearance tab, "Apple platinum"):
      20px, black frame, #ddd face with a white top line and #aaa foot; a #aaa
@@ -3174,6 +3522,61 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
   font-palette: --clio-aa-p9-button-disabled;
 }
 
+/* ---- List view headers -----------------------------------------------------
+   Measured row by row (Finder list view, Mac OS 9.0). A header: #666 above,
+   white light along its top and left, #ccc, #888 shade and a #333 rule below;
+   the #666 column on its left is the divider. The sorted header is sunk:
+   #111 top and left, #444 right and below (#222 at the two odd corners), a
+   #555 then #aaa inner bevel round #888. The sort-direction cell adds an #888
+   shade on its right. */
+:is([data-era="platinum"], [data-era="drawingboard"]) .list-view th {
+  background:
+    linear-gradient(#666666, #666666) 0 0 / 100% 1px no-repeat,
+    linear-gradient(#666666, #666666) 0 0 / 1px calc(100% - 1px) no-repeat,
+    linear-gradient(#555555, #555555) 0 100% / 1px 1px no-repeat,
+    linear-gradient(#333333, #333333) 1px 100% / 100% 1px no-repeat,
+    linear-gradient(#ffffff, #ffffff) 1px 1px / 100% 1px no-repeat,
+    linear-gradient(#ffffff, #ffffff) 1px 1px / 1px calc(100% - 3px) no-repeat,
+    linear-gradient(#888888, #888888) 2px calc(100% - 1px) / 100% 1px no-repeat,
+    #cccccc;
+}
+
+:is([data-era="platinum"], [data-era="drawingboard"]) .list-view th[aria-sort]:not([aria-sort="none"]) {
+  background:
+    linear-gradient(#222222, #222222) 100% 0 / 1px 1px no-repeat,
+    linear-gradient(#222222, #222222) 0 100% / 1px 1px no-repeat,
+    linear-gradient(#111111, #111111) 0 0 / calc(100% - 1px) 1px no-repeat,
+    linear-gradient(#111111, #111111) 0 0 / 1px calc(100% - 1px) no-repeat,
+    linear-gradient(#444444, #444444) 100% 1px / 1px 100% no-repeat,
+    linear-gradient(#444444, #444444) 1px 100% / 100% 1px no-repeat,
+    linear-gradient(#777777, #777777) calc(100% - 1px) 1px / 1px 1px no-repeat,
+    linear-gradient(#777777, #777777) 1px calc(100% - 1px) / 1px 1px no-repeat,
+    linear-gradient(#555555, #555555) 1px 1px / calc(100% - 3px) 1px no-repeat,
+    linear-gradient(#555555, #555555) 1px 1px / 1px calc(100% - 3px) no-repeat,
+    linear-gradient(#aaaaaa, #aaaaaa) calc(100% - 1px) 2px / 1px calc(100% - 3px) no-repeat,
+    linear-gradient(#aaaaaa, #aaaaaa) 2px calc(100% - 1px) / calc(100% - 3px) 1px no-repeat,
+    #888888;
+}
+
+:is([data-era="platinum"], [data-era="drawingboard"]) .list-view th.sort-direction {
+  background:
+    linear-gradient(#888888, #888888) 100% 2px / 1px calc(100% - 3px) no-repeat,
+    linear-gradient(#cccccc, #cccccc) 100% 1px / 1px 1px no-repeat,
+    linear-gradient(#666666, #666666) 0 0 / 100% 1px no-repeat,
+    linear-gradient(#666666, #666666) 0 0 / 1px calc(100% - 1px) no-repeat,
+    linear-gradient(#555555, #555555) 0 100% / 1px 1px no-repeat,
+    linear-gradient(#333333, #333333) 1px 100% / 100% 1px no-repeat,
+    linear-gradient(#ffffff, #ffffff) 1px 1px / 100% 1px no-repeat,
+    linear-gradient(#ffffff, #ffffff) 1px 1px / 1px calc(100% - 3px) no-repeat,
+    linear-gradient(#888888, #888888) 2px calc(100% - 1px) / 100% 1px no-repeat,
+    url("art/platinum/sort-direction.png") 4px 6px / 8px 7px no-repeat,
+    #cccccc;
+}
+
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(input:not([type]), input[type="text"], input[type="search"], input[type="email"], input[type="url"], input[type="password"], input[type="number"], input[type="tel"], textarea):focus-visible {
+  box-shadow: var(--clio-field-focus-shadow);
+}
+
 /* Mac OS 8.5 "Drawing Board" (the beta theme Apple shipped in 8.5b6 and
    withdrew). Applies inside any element with data-era="drawingboard"; it shares
    the Platinum layer's structure (both are Appearance Manager themes) and
@@ -3194,6 +3597,26 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
      tile (64px) earlier, depending on where the window sits on screen; a page
      matching a particular screen can set 64px on that window or control. */
   --clio-db-phase: 0px;
+  /* Slider (Keyboard, Key Repeat): a 1px pencil track (ppat 7024) 2px below
+     the top of the theme's 9x16 thumb (1106). */
+  --clio-slider-track-height: 1px;
+  --clio-slider-track-top: 2px;
+  --clio-slider-track-slice: 0px;
+  --clio-slider-thumb-width: 9px;
+  --clio-art-slider-thumb: url("art/drawingboard/parts/slider-thumb.png");
+  /* Little arrows: the theme's 13x21 pictures (350: normal, up held, down held,
+     dimmed), through 16 bits (Date & Time). */
+  --clio-little-arrows-width: 13px;
+  --clio-little-arrows-height: 21px;
+  --clio-art-little-arrows: url("art/drawingboard/parts/little-arrows.png");
+  --clio-art-little-arrows-up: url("art/drawingboard/parts/little-arrows-up.png");
+  --clio-art-little-arrows-down: url("art/drawingboard/parts/little-arrows-down.png");
+  --clio-art-little-arrows-disabled: url("art/drawingboard/parts/little-arrows-disabled.png");
+  /* Disclosure triangle: the theme's 11px pictures (closed 340, open 343, which
+     Mac OS draws through 16 bits), Finder list view. */
+  --clio-disclosure-size: 11px;
+  --clio-art-disclosure: url("art/drawingboard/parts/disclosure.png");
+  --clio-art-disclosure-open: url("art/drawingboard/parts/disclosure-open.png");
   --clio-ink: #313131;
   --clio-paper: #e7ded6;
   --clio-face: #cdc6bd;
@@ -4071,6 +4494,63 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
 
 [data-era="drawingboard"] :is(button, .btn, .btn-default, input[type="button"], input[type="submit"], input[type="reset"]):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *):is(:disabled, .disabled) {
   font-palette: --clio-aa-db-button-disabled;
+}
+
+/* ---- List view headers (Finder list view, Mac OS 8.5): a #9f9a94 pencil line
+   above and below; plain headers #cdc6bd with a #555 line at the foot, the
+   sorted one #9f9a94 with the #555 line at the top and #333 on its left; #888
+   between columns. Colours are each line's dominant one: the theme draws
+   these lines with pattern pens, not reproduced here. */
+[data-era="drawingboard"] .list-view th {
+  background:
+    linear-gradient(#9f9a94, #9f9a94) 0 0 / 100% 1px no-repeat,
+    linear-gradient(#9f9a94, #9f9a94) 0 100% / 100% 1px no-repeat,
+    linear-gradient(#555555, #555555) 0 calc(100% - 1px) / 100% 1px no-repeat,
+    linear-gradient(#888888, #888888) 0 1px / 1px calc(100% - 2px) no-repeat,
+    #cdc6bd;
+}
+
+[data-era="drawingboard"] .list-view th[aria-sort]:not([aria-sort="none"]) {
+  background:
+    linear-gradient(#9f9a94, #9f9a94) 0 0 / 100% 1px no-repeat,
+    linear-gradient(#555555, #555555) 0 1px / 100% 1px no-repeat,
+    linear-gradient(#333333, #333333) 0 1px / 1px calc(100% - 2px) no-repeat,
+    #9f9a94;
+}
+
+[data-era="drawingboard"] .list-view th.sort-direction {
+  background:
+    linear-gradient(#555555, #555555) 100% 1px / 1px calc(100% - 2px) no-repeat,
+    linear-gradient(#9f9a94, #9f9a94) 0 0 / 100% 1px no-repeat,
+    linear-gradient(#9f9a94, #9f9a94) 0 100% / 100% 1px no-repeat,
+    linear-gradient(#555555, #555555) 0 calc(100% - 1px) / 100% 1px no-repeat,
+    linear-gradient(#888888, #888888) 0 1px / 1px calc(100% - 2px) no-repeat,
+    #cdc6bd;
+}
+
+[data-era="drawingboard"] .list-view {
+  --clio-list-view-bg: #e7ded6;
+  --clio-list-view-sorted-bg: #d6c6b5;
+}
+
+[data-era="drawingboard"] input[type="range"]::-webkit-slider-runnable-track {
+  border: 0;
+  border-image: none;
+  background: url("art/drawingboard/slider-track.png") calc(0px - var(--clio-db-phase, 0px)) 0 / 64px 1px repeat-x;
+}
+
+/* Bevel buttons: drawn as the theme's push button (its pens, corner pixels,
+   hatch and shade); the Navigation Services bevel buttons were not matched
+   pen for pen (inferred). */
+[data-era="drawingboard"] .bevel {
+  border-width: 1px;
+  border-image: url("art/drawingboard/pens/button-corners.png") 5 / 5px stretch;
+  background: var(--clio-button-bg);
+}
+
+[data-era="drawingboard"] .bevel:is(:active, .active, [aria-pressed="true"]):not(:disabled) {
+  border-image-source: url("art/drawingboard/pens/button-held-corners.png");
+  background: var(--clio-button-active-bg);
 }
 
 /* Adaptations the historical machines never needed. Historical sizes are
