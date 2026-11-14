@@ -28,6 +28,16 @@
 /* Clio Sans '97: Charcoal 12 rebuilt the same way from Mac OS 9.0's Key Caps
    (fonts-src/clio-sans-97.txt). Charcoal has one weight, so the face covers
    every weight and the browser never thickens it. */
+/* Each colour face is declared twice: the Plain file alone first, then both. An
+   engine that cannot parse tech() (Safari before 17) drops the second rule and
+   keeps the first instead of losing the face. */
+@font-face {
+  font-family: "Clio Sans '97";
+  src: url("fonts/ClioSans97Plain.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+
 @font-face {
   font-family: "Clio Sans '97";
   src: url("fonts/ClioSans97.woff2") format("woff2") tech(color-COLRv1),
@@ -45,6 +55,13 @@
    pixels fewer than menus and buttons), for title bars only. */
 @font-face {
   font-family: "Clio Sans '97 Title";
+  src: url("fonts/ClioSans97TitlePlain.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Clio Sans '97 Title";
   src: url("fonts/ClioSans97Title.woff2") format("woff2") tech(color-COLRv1),
     url("fonts/ClioSans97TitlePlain.woff2") format("woff2");
   font-weight: 100 900;
@@ -60,8 +77,22 @@
    '97 in its colour, within one level of the real screen. */
 @font-face {
   font-family: "Clio Sans '97 Exact";
+  src: url("fonts/ClioSans97PlainExact.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Clio Sans '97 Exact";
   src: url("fonts/ClioSans97Exact.woff2") format("woff2") tech(color-COLRv1),
     url("fonts/ClioSans97PlainExact.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Clio Sans '97 Title Exact";
+  src: url("fonts/ClioSans97TitlePlainExact.woff2") format("woff2");
   font-weight: 100 900;
   font-display: swap;
 }
@@ -352,6 +383,12 @@
      fallback colour where background-clip: text is missing. */
   --clio-disabled-dither: var(--clio-art-s6-gray50);
   --clio-disabled-fill: transparent;
+  /* A dimmed pop-up menu: the whole control (frame, shadow, title, arrow) drawn
+     through the 50% gray, the ink where x + y is odd surviving (System 7.5.3,
+     Memory's Select Hard Disk with virtual memory off, measured). The pattern
+     starts at the control's corner, not the screen's. */
+  --clio-popup-disabled-mask: var(--clio-art-s6-gray50) 0 0 / 2px 2px;   /* a crisp 2x2 picture: a gradient blurs at 2x in Firefox */
+  --clio-popup-disabled-fg: var(--clio-ink);
   --clio-selection-bg: #000000;
   --clio-selection-fg: #ffffff;
 
@@ -381,6 +418,9 @@
   --clio-radius: 0;
   --clio-control-height: 20px;
   --clio-field-height: 20px;
+  /* clio.js's insertion point: the font's line height, 16px for 12pt (System
+     7.5.3, Find File's 20px field: rows 2-17), whatever the field's line-height. */
+  --clio-caret-height: 16px;
   --clio-row-height: 16px;
   --clio-gap: 8px;
 
@@ -1621,6 +1661,9 @@
   -webkit-font-smoothing: var(--clio-font-smoothing);
   -moz-osx-font-smoothing: grayscale;   /* Firefox on macOS otherwise thickens the pixel squares with a grey fringe */
   line-height: 16px;
+  white-space: nowrap;   /* one line, cut short with an ellipsis, as the Mac truncated a pop-up's title */
+  overflow: hidden;
+  text-overflow: ellipsis;
   appearance: none;
   -webkit-appearance: none;
   cursor: var(--clio-cursor-arrow);
@@ -1632,7 +1675,10 @@
 }
 
 :where(select):disabled {
-  color: var(--clio-disabled);
+  color: var(--clio-popup-disabled-fg, var(--clio-disabled));
+  opacity: 1;   /* Chrome fades a disabled select it draws itself; the Mac did not */
+  mask: var(--clio-popup-disabled-mask, none);
+  mask-clip: no-clip;   /* the shadow outside the frame is dimmed too */
 }
 
 /* The open pop-up menu. Where the browser lets CSS draw it (appearance:
@@ -2817,6 +2863,39 @@
   touch-action: none;
 }
 
+/* ---- clio.js: the insertion point --------------------------------------------
+   TextEdit inverted a 1px line for its caret, as tall as the line: white in a
+   difference blend inverts what is under it the same way. The field's own caret
+   is hidden only while clio.js draws this one. */
+.clio-caret {
+  position: absolute;
+  z-index: 2147483646;
+  width: 1px;
+  background: #ffffff;
+  mix-blend-mode: difference;
+  pointer-events: none;
+}
+
+.clio-caret-off,
+.clio-caret[hidden] {
+  visibility: hidden;
+}
+
+.clio-caret-field {
+  caret-color: transparent;
+}
+
+/* Forced colours repaint the line and may drop the blend: the system's caret instead. */
+@media (forced-colors: active) {
+  .clio-caret {
+    display: none;
+  }
+
+  .clio-caret-field {
+    caret-color: auto;
+  }
+}
+
 /* Control Strip (System 7.5 to Mac OS 9): a row of module buttons with scroll
    arrows and a tab that folds the strip away. Markup follows AI System 6:
    .control-strip > button.control-strip-scroll.control-strip-scroll-back,
@@ -3090,7 +3169,7 @@
      the label 15px in. */
   --clio-popup-shadow: 2px 2px 0 -1px #000000;
   --clio-popup-padding: 0 22px 0 14px;
-  --clio-popup-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='6' shape-rendering='crispEdges'%3E%3Cpath d='M0 0h11v1H0zM1 1h9v1H1zM2 2h7v1H2zM3 3h5v1H3zM4 4h3v1H4zM5 5h1v1H5z'/%3E%3C/svg%3E") right 5px center / 11px 6px no-repeat;
+  --clio-popup-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='6' shape-rendering='crispEdges'%3E%3Cpath d='M0 0h11v1H0zM1 1h9v1H1zM2 2h7v1H2zM3 3h5v1H3zM4 4h3v1H4zM5 5h1v1H5z'/%3E%3C/svg%3E") right 5px top round(down, 50%, 1px) / 11px 6px no-repeat;   /* QuickDraw centred it at floor(spare / 2) */
 
   /* Progress (Finder copy): 11px, a 1px black frame, #ccf track, #444 fill. */
   --clio-progress-height: 11px;
@@ -3219,6 +3298,13 @@
 
 :root :is(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *) > .clio-sb-anchor > .clio-sb > .clio-sb-button {
   background-size: 14px 14px;
+}
+
+/* Collapsed: the title bar's bottom line is the frame's foot, so the shaded
+   window is 19px tall and its shadow starts 1px in under it (System 7.5.3,
+   Infinite HD shaded, measured). */
+:root .window.collapsed {
+  border-bottom-width: 0;
 }
 
 /* Adaptations the historical machines never needed. Historical sizes are

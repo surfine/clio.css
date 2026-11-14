@@ -17,6 +17,8 @@
   --clio-face: #dddddd;
   --clio-disabled: #6f6f6f;
   --clio-disabled-dither: none;
+  --clio-popup-disabled-mask: none;
+  --clio-popup-disabled-fg: var(--clio-disabled);
   /* Push button, disabled button and default ring: the real pixel frames
      (tooling/frame-art.py: Mac OS 9.0 Appearance and GUIdebook's Mac OS 9.0). */
   --clio-button-frame: var(--clio-art-frame-p9-button);

@@ -236,7 +236,7 @@
       </dl>
       <p class="aliases">Also accepts: system.css markup (<code>.title-bar button.close</code>, <code>.title-bar button.resize</code>, <code>.inactive-title-bar</code>, <code>.window-pane</code>, <code>.details-bar</code>, <code>.separator</code>); AI System 6 markup (<code>.close-box</code>, <code>.resize-box</code>, <code>.shade-box</code>, <code>.title-bar h1</code>, <code>.title-bar h2</code>).</p>
       <details class="evidence-details">
-        <summary>Evidence (38)</summary>
+        <summary>Evidence (40)</summary>
       <table class="evidence">
         <caption>Where each value comes from</caption>
         <thead><tr><th scope="col">Era</th><th scope="col">Value</th><th scope="col">Status</th><th scope="col">Source</th></tr></thead>
@@ -261,9 +261,9 @@
         </tr>
 <tr>
           <td>Drawing Board</td>
-          <td>clio.js: the dragged outline is the same 2px band of the gray, round the frame and its shadow (7px across, 8px down), following the frame pieces' overrun near the corners (patches written from the theme's pieces by tooling/db-outline.py)</td>
+          <td>clio.js: the dragged outline is the same 2px band of the gray, round the frame and its shadow (7px across, 8px down), following the structure region's overrun near the corners (patches written by tooling/db-outline.py from the theme's pieces; the region's top-left and bottom-left pieces lie 1px right of the drawn ones, and the grey outer column's last row is region)</td>
           <td><span class="status status-measured">Measured</span></td>
-          <td><code>clio.css capture, Mac OS 8.5 with the 8.5b6 Drawing Board theme in Infinite Mac, Infinite HD dragged by 80,116 (frames before and during, diffed); tooling/outline-check.mjs: 1333 of the Mac's 1349 pixels in all three engines</code><br><span class="upstream">the 16 + 19 pixels left: the close box's cross overrunning above the frame and a line below the bottom-left corner 2px along</span></td>
+          <td><code>clio.css capture, Mac OS 8.5 with the 8.5b6 Drawing Board theme in Infinite Mac, Infinite HD dragged by 80,116 (frames before and during, diffed); tooling/outline-check.mjs: all 1349 of the Mac's pixels and no others in Chromium and WebKit</code><br><span class="upstream">the 1px offset of the region pieces is fitted to this one frame (the inverted gray shows only every other pixel of the region), not read from the theme's region data</span></td>
         </tr>
 <tr>
           <td>System 7</td>
@@ -336,6 +336,18 @@
           <td>Background window: #555 frame, plain white title bar, #888 title, black drop shadow</td>
           <td><span class="status status-measured">Measured</span></td>
           <td><code>clio.css capture, System 7.5.3 in Infinite Mac (npm run capture:system7), frame folder-window</code><br><span class="upstream">99.98% identical</span></td>
+        </tr>
+<tr>
+          <td>Platinum</td>
+          <td>Drop shadow: a 1px black line down the right from the frame's third row and along the foot from its third column (a notch at both corners); behind another window the same line in #555</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, Mac OS 9.0 in Infinite Mac (frames appearance, collapsed; GUIdebook Appearance and Web Sharing)</code><br><span class="upstream">specimens active-titlebar, inactive-titlebar, p9-titlebar and p9-collapsed 100% identical without a mask; drawn with border lines on ::after, as a box-shadow could only start 1px in</span></td>
+        </tr>
+<tr>
+          <td>System 7</td>
+          <td>Shaded (WindowShade) window: 19px, the title bar's bottom line serving as the frame's foot, the shadow 1px in under it</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, System 7.5.3 in Infinite Mac (frame shaded)</code><br><span class="upstream">specimen s7-collapsed 100% identical</span></td>
         </tr>
 <tr>
           <td>System 6</td>
@@ -1003,12 +1015,12 @@
       
       <dl class="facts">
         <dt>Selectors</dt><dd><code>input[type=text]</code> <code>input[type=search]</code> <code>input[type=email]</code> <code>input[type=password]</code> <code>input[type=number]</code> <code>textarea</code></dd>
-        <dt>Tokens</dt><dd><code>--clio-field-bg</code> <code>--clio-field-border</code> <code>--clio-field-shadow</code> <code>--clio-field-padding</code> <code>--clio-field-height</code></dd>
+        <dt>Tokens</dt><dd><code>--clio-field-bg</code> <code>--clio-field-border</code> <code>--clio-field-shadow</code> <code>--clio-field-padding</code> <code>--clio-field-height</code> <code>--clio-caret-height</code></dd>
         <dt>Accessibility</dt><dd>Keyboard focus draws a ring around the field in addition to the caret.</dd>
       </dl>
       
       <details class="evidence-details">
-        <summary>Evidence (6)</summary>
+        <summary>Evidence (8)</summary>
       <table class="evidence">
         <caption>Where each value comes from</caption>
         <thead><tr><th scope="col">Era</th><th scope="col">Value</th><th scope="col">Status</th><th scope="col">Source</th></tr></thead>
@@ -1024,6 +1036,18 @@
           <td>1px ink frame, white, text inset 3px</td>
           <td><span class="status status-measured">Measured</span></td>
           <td><code>clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame control-panel (RAM Cache field), get-info (comments)</code><br><span class="upstream">System 6.0.8</span></td>
+        </tr>
+<tr>
+          <td>System 7</td>
+          <td>clio.js: the insertion point in a field inside a window is TextEdit's: a 1px XOR line 16px tall (--clio-caret-height), in the pixel left of the character, lit 567 ms and dark 567 ms (34 ticks), shown at once after each move; the browser's caret while text is selected or an input method composes; lit and still under reduced motion; data-clio-caret=&quot;off&quot; opts out</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, System 7.5.3 in Infinite Mac, Find File's field (frame caret; every change recorded for 4 s: 1109, 1660, 2260, 2827, 3393, 3944 ms)</code><br><span class="upstream">specimen s7-js-caret 100% identical in all three engines; npm run behaviour checks the blink, the hand-over and the opt-out</span></td>
+        </tr>
+<tr>
+          <td>All eras</td>
+          <td>clio.js: the same insertion point in every era (System 6, Mac OS 8 and 9 use TextEdit's)</td>
+          <td><span class="status status-inferred">Inferred</span></td>
+          <td><code>the System 7 measurement</code><br><span class="upstream">not measured outside System 7.5.3</span></td>
         </tr>
 <tr>
           <td>Platinum</td>
@@ -1088,7 +1112,7 @@
       </dl>
       
       <details class="evidence-details">
-        <summary>Evidence (10)</summary>
+        <summary>Evidence (12)</summary>
       <table class="evidence">
         <caption>Where each value comes from</caption>
         <thead><tr><th scope="col">Era</th><th scope="col">Value</th><th scope="col">Status</th><th scope="col">Source</th></tr></thead>
@@ -1122,6 +1146,18 @@
           <td>An 18px rectangle with a 1px frame and a 1px drop shadow and no arrow; the shadow is what marks it as a menu; held, it inverts</td>
           <td><span class="status status-measured">Measured</span></td>
           <td><code>clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frames save-dialog and popup-held (Standard File folder menu)</code><br><span class="upstream">the down triangle arrived with System 7</span></td>
+        </tr>
+<tr>
+          <td>System 7</td>
+          <td>Dimmed: the whole control (frame, shadow, title, arrow) drawn through the 50% gray, ink kept where x + y is odd, the pattern from the control's corner (QuickDraw kept it to the screen); browsers do not fade it; the arrow centred at floor(spare / 2)</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, System 7.5.3 in Infinite Mac, Memory control panel with virtual memory off (Select Hard Disk; frame memory)</code><br><span class="upstream">specimen s7-popup-disabled 100% identical in Chromium and Firefox; WebKit ignores mask-clip: no-clip, so the dimmed shadow is not drawn there</span></td>
+        </tr>
+<tr>
+          <td>System 6</td>
+          <td>Dimmed: as System 7, the control through the 50% gray</td>
+          <td><span class="status status-inferred">Inferred</span></td>
+          <td><code>the System 7 measurement; no dimmed pop-up menu found in System 6.0.8's control panels and Finder</code><br><span class="upstream">dimmed buttons and items use the same pattern there (measured)</span></td>
         </tr>
 <tr>
           <td>Platinum</td>
@@ -1393,9 +1429,9 @@
         </tr>
 <tr>
           <td>Drawing Board</td>
-          <td>clio.js, data-clio-scrolling=&quot;smart&quot;: both arrows at the far end are one theme picture (ScrollArrowsDbl, pxm# 334 and 324), each button showing its half; dimmed and held states from the same resource</td>
+          <td>clio.js, data-clio-scrolling=&quot;smart&quot;: both arrows at the far end are one theme picture (ScrollArrowsDbl, pxm# 334 and 324), each button showing its half; held, only that arrow lights (state 4 for the first, 1 for the second); dimmed from the same resource</td>
           <td><span class="status status-measured">Measured</span></td>
-          <td><code>clio.css capture, Mac OS 8.5 with the theme, Smart Scrolling on (frame smart-scroll); the theme file's pxm#</code><br><span class="upstream">specimen db-js-smart-arrows 100% identical in all three engines; which held state belongs to which arrow (1 the second, 4 the first) is read from the resource order, not from a held frame (inferred)</span></td>
+          <td><code>clio.css capture, Mac OS 8.5 with the theme, Smart Scrolling on (frames smart-scroll, smart-held-left, smart-held-right); the theme file's pxm#</code><br><span class="upstream">specimens db-js-smart-arrows, db-js-smart-held-left and -right 100% identical in all three engines (the pointer on the held arrow masked); the vertical pair held matches the same way (frames only, no specimen); the dimmed state is still read from the resource order</span></td>
         </tr>
         </tbody>
       </table>

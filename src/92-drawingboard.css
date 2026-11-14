@@ -20,9 +20,9 @@
   --clio-drag-outline-extra: 7px;
   --clio-drag-outline-extra-y: 8px;
   --clio-drag-outline-margin: 12px;
-  --clio-db-outline-tl: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAABQCAQAAAAkGDomAAAAR0lEQVR42u3VQQoAIAhFwfT+d6591LofzJzgoYJjALwxZ0ZHp0f3PSVjhp2+5v7jEreoyCwAMtX5uVUZDQAAAAAAAAAAcLUAGtUR+oNvwE8AAAAASUVORK5CYII=");
+  --clio-db-outline-tl: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAABQCAQAAAAkGDomAAAARElEQVR42u3WwQ0AIAgEQUP/PWMHfD3iTAUbIcRzAF7pTqio9OiaUhLesNLHXDs2cUPU6lCA375ZDjQAAAAAAAAAADC6wVkT9TSjiRQAAAAASUVORK5CYII=");
   --clio-db-outline-tr: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAABQCAQAAAAkGDomAAAAZElEQVR42u3UwQ5AMBBF0Y74/1+ulSAS6YY8nLOTWFyjndZ4qd7H3pvSP0SgQIECb96Ec9birooJPKfETXD9xVvqaPQjcfsTeHxyi3+2ZuInWAnzu7q98RMEAAAAAAAAAAD4oAW4lBQeuypXEwAAAABJRU5ErkJggg==");
-  --clio-db-outline-bl: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAABQCAQAAAAkGDomAAAAfUlEQVR42u3UMQ7DIAwF0Bj1/ld2Z4agkkTFRO+tMHxs4+MAAAAAAAAAAACYFaPDzO5qrAj4qRRmQmYfObN/wP+0QfdLVLFVDjcIuKqhUxWsEbL8DMZZi/sargvbfnpFFNyDVzff05PbHp+ZKB7Qot5kUWvx6yu4gTrfhHu+5xggG695/FIAAAAASUVORK5CYII=");
+  --clio-db-outline-bl: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAABQCAQAAAAkGDomAAAAfElEQVR42u3XSw6AMAgFQNt4/yvj3sT6V9rMbHXxBIo6TQAAAAAAAAAAAGeV1sWI1c3l+4DzVpw/wtwSsa7nN+qZFqcKmCFcM2CWGWxWMEPI9DNY9s7u3y2vB58j31aMuLr5nh2M+sLUlOQB7cFO3iRaPHwFu/hE9Uc0ggXRch4XFPn+mwAAAABJRU5ErkJggg==");
   --clio-db-outline-br: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAABQCAQAAAAkGDomAAAATUlEQVR42u3XwQkAIAwDQO3+O+sAiviMcjdBqGDT1gAAAAAAAOBkDDMAACC8su5Ka2U16jViZU2xdzcJ8PNWeOpbuQ1Y6W8hoIACQrgJSZMT/52XbkwAAAAASUVORK5CYII=");
   /* outline patches: 176 pixels in four 80x80 corners (tooling/db-outline.py) */
   --clio-scrollbar-thumb-overlap: 0px;

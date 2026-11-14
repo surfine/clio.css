@@ -88,7 +88,7 @@
      the label 15px in. */
   --clio-popup-shadow: 2px 2px 0 -1px #000000;
   --clio-popup-padding: 0 22px 0 14px;
-  --clio-popup-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='6' shape-rendering='crispEdges'%3E%3Cpath d='M0 0h11v1H0zM1 1h9v1H1zM2 2h7v1H2zM3 3h5v1H3zM4 4h3v1H4zM5 5h1v1H5z'/%3E%3C/svg%3E") right 5px center / 11px 6px no-repeat;
+  --clio-popup-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='6' shape-rendering='crispEdges'%3E%3Cpath d='M0 0h11v1H0zM1 1h9v1H1zM2 2h7v1H2zM3 3h5v1H3zM4 4h3v1H4zM5 5h1v1H5z'/%3E%3C/svg%3E") right 5px top round(down, 50%, 1px) / 11px 6px no-repeat;   /* QuickDraw centred it at floor(spare / 2) */
 
   /* Progress (Finder copy): 11px, a 1px black frame, #ccf track, #444 fill. */
   --clio-progress-height: 11px;
@@ -199,4 +199,11 @@
 [data-era="system7"] :is(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-button,
 [data-era="system7"]:is(html.clio-scrollbars)::-webkit-scrollbar-button {
   background-size: 14px 14px;
+}
+
+/* Collapsed: the title bar's bottom line is the frame's foot, so the shaded
+   window is 19px tall and its shadow starts 1px in under it (System 7.5.3,
+   Infinite HD shaded, measured). */
+[data-era="system7"] .window.collapsed {
+  border-bottom-width: 0;
 }

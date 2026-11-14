@@ -30,7 +30,7 @@ def piece(name, x0, y0, tile=None, clip=None):
             ix, iy = (X - x0) % w, (Y - y0) % h
             if not tile and not (0 <= X - x0 < w and 0 <= Y - y0 < h): continue
             if clip and not clip(X, Y): continue
-            if X == -1 and 0 <= Y < H: continue          # the grey outer column is not region
+            if X == -1 and 0 <= Y < H - 1: continue      # the grey outer column is not region (its last row is: measured)
             if im.getpixel((ix, iy))[3] > 127: R.add((X, Y))
 def inside(px, py, pts):
     c = False
@@ -39,11 +39,11 @@ def inside(px, py, pts):
         if (y1 > py) != (y2 > py) and px < (x2 - x1) * (py - y1) / (y2 - y1) + x1: c = not c
     return c
 # ::after (inset -10px -11px -18px -8px)
-piece('window-tl.png', -4, -5)
+piece('window-tl.png', -3, -5)   # the region's piece sits 1px right of the drawn one (fitted: Mac OS 8.5 drag)
 piece('window-tr.png', W - 6, -10)
 piece('window-ur.png', W - 6, 22)
 piece('window-br.png', W - 52, H - 46)
-piece('window-bl.png', -8, H - 14)
+piece('window-bl.png', -7, H - 14)   # likewise 1px right
 # ::before (inset 0 -7px -8px -1px) and its clip
 Wb, Hb = W + 8, H + 8
 pts = [(25, 0), (Wb - 13, 0), (Wb - 13, 54), (Wb, 54), (Wb, Hb - 54), (Wb - 59, Hb - 54), (Wb - 59, Hb), (57, Hb), (57, Hb - 22), (0, Hb - 22), (0, 22), (25, 22)]

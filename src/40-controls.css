@@ -243,6 +243,9 @@
   -webkit-font-smoothing: var(--clio-font-smoothing);
   -moz-osx-font-smoothing: grayscale;   /* Firefox on macOS otherwise thickens the pixel squares with a grey fringe */
   line-height: 16px;
+  white-space: nowrap;   /* one line, cut short with an ellipsis, as the Mac truncated a pop-up's title */
+  overflow: hidden;
+  text-overflow: ellipsis;
   appearance: none;
   -webkit-appearance: none;
   cursor: var(--clio-cursor-arrow);
@@ -254,7 +257,10 @@
 }
 
 :where(select):disabled {
-  color: var(--clio-disabled);
+  color: var(--clio-popup-disabled-fg, var(--clio-disabled));
+  opacity: 1;   /* Chrome fades a disabled select it draws itself; the Mac did not */
+  mask: var(--clio-popup-disabled-mask, none);
+  mask-clip: no-clip;   /* the shadow outside the frame is dimmed too */
 }
 
 /* The open pop-up menu. Where the browser lets CSS draw it (appearance:

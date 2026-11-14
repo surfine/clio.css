@@ -28,6 +28,16 @@
 /* Clio Sans '97: Charcoal 12 rebuilt the same way from Mac OS 9.0's Key Caps
    (fonts-src/clio-sans-97.txt). Charcoal has one weight, so the face covers
    every weight and the browser never thickens it. */
+/* Each colour face is declared twice: the Plain file alone first, then both. An
+   engine that cannot parse tech() (Safari before 17) drops the second rule and
+   keeps the first instead of losing the face. */
+@font-face {
+  font-family: "Clio Sans '97";
+  src: url("fonts/ClioSans97Plain.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+
 @font-face {
   font-family: "Clio Sans '97";
   src: url("fonts/ClioSans97.woff2") format("woff2") tech(color-COLRv1),
@@ -45,6 +55,13 @@
    pixels fewer than menus and buttons), for title bars only. */
 @font-face {
   font-family: "Clio Sans '97 Title";
+  src: url("fonts/ClioSans97TitlePlain.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Clio Sans '97 Title";
   src: url("fonts/ClioSans97Title.woff2") format("woff2") tech(color-COLRv1),
     url("fonts/ClioSans97TitlePlain.woff2") format("woff2");
   font-weight: 100 900;
@@ -60,8 +77,22 @@
    '97 in its colour, within one level of the real screen. */
 @font-face {
   font-family: "Clio Sans '97 Exact";
+  src: url("fonts/ClioSans97PlainExact.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Clio Sans '97 Exact";
   src: url("fonts/ClioSans97Exact.woff2") format("woff2") tech(color-COLRv1),
     url("fonts/ClioSans97PlainExact.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Clio Sans '97 Title Exact";
+  src: url("fonts/ClioSans97TitlePlainExact.woff2") format("woff2");
   font-weight: 100 900;
   font-display: swap;
 }
@@ -352,6 +383,12 @@
      fallback colour where background-clip: text is missing. */
   --clio-disabled-dither: var(--clio-art-s6-gray50);
   --clio-disabled-fill: transparent;
+  /* A dimmed pop-up menu: the whole control (frame, shadow, title, arrow) drawn
+     through the 50% gray, the ink where x + y is odd surviving (System 7.5.3,
+     Memory's Select Hard Disk with virtual memory off, measured). The pattern
+     starts at the control's corner, not the screen's. */
+  --clio-popup-disabled-mask: var(--clio-art-s6-gray50) 0 0 / 2px 2px;   /* a crisp 2x2 picture: a gradient blurs at 2x in Firefox */
+  --clio-popup-disabled-fg: var(--clio-ink);
   --clio-selection-bg: #000000;
   --clio-selection-fg: #ffffff;
 
@@ -381,6 +418,9 @@
   --clio-radius: 0;
   --clio-control-height: 20px;
   --clio-field-height: 20px;
+  /* clio.js's insertion point: the font's line height, 16px for 12pt (System
+     7.5.3, Find File's 20px field: rows 2-17), whatever the field's line-height. */
+  --clio-caret-height: 16px;
   --clio-row-height: 16px;
   --clio-gap: 8px;
 
@@ -1621,6 +1661,9 @@
   -webkit-font-smoothing: var(--clio-font-smoothing);
   -moz-osx-font-smoothing: grayscale;   /* Firefox on macOS otherwise thickens the pixel squares with a grey fringe */
   line-height: 16px;
+  white-space: nowrap;   /* one line, cut short with an ellipsis, as the Mac truncated a pop-up's title */
+  overflow: hidden;
+  text-overflow: ellipsis;
   appearance: none;
   -webkit-appearance: none;
   cursor: var(--clio-cursor-arrow);
@@ -1632,7 +1675,10 @@
 }
 
 :where(select):disabled {
-  color: var(--clio-disabled);
+  color: var(--clio-popup-disabled-fg, var(--clio-disabled));
+  opacity: 1;   /* Chrome fades a disabled select it draws itself; the Mac did not */
+  mask: var(--clio-popup-disabled-mask, none);
+  mask-clip: no-clip;   /* the shadow outside the frame is dimmed too */
 }
 
 /* The open pop-up menu. Where the browser lets CSS draw it (appearance:
@@ -2817,6 +2863,39 @@
   touch-action: none;
 }
 
+/* ---- clio.js: the insertion point --------------------------------------------
+   TextEdit inverted a 1px line for its caret, as tall as the line: white in a
+   difference blend inverts what is under it the same way. The field's own caret
+   is hidden only while clio.js draws this one. */
+.clio-caret {
+  position: absolute;
+  z-index: 2147483646;
+  width: 1px;
+  background: #ffffff;
+  mix-blend-mode: difference;
+  pointer-events: none;
+}
+
+.clio-caret-off,
+.clio-caret[hidden] {
+  visibility: hidden;
+}
+
+.clio-caret-field {
+  caret-color: transparent;
+}
+
+/* Forced colours repaint the line and may drop the blend: the system's caret instead. */
+@media (forced-colors: active) {
+  .clio-caret {
+    display: none;
+  }
+
+  .clio-caret-field {
+    caret-color: auto;
+  }
+}
+
 /* Control Strip (System 7.5 to Mac OS 9): a row of module buttons with scroll
    arrows and a tab that folds the strip away. Markup follows AI System 6:
    .control-strip > button.control-strip-scroll.control-strip-scroll-back,
@@ -3019,6 +3098,8 @@
   --clio-face: #dddddd;
   --clio-disabled: #6f6f6f;
   --clio-disabled-dither: none;
+  --clio-popup-disabled-mask: none;
+  --clio-popup-disabled-fg: var(--clio-disabled);
   /* Push button, disabled button and default ring: the real pixel frames
      (tooling/frame-art.py: Mac OS 9.0 Appearance and GUIdebook's Mac OS 9.0). */
   --clio-button-frame: var(--clio-art-frame-p9-button);
@@ -4067,9 +4148,9 @@
   --clio-drag-outline-extra: 7px;
   --clio-drag-outline-extra-y: 8px;
   --clio-drag-outline-margin: 12px;
-  --clio-db-outline-tl: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAABQCAQAAAAkGDomAAAAR0lEQVR42u3VQQoAIAhFwfT+d6591LofzJzgoYJjALwxZ0ZHp0f3PSVjhp2+5v7jEreoyCwAMtX5uVUZDQAAAAAAAAAAcLUAGtUR+oNvwE8AAAAASUVORK5CYII=");
+  --clio-db-outline-tl: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAABQCAQAAAAkGDomAAAARElEQVR42u3WwQ0AIAgEQUP/PWMHfD3iTAUbIcRzAF7pTqio9OiaUhLesNLHXDs2cUPU6lCA375ZDjQAAAAAAAAAADC6wVkT9TSjiRQAAAAASUVORK5CYII=");
   --clio-db-outline-tr: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAABQCAQAAAAkGDomAAAAZElEQVR42u3UwQ5AMBBF0Y74/1+ulSAS6YY8nLOTWFyjndZ4qd7H3pvSP0SgQIECb96Ec9birooJPKfETXD9xVvqaPQjcfsTeHxyi3+2ZuInWAnzu7q98RMEAAAAAAAAAAD4oAW4lBQeuypXEwAAAABJRU5ErkJggg==");
-  --clio-db-outline-bl: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAABQCAQAAAAkGDomAAAAfUlEQVR42u3UMQ7DIAwF0Bj1/ld2Z4agkkTFRO+tMHxs4+MAAAAAAAAAAACYFaPDzO5qrAj4qRRmQmYfObN/wP+0QfdLVLFVDjcIuKqhUxWsEbL8DMZZi/sargvbfnpFFNyDVzff05PbHp+ZKB7Qot5kUWvx6yu4gTrfhHu+5xggG695/FIAAAAASUVORK5CYII=");
+  --clio-db-outline-bl: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAABQCAQAAAAkGDomAAAAfElEQVR42u3XSw6AMAgFQNt4/yvj3sT6V9rMbHXxBIo6TQAAAAAAAAAAAGeV1sWI1c3l+4DzVpw/wtwSsa7nN+qZFqcKmCFcM2CWGWxWMEPI9DNY9s7u3y2vB58j31aMuLr5nh2M+sLUlOQB7cFO3iRaPHwFu/hE9Uc0ggXRch4XFPn+mwAAAABJRU5ErkJggg==");
   --clio-db-outline-br: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAABQCAQAAAAkGDomAAAATUlEQVR42u3XwQkAIAwDQO3+O+sAiviMcjdBqGDT1gAAAAAAAOBkDDMAACC8su5Ka2U16jViZU2xdzcJ8PNWeOpbuQ1Y6W8hoIACQrgJSZMT/52XbkwAAAAASUVORK5CYII=");
   /* outline patches: 176 pixels in four 80x80 corners (tooling/db-outline.py) */
   --clio-scrollbar-thumb-overlap: 0px;

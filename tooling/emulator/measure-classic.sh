@@ -49,5 +49,16 @@ drawingboard-install)
   $S/d.sh $D "click 737 55" "wait 1200" "move 178 9" "down" "wait 1300" "move 190 60" "move 190 103" "wait 600" "up" "wait 60000" "wait 30000"
   $S/d.sh $D "move 18 9" "wait 700" "down" "wait 1500" "move 60 120" "move 60 176" "wait 1500" "move 150 176" "move 240 177" "wait 1000" "move 240 120" "move 240 84" "wait 1000" "up" "wait 15000" "click 293 110" "wait 4000"
   $S/d.sh $D "move 367 152" "wait 500" "down" "wait 1500" "move 367 160" "move 367 168" "wait 700" "up" "wait 20000" "cmd w" "wait 3000" ;;
-*) echo "usage: $0 system6|system7|platinum|drawingboard DIR"; exit 2 ;;
+system7-more)
+  # Control Panels > Memory: Select Hard Disk dimmed with virtual memory off (system7/memory)
+  $S/s7panel.sh $D 323 memory
+  # Find File's field: the insertion point (system7/caret: lit) and its blink (rec.json)
+  $S/d.sh $D "cmd w" "wait 1500" "move 18 9" "wait 600" "down" "wait 1500" "move 60 100" "move 60 168" "wait 800" "up" "wait 6000" "move 400 300" "wait 300" "rec 478 174 30 20 4000" "shot caret1" "wait 270" "shot caret2" ;;
+drawingboard-held)
+  # After drawingboard-install (put the theme into the System Folder by hand if the windows lie elsewhere):
+  # Appearance > Options > Smart Scrolling, Macintosh HD moved up and made small, each arrow of the pair held
+  # (drawingboard/smart-held-left, smart-held-right)
+  $S/d.sh $D "click 572 110" "wait 3000" "click 218 147" "wait 1500" "cmd w" "wait 4000" "click 140 470" "wait 1500" "slowdrag 250 335 250 135" "wait 1500" "slowdrag 410 358 330 300" "wait 1500"
+  $S/d.sh $D "move 299 299" "wait 400" "down" "wait 500" "shot pair-h-left-held" "up" "wait 800" "move 315 299" "wait 400" "down" "wait 500" "shot pair-h-right-held" "up" ;;
+*) echo "usage: $0 system6|system7|system7-more|platinum|drawingboard|drawingboard-held DIR"; exit 2 ;;
 esac

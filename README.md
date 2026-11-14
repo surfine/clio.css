@@ -25,7 +25,7 @@ npm install clio.css
 ```
 
 ```html
-<link rel="stylesheet" href="https://unpkg.com/clio.css@0.8.0/dist/clio.css">
+<link rel="stylesheet" href="https://unpkg.com/clio.css@0.12.0/dist/clio.css">
 ```
 
 | File | What it draws |
@@ -112,6 +112,13 @@ it; with it:
   right click on the title bar opens too, and a polite live region says where it went.
   The collapse box folds a window to its title bar (`data-clio-shade="dblclick"` adds the
   double click). `clio.zoomRects(from, to)` draws the Finder's zoom rectangles.
+- Text fields inside a `.window` get TextEdit's insertion point: a 1px line that inverts
+  what is under it, a line tall, blinking every 34 ticks as measured in System 7.5.3 (lit
+  and still under reduced motion). The browser's own caret comes back while text is
+  selected or an input method is composing; `data-clio-caret="off"` keeps it everywhere.
+- Centred labels (buttons, tabs, window titles) whose text would start on a half pixel get
+  one more pixel at their end, so every engine lands on the Mac's `floor(spare / 2)`;
+  measured when fonts load and on resize, never per frame (`data-clio-centre="off"`).
 - Sounds: none ship. Set `clio.sounds.alert` (and `menu`, `collapse`, `expand`) to URLs
   and put `data-clio-sounds` on `<html>`; `clio.play(name)` plays one.
 - Scroll areas (`.window-pane`, list boxes, `.clio-scroll`) get scroll bars drawn as
