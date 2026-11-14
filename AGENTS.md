@@ -29,7 +29,8 @@ For AI coding agents using or changing this repository.
   `tooling/s6-art.py`, `tooling/tab-art.py`, `tooling/db-art.py`). Name the capture or
   resource it was measured from in its evidence row. Large textures and illustrations
   (Drawing Board's paper and sketch lines) are not reproduced: use the dominant measured
-  colour and label it `adapted`.
+  colour and label it `adapted`. For the Mac OS X eras the owner chose otherwise (D4 in
+  ROADMAP-MACOSX.md): every part, large textures included, is redrawn pixel by pixel.
   Third-party art needs a licence entry in `THIRD-PARTY.md`.
 - Scope (owner decisions, 2026-11-13 and 2026-11-14): eras that can be measured in an
   emulator — System 6, System 7, Drawing Board (Mac OS 8.5b6, as "System 8"), Platinum
