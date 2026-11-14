@@ -230,6 +230,7 @@
      other corners left the face's #777 (Mac OS 9.0 Finder, frame arrow-held) */
   --clio-scrollbar-button-bevel-on: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' shape-rendering='crispEdges'%3E%3Cpath fill='%23555' d='M0 0h13v1H0zM0 1h1v12H0z'/%3E%3Cpath fill='%23999' d='M1 13h13v1H1zM13 1h1v12h-1z'/%3E%3C/svg%3E");
   --clio-scrollbar-thumb-tracking: live;
+  --clio-scrollbar-repeat-delay: 200ms;   /* Mac OS 9.0 Finder: one step, then a pause of about 0.2 s */
   /* Mac OS 8 and 9 keep a clicked menu open (clio.js) */
   --clio-menu-sticky: 1;
   --clio-drag-outline-width: 2px;   /* Mac OS 9.0: a 2px band */
