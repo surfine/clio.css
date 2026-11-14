@@ -26,8 +26,13 @@ OUT_FILE, FAMILY, PS, ORIGIN = FONTS[KEY]
 # blends ((fg*a + bg*(255-a)) >> 8, a = 17 per level), which no alpha
 # compositing reproduces exactly. Palette 0 is black at those alphas.
 EXACT = '--exact' in sys.argv
-# '--plain': the glyph outlines alone, no colour layers, for browsers without
-# COLRv1 (Safari draws its alpha layers solid, every faint pixel black).
+# '--plain': for browsers without COLRv1 (Safari paints its alpha layers solid,
+# every faint pixel black). The same levels as COLRv0 layers, which Safari
+# draws: fully covered pixels in the text colour (palette 0xFFFF), the other
+# levels from palette entries, black at the levels' alphas by default; a
+# stylesheet recolours them with font-palette (white text, say). With
+# --exact every level, solid included, is a palette entry. Browsers with no
+# colour fonts at all draw the outline (pixels at least half covered).
 PLAIN = '--plain' in sys.argv
 if PLAIN:
     OUT_FILE = OUT_FILE.replace('.woff2', 'Plain.woff2'); FAMILY += ' Plain'; PS = PS.replace('-Regular', 'Plain-Regular')
@@ -101,7 +106,7 @@ for cp, (adv, x0, top, rows) in glyphs.items():
     g = draw(adv, x0, top, rows, base)
     glyf[name(cp)] = g
     hmtx[name(cp)] = (adv * PX, lsb(x0, rows, base))
-    if COVERAGE and rows and not PLAIN:
+    if COVERAGE and rows:
         # One layer per coverage level, painted in the text colour at that alpha.
         for k in sorted({level(ch) for row in rows for ch in row} - {0}):
             ln = '%s.l%d' % (name(cp), k)
@@ -133,7 +138,12 @@ fb.setupOS2(version=4, sTypoAscender=ASC * PX, sTypoDescender=-DESC * PX, sTypoL
 fb.setupPost(isFixedPitch=0, underlinePosition=-200, underlineThickness=100)
 fb.setupHead(unitsPerEm=UPM)
 fb.font['head'].flags |= 1 << 3   # integer ppem scaling
-if layers and not PLAIN:
+if layers and PLAIN:
+    from fontTools.colorLib.builder import buildCOLR, buildCPAL
+    idx = (lambda k: k - 1) if EXACT else (lambda k: 0xFFFF if k == 15 else k - 1)
+    fb.font['COLR'] = buildCOLR({g: [(ln, idx(round(a * 15))) for ln, a in ls] for g, ls in layers.items()}, version=0)
+    fb.font['CPAL'] = buildCPAL([[(0.0, 0.0, 0.0, k * 17 / 255) for k in range(1, 16 if EXACT else 15)]])
+elif layers:
     from fontTools.colorLib.builder import buildCOLR, buildCPAL
     if EXACT:
         fb.font['COLR'] = buildCOLR({g: {'Format': 1, 'Layers': [
