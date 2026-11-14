@@ -65,4 +65,4 @@ Each item says how it can be closed. **M** = can be measured in Infinite Mac;
 
 Start Aqua when items 1–6 are closed or explicitly deferred by the owner, the pixel and
 behaviour checks pass in all three engines, and the task note for the new phase starts
-from LESSONS.md.
+from LESSONS.md. The Mac OS X plan is [ROADMAP-MACOSX.md](ROADMAP-MACOSX.md).
