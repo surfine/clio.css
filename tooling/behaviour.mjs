@@ -200,7 +200,27 @@ await page.keyboard.press("Escape");
 ok(!(await shown("#m")) && await page.evaluate(() => document.activeElement.id) === "t", "keyboard: Esc closes and returns to the title");
 await page.keyboard.press("Enter"); await page.keyboard.press("Enter"); await page.waitForTimeout(450);
 ok(await page.evaluate(() => window.chose) === "new", "keyboard: Return chooses");
-await page.evaluate(() => { window.chose = null; document.activeElement.blur(); });
+ok(await page.evaluate(() => document.activeElement.id) === "t" && !(await shown("#m")), "keyboard: after choosing, focus is back on the title and the menu stays closed");
+// app-menu bar model: one Tab stop, preview on focus, Left/Right between menus, Tab leaves
+await load("platinum", '<button id="before">before</button>' + bar() + '<button id="after">after</button>');
+await page.focus("#before"); await page.keyboard.press("Tab");
+ok(await page.evaluate(() => document.activeElement.id) === "t" && await shown("#m") && !(await page.evaluate(() => document.activeElement.closest(".menu"))), "menu bar: Tab lands on the first title and previews its menu, no item focused");
+await page.keyboard.press("Tab");
+ok(await page.evaluate(() => document.activeElement.id) === "after" && !(await shown("#m")), "menu bar: one Tab stop; Tab leaves and closes the preview");
+await page.keyboard.press("Shift+Tab");
+await page.keyboard.press("ArrowRight");
+ok(await page.evaluate(() => document.activeElement.id) === "t2" && await page.evaluate(() => document.querySelector("#t2").getAttribute("aria-expanded")) === "true" && !(await shown("#m")), "menu bar: Right moves to the next title and previews it");
+await page.keyboard.press("ArrowLeft"); await page.keyboard.press("End");
+ok(await page.evaluate(() => document.activeElement.textContent.trim()) === "Recent", "menu bar: End enters a menu on its last item");
+await page.keyboard.press("ArrowRight");
+ok(await page.evaluate(() => document.activeElement.id) === "one", "menu bar: Right on a submenu item opens it and enters");
+await page.keyboard.press("Escape");
+ok(await page.evaluate(() => document.activeElement.textContent.trim()) === "Recent" && !(await shown("#parent > .menu")) && await shown("#m"), "menu bar: Esc in a submenu closes only it");
+await page.keyboard.press("Home"); await page.keyboard.press("ArrowRight");
+ok(await page.evaluate(() => document.activeElement.id) === "t2" && !(await shown("#m")), "menu bar: Right on a plain item moves to the next menu as a preview");
+await page.keyboard.press("Tab");
+ok(!(await page.evaluate(() => document.querySelector("#t").closest("li").classList.contains("open") || document.querySelector("#t2").closest("li").classList.contains("open"))), "menu bar: Tab out closes every menu");
+await load("platinum", bar("data-clio-shortcuts"));
 await page.keyboard.press("Meta+n");
 ok(await page.evaluate(() => window.chose) === "new" && await page.evaluate(() => document.querySelector("#t").classList.contains("active")), "Command-N runs the item and lights its title");
 await load("platinum", bar());
@@ -216,6 +236,8 @@ if (await page.evaluate(() => CSS.supports("appearance", "base-select"))) {
   await page.mouse.move(sx, sy); await page.mouse.down(); await page.mouse.up();
   const shift = await page.evaluate(() => document.querySelector("#p").style.getPropertyValue("--clio-picker-shift"));
   ok(shift === "-31px", `base-select: the picker moves up two rows and a border to put Monaco on the button (${shift})`);
+  const placed = await page.evaluate(() => { const o = document.querySelectorAll("#p option")[2].getBoundingClientRect(), r = document.querySelector("#p").getBoundingClientRect(); return [Math.round(o.top + o.height / 2), Math.round(r.top + r.height / 2), Math.round(o.left - r.left)]; });
+  ok(Math.abs(placed[0] - placed[1]) <= 1 && Math.abs(placed[2]) <= 1, `base-select: the open picker lies over the button, Monaco on its row (${placed})`);
   await page.keyboard.press("Escape");
 }
 // elsewhere clio.js draws the menu (forced here by hiding base-select from it)

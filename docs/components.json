@@ -384,9 +384,9 @@
         },
         {
           "era": "both",
-          "claim": "clio.js: arrow keys, Return and Esc in menus; Command-key equivalents from <kbd>⌘N</kbd> on menu bars marked data-clio-shortcuts, the title lit for 8 ticks",
+          "claim": "clio.js: from the keyboard the bar is an application menu bar: one Tab stop (roving tabindex), a title's menu previewed on focus, Left/Right between menus, Down/Home/End into a menu, Esc one level at a time, Tab out closes all; Command-key equivalents from <kbd>⌘N</kbd> on menu bars marked data-clio-shortcuts, the title lit for 8 ticks",
           "status": "adapted",
-          "source": "clio.css",
+          "source": "WAI-ARIA Authoring Practices, menubar pattern (via modern-web-guidance app-menus and menu)",
           "upstream": "Mac OS 8 and 9 had no keyboard menu navigation; Command keys are opt-in so a page's demo menus never take the browser's shortcuts"
         },
         {
