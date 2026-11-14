@@ -18,6 +18,26 @@
      tile (64px) earlier, depending on where the window sits on screen; a page
      matching a particular screen can set 64px on that window or control. */
   --clio-db-phase: 0px;
+  /* Slider (Keyboard, Key Repeat): a 1px pencil track (ppat 7024) 2px below
+     the top of the theme's 9x16 thumb (1106). */
+  --clio-slider-track-height: 1px;
+  --clio-slider-track-top: 2px;
+  --clio-slider-track-slice: 0px;
+  --clio-slider-thumb-width: 9px;
+  --clio-art-slider-thumb: url("art/drawingboard/parts/slider-thumb.png");
+  /* Little arrows: the theme's 13x21 pictures (350: normal, up held, down held,
+     dimmed), through 16 bits (Date & Time). */
+  --clio-little-arrows-width: 13px;
+  --clio-little-arrows-height: 21px;
+  --clio-art-little-arrows: url("art/drawingboard/parts/little-arrows.png");
+  --clio-art-little-arrows-up: url("art/drawingboard/parts/little-arrows-up.png");
+  --clio-art-little-arrows-down: url("art/drawingboard/parts/little-arrows-down.png");
+  --clio-art-little-arrows-disabled: url("art/drawingboard/parts/little-arrows-disabled.png");
+  /* Disclosure triangle: the theme's 11px pictures (closed 340, open 343, which
+     Mac OS draws through 16 bits), Finder list view. */
+  --clio-disclosure-size: 11px;
+  --clio-art-disclosure: url("art/drawingboard/parts/disclosure.png");
+  --clio-art-disclosure-open: url("art/drawingboard/parts/disclosure-open.png");
   --clio-ink: #313131;
   --clio-paper: #e7ded6;
   --clio-face: #cdc6bd;
@@ -895,4 +915,61 @@
 
 [data-era="drawingboard"] :is(button, .btn, .btn-default, input[type="button"], input[type="submit"], input[type="reset"]):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *):is(:disabled, .disabled) {
   font-palette: --clio-aa-db-button-disabled;
+}
+
+/* ---- List view headers (Finder list view, Mac OS 8.5): a #9f9a94 pencil line
+   above and below; plain headers #cdc6bd with a #555 line at the foot, the
+   sorted one #9f9a94 with the #555 line at the top and #333 on its left; #888
+   between columns. Colours are each line's dominant one: the theme draws
+   these lines with pattern pens, not reproduced here. */
+[data-era="drawingboard"] .list-view th {
+  background:
+    linear-gradient(#9f9a94, #9f9a94) 0 0 / 100% 1px no-repeat,
+    linear-gradient(#9f9a94, #9f9a94) 0 100% / 100% 1px no-repeat,
+    linear-gradient(#555555, #555555) 0 calc(100% - 1px) / 100% 1px no-repeat,
+    linear-gradient(#888888, #888888) 0 1px / 1px calc(100% - 2px) no-repeat,
+    #cdc6bd;
+}
+
+[data-era="drawingboard"] .list-view th[aria-sort]:not([aria-sort="none"]) {
+  background:
+    linear-gradient(#9f9a94, #9f9a94) 0 0 / 100% 1px no-repeat,
+    linear-gradient(#555555, #555555) 0 1px / 100% 1px no-repeat,
+    linear-gradient(#333333, #333333) 0 1px / 1px calc(100% - 2px) no-repeat,
+    #9f9a94;
+}
+
+[data-era="drawingboard"] .list-view th.sort-direction {
+  background:
+    linear-gradient(#555555, #555555) 100% 1px / 1px calc(100% - 2px) no-repeat,
+    linear-gradient(#9f9a94, #9f9a94) 0 0 / 100% 1px no-repeat,
+    linear-gradient(#9f9a94, #9f9a94) 0 100% / 100% 1px no-repeat,
+    linear-gradient(#555555, #555555) 0 calc(100% - 1px) / 100% 1px no-repeat,
+    linear-gradient(#888888, #888888) 0 1px / 1px calc(100% - 2px) no-repeat,
+    #cdc6bd;
+}
+
+[data-era="drawingboard"] .list-view {
+  --clio-list-view-bg: #e7ded6;
+  --clio-list-view-sorted-bg: #d6c6b5;
+}
+
+[data-era="drawingboard"] input[type="range"]::-webkit-slider-runnable-track {
+  border: 0;
+  border-image: none;
+  background: url("art/drawingboard/slider-track.png") calc(0px - var(--clio-db-phase, 0px)) 0 / 64px 1px repeat-x;
+}
+
+/* Bevel buttons: drawn as the theme's push button (its pens, corner pixels,
+   hatch and shade); the Navigation Services bevel buttons were not matched
+   pen for pen (inferred). */
+[data-era="drawingboard"] .bevel {
+  border-width: 1px;
+  border-image: url("art/drawingboard/pens/button-corners.png") 5 / 5px stretch;
+  background: var(--clio-button-bg);
+}
+
+[data-era="drawingboard"] .bevel:is(:active, .active, [aria-pressed="true"]):not(:disabled) {
+  border-image-source: url("art/drawingboard/pens/button-held-corners.png");
+  background: var(--clio-button-active-bg);
 }

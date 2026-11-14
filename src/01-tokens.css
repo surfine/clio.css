@@ -173,6 +173,7 @@
   /* Edit text: 1px frame, text inset 3px (Control Panel RAM cache field). */
   --clio-field-padding: 3px;
   --clio-field-focus-shadow: none;
+  --clio-field-focus-outline: var(--clio-focus-outline);
 
   /* Pop-up menus */
   --clio-popup-bg: var(--clio-paper);
@@ -299,6 +300,68 @@
   --clio-art-s6-grow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' shape-rendering='crispEdges'%3E%3Cpath fill='%23000' d='M2 2h7v1h-7zM2 3h1v1h-1zM8 3h1v1h-1zM2 4h1v1h-1zM8 4h5v1h-5zM2 5h1v1h-1zM8 5h1v1h-1zM12 5h1v1h-1zM2 6h1v1h-1zM8 6h1v1h-1zM12 6h1v1h-1zM2 7h1v1h-1zM8 7h1v1h-1zM12 7h1v1h-1zM2 8h7v1h-7zM12 8h1v1h-1zM4 9h1v1h-1zM12 9h1v1h-1zM4 10h1v1h-1zM12 10h1v1h-1zM4 11h1v1h-1zM12 11h1v1h-1zM4 12h9v1h-9z'/%3E%3C/svg%3E");
   --clio-art-s6-dkgray: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='2' shape-rendering='crispEdges'%3E%3Cpath fill='%23000' d='M0 0h1v1h-1zM2 0h2v1h-2zM0 1h3v1h-3z'/%3E%3Cpath fill='%23fff' d='M1 0h1v1h-1zM3 1h1v1h-1z'/%3E%3C/svg%3E");
   --clio-art-s6-menucheck: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='8' shape-rendering='crispEdges'%3E%3Cpath fill='%23000' d='M8 0h1v1h-1zM7 1h2v1h-2zM6 2h2v1h-2zM5 3h2v1h-2zM0 4h1v1h-1zM4 4h2v1h-2zM0 5h2v1h-2zM3 5h2v1h-2zM1 6h3v1h-3zM2 7h1v1h-1z'/%3E%3C/svg%3E");
+  /* Disclosure triangle: System 6 had none; it takes System 7's (Finder list
+     view, 11px, black with a blue and white checker). */
+  --clio-disclosure-size: 11px;
+  --clio-disclosure-gap: 4px;
+  --clio-art-disclosure: url("art/system7/disclosure.png");
+  --clio-art-disclosure-open: url("art/system7/disclosure-open.png");
+
+  /* List view (Finder, View by Name; System 7.5.3): headers on the window's
+     white, the sorted one underlined, a double rule (black, white, black) below. */
+  --clio-list-view-bg: var(--clio-paper);
+  --clio-list-view-row: 16px;
+  --clio-list-view-header-height: 20px;
+  --clio-list-view-header-padding: 0 4px 3px;
+  --clio-list-view-header-bg: linear-gradient(var(--clio-ink), var(--clio-ink)) 0 calc(100% - 2px) / 100% 1px no-repeat, linear-gradient(var(--clio-ink), var(--clio-ink)) 0 100% / 100% 1px no-repeat;
+  --clio-list-view-sorted-header-bg: var(--clio-list-view-header-bg);
+  --clio-list-view-sorted-decoration: underline;
+  --clio-list-view-sorted-bg: transparent;
+  --clio-list-view-sort-width: 0;
+
+  /* Slider: System 6 had none; it takes Platinum's (Mouse control panel,
+     Mac OS 9.0) until an era draws its own. */
+  --clio-slider-height: 16px;
+  --clio-slider-track-height: 7px;
+  --clio-slider-track-top: 3px;
+  --clio-slider-track-slice: 3px;
+  --clio-slider-track-slice-n: 3;
+  --clio-slider-thumb-width: 15px;
+  --clio-slider-thumb-height: 16px;
+  --clio-art-slider-track: url("art/platinum/slider-track.png");
+  --clio-art-slider-thumb: url("art/platinum/slider-thumb.png");
+  --clio-slider-tick-gap: 0px;
+  --clio-slider-tick-count: 5;
+  --clio-slider-tick-offset: 9px;
+  --clio-slider-tick-run: 18px;
+  --clio-slider-tick-light: #ffffff;
+  --clio-slider-tick-ink: #000000;
+  --clio-slider-tick-shade: #888888;
+
+  /* Little arrows: System 6 had none; it takes System 7's (Memory control
+     panel, Cache Size: 15x25). Held and dimmed states are not on System 7's
+     screens and keep the normal picture. */
+  --clio-little-arrows-width: 15px;
+  --clio-little-arrows-height: 25px;
+  --clio-art-little-arrows: url("art/system7/little-arrows.png");
+  --clio-art-little-arrows-up: var(--clio-art-little-arrows);
+  --clio-art-little-arrows-down: var(--clio-art-little-arrows);
+  --clio-art-little-arrows-disabled: var(--clio-art-little-arrows);
+
+  /* Bevel button: System 6 and 7 had none; they take Platinum's
+     (Navigation Services, Mac OS 9.0). */
+  --clio-bevel-min: 20px;
+  --clio-bevel-padding: 0 2px;
+  --clio-bevel-slice: 3px;
+  --clio-bevel-slice-n: 3;
+  --clio-art-bevel: url("art/platinum/bevel.png");
+  --clio-art-bevel-held: url("art/platinum/bevel-held.png");
+  --clio-art-bevel-menu-arrow: url("art/platinum/bevel-menu-arrow.png");
+  --clio-bevel-arrow-right: 5px;
+  --clio-bevel-arrow-bottom: 4px;
+  --clio-bevel-arrow-width: 3px;
+  --clio-bevel-arrow-height: 2px;
+
   /* Frames cut from captures by tooling/frame-art.py. */
   --clio-art-frame-s6-button: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJAgMAAACd/+6DAAAACVBMVEUAAAAAAAD///+D3c/SAAAAAXRSTlMAQObYZgAAACpJREFUeJxjYAxgYBINZWBiYWFgCmB0YGJgYABhBqmVDEx//jAwMAYwAAA66QRtNyAoFwAAAABJRU5ErkJggg==");
   --clio-art-frame-s6-button-held: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJAQMAAADaX5RTAAAABlBMVEUAAAAAAAClZ7nPAAAAAXRSTlMAQObYZgAAAB1JREFUeJxjkGFgSmZgYmBg/N/IxABiMNSDSRkGACm1Aqb7EOVpAAAAAElFTkSuQmCC");
