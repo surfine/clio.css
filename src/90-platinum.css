@@ -489,7 +489,7 @@
   box-shadow: 0 0 0 1px #888888;
 }
 
-:is([data-era="platinum"], [data-era="drawingboard"]) :is(button, .btn, .btn-default, input[type="button"], input[type="submit"], input[type="reset"]):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *):is(:disabled, .disabled) {
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(button, .btn, .btn-default, input[type="button"], input[type="submit"], input[type="reset"]):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *, .disclosure, .little-arrows > *, .help-button):is(:disabled, .disabled) {
   background: transparent;
   box-shadow: none;
   border-image: var(--clio-button-frame-disabled) var(--clio-button-frame-slice) fill / calc(var(--clio-button-frame-slice) * 1px) stretch;
@@ -705,16 +705,16 @@
   font-palette: --clio-aa-p9-title-inactive;
 }
 
-:is([data-era="platinum"], [data-era="drawingboard"]) :is(button, .btn, .btn-default, input[type="button"], input[type="submit"], input[type="reset"]):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *) {
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(button, .btn, .btn-default, input[type="button"], input[type="submit"], input[type="reset"]):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *, .disclosure, .little-arrows > *, .help-button) {
   font-family: var(--clio-font-button);
   font-palette: --clio-aa-p9-button;
 }
 
-:is([data-era="platinum"], [data-era="drawingboard"]) :is(button, .btn, .btn-default, input[type="button"], input[type="submit"], input[type="reset"]):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *):not(:disabled, .disabled):is(:active, .active) {
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(button, .btn, .btn-default, input[type="button"], input[type="submit"], input[type="reset"]):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *, .disclosure, .little-arrows > *, .help-button):not(:disabled, .disabled):is(:active, .active) {
   font-palette: --clio-aa-p9-button-held;
 }
 
-:is([data-era="platinum"], [data-era="drawingboard"]) :is(button, .btn, .btn-default, input[type="button"], input[type="submit"], input[type="reset"]):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *):is(:disabled, .disabled) {
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(button, .btn, .btn-default, input[type="button"], input[type="submit"], input[type="reset"]):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *, .disclosure, .little-arrows > *, .help-button):is(:disabled, .disabled) {
   font-palette: --clio-aa-p9-button-disabled;
 }
 

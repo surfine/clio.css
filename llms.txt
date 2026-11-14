@@ -31,6 +31,15 @@ Drop-in for system.css markup (.window, .title-bar button.close, .btn, .btn-defa
 - [Tabs](https://surfine.github.io/clio.css/#tabs): A tab strip over a panel. Native in Platinum; an adaptation in System 6, which had no tab control.
 - [Control Strip](https://surfine.github.io/clio.css/#control-strip): The Control Strip of System 7.5 to Mac OS 9: module buttons with menu triangles, scroll arrows and a tab that folds it away. Markup matches AI System 6's.
 - [Desktop and icons](https://surfine.github.io/clio.css/#desktop): The desktop pattern and desktop icons with their name labels. Bring your own icon images; clio.css ships no Apple icons.
+- [Disclosure triangle](https://surfine.github.io/clio.css/#disclosure): The triangle that shows and hides a list's or a dialog's details. A <details> summary gets it too.
+- [List view](https://surfine.github.io/clio.css/#list-view): The Finder's list view: column headers with the sorted column marked, and rows of names and details.
+- [Slider](https://surfine.github.io/clio.css/#slider): <input type=range> as the Appearance slider, with optional tick marks.
+- [Little arrows](https://surfine.github.io/clio.css/#little-arrows): The up and down pair beside a number or a clock field.
+- [Bevel button](https://surfine.github.io/clio.css/#bevel-button): A square bevelled button for an icon or a short label: push button, toggle (aria-pressed) or menu (class menu).
+- [Chasing arrows](https://surfine.github.io/clio.css/#chasing-arrows): The asynchronous progress indicator: two arrows chasing round a circle.
+- [Help button](https://surfine.github.io/clio.css/#help-button): The square button with the help icon in a dialog's lower left.
+- [Image well](https://surfine.github.io/clio.css/#image-well): A sunken well holding a picture or an icon.
+- [Help balloon](https://surfine.github.io/clio.css/#balloon): Balloon Help: a white balloon with a tail pointing at what it describes.
 - [Type and tokens](https://surfine.github.io/clio.css/#typography): The fonts, the palette and every --clio-* custom property you can override.
 
 ## Optional

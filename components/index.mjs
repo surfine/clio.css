@@ -12,6 +12,8 @@
 
 export const AIS6 = "AI System 6 @b75cd4ed";
 
+import hig from "./hig.mjs";
+
 export const components = [
   {
     id: "window",
@@ -86,6 +88,10 @@ export const components = [
       { era: "drawingboard", claim: "Title bar: 20px on the frame colour then the #555 rule; close and collapse boxes 11px, 4px below the bar's top, flush with the content line", status: "measured", source: "clio.css capture, Mac OS 8.5 with the 8.5b6 Drawing Board theme in Infinite Mac (npm run capture:drawingboard), frame appearance", upstream: "close box 1:1 at (166,73), collapse box 1:1 at (621,73)" },
       { era: "drawingboard", claim: "Close, zoom and collapse box art, normal and held", status: "measured", source: "the theme file's pxm# pixmaps, decoded by tooling/theme-resources.py and redrawn by tooling/db-art.py", upstream: "WindowLargeCloseBox, WindowLargeZoom, WindowLargeCollapse; each found 1:1 in the capture" },
       { era: "drawingboard", claim: "Mac OS sometimes starts a 128px pattern half a tile (64px) earlier, depending on where the window or control sits on screen (the Appearance window, the File menu, the Energy Saver alert, the first Date & Time field, the Themes list's scroll bar); clio.css starts it at the element and offers --clio-db-phase: 64px to match a given screen", status: "adapted", source: "clio.css", upstream: "the rule behind the shift was not found from these captures" },
+      { era: "platinum", claim: "Utility window (.window.utility): 1px black outline and drop from the second row, white light, #999 shade, a 13-row title bar with a 3px dot pattern (the run right of the title from the right end), 10x10 boxes, a #999 rule", status: "measured", source: "clio.css capture, Mac OS 9.0 in Infinite Mac (frames in .fidelity/hig/platinum9), frame switcher (Application Switcher)", upstream: "both ends of the title bar 100% identical" },
+      { era: "drawingboard", claim: "Utility windows take Platinum's drawing; the theme's floating-window pieces (boxes 201/211/221, frame 6195-6214) were found but its title bar pieces were not matched", status: "inferred", source: "clio.css", upstream: "Application Switcher, Mac OS 8.5" },
+      { era: "system7", claim: "Utility windows are the document window's parts at a 13px title bar", status: "inferred", source: "clio.css", upstream: "Macintosh Human Interface Guidelines (1992), ch. 5: floating windows; none on the captured screens" },
+      { era: "platinum", claim: "Movable modal window (.window.movable-modal): no close box, ridges from the fourth column, a black rule across the whole width, a dialog body (white light, #999/#555 shade) with no frame band", status: "measured", source: "clio.css capture, Mac OS 9.0 in Infinite Mac (frames in .fidelity/hig/platinum9), frame nav (Navigation Services Open)", upstream: "left end 100% identical; the right end not compared" },
     ]
   },
   {
@@ -128,6 +134,9 @@ export const components = [
       { era: "drawingboard", claim: "Menu bar: the theme's 630x27 picture (pxm 6104) tiled from the screen's left, 22 rows shown; menus: paper (ppat 7125) from the inside top-left in a frame of pattern pens (ppat 129-133) tiled from the menu's corner, a 2px pencil shade, fixed pencil pixels where the pens meet; 18px items; the separator is ppat 133", status: "measured", source: "clio.css capture, Mac OS 8.5 with the 8.5b6 Drawing Board theme in Infinite Mac (npm run capture:drawingboard), frames file-menu, edit-menu and control-panels-menu; the theme file's ppat and pxm# resources, decoded by tooling/theme-resources.py, written by tooling/db-art.py and tooling/db-pens.py", upstream: "File, Edit, Apple and Control Panels menus agree" },
       { era: "drawingboard", claim: "The chosen menu title and item are underlined in pencil instead of inverted", status: "measured", source: "the theme file's pxm# pixmaps, decoded by tooling/theme-resources.py and redrawn by tooling/db-art.py", upstream: "Menu_Title_Underline_Center, Menu_Item_underline_center; the title underline is visible under File in the capture" },
       { era: "drawingboard", claim: "Menu item underline: left 16px in, right 15px in, its middle piece tiled (the Appearance pop-up's ends 16px from both sides)", status: "measured", source: "clio.css capture, Mac OS 8.5 with the 8.5b6 Drawing Board theme in Infinite Mac (npm run capture:drawingboard), frames control-panels-menu and popup-open", upstream: "Energy Saver in the Control Panels menu" },
+      { era: "system7", claim: "A menu longer than the screen ends in a scroll arrow row (11x6, black, 5px in); the up arrow is the down arrow turned over", status: "measured", source: "clio.css capture, System 7.5.3 in Infinite Mac, frame hig/system7/cp", upstream: "Control Panels submenu; the up arrow inferred" },
+      { era: "drawingboard", claim: "Menu scroll arrows are the theme's 364 (down) and 389 (up)", status: "measured", source: "the theme file's pxm#", upstream: "the down arrow found in the Control Panels submenu" },
+      { era: "both", claim: "Menu bar extras (li.menu-extras: the Help and Application menus) sit at the right; a 16px icon can lead a title or an item", status: "measured", source: "clio.css captures, frames hig/*/app-menu, help-menu, apple-menu, cp", upstream: "positions not compared pixel by pixel" },
     ]
   },
   {
@@ -227,6 +236,7 @@ export const components = [
       { era: "platinum", claim: "White field, 1px black frame, #888 shadow above-left and white etch below-right", status: "measured", source: "apps/desktop/styles/65-appearance-themes.css:935 (P30)", upstream: "Infinite Mac Mac OS 9.0 capture" },
       { era: "platinum", claim: "Focus: a 2px #6666cc ring", status: "measured", source: "apps/desktop/styles/65-platinum-utility.css:38", upstream: "Mac OS 9 capture platinum-native/10b-fonts-tab" },
       { era: "drawingboard", claim: "Edit text: a 1px line of pattern pens (ppat 7003-7006), the rows tiled from the white's left edge, the left column from its top and the right column from 1px higher; 1px of whatever is behind inside it, then white", status: "measured", source: "clio.css capture, Mac OS 8.5 with the 8.5b6 Drawing Board theme in Infinite Mac (npm run capture:drawingboard), frame date-time; the theme file's ppat and pxm# resources, decoded by tooling/theme-resources.py, written by tooling/db-art.py and tooling/db-pens.py", upstream: "both Date & Time fields agree" },
+      { era: "platinum", claim: "Keyboard focus: a 2px ring of #6666cc (Purple highlight) round the field, its outer corners left out; list boxes take it too", status: "measured", source: "clio.css capture, Mac OS 9.0 in Infinite Mac (frames in .fidelity/hig/platinum9), frame date-time-edit", upstream: "100% identical" },
     ]
   },
   {
@@ -340,6 +350,9 @@ export const components = [
       { era: "drawingboard", claim: "Alerts: the theme's eight Alert pictures (6127-6134) round the outline, edges tiled from their ends, on the window paper from 4px inside", status: "measured", source: "clio.css capture, Mac OS 8.5 with the 8.5b6 Drawing Board theme in Infinite Mac (npm run capture:drawingboard), frame energy-saver-alert; the theme file's ppat and pxm# resources, decoded by tooling/theme-resources.py, written by tooling/db-art.py and tooling/db-pens.py", upstream: "every piece found 1:1 round Energy Saver's start-up notice" },
       { era: "drawingboard", claim: "Movable modal dialogs (.modeless-dialog, which is a .window) draw the document window's frame: #222 outline, 4px #cdc6bd frame, #777 inner line, 20px title bar over a #555 rule, the #777 band right and below", status: "measured", source: "clio.css capture, Mac OS 8.5 with Drawing Board (npm run capture:drawingboard), frame copy-progress-5", upstream: "Finder copy window; Movable_Modal pixmaps found 1:1" },
       { era: "drawingboard", claim: "Modal dialogs: the Modal pictures (6135-6142), which have the alert's sizes, placed the same way", status: "inferred", source: "the theme file's ppat and pxm# resources, decoded by tooling/theme-resources.py, written by tooling/db-art.py and tooling/db-pens.py", upstream: "no modal dialog was on screen in the captures" },
+      { era: "platinum", claim: "Separator line (.separator, <hr class=separator>): etched, #888 then white one row lower and one column further right", status: "measured", source: "clio.css capture, Mac OS 9.0 in Infinite Mac, frame hig/platinum9/mouse", upstream: "100% identical" },
+      { era: "system7", claim: "Separator line: a 3px band of QuickDraw's 50% grey, aligned to the screen", status: "measured", source: "clio.css capture, System 7.5.3 in Infinite Mac, frame hig/system7/memory", upstream: "—" },
+      { era: "system6", claim: "Separator line: 1px of ink", status: "inferred", source: "clio.css", upstream: "—" },
     ]
   },
   {
@@ -358,6 +371,8 @@ export const components = [
       { era: "system6", claim: "System 6 had no group box; clio.css draws a 1px ink frame with the legend on paper", status: "adapted", source: "clio.css", upstream: "Control Panel divides its panes with plain 1px rules (clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frame control-panel)" },
       { era: "platinum", claim: "Etched: #888 line with a white line inside and below", status: "measured", source: "apps/desktop/styles/65-appearance-themes.css:909 (P20)", upstream: "Mac OS 9 native group box" },
       { era: "drawingboard", claim: "Group boxes: a 1px #777 line (#888 on the bottom and right edge), no bevel", status: "measured", source: "clio.css capture, Mac OS 8.5 with the 8.5b6 Drawing Board theme in Infinite Mac (npm run capture:drawingboard), frame general-controls", upstream: "Desktop group" },
+      { era: "platinum", claim: "Secondary group box (fieldset.secondary): one #888 line, no light", status: "measured", source: "clio.css capture, Mac OS 9.0 in Infinite Mac (frames in .fidelity/hig/platinum9), frame sound (Settings for selected device)", upstream: "—" },
+      { era: "both", claim: "A check box or pop-up menu can title a group box from inside the legend", status: "measured", source: "clio.css capture, Mac OS 9.0 in Infinite Mac (frames in .fidelity/platinum9), frame date-time (Use a Network Time Server)", upstream: "—" },
     ]
   },
   {
@@ -466,6 +481,7 @@ export const components = [
       { era: "drawingboard", claim: "Desktop and icons are unchanged from Platinum; the theme's desktop pictures are not reproduced", status: "adapted", source: "clio.css", upstream: "scen 'Drawing Board on a Grid' / 'on Parchment' are Apple artwork" },
     ]
   },
+  ...hig,
   {
     id: "typography",
     name: "Type and tokens",

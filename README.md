@@ -38,6 +38,9 @@ npm install clio.css
 | `*.min.css` | Minified builds |
 | `dist/components.json` | Machine-readable index: selectors, tokens, markup and evidence per component |
 
+[COVERAGE.md](COVERAGE.md) checks clio.css against every control and window the classic
+Apple guidelines define (1987, 1992, Inside Macintosh, Mac OS 8), era by era.
+
 The stylesheets load fonts from `dist/fonts/` and the Drawing Board theme's pictures and
 patterns from `dist/art/drawingboard/` with relative URLs, so serve the `dist` folder as a
 whole (the CDNs above do).
