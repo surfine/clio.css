@@ -38,7 +38,9 @@
 
 /* Clio Sans '97's antialiasing is COLRv1 colour layers. A browser without
    COLRv1 (Safari) would paint every layer solid, so it gets the Plain file:
-   the outlines alone, each pixel at least half covered. */
+   the same levels as COLRv0 layers, which Safari draws (fully covered pixels
+   in the text colour, the others black at their alpha unless a palette below
+   recolours them), over outlines for browsers with no colour fonts. */
 /* Clio Sans '97 Title: the same face as window titles draw it (a few faint
    pixels fewer than menus and buttons), for title bars only. */
 @font-face {
@@ -59,7 +61,7 @@
 @font-face {
   font-family: "Clio Sans '97 Exact";
   src: url("fonts/ClioSans97Exact.woff2") format("woff2") tech(color-COLRv1),
-    url("fonts/ClioSans97Plain.woff2") format("woff2");
+    url("fonts/ClioSans97PlainExact.woff2") format("woff2");
   font-weight: 100 900;
   font-display: swap;
 }
@@ -67,7 +69,7 @@
 @font-face {
   font-family: "Clio Sans '97 Title Exact";
   src: url("fonts/ClioSans97TitleExact.woff2") format("woff2") tech(color-COLRv1),
-    url("fonts/ClioSans97TitlePlain.woff2") format("woff2");
+    url("fonts/ClioSans97TitlePlainExact.woff2") format("woff2");
   font-weight: 100 900;
   font-display: swap;
 }
@@ -211,6 +213,47 @@
     12 #a49f97,
     13 #a19c95,
     14 #9c9c94;
+}
+
+/* COLRv0 edge levels in other text colours (Safari; Chrome's COLRv1 file
+   follows the text colour by itself and ignores these): white for chosen
+   menu titles, items and icon labels, #6f6f6f for dimmed items. */
+@font-palette-values --clio-aa-white {
+  font-family: "Clio Sans '97";
+  override-colors:
+    0 rgb(255 255 255 / 0.0667),
+    1 rgb(255 255 255 / 0.1333),
+    2 rgb(255 255 255 / 0.2000),
+    3 rgb(255 255 255 / 0.2667),
+    4 rgb(255 255 255 / 0.3333),
+    5 rgb(255 255 255 / 0.4000),
+    6 rgb(255 255 255 / 0.4667),
+    7 rgb(255 255 255 / 0.5333),
+    8 rgb(255 255 255 / 0.6000),
+    9 rgb(255 255 255 / 0.6667),
+    10 rgb(255 255 255 / 0.7333),
+    11 rgb(255 255 255 / 0.8000),
+    12 rgb(255 255 255 / 0.8667),
+    13 rgb(255 255 255 / 0.9333);
+}
+
+@font-palette-values --clio-aa-6f6f6f {
+  font-family: "Clio Sans '97";
+  override-colors:
+    0 rgb(111 111 111 / 0.0667),
+    1 rgb(111 111 111 / 0.1333),
+    2 rgb(111 111 111 / 0.2000),
+    3 rgb(111 111 111 / 0.2667),
+    4 rgb(111 111 111 / 0.3333),
+    5 rgb(111 111 111 / 0.4000),
+    6 rgb(111 111 111 / 0.4667),
+    7 rgb(111 111 111 / 0.5333),
+    8 rgb(111 111 111 / 0.6000),
+    9 rgb(111 111 111 / 0.6667),
+    10 rgb(111 111 111 / 0.7333),
+    11 rgb(111 111 111 / 0.8000),
+    12 rgb(111 111 111 / 0.8667),
+    13 rgb(111 111 111 / 0.9333);
 }
 
 /* Clio Sans '97 Display: Charcoal's outlines, traced from Mac OS 9.0 drawing it
@@ -3393,6 +3436,20 @@
 :root .window.movable-modal > .window-pane {
   border: 0;
   background: transparent;
+}
+
+/* Safari's COLRv0 edge levels in white and dimmed text (src/00-fonts.css). */
+:root :is(.menu-bar, [role="menubar"], [role="menu-bar"]) > li > :is(button, a, span):is([aria-expanded="true"], .active),
+:root :is(.menu-bar, [role="menubar"], [role="menu-bar"]) > li.open > :is(button, a, span),
+:root :is(.menu, [role="menu"]) > li:not(.disabled, [aria-disabled="true"], .separator, [role="separator"]):is(:hover, :focus-within, .active),
+:root :is(.menu, [role="menu"]) > li > :is(a, button):not([aria-disabled="true"], :disabled):is(:hover, :focus-visible, .active),
+:root .icon:is(.selected, [aria-selected="true"], [aria-pressed="true"]) > :is(figcaption, span, .icon-label) {
+  font-palette: --clio-aa-white;
+}
+
+:root :is(.menu, [role="menu"]) > li:is(.disabled, [aria-disabled="true"]),
+:root :is(.menu, [role="menu"]) > li > :is(a, button):is(:disabled, [aria-disabled="true"]) {
+  font-palette: --clio-aa-6f6f6f;
 }
 
 /* Adaptations the historical machines never needed. Historical sizes are
