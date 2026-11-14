@@ -199,6 +199,19 @@ if '--files' in sys.argv:
     save(grid([['220000', None, None], ['220000', 'c3b59a', '999966']]), 'menu-corner-tr')
     save(grid([['333300', 'baaa94', '000000'], ['cfc0a3', '756f66', '222222'], ['333333', '222222', '756f66']]), 'menu-corner-br')
     save(grid([['663333'] * 4, [None, None, None, '000000'], [None, None, None, '666633']]), 'menu-corner-bl')
+    # The window's top and bottom edges as SVG patterns of themselves, so a background of
+    # any width tiles them from its own left and stops where its box stops (a collapsed
+    # window draws them in a box of their own, not under a clip). The PNG rides inside:
+    # an SVG used as an image may not fetch another file.
+    def tiled_svg(name):
+        im = Image.open(os.path.join(out, name + '.png')).convert('RGBA')
+        buf = io.BytesIO(); im.save(buf, 'PNG', optimize=True)
+        png = 'data:image/png;base64,' + base64.b64encode(buf.getvalue()).decode()
+        svg = ("<svg xmlns='http://www.w3.org/2000/svg'><defs><pattern id='p' width='%d' height='%d' "
+               "patternUnits='userSpaceOnUse'><image width='%d' height='%d' href='%s'/></pattern></defs>"
+               "<rect width='100%%' height='100%%' fill='url(#p)'/></svg>") % (im.width, im.height, im.width, im.height, png)
+        open(os.path.join(out, name + '-tiled.svg'), 'w').write(svg)
+    for n in ('window-top', 'window-top-inactive', 'window-bottom', 'window-bottom-inactive'): tiled_svg(n)
     # The control art too, as files (the stylesheet's --clio-art-db-* point at them).
     os.makedirs(os.path.join(out, 'parts'), exist_ok=True)
     for k, im in art.items(): save(im, os.path.join('parts', k[len('db-'):]))

@@ -129,10 +129,10 @@
         },
         {
           "era": "drawingboard",
-          "claim": "clio.js: the dragged outline is the same 2px band of the gray, round the frame alone (the theme draws no drop shadow)",
+          "claim": "clio.js: the dragged outline is the same 2px band of the gray, round the frame and its shadow (7px across, 8px down), following the frame pieces' overrun near the corners (patches written from the theme's pieces by tooling/db-outline.py)",
           "status": "measured",
-          "source": "clio.css capture, Mac OS 8.5 with the 8.5b6 Drawing Board theme in Infinite Mac, Infinite HD dragged by 80,116 (frames before and during, diffed); tooling/outline-check.mjs: 1275 of the Mac's 1349 pixels in all three engines",
-          "upstream": "the theme's structure region also takes in its sketch lines' overshoots (74 pixels) and two shaped corners (13), which a rectangle does not follow"
+          "source": "clio.css capture, Mac OS 8.5 with the 8.5b6 Drawing Board theme in Infinite Mac, Infinite HD dragged by 80,116 (frames before and during, diffed); tooling/outline-check.mjs: 1333 of the Mac's 1349 pixels in all three engines",
+          "upstream": "the 16 + 19 pixels left: the close box's cross overrunning above the frame and a line below the bottom-left corner 2px along"
         },
         {
           "era": "system7",
@@ -175,6 +175,13 @@
           "status": "measured",
           "source": "clio.css capture, System 7.5.3 in Infinite Mac: WindowShade control panel set to 2 clicks, Infinite HD double-clicked (frame shaded); specimen s7-collapsed 100% identical in Chromium, WebKit and Firefox",
           "upstream": "Infinite Mac's WindowShade is set to Off clicks with sounds off, so the double click stays opt-in; the control panel's factory setting was not checked"
+        },
+        {
+          "era": "drawingboard",
+          "claim": "Collapsed: the box is the title bar and the foot's black line; the bottom corners and the shadow lie under the title bar, which is drawn last",
+          "status": "measured",
+          "source": "clio.css capture, Mac OS 8.5 with the theme in Infinite Mac, Infinite HD's collapse box clicked (frame collapsed)",
+          "upstream": "specimens db-collapsed-left and db-collapsed-right 100% identical in all three engines (the box and its shadow; a window behind is masked)"
         },
         {
           "era": "both",
@@ -946,10 +953,17 @@
         },
         {
           "era": "platinum",
-          "claim": "Open pop-up menu: its top on the button's top (the current item there), as wide as the button less its 22px of arrows, framed all round in black with the white and #999 bevel, the shadow starting 2px in; check mark 3px in, text 20px, each antialiasing level as the screen shows it",
+          "claim": "Open pop-up menu: its top on the button's top (the current item there), as wide as the button less its 20px of arrows, framed all round in black with the white and #999 bevel, the shadow starting 2px in; check mark 3px in, text 20px, each antialiasing level as the screen shows it",
           "status": "measured",
           "source": "clio.css capture, Mac OS 9.0 in Infinite Mac, Appearance > Fonts, Large System Font held with the pointer off the menu (frame fonts-popup-open)",
-          "upstream": "specimens p9-js-popup-open (clio.js, all three engines) and p9-popup-open (base-select, Chromium and WebKit) 100% identical; the button's arrows drawn pressed while it is open are not drawn yet"
+          "upstream": "specimens p9-js-popup-open (clio.js, all three engines) and p9-popup-open (base-select, Chromium and WebKit) 100% identical"
+        },
+        {
+          "era": "platinum",
+          "claim": "While its menu is open the pop-up button's arrows are drawn pressed: #444 top row, #555 then a #666 face, white arrows, #777 and #888 below and right, the frame's corners to match",
+          "status": "measured",
+          "source": "clio.css capture, Mac OS 9.0 in Infinite Mac (frame fonts-popup-open); tooling/p9-art.py and frame-art.py",
+          "upstream": "specimens p9-js-popup-open-arrows and p9-popup-open-arrows (select:open) 100% identical"
         },
         {
           "era": "system7",

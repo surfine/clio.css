@@ -16,7 +16,7 @@ for (const base of [join(root, "package.json"), join(ais6, "package.json")]) {
 if (!playwright) { console.error("Playwright not found (npm i -D playwright, or set AIS6_DIR)."); process.exit(2); }
 
 const css = pathToFileURL(join(root, "dist/clio.css")).href;
-const js = pathToFileURL(join(root, "dist/clio.js")).href;
+const js = pathToFileURL(join(root, process.env.CLIO_JS === "min" ? "dist/clio.min.js" : "dist/clio.js")).href;   // CLIO_JS=min checks the minified build
 const dir = join(root, ".fidelity/behaviour");
 mkdirSync(dir, { recursive: true });
 const ENGINE = process.env.CLIO_ENGINE || "chromium";

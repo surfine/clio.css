@@ -18,13 +18,13 @@ const ENGINE = process.env.CLIO_ENGINE || "chromium";
 
 // era, frames, the window's frame rect on the screen (left, top, width, pane height), the
 // drag, and the pointer's boxes in the two frames (left out).
-const PH_DB = +(process.env.PH_DB || 226);
+const PH_DB = +(process.env.PH_DB || 218);
 const cases = [
   { era: "system6", dir: "system6", win: [-1, 27, 240, 105], d: [80, 113], pointer: [[195, 33, 21, 28], [275, 146, 21, 25]] },
   { era: "system7", dir: "system7", win: [29, 55, 376, 218], d: [80, 116], pointer: [[295, 60, 21, 23], [375, 176, 21, 23]] },
-  // Drawing Board: the theme's structure region also has its sketch lines' overshoots (74 pixels
-  // here) and two shaped corners (13), which a rectangle cannot follow: `allow` counts them.
-  { era: "drawingboard", dir: "drawingboard", win: [23, 52, 394, PH_DB], d: [80, 116], pointer: [[295, 57, 21, 24], [375, 173, 21, 24]], allow: [74, 13] },
+  // Drawing Board: the frame (387x246) and its shadow; the patches leave 16 pixels on the Mac and 19 in
+  // clio.js where the pieces' overrun below the bottom-left and above the top-left is not their pixels.
+  { era: "drawingboard", dir: "drawingboard", win: [23, 52, 387, PH_DB], d: [80, 116], pointer: [[295, 57, 21, 24], [375, 173, 21, 24]], allow: [16, 19] },
   { era: "platinum", dir: "platinum9", win: [24, 52, 386, 219], d: [80, 116], pointer: [[295, 56, 21, 25], [375, 172, 21, 25]] },
 ];
 const OFF = 100;   // the page offset of the screen: even, so every parity is kept
@@ -41,6 +41,7 @@ for (const c of cases) {
   const r = await page.locator("#w").boundingBox();
   await page.mouse.move(r.x + 150, r.y + 8); await page.mouse.down();
   await page.mouse.move(r.x + 150 + c.d[0], r.y + 8 + c.d[1], { steps: 5 });
+  await page.waitForTimeout(300);   // the outline's mask pictures (Drawing Board) load
   const shot = (await page.screenshot()).toString("base64");
   await page.mouse.up();
   const res = await page.evaluate(async ([a, b, s, pointer, off]) => {

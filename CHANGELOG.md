@@ -5,7 +5,7 @@
 Safari and Firefox, checked: `CLIO_ENGINE=webkit|firefox` runs the pixel check and
 `npm run behaviour` in Playwright's WebKit and Firefox as well as Chromium.
 
-- Pixel check: Chromium 125 of 127 identical, WebKit 123 of 127, Firefox 116 of 123 (FIDELITY.md;
+- Pixel check: Chromium 129 of 131 identical, WebKit 127 of 131, Firefox 119 of 126 (FIDELITY.md;
   the two Chromium misses are Drawing Board's open pop-up menu, 96.2%, text over the paper). What
   still differs is a centred label whose text starts on a half pixel: the Mac and Chromium
   round it down, WebKit blends it, Firefox rounds it up. Behaviour checks: 145 in Chromium
@@ -64,10 +64,19 @@ Safari and Firefox, checked: `CLIO_ENGINE=webkit|firefox` runs the pixel check a
   shade and corner pixels), now laid like the real one: top on the button's, as wide as the
   button less its arrows, the top pen in the button's phase, text and check placed as measured.
   clio.js passes the select's `--clio-db-phase` to the menu it draws.
+- **The last Classic gaps** (owner's call: fix before Aqua):
+  - Platinum: while a pop-up's menu is open its arrows are drawn pressed (clio.js marks the
+    select `.clio-open`; base-select uses `select:open`).
+  - Drawing Board: the collapsed window, the frame drawn as the theme draws it (the bottom
+    corners and shadow under the title bar); the window edges tile from SVG patterns.
+  - Drawing Board: the dragged outline follows the frame and shadow and the pieces' overrun
+    (corner patches from `tooling/db-outline.py`): 1333 of 1349 pixels (was 1275).
+- **`dist/clio.min.js`** (esbuild, 31 KB; the package exports `./js` and `./js.min`);
+  `CLIO_JS=min npm run behaviour` checks it. **Budget**: `clio.min.css` may grow to 220 KB
+  (owner, 2026-11-14); Mac OS X eras will ship as files of their own.
 - Size: the minifier shortens `#aabbcc` to `#abc` and drops spaces around `>` and after a
   declaration's colon (`tooling/min-check.mjs` checks the minified builds parse to the same rules
-  in all three engines); shared bevel token `--clio-p9-bevel`. `clio.min.css` 198.5 KB of the
-  200 KB budget (see ROADMAP item 6).
+  in all three engines); shared bevel token `--clio-p9-bevel`.
 - Tooling: the specimen pages declare UTF-8 (WebKit read "…" as Latin-1), crops snap to
   the pixel the box was drawn on, and fonts are waited for after layout.
 

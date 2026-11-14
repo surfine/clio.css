@@ -104,6 +104,10 @@ frames['p9-button-disabled'] = nine(tile('button-disabled'), 0, 0, 80, 20, 4, 6,
 # faces stay CSS (the label and the arrow box are background layers).
 frames['p9-popup'] = nine(load('platinum9', 'appearance-tab'), 288, 143, 180, 20, 3, 6, 10, out_colour=(0xee, 0xee, 0xee), outer_only=True)
 frames['p9-popup-disabled'] = nine(appear, 407, 337, 194, 20, 3, 6, 10, out_colour=(0xee, 0xee, 0xee), outer_only=True)
+# Open (Appearance > Fonts, "Charcoal" held: 333..493 x 143..162): the arrows' corners pressed.
+# Its left corners and edge lie under the open menu and never show; the top and bottom
+# edges are sampled under the arrows.
+frames['p9-popup-open'] = nine(load('platinum9', 'fonts-popup-open'), 333, 143, 161, 20, 3, 150, 10, out_colour=(0xee, 0xee, 0xee), outer_only=True)
 
 for k, im in frames.items():
     print('  --clio-art-frame-%s: %s; /* %dx%d, slice %d */' % (k, uri(im), im.width, im.height, im.width // 2))

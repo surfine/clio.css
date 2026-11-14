@@ -362,13 +362,14 @@
     const phase = cs.getPropertyValue("--clio-db-phase").trim();   // the pens keep the button's place along them
     if (phase) menu.style.setProperty("--clio-db-phase", phase);
     host.appendChild(menu);
+    sel.classList.add("clio-open");   // the button draws its arrows pressed while the menu is open
     // keep it on screen, as the Menu Manager does
     const m = menu.getBoundingClientRect();
     if (m.top < 0) menu.style.top = "0px";
     else if (m.bottom > innerHeight) menu.style.top = `${Math.max(0, innerHeight - m.height)}px`;
     popup = { sel, menu, mode: "press", hot: null, opened: performance.now(), moved: false, x: 0, y: 0 };
   }
-  function closePopup() { if (popup) { popup.menu.remove(); popup = null; } }
+  function closePopup() { if (popup) { popup.menu.remove(); popup.sel.classList.remove("clio-open"); popup = null; } }
   function lightPopup(li) {
     if (!popup || popup.hot === li) return;
     if (popup.hot) popup.hot.classList.remove("active");
@@ -668,11 +669,11 @@
   // System 7.5.3, a 2px band in Mac OS 9.0, both measured) and the window
   // follows when the button comes up. Only windows positioned absolute or
   // fixed, or marked data-clio-drag, move.
-  const outlineBox = (r, width) => {
+  const outlineBox = (r, width, margin = 0) => {
     const d = document.createElement("div");
     d.className = "clio-outline";
     d.setAttribute("aria-hidden", "true");
-    Object.assign(d.style, { left: `${Math.round(r.left)}px`, top: `${Math.round(r.top)}px`, width: `${Math.round(r.width)}px`, height: `${Math.round(r.height)}px`, padding: `${width}px` });
+    Object.assign(d.style, { left: `${Math.round(r.left)}px`, top: `${Math.round(r.top)}px`, width: `${Math.round(r.width)}px`, height: `${Math.round(r.height)}px`, padding: `${width + margin}px` });
     grayPhase(d, Math.round(r.left), Math.round(r.top));
     return d;
   };
@@ -688,9 +689,11 @@
     if (!(cs.position === "absolute" || cs.position === "fixed" || win.hasAttribute("data-clio-drag"))) return;
     e.preventDefault();
     // The dragged region is the window's structure: its frame and its drop shadow.
-    const grow = px(getComputedStyle(win).getPropertyValue("--clio-drag-outline-extra"));
-    const b = win.getBoundingClientRect(), r = { left: b.left, top: b.top, width: b.width + grow, height: b.height + grow };
-    const o = outlineBox(r, outlineWidth(win));
+    // (Drawing Board: a shadow 7px across and 8px down, and a margin for the corners' overrun.)
+    const ws = getComputedStyle(win), grow = px(ws.getPropertyValue("--clio-drag-outline-extra")), m = px(ws.getPropertyValue("--clio-drag-outline-margin"));
+    const growY = ws.getPropertyValue("--clio-drag-outline-extra-y").trim() ? px(ws.getPropertyValue("--clio-drag-outline-extra-y")) : grow;
+    const b = win.getBoundingClientRect(), r = { left: b.left - m, top: b.top - m, width: b.width + grow + 2 * m, height: b.height + growY + 2 * m };
+    const o = outlineBox(r, outlineWidth(win), m);
     (win.closest("[data-era]") || document.body).appendChild(o);
     const x0 = e.clientX, y0 = e.clientY; let dx = 0, dy = 0;
     const move = (ev) => { if (ev.pointerId !== e.pointerId) return; dx = ev.clientX - x0; dy = ev.clientY - y0; o.style.transform = `translate(${dx}px, ${dy}px)`; grayPhase(o, Math.round(r.left) + dx, Math.round(r.top) + dy); };

@@ -10,6 +10,7 @@ import { readFileSync, writeFileSync, mkdirSync, readdirSync, copyFileSync, rmSy
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { gzipSync } from "node:zlib";
+import { createRequire } from "node:module";
 import { components, AIS6 } from "../components/index.mjs";
 import { renderSite, renderLlms, renderLlmsFull, renderEvidence, renderSitemap } from "./site.mjs";
 
@@ -135,6 +136,11 @@ const copyArt = (to) => {
 copyArt("dist");
 // clio.js, the optional behaviour layer: copied as written (it carries its own banner).
 write("dist/clio.js", read("js/clio.js").replace("0.11.0-dev", pkg.version));
+// clio.min.js: the same, minified by esbuild (a dev tool: here, or in AIS6_DIR as Playwright is).
+let esbuild;
+for (const base of [join(root, "package.json"), join(process.env.AIS6_DIR || "/Users/aaron/AI System 6", "package.json")]) { try { esbuild = createRequire(base)("esbuild"); break; } catch {} }
+if (!esbuild) { console.error("esbuild not found (npm i -D esbuild, or set AIS6_DIR): dist/clio.min.js not written."); process.exit(1); }
+write("dist/clio.min.js", esbuild.transformSync(read("dist/clio.js"), { minify: true, legalComments: "inline", target: "es2020" }).code);
 
 // Machine-readable component index.
 const index = {

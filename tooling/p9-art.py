@@ -79,6 +79,15 @@ art['p9-dropdown-off'] = shape(aptab, 453, 148, 7, 10, '#888888')
 
 fontspop = load('fonts-popup-open')   # Appearance > Fonts, Large System Font held (measure-classic.sh)
 
+# The pop-up button's arrows while its menu is open: drawn pressed (frame fonts-popup-open,
+# x 474-492, y 144-161). Below the top row the first column lies under the menu's shadow:
+# it takes the next column's pixels (it never shows).
+def open_arrows():
+    px, w, h = crop(fontspop, 474, 144, 19, 18)
+    for y in range(1, h): px[(0, y)] = px[(1, y)]
+    return px, w, h
+art['p9-popup-open-arrows'] = open_arrows()
+
 def check():
     """Coverage of the black check over #dddddd (an open pop-up menu's current
     item, Mac OS 9.0), as black with alpha (10x8). The 9x8 taken before from the
