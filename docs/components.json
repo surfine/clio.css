@@ -128,6 +128,13 @@
           "upstream": "opacity only; none under prefers-reduced-motion"
         },
         {
+          "era": "both",
+          "claim": "clio.js: a movable window can be moved without dragging: a move button at the start of the title bar (hidden until it has keyboard focus, the title bar then ringed) takes arrow keys (16px, Shift 1px) and opens a menu of moves, as does a right click on the title bar; moves stay inside the page and a polite live region names them",
+          "status": "adapted",
+          "source": "modern-web-guidance drag guide; WCAG 2.5.7 Dragging Movements",
+          "upstream": "the Mac moved windows only by dragging"
+        },
+        {
           "era": "platinum",
           "claim": "clio.js: the collapse box folds the window to its title bar; a double click on the title bar does only with data-clio-shade=\"dblclick\"",
           "status": "inferred",

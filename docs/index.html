@@ -236,7 +236,7 @@
       </dl>
       <p class="aliases">Also accepts: system.css markup (<code>.title-bar button.close</code>, <code>.title-bar button.resize</code>, <code>.inactive-title-bar</code>, <code>.window-pane</code>, <code>.details-bar</code>, <code>.separator</code>); AI System 6 markup (<code>.close-box</code>, <code>.resize-box</code>, <code>.shade-box</code>, <code>.title-bar h1</code>, <code>.title-bar h2</code>).</p>
       <details class="evidence-details">
-        <summary>Evidence (30)</summary>
+        <summary>Evidence (31)</summary>
       <table class="evidence">
         <caption>Where each value comes from</caption>
         <thead><tr><th scope="col">Era</th><th scope="col">Value</th><th scope="col">Status</th><th scope="col">Source</th></tr></thead>
@@ -258,6 +258,12 @@
           <td>clio.zoomRects(): 8 outlines, one per tick, each edge eased by 1.6^k, the last four on screen at once</td>
           <td><span class="status status-measured">Measured</span></td>
           <td><code>clio.css capture, System 7.5.3 in Infinite Mac, the Finder opening the Infinite HD icon, every animation frame recorded (rectangle edges per frame)</code><br><span class="upstream">opacity only; none under prefers-reduced-motion</span></td>
+        </tr>
+<tr>
+          <td>All eras</td>
+          <td>clio.js: a movable window can be moved without dragging: a move button at the start of the title bar (hidden until it has keyboard focus, the title bar then ringed) takes arrow keys (16px, Shift 1px) and opens a menu of moves, as does a right click on the title bar; moves stay inside the page and a polite live region names them</td>
+          <td><span class="status status-adapted">Adapted</span></td>
+          <td><code>modern-web-guidance drag guide; WCAG 2.5.7 Dragging Movements</code><br><span class="upstream">the Mac moved windows only by dragging</span></td>
         </tr>
 <tr>
           <td>Platinum</td>
