@@ -31,11 +31,14 @@ For AI coding agents using or changing this repository.
   (Drawing Board's paper and sketch lines) are not reproduced: use the dominant measured
   colour and label it `adapted`.
   Third-party art needs a licence entry in `THIRD-PARTY.md`.
-- Scope (owner decision, 2026-11-13): eras that can be measured in an emulator —
-  System 6, System 7, Drawing Board (Mac OS 8.5b6, as "System 8"), Platinum (as
-  "System 9"), Mac OS X 10.0–10.4 (Aqua to Tiger), NeXTSTEP. Order: Aqua next. clio.css
-  feeds back into AI System 6, so AI System 6's own chrome (Control Strip, …) is in scope
-  with its markup (owner, 2026-11-14). Launch posts (awesome lists, Show HN) wait for Aqua.
+- Scope (owner decisions, 2026-11-13 and 2026-11-14): eras that can be measured in an
+  emulator — System 6, System 7, Drawing Board (Mac OS 8.5b6, as "System 8"), Platinum
+  (as "System 9"), and for the Mac OS X phase Aqua (10.2), Tiger (10.4), NeXTSTEP 3.3,
+  Snow Leopard (10.6), Lion (10.7), Yosemite (10.10) and Big Sur (11), plus the laptops
+  behind AI System 6's Pocket Desk (`clio.machines.css`). Never Dewfall, AI System 6's
+  own glass skin. clio.css feeds back into AI System 6, so AI System 6's own chrome
+  (Control Strip, Dock, …) is in scope with its markup. Launch posts (awesome lists,
+  Show HN) wait for Aqua. The plan and the decisions behind it: ROADMAP-MACOSX.md.
 - Tokens live on `:root, [data-era="system6"]` (01-tokens.css),
   `[data-era="system7"]` (80-system7.css), `:is([data-era="platinum"],
   [data-era="drawingboard"])` (90-platinum.css, shared: both are Appearance Manager
