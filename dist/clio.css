@@ -611,6 +611,27 @@
   --clio-bevel-arrow-width: 3px;
   --clio-bevel-arrow-height: 2px;
 
+  /* Chasing arrows: Platinum's three frames (Network Browser, Mac OS 9.0). */
+  --clio-art-chasing-arrows: url("art/platinum/chasing-arrows.png");
+  --clio-chasing-arrows-frames: 3;
+
+  /* Separator: a 1px ink line. */
+  --clio-separator-height: 1px;
+  --clio-separator-margin: 8px 0;
+  --clio-separator-bg: var(--clio-ink);
+
+  /* Help button: Platinum's (Keyboard control panel, Mac OS 9.0). */
+  --clio-art-help-button: url("art/platinum/help-button.png");
+  --clio-image-well-bg: #ffffff;
+
+  /* Utility window: the document window's parts at the size of System 7's
+     floating windows (inferred: none was on the captured screens). */
+  --clio-utility-titlebar-height: 13px;
+  --clio-utility-titlebar-row: 11px;
+  --clio-utility-box-size: 9px;
+  --clio-utility-slot: 13px;
+  --clio-utility-title-size: 9px;
+
   /* Frames cut from captures by tooling/frame-art.py. */
   --clio-art-frame-s6-button: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJAgMAAACd/+6DAAAACVBMVEUAAAAAAAD///+D3c/SAAAAAXRSTlMAQObYZgAAACpJREFUeJxjYAxgYBINZWBiYWFgCmB0YGJgYABhBqmVDEx//jAwMAYwAAA66QRtNyAoFwAAAABJRU5ErkJggg==");
   --clio-art-frame-s6-button-held: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJAQMAAADaX5RTAAAABlBMVEUAAAAAAAClZ7nPAAAAAXRSTlMAQObYZgAAAB1JREFUeJxjkGFgSmZgYmBg/N/IxABiMNSDSRkGACm1Aqb7EOVpAAAAAElFTkSuQmCC");
@@ -921,9 +942,15 @@
   white-space: nowrap;
 }
 
+/* A separator line between groups in a window or dialog (Mac OS 8 HIG:
+   "Separator Lines"): <hr class="separator"> or <div class="separator">. */
 :where(.separator) {
   flex: none;
-  border-top: var(--clio-border);
+  box-sizing: border-box;
+  height: var(--clio-separator-height);
+  margin: var(--clio-separator-margin);
+  border: 0;
+  background: var(--clio-separator-bg);
 }
 
 /* A status line under the pane. */
@@ -1859,6 +1886,113 @@
   box-shadow: var(--clio-list-focus-shadow, var(--clio-list-shadow));
 }
 
+/* ---- Chasing arrows ------------------------------------------------------------
+   The asynchronous progress indicator (Mac OS 8 HIG: "Asynchronous Arrows").
+   Markup: <span class="chasing-arrows" role="status" aria-label="Looking…">.
+   It turns by stepping through the era's frames; with reduced motion it
+   stands still on the first. Earlier eras had a spinning watch cursor
+   instead, and use Platinum's arrows. */
+:where(.chasing-arrows) {
+  position: relative;
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  overflow: hidden;
+  vertical-align: middle;
+}
+
+/* The frames side by side on a strip that moves a frame at a time (transform
+   only, so the turning stays off the main thread). */
+:where(.chasing-arrows)::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: calc(16px * var(--clio-chasing-arrows-frames));
+  height: 16px;
+  background: var(--clio-art-chasing-arrows) 0 0 / 100% 100% no-repeat;
+  animation: clio-chase calc(var(--clio-chasing-arrows-frames) * 0.12s) steps(var(--clio-chasing-arrows-frames)) infinite;
+}
+
+@keyframes clio-chase {
+  to { transform: translateX(calc(-16px * var(--clio-chasing-arrows-frames))); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(.chasing-arrows)::before { animation: none; }
+}
+
+/* ---- Help button -----------------------------------------------------------------
+   The square button with the help icon in a dialog's lower left (Mac OS 8 HIG:
+   "Help Button Layout"). <button class="help-button" aria-label="Help">.
+   Earlier eras put a "Help" push button there instead, and use Platinum's. */
+:where(.help-button) {
+  box-sizing: border-box;
+  width: 21px;
+  min-width: 0;
+  height: 20px;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  border-image: none;
+  background: var(--clio-art-help-button) 0 0 / 21px 20px no-repeat;
+  box-shadow: none;
+  color: transparent;
+  font-size: 0;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: default;
+}
+
+:where(.help-button)::before,
+:where(.help-button)::after {
+  content: none;
+}
+
+/* ---- Image well ---------------------------------------------------------------------
+   A sunken well that holds a picture or an icon (Mac OS 8 HIG: "Image Wells"),
+   drawn like the era's field frame round a white face (inferred: no image
+   well was on the captured screens). <div class="image-well"><img …></div> */
+:where(.image-well) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  border: var(--clio-field-border);
+  background: var(--clio-image-well-bg);
+  box-shadow: var(--clio-field-shadow);
+}
+
+/* ---- Group boxes: secondary, and titled by a check box ---------------------------
+   <fieldset class="secondary"> is the lighter group for a subordinate set
+   (Mac OS 8 HIG: "Group Boxes"). A check box or pop-up menu as the title goes
+   in the legend: <legend><label><input type="checkbox"> Use a server</label></legend>.
+   Before Mac OS 8 every group box is the one kind. */
+:where(fieldset > legend) > :where(label) {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* ---- Utility window ------------------------------------------------------------------
+   A floating palette (Mac OS 8 HIG: "Utility Windows"; HIG 1992: floating
+   windows): <div class="window utility"> with the usual .title-bar. Its title
+   bar is thinner, its boxes smaller and its title in the small font. Before
+   Mac OS 8 the eras draw it from the document window's parts (inferred). */
+:where(.window.utility) {
+  --clio-titlebar-height: var(--clio-utility-titlebar-height);
+  --clio-titlebar-row: var(--clio-utility-titlebar-row);
+  --clio-box-size: var(--clio-utility-box-size);
+  --clio-titlebar-slot: var(--clio-utility-slot);
+  min-width: 80px;
+}
+
+:where(.window.utility) > :where(.title-bar) > :is(.title, h1, h2, h3) {
+  font-size: var(--clio-utility-title-size, var(--clio-title-font-size));
+}
+
 /* Dialogs and alerts.
    .modal-dialog / .alert-box: the double-framed modal box (dBoxProc).
    .standard-dialog: the plain box with a drop shadow (altDBoxProc).
@@ -2264,6 +2398,11 @@
    Every value: System 7.5.3 in Infinite Mac, the 800x600 canvas read 1:1
    (npm run capture:system7); see EVIDENCE.md. */
 [data-era="system7"] {
+  /* Separator (Memory control panel, System 7.5.3): a 3px band of QuickDraw's
+     50% grey, aligned to the screen. */
+  --clio-separator-height: 3px;
+  --clio-separator-bg: var(--clio-art-s6-gray50) 0 0 / 2px 2px fixed;
+
   /* 1px #666/#aaa checker desktop. */
   --clio-desktop: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='2' height='2' shape-rendering='crispEdges'%3E%3Cpath fill='%23aaa' d='M0 0h1v1H0zM1 1h1v1H1z'/%3E%3Cpath fill='%23666' d='M1 0h1v1H1zM0 1h1v1H0z'/%3E%3C/svg%3E") 0 0 / 2px 2px repeat, #888888;
 
@@ -2488,6 +2627,10 @@
   --clio-list-view-sorted-decoration: none;
   --clio-list-view-sorted-bg: #dddddd;
   --clio-list-view-sort-width: 15px;
+  /* Separator (Mouse control panel, Mac OS 9.0): etched, #888 then white one
+     row lower and one column further right. */
+  --clio-separator-height: 2px;
+  --clio-separator-bg: linear-gradient(#888888, #888888) 0 0 / calc(100% - 1px) 1px no-repeat, linear-gradient(#ffffff, #ffffff) 1px 1px / calc(100% - 1px) 1px no-repeat;
   /* Keyboard focus on a field or list: a 2px ring of the highlight colour's
      dark (#6666cc for Purple), its outer corners left out (Date & Time). */
   --clio-focus-ring-colour: #6666cc;
@@ -3218,6 +3361,128 @@
   box-shadow: var(--clio-field-focus-shadow);
 }
 
+/* Secondary group box (Sound, "Settings for selected device"): one #888 line,
+   no light. */
+:is([data-era="platinum"], [data-era="drawingboard"]) fieldset.secondary {
+  border: 1px solid #888888;
+  background: transparent;
+  box-shadow: none;
+}
+
+/* ---- Utility window (Application Switcher, Mac OS 9.0) --------------------------
+   1px black outline and a 1px black drop; white light on the top and left,
+   #999 shade on the right; a 13-row title bar of #ccc with a 3px dot pattern
+   (white, #777 one down and right) in rows 3-10, 9x9 boxes, and a #999 rule
+   under it. */
+:is([data-era="platinum"], [data-era="drawingboard"]) .window.utility {
+  --clio-utility-titlebar-height: 14px;
+  --clio-utility-box-size: 10px;
+  padding: 0;
+  border: 1px solid #000000;
+  background:
+    linear-gradient(#ffffff, #ffffff) 0 0 / calc(100% - 1px) 1px no-repeat,
+    linear-gradient(#ffffff, #ffffff) 0 0 / 1px 100% no-repeat,
+    linear-gradient(#999999, #999999) 100% 1px / 1px 100% no-repeat,
+    #cccccc;
+  box-shadow: none;
+  isolation: isolate;
+}
+
+/* The drop: 1px of black right and below, from the second row and column. */
+:is([data-era="platinum"], [data-era="drawingboard"]) .window.utility::before {
+  content: "";
+  position: absolute;
+  top: 1px;
+  right: -2px;
+  bottom: -2px;
+  left: 1px;
+  z-index: -1;
+  background:
+    linear-gradient(#000000, #000000) 100% 0 / 1px 100% no-repeat,
+    linear-gradient(#000000, #000000) 0 100% / 100% 1px no-repeat;
+}
+
+:is([data-era="platinum"], [data-era="drawingboard"]) .window.utility > .title-bar {
+  height: 13px;
+  margin: 1px 1px 0;
+  padding: 0 26px 0 12px;
+  border-bottom: 0;
+  background:
+    linear-gradient(#999999, #999999) 0 100% / calc(100% - 1px) 1px no-repeat,
+    url("art/platinum/utility-dots.png") 0 2px / 3px 3px repeat-x,
+    url("art/platinum/utility-dots.png") 0 5px / 3px 3px repeat-x,
+    url("art/platinum/utility-dots.png") 0 8px / 3px 3px repeat-x,
+    #cccccc;
+  background-clip: padding-box, content-box, content-box, content-box, padding-box;
+}
+
+:is([data-era="platinum"], [data-era="drawingboard"]) .window.utility > .title-bar > :is(.close, .close-box, .resize, .resize-box, .zoom, .shade, .shade-box, .collapse) {
+  position: absolute;
+  grid-area: auto;
+  top: 1px;
+  left: 0;
+  width: 10px;
+  height: 10px;
+  margin: 0;
+  border: 0;
+  background: url("art/platinum/utility-close.png") 0 0 / 10px 10px no-repeat;
+  box-shadow: none;
+}
+
+:is([data-era="platinum"], [data-era="drawingboard"]) .window.utility > .title-bar > :is(.resize, .resize-box, .zoom) {
+  left: auto;
+  right: 11px;
+  background-image: url("art/platinum/utility-zoom.png");
+  box-shadow: -4px 0 0 #cccccc, 1px 0 0 #cccccc;
+}
+
+:is([data-era="platinum"], [data-era="drawingboard"]) .window.utility > .title-bar > :is(.shade, .shade-box, .collapse) {
+  left: auto;
+  right: 0;
+  background-image: url("art/platinum/utility-collapse.png");
+}
+
+/* With no collapse box, the zoom box takes its place. */
+:is([data-era="platinum"], [data-era="drawingboard"]) .window.utility > .title-bar:not(:has(> :is(.shade, .shade-box, .collapse))) > :is(.resize, .resize-box, .zoom) {
+  right: 0;
+}
+
+:is([data-era="platinum"], [data-era="drawingboard"]) .window.utility > .title-bar > :is(button, .close, .resize, .zoom, .shade, .collapse)::before,
+:is([data-era="platinum"], [data-era="drawingboard"]) .window.utility > .title-bar > :is(button, .close, .resize, .zoom, .shade, .collapse)::after {
+  content: none;
+}
+
+:is([data-era="platinum"], [data-era="drawingboard"]) .window.utility > .title-bar > :is(.title, h1, h2, h3) {
+  height: 11px;
+  padding: 0 2px;
+  background: #cccccc;
+  font-size: 12px;
+  line-height: 11px;
+}
+
+/* The dots right of the title run from the right end (their phase differs
+   from the left run's by one column). */
+:is([data-era="platinum"], [data-era="drawingboard"]) .window.utility > .title-bar::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 25px;
+  bottom: 1px;
+  left: 50%;
+  border: 0;
+  background:
+    url("art/platinum/utility-dots.png") right -1px top 2px / 3px 3px repeat-x,
+    url("art/platinum/utility-dots.png") right -1px top 5px / 3px 3px repeat-x,
+    url("art/platinum/utility-dots.png") right -1px top 8px / 3px 3px repeat-x,
+    #cccccc;
+  box-shadow: none;
+}
+
+:is([data-era="platinum"], [data-era="drawingboard"]) .window.utility > .title-bar > :is(.title, h1, h2, h3) {
+  position: relative;
+  z-index: 1;
+}
+
 /* Mac OS 8.5 "Drawing Board" (the beta theme Apple shipped in 8.5b6 and
    withdrew). Applies inside any element with data-era="drawingboard"; it shares
    the Platinum layer's structure (both are Appearance Manager themes) and
@@ -3253,6 +3518,11 @@
   --clio-art-little-arrows-up: url("art/drawingboard/parts/little-arrows-up.png");
   --clio-art-little-arrows-down: url("art/drawingboard/parts/little-arrows-down.png");
   --clio-art-little-arrows-disabled: url("art/drawingboard/parts/little-arrows-disabled.png");
+  /* Chasing arrows: the theme's six frames (390). */
+  --clio-art-chasing-arrows: url("art/drawingboard/parts/chasing-arrows.png");
+  --clio-chasing-arrows-frames: 6;
+  /* Help button: as the Keyboard control panel draws it. */
+  --clio-art-help-button: url("art/drawingboard/help-button.png");
   /* Disclosure triangle: the theme's 11px pictures (closed 340, open 343, which
      Mac OS draws through 16 bits), Finder list view. */
   --clio-disclosure-size: 11px;

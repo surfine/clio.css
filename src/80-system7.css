@@ -5,6 +5,11 @@
    Every value: System 7.5.3 in Infinite Mac, the 800x600 canvas read 1:1
    (npm run capture:system7); see EVIDENCE.md. */
 [data-era="system7"] {
+  /* Separator (Memory control panel, System 7.5.3): a 3px band of QuickDraw's
+     50% grey, aligned to the screen. */
+  --clio-separator-height: 3px;
+  --clio-separator-bg: var(--clio-art-s6-gray50) 0 0 / 2px 2px fixed;
+
   /* 1px #666/#aaa checker desktop. */
   --clio-desktop: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='2' height='2' shape-rendering='crispEdges'%3E%3Cpath fill='%23aaa' d='M0 0h1v1H0zM1 1h1v1H1z'/%3E%3Cpath fill='%23666' d='M1 0h1v1H1zM0 1h1v1H0z'/%3E%3C/svg%3E") 0 0 / 2px 2px repeat, #888888;
 

@@ -610,6 +610,27 @@
   --clio-bevel-arrow-width: 3px;
   --clio-bevel-arrow-height: 2px;
 
+  /* Chasing arrows: Platinum's three frames (Network Browser, Mac OS 9.0). */
+  --clio-art-chasing-arrows: url("art/platinum/chasing-arrows.png");
+  --clio-chasing-arrows-frames: 3;
+
+  /* Separator: a 1px ink line. */
+  --clio-separator-height: 1px;
+  --clio-separator-margin: 8px 0;
+  --clio-separator-bg: var(--clio-ink);
+
+  /* Help button: Platinum's (Keyboard control panel, Mac OS 9.0). */
+  --clio-art-help-button: url("art/platinum/help-button.png");
+  --clio-image-well-bg: #ffffff;
+
+  /* Utility window: the document window's parts at the size of System 7's
+     floating windows (inferred: none was on the captured screens). */
+  --clio-utility-titlebar-height: 13px;
+  --clio-utility-titlebar-row: 11px;
+  --clio-utility-box-size: 9px;
+  --clio-utility-slot: 13px;
+  --clio-utility-title-size: 9px;
+
   /* Frames cut from captures by tooling/frame-art.py. */
   --clio-art-frame-s6-button: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJAgMAAACd/+6DAAAACVBMVEUAAAAAAAD///+D3c/SAAAAAXRSTlMAQObYZgAAACpJREFUeJxjYAxgYBINZWBiYWFgCmB0YGJgYABhBqmVDEx//jAwMAYwAAA66QRtNyAoFwAAAABJRU5ErkJggg==");
   --clio-art-frame-s6-button-held: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJAQMAAADaX5RTAAAABlBMVEUAAAAAAAClZ7nPAAAAAXRSTlMAQObYZgAAAB1JREFUeJxjkGFgSmZgYmBg/N/IxABiMNSDSRkGACm1Aqb7EOVpAAAAAElFTkSuQmCC");
@@ -920,9 +941,15 @@
   white-space: nowrap;
 }
 
+/* A separator line between groups in a window or dialog (Mac OS 8 HIG:
+   "Separator Lines"): <hr class="separator"> or <div class="separator">. */
 :where(.separator) {
   flex: none;
-  border-top: var(--clio-border);
+  box-sizing: border-box;
+  height: var(--clio-separator-height);
+  margin: var(--clio-separator-margin);
+  border: 0;
+  background: var(--clio-separator-bg);
 }
 
 /* A status line under the pane. */
@@ -1856,6 +1883,113 @@
    --clio-field-focus-shadow. */
 :where(.listbox, [role="listbox"], select[multiple]):is(:focus-visible, :focus-within) {
   box-shadow: var(--clio-list-focus-shadow, var(--clio-list-shadow));
+}
+
+/* ---- Chasing arrows ------------------------------------------------------------
+   The asynchronous progress indicator (Mac OS 8 HIG: "Asynchronous Arrows").
+   Markup: <span class="chasing-arrows" role="status" aria-label="Looking…">.
+   It turns by stepping through the era's frames; with reduced motion it
+   stands still on the first. Earlier eras had a spinning watch cursor
+   instead, and use Platinum's arrows. */
+:where(.chasing-arrows) {
+  position: relative;
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  overflow: hidden;
+  vertical-align: middle;
+}
+
+/* The frames side by side on a strip that moves a frame at a time (transform
+   only, so the turning stays off the main thread). */
+:where(.chasing-arrows)::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: calc(16px * var(--clio-chasing-arrows-frames));
+  height: 16px;
+  background: var(--clio-art-chasing-arrows) 0 0 / 100% 100% no-repeat;
+  animation: clio-chase calc(var(--clio-chasing-arrows-frames) * 0.12s) steps(var(--clio-chasing-arrows-frames)) infinite;
+}
+
+@keyframes clio-chase {
+  to { transform: translateX(calc(-16px * var(--clio-chasing-arrows-frames))); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(.chasing-arrows)::before { animation: none; }
+}
+
+/* ---- Help button -----------------------------------------------------------------
+   The square button with the help icon in a dialog's lower left (Mac OS 8 HIG:
+   "Help Button Layout"). <button class="help-button" aria-label="Help">.
+   Earlier eras put a "Help" push button there instead, and use Platinum's. */
+:where(.help-button) {
+  box-sizing: border-box;
+  width: 21px;
+  min-width: 0;
+  height: 20px;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  border-image: none;
+  background: var(--clio-art-help-button) 0 0 / 21px 20px no-repeat;
+  box-shadow: none;
+  color: transparent;
+  font-size: 0;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: default;
+}
+
+:where(.help-button)::before,
+:where(.help-button)::after {
+  content: none;
+}
+
+/* ---- Image well ---------------------------------------------------------------------
+   A sunken well that holds a picture or an icon (Mac OS 8 HIG: "Image Wells"),
+   drawn like the era's field frame round a white face (inferred: no image
+   well was on the captured screens). <div class="image-well"><img …></div> */
+:where(.image-well) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  border: var(--clio-field-border);
+  background: var(--clio-image-well-bg);
+  box-shadow: var(--clio-field-shadow);
+}
+
+/* ---- Group boxes: secondary, and titled by a check box ---------------------------
+   <fieldset class="secondary"> is the lighter group for a subordinate set
+   (Mac OS 8 HIG: "Group Boxes"). A check box or pop-up menu as the title goes
+   in the legend: <legend><label><input type="checkbox"> Use a server</label></legend>.
+   Before Mac OS 8 every group box is the one kind. */
+:where(fieldset > legend) > :where(label) {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* ---- Utility window ------------------------------------------------------------------
+   A floating palette (Mac OS 8 HIG: "Utility Windows"; HIG 1992: floating
+   windows): <div class="window utility"> with the usual .title-bar. Its title
+   bar is thinner, its boxes smaller and its title in the small font. Before
+   Mac OS 8 the eras draw it from the document window's parts (inferred). */
+:where(.window.utility) {
+  --clio-titlebar-height: var(--clio-utility-titlebar-height);
+  --clio-titlebar-row: var(--clio-utility-titlebar-row);
+  --clio-box-size: var(--clio-utility-box-size);
+  --clio-titlebar-slot: var(--clio-utility-slot);
+  min-width: 80px;
+}
+
+:where(.window.utility) > :where(.title-bar) > :is(.title, h1, h2, h3) {
+  font-size: var(--clio-utility-title-size, var(--clio-title-font-size));
 }
 
 /* Dialogs and alerts.

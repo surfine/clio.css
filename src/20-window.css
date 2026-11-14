@@ -187,9 +187,15 @@
   white-space: nowrap;
 }
 
+/* A separator line between groups in a window or dialog (Mac OS 8 HIG:
+   "Separator Lines"): <hr class="separator"> or <div class="separator">. */
 :where(.separator) {
   flex: none;
-  border-top: var(--clio-border);
+  box-sizing: border-box;
+  height: var(--clio-separator-height);
+  margin: var(--clio-separator-margin);
+  border: 0;
+  background: var(--clio-separator-bg);
 }
 
 /* A status line under the pane. */
