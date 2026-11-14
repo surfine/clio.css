@@ -342,6 +342,129 @@ Accessibility: Make each icon a <button> (or give it role=button and tabindex=0)
 </div>
 ```
 
+## Disclosure triangle (#disclosure)
+
+The triangle that shows and hides a list's or a dialog's details. A <details> summary gets it too.
+
+Selectors: .disclosure, .disclosure[aria-expanded=true], details > summary, details[open] > summary
+Tokens: --clio-disclosure-size, --clio-art-disclosure, --clio-art-disclosure-open
+Accessibility: Use a <button> with aria-expanded and aria-controls, or <details>/<summary>, which keyboards and screen readers already understand.
+
+```html
+<details open>
+  <summary>Control Panels &amp; Extensions</summary>
+  <p style="margin: 4px 0 0 17px">Appearance</p>
+</details>
+<button class="disclosure" aria-expanded="false" aria-label="Show Developer"></button> Developer
+```
+
+## List view (#list-view)
+
+The Finder's list view: column headers with the sorted column marked, and rows of names and details.
+
+Selectors: .list-view, .list-view th[aria-sort], .list-view th.sort-direction, .list-view td.sorted
+Tokens: --clio-list-view-row, --clio-list-view-header-height, --clio-list-view-sorted-bg
+Accessibility: A real <table>: give the sorted header aria-sort, keep scope on headers; the disclosure buttons need labels.
+
+```html
+<table class="list-view" style="width: 340px">
+  <thead><tr><th aria-sort="ascending">Name</th><th>Date Modified</th><th class="sort-direction" aria-label="Sort direction"></th></tr></thead>
+  <tbody>
+    <tr><td class="sorted"><button class="disclosure" aria-expanded="false" aria-label="Show"></button> Developer</td><td colspan="2">Thu, Apr 14, 2022</td></tr>
+    <tr><td class="sorted"><button class="disclosure" aria-expanded="false" aria-label="Show"></button> Games</td><td colspan="2">Thu, Apr 14, 2022</td></tr>
+  </tbody>
+</table>
+```
+
+## Slider (#slider)
+
+<input type=range> as the Appearance slider, with optional tick marks.
+
+Selectors: input[type=range], input[type=range].ticks
+Tokens: --clio-slider-height, --clio-art-slider-track, --clio-art-slider-thumb, --clio-slider-tick-count
+Accessibility: Native range input: label it, and say the value with aria-valuetext when the number alone means little.
+
+```html
+<label for="clio-rate">Key Repeat Rate</label>
+<input id="clio-rate" type="range" class="ticks" min="0" max="4" value="2" style="width: 120px; --clio-slider-tick-count: 5">
+```
+
+## Little arrows (#little-arrows)
+
+The up and down pair beside a number or a clock field.
+
+Selectors: .little-arrows, .little-arrows > .up, .little-arrows > .down, .little-arrows[aria-disabled=true]
+Tokens: --clio-little-arrows-width, --clio-little-arrows-height, --clio-art-little-arrows
+Accessibility: Two real buttons with labels; keep the field itself editable and announce the new value.
+
+```html
+<input type="text" value="32K" style="width: 60px" aria-label="Cache size">
+<span class="little-arrows" role="group" aria-label="Cache size">
+  <button class="up" aria-label="Increase"></button><button class="down" aria-label="Decrease"></button>
+</span>
+```
+
+## Bevel button (#bevel-button)
+
+A square bevelled button for an icon or a short label: push button, toggle (aria-pressed) or menu (class menu).
+
+Selectors: .bevel, .bevel.menu, .bevel[aria-pressed=true], .bevel:active
+Tokens: --clio-art-bevel, --clio-art-bevel-held, --clio-bevel-slice
+Accessibility: A real button: label icon-only ones; a menu bevel needs aria-haspopup and aria-expanded.
+
+```html
+<button class="bevel menu" style="width: 36px; height: 27px" aria-label="Shortcuts" aria-haspopup="menu">☞</button>
+<button class="bevel" aria-pressed="true" style="width: 36px; height: 27px">B</button>
+```
+
+## Chasing arrows (#chasing-arrows)
+
+The asynchronous progress indicator: two arrows chasing round a circle.
+
+Selectors: .chasing-arrows
+Tokens: --clio-art-chasing-arrows, --clio-chasing-arrows-frames
+Accessibility: Give it role=status and a label saying what is going on; it stands still under prefers-reduced-motion.
+
+```html
+<span class="chasing-arrows" role="status" aria-label="Looking for servers"></span> Looking for servers…
+```
+
+## Help button (#help-button)
+
+The square button with the help icon in a dialog's lower left.
+
+Selectors: .help-button
+Tokens: --clio-art-help-button
+Accessibility: aria-label="Help"; it should open help about the dialog.
+
+```html
+<button class="help-button" aria-label="Help"></button>
+```
+
+## Image well (#image-well)
+
+A sunken well holding a picture or an icon.
+
+Selectors: .image-well
+Tokens: --clio-image-well-bg, --clio-field-border, --clio-field-shadow
+Accessibility: Describe the picture with alt text; a well that accepts drops needs a keyboard alternative.
+
+```html
+<div class="image-well" style="width: 48px; height: 48px">◆</div>
+```
+
+## Help balloon (#balloon)
+
+Balloon Help: a white balloon with a tail pointing at what it describes.
+
+Selectors: .balloon
+Tokens: --clio-art-balloon, --clio-art-balloon-tail
+Accessibility: role=tooltip, referenced by aria-describedby from the thing it explains; show it on focus as well as hover.
+
+```html
+<div class="balloon" role="tooltip" style="margin-top: 24px">Hard disk<br><br>A hard disk is a device that stores large numbers of files and folders.</div>
+```
+
 ## Type and tokens (#typography)
 
 The fonts, the palette and every --clio-* custom property you can override.
@@ -3507,7 +3630,7 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
   box-shadow: 0 0 0 1px #888888;
 }
 
-:is([data-era="platinum"], [data-era="drawingboard"]) :is(button, .btn, .btn-default, input[type="button"], input[type="submit"], input[type="reset"]):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *):is(:disabled, .disabled) {
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(button, .btn, .btn-default, input[type="button"], input[type="submit"], input[type="reset"]):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *, .disclosure, .little-arrows > *, .help-button):is(:disabled, .disabled) {
   background: transparent;
   box-shadow: none;
   border-image: var(--clio-button-frame-disabled) var(--clio-button-frame-slice) fill / calc(var(--clio-button-frame-slice) * 1px) stretch;
@@ -3723,16 +3846,16 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
   font-palette: --clio-aa-p9-title-inactive;
 }
 
-:is([data-era="platinum"], [data-era="drawingboard"]) :is(button, .btn, .btn-default, input[type="button"], input[type="submit"], input[type="reset"]):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *) {
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(button, .btn, .btn-default, input[type="button"], input[type="submit"], input[type="reset"]):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *, .disclosure, .little-arrows > *, .help-button) {
   font-family: var(--clio-font-button);
   font-palette: --clio-aa-p9-button;
 }
 
-:is([data-era="platinum"], [data-era="drawingboard"]) :is(button, .btn, .btn-default, input[type="button"], input[type="submit"], input[type="reset"]):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *):not(:disabled, .disabled):is(:active, .active) {
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(button, .btn, .btn-default, input[type="button"], input[type="submit"], input[type="reset"]):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *, .disclosure, .little-arrows > *, .help-button):not(:disabled, .disabled):is(:active, .active) {
   font-palette: --clio-aa-p9-button-held;
 }
 
-:is([data-era="platinum"], [data-era="drawingboard"]) :is(button, .btn, .btn-default, input[type="button"], input[type="submit"], input[type="reset"]):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *):is(:disabled, .disabled) {
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(button, .btn, .btn-default, input[type="button"], input[type="submit"], input[type="reset"]):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *, .disclosure, .little-arrows > *, .help-button):is(:disabled, .disabled) {
   font-palette: --clio-aa-p9-button-disabled;
 }
 
@@ -4553,7 +4676,7 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
 
 /* Disabled push button: not captured; the plain button's frame and face with
    the theme's grey label (inferred). */
-[data-era="drawingboard"] :is(button, .btn, .btn-default, input[type="button"], input[type="submit"], input[type="reset"]):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *):is(:disabled, .disabled) {
+[data-era="drawingboard"] :is(button, .btn, .btn-default, input[type="button"], input[type="submit"], input[type="reset"]):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *, .disclosure, .little-arrows > *, .help-button):is(:disabled, .disabled) {
   background: var(--clio-button-bg);
   color: #9f9a94;
   -webkit-text-fill-color: #9f9a94;
@@ -4766,7 +4889,7 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
    rows; held: 7127, 7126, tiled from the second column and row). A default
    button instead wears a 3px pencil band (ppat 7085 rows, 7086 columns) whose
    inner line is the box's edge, 2px outside it. Insets are from the padding box. */
-[data-era="drawingboard"] :is(button, .btn, .btn-default):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *)::before {
+[data-era="drawingboard"] :is(button, .btn, .btn-default):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *, .disclosure, .little-arrows > *, .help-button)::before {
   content: "";
   position: absolute;
   top: 0;
@@ -4782,14 +4905,14 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
   pointer-events: none;
 }
 
-[data-era="drawingboard"] :is(button, .btn, .btn-default):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *, :disabled, .disabled):is(:active, .active)::before {
+[data-era="drawingboard"] :is(button, .btn, .btn-default):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *, .disclosure, .little-arrows > *, .help-button, :disabled, .disabled):is(:active, .active)::before {
   left: 0;
   background:
     url("art/drawingboard/pens/button-held-shade-right.png") right 0 top 0 / 1px 16px repeat-y,
     url("art/drawingboard/pens/button-held-shade-bottom.png") left 0 bottom 0 / 32px 1px repeat-x;
 }
 
-[data-era="drawingboard"] :is(button, .btn, .btn-default):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *):is(.default, .btn-default)::before {
+[data-era="drawingboard"] :is(button, .btn, .btn-default):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *, .disclosure, .little-arrows > *, .help-button):is(.default, .btn-default)::before {
   inset: -3px;
   background:
     url("art/drawingboard/pens/button-default-left-3.png") left 0 bottom 3px / 1px 16px repeat-y,
@@ -4808,11 +4931,11 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
 
 /* The pencil overruns at a push button's corners, outside its box: Button*
    pieces round a plain button, *Default pieces round the default one. */
-[data-era="drawingboard"] :is(button, .btn, .btn-default, input[type="button"], input[type="submit"], input[type="reset"]):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *) {
+[data-era="drawingboard"] :is(button, .btn, .btn-default, input[type="button"], input[type="submit"], input[type="reset"]):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *, .disclosure, .little-arrows > *, .help-button) {
   position: relative;
 }
 
-[data-era="drawingboard"] :is(button, .btn, .btn-default):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *)::after {
+[data-era="drawingboard"] :is(button, .btn, .btn-default):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *, .disclosure, .little-arrows > *, .help-button)::after {
   content: "";
   position: absolute;
   inset: -6px;   /* from the padding box: 5px outside the frame */
@@ -4824,7 +4947,7 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
   pointer-events: none;
 }
 
-[data-era="drawingboard"] :is(button, .btn, .btn-default):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *, :disabled, .disabled):is(:active, .active)::after {
+[data-era="drawingboard"] :is(button, .btn, .btn-default):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *, .disclosure, .little-arrows > *, .help-button, :disabled, .disabled):is(:active, .active)::after {
   background:
     var(--clio-art-db-btn-tl) left 3px top 3px / 7px 3px no-repeat,
     var(--clio-art-db-btn-tr) right 2px top 3px / 4px 3px no-repeat,
@@ -4832,11 +4955,11 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
     var(--clio-art-db-btn-bl) left 3px bottom 2px / 7px 4px no-repeat;
 }
 
-[data-era="drawingboard"] :is(button, .btn, .btn-default):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *):is(.default, .btn-default) {
+[data-era="drawingboard"] :is(button, .btn, .btn-default):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *, .disclosure, .little-arrows > *, .help-button):is(.default, .btn-default) {
   border-image-source: none;
 }
 
-[data-era="drawingboard"] :is(button, .btn, .btn-default):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *):is(.default, .btn-default)::after {
+[data-era="drawingboard"] :is(button, .btn, .btn-default):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *, .disclosure, .little-arrows > *, .help-button):is(.default, .btn-default)::after {
   background:
     url("art/drawingboard/pens/button-default-corner-tl.png") left 5px top 5px / 5px 5px no-repeat,
     url("art/drawingboard/pens/button-default-corner-tr.png") right 5px top 5px / 5px 5px no-repeat,
@@ -4867,12 +4990,12 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
 
 /* ---- Antialiasing as Mac OS blends it: #333 labels on #cec6b5 (their solid
    pixels #313131, from a 16-bit buffer); grey when disabled. */
-[data-era="drawingboard"] :is(button, .btn, .btn-default, input[type="button"], input[type="submit"], input[type="reset"]):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *),
-[data-era="drawingboard"] :is(button, .btn, .btn-default, input[type="button"], input[type="submit"], input[type="reset"]):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *):not(:disabled, .disabled):is(:active, .active) {
+[data-era="drawingboard"] :is(button, .btn, .btn-default, input[type="button"], input[type="submit"], input[type="reset"]):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *, .disclosure, .little-arrows > *, .help-button),
+[data-era="drawingboard"] :is(button, .btn, .btn-default, input[type="button"], input[type="submit"], input[type="reset"]):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *, .disclosure, .little-arrows > *, .help-button):not(:disabled, .disabled):is(:active, .active) {
   font-palette: --clio-aa-db-button;
 }
 
-[data-era="drawingboard"] :is(button, .btn, .btn-default, input[type="button"], input[type="submit"], input[type="reset"]):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *):is(:disabled, .disabled) {
+[data-era="drawingboard"] :is(button, .btn, .btn-default, input[type="button"], input[type="submit"], input[type="reset"]):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .control-strip *, .disclosure, .little-arrows > *, .help-button):is(:disabled, .disabled) {
   font-palette: --clio-aa-db-button-disabled;
 }
 

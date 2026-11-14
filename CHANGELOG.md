@@ -1,5 +1,31 @@
 # Changelog
 
+## 0.10.0 — 2026-11-14
+
+Every control the classic guidelines define is now in clio.css. COVERAGE.md checks the
+Apple Desktop Interface (1987), the Macintosh Human Interface Guidelines (1992), Inside
+Macintosh: Toolbox Essentials and the Mac OS 8 Human Interface Guidelines with its
+Appearance Manager control list, row by row, era by era.
+
+New, measured from System 7.5.3, Mac OS 8.5 Drawing Board and Mac OS 9.0 in Infinite Mac
+(frames taken by hand this time, `tooling/hig-art.py` for the art):
+
+- **Disclosure triangles** (`.disclosure`, `<details>`), **list views** (`.list-view`:
+  column headers, the sorted column, the sort-direction mark).
+- **Sliders** with tick marks (`input[type=range]`), **little arrows** (`.little-arrows`),
+  so a clock or number field can be built.
+- **Bevel buttons** (`.bevel`, as a toggle or a menu), the **help button**, **chasing
+  arrows** (turned by a transform; still under reduced motion), **separator lines**,
+  **image wells**, **secondary group boxes**.
+- **Utility windows** (`.window.utility`), **movable modal windows**
+  (`.window.movable-modal`), the Platinum **keyboard focus ring**.
+- **Help balloons** (`.balloon`), **scrolling menus**, menu bar **extras** (Help and
+  Application menus) and **menu item icons**.
+- 16 new pixel specimens (106 in all), every one 100% identical (FIDELITY.md); what
+  is inferred or lent from another era says so in EVIDENCE.md.
+- `clio.min.css` may now grow to 200 KB (it is 168 KB).
+
+
 ## 0.9.3 — 2026-11-14
 
 Reverts 0.9.2's OpenType-SVG levels: on real iPhones Safari drew no Platinum or Drawing
