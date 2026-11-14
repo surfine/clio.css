@@ -2,6 +2,15 @@
 
 ## Unreleased
 
+- **Menus** (clio.js): press-drag-release and Mac OS 8/9 click-to-open menus, the chosen
+  item blinking 3 times (3 ticks each, measured in Mac OS 9.0), submenus after 9 ticks
+  (measured) that survive a move towards them, arrow keys, Return, Esc, and opt-in
+  Command keys (`data-clio-shortcuts`). Without clio.js nothing changes; with it a menu
+  no longer opens just because focus sits on its title.
+- **Pop-up menus**: `appearance: base-select` draws the open `<select>` as the era's menu
+  (Chrome 135, Safari 27); clio.js lines the current item up with the button there and
+  draws the menu itself in other browsers. `npm run behaviour`: 111 checks.
+
 - **clio.js** (optional, `dist/clio.js`): held controls let go off the pointer; Return,
   Esc and Cmd-. press the dialog's default and cancel buttons; scroll bars drawn as
   elements with each era's fixed-length scroll box, held arrows that repeat, paging from

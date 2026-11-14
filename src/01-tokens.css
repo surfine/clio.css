@@ -198,6 +198,8 @@
   --clio-scrollbar-thumb-tracking: outline;
   --clio-scrollbar-thumb-overlap: 0px;
   --clio-scrollbar-thumb-after: none;
+  /* clio.js menus: System 6 and 7 menus stay open only while the button is held */
+  --clio-menu-sticky: 0;
   --clio-scrollbar-ghost: var(--clio-disabled-dither, #000000) 0 0 / 2px 2px repeat;
   --clio-scrollbar-track-shadow: none;
   --clio-scrollbar-thumb-bg: var(--clio-paper);

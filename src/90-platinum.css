@@ -218,6 +218,8 @@
     #888888;
   --clio-scrollbar-button-bevel: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' shape-rendering='crispEdges'%3E%3Cpath fill='%23fff' d='M0 0h13v1H0zM0 1h1v12H0z'/%3E%3Cpath fill='%23bbb' d='M1 13h13v1H1zM13 1h1v12h-1z'/%3E%3C/svg%3E");
   --clio-scrollbar-thumb-tracking: live;
+  /* Mac OS 8 and 9 keep a clicked menu open (clio.js) */
+  --clio-menu-sticky: 1;
   --clio-scrollbar-track: #aaaaaa;
   /* The lane: #777 and #888 along the top and left, #bbb and #ccc down the
      right, nothing along the bottom (frames finder-scroll-*). */
@@ -591,9 +593,21 @@
   background: var(--clio-art-p-check) 0 0 / 9px 8px no-repeat;
 }
 
-:is([data-era="platinum"], [data-era="drawingboard"]) :is(.menu, [role="menu"]) > li:is(.checked, [aria-checked="true"]):is(:hover, :focus-within, .active)::before,
-:is([data-era="platinum"], [data-era="drawingboard"]) :is(.menu, [role="menu"]) > li > :is([aria-checked="true"], .checked):is(:hover, :focus-visible, .active)::before {
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(.menu, [role="menu"]) > li:is(.checked, [aria-checked="true"]):is(:hover, :focus-within, .active):where(:not([data-clio-blink]))::before,
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(.menu, [role="menu"]) > li > :is([aria-checked="true"], .checked):is(:hover, :focus-visible, .active):where(:not([data-clio-blink]))::before {
   filter: invert(1);
+}
+
+/* The same check mark in an open pop-up menu drawn by the browser (base-select). */
+@supports (appearance: base-select) {
+  :is([data-era="platinum"], [data-era="drawingboard"]) select option::checkmark {
+    left: 7px;
+    background: var(--clio-art-p-check) 0 0 / 9px 8px no-repeat;
+  }
+
+  :is([data-era="platinum"], [data-era="drawingboard"]) select option:is(:hover, :focus-visible)::checkmark {
+    filter: invert(1);
+  }
 }
 
 :is([data-era="platinum"], [data-era="drawingboard"]) :is(.menu, [role="menu"]) > li:has(> :is(.menu, ul[role="menu"]))::after,
@@ -601,7 +615,7 @@
   background-image: var(--clio-art-p-submenu);
 }
 
-:is([data-era="platinum"], [data-era="drawingboard"]) :is(.menu, [role="menu"]) > li:has(> :is(.menu, ul[role="menu"])):is(:hover, :focus-within, .active)::after {
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(.menu, [role="menu"]) > li:has(> :is(.menu, ul[role="menu"])):is(:hover, :focus-within, .active):where(:not([data-clio-blink]))::after {
   background-image: var(--clio-art-p-submenu-on);
 }
 
@@ -968,8 +982,8 @@
 /* Safari's COLRv0 edge levels in white and dimmed text (src/00-fonts.css). */
 :is([data-era="platinum"], [data-era="drawingboard"]) :is(.menu-bar, [role="menubar"], [role="menu-bar"]) > li > :is(button, a, span):is([aria-expanded="true"], .active),
 :is([data-era="platinum"], [data-era="drawingboard"]) :is(.menu-bar, [role="menubar"], [role="menu-bar"]) > li.open > :is(button, a, span),
-:is([data-era="platinum"], [data-era="drawingboard"]) :is(.menu, [role="menu"]) > li:not(.disabled, [aria-disabled="true"], .separator, [role="separator"]):is(:hover, :focus-within, .active),
-:is([data-era="platinum"], [data-era="drawingboard"]) :is(.menu, [role="menu"]) > li > :is(a, button):not([aria-disabled="true"], :disabled):is(:hover, :focus-visible, .active),
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(.menu, [role="menu"]) > li:not(.disabled, [aria-disabled="true"], .separator, [role="separator"]):is(:hover, :focus-within, .active):where(:not([data-clio-blink])),
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(.menu, [role="menu"]) > li > :is(a, button):not([aria-disabled="true"], :disabled):is(:hover, :focus-visible, .active):where(:not([data-clio-blink])),
 :is([data-era="platinum"], [data-era="drawingboard"]) .icon:is(.selected, [aria-selected="true"], [aria-pressed="true"]) > :is(figcaption, span, .icon-label) {
   font-palette: --clio-aa-white;
 }

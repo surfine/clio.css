@@ -120,6 +120,131 @@ ok(!(await page.evaluate(() => document.querySelector("#s .clio-sb-v").classList
 await load("platinum", box("", 200, 150, 50).replace("width:800px", "width:50px"));
 ok(await page.evaluate(() => getComputedStyle(document.querySelector("#s .clio-sb-v > .clio-sb-thumb")).display) === "none", "platinum: no scroll box when nothing scrolls");
 
+// 4. Menus.
+const bar = (extra = "") => `<ul class="menu-bar" role="menubar" ${extra} style="width:400px">
+  <li role="none"><button role="menuitem" id="t" aria-haspopup="true" aria-expanded="false">File</button>
+    <ul class="menu" role="menu" id="m">
+      <li role="none"><button role="menuitem" id="new" onclick="window.chose='new'">New <kbd>⌘N</kbd></button></li>
+      <li role="none"><button role="menuitem" id="open" onclick="window.chose='open'">Open…</button></li>
+      <li role="separator" class="separator"></li>
+      <li role="none" class="disabled"><button role="menuitem" aria-disabled="true" onclick="window.chose='dim'">Print</button></li>
+      <li role="none" id="parent"><button role="menuitem" aria-haspopup="true">Recent</button>
+        <ul class="menu" role="menu"><li role="none"><button role="menuitem" id="one" onclick="window.chose='one'">One</button></li></ul></li>
+    </ul></li>
+  <li role="none"><button role="menuitem" id="t2" aria-haspopup="true" aria-expanded="false">Edit</button>
+    <ul class="menu" role="menu"><li role="none"><button role="menuitem" id="undo" onclick="window.chose='undo'">Undo</button></li></ul></li>
+</ul><p id="away" style="margin-top:200px">away</p>`;
+const shown = (sel) => page.evaluate((s) => { const e = document.querySelector(s); return !!e && getComputedStyle(e).display !== "none"; }, sel);
+for (const era of ["system7", "platinum"]) {
+  await load(era, bar());
+  const [tx, ty] = await center("#t");
+  // press, drag to an item, release: it blinks, then runs, and the menu closes
+  await page.mouse.move(tx, ty); await page.mouse.down();
+  ok(await shown("#m"), `${era}: pressing a title opens its menu`);
+  const [ox, oy] = await center("#open");
+  await page.mouse.move(ox, oy, { steps: 4 });
+  ok(await page.evaluate(() => document.querySelector("#open").parentElement.classList.contains("active")), `${era}: the item under the pointer lights`);
+  await page.mouse.up();
+  const blinks = await page.evaluate(() => new Promise((res) => { const li = document.querySelector("#open").parentElement; const seen = []; const t0 = performance.now();
+    const step = () => { seen.push(li.hasAttribute("data-clio-blink") ? 0 : 1); if (performance.now() - t0 < 400) requestAnimationFrame(step); else res(seen.join("")); }; step(); }));
+  const offs = (blinks.match(/0+/g) || []).length;
+  ok(offs === 3, `${era}: the chosen item blinks three times (${blinks})`);
+  ok(await page.evaluate(() => window.chose) === "open", `${era}: then it runs`);
+  ok(!(await shown("#m")), `${era}: and the menu closes`);
+  // released away from any item: nothing runs
+  await page.evaluate(() => { window.chose = null; });
+  await page.mouse.move(tx, ty); await page.mouse.down(); await page.mouse.move(tx + 300, ty + 300, { steps: 3 }); await page.mouse.up();
+  ok(!(await shown("#m")) && !(await page.evaluate(() => window.chose)), `${era}: released elsewhere, the menu closes and nothing runs`);
+  // a disabled item does not run
+  await page.mouse.move(tx, ty); await page.mouse.down();
+  const [dx, dy] = await center("li.disabled button"); await page.mouse.move(dx, dy, { steps: 3 }); await page.mouse.up();
+  await page.waitForTimeout(400);
+  ok(!(await page.evaluate(() => window.chose)), `${era}: a dimmed item does not run`);
+  // dragging across titles switches menus
+  await page.mouse.move(tx, ty); await page.mouse.down();
+  const [ex, ey] = await center("#t2"); await page.mouse.move(ex, ey, { steps: 3 });
+  ok(!(await shown("#m")) && await page.evaluate(() => document.querySelector("#t2").getAttribute("aria-expanded")) === "true", `${era}: dragging to another title switches menus`);
+  await page.mouse.move(tx + 300, ty + 300); await page.mouse.up();
+  // a submenu opens about 9 ticks after its item lights
+  await page.mouse.move(tx, ty); await page.mouse.down();
+  const [px2, py2] = await center("#parent > button"); await page.mouse.move(px2, py2, { steps: 3 });
+  ok(!(await shown("#parent > .menu")), `${era}: a submenu waits before opening`);
+  await page.waitForTimeout(250);
+  ok(await shown("#parent > .menu"), `${era}: then opens`);
+  const [sx, sy] = await center("#one"); await page.mouse.move(sx, sy, { steps: 6 }); await page.mouse.up();
+  await page.waitForTimeout(450);
+  ok(await page.evaluate(() => window.chose) === "one", `${era}: an item in a submenu can be chosen`);
+  // a click (press and release on the title)
+  await page.evaluate(() => { window.chose = null; });
+  await page.mouse.click(tx, ty);
+  const stays = await shown("#m");
+  if (era === "platinum") {
+    ok(stays, "platinum: a clicked menu stays open (Mac OS 8)");
+    const [nx, ny] = await center("#new"); await page.mouse.move(nx, ny, { steps: 3 }); await page.mouse.click(nx, ny);
+    await page.waitForTimeout(450);
+    ok(await page.evaluate(() => window.chose) === "new" && !(await shown("#m")), "platinum: a click on an item of an open menu chooses it");
+    await page.mouse.click(tx, ty); await page.mouse.click(400, 500);
+    ok(!(await shown("#m")), "platinum: a click elsewhere closes it");
+  } else ok(!stays, "system7: a clicked menu closes again (the button must be held)");
+}
+// keyboard and Command keys
+await load("platinum", bar("data-clio-shortcuts"));
+await page.focus("#t");
+await page.keyboard.press("ArrowDown");
+ok(await shown("#m") && await page.evaluate(() => document.activeElement.id) === "new", "keyboard: Down opens the menu on its first item");
+await page.keyboard.press("ArrowDown");
+ok(await page.evaluate(() => document.activeElement.id) === "open", "keyboard: Down moves to the next item, skipping nothing usable");
+await page.keyboard.press("ArrowDown");
+ok(await page.evaluate(() => document.activeElement.textContent.trim()) === "Recent", "keyboard: separators and dimmed items are skipped");
+await page.keyboard.press("Escape");
+ok(!(await shown("#m")) && await page.evaluate(() => document.activeElement.id) === "t", "keyboard: Esc closes and returns to the title");
+await page.keyboard.press("Enter"); await page.keyboard.press("Enter"); await page.waitForTimeout(450);
+ok(await page.evaluate(() => window.chose) === "new", "keyboard: Return chooses");
+await page.evaluate(() => { window.chose = null; document.activeElement.blur(); });
+await page.keyboard.press("Meta+n");
+ok(await page.evaluate(() => window.chose) === "new" && await page.evaluate(() => document.querySelector("#t").classList.contains("active")), "Command-N runs the item and lights its title");
+await load("platinum", bar());
+await page.keyboard.press("Meta+n");
+ok(!(await page.evaluate(() => window.chose)), "without data-clio-shortcuts, Command keys stay the browser's");
+
+// 5. Pop-up menus.
+const popupHtml = `<div class="clio" style="padding:40px"><select id="p" style="width:140px" onchange="window.changed=this.value"><option>Chicago</option><option>Geneva</option><option selected>Monaco</option><option disabled>Symbol</option><option>Times</option></select></div>`;
+// where the browser draws the menu (base-select), clio.js lines the current item up
+await load("platinum", popupHtml);
+if (await page.evaluate(() => CSS.supports("appearance", "base-select"))) {
+  const [sx, sy] = await center("#p");
+  await page.mouse.move(sx, sy); await page.mouse.down(); await page.mouse.up();
+  const shift = await page.evaluate(() => document.querySelector("#p").style.getPropertyValue("--clio-picker-shift"));
+  ok(shift === "-31px", `base-select: the picker moves up two rows and a border to put Monaco on the button (${shift})`);
+  await page.keyboard.press("Escape");
+}
+// elsewhere clio.js draws the menu (forced here by hiding base-select from it)
+const noBase = `<script>{ const f = CSS.supports.bind(CSS); CSS.supports = (a, b) => (a === "appearance" && b === "base-select") ? false : f(a, b); }</script>`;
+for (const era of ["system7", "platinum"]) {
+  await load(era, noBase + popupHtml);
+  const [sx, sy, sb] = await center("#p");
+  await page.mouse.move(sx, sy); await page.mouse.down();
+  const m = await page.evaluate(() => { const c = document.querySelector(".clio-popup-menu li.checked"); const r = c.getBoundingClientRect(); return { y: r.top + r.height / 2, n: document.querySelectorAll(".clio-popup-menu li").length }; });
+  ok(m.n === 5 && Math.abs(m.y - (sb.y + sb.height / 2)) <= 1, `${era}: the drawn menu lies over the button, Monaco on its row (${m.y} vs ${sb.y + sb.height / 2})`);
+  const [gx, gy] = await center(".clio-popup-menu li:nth-child(2)");
+  await page.mouse.move(gx, gy, { steps: 4 }); await page.mouse.up();
+  await page.waitForTimeout(450);
+  ok(await page.evaluate(() => document.querySelector("#p").value) === "Geneva" && await page.evaluate(() => window.changed) === "Geneva" && !(await page.$(".clio-popup-menu")), `${era}: drag and release chooses, fires change and closes`);
+  // a dimmed option cannot be chosen
+  await page.mouse.move(sx, sy); await page.mouse.down();
+  const [dx, dy] = await center(".clio-popup-menu li.disabled"); await page.mouse.move(dx, dy, { steps: 4 }); await page.mouse.up();
+  await page.waitForTimeout(450);
+  ok(await page.evaluate(() => document.querySelector("#p").value) === "Geneva" && !(await page.$(".clio-popup-menu")), `${era}: a dimmed option does nothing`);
+  await page.mouse.click(sx, sy);
+  const open = !!(await page.$(".clio-popup-menu"));
+  if (era === "platinum") {
+    ok(open, "platinum: a clicked pop-up stays open");
+    const [tx2, ty2] = await center(".clio-popup-menu li:nth-child(5)"); await page.mouse.move(tx2, ty2, { steps: 3 }); await page.mouse.click(tx2, ty2);
+    await page.waitForTimeout(450);
+    ok(await page.evaluate(() => document.querySelector("#p").value) === "Times", "platinum: then a click chooses");
+  } else ok(!open, "system7: a clicked pop-up closes (the button must be held)");
+}
+
 ok(errors.length === 0, "no page errors: " + errors.join("; "));
 await browser.close();
 console.log(failed ? `FAIL ${failed} of ${passed + failed} behaviour checks` : `ok ${passed} behaviour checks`);

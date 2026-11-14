@@ -686,12 +686,12 @@
 /* ---- Menus ------------------------------------------------------------------ */
 [data-era="drawingboard"] :is(.menu, [role="menu"]) > li:has(> :is(.menu, ul[role="menu"]))::after,
 [data-era="drawingboard"] :is(.menu, [role="menu"]) > li > [aria-haspopup="true"]::after,
-[data-era="drawingboard"] :is(.menu, [role="menu"]) > li:has(> :is(.menu, ul[role="menu"])):is(:hover, :focus-within, .active)::after {
+[data-era="drawingboard"] :is(.menu, [role="menu"]) > li:has(> :is(.menu, ul[role="menu"])):is(:hover, :focus-within, .active):where(:not([data-clio-blink]))::after {
   background-image: var(--clio-art-db-submenu);
 }
 
-[data-era="drawingboard"] :is(.menu, [role="menu"]) > li:is(.checked, [aria-checked="true"]):is(:hover, :focus-within, .active)::before,
-[data-era="drawingboard"] :is(.menu, [role="menu"]) > li > :is([aria-checked="true"], .checked):is(:hover, :focus-visible, .active)::before {
+[data-era="drawingboard"] :is(.menu, [role="menu"]) > li:is(.checked, [aria-checked="true"]):is(:hover, :focus-within, .active):where(:not([data-clio-blink]))::before,
+[data-era="drawingboard"] :is(.menu, [role="menu"]) > li > :is([aria-checked="true"], .checked):is(:hover, :focus-visible, .active):where(:not([data-clio-blink]))::before {
   filter: none;
 }
 
