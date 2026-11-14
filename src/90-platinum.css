@@ -944,3 +944,9 @@
 :is([data-era="platinum"], [data-era="drawingboard"]) :is(.menu, [role="menu"]) > li > :is(a, button):is(:disabled, [aria-disabled="true"]) {
   font-palette: --clio-aa-6f6f6f;
 }
+
+/* A submenu sits inside its parent's <li>, which stays chosen while the
+   pointer is in the submenu: its own items start from the black levels. */
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(.menu, [role="menu"]) :is(.menu, [role="menu"]) {
+  font-palette: normal;
+}

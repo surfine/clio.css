@@ -3452,6 +3452,12 @@
   font-palette: --clio-aa-6f6f6f;
 }
 
+/* A submenu sits inside its parent's <li>, which stays chosen while the
+   pointer is in the submenu: its own items start from the black levels. */
+:root :is(.menu, [role="menu"]) :is(.menu, [role="menu"]) {
+  font-palette: normal;
+}
+
 /* Adaptations the historical machines never needed. Historical sizes are
    calibration, not a cage: on a touch screen the controls grow to the
    "coarse pointer" sizes from AI System 6's fidelity contract, without any
@@ -3505,7 +3511,8 @@
      data-clio-font="truth"   Truth FB, David Berlow's own 2005 expansion of
                               Charcoal, sold by Font Bureau. Not shipped: install
                               it or add your own @font-face.
-   Set the attribute on <html> or any ancestor. Clio Sans '97 stays as the
+   Set the attribute on <html> or any ancestor. It changes Platinum and
+   Drawing Board only; System 6 and 7 keep Chicago. Clio Sans '97 stays as the
    fallback. These are outline fonts drawn by the browser, not the measured
    pixels. */
 @font-face {
@@ -3514,13 +3521,17 @@
   font-display: swap;
 }
 
-:is([data-clio-font="virtue"], [data-clio-font="virtue"] [data-era]) {
+[data-clio-font="virtue"]:root,
+[data-clio-font="virtue"] :root,
+:root [data-clio-font="virtue"] {
   --clio-font-chrome: Virtue, "Clio Sans '97", "Clio Asap", Geneva, "Helvetica Neue", Arial, sans-serif;
   --clio-font-window-title: Virtue, "Clio Sans '97 Title", "Clio Sans '97", "Clio Asap", Geneva, "Helvetica Neue", Arial, sans-serif;
   --clio-font-button: Virtue, "Clio Sans '97", "Clio Asap", Geneva, "Helvetica Neue", Arial, sans-serif;
 }
 
-:is([data-clio-font="truth"], [data-clio-font="truth"] [data-era]) {
+[data-clio-font="truth"]:root,
+[data-clio-font="truth"] :root,
+:root [data-clio-font="truth"] {
   --clio-font-chrome: "Truth FB", Truth, "Clio Sans '97", "Clio Asap", Geneva, "Helvetica Neue", Arial, sans-serif;
   --clio-font-window-title: "Truth FB", Truth, "Clio Sans '97 Title", "Clio Sans '97", "Clio Asap", Geneva, "Helvetica Neue", Arial, sans-serif;
   --clio-font-button: "Truth FB", Truth, "Clio Sans '97", "Clio Asap", Geneva, "Helvetica Neue", Arial, sans-serif;
