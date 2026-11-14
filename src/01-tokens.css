@@ -201,9 +201,17 @@
   --clio-scrollbar-thumb-after: none;
   /* clio.js menus: System 6 and 7 menus stay open only while the button is held */
   --clio-menu-sticky: 0;
-  /* clio.js: the grey outline of a dragged window (System 7.5.3: 1px) */
+  /* clio.js: the grey outline of a dragged window (System 6.0.8 and 7.5.3: 1px) */
   --clio-drag-outline-width: 1px;
-  --clio-scrollbar-ghost: var(--clio-disabled-dither, #000000) 0 0 / 2px 2px repeat;
+  /* ... around the window and its 1px shadow (both measured) */
+  --clio-drag-outline-extra: 1px;
+  /* clio.js: a dragged scroll box leaves its frame XORed with dkGray (System
+     6.0.8, measured): white where dkGray is set, in step with the lane's ltGray,
+     inverting what is under it, so over the lane it comes out solid black. */
+  --clio-scrollbar-ghost: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='2' shape-rendering='crispEdges'%3E%3Cpath fill='%23fff' d='M1 0h3v1H1zM0 1h2v1H0zM3 1h1v1H3z'/%3E%3C/svg%3E") 0 0 / 4px 2px repeat;
+  --clio-scrollbar-ghost-blend: difference;
+  /* clio.js: the box sits inside the bar's line, 14px wide (System 6.0.8, System Folder list) */
+  --clio-scrollbar-thumb-inset: 1px;
   --clio-scrollbar-track-shadow: none;
   --clio-scrollbar-thumb-bg: var(--clio-paper);
   --clio-scrollbar-thumb-border: 1px solid var(--clio-ink);

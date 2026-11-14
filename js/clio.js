@@ -465,7 +465,7 @@
     }
 
     read() {
-      const h = this.host, cs = getComputedStyle(h);
+      const h = this.host, cs = getComputedStyle(h); let r;
       return {
         cw: h.clientWidth, ch: h.clientHeight, sw: h.scrollWidth, sh: h.scrollHeight, sl: h.scrollLeft, st: h.scrollTop,
         size: px(cs.getPropertyValue("--clio-scrollbar-size")) || 15,
@@ -473,6 +473,9 @@
         live: cs.getPropertyValue("--clio-scrollbar-thumb-tracking").trim() === "live",
         smart: !!h.closest('[data-clio-scrolling="smart"]'),
         overlap: px(cs.getPropertyValue("--clio-scrollbar-thumb-overlap")),
+        // the padding box's place on the page: QuickDraw aligned a lane's pattern with the
+        // screen, so the lanes are aligned with the page (System 6.0.8, System 7.5.3)
+        ox: (r = h.getBoundingClientRect()).left + h.clientLeft + scrollX, oy: r.top + h.clientTop + scrollY,
       };
     }
 
@@ -503,6 +506,10 @@
       if (!on) return;
       s.left = `${x}px`; s.top = `${y}px`;
       s.width = `${vertical ? size : length}px`; s.height = `${vertical ? length : size}px`;
+      // The lane's origin on the page (its line is the track's first pixel), as a pattern offset.
+      const mod = (v, n) => ((Math.round(-v) % n) + n) % n;
+      const tx = this.m.ox + this.pad.l + x + (vertical ? 1 : size), ty = this.m.oy + this.pad.t + y + (vertical ? size : 1);
+      s.setProperty("--clio-sb-px", `${mod(tx, 8)}px`); s.setProperty("--clio-sb-py", `${mod(ty, 8)}px`);
       p.bar.classList.toggle("clio-sb-smart", smart);
       p.bar.classList.toggle("clio-sb-off", max <= 0);
       const ov = this.m.overlap;   // Platinum's box shares its end lines with the arrows'
@@ -654,8 +661,12 @@
     d.className = "clio-outline";
     d.setAttribute("aria-hidden", "true");
     Object.assign(d.style, { left: `${Math.round(r.left)}px`, top: `${Math.round(r.top)}px`, width: `${Math.round(r.width)}px`, height: `${Math.round(r.height)}px`, padding: `${width}px` });
+    grayPhase(d, Math.round(r.left), Math.round(r.top));
     return d;
   };
+  // QuickDraw's gray kept to the screen as the outline moved: keep it to the page (a fixed
+  // background would not survive the transform that moves the outline).
+  const grayPhase = (d, x, y) => { d.style.backgroundPosition = `${Math.round(x + y + scrollX + scrollY) & 1}px 0`; };
   const outlineWidth = (el) => px(getComputedStyle(el).getPropertyValue("--clio-drag-outline-width")) || 1;
   document.addEventListener("pointerdown", (e) => {
     if (e.button !== 0 || !(e.target instanceof Element)) return;
@@ -664,10 +675,13 @@
     const win = bar.parentElement, cs = getComputedStyle(win);
     if (!(cs.position === "absolute" || cs.position === "fixed" || win.hasAttribute("data-clio-drag"))) return;
     e.preventDefault();
-    const r = win.getBoundingClientRect(), o = outlineBox(r, outlineWidth(win));
+    // The dragged region is the window's structure: its frame and its drop shadow.
+    const grow = px(getComputedStyle(win).getPropertyValue("--clio-drag-outline-extra"));
+    const b = win.getBoundingClientRect(), r = { left: b.left, top: b.top, width: b.width + grow, height: b.height + grow };
+    const o = outlineBox(r, outlineWidth(win));
     (win.closest("[data-era]") || document.body).appendChild(o);
     const x0 = e.clientX, y0 = e.clientY; let dx = 0, dy = 0;
-    const move = (ev) => { if (ev.pointerId !== e.pointerId) return; dx = ev.clientX - x0; dy = ev.clientY - y0; o.style.transform = `translate(${dx}px, ${dy}px)`; };
+    const move = (ev) => { if (ev.pointerId !== e.pointerId) return; dx = ev.clientX - x0; dy = ev.clientY - y0; o.style.transform = `translate(${dx}px, ${dy}px)`; grayPhase(o, Math.round(r.left) + dx, Math.round(r.top) + dy); };
     const up = (ev) => {
       if (ev.pointerId !== e.pointerId) return;
       document.removeEventListener("pointermove", move, true); document.removeEventListener("pointerup", up, true); document.removeEventListener("pointercancel", up, true);
@@ -688,6 +702,7 @@
     left = Math.max(0, Math.min(left, box.w - win.offsetWidth));
     top = Math.max(0, Math.min(top, box.h - win.offsetHeight));
     win.style.left = `${Math.round(left)}px`; win.style.top = `${Math.round(top)}px`;
+    for (const b of live) if (win.contains(b.host)) b.schedule();   // the lanes' patterns keep to the page
     if (say) announce(`${windowName(win)} ${say}`);
     win.dispatchEvent(new CustomEvent("clio:move", { bubbles: true, detail: { dx, dy } }));
   }

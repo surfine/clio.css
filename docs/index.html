@@ -236,16 +236,22 @@
       </dl>
       <p class="aliases">Also accepts: system.css markup (<code>.title-bar button.close</code>, <code>.title-bar button.resize</code>, <code>.inactive-title-bar</code>, <code>.window-pane</code>, <code>.details-bar</code>, <code>.separator</code>); AI System 6 markup (<code>.close-box</code>, <code>.resize-box</code>, <code>.shade-box</code>, <code>.title-bar h1</code>, <code>.title-bar h2</code>).</p>
       <details class="evidence-details">
-        <summary>Evidence (31)</summary>
+        <summary>Evidence (33)</summary>
       <table class="evidence">
         <caption>Where each value comes from</caption>
         <thead><tr><th scope="col">Era</th><th scope="col">Value</th><th scope="col">Status</th><th scope="col">Source</th></tr></thead>
         <tbody>
 <tr>
           <td>System 7</td>
-          <td>clio.js: dragging the title bar moves a 1px grey outline (the pattern inverting what lies under it) and the window follows on release</td>
+          <td>clio.js: dragging the title bar moves a 1px grey outline around the window and its 1px shadow (the structure region); the gray inverts the pixels whose x + y is odd, kept to the page as QuickDraw kept it to the screen, and the window follows on release</td>
           <td><span class="status status-measured">Measured</span></td>
-          <td><code>clio.css capture, System 7.5.3 in Infinite Mac, Finder window dragged (frames before and during, diffed)</code><br><span class="upstream">QuickDraw DragGrayRgn; System 6 assumed the same (inferred)</span></td>
+          <td><code>clio.css capture, System 7.5.3 in Infinite Mac, Infinite HD dragged by 80,116 (frames before and during, diffed); tooling/outline-check.mjs: the same 614 pixels inverted in Chromium, WebKit and Firefox</code><br><span class="upstream">QuickDraw DragGrayRgn of the window's structure region</span></td>
+        </tr>
+<tr>
+          <td>System 6</td>
+          <td>clio.js: as System 7: a 1px grey outline around the window and its shadow, the gray on the odd pixels</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, System 6.0.8 in Infinite Mac, Macintosh HD dragged by 80,113 (frames before and during, diffed); tooling/outline-check.mjs: the same 365 pixels in all three engines</code><br><span class="upstream">QuickDraw DragGrayRgn</span></td>
         </tr>
 <tr>
           <td>Platinum</td>
@@ -272,10 +278,16 @@
           <td><code>Mac OS 9.0 in Infinite Mac, Appearance &gt; Options: &quot;Double-click title bar to collapse windows&quot; off</code><br><span class="upstream">the collapsed window's look is not compared to a capture</span></td>
         </tr>
 <tr>
+          <td>System 7</td>
+          <td>clio.js, data-clio-shade=&quot;dblclick&quot;: WindowShade folds the window to its title bar, closed by the frame and shadow; there is no collapse box</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, System 7.5.3 in Infinite Mac: WindowShade control panel set to 2 clicks, Infinite HD double-clicked (frame shaded); specimen s7-collapsed 100% identical in Chromium, WebKit and Firefox</code><br><span class="upstream">Infinite Mac's WindowShade is set to Off clicks with sounds off, so the double click stays opt-in; the control panel's factory setting was not checked</span></td>
+        </tr>
+<tr>
           <td>All eras</td>
           <td>Cursors: the arrow (11x16, white outline, hot spot 1,1) and the I-beam (7x16, black, no cross bar, hot spot 3,4), redrawn at 1x, 2x and 3x; links and buttons in clio.css windows keep the arrow (the Mac had no pointing hand)</td>
           <td><span class="status status-measured">Measured</span></td>
-          <td><code>clio.css capture, System 7.5.3 and Mac OS 9.0 in Infinite Mac (identical arrows), Mac OS 9.0 Stickies (I-beam); tooling/cursor-art.py</code><br><span class="upstream">System 6 and Drawing Board assumed the same (inferred); the watch was not captured</span></td>
+          <td><code>clio.css capture, System 7.5.3 and Mac OS 9.0 in Infinite Mac (identical arrows), Mac OS 9.0 Stickies (I-beam), System 6.0.8 (the same arrow on the desktop and the same I-beam in Find File); tooling/cursor-art.py</code><br><span class="upstream">System 6 and Drawing Board assumed the same (inferred); the watch was not captured</span></td>
         </tr>
 <tr>
           <td>System 7</td>
@@ -480,7 +492,7 @@
       </dl>
       <p class="aliases">Also accepts: system.css markup (<code>ul[role=menu-bar]</code>, <code>[role=menu-item]</code>, <code>li.divider</code>).</p>
       <details class="evidence-details">
-        <summary>Evidence (21)</summary>
+        <summary>Evidence (23)</summary>
       <table class="evidence">
         <caption>Where each value comes from</caption>
         <thead><tr><th scope="col">Era</th><th scope="col">Value</th><th scope="col">Status</th><th scope="col">Source</th></tr></thead>
@@ -489,7 +501,19 @@
           <td>Platinum</td>
           <td>clio.js: a chosen item blinks 3 times, 3 ticks dark and 3 lit, before the menu closes and the command runs</td>
           <td><span class="status status-measured">Measured</span></td>
-          <td><code>clio.css capture, Mac OS 9.0 in Infinite Mac, Apple menu, each animation frame of the emulator's canvas recorded (release at 30 ms; dark at 59, 159, 276 ms; gone at 375 ms)</code><br><span class="upstream">General Controls' default Menu Blinking; System 6 and 7 assumed the same (inferred)</span></td>
+          <td><code>clio.css capture, Mac OS 9.0 in Infinite Mac, Apple menu, each animation frame of the emulator's canvas recorded (release at 30 ms; dark at 59, 159, 276 ms; gone at 375 ms)</code><br><span class="upstream">General Controls' default Menu Blinking</span></td>
+        </tr>
+<tr>
+          <td>System 6</td>
+          <td>clio.js: as Mac OS 9: the chosen item blinks 3 times, about 3 ticks dark and 3 lit</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, System 6.0.8 in Infinite Mac, File &gt; Get Info released, each animation frame recorded (dark at 109, 193, 293 ms; gone at 392 ms)</code><br><span class="upstream">MenuFlash 3</span></td>
+        </tr>
+<tr>
+          <td>System 7</td>
+          <td>clio.js: as Mac OS 9: 3 blinks of about 3 ticks</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, System 7.5.3 in Infinite Mac, Edit &gt; Show Clipboard released (dark at 63, 147, 246 ms; gone at 346 ms)</code><br><span class="upstream">MenuFlash 3</span></td>
         </tr>
 <tr>
           <td>Platinum</td>
@@ -507,7 +531,7 @@
           <td>Platinum</td>
           <td>clio.js: a menu opened with a click stays open until the next click (Mac OS 8 and 9); in System 6 and 7 it closes when the button comes up</td>
           <td><span class="status status-measured">Measured</span></td>
-          <td><code>clio.css capture scripts for Mac OS 9.0 (click opens the Apple menu) and System 7.5.3 (menus must be held)</code><br><span class="upstream">--clio-menu-sticky</span></td>
+          <td><code>clio.css capture scripts for Mac OS 9.0 (click opens the Apple menu) and System 7.5.3 (menus must be held); System 6.0.8 in Infinite Mac: a click on File leaves no menu open</code><br><span class="upstream">--clio-menu-sticky</span></td>
         </tr>
 <tr>
           <td>All eras</td>
@@ -1121,7 +1145,7 @@
           <td>System 7</td>
           <td>As System 6: a selected row inverts across the list</td>
           <td><span class="status status-inferred">Inferred</span></td>
-          <td><code>seen in the Keyboard control panel during capture; not pixel-checked</code><br><span class="upstream">System 7.5.3</span></td>
+          <td><code>seen in the Keyboard control panel during capture; the Color control panel's highlight colour is Black &amp; White (System 7.5.3 in Infinite Mac); the row itself not pixel-checked</code><br><span class="upstream">System 7.5.3</span></td>
         </tr>
 <tr>
           <td>System 6</td>
@@ -1176,7 +1200,7 @@
       </dl>
       
       <details class="evidence-details">
-        <summary>Evidence (17)</summary>
+        <summary>Evidence (20)</summary>
       <table class="evidence">
         <caption>Where each value comes from</caption>
         <thead><tr><th scope="col">Era</th><th scope="col">Value</th><th scope="col">Status</th><th scope="col">Source</th></tr></thead>
@@ -1240,6 +1264,24 @@
           <td>clio.js: the scroll box is the #555 line and 15 rows, 16 in all, right after the arrow's black line; dragged, it leaves a 14x16 outline in which the lane's #ddd turns black and its #777 dots stay, and the content scrolls on release</td>
           <td><span class="status status-measured">Measured</span></td>
           <td><code>clio.css capture, System 7.5.3 in Infinite Mac (frames hig/system7/finder-scroll and finder-thumb-drag)</code><br><span class="upstream">specimen s7-js-scroll-top 100% identical</span></td>
+        </tr>
+<tr>
+          <td>System 6</td>
+          <td>clio.js: the scroll box is 14x16 inside the bar's line; dragged, it leaves its frame XORed with dkGray, which over the ltGray lane comes out solid black, and the content scrolls on release</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, System 6.0.8 in Infinite Mac, System Folder list, the box pressed and held 56px lower (frame scroll-box-drag)</code><br><span class="upstream">specimen s6-js-scroll-drag 100% identical in Chromium, WebKit and Firefox (the pointer masked)</span></td>
+        </tr>
+<tr>
+          <td>All eras</td>
+          <td>clio.js: the lane's pattern is kept to the page, as QuickDraw kept it to the screen; the browser's own bar starts it at the lane</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, System 6.0.8 (System Folder) and System 7.5.3 (Infinite HD narrowed): the lane's dots fall on the same screen columns wherever the bar is</code><br><span class="upstream">specimen s7-js-hscroll-lane 100% identical; without clio.js the dots may sit one step along (adapted)</span></td>
+        </tr>
+<tr>
+          <td>System 7</td>
+          <td>Horizontal bar: the vertical bar turned, its box the #555 line and 15 columns after the left arrow's black line</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, System 7.5.3 in Infinite Mac, Infinite HD narrowed until it scrolls sideways (frame hbar)</code><br><span class="upstream">specimens s7-scroll-left, s7-scroll-right, s7-hscroll-thumb 100% identical</span></td>
         </tr>
 <tr>
           <td>Platinum</td>

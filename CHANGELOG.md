@@ -5,7 +5,7 @@
 Safari and Firefox, checked: `CLIO_ENGINE=webkit|firefox` runs the pixel check and
 `npm run behaviour` in Playwright's WebKit and Firefox as well as Chromium.
 
-- Pixel check: Chromium 112 of 112 identical, WebKit 110, Firefox 104 (FIDELITY.md). What
+- Pixel check: Chromium 118 of 118 identical, WebKit 116, Firefox 110 (FIDELITY.md). What
   still differs is a centred label whose text starts on a half pixel: the Mac and Chromium
   round it down, WebKit blends it, Firefox rounds it up. Behaviour checks: 145 in Chromium
   and WebKit, 143 in Firefox (the two base-select checks do not apply).
@@ -22,6 +22,22 @@ Safari and Firefox, checked: `CLIO_ENGINE=webkit|firefox` runs the pixel check a
 - Drawing Board scroll bars drawn by clio.js: the arrow art no longer sits a pixel low and
   the grip shows on the theme's 15px scroll box (it now lies over the box's ends,
   `(length − 2) / 2` rounded down from the start, as the Themes tab shows).
+- **System 6.0.8 and System 7.5.3 behaviour, measured** in Infinite Mac
+  (`tooling/emulator/measure-classic.sh`):
+  - A dragged window's grey outline goes round the window *and its shadow*, and inverts
+    the pixels whose x + y is odd wherever it is (QuickDraw kept the gray to the screen;
+    clio.js keeps it to the page). `tooling/outline-check.mjs` compares the inverted pixels
+    with the real drag: System 6 365 of 365, System 7 614 of 614, in all three engines.
+  - System 6's dragged scroll box leaves its frame XORed with dkGray, solid black over the
+    lane (it was a 50% dither); the box is 14px wide inside the bar's line (it covered the
+    line). Specimen `s6-js-scroll-drag`.
+  - Lane patterns keep to the screen: clio.js keeps them to the page (`--clio-sb-px/-py`).
+  - Menus blink 3 times, about 3 ticks each, as in Mac OS 9; System 6 menus close when
+    the button comes up; the cursors are the same arrow and I-beam.
+  - System 7's horizontal scroll bar, its collapsed (WindowShade) window and its
+    Black & White highlight colour checked against frames; new specimens
+    `s7-scroll-left`, `s7-scroll-right`, `s7-hscroll-thumb`, `s7-js-hscroll-lane`,
+    `s7-collapsed`.
 - Tooling: the specimen pages declare UTF-8 (WebKit read "…" as Latin-1), crops snap to
   the pixel the box was drawn on, and fonts are waited for after layout.
 

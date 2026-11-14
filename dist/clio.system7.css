@@ -532,9 +532,17 @@
   --clio-scrollbar-thumb-after: none;
   /* clio.js menus: System 6 and 7 menus stay open only while the button is held */
   --clio-menu-sticky: 0;
-  /* clio.js: the grey outline of a dragged window (System 7.5.3: 1px) */
+  /* clio.js: the grey outline of a dragged window (System 6.0.8 and 7.5.3: 1px) */
   --clio-drag-outline-width: 1px;
-  --clio-scrollbar-ghost: var(--clio-disabled-dither, #000000) 0 0 / 2px 2px repeat;
+  /* ... around the window and its 1px shadow (both measured) */
+  --clio-drag-outline-extra: 1px;
+  /* clio.js: a dragged scroll box leaves its frame XORed with dkGray (System
+     6.0.8, measured): white where dkGray is set, in step with the lane's ltGray,
+     inverting what is under it, so over the lane it comes out solid black. */
+  --clio-scrollbar-ghost: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='2' shape-rendering='crispEdges'%3E%3Cpath fill='%23fff' d='M1 0h3v1H1zM0 1h2v1H0zM3 1h1v1H3z'/%3E%3C/svg%3E") 0 0 / 4px 2px repeat;
+  --clio-scrollbar-ghost-blend: difference;
+  /* clio.js: the box sits inside the bar's line, 14px wide (System 6.0.8, System Folder list) */
+  --clio-scrollbar-thumb-inset: 1px;
   --clio-scrollbar-track-shadow: none;
   --clio-scrollbar-thumb-bg: var(--clio-paper);
   --clio-scrollbar-thumb-border: 1px solid var(--clio-ink);
@@ -2670,11 +2678,11 @@
 .clio-sb-anchor > .clio-sb-v > .clio-sb-dec { top: 0; left: 0; }
 .clio-sb-anchor > .clio-sb-v > .clio-sb-inc { bottom: 0; left: 0; }
 .clio-sb-anchor > .clio-sb-v > .clio-sb-track { top: var(--clio-scrollbar-size); bottom: var(--clio-scrollbar-size); left: 0; right: 0; }
-.clio-sb-anchor > .clio-sb-v > .clio-sb-thumb { top: var(--clio-scrollbar-size); left: 0; right: 0; }
+.clio-sb-anchor > .clio-sb-v > .clio-sb-thumb { top: var(--clio-scrollbar-size); left: var(--clio-scrollbar-thumb-inset, 0px); right: 0; min-width: 0; }   /* the bar's min-width is the box's length */
 .clio-sb-anchor > .clio-sb-h > .clio-sb-dec { left: 0; top: 0; }
 .clio-sb-anchor > .clio-sb-h > .clio-sb-inc { right: 0; top: 0; }
 .clio-sb-anchor > .clio-sb-h > .clio-sb-track { left: var(--clio-scrollbar-size); right: var(--clio-scrollbar-size); top: 0; bottom: 0; }
-.clio-sb-anchor > .clio-sb-h > .clio-sb-thumb { left: var(--clio-scrollbar-size); top: 0; bottom: 0; }
+.clio-sb-anchor > .clio-sb-h > .clio-sb-thumb { left: var(--clio-scrollbar-size); top: var(--clio-scrollbar-thumb-inset, 0px); bottom: 0; min-height: 0; }
 
 /* Smart Scrolling (Mac OS 8/9, Appearance > Options): both arrows at the far
    end, the up or left arrow first. */
@@ -2684,6 +2692,14 @@
 .clio-sb-anchor > .clio-sb-h.clio-sb-smart > .clio-sb-dec { left: auto; right: var(--clio-scrollbar-size); }
 .clio-sb-anchor > .clio-sb-h.clio-sb-smart > .clio-sb-track { left: 0; right: calc(2 * var(--clio-scrollbar-size)); }
 .clio-sb-anchor > .clio-sb-h.clio-sb-smart > .clio-sb-thumb { left: 0; }
+
+/* QuickDraw kept a lane's pattern in step with the screen (System 6.0.8, System
+   7.5.3): clio.js sets --clio-sb-px/-py on each bar to keep it in step with the
+   page. A rule, not a token: the offsets belong to each bar. Eras whose tracks
+   have their own rules (Drawing Board) place their layers themselves. */
+.clio-sb-anchor > .clio-sb > .clio-sb-track {
+  background-position: var(--clio-sb-px, 0px) var(--clio-sb-py, 0px);
+}
 
 /* The arrows lie over the box's ends and its shadow. */
 .clio-sb-anchor > .clio-sb > .clio-sb-button { z-index: 1; }
@@ -2710,7 +2726,8 @@
   z-index: 1;
   padding: 1px;
   background: var(--clio-scrollbar-ghost, #000000);
-  background-position: var(--clio-sb-gx, 0px) var(--clio-sb-gy, 0px);   /* in step with the lane's pattern */
+  background-position: calc(var(--clio-sb-px, 0px) + var(--clio-sb-gx, 0px)) calc(var(--clio-sb-py, 0px) + var(--clio-sb-gy, 0px));   /* in step with the lane's pattern */
+  mix-blend-mode: var(--clio-scrollbar-ghost-blend, normal);
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
   mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
@@ -2724,7 +2741,9 @@
   z-index: 2147483000;
   box-sizing: border-box;
   margin: 0;
-  background: repeating-conic-gradient(#ffffff 0 25%, transparent 0 50%) 0 0 / 2px 2px fixed;
+  /* gray inverts the pixels whose x + y is odd on the screen (System 6.0.8 and
+     7.5.3, measured); clio.js sets the position that keeps it to the page */
+  background: repeating-conic-gradient(#ffffff 0 25%, transparent 0 50%) 0 0 / 2px 2px;
   mix-blend-mode: difference;
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
@@ -2973,6 +2992,8 @@
      a 14x16 frame in which the lane's #ddd turns black and its #777 dots stay. */
   --clio-scrollbar-thumb-length: 16px;   /* the #555 line and 15 rows (frame finder-scroll) */
   --clio-scrollbar-ghost: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='2' shape-rendering='crispEdges'%3E%3Cpath fill='%23000' d='M0 0h4v2H0z'/%3E%3Cpath fill='%23777' d='M2 0h1v1H2zM0 1h1v1H0z'/%3E%3C/svg%3E") 0 0 / 4px 2px repeat;
+  --clio-scrollbar-thumb-inset: 0px;   /* its #555 line is drawn over the bar's */
+  --clio-scrollbar-ghost-blend: normal;   /* painted: the lane's #ddd black, its #777 dots kept (measured) */
   /* The grip sits where System 7's fixed 16px scroll box has it: 3px from the
      leading edge, whatever length the browser gives the box. */
   --clio-scrollbar-thumb-bg: var(--clio-art-s7-grip-v) 50% 3px / 6px 10px no-repeat, #aaaaaa;

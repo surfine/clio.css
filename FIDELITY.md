@@ -23,6 +23,7 @@ Infinite Mac tints black and white as #222222 and #eeeeee.
 | s6-radio-on | 12×12 | 100.0% | 100.0% | 0.0% | 0 |
 | s6-radio-off | 12×12 | 100.0% | 100.0% | 0.0% | 0 |
 | s6-scroll-up | 14×14 | 100.0% | 100.0% | 0.0% | 0 |
+| s6-js-scroll-drag | 15×90 | 100.0% | 100.0% | 0.0% | 0 |
 | s6-grow-box | 14×14 | 100.0% | 100.0% | 0.0% | 0 |
 | s6-scroll-left | 14×14 | 100.0% | 100.0% | 0.0% | 0 |
 | s6-scroll-right | 14×14 | 100.0% | 100.0% | 0.0% | 0 |
@@ -45,9 +46,14 @@ Reference: System 7.5.3 running in Infinite Mac, the 800×600 colour canvas read
 | --- | --- | ---: | ---: | ---: | ---: |
 | s7-titlebar | 377×19 | 100.0% | 100.0% | 0.0% | 0 |
 | s7-titlebar-inactive | 377×16 | 100.0% | 100.0% | 0.0% | 0 |
+| s7-collapsed | 229×20 | 100.0% | 100.0% | 0.0% | 0 |
 | s7-scroll-up | 14×14 | 100.0% | 100.0% | 0.0% | 0 |
 | s7-scroll-thumb | 14×15 | 100.0% | 100.0% | 0.0% | 0 |
 | s7-grow-box | 14×14 | 100.0% | 100.0% | 0.0% | 0 |
+| s7-scroll-left | 14×14 | 100.0% | 100.0% | 0.0% | 0 |
+| s7-scroll-right | 14×14 | 100.0% | 100.0% | 0.0% | 0 |
+| s7-hscroll-thumb | 15×14 | 100.0% | 100.0% | 0.0% | 0 |
+| s7-js-hscroll-lane | 40×14 | 100.0% | 100.0% | 0.0% | 0 |
 | s7-alert-frame | 18×18 | 100.0% | 100.0% | 0.0% | 0 |
 | s7-checkbox-on | 12×12 | 100.0% | 100.0% | 0.0% | 0 |
 | s7-checkbox-off | 12×12 | 100.0% | 100.0% | 0.0% | 0 |
@@ -167,8 +173,8 @@ Reference: GUIdebook Mac OS 9.0 captures, cropped by AI System 6 (`AIS6_DIR`).
 and Firefox (results in `.fidelity/results-<engine>.json`). Firefox has no `::-webkit-scrollbar`:
 its scroll-bar specimens load clio.js, whose element bars take the same rules.
 
-- WebKit: 110 of 112 identical; not identical: button-disabled (98.8%), p9-titlebar (97.3%)
-- Firefox: 104 of 110 identical; not identical: active-titlebar (100.0%), button-disabled (98.8%), s6-default-ok (98.4%), s6-button-pressed (95.4%), s6-button-hover (95.3%), p9-titlebar (97.3%)
+- WebKit: 116 of 118 identical; not identical: button-disabled (98.8%), p9-titlebar (97.3%)
+- Firefox: 110 of 116 identical; not identical: active-titlebar (100.0%), button-disabled (98.8%), s6-default-ok (98.4%), s6-button-pressed (95.4%), s6-button-hover (95.3%), p9-titlebar (97.3%)
 
 Every pixel that differs in those specimens is in a centred label or title whose spare width is odd,
 so its text starts on a half pixel. The Mac rounds that down; Chromium snaps the same way, WebKit
