@@ -38,6 +38,9 @@ npm install clio.css
 | `*.min.css` | Minified builds |
 | `dist/components.json` | Machine-readable index: selectors, tokens, markup and evidence per component |
 
+How it was measured, and what to reuse for the next era: [LESSONS.md](LESSONS.md). What is
+still open: [ROADMAP.md](ROADMAP.md).
+
 [COVERAGE.md](COVERAGE.md) checks clio.css against every control and window the classic
 Apple guidelines define (1987, 1992, Inside Macintosh, Mac OS 8), era by era.
 
