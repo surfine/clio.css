@@ -66,6 +66,7 @@
   --clio-font-size: 12px;
   --clio-font-smoothing: none;
   --clio-text-smoothing: auto;
+  --clio-text-smoothing-moz: auto;
   --clio-font-small: var(--clio-font-text);
   --clio-font-size-small: 10px;
   --clio-chrome-weight: 700;
@@ -399,10 +400,12 @@
   /* Six ridges: white lines, and #777 lines one pixel to their right (the
      ridge's shade), between the box slots (Mac OS 9.0, both ends measured). */
   --clio-tb-ridges: calc(100% - var(--clio-tb-close) - var(--clio-tb-zoom) - var(--clio-tb-shade) - 1px);
+  /* The ridges are 12px tiles over an opaque bar: a hard stop to transparent in a
+     covering layer leaves WebKit's covering rows a hair translucent (±1 per channel). */
   background:
-    linear-gradient(to bottom, #cccccc 0 1px, transparent 1px 13px, #cccccc 13px 17px, #999999 17px 18px),
-    repeating-linear-gradient(to bottom, #ffffff 0 1px, transparent 1px 2px) var(--clio-tb-close) 1px / var(--clio-tb-ridges) 2px repeat-y,
-    repeating-linear-gradient(to bottom, transparent 0 1px, #777777 1px 2px) calc(var(--clio-tb-close) + 1px) 1px / var(--clio-tb-ridges) 2px repeat-y,
+    repeating-linear-gradient(to bottom, #ffffff 0 1px, transparent 1px 2px) var(--clio-tb-close) 1px / var(--clio-tb-ridges) 12px no-repeat,
+    repeating-linear-gradient(to bottom, transparent 0 1px, #777777 1px 2px) calc(var(--clio-tb-close) + 1px) 1px / var(--clio-tb-ridges) 12px no-repeat,
+    linear-gradient(to bottom, #cccccc 0 17px, #999999 17px 18px) 0 0 / 100% 18px no-repeat,
     #cccccc;
 }
 
@@ -688,9 +691,13 @@
   background: var(--clio-pane-bg);
 }
 
+/* WebKit starts a fieldset's padding box below the whole legend (clientTop is the
+   legend's height), so the dots would fill the band between the drawn top line and
+   the legend's foot: the first layer covers that band with the pane in every engine. */
 :is([data-era="platinum"], [data-era="drawingboard"]) fieldset {
   background:
-    linear-gradient(var(--clio-pane-bg), var(--clio-pane-bg)) padding-box,
+    linear-gradient(var(--clio-pane-bg), var(--clio-pane-bg)) 1px 1px / calc(100% - 2px) calc(var(--clio-font-size) * 1.5) no-repeat border-box,
+    linear-gradient(var(--clio-pane-bg), var(--clio-pane-bg)) 0 0 / 100% 100% no-repeat padding-box,
     var(--clio-art-p9-group-dots) 0 0 / 2px 2px fixed border-box;
   image-rendering: pixelated;   /* keep the dots from blending into one grey */
 }

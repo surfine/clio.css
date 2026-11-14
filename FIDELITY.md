@@ -83,6 +83,8 @@ the 800×600 colour canvas read 1:1 (`npm run capture:drawingboard`), compared i
 | db-scroll-thumb-grip | 2×14 | 100.0% | 100.0% | 0.0% | 0 |
 | db-scroll-thumb-end | 7×14 | 100.0% | 100.0% | 0.0% | 0 |
 | db-scroll-track | 100×16 | 100.0% | 100.0% | 0.0% | 0 |
+| db-js-scroll-arrow | 16×16 | 100.0% | 100.0% | 0.0% | 0 |
+| db-js-scroll-thumb | 15×14 | 100.0% | 100.0% | 0.0% | 0 |
 | db-default-button | 16×24 | 100.0% | 100.0% | 0.0% | 0 |
 | db-alert-corner | 20×12 | 100.0% | 100.0% | 0.0% | 0 |
 | db-alert-shadow | 14×12 | 100.0% | 100.0% | 0.0% | 0 |
@@ -158,6 +160,20 @@ Reference: GUIdebook Mac OS 9.0 captures, cropped by AI System 6 (`AIS6_DIR`).
 | checkbox-checked | 12×12 | 100.0% | 100.0% | 0.0% | 0 |
 | checkbox-unchecked | 12×12 | 100.0% | 100.0% | 0.0% | 0 |
 | selected-tab | 103×24 | 100.0% | 100.0% | 0.0% | 0 |
+
+## WebKit and Firefox
+
+`CLIO_ENGINE=webkit|firefox npm run fidelity` renders the same specimens in Playwright's WebKit
+and Firefox (results in `.fidelity/results-<engine>.json`). Firefox has no `::-webkit-scrollbar`:
+its scroll-bar specimens load clio.js, whose element bars take the same rules.
+
+- WebKit: 110 of 112 identical; not identical: button-disabled (98.8%), p9-titlebar (97.3%)
+- Firefox: 104 of 110 identical; not identical: active-titlebar (100.0%), button-disabled (98.8%), s6-default-ok (98.4%), s6-button-pressed (95.4%), s6-button-hover (95.3%), p9-titlebar (97.3%)
+
+Every pixel that differs in those specimens is in a centred label or title whose spare width is odd,
+so its text starts on a half pixel. The Mac rounds that down; Chromium snaps the same way, WebKit
+draws the text on the half pixel (blended) and Firefox rounds it up. CSS cannot read a text's width
+to round it, so this stays an engine difference.
 
 ## What the remaining difference is
 

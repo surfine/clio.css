@@ -256,6 +256,45 @@
     13 rgb(111 111 111 / 0.9333);
 }
 
+/* Drawing Board's menu text (#313131) and dimmed text (#8c8c8c), for Safari's COLRv0 file. */
+@font-palette-values --clio-aa-313131 {
+  font-family: "Clio Sans '97";
+  override-colors:
+    0 rgb(49 49 49 / 0.0667),
+    1 rgb(49 49 49 / 0.1333),
+    2 rgb(49 49 49 / 0.2000),
+    3 rgb(49 49 49 / 0.2667),
+    4 rgb(49 49 49 / 0.3333),
+    5 rgb(49 49 49 / 0.4000),
+    6 rgb(49 49 49 / 0.4667),
+    7 rgb(49 49 49 / 0.5333),
+    8 rgb(49 49 49 / 0.6000),
+    9 rgb(49 49 49 / 0.6667),
+    10 rgb(49 49 49 / 0.7333),
+    11 rgb(49 49 49 / 0.8000),
+    12 rgb(49 49 49 / 0.8667),
+    13 rgb(49 49 49 / 0.9333);
+}
+
+@font-palette-values --clio-aa-8c8c8c {
+  font-family: "Clio Sans '97";
+  override-colors:
+    0 rgb(140 140 140 / 0.0667),
+    1 rgb(140 140 140 / 0.1333),
+    2 rgb(140 140 140 / 0.2000),
+    3 rgb(140 140 140 / 0.2667),
+    4 rgb(140 140 140 / 0.3333),
+    5 rgb(140 140 140 / 0.4000),
+    6 rgb(140 140 140 / 0.4667),
+    7 rgb(140 140 140 / 0.5333),
+    8 rgb(140 140 140 / 0.6000),
+    9 rgb(140 140 140 / 0.6667),
+    10 rgb(140 140 140 / 0.7333),
+    11 rgb(140 140 140 / 0.8000),
+    12 rgb(140 140 140 / 0.8667),
+    13 rgb(140 140 140 / 0.9333);
+}
+
 /* Clio Sans '97 Display: Charcoal's outlines, traced from Mac OS 9.0 drawing it
    at 72 points (fonts/ClioSans97Display.woff2, tooling/trace-outline.py), for
    every size that is not 12px or a multiple of it. */
@@ -322,6 +361,7 @@
   /* Geneva 9: the Finder info line, icon names, status lines. */
   --clio-font-small: "Clio Text '84 9", Geneva, "Helvetica Neue", Arial, sans-serif;
   --clio-text-smoothing: none;
+  --clio-text-smoothing-moz: grayscale;   /* Firefox's nearest to none */
   --clio-font-mono: Monaco, Menlo, Consolas, "Courier New", monospace;
   /* Chrome type at sizes other than 12px and its multiples (.display): an
      outline face, smoothed. */
@@ -739,6 +779,7 @@
   font-synthesis: none;
   line-height: 16px;
   -webkit-font-smoothing: var(--clio-font-smoothing);
+  -moz-osx-font-smoothing: grayscale;   /* Firefox on macOS otherwise thickens the pixel squares with a grey fringe */
 }
 
 :where(.window, .modal-dialog, .alert-box, .standard-dialog, .modeless-dialog, .clio) *,
@@ -752,6 +793,7 @@
   font-family: var(--clio-font-text);
   font-stretch: var(--clio-font-stretch-text);
   -webkit-font-smoothing: var(--clio-text-smoothing);
+  -moz-osx-font-smoothing: var(--clio-text-smoothing-moz);
 }
 
 :where(.window, .modal-dialog, .alert-box, .standard-dialog, .clio) :where(h1, h2, h3, h4, .heading) {
@@ -1343,6 +1385,7 @@
   font-stretch: var(--clio-font-stretch-text);
   font-weight: var(--clio-button-weight);
   -webkit-font-smoothing: var(--clio-font-smoothing);
+  -moz-osx-font-smoothing: grayscale;   /* Firefox on macOS otherwise thickens the pixel squares with a grey fringe */
   line-height: 14px;
   text-align: center;
   text-decoration: none;
@@ -1559,6 +1602,7 @@
   font-stretch: var(--clio-font-stretch-text);
   font-weight: var(--clio-popup-weight);
   -webkit-font-smoothing: var(--clio-font-smoothing);
+  -moz-osx-font-smoothing: grayscale;   /* Firefox on macOS otherwise thickens the pixel squares with a grey fringe */
   line-height: 16px;
   appearance: none;
   -webkit-appearance: none;
@@ -1969,7 +2013,8 @@
 }
 
 :where(input[type="range"].ticks) {
-  --clio-slider-tick-spacing: calc((100% - var(--clio-slider-tick-run)) / (var(--clio-slider-tick-count) - 1));
+  /* A whole number of pixels: each engine rounds a fractional period its own way. */
+  --clio-slider-tick-spacing: round((100% - var(--clio-slider-tick-run)) / (var(--clio-slider-tick-count) - 1), 1px);
   height: calc(var(--clio-slider-height) + var(--clio-slider-tick-gap) + 4px);
   background:
     repeating-linear-gradient(to right, var(--clio-slider-tick-light) 0 1px, var(--clio-slider-tick-ink) 1px 2px, var(--clio-slider-tick-shade) 2px 3px, transparent 3px var(--clio-slider-tick-spacing)) var(--clio-slider-tick-offset) 100% / 100% 3px no-repeat,
@@ -1994,6 +2039,28 @@
   background: var(--clio-art-slider-thumb) 0 0 / 100% 100% no-repeat;
   appearance: none;
   -webkit-appearance: none;
+}
+
+/* Firefox: the same track and thumb through its own parts. */
+:where(input[type="range"])::-moz-range-track {
+  box-sizing: border-box;
+  height: var(--clio-slider-track-height);
+  border-style: solid;
+  border-width: var(--clio-slider-track-slice);
+  border-color: transparent;
+  border-image: var(--clio-art-slider-track) var(--clio-slider-track-slice-n) fill / var(--clio-slider-track-slice) stretch;
+}
+
+:where(input[type="range"])::-moz-range-thumb {
+  box-sizing: border-box;
+  width: var(--clio-slider-thumb-width);
+  height: var(--clio-slider-thumb-height);
+  border: 0;
+  border-radius: 0;
+  background: var(--clio-art-slider-thumb) 0 0 / 100% 100% no-repeat;
+  /* Firefox centres the thumb in the content box (its top lands half a pixel
+     above, then on the pixel below); this brings its top to the content box's. */
+  translate: 0 round(down, (var(--clio-slider-thumb-height) - var(--clio-slider-track-height) - 2 * var(--clio-slider-track-top)) / 2, 1px);
 }
 
 /* ---- Little arrows -----------------------------------------------------------
@@ -2940,6 +3007,7 @@
   --clio-font-size: 12px;
   --clio-font-smoothing: none;
   --clio-text-smoothing: auto;
+  --clio-text-smoothing-moz: auto;
   --clio-font-small: var(--clio-font-text);
   --clio-font-size-small: 10px;
   --clio-chrome-weight: 700;
@@ -3273,10 +3341,12 @@
   /* Six ridges: white lines, and #777 lines one pixel to their right (the
      ridge's shade), between the box slots (Mac OS 9.0, both ends measured). */
   --clio-tb-ridges: calc(100% - var(--clio-tb-close) - var(--clio-tb-zoom) - var(--clio-tb-shade) - 1px);
+  /* The ridges are 12px tiles over an opaque bar: a hard stop to transparent in a
+     covering layer leaves WebKit's covering rows a hair translucent (±1 per channel). */
   background:
-    linear-gradient(to bottom, #cccccc 0 1px, transparent 1px 13px, #cccccc 13px 17px, #999999 17px 18px),
-    repeating-linear-gradient(to bottom, #ffffff 0 1px, transparent 1px 2px) var(--clio-tb-close) 1px / var(--clio-tb-ridges) 2px repeat-y,
-    repeating-linear-gradient(to bottom, transparent 0 1px, #777777 1px 2px) calc(var(--clio-tb-close) + 1px) 1px / var(--clio-tb-ridges) 2px repeat-y,
+    repeating-linear-gradient(to bottom, #ffffff 0 1px, transparent 1px 2px) var(--clio-tb-close) 1px / var(--clio-tb-ridges) 12px no-repeat,
+    repeating-linear-gradient(to bottom, transparent 0 1px, #777777 1px 2px) calc(var(--clio-tb-close) + 1px) 1px / var(--clio-tb-ridges) 12px no-repeat,
+    linear-gradient(to bottom, #cccccc 0 17px, #999999 17px 18px) 0 0 / 100% 18px no-repeat,
     #cccccc;
 }
 
@@ -3576,9 +3646,13 @@
   background: var(--clio-pane-bg);
 }
 
+/* WebKit starts a fieldset's padding box below the whole legend (clientTop is the
+   legend's height), so the dots would fill the band between the drawn top line and
+   the legend's foot: the first layer covers that band with the pane in every engine. */
 :root fieldset {
   background:
-    linear-gradient(var(--clio-pane-bg), var(--clio-pane-bg)) padding-box,
+    linear-gradient(var(--clio-pane-bg), var(--clio-pane-bg)) 1px 1px / calc(100% - 2px) calc(var(--clio-font-size) * 1.5) no-repeat border-box,
+    linear-gradient(var(--clio-pane-bg), var(--clio-pane-bg)) 0 0 / 100% 100% no-repeat padding-box,
     var(--clio-art-p9-group-dots) 0 0 / 2px 2px fixed border-box;
   image-rendering: pixelated;   /* keep the dots from blending into one grey */
 }
@@ -4080,15 +4154,17 @@
   --clio-scrollbar-track: linear-gradient(to right, #555555 0 1px, #ece6e4 1px 7px, #777777 7px 9px, #ece6e4 9px 15px, #555555 15px);
   --clio-scrollbar-track-color: #ece6e4;
   --clio-scrollbar-track-shadow: none;
+  /* The grip lies over the ends, (length - 2) / 2 rounded down from the start:
+     on the 15px box it covers the start's last pixel (Themes tab list). */
   --clio-scrollbar-thumb-bg:
+    var(--clio-art-db-thumb-vgrip) 1px round(down, 50%, 1px) / 14px 2px no-repeat,
     var(--clio-art-db-thumb-top) 1px 0 / 14px 7px no-repeat,
     var(--clio-art-db-thumb-bottom) 1px 100% / 14px 8px no-repeat,
-    var(--clio-art-db-thumb-vgrip) 1px 50% / 14px 2px no-repeat,
     var(--clio-art-db-thumb-vstretch) 1px 0 / 14px 100% no-repeat;
   --clio-scrollbar-thumb-bg-horizontal:
+    var(--clio-art-db-thumb-hgrip) round(down, 50%, 1px) 1px / 2px 14px no-repeat,
     var(--clio-art-db-thumb-left) 0 1px / 7px 14px no-repeat,
     var(--clio-art-db-thumb-right) 100% 1px / 8px 14px no-repeat,
-    var(--clio-art-db-thumb-hgrip) 50% 1px / 2px 14px no-repeat,
     var(--clio-art-db-thumb-hstretch) 0 1px / 100% 14px no-repeat;
   --clio-scrollbar-thumb-color: #cdc6bd;
   --clio-scrollbar-thumb-border: 0 none;
@@ -4703,7 +4779,10 @@
 :root :is(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-button,
 :root:is(html.clio-scrollbars)::-webkit-scrollbar-button,
 :root :is(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-button:active,
-:root:is(html.clio-scrollbars)::-webkit-scrollbar-button:active {
+:root:is(html.clio-scrollbars)::-webkit-scrollbar-button:active,
+:root :is(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-button:horizontal,
+:root:is(html.clio-scrollbars)::-webkit-scrollbar-button:horizontal {
+  /* :horizontal outweighs the Platinum rule that moves that art a pixel down. */
   border: 0;
   background-color: transparent;
   background-position: 0 0;
@@ -4712,7 +4791,9 @@
 }
 
 :root :is(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *) > .clio-sb-anchor > .clio-sb > .clio-sb-button,
-:root :is(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *) > .clio-sb-anchor > .clio-sb > .clio-sb-button.clio-held {
+:root :is(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *) > .clio-sb-anchor > .clio-sb > .clio-sb-button.clio-held,
+:root :is(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *) > .clio-sb-anchor > .clio-sb.clio-sb-h > .clio-sb-button {
+  /* :horizontal outweighs the Platinum rule that moves that art a pixel down. */
   border: 0;
   background-color: transparent;
   background-position: 0 0;
@@ -4900,6 +4981,12 @@
   background: url("art/drawingboard/slider-track.png") calc(0px - var(--clio-db-phase, 0px)) 0 / 64px 1px repeat-x;
 }
 
+:root input[type="range"]::-moz-range-track {
+  border: 0;
+  border-image: none;
+  background: url("art/drawingboard/slider-track.png") calc(0px - var(--clio-db-phase, 0px)) 0 / 64px 1px repeat-x;
+}
+
 /* Bevel buttons: drawn as the theme's push button (its pens, corner pixels,
    hatch and shade); the Navigation Services bevel buttons were not matched
    pen for pen (inferred). */
@@ -4915,11 +5002,17 @@
 }
 
 /* Drawing Board's chosen items stay #313131 (underlined, not inverted) and its
-   dimmed text is #8c8c8c: the default black edge levels serve. */
+   dimmed text is #8c8c8c. Browsers with COLRv1 draw the edge levels in the text
+   colour; Safari's COLRv0 file draws them from these palettes. */
 :root :is(.menu-bar, [role="menubar"], [role="menu-bar"]) > li > :is(button, a, span),
 :root :is(.menu, [role="menu"]) > li,
 :root :is(.menu, [role="menu"]) > li > :is(a, button) {
-  font-palette: normal !important;   /* outranks the shared chosen-item rule */
+  font-palette: --clio-aa-313131 !important;   /* outranks the shared chosen-item rule */
+}
+
+:root :is(.menu, [role="menu"]) > li:is(.disabled, [aria-disabled="true"]),
+:root :is(.menu, [role="menu"]) > li > :is(a, button):is(:disabled, [aria-disabled="true"]) {
+  font-palette: --clio-aa-8c8c8c !important;
 }
 
 /* Adaptations the historical machines never needed. Historical sizes are

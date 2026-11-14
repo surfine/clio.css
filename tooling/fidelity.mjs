@@ -118,13 +118,17 @@ specimens.push(
   DB("db-button-whole", `<div style="padding:12px;background:#e7ded6"><button id="s" style="width:103px">Save Theme…</button></div>`, [0, 0, 103, 21], "themes-tab", [518, 370, 103, 21]),
   DB("db-button-end", `<div style="padding:12px;background:#e7ded6"><button id="s" style="width:103px">Save Theme…</button></div>`, [88, 0, 16, 21], "themes-tab", [606, 370, 16, 21]),
   // The Themes tab's list scroll bar (Mac OS drew its track half a tile along). Chromium will not draw
-  // a scroll box shorter than 26px (the theme's is 15 here), so the box's ends and grip are compared apart,
-  // without the track lines above and below them, which differ along the track.
-  DB("db-scroll-arrow", `<div class="clio-scroll" id="s" style="width:394px;height:60px;overflow-x:scroll;overflow-y:hidden;background:#fff;--clio-db-phase:64px"><div style="width:40000px;height:20px"></div></div>`, [0, 44, 16, 16], "themes-tab", [192, 297, 16, 16]),
-  DB("db-scroll-thumb-start", `<div class="clio-scroll" id="s" style="width:394px;height:60px;overflow-x:scroll;overflow-y:hidden;background:#fff;--clio-db-phase:64px"><div style="width:40000px;height:20px"></div></div>`, [16, 44, 6, 16], "themes-tab", [208, 297, 6, 16]),
-  DB("db-scroll-thumb-grip", `<div class="clio-scroll" id="s" style="width:394px;height:60px;overflow-x:scroll;overflow-y:hidden;background:#fff;--clio-db-phase:64px"><div style="width:40000px;height:20px"></div></div>`, [28, 45, 2, 14], "themes-tab", [214, 298, 2, 14]),
-  DB("db-scroll-thumb-end", `<div class="clio-scroll" id="s" style="width:394px;height:60px;overflow-x:scroll;overflow-y:hidden;background:#fff;--clio-db-phase:64px"><div style="width:40000px;height:20px"></div></div>`, [35, 45, 7, 14], "themes-tab", [216, 298, 7, 14]),
-  DB("db-scroll-track", `<div class="clio-scroll" id="s" style="width:394px;height:60px;overflow-x:scroll;overflow-y:hidden;background:#fff;--clio-db-phase:64px"><div style="width:40000px;height:20px"></div></div>`, [100, 44, 100, 16], "themes-tab", [292, 297, 100, 16]),
+  // a scroll box shorter than 26px (the theme's is 15 here; WebKit and Firefox with clio.js draw 15), so the
+  // box's ends and grip are compared apart, without the track lines above and below them, which differ along
+  // the track. The content is 5486px wide so the box is 26px long by proportion in every engine.
+  DB("db-scroll-arrow", `<div class="clio-scroll" id="s" style="width:394px;height:60px;overflow-x:scroll;overflow-y:hidden;background:#fff;--clio-db-phase:64px"><div style="width:5486px;height:20px"></div></div>`, [0, 44, 16, 16], "themes-tab", [192, 297, 16, 16]),
+  DB("db-scroll-thumb-start", `<div class="clio-scroll" id="s" style="width:394px;height:60px;overflow-x:scroll;overflow-y:hidden;background:#fff;--clio-db-phase:64px"><div style="width:5486px;height:20px"></div></div>`, [16, 44, 6, 16], "themes-tab", [208, 297, 6, 16]),
+  DB("db-scroll-thumb-grip", `<div class="clio-scroll" id="s" style="width:394px;height:60px;overflow-x:scroll;overflow-y:hidden;background:#fff;--clio-db-phase:64px"><div style="width:5486px;height:20px"></div></div>`, [28, 45, 2, 14], "themes-tab", [214, 298, 2, 14]),
+  DB("db-scroll-thumb-end", `<div class="clio-scroll" id="s" style="width:394px;height:60px;overflow-x:scroll;overflow-y:hidden;background:#fff;--clio-db-phase:64px"><div style="width:5486px;height:20px"></div></div>`, [35, 45, 7, 14], "themes-tab", [216, 298, 7, 14]),
+  DB("db-scroll-track", `<div class="clio-scroll" id="s" style="width:394px;height:60px;overflow-x:scroll;overflow-y:hidden;background:#fff;--clio-db-phase:64px"><div style="width:5486px;height:20px"></div></div>`, [100, 44, 100, 16], "themes-tab", [292, 297, 100, 16]),
+  // The same bar drawn by clio.js, which keeps the theme's 15px box: compared whole.
+  { ...DB("db-js-scroll-arrow", `<div class="clio-scroll" id="s" style="width:394px;height:60px;overflow-x:scroll;overflow-y:hidden;background:#fff;--clio-db-phase:64px"><div style="width:40000px;height:20px"></div></div>`, [0, 44, 16, 16], "themes-tab", [192, 297, 16, 16]), js: true },
+  { ...DB("db-js-scroll-thumb", `<div class="clio-scroll" id="s" style="width:394px;height:60px;overflow-x:scroll;overflow-y:hidden;background:#fff;--clio-db-phase:64px"><div style="width:40000px;height:20px"></div></div>`, [16, 45, 15, 14], "themes-tab", [208, 298, 15, 14]), js: true },
   // Energy Saver's start-up notice: an alert framed 164..632 x 201..412, "Close Message" the default button (441..579 x 375..394).
   { ...DB("db-default-button", `<div style="padding:12px;background:#e7ded6"><button class="default" id="s" style="width:140px">Close Message</button></div>`, [-3, -3, 16, 24], "energy-saver-alert", [438, 372, 16, 24]), mask: [[0, 0, 16, 1], [0, 0, 1, 24]] },   // masked: the alert's paper beyond the band
   // Alert at Energy Saver's notice place on screen: Mac OS draws its paper half a tile along (--clio-db-phase).
@@ -218,9 +222,14 @@ specimens.push(
 
 const css = pathToFileURL(join(root, "dist/clio.css")).href;
 const js = pathToFileURL(join(root, "dist/clio.js")).href;
-const out = join(root, ".fidelity");
+const out = join(root, ".fidelity"), out0 = out;
 mkdirSync(out, { recursive: true });
-const browser = await playwright.chromium.launch({ ignoreDefaultArgs: ["--hide-scrollbars"] });
+// CLIO_ENGINE=webkit|firefox renders in that engine (default chromium). Other engines
+// write results-<engine>[-<n>x].json and leave FIDELITY.md, which is the Chromium table.
+const ENGINE = process.env.CLIO_ENGINE || "chromium";
+if (!["chromium", "webkit", "firefox"].includes(ENGINE)) { console.error(`CLIO_ENGINE must be chromium, webkit or firefox, not ${ENGINE}`); process.exit(2); }
+const browser = await playwright[ENGINE].launch(ENGINE === "chromium" ? { ignoreDefaultArgs: ["--hide-scrollbars"] } : {});
+const tag = (ENGINE === "chromium" ? "" : "-" + ENGINE);
 // FIDELITY_DPR=2 (or 3) renders at that device pixel ratio and compares against the
 // reference scaled up by nearest neighbour: every Mac pixel must become a solid 2x2
 // (3x3) block. Results go to results-<n>x.json; FIDELITY.md stays the 1x table.
@@ -231,15 +240,25 @@ const ONLY = process.env.FIDELITY_ONLY ? new RegExp(process.env.FIDELITY_ONLY) :
 for (const s of specimens) {
   if (ONLY && !ONLY.test(s.id)) continue;
   if (s.refFile && !existsSync(s.refFile)) { console.log(`${s.id}: no reference (run npm run capture:system6)`); continue; }
-  const html = `<!doctype html><html data-era="${s.era || "platinum"}"><head><link rel="stylesheet" href="${css}"><style>body{margin:0;padding:24px;background:#4a71ab}</style></head><body>${s.html}${s.js ? `<script src="${js}"></script>` : ""}</body></html>`;
-  const file = join(out, `${s.id}.html`);
+  // Firefox has no ::-webkit-scrollbar: there the era's scroll bars are the ones clio.js
+  // draws, so scroll-bar specimens load it (and say so in the table).
+  // clio.js keeps the theme's 15px Drawing Board box, so the crops set for the browser's
+  // 26px box do not apply; db-js-scroll-thumb compares that 15px box whole.
+  if (ENGINE === "firefox" && /^db-scroll-thumb-(grip|end)$/.test(s.id)) { console.log(`${s.id}: n/a in firefox (see db-js-scroll-thumb)`); continue; }
+  if (ENGINE === "firefox" && !s.js && /scroll|grow-box/.test(s.id)) s.js = s.viaJs = true;
+  const html = `<!doctype html><html data-era="${s.era || "platinum"}"><head><meta charset="utf-8"><link rel="stylesheet" href="${css}"><style>body{margin:0;padding:24px;background:#4a71ab}${process.env.FIDELITY_CSS || ""}</style></head><body>${s.html}${s.js ? `<script src="${js}"></script>` : ""}</body></html>`;
+  const file = join(out, `${s.id}${tag}.html`);
   writeFileSync(file, html);
   await page.goto(pathToFileURL(file).href);
-  await page.evaluate(() => document.fonts.ready);
+  // Lay out first so the faces the specimen uses start loading, then wait for them and
+  // for two frames: fonts.ready alone could resolve before the first face was asked for.
+  await page.evaluate(async () => { void document.body.offsetHeight; await document.fonts.ready; await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))); });
   if (s.js) await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))));
   const box = await page.locator("#s").boundingBox();
   const [x, y, w, h] = s.crop;
-  const shot = await page.screenshot({ clip: { x: box.x + x, y: box.y + y, width: w, height: h } });
+  // Engines snap a box at a fractional position to the pixel grid in their own way, and
+  // a fractional clip is rounded differently again: crop at the pixel the box snapped to.
+  const shot = await page.screenshot({ clip: { x: Math.round(box.x) + x, y: Math.round(box.y) + y, width: w, height: h } });
   const ref = readFileSync(s.refFile || join(tiles, `${s.id}-reference.png`));
   const metrics = await page.evaluate(async ([a, b, name, refCrop, mono, mask, dpr]) => {
     const load = (b64) => new Promise((res) => { const i = new Image(); i.onload = () => res(i); i.src = "data:image/png;base64," + b64; });
@@ -281,19 +300,36 @@ for (const s of specimens) {
     g.putImageData(d, w * 2, 0);
     return { name, size: [w, h], same: +(same / n).toFixed(4), exact: +(exact / n).toFixed(4), structural: +(off / n).toFixed(4), meanAbs: +(sum / n).toFixed(2), misses, image: diff.toDataURL("image/png").split(",")[1] };
   }, [shot.toString("base64"), ref.toString("base64"), s.id, s.refCrop || null, !!s.mono, (s.mask || []).map((m) => m.map((v) => v * DPR)), DPR]);
-  writeFileSync(join(out, `${s.id}${DPR === 1 ? "" : "@" + DPR + "x"}-compare.png`), Buffer.from(metrics.image, "base64"));
+  writeFileSync(join(out, `${s.id}${tag}${DPR === 1 ? "" : "@" + DPR + "x"}-compare.png`), Buffer.from(metrics.image, "base64"));
   delete metrics.image;
-  writeFileSync(join(out, `${s.id}${DPR === 1 ? "" : "@" + DPR + "x"}-misses.json`), JSON.stringify(metrics.misses));   // [x, y, ref rgb, clio rgb]
+  writeFileSync(join(out, `${s.id}${tag}${DPR === 1 ? "" : "@" + DPR + "x"}-misses.json`), JSON.stringify(metrics.misses));   // [x, y, ref rgb, clio rgb]
   delete metrics.misses;
-  results.push({ ...metrics, era: s.group || s.era || "platinum" });
+  results.push({ ...metrics, era: s.group || s.era || "platinum", ...(s.viaJs ? { viaJs: true } : {}) });
 }
 await browser.close();
 console.log("specimen              size      same    exact   off>48  meanAbs   (reference | clio.css | diff in .fidelity/)");
-for (const r of results) console.log(`${r.name.padEnd(21)} ${r.size.join("x").padEnd(9)} ${String(r.same).padEnd(7)} ${String(r.exact).padEnd(7)} ${String(r.structural).padEnd(7)} ${r.meanAbs}`);
+for (const r of results) console.log(`${r.name.padEnd(21)} ${r.size.join("x").padEnd(9)} ${String(r.same).padEnd(7)} ${String(r.exact).padEnd(7)} ${String(r.structural).padEnd(7)} ${r.meanAbs}${r.viaJs ? "  (clio.js bars)" : ""}`);
 if (ONLY) process.exit(0);
-writeFileSync(join(out, DPR === 1 ? "results.json" : `results-${DPR}x.json`), JSON.stringify(results, null, 2));
-if (DPR !== 1) { console.log(`${results.filter((r) => r.same === 1).length} of ${results.length} identical at ${DPR}x`); process.exit(0); }
+writeFileSync(join(out, DPR === 1 ? `results${tag}.json` : `results${tag}-${DPR}x.json`), JSON.stringify(results, null, 2));
+if (DPR !== 1 || ENGINE !== "chromium") { console.log(`${results.filter((r) => r.same === 1).length} of ${results.length} identical at ${DPR}x in ${ENGINE}`); process.exit(0); }
 const date = new Date().toISOString().slice(0, 10);
+// The other engines' last runs, if any, summarised for FIDELITY.md.
+function others() {
+  const out = [];
+  for (const e of ["webkit", "firefox"]) {
+    const f = join(out0, `results-${e}.json`);
+    if (!existsSync(f)) { out.push(`- ${e}: not run`); continue; }
+    const r = JSON.parse(readFileSync(f, "utf8"));
+    const off = r.filter((x) => x.same !== 1);
+    out.push(`- ${e === "webkit" ? "WebKit" : "Firefox"}: ${r.length - off.length} of ${r.length} identical` + (off.length ? `; not identical: ${off.map((x) => `${x.name} (${(x.same * 100).toFixed(1)}%)`).join(", ")}` : ""));
+  }
+  return out.join("\n") + `
+
+Every pixel that differs in those specimens is in a centred label or title whose spare width is odd,
+so its text starts on a half pixel. The Mac rounds that down; Chromium snaps the same way, WebKit
+draws the text on the half pixel (blended) and Firefox rounds it up. CSS cannot read a text's width
+to round it, so this stays an engine difference.`;
+}
 const row = (r) => "| " + r.name + " | " + r.size.join("×") + " | " + (r.same * 100).toFixed(1) + "% | " + (r.exact * 100).toFixed(1) + "% | " + (r.structural * 100).toFixed(1) + "% | " + r.meanAbs + " |";
 const table = (era) => "| Specimen | Size | same | exact | off | mean |\n| --- | --- | ---: | ---: | ---: | ---: |\n" + results.filter((r) => r.era === era).map(row).join("\n");
 writeFileSync(join(root, "FIDELITY.md"), `# Pixel check
@@ -341,6 +377,14 @@ ${table("platinum9")}
 Reference: GUIdebook Mac OS 9.0 captures, cropped by AI System 6 (\`AIS6_DIR\`).
 
 ${table("platinum")}
+
+## WebKit and Firefox
+
+\`CLIO_ENGINE=webkit|firefox npm run fidelity\` renders the same specimens in Playwright's WebKit
+and Firefox (results in \`.fidelity/results-<engine>.json\`). Firefox has no \`::-webkit-scrollbar\`:
+its scroll-bar specimens load clio.js, whose element bars take the same rules.
+
+${others()}
 
 ## What the remaining difference is
 
