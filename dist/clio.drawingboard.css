@@ -4112,3 +4112,24 @@
     box-shadow: none;
   }
 }
+
+/* Optional chrome faces for Platinum and Drawing Board, which clio.css does
+   not ship (their licences give no redistribution terms, or sell them):
+     data-clio-font="virtue"  Virtue, Marty P. Pfeiffer's free 1997-99 TrueType
+                              reworking of Charcoal (scootergraphics.com/virtue).
+     data-clio-font="truth"   Truth FB, David Berlow's own 2005 expansion of
+                              Charcoal, sold by Font Bureau.
+   Install the font, or add your own @font-face for it, and set the attribute
+   on <html> or any ancestor. Clio Sans '97 stays as the fallback. These are
+   outline fonts drawn by the browser: they are not the measured pixels. */
+:is([data-clio-font="virtue"], [data-clio-font="virtue"] [data-era]) {
+  --clio-font-chrome: Virtue, "Clio Sans '97", "Clio Asap", Geneva, "Helvetica Neue", Arial, sans-serif;
+  --clio-font-window-title: Virtue, "Clio Sans '97 Title", "Clio Sans '97", "Clio Asap", Geneva, "Helvetica Neue", Arial, sans-serif;
+  --clio-font-button: Virtue, "Clio Sans '97", "Clio Asap", Geneva, "Helvetica Neue", Arial, sans-serif;
+}
+
+:is([data-clio-font="truth"], [data-clio-font="truth"] [data-era]) {
+  --clio-font-chrome: "Truth FB", Truth, "Clio Sans '97", "Clio Asap", Geneva, "Helvetica Neue", Arial, sans-serif;
+  --clio-font-window-title: "Truth FB", Truth, "Clio Sans '97 Title", "Clio Sans '97", "Clio Asap", Geneva, "Helvetica Neue", Arial, sans-serif;
+  --clio-font-button: "Truth FB", Truth, "Clio Sans '97", "Clio Asap", Geneva, "Helvetica Neue", Arial, sans-serif;
+}
