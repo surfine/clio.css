@@ -28,7 +28,7 @@
   document.addEventListener("pointerdown", (e) => {
     if (e.button !== 0 || !(e.target instanceof Element)) return;
     const el = e.target.closest(PRESSABLE);
-    if (!el || el.disabled || optedOut(el) || el.closest(".clio-sb-anchor")) return;
+    if (!el || el.disabled || optedOut(el) || el.closest(".clio-sb-anchor, .menu-bar, [role=menubar], [role=menu-bar], .menu, [role=menu]")) return;
     const r = el.getBoundingClientRect();   // once per press; the control does not move while held
     const inside = (ev) => ev.clientX >= r.left && ev.clientX < r.right && ev.clientY >= r.top && ev.clientY < r.bottom;
     const move = (ev) => { if (ev.pointerId === e.pointerId) el.toggleAttribute(OFF, !inside(ev)); };
@@ -69,6 +69,305 @@
     e.preventDefault();
     flash(button);
   });
+
+  /* ---- Menus -------------------------------------------------------------- */
+  // Press a title and drag: the menu follows the pointer and the item under it
+  // is chosen when the button comes up, blinking first. Mac OS 8 and 9 also
+  // keep a clicked menu open (--clio-menu-sticky: 1). Measured in Mac OS 9.0:
+  // 3 blinks of 3 ticks off and 3 on; a submenu opens 9 ticks after its item
+  // lights and survives a move towards it for up to about 1.2 s.
+  const BAR = ".menu-bar, [role=menubar], [role=menu-bar]";
+  const MENU = ".menu, [role=menu]";
+  const TITLE = ":scope > li > :is(button, a, span)";
+  const BLINK = "data-clio-blink";
+  const SUBMENU_DELAY = 9 * TICK;
+  const DRAG_HOLD = 1200;
+  const reduced = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const sticky = (el) => getComputedStyle(el).getPropertyValue("--clio-menu-sticky").trim() === "1";
+  const usable = (li) => li && li.matches(`:is(${MENU}) > li`) && !li.matches(".disabled, [aria-disabled=true], .separator, [role=separator], .scroll-up, .scroll-down") && !li.querySelector(":scope > :is(a, button):is(:disabled, [aria-disabled=true])");
+  const submenuOf = (li) => li && li.querySelector(`:scope > :is(${MENU})`);
+  const control = (li) => li.querySelector(":scope > :is(a, button)") || li;
+
+  let track = null;   // { bar, title, li, mode: "press" | "sticky", hot, timer, hold }
+
+  function titleOf(li) { return li.querySelector(":scope > :is(button, a, span)"); }
+  function openTitle(bar, li) {
+    for (const other of bar.querySelectorAll(":scope > li.open")) if (other !== li) closeTitle(other);
+    li.classList.add("open");
+    const t = titleOf(li); if (t && t.hasAttribute("aria-expanded")) t.setAttribute("aria-expanded", "true");
+  }
+  function closeTitle(li) {
+    li.classList.remove("open");
+    const t = titleOf(li); if (t && t.hasAttribute("aria-expanded")) t.setAttribute("aria-expanded", "false");
+    for (const x of li.querySelectorAll("li.open, li.active")) x.classList.remove("open", "active");
+  }
+  function closeAll() {
+    if (!track) return;
+    clearTimeout(track.timer); clearTimeout(track.hold);
+    for (const li of track.bar.querySelectorAll(":scope > li.open")) closeTitle(li);
+    if (document.activeElement && track.bar.contains(document.activeElement)) document.activeElement.blur();
+    track = null;
+  }
+  // Light an item; open its submenu after the delay, close siblings' submenus.
+  function light(li) {
+    if (!track || track.hot === li) return;
+    const menu = li ? li.parentElement : null;
+    if (menu) for (const sib of menu.children) if (sib !== li) { sib.classList.remove("active"); if (sib.classList.contains("open")) closeSub(sib); }
+    if (track.hot && track.hot !== li && (!li || !track.hot.contains(li))) track.hot.classList.remove("active");
+    track.hot = li;
+    clearTimeout(track.timer);
+    if (!li || !usable(li)) return;
+    li.classList.add("active");
+    if (submenuOf(li)) track.timer = setTimeout(() => { li.classList.add("open"); }, SUBMENU_DELAY);
+  }
+  function closeSub(li) { li.classList.remove("open", "active"); for (const x of li.querySelectorAll("li.open, li.active")) x.classList.remove("open", "active"); }
+  // Moving from an open parent item towards its submenu keeps it (a cone from
+  // the pointer to the submenu's near edge), for up to DRAG_HOLD.
+  function towardsSub(parent, from, to) {
+    const sub = submenuOf(parent); if (!sub || !parent.classList.contains("open")) return false;
+    const r = sub.getBoundingClientRect();
+    const right = r.left >= from.x, edge = right ? r.left : r.right;
+    const dx = to.x - from.x;
+    if (right ? dx <= 0 : dx >= 0) return false;
+    const k = Math.abs(dx) / Math.abs(edge - from.x || 1);
+    return to.y >= from.y + (r.top - from.y) * k - 1 && to.y <= from.y + (r.bottom - from.y) * k + 1;
+  }
+  function itemAt(x, y) {
+    const el = document.elementFromPoint(x, y);
+    return el ? el.closest(`:is(${MENU}) > li`) : null;
+  }
+  function choose(li) {
+    const done = () => {
+      li.removeAttribute(BLINK); const c = control(li); c.removeAttribute(BLINK);
+      closeAll();
+      c.click();
+    };
+    track.mode = "blink";
+    const c = control(li);
+    if (reduced()) return done();
+    let n = 0;
+    const step = () => {   // off, on, off, on, off, on: 3 ticks each
+      const off = n % 2 === 0;
+      li.toggleAttribute(BLINK, off); c.toggleAttribute(BLINK, off);
+      if (++n === 7) return done();
+      setTimeout(step, 3 * TICK);
+    };
+    step();
+  }
+
+  document.addEventListener("pointerdown", (e) => {
+    if (e.button !== 0 || !(e.target instanceof Element)) return;
+    const target = e.target;
+    if (track && track.mode === "sticky") {
+      const li = target.closest(`:is(${MENU}) > li`);
+      const tli = target.closest(`:is(${BAR}) > li`);
+      if (li && track.bar.contains(li)) { track.mode = "press"; e.preventDefault(); return; }
+      if (tli && tli.parentElement === track.bar && !li) { e.preventDefault(); if (tli.classList.contains("open")) { closeAll(); return; } openTitle(track.bar, tli); track.li = tli; track.mode = "press"; track.fresh = false; return; }
+      closeAll(); e.preventDefault(); e.stopPropagation();
+      document.addEventListener("click", (c) => { c.preventDefault(); c.stopPropagation(); }, { capture: true, once: true });
+      return;
+    }
+    const tli = target.closest(`:is(${BAR}) > li`);
+    if (!tli || optedOut(tli) || target.closest(MENU)) return;
+    e.preventDefault();   // the title neither takes focus nor starts a selection
+    const bar = tli.parentElement;
+    track = { bar, li: tli, mode: "press", hot: null, fresh: true, last: { x: e.clientX, y: e.clientY } };
+    openTitle(bar, tli);
+  }, true);
+
+  document.addEventListener("pointermove", (e) => {
+    if (!track || track.mode === "blink") return;
+    const at = { x: e.clientX, y: e.clientY };
+    const from = track.last; track.last = at;
+    const el = document.elementFromPoint(at.x, at.y);
+    if (!el) return;
+    const tli = el.closest(`:is(${BAR}) > li`);
+    if (tli && tli.parentElement === track.bar && !el.closest(MENU) && tli !== track.li && (track.mode === "press" || track.mode === "sticky")) {
+      openTitle(track.bar, tli); track.li = tli; track.fresh = false; light(null); return;
+    }
+    const li = el.closest(`:is(${MENU}) > li`);
+    if (li && !track.bar.contains(li)) return;
+    // keep a parent's submenu while heading for it
+    const parent = track.hot && submenuOf(track.hot) ? track.hot : null;
+    if (parent && li !== parent && !(li && parent.contains(li)) && towardsSub(parent, from, at)) {
+      clearTimeout(track.hold);
+      track.hold = setTimeout(() => { if (track) light(itemAt(track.last.x, track.last.y)); }, DRAG_HOLD);
+      return;
+    }
+    clearTimeout(track.hold);
+    if (li) light(li);
+    else if (track.hot && !submenuOf(track.hot)) light(null);
+  }, true);
+
+  document.addEventListener("pointerup", (e) => {
+    if (!track || track.mode !== "press" || e.button !== 0) return;
+    const el = document.elementFromPoint(e.clientX, e.clientY);
+    const li = el && el.closest(`:is(${MENU}) > li`);
+    if (li && track.bar.contains(li) && usable(li) && !submenuOf(li)) { e.preventDefault(); choose(li); return; }
+    const tli = el && el.closest(`:is(${BAR}) > li`);
+    if (tli === track.li && track.fresh && !el.closest(MENU) && sticky(track.bar)) { track.mode = "sticky"; return; }   // Mac OS 8: a click leaves the menu open
+    closeAll();
+  }, true);
+
+  // A click that ends a menu gesture must not reach the page.
+  document.addEventListener("click", (e) => {
+    if (e.isTrusted && e.target instanceof Element && e.target.closest(`:is(${BAR}) > li > :is(button, a, span)`) && !optedOut(e.target)) e.preventDefault();
+  }, true);
+
+  // Keyboard: arrows move between titles and items, Return/Space chooses,
+  // Esc closes. Command-key equivalents (<kbd>⌘N</kbd>) work on menu bars
+  // marked data-clio-shortcuts, the title lighting while the item runs.
+  const items = (menu) => [...menu.children].filter(usable);
+  const focusItem = (li) => { const c = control(li); if (c === li && !li.hasAttribute("tabindex")) li.tabIndex = -1; c.focus(); if (track) light(li); };
+  document.addEventListener("keydown", (e) => {
+    if (e.defaultPrevented || e.isComposing) return;
+    const f = document.activeElement instanceof Element ? document.activeElement : null;
+    if (e.metaKey || e.ctrlKey) return shortcut(e);
+    if (!f) return;
+    const tli = f.closest(`:is(${BAR}) > li`);
+    if (!tli || optedOut(tli)) return;
+    const bar = tli.parentElement;
+    const inMenu = f.closest(`:is(${MENU}) > li`);
+    const titles = [...bar.children];
+    const go = (fn) => { e.preventDefault(); fn(); };
+    if (!inMenu) {
+      if (["ArrowDown", "Enter", " "].includes(e.key)) return go(() => { track = { bar, li: tli, mode: "sticky", hot: null, last: { x: 0, y: 0 } }; openTitle(bar, tli); const m = tli.querySelector(`:scope > :is(${MENU})`); if (m && items(m)[0]) focusItem(items(m)[0]); });
+      if (e.key === "ArrowRight" || e.key === "ArrowLeft") return go(() => { const i = titles.indexOf(tli); const n = titles[(i + (e.key === "ArrowRight" ? 1 : titles.length - 1)) % titles.length]; const t = titleOf(n); if (t) t.focus(); });
+      return;
+    }
+    if (!track) track = { bar, li: tli, mode: "sticky", hot: null, last: { x: 0, y: 0 } };
+    const menu = inMenu.parentElement, list = items(menu), i = list.indexOf(inMenu);
+    if (e.key === "ArrowDown" || e.key === "ArrowUp") return go(() => focusItem(list[(i + (e.key === "ArrowDown" ? 1 : list.length - 1)) % list.length]));
+    if (e.key === "ArrowRight" && submenuOf(inMenu)) return go(() => { inMenu.classList.add("open"); const s = items(submenuOf(inMenu)); if (s[0]) focusItem(s[0]); });
+    if (e.key === "ArrowLeft" && menu.parentElement.closest(`:is(${MENU}) > li`)) return go(() => { const p = menu.parentElement; closeSub(p); focusItem(p); });
+    if (e.key === "Escape") return go(() => { const t = titleOf(tli); closeAll(); if (t) t.focus(); });
+    if ((e.key === "Enter" || e.key === " ") && usable(inMenu) && !submenuOf(inMenu)) return go(() => choose(inMenu));
+  }, true);
+
+  function shortcut(e) {
+    if (e.altKey || e.key.length !== 1) return;
+    const key = e.key.toLowerCase();
+    for (const bar of document.querySelectorAll(`:is(${BAR})[data-clio-shortcuts]`)) {
+      for (const kbd of bar.querySelectorAll(`:is(${MENU}) > li kbd`)) {
+        const m = kbd.textContent.trim().match(/^(⇧?)\s*⌘\s*(.)$/u);   // "⌘N", "⇧⌘S"
+        const li = kbd.closest(`:is(${MENU}) > li`);
+        if (!m || m[2].toLowerCase() !== key || !!m[1] !== e.shiftKey || !usable(li)) continue;
+        e.preventDefault();
+        const tli = li.closest(`:is(${BAR}) > li`), t = titleOf(tli);
+        if (t) t.classList.add("active");
+        setTimeout(() => { if (t) t.classList.remove("active"); }, 8 * TICK);
+        control(li).click();
+        return;
+      }
+    }
+  }
+
+  /* ---- Pop-up menus (<select>) ------------------------------------------ */
+  // The open menu lies over the button with the current item on the button's
+  // row. Where the browser draws it (appearance: base-select) clio.js only
+  // lines it up; elsewhere it draws the era's .menu itself and tracks it like
+  // the menu bar's. Touch keeps the system's picker.
+  const POPUP = "select:not([multiple]):not([size]), select[size='1']";
+  const baseSelect = !!(window.CSS && CSS.supports && CSS.supports("appearance", "base-select"));
+  const rowOf = (el) => px(getComputedStyle(el).getPropertyValue("--clio-menu-item-height")) || 16;
+  const borderTop = (el) => px(getComputedStyle(el).getPropertyValue("--clio-menu-border-top-width")) || 1;
+  const blink = (li, done) => {
+    if (reduced()) return done();
+    let n = 0;
+    const step = () => { li.toggleAttribute(BLINK, n % 2 === 0); if (++n === 7) { li.removeAttribute(BLINK); return done(); } setTimeout(step, 3 * TICK); };
+    step();
+  };
+  const alignPicker = (sel) => {
+    const h = rowOf(sel), r = sel.getBoundingClientRect();
+    sel.style.setProperty("--clio-picker-shift", `${Math.round((r.height - h) / 2) - borderTop(sel) - Math.max(0, sel.selectedIndex) * h}px`);
+  };
+  let popup = null;   // { sel, menu, mode, hot, opened }
+
+  function openPopup(sel) {
+    const r = sel.getBoundingClientRect(), h = rowOf(sel);
+    const menu = document.createElement("ul");
+    menu.className = "menu clio-popup-menu";
+    menu.setAttribute("role", "menu");
+    for (const o of sel.options) {
+      const li = document.createElement("li");
+      li.textContent = o.label || o.text;
+      li.dataset.index = o.index;
+      if (o.disabled || (o.parentElement && o.parentElement.disabled)) li.classList.add("disabled");
+      if (o.selected) li.classList.add("checked");
+      menu.appendChild(li);
+    }
+    const host = sel.closest("[data-era]") || document.body;
+    Object.assign(menu.style, { position: "fixed", left: `${Math.round(r.left)}px`, top: `${Math.round(r.top + (r.height - h) / 2) - borderTop(sel) - Math.max(0, sel.selectedIndex) * h}px`, minWidth: `${Math.round(r.width)}px`, zIndex: "2147483000" });
+    host.appendChild(menu);
+    // keep it on screen, as the Menu Manager does
+    const m = menu.getBoundingClientRect();
+    if (m.top < 0) menu.style.top = "0px";
+    else if (m.bottom > innerHeight) menu.style.top = `${Math.max(0, innerHeight - m.height)}px`;
+    popup = { sel, menu, mode: "press", hot: null, opened: performance.now(), moved: false, x: 0, y: 0 };
+  }
+  function closePopup() { if (popup) { popup.menu.remove(); popup = null; } }
+  function lightPopup(li) {
+    if (!popup || popup.hot === li) return;
+    if (popup.hot) popup.hot.classList.remove("active");
+    popup.hot = li && !li.classList.contains("disabled") ? li : null;
+    if (popup.hot) popup.hot.classList.add("active");
+  }
+  function choosePopup(li) {
+    const { sel } = popup; popup.mode = "blink";
+    blink(li, () => {
+      closePopup();
+      const i = +li.dataset.index;
+      if (sel.selectedIndex !== i) {
+        sel.selectedIndex = i;
+        sel.dispatchEvent(new Event("input", { bubbles: true }));
+        sel.dispatchEvent(new Event("change", { bubbles: true }));
+      }
+    });
+  }
+
+  document.addEventListener("pointerdown", (e) => {
+    if (e.button !== 0 || !(e.target instanceof Element)) return;
+    if (popup) {
+      const li = e.target.closest(".clio-popup-menu > li");
+      e.preventDefault();
+      if (li && popup.menu.contains(li) && popup.mode === "sticky") { popup.mode = "press"; popup.moved = true; lightPopup(li); return; }
+      if (popup.mode !== "blink") closePopup();
+      return;
+    }
+    const sel = e.target.closest(POPUP);
+    if (!sel || sel.disabled || optedOut(sel)) return;
+    if (baseSelect) { alignPicker(sel); return; }
+    if (e.pointerType === "touch") return;
+    e.preventDefault();
+    sel.focus({ preventScroll: true });
+    openPopup(sel);
+    popup.x = e.clientX; popup.y = e.clientY;
+  }, true);
+  document.addEventListener("keydown", (e) => {
+    const f = document.activeElement;
+    if (baseSelect && f instanceof Element && f.matches(POPUP)) alignPicker(f);
+    if (popup && e.key === "Escape") { e.preventDefault(); closePopup(); }
+  }, true);
+  document.addEventListener("pointermove", (e) => {
+    if (!popup || popup.mode === "blink") return;
+    const el = document.elementFromPoint(e.clientX, e.clientY);
+    const li = el && el.closest(".clio-popup-menu > li");
+    if (Math.abs(e.clientX - popup.x) + Math.abs(e.clientY - popup.y) > 3) popup.moved = true;
+    lightPopup(li && popup.menu.contains(li) ? li : null);
+  }, true);
+  document.addEventListener("pointerup", (e) => {
+    if (!popup || popup.mode !== "press") return;
+    const el = document.elementFromPoint(e.clientX, e.clientY);
+    const li = el && el.closest(".clio-popup-menu > li");
+    const click = !popup.moved;   // a click, not a drag: the item under the pointer is just the current one
+    if (li && popup.menu.contains(li) && !li.classList.contains("disabled") && !click) return choosePopup(li);
+    if ((el && el.closest(POPUP) === popup.sel) || (li && click)) {
+      if (sticky(popup.sel)) { popup.mode = "sticky"; return; }
+    }
+    closePopup();
+  }, true);
+  addEventListener("blur", closePopup);
+  addEventListener("resize", closePopup);
 
   /* ---- Scroll bars -------------------------------------------------------- */
   const HOSTS = ".window-pane, div.listbox, div[role=listbox], ul[role=listbox], .clio-scroll";
@@ -271,10 +570,12 @@
     return found;
   }
 
+  const claimBars = (root) => { for (const b of (root.querySelectorAll ? root.querySelectorAll(BAR) : [])) if (!optedOut(b)) b.setAttribute("data-clio-menus", ""); if (root instanceof Element && root.matches(BAR) && !optedOut(root)) root.setAttribute("data-clio-menus", ""); };
   function start() {
     scrollbars(document);
+    claimBars(document);   // clio.js opens these menus; focus alone no longer does
     new MutationObserver((records) => {
-      for (const r of records) for (const n of r.addedNodes) if (n instanceof Element && !n.classList.contains("clio-sb-anchor") && !n.closest(".clio-sb-anchor")) scrollbars(n);
+      for (const r of records) for (const n of r.addedNodes) if (n instanceof Element && !n.classList.contains("clio-sb-anchor") && !n.closest(".clio-sb-anchor")) { scrollbars(n); claimBars(n); }
     }).observe(document.documentElement, { childList: true, subtree: true });
     // An era or Smart Scrolling switched anywhere: the bars' sizes come from the era.
     new MutationObserver(() => { for (const b of live) if (b.host.isConnected) b.schedule(); })

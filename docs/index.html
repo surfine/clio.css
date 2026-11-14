@@ -444,11 +444,41 @@
       </dl>
       <p class="aliases">Also accepts: system.css markup (<code>ul[role=menu-bar]</code>, <code>[role=menu-item]</code>, <code>li.divider</code>).</p>
       <details class="evidence-details">
-        <summary>Evidence (16)</summary>
+        <summary>Evidence (21)</summary>
       <table class="evidence">
         <caption>Where each value comes from</caption>
         <thead><tr><th scope="col">Era</th><th scope="col">Value</th><th scope="col">Status</th><th scope="col">Source</th></tr></thead>
         <tbody>
+<tr>
+          <td>Platinum</td>
+          <td>clio.js: a chosen item blinks 3 times, 3 ticks dark and 3 lit, before the menu closes and the command runs</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, Mac OS 9.0 in Infinite Mac, Apple menu, each animation frame of the emulator's canvas recorded (release at 30 ms; dark at 59, 159, 276 ms; gone at 375 ms)</code><br><span class="upstream">General Controls' default Menu Blinking; System 6 and 7 assumed the same (inferred)</span></td>
+        </tr>
+<tr>
+          <td>Platinum</td>
+          <td>clio.js: a submenu opens 9 ticks after its item lights</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, Mac OS 9.0 in Infinite Mac, Apple menu &gt; Control Panels (150 ms in two runs)</code><br><span class="upstream">applies to every era (inferred for System 6 and 7)</span></td>
+        </tr>
+<tr>
+          <td>All eras</td>
+          <td>clio.js: moving from a parent item towards its submenu keeps the submenu for up to 1.2 s</td>
+          <td><span class="status status-inferred">Inferred</span></td>
+          <td><code>clio.css capture, Mac OS 9.0 in Infinite Mac: some moves held the submenu 1.15-1.2 s, a move straight up switched at once</code><br><span class="upstream">the direction test is a cone to the submenu's near edge; Apple's own rule was not pinned down</span></td>
+        </tr>
+<tr>
+          <td>Platinum</td>
+          <td>clio.js: a menu opened with a click stays open until the next click (Mac OS 8 and 9); in System 6 and 7 it closes when the button comes up</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture scripts for Mac OS 9.0 (click opens the Apple menu) and System 7.5.3 (menus must be held)</code><br><span class="upstream">--clio-menu-sticky</span></td>
+        </tr>
+<tr>
+          <td>All eras</td>
+          <td>clio.js: arrow keys, Return and Esc in menus; Command-key equivalents from &lt;kbd&gt;⌘N&lt;/kbd&gt; on menu bars marked data-clio-shortcuts, the title lit for 8 ticks</td>
+          <td><span class="status status-adapted">Adapted</span></td>
+          <td><code>clio.css</code><br><span class="upstream">Mac OS 8 and 9 had no keyboard menu navigation; Command keys are opt-in so a page's demo menus never take the browser's shortcuts</span></td>
+        </tr>
 <tr>
           <td>System 7</td>
           <td>Menus keep System 6's rows and black highlight; disabled items and the separator are solid #888 instead of a dither</td>
@@ -962,11 +992,17 @@
       </dl>
       
       <details class="evidence-details">
-        <summary>Evidence (6)</summary>
+        <summary>Evidence (7)</summary>
       <table class="evidence">
         <caption>Where each value comes from</caption>
         <thead><tr><th scope="col">Era</th><th scope="col">Value</th><th scope="col">Status</th><th scope="col">Source</th></tr></thead>
         <tbody>
+<tr>
+          <td>All eras</td>
+          <td>Open pop-up menu: the era's menu laid over the button, the current item on the button's row, checked</td>
+          <td><span class="status status-inferred">Inferred</span></td>
+          <td><code>clio.css capture, Mac OS 9.0 in Infinite Mac, SimpleText Text Style (frame platinum9/cl-size-popup)</code><br><span class="upstream">drawn with appearance: base-select where supported (Chrome 135, Safari 27; clio.js lines it up), by clio.js elsewhere; the row alignment is checked by npm run behaviour, not against pixels</span></td>
+        </tr>
 <tr>
           <td>System 7</td>
           <td>An 18px box with an 11×6 black triangle 5px from the right edge, label 15px in, and a 1px shadow that starts 3px in from the corner</td>

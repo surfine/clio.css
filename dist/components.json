@@ -320,6 +320,41 @@
       "reserveHeight": 150,
       "evidence": [
         {
+          "era": "platinum",
+          "claim": "clio.js: a chosen item blinks 3 times, 3 ticks dark and 3 lit, before the menu closes and the command runs",
+          "status": "measured",
+          "source": "clio.css capture, Mac OS 9.0 in Infinite Mac, Apple menu, each animation frame of the emulator's canvas recorded (release at 30 ms; dark at 59, 159, 276 ms; gone at 375 ms)",
+          "upstream": "General Controls' default Menu Blinking; System 6 and 7 assumed the same (inferred)"
+        },
+        {
+          "era": "platinum",
+          "claim": "clio.js: a submenu opens 9 ticks after its item lights",
+          "status": "measured",
+          "source": "clio.css capture, Mac OS 9.0 in Infinite Mac, Apple menu > Control Panels (150 ms in two runs)",
+          "upstream": "applies to every era (inferred for System 6 and 7)"
+        },
+        {
+          "era": "both",
+          "claim": "clio.js: moving from a parent item towards its submenu keeps the submenu for up to 1.2 s",
+          "status": "inferred",
+          "source": "clio.css capture, Mac OS 9.0 in Infinite Mac: some moves held the submenu 1.15-1.2 s, a move straight up switched at once",
+          "upstream": "the direction test is a cone to the submenu's near edge; Apple's own rule was not pinned down"
+        },
+        {
+          "era": "platinum",
+          "claim": "clio.js: a menu opened with a click stays open until the next click (Mac OS 8 and 9); in System 6 and 7 it closes when the button comes up",
+          "status": "measured",
+          "source": "clio.css capture scripts for Mac OS 9.0 (click opens the Apple menu) and System 7.5.3 (menus must be held)",
+          "upstream": "--clio-menu-sticky"
+        },
+        {
+          "era": "both",
+          "claim": "clio.js: arrow keys, Return and Esc in menus; Command-key equivalents from <kbd>⌘N</kbd> on menu bars marked data-clio-shortcuts, the title lit for 8 ticks",
+          "status": "adapted",
+          "source": "clio.css",
+          "upstream": "Mac OS 8 and 9 had no keyboard menu navigation; Command keys are opt-in so a page's demo menus never take the browser's shortcuts"
+        },
+        {
           "era": "system7",
           "claim": "Menus keep System 6's rows and black highlight; disabled items and the separator are solid #888 instead of a dither",
           "status": "measured",
@@ -804,6 +839,13 @@
       "accessibility": "Native <select>, so the open list is the browser's own and works everywhere.",
       "html": "<div class=\"field-row\">\n  <label for=\"clio-font\">Font:</label>\n  <select id=\"clio-font\">\n    <option>Chicago</option>\n    <option selected>Geneva</option>\n    <option>New York</option>\n  </select>\n</div>",
       "evidence": [
+        {
+          "era": "both",
+          "claim": "Open pop-up menu: the era's menu laid over the button, the current item on the button's row, checked",
+          "status": "inferred",
+          "source": "clio.css capture, Mac OS 9.0 in Infinite Mac, SimpleText Text Style (frame platinum9/cl-size-popup)",
+          "upstream": "drawn with appearance: base-select where supported (Chrome 135, Safari 27; clio.js lines it up), by clio.js elsewhere; the row alignment is checked by npm run behaviour, not against pixels"
+        },
         {
           "era": "system7",
           "claim": "An 18px box with an 11×6 black triangle 5px from the right edge, label 15px in, and a 1px shadow that starts 3px in from the corner",

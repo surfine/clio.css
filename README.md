@@ -86,6 +86,14 @@ it; with it:
   control tracking does.
 - Return or Enter clicks a dialog's `.default` button and Esc or Cmd-. its cancel button
   (`data-clio-cancel` or `value="cancel"`), each after showing it pressed for 8 ticks.
+- Menus track the pointer: press a title and drag, release on an item to choose it (it
+  blinks three times first, as Mac OS 9 does), drag across titles to switch menus;
+  submenus open after 9 ticks and stay while you head for them. Mac OS 8 and 9 keep a
+  clicked menu open. Arrow keys, Return and Esc work in menus; Command-key equivalents
+  written as `<kbd>⌘N</kbd>` run their item on menu bars marked `data-clio-shortcuts`.
+- `<select>` opens as the era's pop-up menu over the button, the current item on the
+  button's row: drawn by the browser where `appearance: base-select` is supported (Chrome
+  135, Safari 27), by clio.js elsewhere. Touch keeps the system picker.
 - Scroll areas (`.window-pane`, list boxes, `.clio-scroll`) get scroll bars drawn as
   elements with the same rules as the browser's: the scroll box keeps the era's fixed
   length, arrows repeat while held, a click in the lane pages, and System 6 and 7 drag an

@@ -100,6 +100,12 @@
   display: block;
 }
 
+/* With clio.js (data-clio-menus) a menu opens from the pointer or the arrow
+   keys, not merely because focus sits on its title. */
+:where([data-clio-menus]) li:focus-within:not(.open) > :is(.menu, ul[role="menu"]) {
+  display: none;
+}
+
 /* ---- Menu items ---------------------------------------------------------- */
 :where(.menu, [role="menu"]) > li {
   position: relative;
@@ -139,8 +145,8 @@
   cursor: default;
 }
 
-:where(.menu, [role="menu"]) > li:not(.disabled, [aria-disabled="true"], .separator, [role="separator"]):is(:hover, :focus-within, .active),
-:where(.menu, [role="menu"]) > li > :is(a, button):not([aria-disabled="true"], :disabled):is(:hover, :focus-visible, .active) {
+:where(.menu, [role="menu"]) > li:not(.disabled, [aria-disabled="true"], .separator, [role="separator"]):is(:hover, :focus-within, .active):where(:not([data-clio-blink])),
+:where(.menu, [role="menu"]) > li > :is(a, button):not([aria-disabled="true"], :disabled):is(:hover, :focus-visible, .active):where(:not([data-clio-blink])) {
   background: var(--clio-menu-item-active-bg);
   box-shadow: var(--clio-menu-item-active-shadow);
   color: var(--clio-menu-item-active-fg);
@@ -178,8 +184,8 @@
   background: var(--clio-art-s6-menucheck) 0 0 / 9px 8px no-repeat;
 }
 
-:where(.menu, [role="menu"]) > li:is(.checked, [aria-checked="true"]):is(:hover, :focus-within, .active)::before,
-:where(.menu, [role="menu"]) > li > :is([aria-checked="true"], .checked):is(:hover, :focus-visible, .active)::before {
+:where(.menu, [role="menu"]) > li:is(.checked, [aria-checked="true"]):is(:hover, :focus-within, .active):where(:not([data-clio-blink]))::before,
+:where(.menu, [role="menu"]) > li > :is([aria-checked="true"], .checked):is(:hover, :focus-visible, .active):where(:not([data-clio-blink]))::before {
   background-image: var(--clio-art-s6-menucheck-on);
 }
 
@@ -196,7 +202,7 @@
   background: var(--clio-art-s6-submenu) 0 0 / 6px 11px no-repeat;
 }
 
-:where(.menu, [role="menu"]) > li:has(> :is(.menu, ul[role="menu"])):is(:hover, :focus-within, .active)::after {
+:where(.menu, [role="menu"]) > li:has(> :is(.menu, ul[role="menu"])):is(:hover, :focus-within, .active):where(:not([data-clio-blink]))::after {
   background-image: var(--clio-art-s6-submenu-on);
 }
 
