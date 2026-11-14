@@ -353,6 +353,90 @@ measuring; the rows above are the plan, not measurements.
   `clio.machines.css` per machine, keeping its module, poses and tokens
   (`--duo-fold-y`, `--duo-page-w`, `data-duo-machine`).
 
+## 9. The far goal: real Liquid Glass, and every system surface (owner, 2026-11-14)
+
+The end state: AI System 6 looks and behaves exactly like each Mac OS X / macOS era,
+down to full screen, the Dock, Control Center and Notification Center, more faithful
+than ryOS. This includes Apple's real Liquid Glass (macOS 26/27), measured, as a
+separate era from Dewfall (AI System 6's own skin, which stays unmeasured).
+
+### Where the real thing runs (already available)
+
+| Era | Machine | Notes |
+| --- | --- | --- |
+| macOS 27 Golden Gate (Liquid Glass) | this Mac (27.2), natively | `screencapture` is the framebuffer at Retina scale; 27.2 and 27.3 beta restore images in `ws-macos-27.2/`, `ws-macos-27.3/` on TiPlus 7100 for a clean VM |
+| macOS 26 Tahoe (first Liquid Glass) | WindowShade's Lume VM `wsqa-manual` (26.6.2) | `WindowShade-QA/RUNBOOK.md`; CuaDriver gives capture and single-step input with evidence files (`qa.py prepare / capture / act`). Reuse it; do not build another driver. |
+| macOS 15 Sequoia (last before Liquid Glass) | Lume VM `wsqa-15` | Cross-check for Big Sur-family controls |
+
+Follow WindowShade's runbook rules: one VM instance at a time, check the real process
+and `nvram.bin` before starting or stopping, no SIP or TCC changes, no credentials in
+config.
+
+### P8 Liquid Glass (after P5)
+
+- **M** Measure on 27.2 natively and 26.6.2 in the VM, at factory settings, light and
+  dark, "Clear" and "Tinted" where the system offers them: refraction (displacement
+  across the lens edge against known backgrounds such as grids and stripes), specular
+  rim, blur radius, tint, shadow; the menu bar, Dock, Control Center, Notification
+  Center, sidebars, toolbars, sheets, popovers, sliders and switches.
+- **B** Rendering in three tiers, all fitted to the frames: CSS (`backdrop-filter`
+  plus fitted tints) as the base; SVG `feDisplacementMap` refraction (MIT prior art
+  below); `clio-quartz.js` WebGPU lensing, dispersion and specular highlights for the
+  exact look, with the WebGPU shader ported from Apache-2.0 / MIT sources and refitted
+  to the measured frames.
+- **F** AI System 6 keeps Dewfall as its own skin and gains a measured "Liquid Glass"
+  reference era only if the owner adds it as a thirteenth appearance; otherwise the
+  measurements calibrate Dewfall's materials without renaming it.
+
+### System surfaces every Mac OS X era must cover
+
+Added to section 4's list, per era where the era had it: menu bar extras; Dock
+(magnification, running indicators, bounce, minimize with genie and scale effects,
+stacks from 10.5 not needed unless AI System 6 uses them); full screen (10.7+) with its
+transition; Mission Control / Exposé (10.3+) and Spaces; Dashboard (Tiger) is out
+unless AI System 6 adds it; Spotlight menu (10.4+); Notification Center (10.8+, so
+Yosemite and later); Control Center (11+); window snapping and tiling (where the era
+had it). AI System 6 decides which it renders; clio.css draws each one it renders.
+
+## 10. Prior art: reuse before building (survey 2026-11-14)
+
+Search before building every part (the "prior art first" rule). Reuse **code** only
+under MIT, BSD, Apache-2.0 or similarly permissive licences, keeping their notices in
+THIRD-PARTY.md; rewrite into clio.css's own structure rather than vendoring. GPL, LGPL,
+AGPL and unlicensed projects are **ideas only**: read them for metrics and techniques,
+write our own code, never copy lines.
+
+| Need | Project | Licence | Use |
+| --- | --- | --- | --- |
+| Liquid Glass refraction (SVG) | rdev/liquid-glass-react, shuding/liquid-glass, archisvaze/liquid-glass | MIT | Code: displacement-map maths, chromatic aberration |
+| Liquid Glass shader (refraction, dispersion, highlights) | Kyant0/AndroidLiquidGlass | Apache-2.0 | Code: port the shader to WGSL |
+| Liquid Glass WebGL/WebGPU | naughtyduk/liquidGL, martin65536/liquid-glass-webgl | not detected | Ideas until their LICENSE files are read |
+| Tahoe and Big Sur metrics, colours, SVG assets | vinceliuice/MacTahoe-gtk-theme, WhiteSur-gtk-theme | MIT (check each asset) | Code and values, then confirmed by measurement |
+| Big Sur-era web desktop: Dock magnification, menu bar, Control Center | PuruVJ/macos-web, Renovamen/playground-macos | MIT | Code: Dock maths, panel structure |
+| HIG-shaped CSS controls (segmented control, switches, sheets) | codedgar/Puppertino | MIT | Code where it matches the measured era |
+| Genie minimize | Ciechan/BCGenieEffect, alexwidua/genie | MIT | Code: mesh-warp maths, ported to WebGPU/CSS |
+| Quartz-like rasteriser | google/skia (CanvasKit) | BSD-3-Clause | Code: the WASM rasteriser base for P4 |
+| Real systems to check against | mihaip/infinite-mac | Apache-2.0 | Reference runtime (already used) |
+| Aqua, brushed metal, Exposé, Dock (most faithful web desktop) | ryokun6/ryos | AGPL-3.0 | Ideas only; it is also the benchmark to beat |
+| Jaguar and Snow Leopard metrics, nine-slice maps | Quaqua (mirror karlvr/Quaqua) | unclear | Ideas only (already AI System 6's secondary evidence) |
+| Yosemite metrics | vinceliuice/Yosemite-gtk-theme | GPL-3.0 | Ideas only |
+| NeXTSTEP look | trunkmaster/nextspace, gnustep/libs-gui | GPL-3.0 | Ideas only |
+| Quartz 2D / Core Animation semantics | gnustep/libs-opal, libs-quartzcore | LGPL-2.1 | Ideas only |
+
+No usable prior art (build these ourselves, from measurements): Jaguar gel and Tiger
+brushed metal as CSS, Snow Leopard, Lion, Yosemite on the web, NeXTSTEP CSS, a
+standalone Mission Control or Notification Center, Apple's font smoothing.
+
+### Benchmark: ryOS
+
+ryOS (AGPL-3.0, React, about 1,300 stars) is the most faithful web desktop today: System
+7, Aqua with glass and dark variants, Dock magnification, Exposé, Spotlight, a
+Tiger-style Dashboard; no genie effect and no Control Center. clio.css beats it when, per
+era, its pixel check reports identical or measured-error results against real frames
+(ryOS publishes none), it covers every HIG control and system surface in sections 4 and
+9, and it runs without a framework. Compare side by side at the end of P1 and of each
+later era, and record the comparison in FIDELITY.md.
+
 ## 7. Risks
 
 - Virtual Intel Mac's QEMU may not expose a monitor: the in-guest `screencapture`
@@ -362,3 +446,6 @@ measuring; the rows above are the plan, not measurements.
 - Antialiased text and art will not be pixel-identical in browsers; the target there
   is a measured, reported error, not a claim of identity.
 - Aqua art is closer to authored illustration than Classic's; D4 sets the line.
+- WebGPU is not in every browser; every WebGPU effect has a CSS fallback.
+- Liquid Glass changes between point releases (26.x, 27.x): pin the version measured
+  and record it in each evidence row.
