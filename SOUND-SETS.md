@@ -112,3 +112,24 @@ half a day.
 
 The Drawing Board theme file carries its own cursors (4 `crsr` resources); clio.css's Drawing
 Board era uses the Platinum arrow. A candidate for 0.12.1.
+
+## 7. System 6 and System 7 (checked in Infinite Mac, 2026-11-15)
+
+Neither has interface sounds: menus, windows and controls are silent. Sound tracks arrived
+with the Appearance Manager in Mac OS 8.5. What they have is the **alert sound**
+(`SysBeep`, played by alerts and errors), chosen in the Sound control panel:
+
+- **System 6.0.8** (Control Panel › Sound, frame `.fidelity/snd6/sound`): Simple Beep,
+  Clink-Klank, Boing, Monkey. Speaker volume 0–7.
+- **System 7.5.3** (Sound control panel › Alert Sounds, frames `.fidelity/snd7/`): Basil, Bend
+  Me, Blue Dust, Bye!, Dewdrop, Droplet, Indigo, Jacaranda, Natal, Quack, Ryan's Hope,
+  Sheet, Simple Beep, Solly, Sosumi, Transvaal, Wild Eep (17; Sosumi selected in Infinite
+  Mac). System 7.0's own set was Droplet, Indigo, Quack, Simple Beep, Sosumi, Wild Eep; the
+  others came with later releases and models, which ones in which is not checked here,
+  nor the factory default.
+- Both live as `'snd '` resources in the System file. To extract them: copy the System file
+  out through Infinite Mac's Uploads folder, or read Apple's freely released System 6.0.8 and
+  7.5.3 install disks; then the same decoder as the sound sets.
+- For clio.js: an era's alert sound plays for an alert (`.alert-box`, the `alert` event the
+  sound interface already has), with the era's list to choose from; the startup chime is the
+  ROM's, outside the system.
