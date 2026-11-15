@@ -1,6 +1,6 @@
 """Decode classic Mac OS sound sets and System alert sounds to WAV + manifest.json.
 
-  python3 tooling/soundset.py packs [<fidelity dir> [<out dir>]]           # everything: npm run soundset
+  python3 tooling/soundset.py packs [--all] [<fidelity dir> [<out dir>]]   # npm run soundset: Apple's 4 sets (--all: 42) and the alerts
   python3 tooling/soundset.py build <set file | folder | .sit>... <out dir>  # every set found
   python3 tooling/soundset.py scan  <set file | folder | .sit>...           # inventory, no output
   python3 tooling/soundset.py alerts <out dir> <System or sound file>...   # alert sounds
@@ -417,8 +417,11 @@ ALERTS = {
                           "Submarine", "Temple", "Uh oh", "Voltage"], "selected": "Sosumi",
                  "captures": {"SimpleBeep": ("simple-beep.wav", 22050.0)}},
 }
-# Proposed, not decided: the owner chooses each era's default sound track.
+# Each era's default sound track (owner, 2026-11-15).
 DEFAULT_SETS = {"drawingboard": "drawingboard-sounds", "platinum": "platinum-sounds"}
+# What the owner's sites serve (owner, 2026-11-15): Apple's four sets and the alert sounds;
+# the third-party sets stay on this machine (`packs --all` builds them too).
+APPLE_SETS = {"platinum-sounds", "drawingboard-sounds", "gizmo-sounds", "hi-tech-sounds"}
 
 def build_alerts(era, src, out):
     cfg = ALERTS[era]
@@ -458,16 +461,22 @@ def build_alerts(era, src, out):
     print(f"{cfg['source']} alerts: {len(man['alerts'])}/{len(cfg['list'])}" + (f" PROBLEMS {man['problems']}" if man["problems"] else ""))
     return man
 
-def build_packs(fidelity, out):
-    """Everything the owner's sites serve: the 42 sound sets and the three alert lists."""
+def build_packs(fidelity, out, everything=False):
+    """What the owner's sites serve: Apple's four sound sets (all 42 with --all) and the
+    three alert lists."""
     sits = sorted(os.path.join(fidelity, "soundsets", "downloads", f) for f in os.listdir(os.path.join(fidelity, "soundsets", "downloads")) if f.endswith(".sit"))
     rc = main(["build", *sits, os.path.join(out, "sets")])
     with open(os.path.join(out, "sets", "index.json")) as f: sets = json.load(f)
+    if not everything:
+        for x in sets:
+            if x["slug"] not in APPLE_SETS: shutil.rmtree(os.path.join(out, "sets", x["slug"]))
+        sets = [x for x in sets if x["slug"] in APPLE_SETS]
+        with open(os.path.join(out, "sets", "index.json"), "w") as f: json.dump(sets, f, indent=1, ensure_ascii=False)
     alerts = {}
     for era in ALERTS:
         m = build_alerts(era, os.path.join(fidelity, "soundsets", "alerts-src", era), os.path.join(out, "alerts", era))
         alerts[era] = {"manifest": f"alerts/{era}/manifest.json", "eras": m["eras"], "selected": m["selected"], "count": len(m["alerts"])}
-    index = {"sets": [dict(x, manifest="sets/" + x["manifest"]) for x in sets], "alerts": alerts, "defaults": DEFAULT_SETS, "defaultsDecided": False}
+    index = {"sets": [dict(x, manifest="sets/" + x["manifest"]) for x in sets], "alerts": alerts, "defaults": DEFAULT_SETS}
     with open(os.path.join(out, "index.json"), "w") as f: json.dump(index, f, indent=1, ensure_ascii=False)
     print(f"{len(sets)} sets, {len(alerts)} alert lists -> {out}")
     return rc
@@ -515,7 +524,8 @@ def main(argv):
     if cmd == "selftest": return selftest(argv[1:])
     if cmd == "packs":
         here = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        return build_packs(argv[1] if len(argv) > 1 else os.path.join(here, ".fidelity"), argv[2] if len(argv) > 2 else os.path.join(here, "packs"))
+        everything = "--all" in argv; rest = [a for a in argv[1:] if a != "--all"]
+        return build_packs(rest[0] if rest else os.path.join(here, ".fidelity"), rest[1] if len(rest) > 1 else os.path.join(here, "packs"), everything)
     if cmd == "capture":
         # capture <capture.wav> <out.wav> [name]: a sound the Mac synthesizes (Simple Beep: no
         # sampled 'snd ' to decode) kept as the emulator played it, from its first to its last
