@@ -464,6 +464,168 @@ ok(still, "insertion point: lit and still under reduced motion");
   await page.mouse.move(zx + 300, zy); await page.mouse.up();
 }
 
+
+// 7. Sound sets: a made-up set and alert list (tones, written here: no Apple sound is
+// needed), served over HTTP. Every event clio.js tracks plays its sound once (clio:sound),
+// each drag loop starts and stops, and only one runs at a time.
+{
+  const { createServer } = await import("node:http");
+  const { readFileSync: rd, existsSync: ex } = await import("node:fs");
+  const sdir = join(dir, "sounds"); mkdirSync(join(sdir, "set"), { recursive: true }); mkdirSync(join(sdir, "alerts"), { recursive: true });
+  const wav = (n, rate = 22050) => { const h = Buffer.alloc(44); h.write("RIFF", 0); h.writeUInt32LE(36 + n, 4); h.write("WAVE", 8); h.write("fmt ", 12); h.writeUInt32LE(16, 16); h.writeUInt16LE(1, 20); h.writeUInt16LE(1, 22); h.writeUInt32LE(rate, 24); h.writeUInt32LE(rate, 28); h.writeUInt16LE(1, 32); h.writeUInt16LE(8, 34); h.write("data", 36); h.writeUInt32LE(n, 40); return Buffer.concat([h, Buffer.from(Array.from({ length: n }, (_, i) => 128 + Math.round(60 * Math.sin(i / 3))))]); };
+  writeFileSync(join(sdir, "set", "1.wav"), wav(200, 11127)); writeFileSync(join(sdir, "alerts", "beep.wav"), wav(300));
+  const EFFECTS = { 2: "mnuo mnuc mnui mnus", 1: "wclp wcle wclx wclr wzmp wzme wzmx wzmr wcop wcoe wcox wcor uclp ucle uclx uclr uzmp uzme uzmx uzmr ucop ucoe ucox ucor wopn wcls wzmi wzmo wcol wexp wact uopn ucls uzmi uzmo ucol uexp uact dopn dlgc aopn altc pwop pwcl blno blnc", 4: "btnp btne btnx btnr dbtp dbte dbtx dbtr cbtp cbte cbtx cbtr chkp chke chkx chkr radp rade radx radr sbap sbae sbax sbar sbte sbtp slte sltp bevp beve bevx bevr laup ladp lare larx laur ladr popp pope popx popr dscp dsce dscx dscr tabp tabe tabx tabr dtuh", 8: "dthi dtdr ftrs fsel fnew fdrp fcpd fral flap dski dske fdon fdof" };
+  const LOOPS = { 1: "wmov wgro umov ugro dmov amov imov slgh drag", 4: "slth sbth sbgh sbai sbad" };
+  const ref = { sound: 1, file: "1.wav", gain: 0.5, loop: null };
+  const man = { name: "Test Tones", sounds: { 1: { file: "1.wav", rate: 11127.2727, loopStart: 0, loopEnd: 0 } }, events: {}, loops: {} };
+  for (const [c, codes] of Object.entries(EFFECTS)) for (const k of codes.split(" ")) man.events[k] = { class: +c, play: ref };
+  for (const [c, codes] of Object.entries(LOOPS)) for (const k of codes.split(" ")) man.loops[k] = { class: +c, roles: { attack: null, moving: ref, idle: ref, release: ref } };
+  writeFileSync(join(sdir, "set", "manifest.json"), JSON.stringify(man));
+  writeFileSync(join(sdir, "alerts", "manifest.json"), JSON.stringify({ kind: "alerts", eras: ["system7", "platinum"], list: ["Beep"], selected: "Beep", alerts: { Beep: { file: "beep.wav", rate: 22050 } } }));
+  const server = createServer((q, s) => {
+    const f = join(root, decodeURIComponent(new URL(q.url, "http://x").pathname));
+    if (!f.startsWith(root) || !ex(f)) { s.writeHead(404); return s.end(); }
+    s.writeHead(200, { "content-type": f.endsWith(".json") ? "application/json" : f.endsWith(".wav") ? "audio/wav" : f.endsWith(".css") ? "text/css" : f.endsWith(".js") ? "text/javascript" : "text/html" });
+    s.end(rd(f));
+  });
+  await new Promise((r) => server.listen(0, "127.0.0.1", r));
+  const http = `http://127.0.0.1:${server.address().port}`;
+  const rel = (p) => p.slice(root.length).split("\\").join("/");
+  async function hload(era, body) {
+    const file = join(dir, `snd-${era}-${ENGINE}.html`);
+    writeFileSync(file, `<!doctype html><html data-era="${era}"><head><meta charset="utf-8"><link rel="stylesheet" href="/dist/clio.css"></head><body style="margin:20px">${body}<script src="/${process.env.CLIO_JS === "min" ? "dist/clio.min.js" : "dist/clio.js"}"></script></body></html>`);
+    await page.goto(http + rel(file));
+    const r = await page.evaluate(async ([s, a]) => {
+      window.heard = []; document.addEventListener("clio:sound", (e) => window.heard.push(e.detail.kind === "one-shot" || e.detail.kind === "alert" ? e.detail.code : `${e.detail.code}:${e.detail.kind}`));
+      return [await clio.sounds.use(s), await clio.sounds.use(a)];
+    }, [rel(join(sdir, "set", "manifest.json")), rel(join(sdir, "alerts", "manifest.json"))]);
+    await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))));
+    return r;
+  }
+  const heard = async () => { await page.waitForTimeout(60); return page.evaluate(() => window.heard.splice(0).join(" ")); };
+  const press = async (sel, how = {}) => {
+    const [x, y, b] = await center(sel);
+    await page.mouse.move(x, y); await page.mouse.down();
+    if (how.out) { await page.mouse.move(x, b.y + b.height + 40); await page.mouse.move(x, y); }
+    if (how.hold) await page.waitForTimeout(how.hold);
+    await page.mouse.up();
+  };
+  const loaded = await hload("platinum", `<div class="clio" style="padding:20px;background:#ddd">
+    <button id="b1">Plain</button><button id="b2" class="default">OK</button><button id="b3" data-clio-cancel>Cancel</button>
+    <input type="checkbox" id="c1"><input type="radio" id="r1"><button class="bevel" id="v1">B</button>
+    <button class="disclosure" id="d1" aria-expanded="false" aria-label="Show"></button>
+    <div role="tablist"><button role="tab" id="t1" aria-selected="true">A</button></div>
+    <span class="little-arrows" role="group"><button class="up" id="lu" aria-label="Up"></button><button class="down" id="ld" aria-label="Down"></button></span>
+    <input type="range" id="sl" min="0" max="10" value="5" style="width:120px">
+  </div>`);
+  ok(loaded[0] && loaded[0].sounds === 1 && loaded[1] && loaded[1].sounds === 1, `sounds: a set and an alert list load and decode (${JSON.stringify(loaded)})`);
+  ok(await heard() === "", "sounds: loading plays nothing");
+  await press("#b1"); ok(await heard() === "btnp btnr", "sounds: a push button plays press and release once each");
+  await press("#b1", { out: true }); ok(await heard() === "btnp btnx btne btnr", "sounds: leaving and re-entering a held button plays exit and enter");
+  await press("#b2"); ok(await heard() === "dbtp dbtr", "sounds: the default button has its own kind");
+  await press("#b3"); ok(await heard() === "cbtp cbtr", "sounds: the cancel button has its own kind");
+  await press("#c1"); await press("#r1"); await press("#v1"); await press("#d1"); await press("#t1");
+  ok(await heard() === "chkp chkr radp radr bevp bevr dscp dscr tabp tabr", "sounds: check box, radio button, bevel button, disclosure triangle and tab");
+  await press("#lu"); await press("#ld"); ok(await heard() === "laup laur ladp ladr", "sounds: little arrows, up and down apart");
+  {
+    const [x, y, b] = await center("#sl");
+    await page.mouse.move(x, y); await page.mouse.down();
+    for (let i = 1; i <= 12; i++) await page.mouse.move(x + i * 8, y);
+    await page.mouse.up();
+    const h = await heard();
+    ok(/^sltp slth:loop-start .*slth:loop-stop$/.test(h) && (h.match(/slte/g) || []).length === 1, `sounds: a slider plays its press, runs its thumb loop and the end of the track once (${h})`);
+  }
+  await page.evaluate(() => { clio.play("ftrs"); clio.play("dtdr"); });
+  ok(await heard() === "ftrs dtdr", "sounds: clio.play for the Finder's and the Drag Manager's kinds");
+  await page.evaluate(() => { clio.sounds.beginDrag("drag"); clio.sounds.beginDrag("wgro"); clio.sounds.endDrag(); });
+  ok(await heard() === "drag:loop-start drag:loop-stop wgro:loop-start wgro:loop-stop", "sounds: one drag loop at a time; a second ends the first");
+  // dialogs, alerts, windows, balloons
+  await page.evaluate(() => {
+    const h = document.body;
+    h.insertAdjacentHTML("beforeend", '<div class="modal-dialog" id="dg">Dialog</div>');
+  });
+  ok(await heard() === "dopn", "sounds: a dialog appearing plays dopn");
+  await page.evaluate(() => document.querySelector("#dg").remove());
+  ok(await heard() === "dlgc", "sounds: and closing plays dlgc");
+  await page.evaluate(() => document.body.insertAdjacentHTML("beforeend", '<div class="alert-box" id="al">Alert</div>'));
+  { const h = await heard(); ok(h === "alert aopn", `sounds: an alert plays the era's alert sound and aopn (${h})`); }
+  await page.evaluate(() => { document.querySelector("#al").hidden = true; });
+  { const h = await heard(); ok(h === "altc", `sounds: hiding the alert plays altc (${h})`); }
+  await page.evaluate(() => document.body.insertAdjacentHTML("beforeend", '<div class="balloon" id="bl">Help</div>'));
+  await page.evaluate(() => document.querySelector("#bl").remove());
+  ok(await heard() === "blno blnc", "sounds: a balloon shown and hidden");
+  await page.evaluate(() => document.body.insertAdjacentHTML("beforeend", '<dialog id="dd">Native</dialog>'));
+  await page.evaluate(() => document.querySelector("#dd").show()); await page.evaluate(() => document.querySelector("#dd").close());
+  ok(await heard() === "dopn dlgc", "sounds: <dialog> open and close");
+  // windows: open, activate, close box, collapse, drag, close
+  await page.evaluate(() => document.body.insertAdjacentHTML("beforeend", `<div class="window inactive" id="w" style="position:absolute;left:300px;top:200px;width:220px"><div class="title-bar"><button class="close" aria-label="Close"></button><h1 class="title">Doc</h1><button class="shade" aria-label="Collapse"></button></div><div class="window-pane" style="height:60px"></div></div>`));
+  ok(await heard() === "wopn", "sounds: a window appearing plays wopn");
+  await page.evaluate(() => document.querySelector("#w").classList.remove("inactive"));
+  ok(await heard() === "wact", "sounds: a window losing .inactive plays wact");
+  await press("#w .close"); ok(await heard() === "wclp wclr", "sounds: the close box");
+  await press("#w .shade"); ok(await heard() === "wcop wcor wcol", "sounds: the collapse box, then the window collapses");
+  await press("#w .shade"); ok(await heard() === "wcop wcor wexp", "sounds: and expands");
+  {
+    const [x, y] = await center("#w .title");
+    await page.mouse.move(x, y); await page.mouse.down();
+    for (let i = 1; i <= 5; i++) await page.mouse.move(x + i * 10, y + i * 5);
+    await page.mouse.up();
+    ok(await heard() === "wmov:loop-start wmov:loop-stop", "sounds: dragging a window starts and stops its drag loop");
+  }
+  await page.evaluate(() => { document.querySelector("#w").classList.add("utility"); });
+  { const [x, y] = await center("#w .title"); await page.mouse.move(x, y); await page.mouse.down(); await page.mouse.move(x + 20, y + 10); await page.mouse.up(); }
+  ok(await heard() === "umov:loop-start umov:loop-stop", "sounds: a utility window has its own drag loop");
+  await page.evaluate(() => document.querySelector("#w").remove());
+  ok(await heard() === "ucls", "sounds: closing a utility window plays ucls");
+  // menus and pop-ups
+  await hload("platinum", `<ul class="menu-bar" role="menubar" style="position:relative"><li><button>File</button><ul class="menu" role="menu"><li id="m1"><button>New</button></li><li id="m2"><button>Open</button></li></ul></li></ul>
+    <div style="height:120px"></div><select id="sel" style="width:120px"><option>One</option><option>Two</option></select>
+    <div class="clio-scroll" id="sc" style="width:200px;height:150px;overflow:scroll;background:#fff"><div style="width:800px;height:2000px"></div></div>`);
+  {
+    const [x, y] = await center(".menu-bar > li > button");
+    await page.mouse.move(x, y); await page.mouse.down();
+    const [ix, iy] = await center("#m1"); await page.mouse.move(ix, iy);
+    const [jx, jy] = await center("#m2"); await page.mouse.move(jx, jy);
+    await page.mouse.up(); await page.waitForTimeout(250);
+    { const h = await heard(); ok(h === "mnuo mnui mnui mnus", `sounds: a menu opens, each item lights and the chosen one sounds; no close sound after a choice (${h})`); }
+    await page.mouse.move(x, y); await page.mouse.down(); await page.mouse.move(x + 300, y + 300); await page.mouse.up();
+    { const h = await heard(); ok(h === "mnuo mnuc", `sounds: a menu let go of plays its close (${h})`); }
+  }
+  if (!(await page.evaluate(() => document.documentElement.hasAttribute("data-clio-popups") && getComputedStyle(document.querySelector("#sel")).appearance === "base-select"))) {
+    const [x, y] = await center("#sel");
+    await page.mouse.move(x, y); await page.mouse.down();
+    const [px2, py2] = await center(".clio-popup-menu li:nth-child(2)");
+    await page.mouse.move(px2, py2); await page.mouse.up(); await page.waitForTimeout(250);
+    const h = await heard();
+    ok(/^popp( mnui)+ mnus$/.test(h), `sounds: a pop-up presses, lights its items and chooses (${h})`);
+  } else passed++;
+  {
+    const arrow = async (sel, hold) => { const [x, y] = await center(sel); await page.mouse.move(x, y); await page.mouse.down(); await page.waitForTimeout(hold); await page.mouse.up(); };
+    await arrow("#sc .clio-sb-v .clio-sb-inc", 30);
+    ok(await heard() === "sbap sbar", "sounds: a scroll arrow clicked");
+    await arrow("#sc .clio-sb-v .clio-sb-inc", 400);
+    ok(await heard() === "sbap sbai:loop-start sbai:loop-stop sbar", "sounds: a scroll arrow held runs its loop");
+    const b = await page.locator("#sc .clio-sb-v").boundingBox();
+    await page.mouse.move(b.x + b.width / 2, b.y + b.height - 30); await page.mouse.down(); await page.waitForTimeout(500); await page.mouse.up();
+    const h = await heard();
+    ok(/^sbtp( sbte)?$/.test(h), `sounds: the lane pages (${h})`);
+    const [tx, ty] = await center("#sc .clio-sb-v .clio-sb-thumb");
+    await page.mouse.move(tx, ty); await page.mouse.down(); await page.mouse.move(tx, ty + 20); await page.mouse.move(tx, ty + 30); await page.mouse.up();
+    ok(await heard() === "sbth:loop-start sbth:loop-stop", "sounds: Platinum's live scroll box runs sbth");
+  }
+  // classes, mute, eras
+  await page.evaluate(() => document.documentElement.setAttribute("data-clio-sounds", "menus"));
+  await page.evaluate(() => { clio.play("btnp"); clio.play("mnuo"); });
+  ok(await heard() === "mnuo", 'sounds: data-clio-sounds="menus" keeps only the menu class');
+  await page.evaluate(() => { document.documentElement.setAttribute("data-clio-sounds", "none"); clio.play("mnuo"); document.documentElement.removeAttribute("data-clio-sounds"); clio.sounds.muted = true; clio.play("mnuo"); clio.sounds.muted = false; clio.play("mnuo"); });
+  ok(await heard() === "mnuo", 'sounds: "none" and clio.sounds.muted silence the page');
+  await hload("system7", `<div class="clio"><button id="b">OK</button></div>`);
+  await press("#b");
+  await page.evaluate(() => document.body.insertAdjacentHTML("beforeend", '<div class="alert-box">Alert</div>'));
+  { const h = await heard(); ok(h === "alert", `sounds: System 7 has no interface sounds, only its alert sound (${h})`); }
+  server.close();
+}
+
 ok(errors.length === 0, "no page errors: " + errors.join("; "));
 await browser.close();
 console.log(failed ? `FAIL ${failed} of ${passed + failed} behaviour checks (${ENGINE})` : `ok ${passed} behaviour checks (${ENGINE})`);
