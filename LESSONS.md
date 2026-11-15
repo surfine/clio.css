@@ -201,6 +201,23 @@ down.
 
 ## 8. Process
 
+- Never run `tooling/build.mjs` while a pixel or behaviour run is going: the run reads `dist/`
+  mid-way and its numbers mix two builds. Run checks in the background, edit only files the run
+  does not read, and rerun after any build.
+- When several sessions share one checkout, `git fetch` before merging and expect conflicts only in
+  generated files: rebuild them, and reconcile a value two sessions measured differently from its
+  primary source (the ROM's CaretTime beat an emulator average).
+- Read a misses file's column order before reasoning from it (`[x, y, ref rgb, clio rgb]`); reading
+  it backwards sent one fix the wrong way.
+- An absolutely placed `::after` counts its offsets from the padding box, inside the border:
+  `right: -1px` still lands on the frame's own column.
+- A specimen's backdrop belongs in the markup, not in a mask: wrap it (`beside()` in
+  `fidelity.mjs`) with the colour or pattern beside the window, and give the wrapper room for the
+  shadow. A data-URI picture inside a `style="..."` attribute must be fully percent-encoded and
+  unquoted.
+- A driving script that clicks by coordinates breaks when the emulator restores windows elsewhere:
+  take a screenshot after each step that moves windows, and fall back to doing it by hand.
+
 - Work in batches that each end pushed and green: build, `npm test`, the pixel check and
   `npm run behaviour` in all three engines, `tooling/outline-check.mjs`, then push and wait
   for GitHub Pages to serve the new file.
