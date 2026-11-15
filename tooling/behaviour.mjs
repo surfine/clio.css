@@ -393,6 +393,9 @@ ok(zr.total === 8 && zr.most <= 4 && zr.most >= 3 && zr.left === 0, `zoom rects:
 await load("platinum", `<div class="window"><div class="window-pane"><button id="cb">OK</button><textarea id="ct"></textarea></div></div>`);
 const cur = await page.evaluate(() => [getComputedStyle(document.documentElement).cursor, getComputedStyle(document.querySelector("#cb")).cursor, getComputedStyle(document.querySelector("#ct")).cursor]);
 ok(cur[0].includes("arrow.png") && cur[1].includes("arrow.png") && cur[2].includes("ibeam.png"), "cursors: the Mac's arrow on the page and buttons, its I-beam in text");
+await load("drawingboard", `<div class="window"><div class="window-pane"><button id="cb">OK</button><textarea id="ct"></textarea></div></div>`);
+const curdb = await page.evaluate(() => [getComputedStyle(document.documentElement).cursor, getComputedStyle(document.querySelector("#cb")).cursor, getComputedStyle(document.querySelector("#ct")).cursor]);
+ok(curdb[0].includes("db-arrow.png") && curdb[0].includes("0 0") && curdb[1].includes("db-arrow.png") && curdb[2].includes("ibeam.png"), `cursors: Drawing Board's own arrow (crsr 128, hot spot 0,0) on the page and buttons, its I-beam in text (${curdb.join(" | ")})`);
 // sounds
 await load("platinum", `<div id="host"></div>`);
 const played = await page.evaluate(async () => {

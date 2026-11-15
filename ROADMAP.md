@@ -98,8 +98,8 @@ Empty (owner, 2026-11-14: close everything for the Classic final, 0.12.0).
   Board now uses it. Left ([SOUND-SETS.md](SOUND-SETS.md) §5): push buttons and the delay
   field on a lightly loaded emulator; serve Apple's four sets and the alerts from R2 to both
   sites behind an Appearance-style toggle, off by default.
-- **Drawing Board's own cursors**: the theme file has 4 `crsr` resources; the era uses the
-  Platinum arrow.
+- **Drawing Board's own cursors**: done — the theme's `crsr` 128 (arrow, 16x16, hot spot 0,0)
+  decoded by `tooling/db-cursor.py`; 129-131 are drag badges (copy, alias, document), not used.
 
 - **Drawing Board's utility windows** (top-title and side-title) still use Platinum's frame.
   The theme has them (`pxm#` 6187–6214); their places in the 8.5 Application Switcher (frame
