@@ -77,7 +77,9 @@
     "capture:drawingboard": "node tooling/capture-drawingboard.mjs",
     "capture:platinum": "node tooling/capture-platinum.mjs",
     "capture:charcoal-large": "node tooling/capture-charcoal-large.mjs",
-    "capture:charcoal-ui": "node tooling/capture-charcoal-ui.mjs"
+    "capture:charcoal-ui": "node tooling/capture-charcoal-ui.mjs",
+    "soundset": "python3 tooling/soundset.py packs",
+    "sound-proof": "node tooling/sound-proof.mjs"
   },
   "engines": {
     "node": ">=18"

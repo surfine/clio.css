@@ -1,4 +1,4 @@
-# Appearance sound sets: feasibility study
+# Appearance sound sets and alert sounds
 
 Owner's question (2026-11-15): can the sound sets of Mac OS 8.5–9's Appearance Manager,
 such as the 44 collected in Macintosh Repository's
@@ -133,3 +133,72 @@ with the Appearance Manager in Mac OS 8.5. What they have is the **alert sound**
 - For clio.js: an era's alert sound plays for an alert (`.alert-box`, the `alert` event the
   sound interface already has), with the era's list to choose from; the startup chime is the
   ROM's, outside the system.
+
+## 8. Built (0.12.1, 2026-11-15): what was measured and what is inferred
+
+The tool (`tooling/soundset.py`), the player (clio.js `clio.sounds`) and the checks are in
+this repository; the sounds are in the git-ignored `packs/` only (`npm run soundset`, from
+`.fidelity/soundsets/`: both archives and `alerts-src/`, the files the emulator handed out).
+
+### Decoding
+
+| | Result |
+| --- | --- |
+| Sets | 42: both archives, Clickz 1.0 and SGI Sounds once each; Wet SoundSet 1.0 kept although its sounds and map equal Aqua SoundSet 1.0's; oddworld soundset found by its map (its Finder info is gone) |
+| Layouts | 8.5b6 (DrawingBoard Sounds only): `u32` count, 20-byte entries `code, id×3, class, n, 0, 0, 5`; release: `u16` 1, `u16` count, 44-byte entries `code, class, flags, delay, 0, 4 × (id, level, Fixed)` |
+| Encodings | `stdSH` 8-bit; `extSH` 8/16-bit mono and stereo; `cmpSH` μ-law (Terminator 2), IMA4 (BLACKSILVER, 4), MACE 3:1 (Windose98, 1) |
+| "Rarer layouts" | the 26 sounds of §5½ are empty `'snd '` resources (LooneyTunes 9, PlasticWrap 1, Squeaky Chair 1, Windows NT 15): kept as silent |
+| Lossless | every PCM sound byte for byte (8-bit stays unsigned 8-bit); IMA4 and μ-law identical to Apple's AudioToolbox decoder and ffmpeg (`soundset.py selftest`: 31/31); IMA4 carries its predictor across packets unless the header's index differs or its predictor is more than 127 away, as AudioToolbox does; MACE through ffmpeg's decoder (not checked against Apple's) |
+| Sizes | every sound's frame count equals its header's; 2 copied loop points run past the end (Gizmo 136, Matrix 509), clamped by the browser |
+
+### Alert sounds
+
+| Era | Got out of the emulator | Notes |
+| --- | --- | --- |
+| System 6.0.8 | the System file, MacBinary through BlueSCSI SD Transfer (System 6's Outside World) | Boing, Monkey decoded; Simple Beep is a square-wave synth (`timbreCmd`, `freqCmd` 69, an `ampCmd` ramp) and Clink-Klank a sample played by `freqDurationCmd` 60 then 48: both kept as recorded |
+| System 7.5.3 | the 16 sampled sounds dragged out of the System suitcase to Uploads (copying the whole System file gave a fork zeroed after 3.6 MB) | Simple Beep recorded |
+| Mac OS 9.0 | the 12 sounds dragged out of the System suitcase | SimpleBeep recorded; used for Drawing Board too (8.5b6 not checked) |
+
+Infinite Mac selects Sosumi in System 7.5.3 and Mac OS 9.0 and Simple Beep in System 6; the
+factory defaults were not checked. Mac OS 9.0's sound track is None there.
+
+### Against the emulator (`drive.mjs` arec/astop, `soundcompare.py`)
+
+| Sound | Output | Result |
+| --- | --- | --- |
+| Sheet, Dewdrop, Basil (7.5.3, 16-bit 44.1 kHz stereo) | 22,050 Hz | identical at every sample (38,245, 42,877, 55,568): decimated 2:1, mixed (L+R)>>1 |
+| Sosumi, Wild Eep, Droplet (11,127 Hz), Indigo (22,254 Hz), 8-bit | 22,050 Hz, 8-bit values with the byte repeated | correlation 0.99984-0.99997, gain 0.995-0.998; a 16.16 linear-interpolation model reproduces 88-94% of samples exactly, the rest ±1 step (Sound Manager's converter not fully modelled) |
+| Boing, Monkey (6.0.8) | Mini vMac 22,254.5 Hz, labelled 22,050 Hz by Infinite Mac | correlation 0.997, 0.995 at the true rate |
+| Temple, Sosumi (Mac OS 9.0) | 22,050 Hz, filtered converter | correlation 0.9998 |
+
+### Sound-set semantics (Mac OS 9.0 with Platinum Sounds)
+
+- **Measured**: a slot's level is a gain of level/255, 0 = full (tabp 185 -> 0.730, tabr 0 ->
+  0.986, chke/chkx 55 -> 0.22, mnui 205 -> 0.84, button 205 -> 0.81, wmov idle 45 -> 0.168).
+  The sound that plays is the first slot whose `'snd '` exists (check box press and release
+  both played slot 0 whichever way the box went).
+- **Measured**: a held window drag repeats the loop section of its idle sound until release.
+- **Inferred**: the drag slots' roles, attack, moving, idle, release, from Platinum's own
+  sound names; DrawingBoard's three as attack, loop, release ("wmov (release)").
+- **Not settled, not used**: the per-slot Fixed value (laup 1, ladp -1, laur -2, ladr -4,
+  btnp 4: not a pitch; a button with 4 sounded at its own pitch) and the entry's delay field
+  (40-225). Timing in this emulator is unreliable: sounds load lazily from its network disk
+  and the host was under load (a menu's open sound came 1.3 s after the press). Push buttons
+  were inconsistent (Set Desktop silent, Save Theme… on press, Cancel on release); clio.js
+  plays press and release as the map defines them.
+- Theme sounds came out about 15 cents flat against their own rate, alert sounds at 0 cents:
+  not explained, not applied.
+
+### The player
+
+`clio.sounds.use(url, { era, alert })` loads a set (default eras Drawing Board and Platinum)
+or an alert list (its manifest's eras); `clio.play(code[, el])`, `clio.play("alert")`;
+`clio.sounds.beginDrag(code) / dragMove() / endDrag()`; `muted`, `volume`,
+`alertSound(era[, name])`; `data-clio-sounds` classes; a `clio:sound` event per sound. The
+idle loop takes over 6 ticks after the last move (chosen). Each manifest names, per kind,
+the sound, the gain and the loop points, so the player interprets nothing.
+
+### Default set per era
+
+Not decided: `packs/index.json` proposes DrawingBoard Sounds for Drawing Board and Platinum
+Sounds for Platinum (`defaultsDecided: false`); the owner chooses.

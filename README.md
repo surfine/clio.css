@@ -119,8 +119,24 @@ it; with it:
 - Centred labels (buttons, tabs, window titles) whose text would start on a half pixel get
   one more pixel at their end, so every engine lands on the Mac's `floor(spare / 2)`;
   measured when fonts load and on resize, never per frame (`data-clio-centre="off"`).
-- Sounds: none ship. Set `clio.sounds.alert` (and `menu`, `collapse`, `expand`) to URLs
-  and put `data-clio-sounds` on `<html>`; `clio.play(name)` plays one.
+- Sounds (optional, none ship: they are Apple's and the sets' authors'). Build a pack from
+  your own copies of the Mac OS 8.5–9 Appearance sound sets and System alert sounds with
+  `npm run soundset` (`tooling/soundset.py`: WAV files at each sound's own rate and depth
+  plus `manifest.json`, into the git-ignored `packs/`), serve it, then
+  `await clio.sounds.use("packs/sets/platinum-sounds/manifest.json")` and
+  `clio.sounds.use("packs/alerts/platinum/manifest.json")`. Every sound is decoded into Web
+  Audio up front. A sound set plays for Drawing Board and Platinum (`{ era }` to choose:
+  System 6 and 7 had no interface sounds), an alert list for its own eras. Menus, window
+  boxes and drags, collapse, buttons (default and cancel apart), check boxes, radios,
+  bevels, pop-ups, disclosure triangles, tabs, little arrows, scroll arrows, lane and box,
+  sliders, balloons, and windows, dialogs and alerts opening, closing and activating play
+  their Appearance sound; one-shots overlap and exactly one drag loop runs at a time.
+  `clio.play("ftrs")` plays any other kind (the Finder's, the Drag Manager's),
+  `clio.play("alert")` the era's alert sound. `data-clio-sounds="menus windows controls
+  finder"` keeps those classes (absent: all; `"none"`: silent), `clio.sounds.muted = true`
+  silences the page, and a hidden page is silent. Each sound fires a `clio:sound` event. The
+  0.11 interface (`clio.sounds.alert = url` with `data-clio-sounds`) still works.
+  [SOUND-SETS.md](SOUND-SETS.md) has the format, the measurements and what is inferred.
 - Scroll areas (`.window-pane`, list boxes, `.clio-scroll`) get scroll bars drawn as
   elements with the same rules as the browser's: the scroll box keeps the era's fixed
   length, arrows repeat while held, a click in the lane pages, and System 6 and 7 drag an
@@ -261,6 +277,7 @@ gets the era's scroll-bar colours only.
 npm run build      # dist/, docs/, llms.txt, EVIDENCE.md from src/ and components/index.mjs
 npm test           # build + static checks
 npm run fidelity   # pixel check against AI System 6's references (needs a local checkout)
+npm run soundset   # sound packs from your copies in .fidelity/soundsets/ into packs/ (never committed)
 ```
 
 ## Licence

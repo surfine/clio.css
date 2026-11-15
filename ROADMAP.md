@@ -93,9 +93,10 @@ Empty (owner, 2026-11-14: close everything for the Classic final, 0.12.0).
 
 ### 0.12.1 (timeboxed out of 0.12.0, owner 2026-11-15)
 
-- **Appearance sound sets** (owner, 2026-11-15): `tooling/soundset.py` and a clio.js player
-  for the 116 sound kinds and 14 drag loops, built from the owner's copies and served on
-  the owner's sites, never in npm or this repository. Study: [SOUND-SETS.md](SOUND-SETS.md).
+- **Appearance sound sets** (owner, 2026-11-15): done (CHANGELOG Unreleased). Open: the
+  default sound track per era (owner's call; proposed DrawingBoard Sounds and Platinum
+  Sounds), and the meaning of the map's per-slot Fixed value and delay field
+  ([SOUND-SETS.md](SOUND-SETS.md) §8).
 - **Drawing Board's own cursors**: the theme file has 4 `crsr` resources; the era uses the
   Platinum arrow.
 

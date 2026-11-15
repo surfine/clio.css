@@ -1,5 +1,33 @@
 # Changelog
 
+## Unreleased (0.12.1)
+
+- **Appearance sound sets and alert sounds** (owner, 2026-11-15; SOUND-SETS.md). The sounds
+  never enter npm or this repository; the tool, the player and the docs do.
+  - `tooling/soundset.py` reads a Mac OS 8.5–9 sound set or a `.sit` of them: both `snd#`
+    layouts (8.5b6's 20-byte entries, the release's 44-byte ones), every `'snd '` (format 1
+    and 2; `stdSH`, `extSH` 8/16-bit mono/stereo, `cmpSH` μ-law, IMA4 and MACE 3:1; empty
+    resources kept as silent) to WAV at the sound's own rate and depth, and a `manifest.json`
+    with each kind's class, the sound and gain that play, and each drag loop's attack,
+    moving, idle and release sounds with loop points. `npm run soundset` builds the 42 sets of
+    both Macintosh Repository archives and the alert lists of System 6.0.8 (4), System 7.5.3
+    (17) and Mac OS 9.0 (13) into the git-ignored `packs/` (63 MB).
+  - clio.js: `clio.sounds.use(url)` decodes a set or an alert list into Web Audio buffers up
+    front and plays them on every event it tracks, with hooks added for window open, close
+    and activate and for sliders; `clio.play(code)`, `clio.sounds.beginDrag/endDrag`,
+    `muted`, `volume`, `data-clio-sounds` classes, a `clio:sound` event. 35 behaviour checks
+    in Chromium, WebKit and Firefox; `tooling/sound-proof.mjs` records clio.js playing the
+    real packs and matches the WAVs (correlation ≥ 0.99998 in Chromium and WebKit).
+  - Proof against the emulator: `tooling/emulator/drive.mjs` taps Infinite Mac's Web Audio
+    output (`arec`/`astop`) and `tooling/soundcompare.py` compares sample by sample. System
+    7.5.3's 16-bit 44.1 kHz alert sounds (Sheet, Dewdrop, Basil) come out of the emulator
+    identical to every sample (decimated 2:1, stereo as (L+R)>>1); 8-bit 11 and 22 kHz ones
+    pass through the Sound Manager's interpolating converter (correlation 0.99984–0.99997).
+    IMA4 and μ-law decode identically to Apple's AudioToolbox and ffmpeg.
+  - Measured in Mac OS 9.0 with Platinum Sounds: a slot's level is a gain of level/255
+    (0 = full), and a drag holds its idle loop while still. Default sound track per era is
+    proposed (DrawingBoard Sounds, Platinum Sounds), not decided.
+
 ## 0.12.0 — 2026-11-15, the Classic final
 
 Everything the Classic Mac OS phase set out to do, measured in four eras and checked in
