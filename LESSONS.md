@@ -199,6 +199,41 @@ Check a cause against the real context (clio.css's windows) before changing the 
 and keep a timebox: what does not fit goes to the next patch with its measurements written
 down.
 
+## 7¾. Chinese, Japanese and Korean (2026-11-15)
+
+- **Where to measure.** Infinite Mac has one localized system, KanjiTalk 7.5.3. Chinese and
+  Korean come from the Mac OS 9.0 install CD in its CD-ROM library (Software Installers >
+  Language Kits), installed into the Mac OS 9.0 machine (`tooling/emulator/measure-cjk.sh`;
+  `pageshot`/`pclick` drive the library's own buttons). The disk's 55,730K holds the two
+  Chinese kits (25,511K) but not Korean too (the three need 56,825K): for Korean, trash the
+  Internet and Applications folders first. Installs live only as long as the driver: write
+  every measurement down before anything can kill it.
+- **Getting CJK on screen.** The Finder's rename keeps the Chinese keyboards dimmed; Stickies
+  takes them (Traditional Chinese starts in Cangjie: `l` 中, `yk` 文). The Text control
+  panel's Script pop-up lists 繁體中文 and 简体中文: a standard pop-up menu with CJK rows,
+  the cheapest specimen there is.
+- **What was found.** CJK draws at the Roman geometry (rows, baselines; kanji ink from 10px
+  above the baseline to 1px below). A localized system's system font is the script's font:
+  KanjiTalk draws Latin chrome in Osaka, which is why the CJK fonts lead every stack.
+- **Comparing a stand-in font honestly.** Glyphs that are not Apple's cannot match pixel for
+  pixel: an `ink` box in `tooling/fidelity.mjs` leaves a run out of the pixel count and checks
+  the rows that carry ink instead. Specimens must force the stand-in (`--clio-font-cjk`):
+  current macOS has an Osaka, which the stack rightly takes first.
+- **Metrics of a fallback font move the baseline.** WebKit and Firefox took the stand-in as
+  the line's first font and set CJK a pixel low with its 13px ascent; Chromium did not.
+  Give any font that can lead a stack Clio's metrics (ascent 11, descent 3 at 12px) in the
+  file (`tooling/cjk-fonts.py`), not only in CSS.
+- **Load per language.** A face is fetched only when text in its `unicode-range` meets a stack
+  that names it, so naming the families only in `--clio-font-cjk` under `:lang()` keeps every
+  other page at zero bytes (`tooling/behaviour.mjs` checks it). A frequency-sliced
+  `unicode-range` would have cost about 100 KB of CSS; the national character set per file
+  is both period-true and small (170–320 KB).
+- **clio.js menus hang off the era's root**, outside the `<select>`: copy any attribute CSS
+  needs (`lang`) onto the rows it draws.
+- **Open:** Korean and Chinese on System 7 unmeasured; CJK in 9px small text (KanjiTalk drew
+  8px kanji); Mac OS 9's lit top line on a highlighted first pop-up item (masked in
+  `p9-zh-popup-open`).
+
 ## 8. Process
 
 - Never run `tooling/build.mjs` while a pixel or behaviour run is going: the run reads `dist/`
