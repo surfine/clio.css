@@ -137,6 +137,10 @@ it; with it:
   silences the page, and a hidden page is silent. Each sound fires a `clio:sound` event. The
   0.11 interface (`clio.sounds.alert = url` with `data-clio-sounds`) still works.
   [SOUND-SETS.md](SOUND-SETS.md) has the format, the measurements and what is inferred.
+  For a site, `dist/clio-sounds-panel.js` draws Appearance > Sound's controls (a sound
+  track pop-up, None by default, and the four class boxes), remembers the choice in the
+  visitor's browser and loads a pack's `index.json`:
+  `clioSoundsPanel(element, { base: "https://…/packs/" })`; demo `docs/sounds-panel.html?base=…`.
 - Scroll areas (`.window-pane`, list boxes, `.clio-scroll`) get scroll bars drawn as
   elements with the same rules as the browser's: the scroll box keeps the era's fixed
   length, arrows repeat while held, a click in the lane pages, and System 6 and 7 drag an

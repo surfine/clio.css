@@ -136,6 +136,8 @@ const copyArt = (to) => {
 copyArt("dist");
 // clio.js, the optional behaviour layer: copied as written (it carries its own banner).
 write("dist/clio.js", read("js/clio.js").replace("0.11.0-dev", pkg.version));
+// The Appearance > Sound panel for sites that serve sound packs (copied as written).
+write("dist/clio-sounds-panel.js", read("js/clio-sounds-panel.js"));
 // clio.min.js: the same, minified by esbuild (a dev tool: here, or in AIS6_DIR as Playwright is).
 let esbuild;
 for (const base of [join(root, "package.json"), join(process.env.AIS6_DIR || "/Users/aaron/AI System 6", "package.json")]) { try { esbuild = createRequire(base)("esbuild"); break; } catch {} }
@@ -186,6 +188,8 @@ write("docs/robots.txt", `User-agent: *\nAllow: /\n\nSitemap: ${pkg.homepage}sit
 write("docs/.nojekyll", "");
 // the touch bench for real phones (test/touch.html; not indexed)
 copyFileSync(join(root, "test/touch.html"), join(root, "docs/touch.html"));
+// the sound panel's demo (test/sounds-panel.html; ?base= points it at a pack, none ship)
+copyFileSync(join(root, "test/sounds-panel.html"), join(root, "docs/sounds-panel.html"));
 write("EVIDENCE.md", renderEvidence({ pkg, components }));
 mkdirSync(join(root, "docs/dist/fonts"), { recursive: true });
 for (const f of readdirSync(join(root, "dist"))) {

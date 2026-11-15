@@ -52,7 +52,8 @@
     "./system7": "./dist/clio.system7.css",
     "./system7.min": "./dist/clio.system7.min.css",
     "./js": "./dist/clio.js",
-    "./js.min": "./dist/clio.min.js"
+    "./js.min": "./dist/clio.min.js",
+    "./sounds-panel": "./dist/clio-sounds-panel.js"
   },
   "files": [
     "dist",

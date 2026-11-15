@@ -1,6 +1,6 @@
 // Static contract for js/clio-sounds-panel.js (the worker's job); behaviour is checked in a browser by the controller.
 import { readFileSync, existsSync } from "node:fs";
-const f = "js/clio-sounds-panel.js", d = "docs/sounds-panel.html";
+const f = "js/clio-sounds-panel.js", d = "test/sounds-panel.html";
 let bad = 0; const ok = (c, m) => { if (!c) { bad++; console.log("FAIL " + m); } };
 ok(existsSync(f), f + " exists"); ok(existsSync(d), d + " exists");
 const s = existsSync(f) ? readFileSync(f, "utf8") : "";
@@ -16,5 +16,5 @@ ok(!/https?:\/\//.test(s), "no hard-coded URL");
 ok(!/style\s*=|\.style\./.test(s), "no inline style");
 ok(/destroy\s*\(/.test(s), "returns destroy()");
 const h = existsSync(d) ? readFileSync(d, "utf8") : "";
-ok(h.includes("clio-sounds-panel.js") && h.includes('data-era="platinum"'), "demo page loads the panel in Platinum");
+ok(h.includes("clio-sounds-panel.js") && h.includes("data-era=\"platinum\""), "demo page loads the panel in Platinum");
 console.log(bad ? `FAIL ${bad}` : "ok sounds-panel contract"); process.exit(bad ? 1 : 0);

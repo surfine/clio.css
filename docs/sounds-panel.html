@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sound — clio.css</title>
+<link rel="stylesheet" href="dist/clio.css">
+</head>
+<body style="margin: 20px">
+<!-- The demo of js/clio-sounds-panel.js; the build copies it to docs/. No sounds ship:
+     ?base= points it at a pack built by npm run soundset. -->
+<div class="window" data-era="platinum" style="width: 360px">
+  <div class="title-bar"><div class="title">Sound</div></div>
+  <div class="window-pane">
+    <p>Pick a sound track, then try the controls below.</p>
+    <div id="panel"></div>
+    <p><button type="button">Play a button sound</button></p>
+    <p><label><input type="checkbox"> Play the check-box sound</label></p>
+  </div>
+</div>
+<script src="dist/clio.js"></script>
+<script src="dist/clio-sounds-panel.js"></script>
+<script>
+  (function () {
+    var base = new URLSearchParams(window.location.search).get("base") || "packs/";
+    window.clioSoundsPanel(document.getElementById("panel"), { base: base });
+  })();
+</script>
+</body>
+</html>
