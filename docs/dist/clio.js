@@ -9,7 +9,7 @@
  *     <select> opening as the era's pop-up menu
  *   - window dragging with a grey outline, the collapse box, clio.zoomRects()
  *   - the era's insertion point in text fields (XOR, measured blink)
- *   - optional sounds you supply (clio.sounds, data-clio-sounds)
+ *   - optional Appearance sound sets and alert sounds you supply (clio.sounds.use)
  * Opt out per element with data-clio-js="off". */
 (() => {
   "use strict";
@@ -36,9 +36,17 @@
     if (!el || el.disabled || optedOut(el) || el.closest(".clio-sb-anchor, .menu-bar, [role=menubar], [role=menu-bar], .menu, [role=menu]")) return;
     const r = el.getBoundingClientRect();   // once per press; the control does not move while held
     const inside = (ev) => ev.clientX >= r.left && ev.clientX < r.right && ev.clientY >= r.top && ev.clientY < r.bottom;
-    const move = (ev) => { if (ev.pointerId === e.pointerId) el.toggleAttribute(OFF, !inside(ev)); };
+    // the Appearance sounds: press, exit and enter while held, release inside
+    controlSound(el, "p");
+    const move = (ev) => {
+      if (ev.pointerId !== e.pointerId) return;
+      const off = !inside(ev);
+      if (off !== el.hasAttribute(OFF)) controlSound(el, off ? "x" : "e");
+      el.toggleAttribute(OFF, off);
+    };
     const end = (ev) => {
       if (ev.pointerId !== e.pointerId) return;
+      if (ev.type === "pointerup" && inside(ev)) controlSound(el, "r");
       el.removeAttribute(OFF);
       document.removeEventListener("pointermove", move, true);
       document.removeEventListener("pointerup", end, true);
@@ -58,7 +66,8 @@
   const flash = (button) => {
     const had = button.classList.contains("active");
     button.classList.add("active");
-    setTimeout(() => { if (!had) button.classList.remove("active"); button.click(); }, 8 * TICK);
+    controlSound(button, "p");
+    setTimeout(() => { if (!had) button.classList.remove("active"); controlSound(button, "r"); button.click(); }, 8 * TICK);
   };
   document.addEventListener("keydown", (e) => {
     if (e.defaultPrevented || e.isComposing || e.repeat) return;
@@ -99,10 +108,12 @@
   function titleOf(li) { return li.querySelector(":scope > :is(button, a, span)"); }
   function openTitle(bar, li) {
     for (const other of bar.querySelectorAll(":scope > li.open")) if (other !== li) closeTitle(other);
+    if (!li.classList.contains("open") && menuOf(li)) play("mnuo", li);
     li.classList.add("open");
     const t = titleOf(li); if (t && t.hasAttribute("aria-expanded")) t.setAttribute("aria-expanded", "true");
   }
   function closeTitle(li) {
+    if (li.classList.contains("open") && menuOf(li) && !(track && track.mode === "blink")) play("mnuc", li);
     li.classList.remove("open");
     const t = titleOf(li); if (t && t.hasAttribute("aria-expanded")) t.setAttribute("aria-expanded", "false");
     for (const x of li.querySelectorAll("li.open, li.active")) x.classList.remove("open", "active");
@@ -124,6 +135,7 @@
     clearTimeout(track.timer);
     if (!li || !usable(li)) return;
     li.classList.add("active");
+    play("mnui", li);
     if (submenuOf(li)) track.timer = setTimeout(() => { li.classList.add("open"); }, SUBMENU_DELAY);
   }
   function closeSub(li) { li.classList.remove("open", "active"); for (const x of li.querySelectorAll("li.open, li.active")) x.classList.remove("open", "active"); }
@@ -149,10 +161,11 @@
       li.removeAttribute(BLINK); const c = control(li); c.removeAttribute(BLINK);
       closeAll();
       if (after) after();
-      play("menu");
+      play("menu");      // the 0.11 name
       c.click();
     };
     track.mode = "blink";
+    play("mnus", li);   // as the item is chosen, before it blinks
     const c = control(li);
     if (reduced()) return done();
     let n = 0;
@@ -380,6 +393,7 @@
     if (phase) menu.style.setProperty("--clio-db-phase", phase);
     host.appendChild(menu);
     sel.classList.add("clio-open");   // the button draws its arrows pressed while the menu is open
+    play("popp", sel);
     // keep it on screen, as the Menu Manager does
     const m = menu.getBoundingClientRect();
     if (m.top < 0) menu.style.top = "0px";
@@ -391,10 +405,11 @@
     if (!popup || popup.hot === li) return;
     if (popup.hot) popup.hot.classList.remove("active");
     popup.hot = li && !li.classList.contains("disabled") ? li : null;
-    if (popup.hot) popup.hot.classList.add("active");
+    if (popup.hot) { popup.hot.classList.add("active"); play("mnui", popup.sel); }
   }
   function choosePopup(li) {
     const { sel } = popup; popup.mode = "blink";
+    play("mnus", sel);
     blink(li, () => {
       closePopup();
       const i = +li.dataset.index;
@@ -445,6 +460,7 @@
     if ((el && el.closest(POPUP) === popup.sel) || (li && click)) {
       if (sticky(popup.sel)) { popup.mode = "sticky"; return; }
     }
+    play("popr", popup.sel);
     closePopup();
   }, true);
   addEventListener("blur", closePopup);
@@ -584,13 +600,16 @@
         let over = true;
         button.classList.add("clio-held");
         const inButton = (ev) => { const b = button.getBoundingClientRect(); return ev.clientX >= b.left && ev.clientX < b.right && ev.clientY >= b.top && ev.clientY < b.bottom; };
-        p.onmove = (ev) => { over = inButton(ev); button.classList.toggle("clio-held", over); };
-        repeat(() => this.scrollBy(p, sign * LINE), () => over);
-        stop = () => button.classList.remove("clio-held");
+        play("sbap", this.host);
+        let held = 0;   // the arrow held: its drag loop, after the first repeat
+        p.onmove = (ev) => { const now = inButton(ev); if (now !== over) play(now ? "sbae" : "sbax", this.host); over = now; button.classList.toggle("clio-held", over); };
+        repeat(() => { this.scrollBy(p, sign * LINE); if (++held === 2) beginDrag(sign > 0 ? "sbai" : "sbad", this.host); }, () => over);
+        stop = (ev) => { button.classList.remove("clio-held"); if (held > 1) endDrag(true); if (over && ev.type === "pointerup") play("sbar", this.host); };
       } else if (target === p.thumb) {
         const grab = along(e) - trackStart - p.at;
         const live = m.live;
         p.dragging = true;
+        beginDrag(live ? "sbth" : "sbgh", this.host);
         if (!live) {
           p.ghost = make("clio-sb-ghost", p.bar);
           p.ghost.style.cssText = vertical
@@ -599,6 +618,7 @@
         }
         let at = p.at;
         p.onmove = (ev) => {
+          dragMove();
           at = Math.max(0, Math.min(p.range, Math.round(along(ev) - trackStart - grab)));
           if (live) { this.scrollToThumb(p, at); p.thumb.style.transform = vertical ? `translateY(${at}px)` : `translateX(${at}px)`; return; }
           const shift = `${-at}px`;
@@ -607,6 +627,7 @@
         };
         p.onmove(e);
         stop = () => {
+          endDrag();
           p.dragging = false;
           if (p.ghost) { p.ghost.remove(); p.ghost = null; this.scrollToThumb(p, at); }
           this.schedule();
@@ -617,7 +638,9 @@
         const page = (vertical ? m.ch : m.cw) - LINE;
         p.onmove = (ev) => { point = along(ev); };
         const beyond = () => { const a = trackStart + p.at; return point < a ? -1 : point >= a + p.thumbLength ? 1 : 0; };
-        repeat(() => { const d = beyond(); if (d) this.scrollBy(p, d * page); }, () => !!beyond());
+        play("sbtp", this.host);
+        let reached = false;   // the box reaching the pointer: the end of the track's paging
+        repeat(() => { const d = beyond(); if (d) { this.scrollBy(p, d * page); reached = false; } else if (!reached) { reached = true; play("sbte", this.host); } }, () => !!beyond() || !reached);
       }
 
       const up = (ev) => {
@@ -627,7 +650,7 @@
         p.bar.removeEventListener("pointerup", up);
         p.bar.removeEventListener("pointercancel", up);
         p.onmove = null;
-        if (stop) stop();
+        if (stop) stop(ev);
       };
       const move = (ev) => { if (ev.pointerId === e.pointerId && p.onmove) p.onmove(ev); };
       p.bar.addEventListener("pointermove", move);
@@ -718,10 +741,12 @@
     const o = outlineBox(r, outlineWidth(win), m);
     (win.closest("[data-era]") || document.body).appendChild(o);
     const x0 = e.clientX, y0 = e.clientY; let dx = 0, dy = 0;
-    const move = (ev) => { if (ev.pointerId !== e.pointerId) return; dx = Math.round(ev.clientX - x0); dy = Math.round(ev.clientY - y0); /* a finger reports fractions */ o.style.transform = `translate(${dx}px, ${dy}px)`; grayPhase(o, Math.round(r.left) + dx, Math.round(r.top) + dy); };
+    beginDrag(win.matches(ALERT) || win.querySelector(ALERT) ? "amov" : win.matches(".modal-dialog, .movable-modal, .standard-dialog, .modeless-dialog") ? "dmov" : isUtility(win) ? "umov" : "wmov", win);
+    const move = (ev) => { if (ev.pointerId !== e.pointerId) return; dragMove(); dx = Math.round(ev.clientX - x0); dy = Math.round(ev.clientY - y0); /* a finger reports fractions */ o.style.transform = `translate(${dx}px, ${dy}px)`; grayPhase(o, Math.round(r.left) + dx, Math.round(r.top) + dy); };
     const up = (ev) => {
       if (ev.pointerId !== e.pointerId) return;
       document.removeEventListener("pointermove", move, true); document.removeEventListener("pointerup", up, true); document.removeEventListener("pointercancel", up, true);
+      endDrag(ev.type === "pointercancel");
       o.remove();
       if (ev.type === "pointercancel" || (!dx && !dy)) return;
       moveBy(win, dx, dy);
@@ -868,7 +893,8 @@
     win.classList.toggle("collapsed", on);
     const box = win.querySelector(":scope > .title-bar > :is(.shade, .shade-box, .collapse)");
     if (box) box.setAttribute("aria-expanded", String(!on));
-    play(on ? "collapse" : "expand");
+    play(on ? "collapse" : "expand");   // the 0.11 names
+    play(on ? (isUtility(win) ? "ucol" : "wcol") : (isUtility(win) ? "uexp" : "wexp"), win);
     win.dispatchEvent(new CustomEvent("clio:collapse", { bubbles: true, detail: { collapsed: on } }));
   }
   document.addEventListener("click", (e) => {
@@ -988,31 +1014,267 @@
   addEventListener("resize", () => { if (caretField) queueCaret(); });
 
   /* ---- Sounds ------------------------------------------------------------- */
-  // None ship (the Mac's are Apple's recordings). Give clio.sounds a URL per
-  // name and put data-clio-sounds on <html>: "alert" plays when an alert box
-  // appears, "menu" when a menu item is chosen, "collapse" and "expand" with
-  // the collapse box. clio.play(name) plays one yourself.
-  const sounds = {};
-  function play(name) {
-    const url = sounds[name];
-    if (!url || !document.documentElement.hasAttribute("data-clio-sounds")) return;
-    try { const a = new Audio(url); a.play().catch(() => {}); } catch {}
+  // The Appearance Manager's sound tracks (Mac OS 8.5-9) and each era's alert sound.
+  // None ship: they are Apple's and the sets' authors'. tooling/soundset.py turns your
+  // own copies into WAV files and a manifest; clio.sounds.use(url) loads one and
+  // decodes every sound into Web Audio buffers up front. Nothing plays until a page
+  // loads one. A sound set plays for the Appearance eras (Drawing Board, Platinum:
+  // System 6 and 7 had no interface sounds, only the alert sound); an alert list plays
+  // for the eras its manifest names. One-shots overlap, as PlayThemeSound's did;
+  // exactly one drag loop runs at a time (BeginThemeDragSound/EndThemeDragSound).
+  // data-clio-sounds="menus windows controls finder" on <html> keeps those classes
+  // (Appearance > Sound's check boxes; absent: all four, "none": silent);
+  // clio.sounds.muted silences the page; nothing plays while the page is hidden.
+  // Every sound played is announced as a clio:sound event on the document.
+  const CLASS_BITS = { windows: 1, menus: 2, controls: 4, finder: 8 };
+  const APPEARANCE_ERAS = ["drawingboard", "platinum"];
+  const snd = { ctx: null, out: null, sets: [], alerts: [], drag: null, muted: false, volume: 1, alert: {} };
+  const legacy = {};   // clio.sounds.alert = "beep.wav": the 0.11 interface, still honoured
+  const eraOf = (el) => { const h = el instanceof Element ? el.closest("[data-era]") : document.documentElement.closest("[data-era]"); return (h && h.getAttribute("data-era")) || "system6"; };
+  function classesOn() {
+    const v = document.documentElement.getAttribute("data-clio-sounds");
+    if (v == null || !v.trim()) return 15;
+    let m = 0; for (const t of v.toLowerCase().split(/\s+/)) m |= CLASS_BITS[t] || 0;
+    return m;
   }
-  const ALERT = ".alert-box, [role=alertdialog]";
-  const visible = (el) => el.isConnected && el.getClientRects().length > 0;
-  new MutationObserver((records) => {
-    if (!document.documentElement.hasAttribute("data-clio-sounds")) return;
-    for (const r of records) {
-      const els = r.type === "attributes" ? [r.target] : [...r.addedNodes].filter((n) => n instanceof Element);
-      for (const el of els) if ((el.matches(ALERT) || el.querySelector(ALERT)) && visible(el.matches(ALERT) ? el : el.querySelector(ALERT))) return play("alert");
+  const silent = () => snd.muted || document.hidden;
+  function audio() {
+    if (snd.ctx) return snd.ctx;
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) return null;
+    snd.ctx = new AC();
+    snd.out = snd.ctx.createGain(); snd.out.gain.value = snd.volume; snd.out.connect(snd.ctx.destination);
+    // A context made before any gesture starts suspended (autoplay policy): the first
+    // press or key wakes it; the sounds that press makes then play.
+    const wake = () => { if (snd.ctx.state === "suspended" && !document.hidden) snd.ctx.resume().catch(() => {}); };
+    for (const t of ["pointerdown", "keydown", "touchend"]) document.addEventListener(t, wake, true);
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) { endDrag(true); snd.ctx.suspend().catch(() => {}); } else wake();
+    });
+    return snd.ctx;
+  }
+  // WAV (PCM 8-bit unsigned or 16-bit, any channels) to an AudioBuffer at the sound's
+  // own rate, read here so the 'snd ' header's exact rate (11127.27 Hz, not the WAV's
+  // whole 11127) is kept and no decoder resamples on the way.
+  function wavBuffer(ctx, data, rate) {
+    const v = new DataView(data); let p = 12, fmt = null, at = 0, len = 0;
+    while (p + 8 <= v.byteLength) {
+      const id = String.fromCharCode(v.getUint8(p), v.getUint8(p + 1), v.getUint8(p + 2), v.getUint8(p + 3)), n = v.getUint32(p + 4, true);
+      if (id === "fmt ") fmt = { ch: v.getUint16(p + 10, true), rate: v.getUint32(p + 12, true), bits: v.getUint16(p + 22, true) };
+      else if (id === "data") { at = p + 8; len = Math.min(n, v.byteLength - at); }
+      p += 8 + n + (n & 1);
     }
-  }).observe(document.documentElement, { childList: true, subtree: true, attributes: true, attributeFilter: ["open", "hidden"] });
+    if (!fmt || !len) throw new Error("not a PCM WAV");
+    const step = fmt.bits / 8, frames = Math.floor(len / (step * fmt.ch));
+    const buf = ctx.createBuffer(fmt.ch, Math.max(1, frames), rate || fmt.rate);
+    for (let c = 0; c < fmt.ch; c++) {
+      const d = buf.getChannelData(c);
+      for (let i = 0; i < frames; i++) {
+        const o = at + (i * fmt.ch + c) * step;
+        d[i] = fmt.bits === 8 ? (v.getUint8(o) - 128) / 128 : v.getInt16(o, true) / 32768;
+      }
+    }
+    return buf;
+  }
+  async function use(url, opts = {}) {
+    const ctx = audio();
+    if (!ctx) return null;
+    const base = new URL(url, document.baseURI);
+    const man = await (await fetch(base)).json();
+    const files = new Map();
+    const want = new Map();   // file -> exact rate
+    const add = (r) => { if (r && r.file && man.sounds && man.sounds[r.sound]) want.set(r.file, man.sounds[r.sound].rate); };
+    if (man.alerts) for (const a of Object.values(man.alerts)) want.set(a.file, a.rate);
+    for (const e of Object.values(man.events || {})) add(e.play);
+    for (const e of Object.values(man.loops || {})) for (const r of Object.values(e.roles || {})) add(r);
+    await Promise.all([...want].map(async ([file, rate]) => {
+      const res = await fetch(new URL(file, base));
+      if (res.ok) files.set(file, wavBuffer(ctx, await res.arrayBuffer(), rate));
+    }));
+    const eras = opts.era ? [].concat(opts.era) : man.eras || (man.alerts ? null : APPEARANCE_ERAS);
+    const entry = { url: String(base), man, files, eras };
+    if (man.alerts) { snd.alerts = snd.alerts.filter((x) => x.url !== entry.url); snd.alerts.push(entry); if (opts.alert) for (const e of eras || []) snd.alert[e] = opts.alert; }
+    else { snd.sets = snd.sets.filter((x) => x.url !== entry.url); snd.sets.push(entry); }
+    return { name: man.name || man.source, sounds: files.size };
+  }
+  const setFor = (era) => { for (let i = snd.sets.length - 1; i >= 0; i--) { const s = snd.sets[i]; if (!s.eras || s.eras.includes("*") || s.eras.includes(era)) return s; } return null; };
+  const alertsFor = (era) => { for (let i = snd.alerts.length - 1; i >= 0; i--) { const s = snd.alerts[i]; if (!s.eras || s.eras.includes("*") || s.eras.includes(era)) return s; } return null; };
+  function startSound(set, ref, opts = {}) {
+    const buf = ref && ref.file && set.files.get(ref.file);
+    if (!buf || silent()) return null;
+    const ctx = snd.ctx, src = ctx.createBufferSource(), g = ctx.createGain();
+    src.buffer = buf; g.gain.value = ref.gain == null ? 1 : ref.gain;
+    if (opts.loop) {
+      src.loop = true;
+      if (ref.loop) { src.loopStart = ref.loop[0] / buf.sampleRate; src.loopEnd = ref.loop[1] / buf.sampleRate; }
+    }
+    src.connect(g).connect(snd.out);
+    src.start();
+    src.onended = () => g.disconnect();
+    return { src, g };
+  }
+  const announceSound = (code, kind, era, el) => document.dispatchEvent(new CustomEvent("clio:sound", { detail: { code, kind, era, target: el instanceof Element ? el : null } }));
+  // clio.play(code[, element]): an Appearance sound kind ('mnuo', 'btnp', 'ftrs', ...) from
+  // the set for the element's era, or "alert" for the era's alert sound.
+  function play(code, el) {
+    if (typeof legacy[code] === "string") {   // the 0.11 interface: a URL per name
+      if (!document.documentElement.hasAttribute("data-clio-sounds") || silent()) return;
+      try { const a = new Audio(legacy[code]); a.play().catch(() => {}); } catch {}
+      return;
+    }
+    if (!snd.ctx || silent()) return;
+    const era = eraOf(el);
+    if (code === "alert") {
+      const list = alertsFor(era); if (!list) return;
+      const name = snd.alert[era] || list.man.selected, a = list.man.alerts[name];
+      if (a && startSound(list, { file: a.file, gain: 1 })) announceSound("alert", "alert", era, el);
+      return;
+    }
+    const set = setFor(era); if (!set) return;
+    const e = set.man.events && set.man.events[code];
+    if (!e || !e.play || !(e.class & classesOn())) return;
+    if (startSound(set, e.play)) announceSound(code, "one-shot", era, el);
+  }
+  // Drag loops: attack once, then the moving loop while the pointer moves and the idle
+  // loop while it holds still (measured, Platinum's window drag), the release sound at
+  // the end. Starting another drag ends the one running.
+  const IDLE_AFTER = 6 * TICK;
+  function beginDrag(code, el) {
+    endDrag(true);
+    if (!snd.ctx || silent()) return;
+    const era = eraOf(el), set = setFor(era); if (!set) return;
+    const e = set.man.loops && set.man.loops[code];
+    if (!e || !e.roles || !(e.class & classesOn())) return;
+    snd.drag = { code, era, el, set, roles: e.roles, mode: null, node: null, timer: 0 };
+    startSound(set, e.roles.attack);
+    loopMode("idle");
+    announceSound(code, "loop-start", era, el);
+  }
+  function loopMode(mode) {
+    const d = snd.drag; if (!d || d.mode === mode) return;
+    if (d.node) { try { d.node.src.stop(); } catch {} d.node = null; }
+    d.mode = mode; d.node = startSound(d.set, d.roles[mode], { loop: true });
+  }
+  function dragMove() {
+    const d = snd.drag; if (!d) return;
+    loopMode("moving");
+    clearTimeout(d.timer); d.timer = setTimeout(() => loopMode("idle"), IDLE_AFTER);
+  }
+  function endDrag(quiet) {
+    const d = snd.drag; if (!d) return;
+    snd.drag = null; clearTimeout(d.timer);
+    if (d.node) { try { d.node.src.stop(); } catch {} }
+    if (!quiet) startSound(d.set, d.roles.release);
+    announceSound(d.code, "loop-stop", d.era, d.el);
+  }
+
+  // Which sound kind a pressed control is: [prefix] + p (press), e (enter), x (exit), r (release).
+  const isUtility = (el) => !!el.closest(".window.utility");
+  function controlKind(el) {
+    const tb = el.closest(".title-bar > *");
+    if (tb && tb.parentElement.parentElement && tb.parentElement.parentElement.matches(".window")) {
+      const u = isUtility(tb) ? "u" : "w";
+      if (tb.matches(".close, .close-box")) return u + "cl";
+      if (tb.matches(".zoom, .resize, .resize-box")) return u + "zm";
+      if (tb.matches(".shade, .shade-box, .collapse")) return u + "co";
+      return null;
+    }
+    if (el.matches("input[type=checkbox]")) return "chk";
+    if (el.matches("input[type=radio]")) return "rad";
+    if (el.matches(".bevel")) return "bev";
+    if (el.matches(".disclosure")) return "dsc";
+    if (el.matches('[role="tab"]')) return "tab";
+    if (el.matches(".little-arrows > *")) return "la";
+    if (el.matches(".control-strip-module, .control-strip-scroll")) return null;
+    if (el.matches(DEFAULT)) return "dbt";
+    if (el.matches(CANCEL)) return "cbt";
+    return "btn";
+  }
+  function controlSound(el, phase) {
+    const k = el && controlKind(el); if (!k) return;
+    if (k === "la") {   // little arrows: up and down press and release apart, enter and exit shared
+      const up = el.matches(".up, :first-child");
+      return play(phase === "p" ? (up ? "laup" : "ladp") : phase === "r" ? (up ? "laur" : "ladr") : phase === "e" ? "lare" : "larx", el);
+    }
+    play(k + phase, el);
+  }
+
+  // Windows, dialogs, alerts and balloons appearing and going: an observer, so pages need
+  // no calls. A window that loses .inactive is activated.
+  const ALERT = ".alert-box, [role=alertdialog]";
+  const OPENABLE = ".window, .modal-dialog, .standard-dialog, .modeless-dialog, .alert-box, dialog, [role=dialog], [role=alertdialog], .balloon";
+  const visible = (el) => el.isConnected && el.getClientRects().length > 0;
+  function openKind(el, open) {
+    if (el.matches(".balloon")) return open ? "blno" : "blnc";
+    if (el.matches(ALERT)) return open ? "aopn" : "altc";
+    if (el.matches(".modal-dialog, .standard-dialog, .modeless-dialog, dialog, [role=dialog]") && !el.matches(".window")) return open ? "dopn" : "dlgc";
+    if (el.matches(".window.modal-dialog, .window.movable-modal")) return open ? "dopn" : "dlgc";
+    return (isUtility(el) ? "u" : "w") + (open ? "opn" : "cls");
+  }
+  function opened(el) {
+    if (optedOut(el)) return;
+    if (el.matches(ALERT) || (el.querySelector && el.querySelector(ALERT))) play("alert", el);
+    play(openKind(el, true), el);
+  }
+  const gone = (el, parent) => { if (!optedOut(parent || el)) play(openKind(el, false), parent || document.documentElement); };
+  new MutationObserver((records) => {
+    if (!snd.ctx && !Object.keys(legacy).length) return;
+    for (const r of records) {
+      if (r.type === "attributes") {
+        const el = r.target;
+        if (!el.matches(OPENABLE)) continue;
+        if (r.attributeName === "class") {
+          if (el.matches(".window") && (r.oldValue || "").split(/\s+/).includes("inactive") && !el.classList.contains("inactive")) play(isUtility(el) ? "uact" : "wact", el);
+          continue;
+        }
+        const now = visible(el) && !el.hidden, was = r.attributeName === "open" ? r.oldValue !== null : r.oldValue === null;
+        if (now && !was) opened(el); else if (!now && was) gone(el, el);
+        continue;
+      }
+      for (const n of r.addedNodes) if (n instanceof Element && !n.closest(".clio-sb-anchor, .clio-outline, .clio-live, .clio-popup-menu, .clio-move-menu")) {
+        const el = n.matches(OPENABLE) ? n : n.querySelector(OPENABLE);
+        if (el && visible(el)) opened(el);
+      }
+      for (const n of r.removedNodes) if (n instanceof Element && n.matches(OPENABLE) && !n.hidden) gone(n, r.target instanceof Element ? r.target : null);
+    }
+  }).observe(document.documentElement, { childList: true, subtree: true, attributes: true, attributeOldValue: true, attributeFilter: ["open", "hidden", "class"] });
+
+  // Sliders (input[type=range]): the press, the thumb's drag loop (live), the end of the track.
+  document.addEventListener("pointerdown", (e) => {
+    const r = e.button === 0 && e.target instanceof Element && e.target.closest("input[type=range]");
+    if (!r || r.disabled || optedOut(r) || !snd.ctx) return;
+    play("sltp", r); beginDrag("slth", r);
+    let last = r.value;
+    const atEnd = () => r.value === r.max || r.value === r.min || (r.max === "" && r.value === "100") || (r.min === "" && r.value === "0");
+    const move = (ev) => { if (ev.pointerId !== e.pointerId) return; dragMove(); if (r.value !== last) { last = r.value; if (atEnd()) play("slte", r); } };
+    const up = (ev) => { if (ev.pointerId !== e.pointerId) return; document.removeEventListener("pointermove", move, true); document.removeEventListener("pointerup", up, true); document.removeEventListener("pointercancel", up, true); endDrag(); };
+    document.addEventListener("pointermove", move, true); document.addEventListener("pointerup", up, true); document.addEventListener("pointercancel", up, true);
+  }, true);
+
+  const sounds = {
+    use,
+    play,
+    beginDrag,
+    dragMove,
+    endDrag: () => endDrag(false),
+    get muted() { return snd.muted; },
+    set muted(v) { snd.muted = !!v; if (v) endDrag(true); },
+    get volume() { return snd.volume; },
+    set volume(v) { snd.volume = Math.max(0, Math.min(1, +v || 0)); if (snd.out) snd.out.gain.value = snd.volume; },
+    // the alert sound by name, per era: clio.sounds.alertSound("platinum", "Sosumi")
+    alertSound(era, name) { if (name === undefined) { const l = alertsFor(era); return snd.alert[era] || (l && l.man.selected) || null; } snd.alert[era] = name; },
+    get loaded() { return { sets: snd.sets.map((s) => ({ name: s.man.name, eras: s.eras })), alerts: snd.alerts.map((s) => ({ name: s.man.source, eras: s.eras, list: s.man.list })) }; },
+  };
+  const soundsApi = new Proxy(sounds, {   // the 0.11 interface: clio.sounds.alert = "url"
+    set(t, k, v) { if (k in t) { t[k] = v; return true; } legacy[k] = v; return true; },
+    get(t, k) { return k in t ? t[k] : legacy[k]; },
+  });
 
   window.clio = {
     version: "0.12.0",
     zoomRects,
     collapse,
-    sounds,
+    sounds: soundsApi,
     play,
     scrollbars,
     unscroll(el) { const b = hosts.get(el); if (b) { b.destroy(); hosts.delete(el); live.delete(b); } },
