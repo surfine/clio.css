@@ -251,7 +251,14 @@
           "claim": "Cursors: the arrow (11x16, white outline, hot spot 1,1) and the I-beam (7x16, black, no cross bar, hot spot 3,4), redrawn at 1x, 2x and 3x; links and buttons in clio.css windows keep the arrow (the Mac had no pointing hand)",
           "status": "measured",
           "source": "clio.css capture, System 7.5.3 and Mac OS 9.0 in Infinite Mac (identical arrows), Mac OS 9.0 Stickies (I-beam), System 6.0.8 (the same arrow on the desktop and the same I-beam in Find File); tooling/cursor-art.py",
-          "upstream": "System 6 and Drawing Board assumed the same (inferred); the watch was not captured"
+          "upstream": "System 6 assumed the same (inferred); Drawing Board has the theme's own arrow (next row); the watch was not captured"
+        },
+        {
+          "era": "drawingboard",
+          "claim": "Cursors: the theme's own arrow, 16x16 in greys, hot spot 0,0 (crsr 128); 129-131 are the same arrow with a drag badge",
+          "status": "measured",
+          "source": "the Drawing Board theme file's crsr resources (Mac OS 8.5b6 Beta Themes), decoded by tooling/db-cursor.py into art/cursors/db-arrow{,-2x,-3x}.png; --check: every pixel of 1x, 2x and 3x equals the resource; tooling/behaviour.mjs: the page and buttons use it in Chromium, WebKit and Firefox",
+          "upstream": "the theme's drag badges (copy, alias, a document) are not used, clio.css has one arrow; it ships no I-beam or watch of its own, so text and busy keep the measured System 7/Mac OS 9 ones"
         },
         {
           "era": "both",

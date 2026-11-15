@@ -20,6 +20,11 @@
     `muted`, `volume`, `data-clio-sounds` classes, a `clio:sound` event. 35 behaviour checks
     in Chromium, WebKit and Firefox; `tooling/sound-proof.mjs` records clio.js playing the
     real packs and matches the WAVs (correlation ≥ 0.99998 in Chromium and WebKit).
+  - **Drawing Board's own cursor**: the theme file's `crsr` 128 — a 16x16 arrow in greys with its
+    hot spot at 0,0 — decoded by `tooling/db-cursor.py` to `art/cursors/db-arrow{,-2x,-3x}.png`
+    and used by `[data-era="drawingboard"]` (page, buttons and window chrome), where the era
+    had Platinum's arrow. `--check` compares every pixel of the three sizes with the resource;
+    one more behaviour check in each engine.
   - `dist/clio-sounds-panel.js` (`clioSoundsPanel(el, { base })`): Appearance > Sound for a
     site, off (None) until the visitor picks a track, remembered in localStorage; 6 behaviour
     checks. First draft by DeepSeek Harness from a written work order and contract

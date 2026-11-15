@@ -11,6 +11,10 @@
    each found 1:1 in the capture. The stylesheet loads them from art/ beside
    itself, as it loads fonts/. See EVIDENCE.md. */
 [data-era="drawingboard"] {
+  /* the theme's own arrow: 'crsr' 128, 16x16 in greys, hot spot 0,0 (tooling/db-cursor.py
+     writes art/cursors/db-arrow{,-2x,-3x}.png; --check compares every pixel with the
+     resource). 129-131 are the same arrow with a drag badge (copy, alias, a document). */
+  --clio-cursor-arrow: image-set(url("art/cursors/db-arrow.png") 1x, url("art/cursors/db-arrow-2x.png") 2x, url("art/cursors/db-arrow-3x.png") 3x) 0 0, default;
   --clio-scrollbar-size: 16px;
   --clio-scrollbar-button-bevel: none;
   --clio-scrollbar-button-bevel-on: none;
