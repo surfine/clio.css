@@ -95,9 +95,10 @@ Empty (owner, 2026-11-14: close everything for the Classic final, 0.12.0).
 
 - **Appearance sound sets** (owner, 2026-11-15): done (CHANGELOG Unreleased). Mac OS 8.5's
   alert list measured 2026-11-15 (6 sounds, Sosumi selected; SOUND-SETS.md §8) and Drawing
-  Board now uses it. Left ([SOUND-SETS.md](SOUND-SETS.md) §5): push buttons and the delay
-  field on a lightly loaded emulator; serve Apple's four sets and the alerts from R2 to both
-  sites behind an Appearance-style toggle, off by default.
+  Board now uses it. Push buttons and the delay field re-measured on a light-load emulator
+  (SOUND-SETS.md §8): menus play on press and on release, Set Desktop stayed silent, the menu
+  sounds' IDs were not identified — still open. Also left: serve Apple's four sets and the
+  alerts from R2 to both sites behind an Appearance-style toggle, off by default.
 - **Drawing Board's own cursors**: done — the theme's `crsr` 128 (arrow, 16x16, hot spot 0,0)
   decoded by `tooling/db-cursor.py`; 129-131 are drag badges (copy, alias, document), not used.
 

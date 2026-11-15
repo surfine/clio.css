@@ -222,3 +222,21 @@ the sound, the gain and the loop points, so the player interprets nothing.
 
 Decided (§5.4): DrawingBoard Sounds for Drawing Board, Platinum Sounds for Platinum
 (`packs/index.json` `defaults`).
+
+### Push buttons and the delay field, re-measured (2026-11-15, light load)
+
+Mac OS 9.0 in Infinite Mac, Appearance > Sound: Platinum Sounds selected, all four classes
+checked (`.fidelity/snd-push/pop2.png`); the output works (a Sound control panel alert recorded
+at peak 0.44). Records in `.fidelity/snd-push/cap/`.
+
+| Action (3 repeats) | What plays | When |
+| --- | --- | --- |
+| File menu held 3 s and released | two different sounds, each 0.10–0.13 s, peaks 0.43 and 0.44 | press sound 75–85 ms after the press (531 ms on the first try: the set loading from the network disk), release sound 15–30 ms after the release |
+| Set Desktop (Appearance > Desktop) | nothing | — |
+| a tab in the Appearance window | nothing | — |
+
+The two menu sounds did not match any of Platinum Sounds' 68 decoded sounds by cross
+correlation (best 0.32, against `mnuc`): their `'snd '` IDs are not identified, so the table
+stops at what was heard. Push buttons stay **inconsistent**: silent here (Set Desktop, a tab),
+press on Save Theme… and release on Cancel in the previous run; clio.js is unchanged. The
+per-slot `Fixed` value and the entry's delay field were not measured either.
