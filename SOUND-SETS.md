@@ -84,8 +84,9 @@ half a day.
 
 ## 5. Owner's decisions (2026-11-15)
 
-1. **Both archives downloaded** into the git-ignored `.fidelity/soundsets/` (the first:
-   21,315,909 bytes, SHA-1 `cfd86614dd8094d6fd6383e34afc864e0464ba13`, as the site lists).
+1. **Both archives downloaded** into the git-ignored `.fidelity/soundsets/`, SHA-1 as the site
+   lists: `Sound_Sets.sit` 21,315,909 bytes `cfd86614dd8094d6fd6383e34afc864e0464ba13`;
+   `9-more-Sound-Sets.sit` 7,649,048 bytes `830a286fc78d6cad085aeceea83b522de97c28cf`.
 2. **Packs are served on the owner's sites** (aisystem6.aaronlau.me, aaronlau.me), built from
    these copies; they stay out of the npm package and the public repository.
 3. **Built in 0.12.1**, with the other items moved there.
@@ -102,6 +103,10 @@ half a day.
 - Encodings across the sets: 8-bit `stdSH` (most), extended 8- and 16-bit, μ-law (`cmpSH`
   'ulaw', the Terminator 2 set), and 11 sounds in a rarer layout (format 2 or a short
   header) for the decoder to handle. No MACE or IMA4 in this archive.
+- The second archive (9 sets; Clickz and SGI Sounds repeat the first's) uses the same layout
+  and adds IMA4 (BLACKSILVER), a `cmpSH` whose format field is zero (MACE by compression
+  ID, Windose98) and 15 rarer-layout sounds (Windows NT). So the decoder needs 8- and 16-bit
+  PCM, μ-law, IMA4 and MACE 3:1/6:1: 42 distinct sets, 116 kinds and 14 loops each.
 
 ## 6. Found on the way
 
