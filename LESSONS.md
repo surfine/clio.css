@@ -43,7 +43,8 @@ Emulator quirks that cost time:
   (GUIdebook) show it off. Check a setting's factory default before taking a frame as
   "the" look.
 - The emulator runs **faster than the hardware**: rates that depend on CPU speed
-  (scroll repeat, app launch, the watch cursor) cannot be measured. Tick-based timers
+  (scroll repeat, app launch) cannot be measured. The watch cursor can: `film` a crop round
+  the pointer while double-clicking a Finder folder (System 7.5.3 and Mac OS 9.0). Tick-based timers
   (blink, delays) can, because the Mac clock runs in real time.
 - A double click that is too slow selects instead of opening: use `cmd o`.
 - Installing the Drawing Board theme needed a slow drag (`slowdrag`) and a restart.
@@ -233,6 +234,31 @@ down.
 - **Open:** Korean and Chinese on System 7 unmeasured; CJK in 9px small text (KanjiTalk drew
   8px kanji); Mac OS 9's lit top line on a highlighted first pop-up item (masked in
   `p9-zh-popup-open`).
+
+## 7¾. Reading the ROMs (timings the emulator cannot settle)
+
+The owner allowed reading Mac OS's own code for numbers and rules only; nothing of it
+enters the repo (ROMs, dumps and disassembly stay in a scratch folder).
+
+- The ROMs Infinite Mac boots are its assets: the page's network log names them
+  (`Mac-IIx` for System 6, `Quadra-650` for 7.5.3, `Power-Macintosh-9500` for 8.5,
+  `New-World` for 9.0). The New World file is compressed: `pip install tbxi`, then
+  `tbxi dump` gives `Mac68KROM.src/MainCode` (68k) and `Rsrc/` (CURS, …).
+- Old-world ROMs list their resources from the table at offset $1A (CURS 4 is the watch,
+  MDEF 0, CDEF 0/1). Disassemble with capstone's M68K mode; name your scripts so they do not
+  shadow the standard library (a `dis.py` breaks capstone's import) and run Python with -I.
+- Find code by its trap sequence rather than by symbol: MenuSelect's submenu rule is the
+  only place with DeltaPoint, FixRatio, AngleFromSlope (`A94F A869 A8C4`); the Dialog
+  Manager's default-button flash is `A95D, Delay(8), A95D`; factory parameter RAM is a
+  20-byte table starting `A8 00 00`; InitUtil turns it into CaretTime, DoubleTime and the
+  key repeat globals.
+- The same Toolbox code ran from System 6 to Mac OS 9 (the IIx, Quadra and New World ROMs
+  agree byte for byte in the parts used): read once, then check each era in the emulator.
+- The emulator adds 0.14–0.26 s of input lag and samples the pointer at its own rate:
+  compare a held case with an immediate one in the same run, and do not try to find an
+  angle boundary by probing; read it from the code.
+- A caret in a busy application blinks irregularly; time it in System 6, or in General
+  Controls' own preview (Mac OS 9's middle setting is about 48 ticks, not CaretTime's 32).
 
 ## 8. Process
 
