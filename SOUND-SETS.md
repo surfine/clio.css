@@ -82,12 +82,26 @@ half a day.
   aisystem6.aaronlau.me or aaronlau.me is the owner's decision (a personal, non-commercial
   page; the rights holders could still ask for removal).
 
-## 5. Decisions for the owner
+## 5. Owner's decisions (2026-11-15)
 
-1. Download the two archives from Macintosh Repository (20.3 MB `Sound_Sets.sit`, 7.3 MB
-   `9-more-Sound-Sets.sit`), or start with the three Apple sets already here?
-2. Serve packs on the owner's sites, or keep them local?
-3. Which sets become the defaults for the Drawing Board and Platinum eras?
+1. **Both archives downloaded** into the git-ignored `.fidelity/soundsets/` (the first:
+   21,315,909 bytes, SHA-1 `cfd86614dd8094d6fd6383e34afc864e0464ba13`, as the site lists).
+2. **Packs are served on the owner's sites** (aisystem6.aaronlau.me, aaronlau.me), built from
+   these copies; they stay out of the npm package and the public repository.
+3. **Built in 0.12.1**, with the other items moved there.
+4. Still open: the default set per era (proposed: DrawingBoard Sounds for Drawing Board,
+   Platinum Sounds for Platinum).
+
+## 5½. Inventory of the first archive (35 sets)
+
+- Every release set uses the 44-byte layout: `snd#` 1000 has all 116 effect kinds (5,108
+  bytes), `snd#` 1001 all 14 drag loops (620 bytes). Only the 8.5b6 DrawingBoard Sounds uses
+  the beta's 20-byte layout (92 effects, 11 loops).
+- Platinum Sounds: 68 sounds, all extended 16-bit. Apple's four sets: Platinum, DrawingBoard,
+  Gizmo, Hi-Tech.
+- Encodings across the sets: 8-bit `stdSH` (most), extended 8- and 16-bit, μ-law (`cmpSH`
+  'ulaw', the Terminator 2 set), and 11 sounds in a rarer layout (format 2 or a short
+  header) for the decoder to handle. No MACE or IMA4 in this archive.
 
 ## 6. Found on the way
 

@@ -93,6 +93,12 @@ Empty (owner, 2026-11-14: close everything for the Classic final, 0.12.0).
 
 ### 0.12.1 (timeboxed out of 0.12.0, owner 2026-11-15)
 
+- **Appearance sound sets** (owner, 2026-11-15): `tooling/soundset.py` and a clio.js player
+  for the 116 sound kinds and 14 drag loops, built from the owner's copies and served on
+  the owner's sites, never in npm or this repository. Study: [SOUND-SETS.md](SOUND-SETS.md).
+- **Drawing Board's own cursors**: the theme file has 4 `crsr` resources; the era uses the
+  Platinum arrow.
+
 - **Drawing Board's utility windows** (top-title and side-title) still use Platinum's frame.
   The theme has them (`pxm#` 6187–6214); their places in the 8.5 Application Switcher (frame
   `hig/drawingboard/switcher`) are measured: sides, bottom and corners match the pieces with
