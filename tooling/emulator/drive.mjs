@@ -6,10 +6,13 @@
 // Apple's screens and are never committed). See LESSONS.md.
 // Append commands (one per line) to <dir>/cmd; results in <dir>/log.
 //  move x y | down | up | click x y | dbl x y | drag x1 y1 x2 y2 | slowdrag x1 y1 x2 y2 | key K | type TEXT | cmd K | wait ms
-//  shot NAME (canvas png) | ctrlclick x y | ctrlup | dropzip FILE (drop a .zip onto the emulator)
+//  shot NAME (canvas png) | ctrlclick x y | ctrlup | shiftclick x y | dropzip FILE (drop a .zip onto the emulator)
 //  rec x y w h ms [up | down | key K | X Y]   every animation frame of a crop, as [ms, hash] at each change -> rec.json (timing)
 //  film x y w h ms [up | down | dbl X Y]  every changed frame of a crop as film/NNN-<ms>.png (animations)
 //  pageshot NAME (the whole page, for the emulator's own controls) | pclick x y (page pixels) | ptext TEXT (click the page element with that text)
+//  arec (start recording the emulator's audio output) | astop NAME (stop; NAME.wav, 32-bit float at the
+//  AudioContext's rate, as the emulator handed it to Web Audio) | ainfo (contexts, rates and nodes seen)
+//  (downloads: anything the page downloads, e.g. a file put in The Outside World > Uploads, lands in <dir>)
 //  quit
 import { createRequire } from "node:module";
 import { readFileSync, writeFileSync, appendFileSync, existsSync } from "node:fs";
@@ -23,17 +26,43 @@ if (!pw) { console.error("Playwright not found (npm i -D playwright, or set AIS6
 const [url, dir, W = "1200", H = "900"] = process.argv.slice(2);
 const log = (s) => appendFileSync(`${dir}/log`, s + "\n");
 writeFileSync(`${dir}/cmd`, ""); writeFileSync(`${dir}/log`, "");
-const b = await pw.chromium.launch();
+const b = await pw.chromium.launch({ args: ["--autoplay-policy=no-user-gesture-required"] });
 const page = await b.newPage({ viewport: { width: +W, height: +H } });
+// Files put in The Outside World > Uploads come to the browser as a .zip download: keep them.
+page.on("download", async (d) => { const f = `${dir}/${d.suggestedFilename()}`; await d.saveAs(f); log("download " + f); });
+// Web Audio tap: whatever the page connects to an AudioContext's destination is also fed to
+// a recorder (a ScriptProcessor, which hands over every rendered quantum on the main
+// thread), so the emulator's sound is captured as the browser was given it.
+await page.addInitScript(() => {
+  const tap = (window.__clioTap = { on: false, chunks: [], ctxs: [], seen: [] });
+  const recorders = new WeakMap();
+  const recorderFor = (ctx) => {
+    let r = recorders.get(ctx);
+    if (r) return r;
+    r = ctx.createScriptProcessor(1024, 2, 2);
+    r.onaudioprocess = (e) => { const i = e.inputBuffer; if (tap.on) tap.chunks.push([i.getChannelData(0).slice(), i.getChannelData(1).slice()]); for (let c = 0; c < e.outputBuffer.numberOfChannels; c++) e.outputBuffer.getChannelData(c).fill(0); };
+    r.connect(ctx.destination);
+    recorders.set(ctx, r); tap.ctxs.push(ctx);
+    return r;
+  };
+  const connect = AudioNode.prototype.connect;
+  AudioNode.prototype.connect = function (dest, ...rest) {
+    const out = connect.call(this, dest, ...rest);
+    if (dest instanceof AudioDestinationNode && !(this instanceof ScriptProcessorNode)) { tap.seen.push(this.constructor.name); connect.call(this, recorderFor(this.context)); }
+    return out;
+  };
+});
 await page.goto(url, { waitUntil: "domcontentloaded" });
 await page.waitForSelector("canvas", { timeout: 120000 });
 let box; const at = async (x, y) => { box = await page.locator("canvas").boundingBox(); return [box.x + +x + 0.5, box.y + +y + 0.5]; };
 log("ready");
-let done = 0;
+let done = 0, recAt = 0;   // while recording, each command's start is logged as @ms after arec
 for (;;) {
   const lines = readFileSync(`${dir}/cmd`, "utf8").split("\n").filter(Boolean);
   while (done < lines.length) {
     const [c, ...a] = lines[done++].split(" ");
+    const at0 = recAt ? ` @${Date.now() - recAt}` : "";
+    if (c === "arec") recAt = Date.now();
     try {
       if (c === "move") await page.mouse.move(...await at(a[0], a[1]), { steps: 5 });
       else if (c === "down") await page.mouse.down();
@@ -47,6 +76,7 @@ for (;;) {
       else if (c === "cmd") { await page.keyboard.down("Meta"); await page.waitForTimeout(150); await page.keyboard.press(a[0]); await page.waitForTimeout(150); await page.keyboard.up("Meta"); }
       else if (c === "wait") await page.waitForTimeout(+a[0]);
       else if (c === "shot") { const b64 = await page.evaluate(() => document.querySelector("canvas").toDataURL("image/png").split(",")[1]); writeFileSync(`${dir}/${a[0]}.png`, Buffer.from(b64, "base64")); }
+      else if (c === "shiftclick") { await page.mouse.move(...await at(a[0], a[1]), { steps: 5 }); await page.keyboard.down("Shift"); await page.waitForTimeout(100); await page.mouse.down(); await page.waitForTimeout(120); await page.mouse.up(); await page.keyboard.up("Shift"); }
       else if (c === "ctrlclick") { await page.mouse.move(...await at(a[0], a[1]), { steps: 5 }); await page.keyboard.down("Control"); await page.waitForTimeout(200); await page.mouse.down(); await page.waitForTimeout(1500); }
       else if (c === "ctrlup") { await page.mouse.up(); await page.keyboard.up("Control"); }
       else if (c === "dropzip") {
@@ -93,8 +123,30 @@ for (;;) {
       else if (c === "pageshot") await page.screenshot({ path: `${dir}/${a[0]}.png` });
       else if (c === "pclick") await page.mouse.click(+a[0], +a[1]);
       else if (c === "ptext") await page.getByText(a.join(" "), { exact: true }).first().click();
+      else if (c === "arec") await page.evaluate(() => { const t = window.__clioTap; t.chunks = []; t.on = true; for (const x of t.ctxs) x.resume && x.resume(); });
+      else if (c === "ainfo") log("audio " + JSON.stringify(await page.evaluate(() => { const t = window.__clioTap; return { contexts: t.ctxs.map((x) => [x.sampleRate, x.state, x.baseLatency]), nodes: t.seen, chunks: t.chunks.length }; })));
+      else if (c === "astop") {
+        const { rate, l, r } = await page.evaluate(() => {
+          const t = window.__clioTap; t.on = false;
+          const n = t.chunks.reduce((s, c) => s + c[0].length, 0), L = new Float32Array(n), R = new Float32Array(n);
+          let o = 0; for (const [a, b] of t.chunks) { L.set(a, o); R.set(b, o); o += a.length; }
+          t.chunks = [];
+          const b64 = (f) => { const u = new Uint8Array(f.buffer); let s = ""; for (let i = 0; i < u.length; i += 0x8000) s += String.fromCharCode(...u.subarray(i, i + 0x8000)); return btoa(s); };
+          return { rate: t.ctxs[0] ? t.ctxs[0].sampleRate : 0, l: b64(L), r: b64(R) };
+        });
+        const L = new Float32Array(new Uint8Array(Buffer.from(l, "base64")).buffer), R = new Float32Array(new Uint8Array(Buffer.from(r, "base64")).buffer);
+        const n = L.length, data = Buffer.alloc(n * 8);
+        for (let i = 0; i < n; i++) { data.writeFloatLE(L[i], i * 8); data.writeFloatLE(R[i], i * 8 + 4); }
+        const h = Buffer.alloc(44);
+        h.write("RIFF", 0); h.writeUInt32LE(36 + data.length, 4); h.write("WAVE", 8); h.write("fmt ", 12); h.writeUInt32LE(16, 16);
+        h.writeUInt16LE(3, 20); h.writeUInt16LE(2, 22); h.writeUInt32LE(rate, 24); h.writeUInt32LE(rate * 8, 28); h.writeUInt16LE(8, 32); h.writeUInt16LE(32, 34);
+        h.write("data", 36); h.writeUInt32LE(data.length, 40);
+        writeFileSync(`${dir}/${a[0]}.wav`, Buffer.concat([h, data]));
+        log(`audio ${a[0]}.wav ${n} frames at ${rate} Hz`);
+      }
       else if (c === "quit") { log("bye"); await b.close(); process.exit(0); }
-      log("ok " + lines[done - 1]);
+      if (c === "astop") recAt = 0;
+      log("ok " + lines[done - 1] + at0);
     } catch (e) { log("ERR " + lines[done - 1] + " " + e.message.split("\n")[0]); }
   }
   await page.waitForTimeout(200);

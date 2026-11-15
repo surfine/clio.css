@@ -4,3 +4,4 @@ node_modules/
 .fidelity/
 tooling/__pycache__/
 .notes/
+packs/
