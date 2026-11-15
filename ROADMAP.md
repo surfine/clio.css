@@ -1,5 +1,10 @@
 # Roadmap
 
+**Mission** (owner, 2026-11-15): one appearance engine for AI System 6, its site
+(aisystem6.aaronlau.me) and Aaron Lau's blog (aaronlau.me), ending three separately
+maintained looks and the duplicated work between them. clio.css is that engine; every era
+it adds must serve the three.
+
 Eras, in order (owner's decisions): System 6, System 7, Mac OS 8.5 Drawing Board, Mac OS 9
 Platinum (done to the level below), then Mac OS X 10.0–10.4 and NeXTSTEP. Only eras that
 can be measured in an emulator. Launch posts wait until Aqua is done. Method:
