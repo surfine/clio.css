@@ -482,6 +482,7 @@ ok(still, "insertion point: lit and still under reduced motion");
   for (const [c, codes] of Object.entries(LOOPS)) for (const k of codes.split(" ")) man.loops[k] = { class: +c, roles: { attack: null, moving: ref, idle: ref, release: ref } };
   writeFileSync(join(sdir, "set", "manifest.json"), JSON.stringify(man));
   writeFileSync(join(sdir, "alerts", "manifest.json"), JSON.stringify({ kind: "alerts", eras: ["system7", "platinum"], list: ["Beep"], selected: "Beep", alerts: { Beep: { file: "beep.wav", rate: 22050 } } }));
+  writeFileSync(join(sdir, "index.json"), JSON.stringify({ sets: [{ slug: "set", name: "Test Tones", manifest: "set/manifest.json" }], alerts: { platinum: { manifest: "alerts/manifest.json", eras: ["platinum"] } }, defaults: { platinum: "set" } }));
   const server = createServer((q, s) => {
     const f = join(root, decodeURIComponent(new URL(q.url, "http://x").pathname));
     if (!f.startsWith(root) || !ex(f)) { s.writeHead(404); return s.end(); }
@@ -588,6 +589,8 @@ ok(still, "insertion point: lit and still under reduced motion");
     const [jx, jy] = await center("#m2"); await page.mouse.move(jx, jy);
     await page.mouse.up(); await page.waitForTimeout(250);
     { const h = await heard(); ok(h === "mnuo mnui mnui mnus", `sounds: a menu opens, each item lights and the chosen one sounds; no close sound after a choice (${h})`); }
+    await page.waitForFunction(() => !document.querySelector(".menu-bar > li.open"));   // the chosen item's blink is over
+    await page.evaluate(() => window.heard.splice(0));
     await page.mouse.move(x, y); await page.mouse.down(); await page.mouse.move(x + 300, y + 300); await page.mouse.up();
     { const h = await heard(); ok(h === "mnuo mnuc", `sounds: a menu let go of plays its close (${h})`); }
   }
@@ -623,6 +626,38 @@ ok(still, "insertion point: lit and still under reduced motion");
   await press("#b");
   await page.evaluate(() => document.body.insertAdjacentHTML("beforeend", '<div class="alert-box">Alert</div>'));
   { const h = await heard(); ok(h === "alert", `sounds: System 7 has no interface sounds, only its alert sound (${h})`); }
+  // The Appearance-style panel (js/clio-sounds-panel.js): off until chosen, remembered.
+  {
+    const file = join(dir, `panel-${ENGINE}.html`);
+    writeFileSync(file, `<!doctype html><html data-era="platinum"><head><meta charset="utf-8"><link rel="stylesheet" href="/dist/clio.css"></head><body style="margin:20px"><div class="clio"><div id="panel"></div><button id="pb">OK</button></div><script src="/dist/clio.js"></script><script src="/dist/clio-sounds-panel.js"></script><script>window.panel = clioSoundsPanel(document.querySelector("#panel"), { base: "${rel(sdir)}/" }); window.heard = []; document.addEventListener("clio:sound", (e) => window.heard.push(e.detail.code));</script></body></html>`);
+    const fetched = []; const onReq = (r) => { if (/manifest\.json|\.wav/.test(r.url())) fetched.push(r.url()); };
+    await page.goto(http + rel(file));
+    await page.evaluate(() => { try { localStorage.clear(); } catch {} });
+    page.on("request", onReq);
+    await page.reload();
+    await page.waitForFunction(() => document.querySelectorAll("#panel select option").length >= 2);
+    const first = await page.evaluate(() => ({ track: document.querySelector("#panel select").value, boxes: [...document.querySelectorAll("#panel input[type=checkbox]")].map((c) => c.checked) }));
+    await press("#pb");
+    ok(/none/i.test(first.track) && first.boxes.length === 4 && first.boxes.every(Boolean) && fetched.length === 0 && (await page.evaluate(() => window.heard.length)) === 0, `panel: starts on None with all four classes, loads nothing and plays nothing (${JSON.stringify(first)}, fetched ${fetched.length})`);
+    await page.selectOption("#panel select", { label: "Test Tones" });
+    await page.waitForFunction(() => clio.sounds.loaded.sets.length === 1 && clio.sounds.loaded.alerts.length === 1, null, { timeout: 5000 }).catch(() => {});
+    await press("#pb");
+    ok((await page.evaluate(() => window.heard.splice(0).join(" "))) === "btnp btnr", "panel: choosing a sound track loads it and the button sounds");
+    for (const c of await page.$$("#panel input[type=checkbox]")) await c.click();
+    ok(await page.evaluate(() => document.documentElement.getAttribute("data-clio-sounds")) === "none", 'panel: all four classes unchecked sets data-clio-sounds="none"');
+    await page.reload();
+    await page.waitForFunction(() => document.querySelectorAll("#panel select option").length >= 2);
+    await page.waitForFunction(() => clio.sounds.loaded.sets.length === 1, null, { timeout: 5000 }).catch(() => {});
+    const back = await page.evaluate(() => ({ track: document.querySelector("#panel select").value, attr: document.documentElement.getAttribute("data-clio-sounds"), sets: clio.sounds.loaded.sets.length }));
+    ok(back.track === "set" && back.attr === "none" && back.sets === 1, `panel: the choice is remembered across a reload (${JSON.stringify(back)})`);
+    await page.selectOption("#panel select", { index: 0 });
+    await page.evaluate(() => { for (const c of document.querySelectorAll("#panel input[type=checkbox]")) c.click(); });
+    await press("#pb");
+    ok(await page.evaluate(() => clio.sounds.muted && window.heard.length === 0), "panel: None again mutes the page");
+    await page.evaluate(() => window.panel.destroy());
+    ok(await page.evaluate(() => !document.querySelector("#panel select")), "panel: destroy() removes it");
+    page.off("request", onReq);
+  }
   server.close();
 }
 

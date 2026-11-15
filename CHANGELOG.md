@@ -18,6 +18,10 @@
     `muted`, `volume`, `data-clio-sounds` classes, a `clio:sound` event. 35 behaviour checks
     in Chromium, WebKit and Firefox; `tooling/sound-proof.mjs` records clio.js playing the
     real packs and matches the WAVs (correlation ≥ 0.99998 in Chromium and WebKit).
+  - `dist/clio-sounds-panel.js` (`clioSoundsPanel(el, { base })`): Appearance > Sound for a
+    site, off (None) until the visitor picks a track, remembered in localStorage; 6 behaviour
+    checks. First draft by DeepSeek Harness from a written work order and contract
+    (`test/sounds-panel-contract.mjs`), reviewed and laid out by the controller.
   - Proof against the emulator: `tooling/emulator/drive.mjs` taps Infinite Mac's Web Audio
     output (`arec`/`astop`) and `tooling/soundcompare.py` compares sample by sample. System
     7.5.3's 16-bit 44.1 kHz alert sounds (Sheet, Dewdrop, Basil) come out of the emulator
