@@ -90,8 +90,17 @@ half a day.
 2. **Packs are served on the owner's sites** (aisystem6.aaronlau.me, aaronlau.me), built from
    these copies; they stay out of the npm package and the public repository.
 3. **Built in 0.12.1**, with the other items moved there.
-4. Still open: the default set per era (proposed: DrawingBoard Sounds for Drawing Board,
-   Platinum Sounds for Platinum).
+4. **Default set per era** (decided 2026-11-15, second round): DrawingBoard Sounds for
+   Drawing Board, Platinum Sounds for Platinum.
+5. **What the sites serve** (2026-11-15): Apple's four sets (Platinum, DrawingBoard, Gizmo,
+   Hi-Tech) and the alert sounds only; the 38 third-party sets stay local (`packs --all`).
+   Both aisystem6.aaronlau.me and aaronlau.me, from one Cloudflare R2 address, never a git
+   repository.
+6. **On the sites, sounds start off**: a toggle modelled on Appearance > Sound (sound track,
+   the four class check boxes), remembered in the visitor's browser.
+7. **Still to measure**: Mac OS 8.5's alert list (Drawing Board borrows Mac OS 9.0's), and
+   push buttons and the delay field again on a lightly loaded emulator.
+8. **Release**: with the rest of 0.12.1, published by the owner.
 
 ## 5½. Inventory of the first archive (35 sets)
 
@@ -200,5 +209,5 @@ the sound, the gain and the loop points, so the player interprets nothing.
 
 ### Default set per era
 
-Not decided: `packs/index.json` proposes DrawingBoard Sounds for Drawing Board and Platinum
-Sounds for Platinum (`defaultsDecided: false`); the owner chooses.
+Decided (§5.4): DrawingBoard Sounds for Drawing Board, Platinum Sounds for Platinum
+(`packs/index.json` `defaults`).
