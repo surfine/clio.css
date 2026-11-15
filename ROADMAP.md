@@ -93,10 +93,11 @@ Empty (owner, 2026-11-14: close everything for the Classic final, 0.12.0).
 
 ### 0.12.1 (timeboxed out of 0.12.0, owner 2026-11-15)
 
-- **Appearance sound sets** (owner, 2026-11-15): done (CHANGELOG Unreleased). Left
-  ([SOUND-SETS.md](SOUND-SETS.md) §5): measure Mac OS 8.5's alert list, and push buttons and
-  the delay field on a lightly loaded emulator; serve Apple's four sets and the alerts from R2
-  to both sites behind an Appearance-style toggle, off by default.
+- **Appearance sound sets** (owner, 2026-11-15): done (CHANGELOG Unreleased). Mac OS 8.5's
+  alert list measured 2026-11-15 (6 sounds, Sosumi selected; SOUND-SETS.md §8) and Drawing
+  Board now uses it. Left ([SOUND-SETS.md](SOUND-SETS.md) §5): push buttons and the delay
+  field on a lightly loaded emulator; serve Apple's four sets and the alerts from R2 to both
+  sites behind an Appearance-style toggle, off by default.
 - **Drawing Board's own cursors**: the theme file has 4 `crsr` resources; the era uses the
   Platinum arrow.
 

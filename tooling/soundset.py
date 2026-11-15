@@ -412,7 +412,17 @@ ALERTS = {
                 "list": ["Basil", "Bend Me", "Blue Dust", "Bye!", "Dewdrop", "Droplet", "Indigo", "Jacaranda", "Natal", "Quack",
                          "Ryan's Hope", "Sheet", "Simple Beep", "Solly", "Sosumi", "Transvaal", "Wild Eep"], "selected": "Sosumi",
                 "captures": {"Simple Beep": ("simple-beep.wav", 22050.0)}},
-    "platinum": {"source": "Mac OS 9.0", "eras": ["platinum", "drawingboard"],
+    # Mac OS 8.5 (Drawing Board): its own six, measured in Monitors & Sound > Alerts
+    # (there is no Sound control panel in 8.5). All six are recordings of the emulator's
+    # output: the System suitcase holds five snd resources (Quack, not Laugh, among them),
+    # and they could not be dragged out this session (SOUND-SETS.md §8).
+    "drawingboard": {"source": "Mac OS 8.5", "eras": ["drawingboard"],
+                     "list": ["Droplet", "Indigo", "Laugh", "Simple Beep", "Sosumi", "Wild Eep"], "selected": "Sosumi",
+                     "captures": {"Droplet": ("droplet.wav", 22050.0), "Indigo": ("indigo.wav", 22050.0),
+                                  "Laugh": ("laugh.wav", 22050.0), "Simple Beep": ("simple-beep.wav", 22050.0),
+                                  "Sosumi": ("sosumi.wav", 22050.0), "Wild Eep": ("wild-eep.wav", 22050.0)},
+                     "capture_note": "recorded from the emulator's output (Monitors & Sound > Alerts): not decoded from 8.5's System file; Droplet, Indigo, Sosumi and Wild Eep match System 7.5.3's decoded samples (correlation 0.99978-0.99995), Laugh differs from 9.0's"},
+    "platinum": {"source": "Mac OS 9.0", "eras": ["platinum"],
                  "list": ["ChuToy", "Glass", "Indigo", "Laugh", "Logjam", "Pong2003", "Purr", "SimpleBeep", "Sosumi",
                           "Submarine", "Temple", "Uh oh", "Voltage"], "selected": "Sosumi",
                  "captures": {"SimpleBeep": ("simple-beep.wav", 22050.0)}},
@@ -453,7 +463,7 @@ def build_alerts(era, src, out):
         info = {"rate": rate, "channels": 1, "bits": 8 if byte else 16, "frames": len(x), "encoding": "capture", "loopStart": 0, "loopEnd": 0}
         pcm = bytes(((v >> 8) + 128) & 0xFF for v in x) if byte else struct.pack(f"<{len(x)}h", *x)
         out_fn = f"{slug(name)}.wav"; write_wav(os.path.join(out, out_fn), dict(info, pcm=pcm))
-        info.update(file=out_fn, sha1=hashlib.sha1(pcm).hexdigest(), note="recorded from the emulator's output: the Mac synthesizes this sound")
+        info.update(file=out_fn, sha1=hashlib.sha1(pcm).hexdigest(), note=cfg.get("capture_note", "recorded from the emulator's output: the Mac synthesizes this sound"))
         man["alerts"][name] = info
     missing = [n for n in cfg["list"] if n not in man["alerts"]]
     if missing: man["problems"].append(f"missing: {missing}")
@@ -463,7 +473,7 @@ def build_alerts(era, src, out):
 
 def build_packs(fidelity, out, everything=False):
     """What the owner's sites serve: Apple's four sound sets (all 42 with --all) and the
-    three alert lists."""
+    four alert lists (6.0.8, 7.5.3, 8.5, 9.0)."""
     sits = sorted(os.path.join(fidelity, "soundsets", "downloads", f) for f in os.listdir(os.path.join(fidelity, "soundsets", "downloads")) if f.endswith(".sit"))
     rc = main(["build", *sits, os.path.join(out, "sets")])
     with open(os.path.join(out, "sets", "index.json")) as f: sets = json.load(f)

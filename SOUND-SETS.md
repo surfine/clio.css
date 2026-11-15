@@ -98,8 +98,8 @@ half a day.
    repository.
 6. **On the sites, sounds start off**: a toggle modelled on Appearance > Sound (sound track,
    the four class check boxes), remembered in the visitor's browser.
-7. **Still to measure**: Mac OS 8.5's alert list (Drawing Board borrows Mac OS 9.0's), and
-   push buttons and the delay field again on a lightly loaded emulator.
+7. **Still to measure**: push buttons and the delay field again on a lightly loaded emulator.
+   Mac OS 8.5's alert list was measured on 2026-11-15 (6 sounds, Sosumi selected; §8).
 8. **Release**: with the rest of 0.12.1, published by the owner.
 
 ## 5½. Inventory of the first archive (35 sets)
@@ -166,10 +166,21 @@ this repository; the sounds are in the git-ignored `packs/` only (`npm run sound
 | --- | --- | --- |
 | System 6.0.8 | the System file, MacBinary through BlueSCSI SD Transfer (System 6's Outside World) | Boing, Monkey decoded; Simple Beep is a square-wave synth (`timbreCmd`, `freqCmd` 69, an `ampCmd` ramp) and Clink-Klank a sample played by `freqDurationCmd` 60 then 48: both kept as recorded |
 | System 7.5.3 | the 16 sampled sounds dragged out of the System suitcase to Uploads (copying the whole System file gave a fork zeroed after 3.6 MB) | Simple Beep recorded |
-| Mac OS 9.0 | the 12 sounds dragged out of the System suitcase | SimpleBeep recorded; used for Drawing Board too (8.5b6 not checked) |
+| Mac OS 8.5 | Monitors & Sound > Alerts (8.5 has no Sound control panel): the six sounds played from the list, each recorded with `arec`/`astop` | list and Sosumi's selection from the panel (`.fidelity/snd-m85/alerts.png`); the System suitcase holds five `snd ` resources (Droplet, Indigo, Quack, Sosumi, Wild Eep); they could not be dragged out of the suitcase to Uploads this session, so all six are recordings (four of them the samples System 7.5.3 ships), not decodes of 8.5's file |
+| Mac OS 9.0 | the 12 sounds dragged out of the System suitcase | SimpleBeep recorded; no longer used for Drawing Board (8.5 measured) |
 
-Infinite Mac selects Sosumi in System 7.5.3 and Mac OS 9.0 and Simple Beep in System 6; the
-factory defaults were not checked. Mac OS 9.0's sound track is None there.
+Infinite Mac selects Sosumi in System 7.5.3, Mac OS 8.5 and Mac OS 9.0 and Simple Beep in
+System 6; the factory defaults were not checked (the saved image's own state). Mac OS 9.0's
+sound track is None there.
+
+Mac OS 8.5's alert list is six: Droplet, Indigo, Laugh, Simple Beep, Sosumi, Wild Eep, with
+Sosumi selected. Played from the list and recorded, four of them are the samples System
+7.5.3 also ships, matched by `soundcompare.py` against its decoded `snd ` resources: Droplet
+correlation 0.999947 (gain 0.998), Indigo 0.999915 (0.997), Sosumi 0.999893 (0.995), Wild Eep
+0.999776 (0.995). Laugh does not match Mac OS 9.0's Laugh (correlation -0.065): 8.5's is a
+different sample, kept as recorded. The suitcase's five sounds are Droplet, Indigo, Quack,
+Sosumi and Wild Eep — Quack is in the file but not in the list, and Laugh is in the list but
+not in the file, so at least one of the six does not come from the System file (not traced).
 
 ### Against the emulator (`drive.mjs` arec/astop, `soundcompare.py`)
 
