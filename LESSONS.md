@@ -188,6 +188,17 @@ A behaviour test must look at the result the user sees: a test that only read
 - Firefox fires no `selectionchange` for a field's own selection: listen to pointerup,
   keyup and select as well.
 
+## 7½. Telling smoothing from offset
+
+A 2x specimen that fails is not necessarily blurred. List the failing pixels' colours: if
+every one exists in the reference, the drawing is sharp and only shifted (a layout position
+on a fraction of a pixel); new, in-between colours mean smoothing. In this phase Firefox's
+"smoothed" 2x specimens were shifted by the test page's own default font; only two SVG
+patterns embedding pictures were really smoothed (fix: `image-rendering` on the `<image>`).
+Check a cause against the real context (clio.css's windows) before changing the product,
+and keep a timebox: what does not fit goes to the next patch with its measurements written
+down.
+
 ## 8. Process
 
 - Work in batches that each end pushed and green: build, `npm test`, the pixel check and

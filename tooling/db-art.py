@@ -208,7 +208,7 @@ if '--files' in sys.argv:
         buf = io.BytesIO(); im.save(buf, 'PNG', optimize=True)
         png = 'data:image/png;base64,' + base64.b64encode(buf.getvalue()).decode()
         svg = ("<svg xmlns='http://www.w3.org/2000/svg'><defs><pattern id='p' width='%d' height='%d' "
-               "patternUnits='userSpaceOnUse'><image width='%d' height='%d' href='%s'/></pattern></defs>"
+               "patternUnits='userSpaceOnUse'><image image-rendering='pixelated' style='image-rendering:pixelated' width='%d' height='%d' href='%s'/></pattern></defs>"
                "<rect width='100%%' height='100%%' fill='url(#p)'/></svg>") % (im.width, im.height, im.width, im.height, png)
         open(os.path.join(out, name + '-tiled.svg'), 'w').write(svg)
     for n in ('window-top', 'window-top-inactive', 'window-bottom', 'window-bottom-inactive'): tiled_svg(n)
@@ -230,7 +230,7 @@ else:
     for k in TILED:
         im = art[k]; png = uri(im)[len('url("'):-2]
         svg = ("<svg xmlns='http://www.w3.org/2000/svg'><defs><pattern id='p' width='%d' height='%d' "
-               "patternUnits='userSpaceOnUse'><image width='%d' height='%d' href='%s'/></pattern></defs>"
+               "patternUnits='userSpaceOnUse'><image image-rendering='pixelated' style='image-rendering:pixelated' width='%d' height='%d' href='%s'/></pattern></defs>"
                "<rect width='100%%' height='100%%' fill='url(%%23p)'/></svg>") % (im.width, im.height, im.width, im.height, png)
         svg = svg.replace('<', '%3C').replace('>', '%3E')
         print('  --clio-art-%s-tiled: url("data:image/svg+xml,%s"); /* %d px tile */' % (k, svg, im.width))

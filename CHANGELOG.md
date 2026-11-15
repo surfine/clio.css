@@ -1,6 +1,12 @@
 # Changelog
 
-## Unreleased
+## 0.12.0 — 2026-11-15, the Classic final
+
+Everything the Classic Mac OS phase set out to do, measured in four eras and checked in
+Chromium, WebKit and Firefox (ROADMAP.md lists what moved to 0.12.1 and why).
+
+- Drawing Board's tiled underline patterns stay sharp at 2x and 3x (their embedded pictures
+  are pixelated).
 
 - **Chinese, Japanese and Korean** (owner decisions 9 and 10): `lang="zh-Hant|zh-Hans|ja|ko"`
   gives the chrome and text a CJK stack: the period bitmap font (Taipei, Beijing, Osaka,

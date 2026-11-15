@@ -5,7 +5,7 @@ Platinum (done to the level below), then Mac OS X 10.0–10.4 and NeXTSTEP. Only
 can be measured in an emulator. Launch posts wait until Aqua is done. Method:
 [LESSONS.md](LESSONS.md).
 
-## Classic Mac OS: state after the close (2026-11-14, unreleased)
+## Classic Mac OS: state at 0.12.0, the Classic final (2026-11-15)
 
 - Every control and window in the 1987 and 1992 HIGs, Inside Macintosh: Toolbox
   Essentials and the Mac OS 8 HIG is drawn, except the five in "Not drawn" below
@@ -73,15 +73,32 @@ Empty (owner, 2026-11-14: close everything for the Classic final, 0.12.0).
   slider (HIG92). Not drawn: Drawing Board's own side-window pieces (it shares the top-title
   utility window's mixture), a held placard (the tester does not track it).
 
-### Waiting (part of 0.12.0)
+- **CJK fonts and Chinese layout**: merged (97eae6d): period stacks, Fusion Pixel stand-ins,
+  measured geometry (CHANGELOG).
+- **Retina, the real smoothing**: the two tiled SVG patterns (Drawing Board's menu and title
+  underlines) embedded PNGs that browsers smoothed at 2x; their `<image>` is now pixelated,
+  and `db-menu-underline` is identical at 2x in all three engines.
 
-- **CJK fonts and Chinese layout**: branches `cjk-fonts` (font stacks and an OFL pixel stand-in)
-  and the Chinese-system measurements.
+### Owner's steps
+
 - **Touch on the owner's phones**: `docs/touch.html` (iPhone SE on iOS 15.8.8, iPhone 18 Pro
-  on iOS 27.3); the owner sends the screenshots. Checked here in the iOS 27 Simulator only.
-- **Retina residue**: Chromium 129 and WebKit 120 of 135 identical at 3x; Firefox scales the
-  art pictures smoothly at 2x and 3x (84 of 130), as before this batch.
+  on iOS 27.3); the owner sends the screenshots. Checked in the iOS 27 Simulator only. What
+  they find goes into 0.12.1.
 - **npm**: 0.10.0 to 0.12.0 are published by the owner.
+
+### 0.12.1 (timeboxed out of 0.12.0, owner 2026-11-15)
+
+- **Drawing Board's utility windows** (top-title and side-title) still use Platinum's frame.
+  The theme has them (`pxm#` 6187–6214); their places in the 8.5 Application Switcher (frame
+  `hig/drawingboard/switcher`) are measured: sides, bottom and corners match the pieces with
+  no mismatch; the title bar pieces differ only under the title and boxes (offsets in
+  `.notes/behaviour-0.11.md`). Building and checking the composition did not fit the hour.
+- **Firefox at 2x and 3x** (111 and 105 of 150): not smoothing. The specimens' wrappers use
+  the page's default font (Times), so inline controls sit on quarter-pixel baselines in
+  Firefox (a check box at y 41.25 against 40). Inside clio.css's own windows both engines
+  place them on whole pixels. Giving the wrappers Clio's metrics lifts Firefox to 142 and 130
+  but costs one specimen at 1x in each engine and three in WebKit at 2x, so the harness was
+  left as it is; the fix is per-specimen wrappers.
 
 7. **Closed: the watch cursor.** Captured opening a Finder folder in System 7.5.3 and Mac OS 9.0 (identical); `aria-busy="true"` shows its first frame. Not drawn: the animation; not captured: System 6.
 8. **Closed: the submenu rule.** Read from the Menu Manager in the System 6, 7 and Mac OS 9 ROMs and checked in the emulator: a wedge from the last point in the item to the submenu's near corners, MenuDelay 8 ticks, MenuDrag 60 ticks from leaving the item.
