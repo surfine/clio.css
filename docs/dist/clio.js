@@ -1009,7 +1009,7 @@
   }).observe(document.documentElement, { childList: true, subtree: true, attributes: true, attributeFilter: ["open", "hidden"] });
 
   window.clio = {
-    version: "0.11.0",
+    version: "0.12.0",
     zoomRects,
     collapse,
     sounds,
