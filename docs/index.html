@@ -240,7 +240,7 @@
       </dl>
       <p class="aliases">Also accepts: system.css markup (<code>.title-bar button.close</code>, <code>.title-bar button.resize</code>, <code>.inactive-title-bar</code>, <code>.window-pane</code>, <code>.details-bar</code>, <code>.separator</code>); AI System 6 markup (<code>.close-box</code>, <code>.resize-box</code>, <code>.shade-box</code>, <code>.title-bar h1</code>, <code>.title-bar h2</code>).</p>
       <details class="evidence-details">
-        <summary>Evidence (48)</summary>
+        <summary>Evidence (49)</summary>
       <table class="evidence">
         <caption>Where each value comes from</caption>
         <thead><tr><th scope="col">Era</th><th scope="col">Value</th><th scope="col">Status</th><th scope="col">Source</th></tr></thead>
@@ -319,9 +319,15 @@
         </tr>
 <tr>
           <td>Platinum</td>
-          <td>clio.js sounds: Mac OS 9.0's 13 alert sounds (Sosumi selected), also used for Drawing Board</td>
+          <td>clio.js sounds: Mac OS 9.0's 13 alert sounds, Sosumi selected</td>
           <td><span class="status status-measured">Measured</span></td>
-          <td><code>Mac OS 9.0 in Infinite Mac: Sound &gt; Alert Sounds; sounds dragged out of the System suitcase; Temple and Sosumi recorded, correlation 0.9998, gain 0.999 and 1.019</code><br><span class="upstream">Mac OS 8.5b6's own list not checked (inferred the same)</span></td>
+          <td><code>Mac OS 9.0 in Infinite Mac: Monitors &amp; Sound &gt; Alerts; sounds dragged out of the System suitcase; Temple and Sosumi recorded, correlation 0.9998, gain 0.999 and 1.019</code><br><span class="upstream">Drawing Board has its own list (next row)</span></td>
+        </tr>
+<tr>
+          <td>Drawing Board</td>
+          <td>clio.js sounds: Mac OS 8.5's six alert sounds — Droplet, Indigo, Laugh, Simple Beep, Sosumi, Wild Eep — with Sosumi selected</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>Mac OS 8.5 in Infinite Mac: Monitors &amp; Sound &gt; Alerts (the list and the selection, .fidelity/snd-m85/alerts.png); each sound played from the list and recorded by tooling/emulator/drive.mjs (arec/astop), compared by tooling/soundcompare.py with System 7.5.3's decoded snd resources</code><br><span class="upstream">recordings, not decodes of 8.5's System file (its five snd resources could not be dragged out this session): Droplet correlation 0.999947, Indigo 0.999915, Sosumi 0.999893, Wild Eep 0.999776 against 7.5.3's samples; Laugh is a different sample from 9.0's (-0.065); Simple Beep is synthesized; 8.5's suitcase lists Quack (not in the panel) and no Laugh</span></td>
         </tr>
 <tr>
           <td>All eras</td>

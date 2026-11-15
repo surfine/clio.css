@@ -11,7 +11,9 @@
     with each kind's class, the sound and gain that play, and each drag loop's attack,
     moving, idle and release sounds with loop points. `npm run soundset` builds the 42 sets of
     both Macintosh Repository archives (`--all`; Apple's four by default) and the alert lists of System 6.0.8 (4), System 7.5.3
-    (17) and Mac OS 9.0 (13) into the git-ignored `packs/` (63 MB).
+    (17), Mac OS 8.5 (6, measured in Monitors & Sound > Alerts: Droplet, Indigo, Laugh, Simple
+    Beep, Sosumi, Wild Eep; Sosumi selected) and Mac OS 9.0 (13) into the git-ignored
+    `packs/` (63 MB). Drawing Board now has its own list; Mac OS 9.0's is Platinum only.
   - clio.js: `clio.sounds.use(url)` decodes a set or an alert list into Web Audio buffers up
     front and plays them on every event it tracks, with hooks added for window open, close
     and activate and for sliders; `clio.play(code)`, `clio.sounds.beginDrag/endDrag`,

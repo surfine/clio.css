@@ -192,10 +192,17 @@
         },
         {
           "era": "platinum",
-          "claim": "clio.js sounds: Mac OS 9.0's 13 alert sounds (Sosumi selected), also used for Drawing Board",
+          "claim": "clio.js sounds: Mac OS 9.0's 13 alert sounds, Sosumi selected",
           "status": "measured",
-          "source": "Mac OS 9.0 in Infinite Mac: Sound > Alert Sounds; sounds dragged out of the System suitcase; Temple and Sosumi recorded, correlation 0.9998, gain 0.999 and 1.019",
-          "upstream": "Mac OS 8.5b6's own list not checked (inferred the same)"
+          "source": "Mac OS 9.0 in Infinite Mac: Monitors & Sound > Alerts; sounds dragged out of the System suitcase; Temple and Sosumi recorded, correlation 0.9998, gain 0.999 and 1.019",
+          "upstream": "Drawing Board has its own list (next row)"
+        },
+        {
+          "era": "drawingboard",
+          "claim": "clio.js sounds: Mac OS 8.5's six alert sounds — Droplet, Indigo, Laugh, Simple Beep, Sosumi, Wild Eep — with Sosumi selected",
+          "status": "measured",
+          "source": "Mac OS 8.5 in Infinite Mac: Monitors & Sound > Alerts (the list and the selection, .fidelity/snd-m85/alerts.png); each sound played from the list and recorded by tooling/emulator/drive.mjs (arec/astop), compared by tooling/soundcompare.py with System 7.5.3's decoded snd resources",
+          "upstream": "recordings, not decodes of 8.5's System file (its five snd resources could not be dragged out this session): Droplet correlation 0.999947, Indigo 0.999915, Sosumi 0.999893, Wild Eep 0.999776 against 7.5.3's samples; Laugh is a different sample from 9.0's (-0.065); Simple Beep is synthesized; 8.5's suitcase lists Quack (not in the panel) and no Laugh"
         },
         {
           "era": "both",
