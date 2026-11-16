@@ -20,6 +20,10 @@
     `muted`, `volume`, `data-clio-sounds` classes, a `clio:sound` event. 35 behaviour checks
     in Chromium, WebKit and Firefox; `tooling/sound-proof.mjs` records clio.js playing the
     real packs and matches the WAVs (correlation ≥ 0.99998 in Chromium and WebKit).
+  - **The 2x/3x fidelity samples**: each specimen's wrapper now carries Clio's metrics, so
+    Firefox no longer puts inline controls on quarter-pixel baselines; at 2x and 3x it goes
+    from 111 and 105 of 150 to 142 and 130, with 1x unchanged in all three engines. The three
+    progress bars keep the default wrapper (WebKit's half pixels at 2x).
   - **Drawing Board's own cursor**: the theme file's `crsr` 128 — a 16x16 arrow in greys with its
     hot spot at 0,0 — decoded by `tooling/db-cursor.py` to `art/cursors/db-arrow{,-2x,-3x}.png`
     and used by `[data-era="drawingboard"]` (page, buttons and window chrome), where the era
