@@ -202,7 +202,7 @@
           "claim": "clio.js sounds: Mac OS 8.5's six alert sounds — Droplet, Indigo, Laugh, Simple Beep, Sosumi, Wild Eep — with Sosumi selected",
           "status": "measured",
           "source": "Mac OS 8.5 in Infinite Mac: Monitors & Sound > Alerts (the list and the selection, .fidelity/snd-m85/alerts.png); each sound played from the list and recorded by tooling/emulator/drive.mjs (arec/astop), compared by tooling/soundcompare.py with System 7.5.3's decoded snd resources",
-          "upstream": "recordings, not decodes of 8.5's System file (its five snd resources could not be dragged out this session): Droplet correlation 0.999947, Indigo 0.999915, Sosumi 0.999893, Wild Eep 0.999776 against 7.5.3's samples; Laugh is a different sample from 9.0's (-0.065); Simple Beep is synthesized; 8.5's suitcase lists Quack (not in the panel) and no Laugh"
+          "upstream": "recordings, not decodes of 8.5's System file (the Finder copies one sound into The Outside World, but the 8.5 image generates no zip download, so the file cannot leave the emulator): Droplet correlation 0.999947, Indigo 0.999915, Sosumi 0.999893, Wild Eep 0.999776 against 7.5.3's samples; Laugh is a different sample from 9.0's (-0.065); Simple Beep is synthesized; 8.5's suitcase lists Quack (not in the panel) and no Laugh"
         },
         {
           "era": "both",
