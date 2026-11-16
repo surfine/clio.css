@@ -107,12 +107,14 @@ Empty (owner, 2026-11-14: close everything for the Classic final, 0.12.0).
   `hig/drawingboard/switcher`) are measured: sides, bottom and corners match the pieces with
   no mismatch; the title bar pieces differ only under the title and boxes (offsets in
   `.notes/behaviour-0.11.md`). Building and checking the composition did not fit the hour.
-- **Firefox at 2x and 3x** (111 and 105 of 150): not smoothing. The specimens' wrappers use
-  the page's default font (Times), so inline controls sit on quarter-pixel baselines in
-  Firefox (a check box at y 41.25 against 40). Inside clio.css's own windows both engines
-  place them on whole pixels. Giving the wrappers Clio's metrics lifts Firefox to 142 and 130
-  but costs one specimen at 1x in each engine and three in WebKit at 2x, so the harness was
-  left as it is; the fix is per-specimen wrappers.
+- **Firefox at 2x and 3x** (111 and 105 of 150): fixed as a harness problem. The specimens'
+  wrappers used the page's default font (Times 16px), so inline controls sat on quarter-pixel
+  baselines in Firefox; each wrapper now carries Clio's metrics, except three progress bars
+  whose wrappers keep the default (with the metrics WebKit put them on half pixels at 2x).
+  Firefox is now 142 and 130 of 150; 1x is unchanged (Chromium 152/155, WebKit 152/155,
+  Firefox 149/150) and so is 2x/3x in the other engines (Chromium 150/155 and 150/155,
+  WebKit 147/155 and 142/155). What still differs in Firefox is specimens WebKit also misses
+  (the Drawing Board collapsed windows, its pop-up, the chasing arrows, the grouped box).
 
 7. **Closed: the watch cursor.** Captured opening a Finder folder in System 7.5.3 and Mac OS 9.0 (identical); `aria-busy="true"` shows its first frame. Not drawn: the animation; not captured: System 6.
 8. **Closed: the submenu rule.** Read from the Menu Manager in the System 6, 7 and Mac OS 9 ROMs and checked in the emulator: a wedge from the last point in the item to the submenu's near corners, MenuDelay 8 ticks, MenuDrag 60 ticks from leaving the item.

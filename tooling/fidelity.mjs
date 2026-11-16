@@ -206,7 +206,7 @@ specimens.push(
 
 // Platinum, re-measured: crops of Mac OS 9.0 from `npm run capture:platinum`.
 const p9dir = join(root, ".fidelity/platinum9");
-const P9 = (id, html, crop, file, ref) => ({ id, era: "platinum", group: "platinum9", html, crop, refFile: join(p9dir, file + ".png"), refCrop: ref });
+const P9 = (id, html, crop, file, ref, opt = {}) => ({ id, era: "platinum", group: "platinum9", html, crop, refFile: join(p9dir, file + ".png"), refCrop: ref, ...opt });
 const strip = (cls = "", id = "") => `<div class="control-strip${cls}" ${id === "strip" ? 'id="s"' : ""}><button class="control-strip-scroll control-strip-scroll-back" disabled aria-label="Scroll back"></button><div class="control-strip-modules" role="toolbar" aria-label="Control Strip"><div class="control-strip-module-track">${'<button class="control-strip-module" aria-haspopup="menu" aria-label="Module"></button>'.repeat(4)}</div></div><button class="control-strip-scroll control-strip-scroll-forward" disabled aria-label="Scroll forward"></button><button class="control-strip-handle" ${id === "handle" ? 'id="s"' : ""} aria-label="Collapse"></button></div>`;
 specimens.push(
   P9("p9-checkbox-on", `<div style="padding:12px;background:#eeeeee"><input type="checkbox" id="s" checked></div>`, [0, 0, 14, 12], "general-controls", [33, 81, 14, 12]),
@@ -223,7 +223,7 @@ specimens.push(
   P9("p9-titlebar-right", `<div class="window" id="s" style="width:476px"><div class="title-bar"><button class="close" aria-label="Close"></button><h2 class="title">Appearance</h2><button class="shade" aria-label="Collapse"></button></div><div class="window-pane" style="height:40px"></div></div>`, [438, 0, 36, 22], "appearance", [599, 68, 36, 22]),
   P9("p9-button-end", `<div style="padding:12px;background:#eeeeee"><button id="s" style="width:86px">Set Desktop</button></div>`, [0, 0, 86, 20], "appearance", [534, 369, 86, 20]),
   P9("p9-popup-disabled", `<div style="padding:12px;background:#eeeeee"><select id="s" style="width:194px" disabled><option>Position Automatically</option></select></div>`, [160, 0, 34, 20], "appearance", [567, 337, 34, 20]),
-  P9("p9-group-corner", `<div style="padding:12px;background:#eeeeee;--clio-pane-bg:#eeeeee"><fieldset id="s" style="width:200px;height:60px"><legend>Desktop</legend></fieldset></div>`, [0, 0, 12, 30], "general-controls", [18, 51, 12, 30]),
+  P9("p9-group-corner", `<div style="padding:12px;background:#eeeeee;--clio-pane-bg:#eeeeee"><fieldset id="s" style="width:200px;height:60px"><legend>Desktop</legend></fieldset></div>`, [0, 0, 12, 30], "general-controls", [18, 51, 12, 30], { noMetrics: true }),
   P9("p9-menu-separator", `<div style="padding:12px;background:#fff"><ul class="menu" role="menu" style="width:176px"><li><span>Close Window</span></li><li role="separator" id="s"></li><li><span>Get Info</span></li></ul></div>`, [0, 0, 100, 6], "file-menu", [38, 100, 100, 6]),
   P9("p9-popup-end", `<div style="padding:12px;background:#eeeeee"><select id="s" style="width:180px"><option>Apple platinum</option></select></div>`, [156, 0, 24, 20], "appearance-tab", [444, 143, 24, 20]),
   { ...P9("p9-button-held", `<div style="padding:12px;background:#eeeeee"><button class="active" id="s" style="width:86px">Set Desktop</button></div>`, [0, 0, 86, 20], "button-held", [534, 369, 86, 20]), mask: [[25, 1, 13, 19]] },   // the pointer, held on the label
@@ -380,6 +380,12 @@ const tag = (ENGINE === "chromium" ? "" : "-" + ENGINE);
 const DPR = Number(process.env.FIDELITY_DPR || 1);
 const page = await browser.newPage({ viewport: { width: 800, height: 400 }, deviceScaleFactor: DPR });
 const results = [];
+// The three progress bars' wrappers keep the page's font: with Clio's metrics WebKit lays
+// them on half pixels at 2x (s6-progress-fill 78.5%, s7-progress-fill 89.4%, s7-progress-track
+// 86.4%). Firefox does not render those three at 2x either way, so nothing is lost there.
+for (const id of ["s6-progress-fill", "s7-progress-fill", "s7-progress-track"]) {
+  const s = specimens.find((x) => x.id === id); if (s) s.noMetrics = true;
+}
 const ONLY = process.env.FIDELITY_ONLY ? new RegExp(process.env.FIDELITY_ONLY) : null;   // a quick look; writes no report
 for (const s of specimens) {
   if (ONLY && !ONLY.test(s.id)) continue;
@@ -395,7 +401,12 @@ for (const s of specimens) {
   if (ENGINE === "firefox" && /^db-scroll-thumb-(grip|end)$/.test(s.id)) { console.log(`${s.id}: n/a in firefox (see db-js-scroll-thumb)`); continue; }
   if (ENGINE === "firefox" && !s.js && /scroll|grow-box/.test(s.id)) s.js = s.viaJs = true;
   if (s.baseSelect && !(await page.goto("about:blank").then(() => page.evaluate(() => CSS.supports("appearance", "base-select"))))) { console.log(`${s.id}: n/a in ${ENGINE} (no base-select)`); continue; }
-  const html = `<!doctype html><html data-era="${s.era || "platinum"}"><head><meta charset="utf-8"><link rel="stylesheet" href="${css}"><style>body{margin:0;padding:24px;background:#4a71ab}${process.env.FIDELITY_CSS || ""}</style></head><body>${s.html}${s.js ? `<script src="${js}"></script>` : ""}</body></html>`;
+  // Firefox puts an inline control on a fractional baseline when its line box comes from the
+  // page's default font (Times 16px): a check box at y 41.25 against the Mac's 40 at 2x and 3x.
+  // The specimen's wrapper therefore carries Clio's metrics, as a Mac window would; specimens
+  // that moved at 1x with them keep the default wrapper (s.noMetrics).
+  const wrapFont = s.noMetrics || process.env.FIDELITY_NO_WRAPFONT ? "" : `font-family:"Clio Sans '84",sans-serif;font-size:12px;line-height:16px;`;
+  const html = `<!doctype html><html data-era="${s.era || "platinum"}"><head><meta charset="utf-8"><link rel="stylesheet" href="${css}"><style>body{margin:0;padding:24px;background:#4a71ab;${wrapFont}${process.env.FIDELITY_CSS || ""}</style></head><body>${s.html}${s.js ? `<script src="${js}"></script>` : ""}</body></html>`;
   const file = join(out, `${s.id}${tag}.html`);
   writeFileSync(file, html);
   await page.goto(pathToFileURL(file).href);
@@ -491,7 +502,23 @@ function others() {
     const off = r.filter((x) => x.same !== 1);
     out.push(`- ${e === "webkit" ? "WebKit" : "Firefox"}: ${r.length - off.length} of ${r.length} identical` + (off.length ? `; not identical: ${off.map((x) => `${x.name} (${(x.same * 100).toFixed(1)}%)`).join(", ")}` : ""));
   }
+  // The 2x/3x runs write results<engine>-<n>x.json; summarise the last ones beside the 1x table.
+  for (const d of [2, 3]) {
+    const line = [];
+    for (const [tag2, label] of [["", "Chromium"], ["-webkit", "WebKit"], ["-firefox", "Firefox"]]) {
+      const f = join(out0, `results${tag2}-${d}x.json`);
+      if (!existsSync(f)) continue;
+      const r = JSON.parse(readFileSync(f, "utf8"));
+      line.push(`${label} ${r.filter((x) => x.same === 1).length}/${r.length}`);
+    }
+    if (line.length) out.push(`- ${d}x: ${line.join(", ")}`);
+  }
   return out.join("\n") + `
+
+Firefox's wrapper carries Clio's metrics (a Mac window's line box) instead of the page's
+default Times, so its inline controls no longer land on quarter-pixel baselines: 142 and 130 at
+2x and 3x, against 111 and 105 with the default wrapper (the three progress bars keep the old
+wrapper: with the metrics WebKit lays them on half pixels at 2x).
 
 Two differences are left. The Drawing Board pop-up menu (below) is text antialiased over the paper.
 WebKit's dimmed System 7 pop-up menu has no shadow: the shadow lies outside the border box, and
