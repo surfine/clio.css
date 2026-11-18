@@ -144,6 +144,12 @@ FILES = {
     'utility-right-top': (6195, 0), 'utility-right-mid': (6196, 0), 'utility-right-bottom': (6197, 0),
     'utility-bottom-l': (6200, 0), 'utility-bottom-r': (6199, 0),
     'utility-bl': (6201, 0), 'utility-br': (6198, 0),
+    # Side-title utility window (the Appearance SDK's Utility Window, the theme's
+    # Util LSide pictures): the top-left corner (with the close box), the column's
+    # top, middle and foot, and the bottom-left corner.
+    'utility-side-tl': (6205, 0), 'utility-side-top': (6206, 0),
+    'utility-side-mid': (6207, 0), 'utility-side-bottom': (6208, 0),
+    'utility-side-bl': (6209, 0),
 }
 if '--files' in sys.argv:
     out = os.path.join(HERE, '..', 'art', 'drawingboard'); os.makedirs(out, exist_ok=True)
