@@ -24,10 +24,10 @@ correct web rendering cannot measure away; the row in EVIDENCE.md says why).
 | A9 | ~~Slider tick mark placement~~ | EVIDENCE.md "Slider: All eras" | **Closed 2026-11-18**: the Mouse control panel's slider (114px track, 3 ticks at 102/150/199) confirms (width − run)/(count − 1) with the first tick 9px in |
 | A10 | ~~Drawing Board slider ticks~~ | EVIDENCE.md "Slider: Drawing Board" | **Closed 2026-11-18**: the Keyboard capture's dashes are 2x3 of the theme's ink at the shared (width − run)/(count − 1) spacing; the Drawing Board tokens now set light/ink/shade, offset 9px and run 9px (the 9px thumb) |
 | A11 | Help button's held state not captured (Drawing Board) | EVIDENCE.md "Help button: Drawing Board" | Capture the held button in 8.5 |
-| A12 | Side-title utility window: theme's own pieces (6194–6209) captured, not drawn | EVIDENCE.md "Side-title utility window: Drawing Board" | Compose the side frame from the pieces and ship `.window.utility.side` |
+| A12 | Side-title utility window: theme's own pieces (6194–6209) captured, not drawn | EVIDENCE.md "Side-title utility window: Drawing Board" | **Attempted 2026-11-18**: the pieces are decoded (6205–6209, 6213/6214 in `tooling/db-art.py`), but the only capture (`.fidelity/rc8/side3.png`) shows a **13px** column where the pieces are **18px** wide — the capture is not the theme's side window (the rc9 one matches the pieces at 0.02–0.16, i.e. not at all). A fresh capture of the Appearance SDK's side window with the theme active is needed; the 223 KB budget was approved for it |
 | A13 | Split bar's dragged 3-row grey outline not drawn | EVIDENCE.md "Split bar: Platinum" | Capture it in BBEdit 5.1 and draw it |
 | A14 | Held placard not tracked | ROADMAP "Rare controls" | Capture a held placard and add the state |
-| A15 | Drawing Board side-window pieces not reproduced | ROADMAP "Rare controls" | Same as A12 |
+| A15 | Drawing Board side-window pieces not reproduced | ROADMAP "Rare controls" | Same as A12 (the pieces are decoded; the capture does not match their 18px column) |
 | A16 | ~~Drawing Board utility frame's rule second row~~ | ROADMAP 0.12.1 | **Closed 2026-11-18**: ppat 7099's one-row pencil line from x=8 (100% over x8–157) |
 
 | A18 | ~~Menu sounds' `'snd '` IDs~~ | SOUND-SETS.md §8 | **Closed 2026-11-18**: `mnuo` (515, 135.7 ms) and `mnuc` (516, 132.8 ms) by event code and burst durations (120–130 ms); correlation inconclusive |

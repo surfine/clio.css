@@ -151,6 +151,9 @@ FILES = {
     'utility-side-mid': (6207, 0), 'utility-side-bottom': (6208, 0),
     'utility-side-bl': (6209, 0),
     'utility-side-box-top': (6213, 0), 'utility-side-box-bottom': (6214, 0),
+    'utility-side-tl-inactive': (6205, 1), 'utility-side-top-inactive': (6206, 1),
+    'utility-side-mid-inactive': (6207, 1), 'utility-side-bottom-inactive': (6208, 1),
+    'utility-side-bl-inactive': (6209, 1),
 }
 if '--files' in sys.argv:
     out = os.path.join(HERE, '..', 'art', 'drawingboard'); os.makedirs(out, exist_ok=True)
