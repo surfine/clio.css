@@ -169,6 +169,7 @@
 <script>
   const done = new Map();
   const tick = (n, note) => {
+    n = String(n);
     if (done.has(n)) { if (note && !String(done.get(n)).includes(note)) done.set(n, done.get(n) + "、" + note); return; }
     done.set(n, note || "✓");
     const li = document.querySelector(`#checklist li[data-item="${n}"]`);
