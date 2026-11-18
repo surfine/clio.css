@@ -1525,7 +1525,8 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
    1x, 2x and 3x. On by default; class="clio-system-cursors" on <html> gives
    the system's own back. The Mac had no pointing hand: links and buttons
    inside clio.css's windows keep the arrow. aria-busy="true" shows the watch
-   (its first frame; hot spot 8,8). */
+   (hot spot 8,8); clio.js spins its seven frames four ticks a frame, as the
+   System's 'acur' resource -6078 does. */
 :where(:root) {
   --clio-cursor-arrow: image-set(url("art/cursors/arrow.png") 1x, url("art/cursors/arrow-2x.png") 2x, url("art/cursors/arrow-3x.png") 3x) 1 1, default;
   --clio-cursor-text: image-set(url("art/cursors/ibeam.png") 1x, url("art/cursors/ibeam-2x.png") 2x, url("art/cursors/ibeam-3x.png") 3x) 3 4, text;

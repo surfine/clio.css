@@ -1270,6 +1270,40 @@
     get(t, k) { return k in t ? t[k] : legacy[k]; },
   });
 
+  /* ---- The watch: seven frames, four ticks each ----------------------------
+     The System's 'acur' resource (-6078, Mac OS 9.0) lists eight CURS frames and a
+     delay of 4 ticks; the fork carries seven of them (-6078..-6072, the same pixels
+     as -20721..-20715). CSS cannot animate cursor:, so while an [aria-busy="true"]
+     element exists clio.js rewrites its --clio-cursor-wait from the computed value
+     (whose URLs are already absolute) every 4 ticks. */
+  const watch = (() => {
+    const root = document.documentElement;
+    let frames = null, timer = 0, at = 0;
+    const base = () => getComputedStyle(root).getPropertyValue("--clio-cursor-wait");
+    const build = () => {
+      const v = base();
+      if (!/watch\.png/.test(v)) return null;
+      return [1, 2, 3, 4, 5, 6, 7].map((n) => v.replace(/watch\.png/, `watch-${n}.png`).replace(/watch-2x\.png/, `watch-${n}-2x.png`).replace(/watch-3x\.png/, `watch-${n}-3x.png`));
+    };
+    const busy = () => document.querySelectorAll('[aria-busy="true"]');
+    const stop = () => { clearInterval(timer); timer = 0; };
+    const step = () => {
+      const els = busy();
+      if (!els.length) { stop(); return; }
+      if (!frames) frames = build();
+      if (!frames) { stop(); return; }
+      at = (at + 1) % frames.length;
+      for (const el of els) el.style.setProperty("--clio-cursor-wait", frames[at]);
+    };
+    const kick = () => {
+      const on = busy().length > 0;
+      if (on && !timer) { if (!frames) frames = build(); if (!frames) return; timer = setInterval(step, 4 * TICK); }
+      else if (!on) { stop(); for (const el of document.querySelectorAll("[style*='--clio-cursor-wait']")) el.style.removeProperty("--clio-cursor-wait"); }
+    };
+    if (typeof MutationObserver !== "undefined") new MutationObserver(kick).observe(document.documentElement, { subtree: true, childList: true, attributes: true, attributeFilter: ["aria-busy"] });
+    return { kick };
+  })();
+
   window.clio = {
     version: "0.11.0-dev",
     zoomRects,
