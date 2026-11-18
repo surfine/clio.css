@@ -20,7 +20,7 @@ correct web rendering cannot measure away; the row in EVIDENCE.md says why).
 | A5 | Insertion point shape outside System 7 not measured | EVIDENCE.md "Text field" | Capture the caret in System 6/8/9 and compare |
 | A6 | System 6 plain box dialog (altDBoxProc) inferred, not measured | EVIDENCE.md "Dialogs and alerts: System 6" | Capture a 6.0.8 altDBoxProc dialog |
 | A7 | Control Strip's held module in System 7 inferred | EVIDENCE.md "Control Strip: System 7" | Capture a held module in 7.5.3 |
-| A8 | System 6 list view headers inferred | EVIDENCE.md "List view: System 6" | Capture System 6's list view |
+
 | A9 | ~~Slider tick mark placement~~ | EVIDENCE.md "Slider: All eras" | **Closed 2026-11-18**: the Mouse control panel's slider (114px track, 3 ticks at 102/150/199) confirms (width − run)/(count − 1) with the first tick 9px in |
 | A10 | Drawing Board slider ticks not reproduced | EVIDENCE.md "Slider: Drawing Board" | Decode the theme's tick drawing and place them |
 | A11 | Help button's held state not captured (Drawing Board) | EVIDENCE.md "Help button: Drawing Board" | Capture the held button in 8.5 |
@@ -29,7 +29,7 @@ correct web rendering cannot measure away; the row in EVIDENCE.md says why).
 | A14 | Held placard not tracked | ROADMAP "Rare controls" | Capture a held placard and add the state |
 | A15 | Drawing Board side-window pieces not reproduced | ROADMAP "Rare controls" | Same as A12 |
 | A16 | ~~Drawing Board utility frame's rule second row~~ | ROADMAP 0.12.1 | **Closed 2026-11-18**: ppat 7099's one-row pencil line from x=8 (100% over x8–157) |
-| A17 | System 6/7 split bar drawn from HIG92 (no application found) | COVERAGE.md note | Search more 6/7 software for a split bar, or leave labelled inferred |
+
 | A18 | ~~Menu sounds' `'snd '` IDs~~ | SOUND-SETS.md §8 | **Closed 2026-11-18**: `mnuo` (515, 135.7 ms) and `mnuc` (516, 132.8 ms) by event code and burst durations (120–130 ms); correlation inconclusive |
 
 ## B. Labelled by design (a web rendering cannot measure these away)
@@ -38,6 +38,8 @@ correct web rendering cannot measure away; the row in EVIDENCE.md says why).
 | --- | --- | --- | --- |
 | B1 | Drawing Board desktop pictures not reproduced | EVIDENCE.md "Desktop and icons" | Apple artwork; the owner's rule is no Apple artwork |
 | B2 | Drawing Board list header lines (pattern pens) not reproduced | EVIDENCE.md "List view" | The pens' sketch texture is Apple artwork |
+| B9 | System 6's list view uses System 7's headers | EVIDENCE.md "List view: System 6" | System 6.0.8's Finder has no list view (HIG 1992); the class must exist in every era, so it takes System 7's |
+| B10 | System 6/7 split bar drawn from HIG92 | COVERAGE.md note | No System 6 or 7 application in Infinite Mac has one; the HIG defines it, so it is drawn from the HIG and labelled inferred |
 | B3 | The open pop-up menu is drawn by clio.js/base-select, not pixels for 6/7 | EVIDENCE.md "Pop-up menu" | The browser's picker cannot carry the theme's pixels |
 | B4 | Alerts' icon drawn by clio.css | EVIDENCE.md "Dialogs and alerts" | Apple's icon is not shipped |
 | B5 | Earlier eras use later controls where the era had none (tabs, sliders, bevel buttons, Control Strip, disclosure) | EVIDENCE.md, COVERAGE.md | The classes must exist in every era; the rows say which era's control they use |
