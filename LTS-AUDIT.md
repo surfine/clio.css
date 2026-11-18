@@ -24,7 +24,7 @@ correct web rendering cannot measure away; the row in EVIDENCE.md says why).
 | A9 | ~~Slider tick mark placement~~ | EVIDENCE.md "Slider: All eras" | **Closed 2026-11-18**: the Mouse control panel's slider (114px track, 3 ticks at 102/150/199) confirms (width − run)/(count − 1) with the first tick 9px in |
 | A10 | ~~Drawing Board slider ticks~~ | EVIDENCE.md "Slider: Drawing Board" | **Closed 2026-11-18**: the Keyboard capture's dashes are 2x3 of the theme's ink at the shared (width − run)/(count − 1) spacing; the Drawing Board tokens now set light/ink/shade, offset 9px and run 9px (the 9px thumb) |
 | A11 | ~~Help button's held state~~ | EVIDENCE.md "Help button: Drawing Board" | **Closed 2026-11-18** as an adaptation: the theme's pressed bevel with the same art one pixel down-right (the theme's press drops the content), now drawn for `:active`/`.active`. No capture of the held state exists and the theme install flow could not be completed (A11's blocker), so the press is labelled adapted, not measured |
-| A13 | Split bar's dragged 3-row grey outline not drawn | EVIDENCE.md "Split bar: Platinum" | Capture it in BBEdit 5.1 and draw it |
+| A13 | ~~Split bar's dragged 3-row grey outline~~ | EVIDENCE.md "Split bar: Platinum" | **Closed 2026-11-18**: while a `.split-bar` is dragged clio.js draws a 3-row grey inverting band across the split view (Inside Macintosh: Windows; HIG 1992), removed on release; behaviour check added (206 checks). The drag itself was not captured, so the band is labelled adapted |
 
 | A16 | ~~Drawing Board utility frame's rule second row~~ | ROADMAP 0.12.1 | **Closed 2026-11-18**: ppat 7099's one-row pencil line from x=8 (100% over x8–157) |
 
