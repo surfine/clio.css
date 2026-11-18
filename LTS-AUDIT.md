@@ -19,7 +19,7 @@ correct web rendering cannot measure away; the row in EVIDENCE.md says why).
 | A4 | Menu bar extras positions not compared pixel by pixel | EVIDENCE.md "Menu bar and menus" | Compare the Help/Application menu extras against the captures |
 | A5 | ~~Insertion point shape outside System 7~~ | EVIDENCE.md "Text field" | **Closed 2026-11-18**: Mac OS 9.0's SimpleText shows the same 1px × 16-row black caret at x=35, rows 44..59, blinking after ~0.5 s |
 | A6 | ~~System 6 plain box dialog~~ | EVIDENCE.md "Dialogs and alerts: System 6" | **Closed 2026-11-18** from the System file: all 12 DLOG resources carry procID 1 (altDBoxProc) — the plain box is System 6's standard dialog frame; the frame's pixels are the ROM WDEF's (Inside Macintosh: Dialogs), drawn by src/50-dialog.css. The screen capture stays blocked by the 6.0.8 image's input path |
-| A7 | Control Strip's held module in System 7 inferred | EVIDENCE.md "Control Strip: System 7" | Capture a held module in 7.5.3 |
+
 
 | A9 | ~~Slider tick mark placement~~ | EVIDENCE.md "Slider: All eras" | **Closed 2026-11-18**: the Mouse control panel's slider (114px track, 3 ticks at 102/150/199) confirms (width − run)/(count − 1) with the first tick 9px in |
 | A10 | ~~Drawing Board slider ticks~~ | EVIDENCE.md "Slider: Drawing Board" | **Closed 2026-11-18**: the Keyboard capture's dashes are 2x3 of the theme's ink at the shared (width − run)/(count − 1) spacing; the Drawing Board tokens now set light/ink/shade, offset 9px and run 9px (the 9px thumb) |
@@ -41,6 +41,7 @@ correct web rendering cannot measure away; the row in EVIDENCE.md says why).
 | B9 | System 6's list view uses System 7's headers | EVIDENCE.md "List view: System 6" | System 6.0.8's Finder has no list view (HIG 1992); the class must exist in every era, so it takes System 7's |
 | B10 | System 6/7 split bar drawn from HIG92 | COVERAGE.md note | No System 6 or 7 application in Infinite Mac has one; the HIG defines it, so it is drawn from the HIG and labelled inferred |
 | B11 | No held placard | EVIDENCE.md "Placard" | A placard is a display control (Inside Macintosh: Controls); it does not respond to clicks, so it has no held state |
+| B12 | System 7's held Control Strip module inferred | EVIDENCE.md "Control Strip: System 7" | The Control Strip is a PowerBook extension; the System 7.5.3 desktop image in Infinite Mac has no strip (checked 2026-11-18), so the held module is drawn from the measured Mac OS 9 held module in the strip's measured System 7 palette |
 | B3 | The open pop-up menu is drawn by clio.js/base-select, not pixels for 6/7 | EVIDENCE.md "Pop-up menu" | The browser's picker cannot carry the theme's pixels |
 | B4 | Alerts' icon drawn by clio.css | EVIDENCE.md "Dialogs and alerts" | Apple's icon is not shipped |
 | B5 | Earlier eras use later controls where the era had none (tabs, sliders, bevel buttons, Control Strip, disclosure) | EVIDENCE.md, COVERAGE.md | The classes must exist in every era; the rows say which era's control they use |
