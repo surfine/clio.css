@@ -1,7 +1,7 @@
-# clio.css 1.0.0 — full reference
+# clio.css 1.0.1 — full reference
 
 Classic Mac OS interface CSS: System 6 (default), System 7 (data-era="system7"), Mac OS 8.5 Drawing Board (data-era="drawingboard") and Mac OS 8/9 Platinum (data-era="platinum").
-Install: npm install clio.css — or <link rel="stylesheet" href="https://unpkg.com/clio.css@1.0.0/dist/clio.css">
+Install: npm install clio.css — or <link rel="stylesheet" href="https://unpkg.com/clio.css@1.0.1/dist/clio.css">
 Rules have zero or one-class specificity; override any --clio-* custom property on any element.
 
 ## Window (#window)
@@ -1805,6 +1805,10 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
   box-shadow: var(--clio-menubar-shadow);
   user-select: none;
   -webkit-user-select: none;
+  /* A press dragged from a title to an item is the Mac's MenuDrag, not a scroll or
+     a long-press callout: the bar and its menus keep the gesture (touch). */
+  touch-action: none;
+  -webkit-touch-callout: none;
 }
 
 :where(.menu-bar, [role="menubar"], [role="menu-bar"]) > li {
@@ -1854,6 +1858,8 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
    System 6: paper, a 1px ink frame and a 1px ink drop shadow. */
 :where(.menu, ul[role="menu"]) {
   z-index: 10;
+  touch-action: none;
+  -webkit-touch-callout: none;
   display: block;
   box-sizing: border-box;
   min-width: 140px;

@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.0.1 (2026-11-18, touch fix)
+
+- **A press dragged from a menu title to an item was lost on a touch screen** (owner's
+  report): the page scrolled or the long-press callout took the gesture, so the pointer
+  stream cancelled and the item never logged. The menu bar and its menus now keep the
+  gesture (`touch-action: none`, `-webkit-touch-callout: none`), as the Mac's MenuDrag
+  expects. Reproduced in a touch-emulated Chromium with CDP touch events: without the rule
+  the drag scrolls and nothing logs; with it, Edit → Paste logs once and the page stays put.
+
 ## 1.0.0 — the Classic LTS (2026-11-18)
 
 The Classic side is finished: [LTS-AUDIT.md](LTS-AUDIT.md) has no open A row, every B row is
