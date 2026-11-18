@@ -1336,7 +1336,7 @@
   })();
 
   window.clio = {
-    version: "0.11.0-dev",
+    version: "1.0.0",
     zoomRects,
     collapse,
     sounds: soundsApi,

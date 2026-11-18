@@ -1,6 +1,6 @@
 {
   "name": "clio.css",
-  "version": "0.12.0",
+  "version": "1.0.0",
   "description": "CSS library for classic Mac OS interfaces: Macintosh System 6, System 7, Mac OS 8.5 Drawing Board and Mac OS 8/9 Platinum windows, menus, buttons, scroll bars and dialogs, with every value traced to measured pixels.",
   "homepage": "https://surfine.github.io/clio.css/",
   "license": "MIT",
@@ -33,8 +33,8 @@
   ],
   "install": {
     "npm": "npm install clio.css",
-    "cdn": "https://unpkg.com/clio.css@0.12.0/dist/clio.css",
-    "jsdelivr": "https://cdn.jsdelivr.net/npm/clio.css@0.12.0/dist/clio.css"
+    "cdn": "https://unpkg.com/clio.css@1.0.0/dist/clio.css",
+    "jsdelivr": "https://cdn.jsdelivr.net/npm/clio.css@1.0.0/dist/clio.css"
   },
   "evidenceStatuses": {
     "measured": "read from real pixels of the era",

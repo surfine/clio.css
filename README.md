@@ -5,6 +5,12 @@ Windows, title bars, menu bars, push buttons, check boxes, radio buttons, text f
 pop-up menus, list boxes, scroll bars, dialogs, group boxes, progress bars, tabs, the
 Control Strip and desktop icons. Pure CSS, no JavaScript. MIT. No screenshots, icons, logos or Apple fonts.
 
+**1.0 — the Classic LTS.** Classic Mac OS is finished here: [LTS-AUDIT.md](LTS-AUDIT.md) has no
+open measurement row — the eight gaps it once listed are closed, four by reading the software
+itself (System 6.0.8's System file for the watch and the dialogs' plain frames) — and every
+remaining row is a deliberate adaptation with its reason. Later changes go into 1.0.x fixes or
+a new major version, not into Classic's look.
+
 Every value is traced to its source and labelled **measured** (read from real pixels of
 the era), **inferred**, **adapted** (a deliberate web change) or **third-party**. System 6
 and System 7 are measured from System 6.0.8 and 7.5.3 running in
