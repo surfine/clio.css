@@ -22,7 +22,7 @@ correct web rendering cannot measure away; the row in EVIDENCE.md says why).
 | A7 | Control Strip's held module in System 7 inferred | EVIDENCE.md "Control Strip: System 7" | Capture a held module in 7.5.3 |
 
 | A9 | ~~Slider tick mark placement~~ | EVIDENCE.md "Slider: All eras" | **Closed 2026-11-18**: the Mouse control panel's slider (114px track, 3 ticks at 102/150/199) confirms (width − run)/(count − 1) with the first tick 9px in |
-| A10 | Drawing Board slider ticks not reproduced | EVIDENCE.md "Slider: Drawing Board" | Decode the theme's tick drawing and place them |
+| A10 | ~~Drawing Board slider ticks~~ | EVIDENCE.md "Slider: Drawing Board" | **Closed 2026-11-18**: the Keyboard capture's dashes are 2x3 of the theme's ink at the shared (width − run)/(count − 1) spacing; the Drawing Board tokens now set light/ink/shade, offset 9px and run 9px (the 9px thumb) |
 | A11 | Help button's held state not captured (Drawing Board) | EVIDENCE.md "Help button: Drawing Board" | Capture the held button in 8.5 |
 | A12 | Side-title utility window: theme's own pieces (6194–6209) captured, not drawn | EVIDENCE.md "Side-title utility window: Drawing Board" | Compose the side frame from the pieces and ship `.window.utility.side` |
 | A13 | Split bar's dragged 3-row grey outline not drawn | EVIDENCE.md "Split bar: Platinum" | Capture it in BBEdit 5.1 and draw it |

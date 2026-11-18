@@ -4564,6 +4564,14 @@
   --clio-slider-track-slice: 0px;
   --clio-slider-thumb-width: 9px;
   --clio-art-slider-thumb: url("art/drawingboard/parts/slider-thumb.png");
+  /* Tick marks (Keyboard, Key Repeat): 2px of the theme's ink, 3px tall, under
+     the track at the same spacing as Platinum's (the Keyboard capture: five
+     marks 22px apart, the first 9px in). */
+  --clio-slider-tick-light: transparent;
+  --clio-slider-tick-ink: #333333;
+  --clio-slider-tick-shade: #333333;
+  --clio-slider-tick-offset: 9px;
+  --clio-slider-tick-run: 9px;
   /* Little arrows: the theme's 13x21 pictures (350: normal, up held, down held,
      dimmed), through 16 bits (Date & Time). */
   --clio-little-arrows-width: 13px;
