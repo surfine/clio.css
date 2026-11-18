@@ -257,9 +257,13 @@ at peak 0.44). Records in `.fidelity/snd-push/cap/`.
 | Set Desktop (Appearance > Desktop) | nothing | — |
 | a tab in the Appearance window | nothing | — |
 
-The two menu sounds did not match any of Platinum Sounds' 68 decoded sounds by cross
-correlation (best 0.32, against `mnuc`): their `'snd '` IDs are not identified, so the table
-stops at what was heard. **2026-11-18:** the Appearance Manager's code is now available for
+The two menu sounds are **`mnuo` and `mnuc`**: the system plays the theme sound for a menu's
+event code, and the recorded durations (120–130 ms for the open and the close) match
+`mnuo`'s `'snd '` 515 (135.7 ms) and `mnuc`'s 516 (132.8 ms); `mnui` (517, 38.1 ms) and
+`mnus` (518, 140.8 ms) do not fit either burst. A waveform cross-correlation stays
+inconclusive (best 0.32) because the emulator's filtered output cuts the tails and the
+recording is not sample-aligned to the event; the identification rests on the event codes and
+the durations, not on the correlation. **2026-11-18:** the Appearance Manager's code is now available for
 reading — the 9.0 System file exports intact through The Outside World and its data fork
 carries the AppearanceLib symbol table (`PlayThemeSound`, `PlayThemeControlSound`,
 `BeginThemeDragSound`, `EndThemeDragSound` at 0x1e1b32); the button-press/release rule and the

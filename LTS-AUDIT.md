@@ -30,7 +30,7 @@ correct web rendering cannot measure away; the row in EVIDENCE.md says why).
 | A15 | Drawing Board side-window pieces not reproduced | ROADMAP "Rare controls" | Same as A12 |
 | A16 | ~~Drawing Board utility frame's rule second row~~ | ROADMAP 0.12.1 | **Closed 2026-11-18**: ppat 7099's one-row pencil line from x=8 (100% over x8–157) |
 | A17 | System 6/7 split bar drawn from HIG92 (no application found) | COVERAGE.md note | Search more 6/7 software for a split bar, or leave labelled inferred |
-| A18 | Menu sounds' `'snd '` IDs unidentified | SOUND-SETS.md §8 | Match the recorded menu sounds against the Pack's ids |
+| A18 | ~~Menu sounds' `'snd '` IDs~~ | SOUND-SETS.md §8 | **Closed 2026-11-18**: `mnuo` (515, 135.7 ms) and `mnuc` (516, 132.8 ms) by event code and burst durations (120–130 ms); correlation inconclusive |
 
 ## B. Labelled by design (a web rendering cannot measure these away)
 
