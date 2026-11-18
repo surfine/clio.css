@@ -103,10 +103,18 @@ Empty (owner, 2026-11-14: close everything for the Classic final, 0.12.0).
   decoded by `tooling/db-cursor.py`; 129-131 are drag badges (copy, alias, document), not used.
 
 - **Drawing Board's utility windows** (top-title and side-title) still use Platinum's frame.
-  The theme has them (`pxm#` 6187–6214); their places in the 8.5 Application Switcher (frame
-  `hig/drawingboard/switcher`) are measured: sides, bottom and corners match the pieces with
-  no mismatch; the title bar pieces differ only under the title and boxes (offsets in
-  `.notes/behaviour-0.11.md`). Building and checking the composition did not fit the hour.
+  The theme has them (`pxm#` 6187–6214); the pieces are decoded (`tooling/db-art.py --files`,
+  committed) and the 2026-11-18 re-check with template matching confirms, at the offsets in
+  `.notes/behaviour-0.11.md`: the left/right edge pieces and the bottom corners match **100%**
+  of their opaque pixels, the rule ends 97/93%, the top-left cap 100% once the close box is
+  masked, the bottom-left corner 100%; the 256-wide top and bottom pieces are **placed and
+  clipped** (top from 625,215; bottom from 626,301), not tiled. Still open: the left and right
+  edges show a 20px span between the 5x10 top piece and the 5x33 bottom piece that neither
+  tiles nor stretches from either piece (65%/53% and 46%/23%), and the theme's `frme` resources
+  (the likely owner of the stretch rule) do not carry the `pxm#` ids in their first 96 bytes.
+  Next: read `frme` properly (the "middle of each side stretches" model) or find a second
+  reference at another window height. The LTS decision: the utility window keeps Platinum's
+  frame unless this is closed before 1.0.
 - **Firefox at 2x and 3x** (111 and 105 of 150): fixed as a harness problem. The specimens'
   wrappers used the page's default font (Times 16px), so inline controls sat on quarter-pixel
   baselines in Firefox; each wrapper now carries Clio's metrics, except three progress bars
