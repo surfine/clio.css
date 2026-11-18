@@ -6661,6 +6661,13 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
 /* Bevel buttons: drawn as the theme's push button (its pens, corner pixels,
    hatch and shade); the Navigation Services bevel buttons were not matched
    pen for pen (inferred). */
+/* The Help button's held state: the theme's pressed bevel with the same art
+   shifted one pixel down-right (inferred — the 8.5 capture is of the normal
+   state; the theme's press drops the button's content by one pixel). */
+[data-era="drawingboard"] .help-button:is(:active:where(:not([data-clio-off])), .active) {
+  background: var(--clio-art-help-button) 1px 1px / 21px 20px no-repeat, var(--clio-button-active-bg);
+}
+
 [data-era="drawingboard"] .bevel {
   border-width: 1px;
   border-image: url("art/drawingboard/pens/button-corners.png") 5 / 5px stretch;
