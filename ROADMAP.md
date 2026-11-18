@@ -117,8 +117,14 @@ Empty (owner, 2026-11-14: close everything for the Classic final, 0.12.0).
   reachable — the 9.0 System file exports through The Outside World (Uploads), its data fork
   carries the AppearanceLib symbol table (`PlayThemeSound`, `PlayThemeControlSound`,
   `BeginThemeDragSound`, `DrawThemeListBoxFrame`, `DrawThemeWindowHeader`, … at 0x1e1b32) —
-  so the frame and sound rules can be read from the code instead of guessed. The LTS
-  decision: the utility window keeps Platinum's frame unless this is closed before 1.0.
+  so the frame and sound rules can be read from the code instead of guessed. The PEF
+  containers parse (`tooling/pef.py`): AppearanceLib is the container at 0x25b810 in the 9.0
+  System file (code 263,588 B, pattern data 50,148 B compressed), its 218 exports map
+  `PlayThemeSound` → code 0x161f0, `PlayThemeControlSound` → 0x16230, `BeginThemeDragSound` →
+  0x16270 (via TVectors in the decompressed data section), and the sound-map lookup at
+  0x14498 confirms the entry layout (0x14 bytes for 8.5b6, 0x2c for the release sets: code +0,
+  class +4, flags +6, delay +8, four slots from +0xc). The LTS decision: the utility window
+  keeps Platinum's frame unless this is closed before 1.0.
 - **Firefox at 2x and 3x** (111 and 105 of 150): fixed as a harness problem. The specimens'
   wrappers used the page's default font (Times 16px), so inline controls sat on quarter-pixel
   baselines in Firefox; each wrapper now carries Clio's metrics, except three progress bars
