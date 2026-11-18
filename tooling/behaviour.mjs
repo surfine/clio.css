@@ -405,6 +405,16 @@ const watch = await page.evaluate(async () => {
   return { frames: [...seen].filter(Boolean).length, cleared: el.style.getPropertyValue("--clio-cursor-wait") === "" };
 });
 ok(watch.frames >= 3 && watch.cleared, `cursors: the watch spins (7 frames, 4 ticks each) while aria-busy and stops after (${JSON.stringify(watch)})`);
+// System 6.0.8's watch: the System file's six 'CURS' 258-263, not the round watch.
+await load("system6", `<div id="busy6" aria-busy="true" style="width:40px;height:40px"></div>`);
+const watch6 = await page.evaluate(async () => {
+  const el = document.querySelector("#busy6"), seen = new Set(), sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+  for (let i = 0; i < 9; i++) { seen.add(el.style.getPropertyValue("--clio-cursor-wait")); await sleep(70); }
+  const urls = [...seen].map((v) => (v.match(/watch6-\d\.png/) || [""])[0]).filter(Boolean);
+  el.setAttribute("aria-busy", "false"); await sleep(120);
+  return { frames: new Set(urls).size, cleared: el.style.getPropertyValue("--clio-cursor-wait") === "", any: urls[0] || "" };
+});
+ok(watch6.frames >= 3 && watch6.cleared && watch6.any.includes("watch6-"), `cursors: System 6's watch spins its six frames from the System file (${JSON.stringify(watch6)})`);
 // sounds
 await load("platinum", `<div id="host"></div>`);
 const played = await page.evaluate(async () => {
