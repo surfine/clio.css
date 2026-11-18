@@ -1280,10 +1280,14 @@
     const root = document.documentElement;
     let frames = null, timer = 0, at = 0;
     const base = () => getComputedStyle(root).getPropertyValue("--clio-cursor-wait");
+    const count = () => parseInt(getComputedStyle(root).getPropertyValue("--clio-cursor-watch-count"), 10) || 7;
     const build = () => {
       const v = base();
-      if (!/watch\.png/.test(v)) return null;
-      return [1, 2, 3, 4, 5, 6, 7].map((n) => v.replace(/watch\.png/, `watch-${n}.png`).replace(/watch-2x\.png/, `watch-${n}-2x.png`).replace(/watch-3x\.png/, `watch-${n}-3x.png`));
+      const m = v.match(/watch(6?)\.png/);
+      if (!m) return null;
+      const stem = `watch${m[1]}`;
+      const n = m[1] ? count() : 7;
+      return Array.from({ length: n }, (_, i) => v.replace(`${stem}.png`, `${stem}-${i + 1}.png`).replace(`${stem}-2x.png`, `${stem}-${i + 1}-2x.png`).replace(`${stem}-3x.png`, `${stem}-${i + 1}-3x.png`));
     };
     const busy = () => document.querySelectorAll('[aria-busy="true"]');
     const stop = () => { clearInterval(timer); timer = 0; };

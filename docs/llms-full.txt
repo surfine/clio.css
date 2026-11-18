@@ -1531,7 +1531,16 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
   --clio-cursor-arrow: image-set(url("art/cursors/arrow.png") 1x, url("art/cursors/arrow-2x.png") 2x, url("art/cursors/arrow-3x.png") 3x) 1 1, default;
   --clio-cursor-text: image-set(url("art/cursors/ibeam.png") 1x, url("art/cursors/ibeam-2x.png") 2x, url("art/cursors/ibeam-3x.png") 3x) 3 4, text;
   --clio-cursor-wait: image-set(url("art/cursors/watch.png") 1x, url("art/cursors/watch-2x.png") 2x, url("art/cursors/watch-3x.png") 3x) 8 8, wait;
+  --clio-cursor-watch-count: 7;
   cursor: var(--clio-cursor-arrow);
+}
+
+/* System 6.0.8's watch is a different drawing: a square face on a band, six
+   frames in the System file's 'CURS' 258-263 (tooling/s6-watch-art.py), not the
+   round watch of System 7.5.3 and Mac OS 9.0 ('CURS' -20721..-20715). */
+:where([data-era="system6"]) {
+  --clio-cursor-wait: image-set(url("art/cursors/watch6.png") 1x, url("art/cursors/watch6-2x.png") 2x, url("art/cursors/watch6-3x.png") 3x) 8 8, wait;
+  --clio-cursor-watch-count: 6;
 }
 
 :where(:root.clio-system-cursors) {
