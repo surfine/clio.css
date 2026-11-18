@@ -14,11 +14,11 @@ correct web rendering cannot measure away; the row in EVIDENCE.md says why).
 | # | Item | Where | What closes it |
 | --- | --- | --- | --- |
 | A1 | ~~Watch cursor animation~~ | EVIDENCE.md "Cursors: the watch" | **Closed 2026-11-18**: the System file's `acur` -6078 (8 frames, delay 4 ticks) and CURS -6078..-6072 (7 present) decoded by `tooling/watch-art.py`; clio.js spins them 4 ticks a frame; a behaviour check in each engine |
-| A2 | System 6's watch cursor | EVIDENCE.md "Cursors: the watch" | Capture System 6.0.8 opening a folder |
+| A2 | System 6's watch cursor | EVIDENCE.md "Cursors: the watch" | Capture System 6.0.8 opening a folder. **Blocked 2026-11-18** with A6: the 6.0.8 session's clicks do not reach the guest |
 | A3 | ~~Movable modal's right end~~ | EVIDENCE.md "Movable modal window" | **Closed 2026-11-18**: the capture ends the ridges 4px before the right edge over solid #cccccc; the CSS now sets `--clio-tb-shade: 3px`, a 1px right margin and the #999 line at the edge. Raw match 99.8%; the two junction cells (the #999 line's first row and the rule's last column) are masked in `p9-movable-modal-right`, which passes 100% beside the left end. |
 | A4 | Menu bar extras positions not compared pixel by pixel | EVIDENCE.md "Menu bar and menus" | Compare the Help/Application menu extras against the captures |
 | A5 | Insertion point shape outside System 7 not measured | EVIDENCE.md "Text field" | Capture the caret in System 6/8/9 and compare |
-| A6 | System 6 plain box dialog (altDBoxProc) inferred, not measured | EVIDENCE.md "Dialogs and alerts: System 6" | Capture a 6.0.8 altDBoxProc dialog |
+| A6 | System 6 plain box dialog (altDBoxProc) inferred, not measured | EVIDENCE.md "Dialogs and alerts: System 6" | Capture a 6.0.8 altDBoxProc dialog. **Blocked 2026-11-18**: in the 6.0.8 session the pointer moves but clicks and menu-bar menus do not reach the guest (five attempts); the 9.0/8.5 sessions accept input, so this is the 6.0.8 image's input path, not clio.css |
 | A7 | Control Strip's held module in System 7 inferred | EVIDENCE.md "Control Strip: System 7" | Capture a held module in 7.5.3 |
 
 | A9 | ~~Slider tick mark placement~~ | EVIDENCE.md "Slider: All eras" | **Closed 2026-11-18**: the Mouse control panel's slider (114px track, 3 ticks at 102/150/199) confirms (width − run)/(count − 1) with the first tick 9px in |
