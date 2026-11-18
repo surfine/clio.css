@@ -125,6 +125,13 @@ Empty (owner, 2026-11-14: close everything for the Classic final, 0.12.0).
   0x14498 confirms the entry layout (0x14 bytes for 8.5b6, 0x2c for the release sets: code +0,
   class +4, flags +6, delay +8, four slots from +0xc). The LTS decision: the utility window
   keeps Platinum's frame unless this is closed before 1.0.
+  **2026-11-18, frame code:** `DrawThemeWindowHeader`, `DrawThemeListBoxFrame`,
+  `DrawThemePlacard` and `DrawThemeWindowFrame` are **thin dispatchers** (each loads the
+  theme provider at `0x17d0` and calls `0x3c780` with a selector: 0xfb8/5, 6, 0xa, 0xb), so
+  the corner/stretch rule lives in the provider, not in these exports; the `frme` resource
+  stays the unresolved piece. A second reference at another window height (a taller
+  Application Switcher) was attempted: the driver gained `keydown`/`keyup`, but 8.5's
+  cmd+Tab palette did not appear in the capture, so the height rule is still unmeasured.
 - **Firefox at 2x and 3x** (111 and 105 of 150): fixed as a harness problem. The specimens'
   wrappers used the page's default font (Times 16px), so inline controls sat on quarter-pixel
   baselines in Firefox; each wrapper now carries Clio's metrics, except three progress bars

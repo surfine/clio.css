@@ -5,7 +5,7 @@
 // Frames land in <dir> (keep them under .fidelity/, which git ignores: they are
 // Apple's screens and are never committed). See LESSONS.md.
 // Append commands (one per line) to <dir>/cmd; results in <dir>/log.
-//  move x y | down | up | click x y | dbl x y | drag x1 y1 x2 y2 | slowdrag x1 y1 x2 y2 | key K | type TEXT | cmd K | wait ms
+//  move x y | down | up | click x y | dbl x y | drag x1 y1 x2 y2 | slowdrag x1 y1 x2 y2 | key K | keydown K | keyup K | type TEXT | cmd K | wait ms
 //  shot NAME (canvas png) | ctrlclick x y | ctrlup | shiftclick x y | dropzip FILE (drop a .zip onto the emulator)
 //  rec x y w h ms [up | down | key K | X Y]   every animation frame of a crop, as [ms, hash] at each change -> rec.json (timing)
 //  film x y w h ms [up | down | dbl X Y]  every changed frame of a crop as film/NNN-<ms>.png (animations)
@@ -72,6 +72,8 @@ for (;;) {
       else if (c === "slowdrag") { const [x0, y0, x1, y1] = a.map(Number); await page.mouse.move(...await at(x0, y0), { steps: 4 }); await page.waitForTimeout(150); await page.mouse.down(); await page.waitForTimeout(400); for (let i = 1; i <= 20; i++) { await page.mouse.move(...await at(x0 + (x1 - x0) * i / 20, y0 + (y1 - y0) * i / 20), { steps: 4 }); await page.waitForTimeout(150); } await page.waitForTimeout(600); await page.mouse.up(); await page.waitForTimeout(2500); }
       else if (c === "drag") { await page.mouse.move(...await at(a[0], a[1]), { steps: 5 }); await page.mouse.down(); await page.waitForTimeout(300); await page.mouse.move(...await at(a[2], a[3]), { steps: 15 }); await page.waitForTimeout(300); await page.mouse.up(); }
       else if (c === "key") await page.keyboard.press(a.join(" "));
+      else if (c === "keydown") await page.keyboard.down(a[0]);
+      else if (c === "keyup") await page.keyboard.up(a[0]);
       else if (c === "type") { for (const ch of a.join(" ")) { await page.keyboard.press(ch === " " ? "Space" : ch); await page.waitForTimeout(80); } }
       else if (c === "cmd") { await page.keyboard.down("Meta"); await page.waitForTimeout(150); await page.keyboard.press(a[0]); await page.waitForTimeout(150); await page.keyboard.up("Meta"); }
       else if (c === "wait") await page.waitForTimeout(+a[0]);
