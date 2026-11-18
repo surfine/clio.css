@@ -17,7 +17,7 @@ correct web rendering cannot measure away; the row in EVIDENCE.md says why).
 | A2 | System 6's watch cursor | EVIDENCE.md "Cursors: the watch" | Capture System 6.0.8 opening a folder. **Blocked 2026-11-18** with A6: the 6.0.8 session's clicks do not reach the guest |
 | A3 | ~~Movable modal's right end~~ | EVIDENCE.md "Movable modal window" | **Closed 2026-11-18**: the capture ends the ridges 4px before the right edge over solid #cccccc; the CSS now sets `--clio-tb-shade: 3px`, a 1px right margin and the #999 line at the edge. Raw match 99.8%; the two junction cells (the #999 line's first row and the rule's last column) are masked in `p9-movable-modal-right`, which passes 100% beside the left end. |
 | A4 | Menu bar extras positions not compared pixel by pixel | EVIDENCE.md "Menu bar and menus" | Compare the Help/Application menu extras against the captures |
-| A5 | Insertion point shape outside System 7 not measured | EVIDENCE.md "Text field" | Capture the caret in System 6/8/9 and compare |
+| A5 | ~~Insertion point shape outside System 7~~ | EVIDENCE.md "Text field" | **Closed 2026-11-18**: Mac OS 9.0's SimpleText shows the same 1px × 16-row black caret at x=35, rows 44..59, blinking after ~0.5 s |
 | A6 | System 6 plain box dialog (altDBoxProc) inferred, not measured | EVIDENCE.md "Dialogs and alerts: System 6" | Capture a 6.0.8 altDBoxProc dialog. **Blocked 2026-11-18**: in the 6.0.8 session the pointer moves but clicks and menu-bar menus do not reach the guest (five attempts); the 9.0/8.5 sessions accept input, so this is the 6.0.8 image's input path, not clio.css |
 | A7 | Control Strip's held module in System 7 inferred | EVIDENCE.md "Control Strip: System 7" | Capture a held module in 7.5.3 |
 
