@@ -212,9 +212,17 @@ not in the file, so at least one of the six does not come from the System file (
   dialog's Cancel (quick click, and a 2 s hold then release), and SimpleText's Don't Save
   (2 s hold then release) — every recording is digital silence (peak 0.0), while an alert
   sound in the 9.0 image recorded at 0.56 through the same tap. This does not reproduce the
-  earlier "Save Theme… on press, Cancel on release", so the button case is open: the next
-  test is the 9.0 image with Platinum Sounds enabled (where the 205 -> 0.81 button was
-  recorded) and a standard dialog button.
+  earlier "Save Theme… on press, Cancel on release".
+- **2026-11-18, Mac OS 9.0 with Platinum Sounds enabled** (track selected, all four classes
+  ticked): a File menu measured an open sound (100 ms, peak 0.14) and a close sound (35 ms,
+  peak 0.13), so the track plays. In the same session SimpleText's save-changes dialog
+  **Don't Save** (2 s hold then release) and Appearance's **Save Theme…** control (quick
+  click) were silent — the first recording has only a 25 ms click transient, the second is
+  digital silence. Tabs and checkboxes did sound in the earlier 9.0 session (tabp 185 ->
+  0.73, chke/chkx 55 -> 0.22), so the control path exists; push buttons specifically do not
+  sound in either image. Why the button case differs (dialog item vs CDEF control, or the
+  part code's map entry) is still open; clio.js plays press and release as the map defines
+  them.
 - Theme sounds came out about 15 cents flat against their own rate, alert sounds at 0 cents:
   not explained, not applied.
 
