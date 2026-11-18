@@ -10,6 +10,10 @@ Platinum (done to the level below), then Mac OS X 10.0–10.4 and NeXTSTEP. Only
 can be measured in an emulator. Launch posts wait until Aqua is done. Method:
 [LESSONS.md](LESSONS.md).
 
+## 1.0.0, the Classic LTS (2026-11-18)
+
+**Before 1.0 ships, [LTS-AUDIT.md](LTS-AUDIT.md) must be empty of open rows.**
+
 ## Classic Mac OS: state at 0.12.0, the Classic final (2026-11-15)
 
 - Every control and window in the 1987 and 1992 HIGs, Inside Macintosh: Toolbox
