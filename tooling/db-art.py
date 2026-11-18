@@ -140,8 +140,8 @@ FILES = {
     'utility-tl': (6187, 0), 'utility-top': (6188, 0), 'utility-top-r': (6189, 0), 'utility-tr': (6190, 0),
     'utility-rule-l': (6210, 0), 'utility-rule-r': (6211, 0),
     'utility-rule': (6192, 0), 'utility-rule-2': (6193, 0),
-    'utility-left-top': (6204, 0), 'utility-left-bottom': (6202, 0),
-    'utility-right-top': (6195, 0), 'utility-right-bottom': (6197, 0),
+    'utility-left-top': (6204, 0), 'utility-left-mid': (6203, 0), 'utility-left-bottom': (6202, 0),
+    'utility-right-top': (6195, 0), 'utility-right-mid': (6196, 0), 'utility-right-bottom': (6197, 0),
     'utility-bottom-l': (6200, 0), 'utility-bottom-r': (6199, 0),
     'utility-bl': (6201, 0), 'utility-br': (6198, 0),
 }
@@ -162,6 +162,9 @@ if '--files' in sys.argv:
             im.save(os.path.join(out, name + '.png'), optimize=True)
     for name, (rid, i) in FILES.items():
         save(pxm[rid][min(i, len(pxm[rid]) - 1)], name)
+    # The utility window's rule: 6192's first row alone (the piece is a 4-row band;
+    # the capture shows only its top line under the title bar).
+    save(pxm[6192][0].crop((0, 0, 256, 1)), 'utility-rule-row')
     # Window paper (ppat 7120): origin at the content's top-left (Date & Time,
     # Appearance and Finder Preferences windows agree).
     save(ppats[7120], 'paper')

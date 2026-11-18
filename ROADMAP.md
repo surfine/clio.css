@@ -137,7 +137,14 @@ Empty (owner, 2026-11-14: close everything for the Classic final, 0.12.0).
   (the title text is in the crop); the rule (6192/6193) is the weak part — its 256-wide
   pattern is **phase-shifted** against the capture (30.7% at 626,228 although the row pattern
   is the right one), so the frame needs the rule's phase before it can be composed as one
-  image. Not committed.
+  image. **2026-11-18, solved:** the side edges' 20px span is the **5x256 middles** (6203 left,
+  6196 right, at 248–268) — both match 100%; the rule's middle is 6192's **top row only** at
+  phase **2** (96.3%). With those, the composed frame is exactly right on the left, right and
+  bottom edges and the caps (title text aside). `tooling/db-art.py` now writes the middles and
+  a one-row `utility-rule-row`. The CSS port is written but **not shipped**: Chromium rejects
+  a multi-layer `background` shorthand with `var()` (it parses to `none`), so the block uses
+  longhands — the layers then paint, but land displaced; the port needs another session. The
+  CSS was reverted rather than shipped wrong.
 - **Firefox at 2x and 3x** (111 and 105 of 150): fixed as a harness problem. The specimens'
   wrappers used the page's default font (Times 16px), so inline controls sat on quarter-pixel
   baselines in Firefox; each wrapper now carries Clio's metrics, except three progress bars
