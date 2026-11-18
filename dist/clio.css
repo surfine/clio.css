@@ -4556,7 +4556,7 @@
   background:
     linear-gradient(#ffffff, #ffffff) 1px 22px / calc(100% - 3px) 1px no-repeat,
     linear-gradient(#ffffff, #ffffff) 1px 22px / 1px calc(100% - 23px) no-repeat,
-    linear-gradient(#999999, #999999) calc(100% - 1px) 23px / 1px calc(100% - 24px) no-repeat,
+    linear-gradient(#999999, #999999) right 0 top 1px / 1px calc(100% - 2px) no-repeat,
     linear-gradient(#555555, #555555) 100% 22px / 1px calc(100% - 22px) no-repeat,
     linear-gradient(#ffffff, #ffffff) 0 0 / 100% 1px no-repeat,
     linear-gradient(#ffffff, #ffffff) 0 0 / 1px 19px no-repeat,
@@ -4568,7 +4568,8 @@
 
 :is([data-era="platinum"], [data-era="drawingboard"]) .window.movable-modal > .title-bar {
   --clio-tb-close: 3px;
-  margin: 0 0 0 1px;
+  --clio-tb-shade: 3px;
+  margin: 0 1px 0 1px;
   border-bottom: 1px solid #000000;
   box-shadow: none;
 }
