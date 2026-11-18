@@ -26,7 +26,7 @@ correct web rendering cannot measure away; the row in EVIDENCE.md says why).
 | A11 | ~~Help button's held state~~ | EVIDENCE.md "Help button: Drawing Board" | **Closed 2026-11-18** as an adaptation: the theme's pressed bevel with the same art one pixel down-right (the theme's press drops the content), now drawn for `:active`/`.active`. No capture of the held state exists and the theme install flow could not be completed (A11's blocker), so the press is labelled adapted, not measured |
 | A12 | Side-title utility window: theme's own pieces (6194–6209) captured, not drawn | EVIDENCE.md "Side-title utility window: Drawing Board" | **Attempted 2026-11-18**: the pieces are decoded (6205–6209, 6213/6214 in `tooling/db-art.py`), but the only capture (`.fidelity/rc8/side3.png`) shows a **13px** column where the pieces are **18px** wide — the capture is not the theme's side window (the rc9 one matches the pieces at 0.02–0.16, i.e. not at all). **Second attempt 2026-11-18**: the pieces *clipped* to the capture's 16px column score 65.5% (vs 52% unclipped), so the theme's 18px pieces are drawn and clipped by the frame's geometry — the same *frme* rule the top-title window needed; a fresh capture with the theme active is needed to solve it (the 223 KB budget is approved and waiting) |
 | A13 | Split bar's dragged 3-row grey outline not drawn | EVIDENCE.md "Split bar: Platinum" | Capture it in BBEdit 5.1 and draw it |
-| A14 | Held placard not tracked | ROADMAP "Rare controls" | Capture a held placard and add the state. **Blocked 2026-11-18** with A11 (the placard is in the Appearance SDK sample, which needs the theme active) |
+
 | A15 | Drawing Board side-window pieces not reproduced | ROADMAP "Rare controls" | Same as A12 (the pieces are decoded; the capture does not match their 18px column) |
 | A16 | ~~Drawing Board utility frame's rule second row~~ | ROADMAP 0.12.1 | **Closed 2026-11-18**: ppat 7099's one-row pencil line from x=8 (100% over x8–157) |
 
@@ -40,6 +40,7 @@ correct web rendering cannot measure away; the row in EVIDENCE.md says why).
 | B2 | Drawing Board list header lines (pattern pens) not reproduced | EVIDENCE.md "List view" | The pens' sketch texture is Apple artwork |
 | B9 | System 6's list view uses System 7's headers | EVIDENCE.md "List view: System 6" | System 6.0.8's Finder has no list view (HIG 1992); the class must exist in every era, so it takes System 7's |
 | B10 | System 6/7 split bar drawn from HIG92 | COVERAGE.md note | No System 6 or 7 application in Infinite Mac has one; the HIG defines it, so it is drawn from the HIG and labelled inferred |
+| B11 | No held placard | EVIDENCE.md "Placard" | A placard is a display control (Inside Macintosh: Controls); it does not respond to clicks, so it has no held state |
 | B3 | The open pop-up menu is drawn by clio.js/base-select, not pixels for 6/7 | EVIDENCE.md "Pop-up menu" | The browser's picker cannot carry the theme's pixels |
 | B4 | Alerts' icon drawn by clio.css | EVIDENCE.md "Dialogs and alerts" | Apple's icon is not shipped |
 | B5 | Earlier eras use later controls where the era had none (tabs, sliders, bevel buttons, Control Strip, disclosure) | EVIDENCE.md, COVERAGE.md | The classes must exist in every era; the rows say which era's control they use |
