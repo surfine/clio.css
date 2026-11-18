@@ -165,6 +165,9 @@ if '--files' in sys.argv:
     # The utility window's rule: 6192's first row alone (the piece is a 4-row band;
     # the capture shows only its top line under the title bar).
     save(pxm[6192][0].crop((0, 0, 256, 1)), 'utility-rule-row')
+    # The rule's shade: ppat 7099's one-row pencil line, drawn from the window's 8th
+    # column (the capture matches it 100% from x=8 to x=157 at y=19).
+    save(ppats[7099].crop((0, 0, 128, 1)), 'utility-rule-shade')
     # Window paper (ppat 7120): origin at the content's top-left (Date & Time,
     # Appearance and Finder Preferences windows agree).
     save(ppats[7120], 'paper')
