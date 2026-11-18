@@ -1,6 +1,6 @@
 {
   "name": "clio.css",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "CSS library for classic Mac OS interfaces: Macintosh System 6, System 7, Mac OS 8.5 Drawing Board and Mac OS 8/9 Platinum windows, menus, buttons, scroll bars and dialogs, with every value traced to measured pixels.",
   "keywords": [
     "css",

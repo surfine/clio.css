@@ -1,4 +1,4 @@
-/*! clio.css 1.0.0 (System 6 only) | MIT | https://surfine.github.io/clio.css/
+/*! clio.css 1.0.1 (System 6 only) | MIT | https://surfine.github.io/clio.css/
  * Classic Mac OS interface CSS: System 6, System 7, Mac OS 8.5 Drawing Board and Mac OS 9 Platinum.
  * Measured values traced to AI System 6; see EVIDENCE.md.
  * Includes art from system.css (MIT) and pixel reconstructions of Apple control art; see THIRD-PARTY.md. */
@@ -1256,6 +1256,10 @@
   box-shadow: var(--clio-menubar-shadow);
   user-select: none;
   -webkit-user-select: none;
+  /* A press dragged from a title to an item is the Mac's MenuDrag, not a scroll or
+     a long-press callout: the bar and its menus keep the gesture (touch). */
+  touch-action: none;
+  -webkit-touch-callout: none;
 }
 
 :where(.menu-bar, [role="menubar"], [role="menu-bar"]) > li {
@@ -1305,6 +1309,8 @@
    System 6: paper, a 1px ink frame and a 1px ink drop shadow. */
 :where(.menu, ul[role="menu"]) {
   z-index: 10;
+  touch-action: none;
+  -webkit-touch-callout: none;
   display: block;
   box-sizing: border-box;
   min-width: 140px;
