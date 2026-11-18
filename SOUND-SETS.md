@@ -237,6 +237,10 @@ at peak 0.44). Records in `.fidelity/snd-push/cap/`.
 
 The two menu sounds did not match any of Platinum Sounds' 68 decoded sounds by cross
 correlation (best 0.32, against `mnuc`): their `'snd '` IDs are not identified, so the table
-stops at what was heard. Push buttons stay **inconsistent**: silent here (Set Desktop, a tab),
+stops at what was heard. **2026-11-18:** the Appearance Manager's code is now available for
+reading — the 9.0 System file exports intact through The Outside World and its data fork
+carries the AppearanceLib symbol table (`PlayThemeSound`, `PlayThemeControlSound`,
+`BeginThemeDragSound`, `EndThemeDragSound` at 0x1e1b32); the button-press/release rule and the
+delay field can be settled from the code. Push buttons stay **inconsistent**: silent here (Set Desktop, a tab),
 press on Save Theme… and release on Cancel in the previous run; clio.js is unchanged. The
 per-slot `Fixed` value and the entry's delay field were not measured either.

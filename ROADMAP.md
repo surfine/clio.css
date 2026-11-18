@@ -113,8 +113,12 @@ Empty (owner, 2026-11-14: close everything for the Classic final, 0.12.0).
   tiles nor stretches from either piece (65%/53% and 46%/23%), and the theme's `frme` resources
   (the likely owner of the stretch rule) do not carry the `pxm#` ids in their first 96 bytes.
   Next: read `frme` properly (the "middle of each side stretches" model) or find a second
-  reference at another window height. The LTS decision: the utility window keeps Platinum's
-  frame unless this is closed before 1.0.
+  reference at another window height. **2026-11-18:** the Appearance Manager itself is now
+  reachable — the 9.0 System file exports through The Outside World (Uploads), its data fork
+  carries the AppearanceLib symbol table (`PlayThemeSound`, `PlayThemeControlSound`,
+  `BeginThemeDragSound`, `DrawThemeListBoxFrame`, `DrawThemeWindowHeader`, … at 0x1e1b32) —
+  so the frame and sound rules can be read from the code instead of guessed. The LTS
+  decision: the utility window keeps Platinum's frame unless this is closed before 1.0.
 - **Firefox at 2x and 3x** (111 and 105 of 150): fixed as a harness problem. The specimens'
   wrappers used the page's default font (Times 16px), so inline controls sat on quarter-pixel
   baselines in Firefox; each wrapper now carries Clio's metrics, except three progress bars
