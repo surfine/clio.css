@@ -94,7 +94,7 @@ def main():
                             for dx in range(scale):
                                 if px[x * scale + dx, y * scale + dy] != rows[y][x]:
                                     sys.exit(f'{name}{tag}.png pixel {x},{y}')
-            print(f'ok {name}{tag}')
+            print(f'ok {name}')
         else:
             print('wrote', write(rows, name)[0])
 
