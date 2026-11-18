@@ -201,10 +201,15 @@ not in the file, so at least one of the six does not come from the System file (
 - **Inferred**: the drag slots' roles, attack, moving, idle, release, from Platinum's own
   sound names; DrawingBoard's three as attack, loop, release ("wmov (release)").
 - **Not settled, not used**: the per-slot Fixed value (laup 1, ladp -1, laur -2, ladr -4,
-  btnp 4: not a pitch; a button with 4 sounded at its own pitch) and the entry's delay field
-  (40-225). Timing in this emulator is unreliable: sounds load lazily from its network disk
-  and the host was under load (a menu's open sound came 1.3 s after the press). clio.js plays
-  press and release as the map defines them.
+  btnp 4: not a pitch; a button with 4 sounded at its own pitch). Timing in this emulator is
+  unreliable: sounds load lazily from its network disk and the host was under load (a menu's
+  open sound came 1.3 s after the press). clio.js plays press and release as the map defines
+  them.
+- **The +8 field is not a delay (code, 2026-11-18)**: the 44-byte entry is copied verbatim
+  into the player's info struct (`AppearanceLib` lookup 0x14498), and the player (0x145c4)
+  reads only the four slot ids at +0xc, +0x14, +0x1c, +0x24 (each `'snd '` id, level, pitch)
+  and the flags at +6; it never reads +8. So the 40-225 value at +8 — decoded as "delay" from
+  the file layout — has no playback timing role. clio.js's ignoring it is correct.
 - **2026-11-18, Mac OS 8.5 (fresh image)**: Appearance > Sound ships with the track **None**;
   with **Platinum Sounds** and all four classes ticked, a File menu measured an open sound
   (105 ms, peak 0.15) and a close sound (40 ms, peak 0.16), so the play path works. In the same session
