@@ -13,7 +13,7 @@ correct web rendering cannot measure away; the row in EVIDENCE.md says why).
 
 | # | Item | Where | What closes it |
 | --- | --- | --- | --- |
-| A1 | Watch cursor animation (only 4 of 8 hand positions seen; clio.js shows the first frame) | EVIDENCE.md "Cursors: the watch", ROADMAP item 7 | Capture the 8 frames in 7.5.3/9.0, add them to `art/cursors/`, and cycle them in clio.js |
+| A1 | ~~Watch cursor animation~~ | EVIDENCE.md "Cursors: the watch" | **Closed 2026-11-18**: the System file's `acur` -6078 (8 frames, delay 4 ticks) and CURS -6078..-6072 (7 present) decoded by `tooling/watch-art.py`; clio.js spins them 4 ticks a frame; a behaviour check in each engine |
 | A2 | System 6's watch cursor | EVIDENCE.md "Cursors: the watch" | Capture System 6.0.8 opening a folder |
 | A3 | Movable modal's right end not compared | EVIDENCE.md "Movable modal window" | Compare the right end against the Mac OS 9 capture |
 | A4 | Menu bar extras positions not compared pixel by pixel | EVIDENCE.md "Menu bar and menus" | Compare the Help/Application menu extras against the captures |

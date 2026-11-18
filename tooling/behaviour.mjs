@@ -396,6 +396,15 @@ ok(cur[0].includes("arrow.png") && cur[1].includes("arrow.png") && cur[2].includ
 await load("drawingboard", `<div class="window"><div class="window-pane"><button id="cb">OK</button><textarea id="ct"></textarea></div></div>`);
 const curdb = await page.evaluate(() => [getComputedStyle(document.documentElement).cursor, getComputedStyle(document.querySelector("#cb")).cursor, getComputedStyle(document.querySelector("#ct")).cursor]);
 ok(curdb[0].includes("db-arrow.png") && curdb[0].includes("0 0") && curdb[1].includes("db-arrow.png") && curdb[2].includes("ibeam.png"), `cursors: Drawing Board's own arrow (crsr 128, hot spot 0,0) on the page and buttons, its I-beam in text (${curdb.join(" | ")})`);
+// The watch: the 'acur' resource's seven frames (CURS -6078..-6072), four ticks each.
+await load("platinum", `<div id="busy" aria-busy="true" style="width:40px;height:40px"></div>`);
+const watch = await page.evaluate(async () => {
+  const el = document.querySelector("#busy"), seen = new Set(), sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+  for (let i = 0; i < 8; i++) { seen.add(el.style.getPropertyValue("--clio-cursor-wait")); await sleep(70); }
+  el.setAttribute("aria-busy", "false"); await sleep(120);
+  return { frames: [...seen].filter(Boolean).length, cleared: el.style.getPropertyValue("--clio-cursor-wait") === "" };
+});
+ok(watch.frames >= 3 && watch.cleared, `cursors: the watch spins (7 frames, 4 ticks each) while aria-busy and stops after (${JSON.stringify(watch)})`);
 // sounds
 await load("platinum", `<div id="host"></div>`);
 const played = await page.evaluate(async () => {

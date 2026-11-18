@@ -6,6 +6,7 @@
 // Apple's screens and are never committed). See LESSONS.md.
 // Append commands (one per line) to <dir>/cmd; results in <dir>/log.
 //  move x y | down | up | click x y | dbl x y | drag x1 y1 x2 y2 | slowdrag x1 y1 x2 y2 | key K | keydown K | keyup K | type TEXT | cmd K | wait ms
+//  shot NAME | burst NAME N MS (N canvas screenshots every MS ms) | arec | astop NAME
 //  shot NAME (canvas png) | ctrlclick x y | ctrlup | shiftclick x y | dropzip FILE (drop a .zip onto the emulator)
 //  rec x y w h ms [up | down | key K | X Y]   every animation frame of a crop, as [ms, hash] at each change -> rec.json (timing)
 //  film x y w h ms [up | down | dbl X Y]  every changed frame of a crop as film/NNN-<ms>.png (animations)
@@ -78,6 +79,7 @@ for (;;) {
       else if (c === "cmd") { await page.keyboard.down("Meta"); await page.waitForTimeout(150); await page.keyboard.press(a[0]); await page.waitForTimeout(150); await page.keyboard.up("Meta"); }
       else if (c === "wait") await page.waitForTimeout(+a[0]);
       else if (c === "shot") { const b64 = await page.evaluate(() => document.querySelector("canvas").toDataURL("image/png").split(",")[1]); writeFileSync(`${dir}/${a[0]}.png`, Buffer.from(b64, "base64")); }
+      else if (c === "burst") { const [name, n, ms] = a; for (let i = 0; i < +n; i++) { const b64 = await page.evaluate(() => document.querySelector("canvas").toDataURL("image/png").split(",")[1]); writeFileSync(`${dir}/${name}-${i}.png`, Buffer.from(b64, "base64")); if (ms) await page.waitForTimeout(+ms); } log(`burst ${name} x${n} @${ms}ms`); }
       else if (c === "shiftclick") { await page.mouse.move(...await at(a[0], a[1]), { steps: 5 }); await page.keyboard.down("Shift"); await page.waitForTimeout(100); await page.mouse.down(); await page.waitForTimeout(120); await page.mouse.up(); await page.keyboard.up("Shift"); }
       else if (c === "ctrlclick") { await page.mouse.move(...await at(a[0], a[1]), { steps: 5 }); await page.keyboard.down("Control"); await page.waitForTimeout(200); await page.mouse.down(); await page.waitForTimeout(1500); }
       else if (c === "ctrlup") { await page.mouse.up(); await page.keyboard.up("Control"); }
