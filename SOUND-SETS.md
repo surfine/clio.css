@@ -203,9 +203,18 @@ not in the file, so at least one of the six does not come from the System file (
 - **Not settled, not used**: the per-slot Fixed value (laup 1, ladp -1, laur -2, ladr -4,
   btnp 4: not a pitch; a button with 4 sounded at its own pitch) and the entry's delay field
   (40-225). Timing in this emulator is unreliable: sounds load lazily from its network disk
-  and the host was under load (a menu's open sound came 1.3 s after the press). Push buttons
-  were inconsistent (Set Desktop silent, Save Theme… on press, Cancel on release); clio.js
-  plays press and release as the map defines them.
+  and the host was under load (a menu's open sound came 1.3 s after the press). clio.js plays
+  press and release as the map defines them.
+- **2026-11-18, Mac OS 8.5 (fresh image)**: Appearance > Sound ships with the track **None**;
+  with **Platinum Sounds** and all four classes ticked, a File menu measured an open sound
+  (105 ms, peak 0.15) and a close sound (40 ms, peak 0.16), so the play path works. In the same session
+  four push buttons made **no** sound at all: Appearance's Save Theme… control, the Save Theme
+  dialog's Cancel (quick click, and a 2 s hold then release), and SimpleText's Don't Save
+  (2 s hold then release) — every recording is digital silence (peak 0.0), while an alert
+  sound in the 9.0 image recorded at 0.56 through the same tap. This does not reproduce the
+  earlier "Save Theme… on press, Cancel on release", so the button case is open: the next
+  test is the 9.0 image with Platinum Sounds enabled (where the 205 -> 0.81 button was
+  recorded) and a standard dialog button.
 - Theme sounds came out about 15 cents flat against their own rate, alert sounds at 0 cents:
   not explained, not applied.
 
