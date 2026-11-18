@@ -10,9 +10,14 @@ Platinum (done to the level below), then Mac OS X 10.0–10.4 and NeXTSTEP. Only
 can be measured in an emulator. Launch posts wait until Aqua is done. Method:
 [LESSONS.md](LESSONS.md).
 
-## 1.0.0, the Classic LTS (2026-11-18)
+## 1.0.0, the Classic LTS (2026-11-18, shipped)
 
-**Before 1.0 ships, [LTS-AUDIT.md](LTS-AUDIT.md) must be empty of open rows.**
+**Before 1.0 ships, [LTS-AUDIT.md](LTS-AUDIT.md) must be empty of open rows.** It is: no open A
+row, every B row a deliberate adaptation with its reason, the C rows the owner's steps. The
+release is tagged `v1.0.0`; npm's 1.0.0 is the owner's publish (C3). What is in it:
+CHANGELOG.md's 1.0.0 section — System 6's own watch read from its System file, the movable
+modal's right end, the slider ticks measured, Drawing Board's ticks, the Help button's held
+state, the split bar's dragged band, and the audit's closures.
 
 ## Classic Mac OS: state at 0.12.0, the Classic final (2026-11-15)
 
