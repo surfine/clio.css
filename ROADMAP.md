@@ -114,13 +114,14 @@ Empty (owner, 2026-11-14: close everything for the Classic final, 0.12.0).
   (5x10 top, **5x256 middle**, 5x33 bottom — all 100%), and the bottom edge with its corners
   (100%). The 20px span the earlier pass could not fill is the 5x256 middles at 248–268. The
   title bar is the theme's 18px one (title centred, the theme's pieces draw the boxes).
-  Still **adapted**, not measured: the rule's second row (the mid-tone line at y=19) is not
-  drawn; the two extra columns at x156–157 belong to the *list's* border in the capture, not
-  to the window's frame (the frame's own 5px edge matches). There is no `db-switcher`
-  fidelity specimen yet (the frame ring measures 58% against the capture with the title text
-  and the list in it). The **side-title** frame (6194–6209) is still Platinum's, and 6194
-  (7x17, its own top-title cap) matches the capture at (764,222) at 78% once the boxes are
-  masked.
+  The rule's second row is **ppat 7099's one-row pencil line from the window's 8th column**
+  (100% over x8–157 at y=19; `utility-rule-shade`). The two extra columns at x156–157 belong
+  to the *list's* border in the capture, not to the window's frame (the frame's own 5px
+  right edge at 158–162 matches column for column). No `db-switcher` fidelity specimen yet:
+  a bare window scores 58% only because the capture's content is the Application Switcher's
+  list — the frame bands themselves measure 60–76% and the pieces that carry no text (edges,
+  corners) 100% in the per-piece check. The **side-title** frame (6194–6209) is still
+  Platinum's; 6194 (7x17) matches the capture at (764,222) at 78% once the boxes are masked.
 - **Firefox at 2x and 3x** (111 and 105 of 150): fixed as a harness problem. The specimens'
   wrappers used the page's default font (Times 16px), so inline controls sat on quarter-pixel
   baselines in Firefox; each wrapper now carries Clio's metrics, except three progress bars

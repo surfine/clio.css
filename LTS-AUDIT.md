@@ -28,7 +28,7 @@ correct web rendering cannot measure away; the row in EVIDENCE.md says why).
 | A13 | Split bar's dragged 3-row grey outline not drawn | EVIDENCE.md "Split bar: Platinum" | Capture it in BBEdit 5.1 and draw it |
 | A14 | Held placard not tracked | ROADMAP "Rare controls" | Capture a held placard and add the state |
 | A15 | Drawing Board side-window pieces not reproduced | ROADMAP "Rare controls" | Same as A12 |
-| A16 | Drawing Board utility frame's rule second row (mid-tone at y=19) not drawn | ROADMAP 0.12.1 | Find the piece or ppat and add the layer |
+| A16 | ~~Drawing Board utility frame's rule second row~~ | ROADMAP 0.12.1 | **Closed 2026-11-18**: ppat 7099's one-row pencil line from x=8 (100% over x8–157) |
 | A17 | System 6/7 split bar drawn from HIG92 (no application found) | COVERAGE.md note | Search more 6/7 software for a split bar, or leave labelled inferred |
 | A18 | Menu sounds' `'snd '` IDs unidentified | SOUND-SETS.md §8 | Match the recorded menu sounds against the Pack's ids |
 
