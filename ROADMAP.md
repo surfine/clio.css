@@ -132,6 +132,12 @@ Empty (owner, 2026-11-14: close everything for the Classic final, 0.12.0).
   stays the unresolved piece. A second reference at another window height (a taller
   Application Switcher) was attempted: the driver gained `keydown`/`keyup`, but 8.5's
   cmd+Tab palette did not appear in the capture, so the height rule is still unmeasured.
+  **2026-11-18, composition:** pasting the pieces at their measured spots round a 163x99
+  outline gives 100% on the bottom, 83%/74% on the left/right edges and 68% on the title bar
+  (the title text is in the crop); the rule (6192/6193) is the weak part — its 256-wide
+  pattern is **phase-shifted** against the capture (30.7% at 626,228 although the row pattern
+  is the right one), so the frame needs the rule's phase before it can be composed as one
+  image. Not committed.
 - **Firefox at 2x and 3x** (111 and 105 of 150): fixed as a harness problem. The specimens'
   wrappers used the page's default font (Times 16px), so inline controls sat on quarter-pixel
   baselines in Firefox; each wrapper now carries Clio's metrics, except three progress bars
