@@ -5,6 +5,10 @@ Plan for taking clio.css from the Classic Mac OS eras to Mac OS X and NeXTSTEP, 
 passes its gate ([ROADMAP.md](ROADMAP.md), "Gate to Mac OS X"). The method is the one
 that worked for Classic ([LESSONS.md](LESSONS.md)); this file only adds what is new.
 
+From 2026-11-18 the Mac OS X / macOS line is a separate product, `clio.wasm` (D8
+below): this file still owns what is measured, in what order, and the Classic line's
+gate; the build half of Mac OS X lives in that repository.
+
 Three requirements frame everything below:
 
 1. **Every control in each era's HIG.** An era is done when every element its Human
@@ -64,7 +68,8 @@ and cite page numbers in COVERAGE.md.
   compatibility; `clio.classic.css`, `clio.aqua.css`, `clio.tiger.css`,
   `clio.snowleopard.css`, `clio.lion.css`, `clio.yosemite.css`, `clio.bigsur.css` and
   `clio.nextstep.css`, each with its own budget in `test/check.mjs`. AI System 6 takes
-  only the era it needs.
+  only the era it needs. **For Mac OS X this is superseded by D8 (2026-11-18):** that
+  line is one engine plus era data, not one CSS file per era.
 - **D6 Licence: accepted, Classic rules.** Guests run only on this machine; frames stay
   in git-ignored folders and on TiPlus 7100; the repository holds only redrawn art and
   evidence descriptions.
@@ -104,6 +109,41 @@ in time, effort and tokens.
 4. Measure once, use twice: every emulator frame is filed so both clio.css and AI
    System 6's Theme Lab can cite it.
 5. Feed back (P6) only the values that changed.
+
+## 2c. Owner's decisions (2026-11-18): two lines
+
+clio.css keeps the Classic eras as CSS; the Mac OS X / macOS line becomes a separate
+wasm + WebGPU product.
+
+- **D7 Classic LTS.** After 0.12.1 closes, the Classic eras (System 6, 7, 8.5 Drawing
+  Board, 9 Platinum) freeze at 1.0: semantic versioning, bug fixes only, no new eras. A
+  migration window stays open — a Classic port to the wasm line may be evaluated later,
+  as its own project — but until then there is exactly one Classic implementation.
+- **D8 The Mac OS X line is `clio.wasm`.** Its own repository (`surfine/clio.wasm`) and
+  npm package (`clio.wasm`), beside `clio.css`; the name is free on npm. It supersedes
+  D5's one-CSS-file-per-era for Mac OS X: one engine plus era data, `data-era="aqua"`….
+- **D9 Material layer first.** The first Mac OS X renderer is a WebGPU material layer
+  (P4/P8: glass, variable blur, shadows) under the DOM skeleton, not a canvas UI. Only
+  if the measured comparison shows CSS cannot carry the look does the skeleton move into
+  canvas (gate G2).
+- **D10 Production, not a showcase.** `clio.wasm` must ship an accessibility tree and
+  IME/text input for editable content: a component library screen readers and input
+  methods can use. A DOM mirror of the semantic tree is the presumed route until the G2
+  measurement says otherwise.
+- **D11 AI System 6 waits for the shell.** The app adopts `clio.wasm` only when the
+  shipping shell (TinyJS, macOS 15+ today) runs on a macOS whose WKWebView has WebGPU by
+  default (macOS 26+). Until then the app stays on the CSS line.
+- **D12 Measure Aqua before choosing a renderer.** P1 comes first; the G2 prototype is
+  judged on three numbers: fidelity against the frames, the accessibility tree unchanged,
+  and the payload/first-frame cost.
+- **D13 The Toolbox decompilation is evidence, not source.** The owner authorised reading
+  the full Toolbox (ROMs and system files) for rules, timings and values. The clean-room
+  rule of LESSONS §7¾ stays: nothing of Apple's code enters this repository or is
+  translated into engine source; decompiled code may define test oracles and constants
+  only. Scope: the ROMs carry QuickDraw, and the Window, Menu, Dialog, TextEdit and Sound
+  Managers (slices 1-2); the Appearance Manager is not in the ROM and must come from the
+  9.0 image's files (slice 3, the one that feeds D8's window frames and the Drawing Board
+  utility window).
 
 ## 3. What AI System 6 needs from each era
 
@@ -194,7 +234,8 @@ dock (tiles) and icon views, the NeXT focus and key-window states.
 
 Each phase ends the way Classic batches did: build, `npm test`, `npm run fidelity`,
 `npm run behaviour` in Chromium, WebKit and Firefox, push, Pages serving the new file,
-CHANGELOG entry. Status letters: **M** measure, **B** browser work, **D** decision,
+CHANGELOG entry. From D8 the Mac OS X browser work runs in `clio.wasm` (its own build,
+its own gates); this section keeps the measurement order and what each era must contain. Status letters: **M** measure, **B** browser work, **D** decision,
 **F** feed back into AI System 6.
 
 ### P0 Infrastructure (no new era yet)
