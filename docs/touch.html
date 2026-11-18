@@ -26,6 +26,29 @@
 <h1>clio.css 觸控測試台</h1>
 <p>給 iPhone SE（iOS 15.8.8）與 iPhone 18 Pro（iOS 27.3）。照 1 到 12 做；每項做完截一張圖（含下方紀錄），連同第 0 項的環境表一起傳回。</p>
 
+<section class="bench" id="panel">
+  <h2>進度（做到哪就自動勾到哪）</h2>
+  <ul id="checklist" style="margin:4px 0;padding-left:20px;font-size:14px">
+    <li data-item="1">1　選單：點一下</li>
+    <li data-item="2">2　選單：按住拖到項目</li>
+    <li data-item="3">3　彈出選單</li>
+    <li data-item="4">4　按鈕：按下與滑出</li>
+    <li data-item="5">5　勾選框與圓鈕</li>
+    <li data-item="6">6　捲動區</li>
+    <li data-item="7">7　視窗：拖、收合、關閉</li>
+    <li data-item="8">8　文字欄與插入點</li>
+    <li data-item="9">9　減少動態效果（重新整理前先開好）</li>
+    <li data-item="10">10　字型</li>
+    <li data-item="11">11　旋轉與縮放</li>
+  </ul>
+  <p class="expect">不用截圖：下面的紀錄會自己累積。全部做完按「產生回報」，把那段文字貼回給我就好；只有第 10 項變成系統字或第 12 項有狀況才需要截圖。</p>
+  <p><button id="report" style="font:15px system-ui;padding:6px 14px">產生回報</button>
+     <button id="copy" style="font:15px system-ui;padding:6px 14px;margin-left:8px">複製</button></p>
+  <pre id="out" hidden style="white-space:pre-wrap;background:#fff;border:1px solid #000;padding:8px;font:13px/1.45 ui-monospace,Menlo,monospace;max-width:640px"></pre>
+  <h2 style="margin-top:14px">12　其他發現（選填）</h2>
+  <textarea id="notes" rows="2" placeholder="哪裡不對、點不到、需要點兩下、字太小……" style="width:100%;max-width:640px;font:14px system-ui;padding:6px"></textarea>
+</section>
+
 <section class="bench">
   <h2>0　環境（自動填入，請截圖）</h2>
   <table id="env"></table>
@@ -144,8 +167,24 @@
 <div id="log" aria-live="polite"></div>
 
 <script>
+  const done = new Map();
+  const tick = (n, note) => {
+    if (done.has(n)) { if (note && !String(done.get(n)).includes(note)) done.set(n, done.get(n) + "、" + note); return; }
+    done.set(n, note || "✓");
+    const li = document.querySelector(`#checklist li[data-item="${n}"]`);
+    if (li) { li.style.color = "#006000"; li.textContent = "✓ " + li.textContent.replace(/^✓ /, ""); }
+  };
   const logEl = document.getElementById("log");
-  const log = (s) => { logEl.textContent += `${new Date().toTimeString().slice(0, 8)}  ${s}\n`; };
+  const log = (s) => {
+    logEl.textContent += `${new Date().toTimeString().slice(0, 8)}  ${s}\n`;
+    if (s.startsWith("選單：")) tick(1, s);
+    if (s === "選單：Paste") tick(2, s);
+    if (s.startsWith("彈出選單")) tick(3, s);
+    if (s.startsWith("按鈕：")) tick(4, s);
+    if (s.startsWith("勾選框") || s.startsWith("圓鈕")) tick(5, s);
+    if (s.startsWith("捲動到")) tick(6, s);
+    if (s.startsWith("視窗")) tick(7, s);
+  };
   document.addEventListener("click", (e) => { const t = e.target.closest("[data-log]"); if (t) log(t.dataset.log); });
   document.addEventListener("change", (e) => {
     const t = e.target.closest("[data-log-change]");
@@ -179,7 +218,32 @@
     const t = document.getElementById("env");
     t.replaceChildren(...rows.map(([k, v]) => { const tr = document.createElement("tr"); const a = document.createElement("td"); a.textContent = k; const b = document.createElement("td"); b.textContent = v; tr.append(a, b); return tr; }));
   }
-  document.fonts.ready.then(() => setTimeout(fill, 300));
+  document.getElementById("field").addEventListener("focus", () => tick(8, "欄位取得焦點"));
+  addEventListener("resize", () => tick(11, `${innerWidth}×${innerHeight}`));
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) tick(9, "reduce");
+  const report = () => {
+    const env = [...document.querySelectorAll("#env tr")].map((tr) => [...tr.children].map((td) => td.textContent.replace(/\s+/g, " ").trim()).join(": ")).join(" | ");
+    const lines = [...document.querySelectorAll("#checklist li")].map((li) => li.textContent.replace(/^✓ /, "").replace(/\s+/g, " ").trim() + (done.has(li.dataset.item) ? "：✓ " + done.get(li.dataset.item) : "：—"));
+    const notes = document.getElementById("notes").value.trim();
+    const now = new Date();
+    const stamp = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")} ${now.toTimeString().slice(0, 5)}`;
+    const t = [`clio.css touch report ${stamp}`, `env: ${env}`, ...lines];
+    if (notes) t.push(`12 其他：${notes}`);
+    return t.join("\n");
+  };
+  document.getElementById("report").addEventListener("click", () => {
+    const out = document.getElementById("out");
+    out.hidden = false;
+    out.textContent = report();
+    out.scrollIntoView({ block: "nearest" });
+  });
+  document.getElementById("copy").addEventListener("click", async () => {
+    const out = document.getElementById("out");
+    if (out.hidden) { out.hidden = false; out.textContent = report(); }
+    try { await navigator.clipboard.writeText(out.textContent); document.getElementById("copy").textContent = "已複製"; }
+    catch { const r = document.createRange(); r.selectNodeContents(out); const sel = getSelection(); sel.removeAllRanges(); sel.addRange(r); document.getElementById("copy").textContent = "已選取，請按複製"; }
+  });
+  document.fonts.ready.then(() => { setTimeout(fill, 300); tick(10, "字型已載入"); });
   addEventListener("load", () => setTimeout(fill, 300));
   addEventListener("resize", fill);
 </script>
