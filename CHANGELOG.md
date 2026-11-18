@@ -1,7 +1,36 @@
 # Changelog
 
-## Unreleased (0.12.1)
+## 1.0.0 — the Classic LTS (2026-11-18)
 
+The Classic side is finished: [LTS-AUDIT.md](LTS-AUDIT.md) has no open A row, every B row is
+a deliberate adaptation with its reason, and the C rows are the owner's own steps. The eight
+measurement gaps the audit listed are closed, four of them by reading the software itself
+rather than a screen (System 6.0.8's System file from archive.org for the watch and the
+dialogs' plain boxes). Nothing below changes the API.
+
+- **System 6's own watch** (cursor): a square face on a band, six 16×16 frames, read from
+  the System file's `CURS` 258–263 in Mac System Software 6.0.8L (archive.org) — a different
+  drawing from System 7.5.3's and Mac OS 9.0's round watch, which clio.css used for every era
+  before. `tooling/s6-watch-art.py` writes `art/cursors/watch6-*.png` at 1x/2x/3x and
+  `--check` compares every pixel; the System 6 era spins the six frames, a behaviour check
+  covers it.
+- **The movable modal's right end** (Mac OS 9.0's Navigation Services Open): the ridges end
+  4px before the right edge over a solid `#cccccc` block, the `#999` line sits inside the
+  black border. Measured against the 9.0 capture; `p9-movable-modal-right` guards it beside
+  the left end (two junction cells masked, named in the spec).
+- **Slider ticks**: the Mouse control panel's slider in Mac OS 9.0 (a 114px track, three
+  ticks at 102, 150 and 199) confirms `(width − run) / (count − 1)` with the first tick 9px
+  in — the formula was adapted, now measured. Drawing Board's own ticks are 2×3 dashes of the
+  theme's ink, drawn with the same formula (`--clio-slider-tick-*`, run 9px).
+- **The Help button's held state** for Drawing Board: the theme's pressed bevel with the art
+  one pixel down-right (adapted: the 8.5 capture has only the normal state).
+- **The split bar's dragged band**: while a `.split-bar` is dragged, clio.js draws the split
+  line's place as a 3-row grey inverting band across the split view (Inside Macintosh:
+  Windows; HIG 1992), removed on release; a behaviour check covers it.
+- **The audit's other closures**: the insertion point measured in Mac OS 9.0 (1px × 16 rows),
+  System 6's standard dialogs all `altDBoxProc` (12 DLOGs in the System file), the placard has
+  no held state (a display control), and System 7's Control Strip — a PowerBook extension the
+  7.5.3 desktop image does not run — is documented as inferred.
 - **Drawing Board utility windows** (top-title). The theme's own frame (`pxm#` 6187–6214)
   replaces Platinum's for `[data-era="drawingboard"] .window.utility`: caps, the rule and its
   ends, the side edges (5x10 top, 5x256 middle, 5x33 bottom) and the bottom edge with its
