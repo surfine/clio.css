@@ -102,49 +102,18 @@ Empty (owner, 2026-11-14: close everything for the Classic final, 0.12.0).
 - **Drawing Board's own cursors**: done — the theme's `crsr` 128 (arrow, 16x16, hot spot 0,0)
   decoded by `tooling/db-cursor.py`; 129-131 are drag badges (copy, alias, document), not used.
 
-- **Drawing Board's utility windows** (top-title and side-title) still use Platinum's frame.
-  The theme has them (`pxm#` 6187–6214); the pieces are decoded (`tooling/db-art.py --files`,
-  committed) and the 2026-11-18 re-check with template matching confirms, at the offsets in
-  `.notes/behaviour-0.11.md`: the left/right edge pieces and the bottom corners match **100%**
-  of their opaque pixels, the rule ends 97/93%, the top-left cap 100% once the close box is
-  masked, the bottom-left corner 100%; the 256-wide top and bottom pieces are **placed and
-  clipped** (top from 625,215; bottom from 626,301), not tiled. Still open: the left and right
-  edges show a 20px span between the 5x10 top piece and the 5x33 bottom piece that neither
-  tiles nor stretches from either piece (65%/53% and 46%/23%), and the theme's `frme` resources
-  (the likely owner of the stretch rule) do not carry the `pxm#` ids in their first 96 bytes.
-  Next: read `frme` properly (the "middle of each side stretches" model) or find a second
-  reference at another window height. **2026-11-18:** the Appearance Manager itself is now
-  reachable — the 9.0 System file exports through The Outside World (Uploads), its data fork
-  carries the AppearanceLib symbol table (`PlayThemeSound`, `PlayThemeControlSound`,
-  `BeginThemeDragSound`, `DrawThemeListBoxFrame`, `DrawThemeWindowHeader`, … at 0x1e1b32) —
-  so the frame and sound rules can be read from the code instead of guessed. The PEF
-  containers parse (`tooling/pef.py`): AppearanceLib is the container at 0x25b810 in the 9.0
-  System file (code 263,588 B, pattern data 50,148 B compressed), its 218 exports map
-  `PlayThemeSound` → code 0x161f0, `PlayThemeControlSound` → 0x16230, `BeginThemeDragSound` →
-  0x16270 (via TVectors in the decompressed data section), and the sound-map lookup at
-  0x14498 confirms the entry layout (0x14 bytes for 8.5b6, 0x2c for the release sets: code +0,
-  class +4, flags +6, delay +8, four slots from +0xc). The LTS decision: the utility window
-  keeps Platinum's frame unless this is closed before 1.0.
-  **2026-11-18, frame code:** `DrawThemeWindowHeader`, `DrawThemeListBoxFrame`,
-  `DrawThemePlacard` and `DrawThemeWindowFrame` are **thin dispatchers** (each loads the
-  theme provider at `0x17d0` and calls `0x3c780` with a selector: 0xfb8/5, 6, 0xa, 0xb), so
-  the corner/stretch rule lives in the provider, not in these exports; the `frme` resource
-  stays the unresolved piece. A second reference at another window height (a taller
-  Application Switcher) was attempted: the driver gained `keydown`/`keyup`, but 8.5's
-  cmd+Tab palette did not appear in the capture, so the height rule is still unmeasured.
-  **2026-11-18, composition:** pasting the pieces at their measured spots round a 163x99
-  outline gives 100% on the bottom, 83%/74% on the left/right edges and 68% on the title bar
-  (the title text is in the crop); the rule (6192/6193) is the weak part — its 256-wide
-  pattern is **phase-shifted** against the capture (30.7% at 626,228 although the row pattern
-  is the right one), so the frame needs the rule's phase before it can be composed as one
-  image. **2026-11-18, solved:** the side edges' 20px span is the **5x256 middles** (6203 left,
-  6196 right, at 248–268) — both match 100%; the rule's middle is 6192's **top row only** at
-  phase **2** (96.3%). With those, the composed frame is exactly right on the left, right and
-  bottom edges and the caps (title text aside). `tooling/db-art.py` now writes the middles and
-  a one-row `utility-rule-row`. The CSS port is written but **not shipped**: Chromium rejects
-  a multi-layer `background` shorthand with `var()` (it parses to `none`), so the block uses
-  longhands — the layers then paint, but land displaced; the port needs another session. The
-  CSS was reverted rather than shipped wrong.
+- **Drawing Board's utility windows** (top-title): the theme's own frame now ships
+  (`[data-era="drawingboard"] .window.utility`, `pxm#` 6187–6214, 17 placed pieces; the CSS
+  budget went to 222 KB for it, owner 2026-11-18). Every piece's place comes from the 8.5
+  Application Switcher (163x99, `hig/drawingboard/switcher`): the caps, the rule's ends
+  (6210/6211, 97/93%) and its middle (6192's **top row** at phase 2, 96.3%), the side edges
+  (5x10 top, **5x256 middle**, 5x33 bottom — all 100%), and the bottom edge with its corners
+  (100%). The 20px span the earlier pass could not fill is the 5x256 middles at 248–268. The
+  title bar is the theme's 18px one (title centred, the theme's pieces draw the boxes).
+  Still **adapted**, not measured: the right edge's 2px outer shade and the rule's second row
+  are not drawn, and there is no `db-switcher` fidelity specimen yet (the frame ring measures
+  58% against the capture with the title text and content in it). The **side-title** frame
+  (6194–6209) is still Platinum's.
 - **Firefox at 2x and 3x** (111 and 105 of 150): fixed as a harness problem. The specimens'
   wrappers used the page's default font (Times 16px), so inline controls sat on quarter-pixel
   baselines in Firefox; each wrapper now carries Clio's metrics, except three progress bars

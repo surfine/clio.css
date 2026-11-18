@@ -5393,6 +5393,62 @@
     var(--db-bottom-tiled) left 64px bottom 10px / calc(100% - 126px) 14px no-repeat;
 }
 
+/* ---- Utility window (palette) ----------------------------------------------
+   The theme's own frame (pxm# 6187-6214) as the 8.5 Application Switcher draws
+   it (163x99, hig/drawingboard/switcher): caps, rule (6192's top row), side
+   edges (5x10/5x256/5x33) and the bottom edge with its corners. Mids clip, the
+   title strip and the bottom edge tile. The right edge's 2px shade and the
+   rule's second row are adapted. */
+[data-era="drawingboard"] .window.utility {
+  min-width: 128px;
+  min-height: 60px;
+  padding: 20px 9px 8px;
+  border: 0;
+}
+
+[data-era="drawingboard"] .window.utility::before {
+  inset: 0 -2px 0 0;
+  clip-path: none;
+  background:
+    url("art/drawingboard/utility-tl.png") 1px 0 no-repeat,
+    url("art/drawingboard/utility-tr.png") 100% 2px no-repeat,
+    url("art/drawingboard/utility-top-r.png") calc(100% - 7px) 5px no-repeat,
+    url("art/drawingboard/utility-rule-l.png") 3px 18px no-repeat,
+    url("art/drawingboard/utility-rule-row.png") 18px 18px / 256px 1px repeat-x,
+    url("art/drawingboard/utility-rule-r.png") calc(100% - 2px) 18px no-repeat,
+    url("art/drawingboard/utility-top.png") 19px 5px repeat-x,
+    url("art/drawingboard/utility-left-top.png") 3px 28px no-repeat,
+    url("art/drawingboard/utility-left-mid.png") 3px 38px no-repeat,
+    url("art/drawingboard/utility-left-bottom.png") 3px calc(100% - 8px) no-repeat,
+    url("art/drawingboard/utility-right-top.png") calc(100% - 2px) 28px no-repeat,
+    url("art/drawingboard/utility-right-mid.png") calc(100% - 2px) 38px no-repeat,
+    url("art/drawingboard/utility-right-bottom.png") calc(100% - 2px) calc(100% - 8px) no-repeat,
+    url("art/drawingboard/utility-bottom-l.png") 20px calc(100% - 3px) repeat-x,
+    url("art/drawingboard/utility-bottom-r.png") calc(100% - 7px) calc(100% - 3px) no-repeat,
+    url("art/drawingboard/utility-bl.png") 0 100% no-repeat,
+    url("art/drawingboard/utility-br.png") calc(100% - 2px) 100% no-repeat;
+}
+
+[data-era="drawingboard"] .window.utility > .title-bar {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 18px;
+  margin: 0;
+  padding: 0 4px;
+  border: 0;
+  background: none;
+  justify-content: center;
+}
+
+/* The theme's pieces draw the boxes themselves. */
+[data-era="drawingboard"] .window.utility > .title-bar > :is(.close, .resize, .zoom, .shade) {
+  visibility: hidden;
+}
+
+[data-era="drawingboard"] .window.utility::after {
+  content: none;
+}
+
 /* ---- Menus -----------------------------------------------------------------
    The shade: 2px of pencil (ppat 130, 131) down the right from 3px below the
    menu's top and along the foot from 4px in. A menu that is not a drop-down

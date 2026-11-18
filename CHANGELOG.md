@@ -2,6 +2,12 @@
 
 ## Unreleased (0.12.1)
 
+- **Drawing Board utility windows** (top-title). The theme's own frame (`pxm#` 6187–6214)
+  replaces Platinum's for `[data-era="drawingboard"] .window.utility`: caps, the rule and its
+  ends, the side edges (5x10 top, 5x256 middle, 5x33 bottom) and the bottom edge with its
+  corners, all placed from the 8.5 Application Switcher (163x99). The title bar is the
+  theme's 18px one. `dist/clio.min.css`'s budget rose to 222 KB for it (owner, 2026-11-18).
+  Adapted, not measured: the right edge's 2px outer shade and the rule's second row.
 - **Appearance sound sets and alert sounds** (owner, 2026-11-15; SOUND-SETS.md). The sounds
   never enter npm or this repository; the tool, the player and the docs do.
   - `tooling/soundset.py` reads a Mac OS 8.5–9 sound set or a `.sit` of them: both `snd#`
