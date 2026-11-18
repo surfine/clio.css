@@ -2599,6 +2599,18 @@
   white-space: nowrap;
 }
 
+/* While a split bar is dragged the split line's place shows as a 3-row grey band
+   across the view (Inside Macintosh: Windows — the split line follows the pointer
+   as an outline; HIG 1992, "Splitting a Window"). Drawn by clio.js. */
+:where(.clio-split-outline) {
+  position: fixed;
+  z-index: 2147483000;
+  height: 3px;
+  background: repeating-conic-gradient(#ffffff 0 25%, transparent 0 50%) 0 0 / 2px 2px;
+  mix-blend-mode: difference;
+  pointer-events: none;
+}
+
 /* ---- Split bar and split line ---------------------------------------------------
    <div class="split-view"> > .split-bar (above the vertical scroll bar), panes,
    and a .split-line between two panes. Apple's guidelines (1992) give the split

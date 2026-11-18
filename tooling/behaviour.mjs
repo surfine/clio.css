@@ -415,6 +415,19 @@ const watch6 = await page.evaluate(async () => {
   return { frames: new Set(urls).size, cleared: el.style.getPropertyValue("--clio-cursor-wait") === "", any: urls[0] || "" };
 });
 ok(watch6.frames >= 3 && watch6.cleared && watch6.any.includes("watch6-"), `cursors: System 6's watch spins its six frames from the System file (${JSON.stringify(watch6)})`);
+// split bar: dragging shows the split line's 3-row grey band, released it goes
+await load("platinum", `<div class="window" style="position:absolute;left:40px;top:40px;width:400px;height:200px"><div class="split-view"><div class="split-bar" style="width:60px"></div></div></div>`);
+const splitDrag = await page.evaluate(async () => {
+  const bar = document.querySelector(".split-bar"), r = bar.getBoundingClientRect();
+  bar.dispatchEvent(new PointerEvent("pointerdown", { bubbles: true, button: 0, clientX: r.left + 10, clientY: r.bottom + 20 }));
+  const made = document.querySelectorAll(".clio-split-outline").length;
+  window.dispatchEvent(new PointerEvent("pointermove", { clientY: r.bottom + 90 }));
+  const moved = (document.querySelector(".clio-split-outline") || {}).style?.top || "";
+  window.dispatchEvent(new PointerEvent("pointerup", {}));
+  return { made, moved, left: document.querySelectorAll(".clio-split-outline").length };
+});
+ok(splitDrag.made === 1 && splitDrag.left === 0 && parseInt(splitDrag.moved, 10) > 100, `split bar: dragging shows the split line's 3-row band and released it goes (${JSON.stringify(splitDrag)})`);
+
 // sounds
 await load("platinum", `<div id="host"></div>`);
 const played = await page.evaluate(async () => {
