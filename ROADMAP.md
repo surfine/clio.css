@@ -110,10 +110,13 @@ Empty (owner, 2026-11-14: close everything for the Classic final, 0.12.0).
   (5x10 top, **5x256 middle**, 5x33 bottom — all 100%), and the bottom edge with its corners
   (100%). The 20px span the earlier pass could not fill is the 5x256 middles at 248–268. The
   title bar is the theme's 18px one (title centred, the theme's pieces draw the boxes).
-  Still **adapted**, not measured: the right edge's 2px outer shade and the rule's second row
-  are not drawn, and there is no `db-switcher` fidelity specimen yet (the frame ring measures
-  58% against the capture with the title text and content in it). The **side-title** frame
-  (6194–6209) is still Platinum's.
+  Still **adapted**, not measured: the rule's second row (the mid-tone line at y=19) is not
+  drawn; the two extra columns at x156–157 belong to the *list's* border in the capture, not
+  to the window's frame (the frame's own 5px edge matches). There is no `db-switcher`
+  fidelity specimen yet (the frame ring measures 58% against the capture with the title text
+  and the list in it). The **side-title** frame (6194–6209) is still Platinum's, and 6194
+  (7x17, its own top-title cap) matches the capture at (764,222) at 78% once the boxes are
+  masked.
 - **Firefox at 2x and 3x** (111 and 105 of 150): fixed as a harness problem. The specimens'
   wrappers used the page's default font (Times 16px), so inline controls sat on quarter-pixel
   baselines in Firefox; each wrapper now carries Clio's metrics, except three progress bars
