@@ -1,6 +1,14 @@
 # Changelog
 
-## 1.0.1 (2026-11-18, touch fix)
+## 1.0.1 (2026-11-18, touch fixes)
+
+- **The scroll bars sat on the window's frame, not inside it** (owner's report from the touch
+  bench: obvious in every era). A scroller with padding put its bars over the right and bottom
+  frame by that padding, and the reserve that the bar's own width adds made a pane show a bar
+  it did not need. `src/62-scrollbar-js.css` now steps the sticky anchor back by the
+  scroller's own padding, so the lanes land on the padding box's corner inside the frame;
+  verified in the bench (the bars inside the frame, the needless bar gone) and the scroll bar
+  specimens stay 100%.
 
 - **A press dragged from a menu title to an item was lost on a touch screen** (owner's
   report): the page scrolled or the long-press callout took the gesture, so the pointer
