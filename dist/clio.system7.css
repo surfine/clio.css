@@ -2988,13 +2988,16 @@
 }
 
 /* A zero-size first child that sticks to the scroller's corner, so the bars
-   inside it stay put while the content moves. It sits in the content box, which
-   the scroller's own padding has already inset: step back by that padding so the
-   lanes land on the padding box's corner, inside the frame, not over it. */
+   inside it stay put while the content moves. At rest it sits at the content
+   box's corner, the scroller's padding in from the padding box; clio.js steps
+   the bars back by that padding, so the lanes land inside the frame. Inset 0
+   keeps it there once scrolled: the sticky view rectangle is the scrollport
+   less its padding in Chromium, WebKit and Firefox alike (measured 2026-11-22),
+   so any other inset moves the bars during the first padding's worth of scroll. */
 .clio-sb-anchor {
   position: sticky;
-  top: calc(0px - var(--clio-sb-pt, 0px));
-  left: calc(0px - var(--clio-sb-pl, 0px));
+  top: 0;
+  left: 0;
   z-index: 2;
   display: block;
   width: 0;

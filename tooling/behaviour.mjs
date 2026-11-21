@@ -117,6 +117,18 @@ for (const era of Object.keys(lengths)) {
   ok(after.top > 0 && !after.ghost, `${era}: on release the content is where the box went (${after.top})`);
 }
 
+// A scroller with padding: the bars stay on the padding box's corner at every scroll
+// position, the first padding's worth included (the touch bench's item 8 lost its up arrow).
+await load("platinum", box().replace('style="', 'style="padding:10px 12px;'));
+const held = [];
+for (const [sl, st] of [[0, 0], [0, 3], [0, 9], [0, 40], [5, 40]]) held.push(await page.evaluate(async ([sl, st]) => {
+  const s = document.querySelector("#s"); s.scrollTop = st; s.scrollLeft = sl;
+  await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+  const p = s.getBoundingClientRect(), v = s.querySelector(".clio-sb-v").getBoundingClientRect(), h = s.querySelector(".clio-sb-h").getBoundingClientRect();
+  return [v.left - p.left - s.clientLeft, v.top - p.top - s.clientTop, h.left - p.left - s.clientLeft, h.top - p.top - s.clientTop].map(Math.round).join(",");
+}, [sl, st]));
+ok(held.every((g) => g === held[0]) && held[0].split(",")[1] === "0", `platinum: a padded scroller's bars stay put as it scrolls (${held.join(" ")})`);
+
 // Smart Scrolling: Mac OS 8/9 only; the box grows with the visible share.
 await load("platinum", box('data-clio-scrolling="smart"', 200, 150, 300));
 const smart = await page.evaluate(() => { const v = document.querySelector("#s .clio-sb-v"); return { smart: v.classList.contains("clio-sb-smart"), len: v.querySelector(".clio-sb-thumb").offsetHeight, dec: v.querySelector(".clio-sb-dec").offsetTop }; });

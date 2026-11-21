@@ -10,6 +10,14 @@
   verified in the bench (the bars inside the frame, the needless bar gone) and the scroll bar
   specimens stay 100%.
 
+- **A padded scroller's bars rose as it scrolled, and the up arrow went blank** (the touch
+  bench's item 8). The step back above went into the sticky inset as well as into clio.js,
+  so once scrolled the anchor stuck at the padding box's corner and the bars moved up by the
+  padding, the top arrow clipped by the pane. The anchor's inset is 0 again: the sticky view
+  rectangle is the scrollport less its padding in Chromium, WebKit and Firefox alike, so the
+  anchor holds the place it has at rest at every scroll position. A behaviour check scrolls a
+  padded scroller through its first padding and past it (it fails on the old inset).
+
 - **A press dragged from a menu title to an item was lost on a touch screen** (owner's
   report): the page scrolled or the long-press callout took the gesture, so the pointer
   stream cancelled and the item never logged. The menu bar and its menus now keep the
