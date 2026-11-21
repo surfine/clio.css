@@ -342,6 +342,7 @@ specimens.push(
 // (frame side-utility: active at 490,454, 255x92 over the desktop; inactive at 90,129,
 // 315x82). Its content is the sample's list (a sunken frame), so crops keep to the
 // window's frame, bar and drop.
+const dbUtility = `<div style="padding:12px;background:#9999cc"><div class="window utility" id="s" style="width:163px;height:99px"><div class="title-bar"><button class="close" aria-label="Close"></button><h2 class="title">Applications</h2><button class="zoom" aria-label="Zoom"></button><button class="collapse" aria-label="Collapse"></button></div><div class="window-pane" style="flex:1"></div></div></div>`;
 const side = (cls, w, h, bg) => `<div style="padding:12px;background:${bg}"><div class="window utility side${cls}" id="s" style="width:${w}px;height:${h}px"><div class="title-bar"><button class="close" aria-label="Close"></button><h2 class="title">Tools</h2><button class="collapse" aria-label="Collapse"></button></div><div class="window-pane" style="flex:1;background:#ffffff"></div></div></div>`;
 specimens.push(
   P9("p9-side-bar", side("", 255, 92, "#9999cc"), [0, 0, 12, 92], "side-utility", [490, 454, 12, 92]),
@@ -356,6 +357,16 @@ specimens.push(
   DB("db-side-top", side("", 260, 101, "#9999cc"), [18, 0, 244, 9], "../rc8/side3", [504, 454, 244, 9]),
   DB("db-side-right", side("", 260, 101, "#9999cc"), [255, 0, 7, 83], "../rc8/side3", [741, 454, 7, 83]),
   DB("db-side-bottom", side("", 260, 101, "#9999cc"), [0, 93, 240, 8], "../rc8/side3", [486, 547, 240, 8]),
+  // Top-title utility window: the Application Switcher's palette (163x99 at 606,210 in
+  // hig/drawingboard/switcher). Its content is the switcher's list and other windows sit
+  // behind the frame's open pixels, so the crops keep to opaque frame (checked against
+  // theme-layout.py's drawing): the title bar either side of the title (clio.css sets the title wider than 8.5,
+  // a font matter of its own), the edges, the foot.
+  DB("db-utility-titlebar-left", dbUtility, [19, 5, 17, 13], "../hig/drawingboard/switcher", [625, 215, 17, 13]),
+  DB("db-utility-titlebar-right", dbUtility, [120, 5, 38, 13], "../hig/drawingboard/switcher", [726, 215, 38, 13]),
+  DB("db-utility-left", dbUtility, [3, 19, 5, 72], "../hig/drawingboard/switcher", [609, 229, 5, 72]),
+  DB("db-utility-right", dbUtility, [158, 19, 5, 20], "../hig/drawingboard/switcher", [764, 229, 5, 20]),
+  DB("db-utility-bottom", dbUtility, [20, 91, 138, 5], "../hig/drawingboard/switcher", [626, 301, 138, 5]),
 );
 // Placard: the CDEF Tester's 100x50 placard (frames placard, placard-disabled) on the
 // window's #ddd. Drawing Board's pencil frame drifts in shade: its face is compared.

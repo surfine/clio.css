@@ -53,13 +53,13 @@ ok(!strip(db).includes('[data-era="drawingboard"]') && !strip(db).includes('[dat
 //    Mac OS 9 and frame art (--clio-art-p9-*, --clio-art-frame-*) and inside the
 //    SVG tiles of Drawing Board art and Drawing Board's outline patches (a mask picture is
 //    fetched with CORS); "%23p" is such a tile's own pattern reference. The window edges'
-//    SVG pattern files (art/drawingboard/*-tiled.svg) and the side-title window's three
-//    (art/drawingboard/side-*.svg) carry their PNGs inside.
+//    SVG pattern files (art/drawingboard/*-tiled.svg) and the utility windows' three each
+//    (art/drawingboard/side-*.svg, utility-*.svg) carry their PNGs inside.
 for (const m of noComments.matchAll(/url\(\s*["']?([^"')]+)/g)) {
   const u = m[1];
   const png = u.startsWith("data:image/png;base64,") && /--clio-(art-(db|p9|s7|frame)|db-outline)-[\w-]+:\s*$/.test(noComments.slice(Math.max(0, m.index - 60), m.index));
   if (u.startsWith("art/")) ok(existsSync(join(root, "dist", u)), `missing art file dist/${u}`);
-  ok(u.startsWith("data:image/svg+xml,") || png || /^fonts\/(ChicagoFLF\.woff2?|Asap-Variable\.woff2|ClioSans84\.woff2|ClioText84\.woff2|ClioText84-9\.woff2|ClioSans97\.woff2|ClioSans97Display\.woff2|ClioSans97Title\.woff2|ClioSans97Exact\.woff2|ClioSans97TitleExact\.woff2|ClioSans97Plain\.woff2|ClioSans97TitlePlain\.woff2|ClioSans97PlainExact\.woff2|ClioSans97TitlePlainExact\.woff2|Virtue\.woff2|FusionPixel12-(TC|SC|JA|KO)\.woff2)$/.test(u) || /^art\/(drawingboard|platinum|system7|system6|cursors)\/(pens\/|parts\/)?[a-z0-9-]+\.png$/.test(u) || /^art\/drawingboard\/([a-z0-9-]+-tiled|side-(frame|runs|edges))\.svg$/.test(u) || /^%23\w+$/.test(u), `unexpected url(): ${u.slice(0, 60)}`);
+  ok(u.startsWith("data:image/svg+xml,") || png || /^fonts\/(ChicagoFLF\.woff2?|Asap-Variable\.woff2|ClioSans84\.woff2|ClioText84\.woff2|ClioText84-9\.woff2|ClioSans97\.woff2|ClioSans97Display\.woff2|ClioSans97Title\.woff2|ClioSans97Exact\.woff2|ClioSans97TitleExact\.woff2|ClioSans97Plain\.woff2|ClioSans97TitlePlain\.woff2|ClioSans97PlainExact\.woff2|ClioSans97TitlePlainExact\.woff2|Virtue\.woff2|FusionPixel12-(TC|SC|JA|KO)\.woff2)$/.test(u) || /^art\/(drawingboard|platinum|system7|system6|cursors)\/(pens\/|parts\/)?[a-z0-9-]+\.png$/.test(u) || /^art\/drawingboard\/([a-z0-9-]+-tiled|(side|utility)-(frame|runs|edges))\.svg$/.test(u) || /^%23\w+$/.test(u), `unexpected url(): ${u.slice(0, 60)}`);
 }
 
 // 6. Component index: every component is documented, evidenced and styled.

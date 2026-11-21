@@ -4328,24 +4328,6 @@
   line-height: 11px;
 }
 
-/* The dots right of the title run from the right end (their phase differs
-   from the left run's by one column). */
-:root .window.utility > .title-bar::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 25px;
-  bottom: 1px;
-  left: 50%;
-  border: 0;
-  background:
-    url("art/platinum/utility-dots.png") right -1px top 2px / 3px 3px repeat-x,
-    url("art/platinum/utility-dots.png") right -1px top 5px / 3px 3px repeat-x,
-    url("art/platinum/utility-dots.png") right -1px top 8px / 3px 3px repeat-x,
-    #cccccc;
-  box-shadow: none;
-}
-
 :root .window.utility > .title-bar > :is(.title, h1, h2, h3) {
   position: relative;
   z-index: 1;
@@ -4916,55 +4898,69 @@
 }
 
 /* ---- Utility window (palette) ----------------------------------------------
-   The theme's own frame (pxm# 6187-6214) as the 8.5 Application Switcher draws
-   it (163x99, hig/drawingboard/switcher): caps, rule (6192's top row), side
-   edges (5x10/5x256/5x33) and the bottom edge with its corners. Mids clip, the
-   title strip and the bottom edge tile. The right edge's 2px shade and the
-   rule's second row are adapted. */
+   The theme's 'layo' 136 (ActiveFloatingWindow), decoded by tooling/theme-layout.py,
+   matches the 8.5 Application Switcher's frame 100% (hig/drawingboard/switcher):
+   the content 8px in, 19px down, 5px from the right (then a 2px shade) and 8px up.
+   Three pictures (tooling/db-art.py): the corner groups; the title bar, the rule
+   (6192's bottom row) and the foot between them; the side edges' middles. The boxes
+   are 201, 221 and 211, the title centred 3.5px left of the window's middle on the
+   capture's baseline. The
+   content keeps the utility window's #ccc (the application draws it). */
 :root .window.utility {
   min-width: 128px;
   min-height: 60px;
-  padding: 20px 9px 8px;
+  padding: 19px 5px 8px 8px;
   border: 0;
+  background: #cccccc content-box;
 }
 
 :root .window.utility::before {
   inset: 0 -2px 0 0;
   clip-path: none;
   background:
-    url("art/drawingboard/utility-tl.png") 1px 0 no-repeat,
-    url("art/drawingboard/utility-tr.png") 100% 2px no-repeat,
-    url("art/drawingboard/utility-top-r.png") calc(100% - 7px) 5px no-repeat,
-    url("art/drawingboard/utility-rule-l.png") 3px 18px no-repeat,
-    url("art/drawingboard/utility-rule-row.png") 18px 18px / 256px 1px repeat-x,
-    url("art/drawingboard/utility-rule-shade.png") 8px 19px / 128px 1px repeat-x,
-    url("art/drawingboard/utility-rule-r.png") calc(100% - 2px) 18px no-repeat,
-    url("art/drawingboard/utility-top.png") 19px 5px repeat-x,
-    url("art/drawingboard/utility-left-top.png") 3px 28px no-repeat,
-    url("art/drawingboard/utility-left-mid.png") 3px 38px no-repeat,
-    url("art/drawingboard/utility-left-bottom.png") 3px calc(100% - 8px) no-repeat,
-    url("art/drawingboard/utility-right-top.png") calc(100% - 2px) 28px no-repeat,
-    url("art/drawingboard/utility-right-mid.png") calc(100% - 2px) 38px no-repeat,
-    url("art/drawingboard/utility-right-bottom.png") calc(100% - 2px) calc(100% - 8px) no-repeat,
-    url("art/drawingboard/utility-bottom-l.png") 20px calc(100% - 3px) repeat-x,
-    url("art/drawingboard/utility-bottom-r.png") calc(100% - 7px) calc(100% - 3px) no-repeat,
-    url("art/drawingboard/utility-bl.png") 0 100% no-repeat,
-    url("art/drawingboard/utility-br.png") calc(100% - 2px) 100% no-repeat;
+    url("art/drawingboard/utility-frame.svg"),
+    url("art/drawingboard/utility-edges.svg") 0 38px / 100% calc(100% - 79px) no-repeat,
+    url("art/drawingboard/utility-runs.svg") 19px 0 / calc(100% - 55px) 100% no-repeat;
 }
 
 :root .window.utility > .title-bar {
   position: absolute;
-  inset: 0 0 auto;
-  height: 18px;
+  inset: 7px 0 auto;
+  height: 11px;
   margin: 0;
-  padding: 0 4px;
+  padding: 0 11px 0 4px;
   border: 0;
   background: none;
   justify-content: center;
 }
 
-/* The theme's pieces draw the boxes themselves. */
-:root .window.utility > .title-bar > :is(.close, .resize, .zoom, .shade) {
+:root .window.utility > .title-bar > :is(.title, h1, h2, h3) {
+  background: none;
+}
+
+:root .window.utility > .title-bar > :is(.close, .resize, .zoom, .shade, .collapse) {
+  inset: 0 auto auto 7px;
+  width: 9px;
+  height: 9px;
+  background: url("art/drawingboard/utility-boxes.png");
+  box-shadow: none;
+}
+
+:root .window.utility > .title-bar > :is(.resize, .zoom) {
+  inset: 0 17px auto auto;
+  background-position-x: -9px;
+}
+
+:root .window.utility > .title-bar > :is(.shade, .collapse) {
+  inset: 0 4px auto auto;
+  background-position-x: -18px;
+}
+
+:root .window.utility > .title-bar > :is(:active:where(:not([data-clio-off])), .active) {
+  background-position-y: -9px;
+}
+
+:root .window.utility.inactive > .title-bar > * {
   visibility: hidden;
 }
 
@@ -4983,7 +4979,6 @@
    window's #ccc (the application draws it). */
 :root .window.utility.side {
   padding: 9px 5px 8px 18px;
-  background: #cccccc content-box;
 }
 
 :root .window.utility.side::before {
@@ -5000,11 +4995,8 @@
 }
 
 /* The boxes (201, and 211 upright), 6px in, 8px down and 7px up; pressed below. */
-:root .window.utility.side > .title-bar > :is(.close, .shade, .collapse) {
-  visibility: visible;
+:root .window.utility.side > .title-bar > * {
   inset: 8px auto auto 6px;
-  width: 9px;
-  height: 9px;
   background: url("art/drawingboard/side-boxes.png");
 }
 
@@ -5015,10 +5007,6 @@
 
 :root .window.utility.side > .title-bar > :is(:active:where(:not([data-clio-off])), .active) {
   background-position-y: -9px;
-}
-
-:root .window.utility.side.inactive > .title-bar > * {
-  visibility: hidden;
 }
 
 /* ---- Menus -----------------------------------------------------------------

@@ -30,6 +30,16 @@
   frame without boxes (`layo` 139; inferred). The Platinum side rules no longer reach Drawing
   Board, and the unused `utility-side-*` pictures are gone.
 
+- **Drawing Board's top-title utility window draws the theme's frame and its boxes**. It was
+  pieced together by eye (0.12): the content sat 1px too far in and down, its right padding was
+  9px instead of 5, the close, zoom and collapse boxes were hidden (the pieces do not carry
+  them; they are pxm 201, 221 and 211), and Platinum's title background and dots showed
+  through. Now drawn from the theme's `layo` 136 like the side window: clio.css equals the
+  decoded frame in all three engines, which equals the Application Switcher's capture (3080
+  frame pixels). The line under the rule that 1.0.0 drew from ppat 7099 is the switcher's
+  own list border inside the content, so it is gone (LTS-AUDIT A16 revised). Platinum's
+  title-bar dots move to `91-platinum-only.css`. Specimens `db-utility-*`.
+
 - **A press dragged from a menu title to an item was lost on a touch screen** (owner's
   report): the page scrolled or the long-press callout took the gesture, so the pointer
   stream cancelled and the item never logged. The menu bar and its menus now keep the

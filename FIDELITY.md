@@ -129,6 +129,11 @@ the 800×600 colour canvas read 1:1 (`npm run capture:drawingboard`), compared i
 | db-side-top | 244×9 | 100.0% | 100.0% | 0.0% | 0 |
 | db-side-right | 7×83 | 100.0% | 100.0% | 0.0% | 0 |
 | db-side-bottom | 240×8 | 100.0% | 100.0% | 0.0% | 0 |
+| db-utility-titlebar-left | 17×13 | 100.0% | 100.0% | 0.0% | 0 |
+| db-utility-titlebar-right | 38×13 | 100.0% | 100.0% | 0.0% | 0 |
+| db-utility-left | 5×72 | 100.0% | 100.0% | 0.0% | 0 |
+| db-utility-right | 5×20 | 100.0% | 100.0% | 0.0% | 0 |
+| db-utility-bottom | 138×5 | 100.0% | 100.0% | 0.0% | 0 |
 | db-placard-face | 98×48 | 100.0% | 100.0% | 0.0% | 0 |
 | db-placard-disabled-face | 98×48 | 100.0% | 100.0% | 0.0% | 0 |
 

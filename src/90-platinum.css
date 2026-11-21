@@ -952,24 +952,6 @@
   line-height: 11px;
 }
 
-/* The dots right of the title run from the right end (their phase differs
-   from the left run's by one column). */
-:is([data-era="platinum"], [data-era="drawingboard"]) .window.utility > .title-bar::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 25px;
-  bottom: 1px;
-  left: 50%;
-  border: 0;
-  background:
-    url("art/platinum/utility-dots.png") right -1px top 2px / 3px 3px repeat-x,
-    url("art/platinum/utility-dots.png") right -1px top 5px / 3px 3px repeat-x,
-    url("art/platinum/utility-dots.png") right -1px top 8px / 3px 3px repeat-x,
-    #cccccc;
-  box-shadow: none;
-}
-
 :is([data-era="platinum"], [data-era="drawingboard"]) .window.utility > .title-bar > :is(.title, h1, h2, h3) {
   position: relative;
   z-index: 1;

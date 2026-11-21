@@ -437,10 +437,24 @@
         },
         {
           "era": "drawingboard",
-          "claim": "Utility windows take Platinum's drawing; the theme's floating-window pieces (boxes 201/211/221, frame 6195-6214) were found but its title bar pieces were not matched",
+          "claim": "Utility windows: the theme's own frame as its 'layo' 136 (ActiveFloatingWindow) lays it out: the content 8px in and 19px down, the title bar pieces (6187-6190, their top 13 rows), the rule (6192's bottom row), the side and foot pieces (6193-6211), a 2px shade right; the boxes 201, 221 (both ways) and 211, 7px down, 7px in and 17px and 4px from the right; the title centred 3.5px left of the middle",
+          "status": "measured",
+          "source": "clio.css capture, Mac OS 8.5 with Drawing Board in Infinite Mac: the Application Switcher's palette (hig/drawingboard/switcher); tooling/theme-layout.py decodes the theme's 'layo' 136 and draws it from the pieces",
+          "upstream": "the drawing equals the capture's 3080 frame pixels, the title's text aside (theme-layout.py --check); clio.css equals that drawing in Chromium, WebKit and Firefox; specimens db-utility-*"
+        },
+        {
+          "era": "drawingboard",
+          "claim": "A utility window's line under the rule is the content's, not the frame's (the Application Switcher draws its list's border there)",
+          "status": "measured",
+          "source": "clio.css — 'layo' 136 ends the frame at the rule; the content rectangle starts on the next row",
+          "upstream": "reverses 1.0.0's rule shade (ppat 7099), LTS-AUDIT A16"
+        },
+        {
+          "era": "drawingboard",
+          "claim": "In the background ('layo' 137) the same frame and no boxes; a pressed box shows its second picture",
           "status": "inferred",
-          "source": "clio.css",
-          "upstream": "Application Switcher, Mac OS 8.5"
+          "source": "clio.css — the theme's 'layo' 137 and the pxm# pairs (normal, pressed) of 200-221",
+          "upstream": "the 8.5 captures have no background or pressed utility window drawn whole"
         },
         {
           "era": "system7",

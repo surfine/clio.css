@@ -133,17 +133,6 @@ FILES = {
     'modal-tl': (6135, 0), 'modal-top': (6140, 0), 'modal-tr': (6136, 0), 'modal-right': (6141, 0),
     'modal-br': (6137, 0), 'modal-bottom': (6142, 0), 'modal-bl': (6138, 0), 'modal-left': (6139, 0),
     'menubar': (6104, 0),          # 630x27, tiled from the screen's left; the bar shows its top 22 rows
-    # Utility window (the Applications palette of the Application Switcher, found 1:1
-    # in hig/drawingboard/switcher.png): the left and right caps, the title bar's left
-    # and right ends, the rule under the title and its ends, the two half edges, the
-    # bottom edge and its corners.
-    'utility-tl': (6187, 0), 'utility-top': (6188, 0), 'utility-top-r': (6189, 0), 'utility-tr': (6190, 0),
-    'utility-rule-l': (6210, 0), 'utility-rule-r': (6211, 0),
-    'utility-rule': (6192, 0), 'utility-rule-2': (6193, 0),
-    'utility-left-top': (6204, 0), 'utility-left-mid': (6203, 0), 'utility-left-bottom': (6202, 0),
-    'utility-right-top': (6195, 0), 'utility-right-mid': (6196, 0), 'utility-right-bottom': (6197, 0),
-    'utility-bottom-l': (6200, 0), 'utility-bottom-r': (6199, 0),
-    'utility-bl': (6201, 0), 'utility-br': (6198, 0),
 }
 if '--files' in sys.argv:
     out = os.path.join(HERE, '..', 'art', 'drawingboard'); os.makedirs(out, exist_ok=True)
@@ -166,9 +155,6 @@ if '--files' in sys.argv:
         return 'data:image/png;base64,' + base64.b64encode(buf.getvalue()).decode()
     for name, (rid, i) in FILES.items():
         save(pxm[rid][min(i, len(pxm[rid]) - 1)], name)
-    # The utility window's rule: 6192's first row alone (the piece is a 4-row band;
-    # the capture shows only its top line under the title bar).
-    save(pxm[6192][0].crop((0, 0, 256, 1)), 'utility-rule-row')
     # Side-title utility window, as the theme's 'layo' 138 (ActiveSideFloatingWindow)
     # lays it out: rectangles on guides from the content's edges, each piece tiled from
     # one corner and clipped to its rectangle (tooling/theme-layout.py renders it; 100%
@@ -211,9 +197,31 @@ if '--files' in sys.argv:
     for rid, i, x, y in ((201, 0, 0, 0), (211, 2, 9, 0), (201, 1, 0, 9), (211, 3, 9, 9)):
         boxes.alpha_composite(pxm[rid][i].convert('RGBA'), (x, y))
     save(boxes, 'side-boxes')
-    # The rule's shade: ppat 7099's one-row pencil line, drawn from the window's 8th
-    # column (the capture matches it 100% from x=8 to x=157 at y=19).
-    save(ppats[7099].crop((0, 0, 128, 1)), 'utility-rule-shade')
+    # Top-title utility window, as 'layo' 136 (ActiveFloatingWindow) lays it out (the
+    # Application Switcher's palette: 3080 frame pixels equal, theme-layout.py --check).
+    # The frame round a content rectangle W x H: 8px left, 19px above, 7px right (the
+    # last 2 a shade), 8px below. The title bar's pieces show their top 13 rows, the
+    # rule is 6192's bottom row; the line under it belongs to the content.
+    def rows(rid, top, n): im = pxm[rid][0]; return im.crop((0, top, im.width, top + n))
+    tl = Image.new('RGBA', (20, 38), (0, 0, 0, 0))
+    for im, x, y in ((pxm[6187][0].crop((0, 0, 18, 18)), 1, 0), (pxm[6210][0].crop((0, 0, 17, 10)), 3, 18), (pxm[6204][0], 3, 28)):
+        tl.alpha_composite(im.convert('RGBA'), (x, y))
+    tr = Image.new('RGBA', (36, 38), (0, 0, 0, 0))
+    for im, x, y in ((rows(6189, 0, 13), 0, 5), (rows(6193, 3, 1), 0, 18), (rows(6190, 0, 16), 29, 2),
+                     (rows(6211, 0, 10), 29, 18), (pxm[6195][0], 29, 28)):
+        tr.alpha_composite(im.convert('RGBA'), (x, y))
+    bl = group(20, 41, (6202, None, 3, 0), (6201, None, 0, 33))
+    br = group(36, 41, (6197, None, 29, 0), (6199, None, 0, 33), (6198, None, 29, 33))
+    svg(img(tl, 0, 0) + "<svg y='100%' overflow='visible'>" + img(bl, 0, -41) + "</svg>"
+        + end % (0, img(tr, -36, 0)) + end % ('100%', img(br, -36, -41)), 'utility-frame')
+    svg(run(0, rows(6188, 0, 13), 0, 5, '100%', 13) + run(1, rows(6192, 3, 1), 1, 18, '100%', 1)
+        + "<svg y='100%' overflow='visible'>" + run(2, pxm[6200][0], 1, -8, '100%', 5) + "</svg>", 'utility-runs')
+    svg(run(0, pxm[6203][0], 3, 0, 5, '100%') + end % (0, run(1, pxm[6196][0], -7, 0, 5, '100%')), 'utility-edges')
+    # Its boxes: close, zoom (221's both-ways picture) and collapse; pressed below.
+    boxes = Image.new('RGBA', (27, 18), (0, 0, 0, 0))
+    for rid, x in ((201, 0), (221, 9), (211, 18)):
+        for i in (0, 1): boxes.alpha_composite(pxm[rid][i].convert('RGBA'), (x, 9 * i))
+    save(boxes, 'utility-boxes')
     # Window paper (ppat 7120): origin at the content's top-left (Date & Time,
     # Appearance and Finder Preferences windows agree).
     save(ppats[7120], 'paper')

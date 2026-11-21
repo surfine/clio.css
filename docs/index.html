@@ -240,7 +240,7 @@
       </dl>
       <p class="aliases">Also accepts: system.css markup (<code>.title-bar button.close</code>, <code>.title-bar button.resize</code>, <code>.inactive-title-bar</code>, <code>.window-pane</code>, <code>.details-bar</code>, <code>.separator</code>); AI System 6 markup (<code>.close-box</code>, <code>.resize-box</code>, <code>.shade-box</code>, <code>.title-bar h1</code>, <code>.title-bar h2</code>).</p>
       <details class="evidence-details">
-        <summary>Evidence (50)</summary>
+        <summary>Evidence (52)</summary>
       <table class="evidence">
         <caption>Where each value comes from</caption>
         <thead><tr><th scope="col">Era</th><th scope="col">Value</th><th scope="col">Status</th><th scope="col">Source</th></tr></thead>
@@ -529,9 +529,21 @@
         </tr>
 <tr>
           <td>Drawing Board</td>
-          <td>Utility windows take Platinum's drawing; the theme's floating-window pieces (boxes 201/211/221, frame 6195-6214) were found but its title bar pieces were not matched</td>
+          <td>Utility windows: the theme's own frame as its 'layo' 136 (ActiveFloatingWindow) lays it out: the content 8px in and 19px down, the title bar pieces (6187-6190, their top 13 rows), the rule (6192's bottom row), the side and foot pieces (6193-6211), a 2px shade right; the boxes 201, 221 (both ways) and 211, 7px down, 7px in and 17px and 4px from the right; the title centred 3.5px left of the middle</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, Mac OS 8.5 with Drawing Board in Infinite Mac: the Application Switcher's palette (hig/drawingboard/switcher); tooling/theme-layout.py decodes the theme's 'layo' 136 and draws it from the pieces</code><br><span class="upstream">the drawing equals the capture's 3080 frame pixels, the title's text aside (theme-layout.py --check); clio.css equals that drawing in Chromium, WebKit and Firefox; specimens db-utility-*</span></td>
+        </tr>
+<tr>
+          <td>Drawing Board</td>
+          <td>A utility window's line under the rule is the content's, not the frame's (the Application Switcher draws its list's border there)</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css — 'layo' 136 ends the frame at the rule; the content rectangle starts on the next row</code><br><span class="upstream">reverses 1.0.0's rule shade (ppat 7099), LTS-AUDIT A16</span></td>
+        </tr>
+<tr>
+          <td>Drawing Board</td>
+          <td>In the background ('layo' 137) the same frame and no boxes; a pressed box shows its second picture</td>
           <td><span class="status status-inferred">Inferred</span></td>
-          <td><code>clio.css</code><br><span class="upstream">Application Switcher, Mac OS 8.5</span></td>
+          <td><code>clio.css — the theme's 'layo' 137 and the pxm# pairs (normal, pressed) of 200-221</code><br><span class="upstream">the 8.5 captures have no background or pressed utility window drawn whole</span></td>
         </tr>
 <tr>
           <td>System 7</td>
