@@ -18,6 +18,18 @@
   anchor holds the place it has at rest at every scroll position. A behaviour check scrolls a
   padded scroller through its first padding and past it (it fails on the old inset).
 
+- **Drawing Board's side-title utility window draws the theme's own frame** (it was
+  Platinum's bar inside the Drawing Board frame, LTS-AUDIT B13). The layout is the theme's
+  `layo` 138, not `frme`: `tooling/theme-layout.py` decodes it and draws the frame from the
+  pieces, equal pixel for pixel to the 8.5 capture of the Appearance SDK's sample (4123 frame
+  pixels; the same decoder draws the Application Switcher's palette, 3080 pixels, title
+  aside). The column is the small system font's height plus 5, so the 18px pieces show 14px.
+  `tooling/db-art.py` writes three pictures for the window's `::before` (the corner groups,
+  the runs along the top and foot, the column's and right edge's middles) and the boxes'
+  sprite; specimens `db-side-bar`, `-top`, `-right`, `-bottom`. In the background the same
+  frame without boxes (`layo` 139; inferred). The Platinum side rules no longer reach Drawing
+  Board, and the unused `utility-side-*` pictures are gone.
+
 - **A press dragged from a menu title to an item was lost on a touch screen** (owner's
   report): the page scrolled or the long-press callout took the gesture, so the pointer
   stream cancelled and the item never logged. The menu bar and its menus now keep the

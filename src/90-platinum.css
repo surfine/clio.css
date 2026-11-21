@@ -1032,51 +1032,9 @@
   font-palette: normal;
 }
 
-/* ---- Side-title utility window (kWindowFloatSide*; Mac OS 9.0, the Appearance
-   SDK's sample "Side Utility Window", frames side3) ------------------------------
-   <div class="window utility side"> with the usual .title-bar (close box at the
-   top, collapse box at the foot; no title is drawn). The frame is the utility
-   window's: 1px black, white light on the top and left, #999 shade on the right
-   and the bottom, the drop from the second row and column. The bar is 10px of #ccc
-   down the left with the 3px dot pattern from 12px below its top to 12px above its
-   foot; the collapse box is the title-bar one transposed. */
-:is([data-era="platinum"], [data-era="drawingboard"]) .window.utility.side {
-  flex-direction: row;
-  background:
-    linear-gradient(#ffffff, #ffffff) 0 0 / calc(100% - 1px) 1px no-repeat,
-    linear-gradient(#ffffff, #ffffff) 0 0 / 1px calc(100% - 1px) no-repeat,
-    linear-gradient(#999999, #999999) 100% 1px / 1px calc(100% - 1px) no-repeat,
-    linear-gradient(#999999, #999999) 1px 100% / calc(100% - 1px) 1px no-repeat,
-    #cccccc;
-}
-
-:is([data-era="platinum"], [data-era="drawingboard"]) .window.utility.side > .title-bar {
-  display: block;
-  flex: none;
-  width: 10px;
-  height: auto;
-  margin: 1px 0 1px 1px;
-  padding: 0;
-  background: url("art/platinum/utility-dots.png") 1px 12px / 3px 3px repeat, #cccccc;
-  box-shadow: none;
-}
-
-/* The dots keep to columns 1 to 9 and rows 12 to 12 above the foot: a #ccc frame
-   painted over the pattern's edges. */
-:is([data-era="platinum"], [data-era="drawingboard"]) .window.utility.side > .title-bar::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-style: solid;
-  border-color: #cccccc;
-  border-width: 12px 0 12px 1px;
-  pointer-events: none;
-}
-
-:is([data-era="platinum"], [data-era="drawingboard"]) .window.utility.side > .title-bar::after {
-  content: none;
-}
-
+/* ---- Side-title utility window (kWindowFloatSide*) ----------------------------
+   Mac OS 9's frame is in 91-platinum-only.css, Drawing Board's in
+   92-drawingboard.css. Both leave the title undrawn, for assistive technology. */
 :is([data-era="platinum"], [data-era="drawingboard"]) .window.utility.side > .title-bar > :is(.title, h1, h2, h3) {
   position: absolute;
   width: 1px;
@@ -1084,44 +1042,6 @@
   overflow: hidden;
   clip-path: inset(50%);
   white-space: nowrap;
-}
-
-:is([data-era="platinum"], [data-era="drawingboard"]) .window.utility.side > .title-bar > :is(.close, .close-box, .resize, .resize-box, .zoom, .shade, .shade-box, .collapse) {
-  top: 0;
-  right: auto;
-  left: 0;
-  z-index: 1;
-  box-shadow: none;
-}
-
-:is([data-era="platinum"], [data-era="drawingboard"]) .window.utility.side > .title-bar > :is(.shade, .shade-box, .collapse, .resize, .resize-box, .zoom) {
-  top: auto;
-  bottom: 0;
-  background-image: url("art/platinum/utility-collapse-side.png");
-}
-
-:is([data-era="platinum"], [data-era="drawingboard"]) .window.utility.side > .window-pane {
-  margin: 1px 1px 1px 0;
-}
-
-/* In the background: a #555 frame and drop on flat #ddd; no boxes, no dots. */
-:is([data-era="platinum"], [data-era="drawingboard"]) .window.utility.side.inactive {
-  border-color: #555555;
-  background: #dddddd;
-}
-
-:is([data-era="platinum"], [data-era="drawingboard"]) .window.utility.side.inactive::before {
-  background:
-    linear-gradient(#555555, #555555) 100% 0 / 1px 100% no-repeat,
-    linear-gradient(#555555, #555555) 0 100% / 100% 1px no-repeat;
-}
-
-:is([data-era="platinum"], [data-era="drawingboard"]) .window.utility.side.inactive > .title-bar {
-  background: #dddddd;
-}
-
-:is([data-era="platinum"], [data-era="drawingboard"]) .window.utility.side.inactive > .title-bar::before {
-  content: none;
 }
 
 /* ---- Placard (Mac OS 9.0, the Appearance SDK's CDEF Tester, frame placard) -----

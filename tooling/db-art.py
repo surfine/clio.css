@@ -144,37 +144,73 @@ FILES = {
     'utility-right-top': (6195, 0), 'utility-right-mid': (6196, 0), 'utility-right-bottom': (6197, 0),
     'utility-bottom-l': (6200, 0), 'utility-bottom-r': (6199, 0),
     'utility-bl': (6201, 0), 'utility-br': (6198, 0),
-    # Side-title utility window (the Appearance SDK's Utility Window, the theme's
-    # Util LSide pictures): the top-left corner (with the close box), the column's
-    # top, middle and foot, and the bottom-left corner.
-    'utility-side-tl': (6205, 0), 'utility-side-top': (6206, 0),
-    'utility-side-mid': (6207, 0), 'utility-side-bottom': (6208, 0),
-    'utility-side-bl': (6209, 0),
-    'utility-side-box-top': (6213, 0), 'utility-side-box-bottom': (6214, 0),
-    'utility-side-tl-inactive': (6205, 1), 'utility-side-top-inactive': (6206, 1),
-    'utility-side-mid-inactive': (6207, 1), 'utility-side-bottom-inactive': (6208, 1),
-    'utility-side-bl-inactive': (6209, 1),
 }
 if '--files' in sys.argv:
     out = os.path.join(HERE, '..', 'art', 'drawingboard'); os.makedirs(out, exist_ok=True)
     ppats = {rid: tr.decode_ppat(body) for rid, _, body in res['ppat']}
-    def save(im, name):
+    def save(im, name, to=None):
         im = im.convert('RGBA')
         px = [im.getpixel((x, y)) for y in range(im.height) for x in range(im.width)]
         px = [c if c[3] else (0, 0, 0, 0) for c in px]
         pal = sorted(set(px), key=lambda c: c[3])
+        to = to or os.path.join(out, name + '.png')
         if len(pal) <= 256:
             p = Image.new('P', im.size); p.putpalette([v for c in pal for v in c[:3]], rawmode='RGB')
             idx = {c: i for i, c in enumerate(pal)}; p.putdata([idx[c] for c in px])
             alpha = bytes(c[3] for c in pal if c[3] < 255)
-            p.save(os.path.join(out, name + '.png'), optimize=True, **({'transparency': alpha} if alpha else {}))
+            p.save(to, 'PNG', optimize=True, **({'transparency': alpha} if alpha else {}))
         else:
-            im.save(os.path.join(out, name + '.png'), optimize=True)
+            im.save(to, 'PNG', optimize=True)
+    def png_uri(im):
+        buf = io.BytesIO(); save(im, None, buf)
+        return 'data:image/png;base64,' + base64.b64encode(buf.getvalue()).decode()
     for name, (rid, i) in FILES.items():
         save(pxm[rid][min(i, len(pxm[rid]) - 1)], name)
     # The utility window's rule: 6192's first row alone (the piece is a 4-row band;
     # the capture shows only its top line under the title bar).
     save(pxm[6192][0].crop((0, 0, 256, 1)), 'utility-rule-row')
+    # Side-title utility window, as the theme's 'layo' 138 (ActiveSideFloatingWindow)
+    # lays it out: rectangles on guides from the content's edges, each piece tiled from
+    # one corner and clipped to its rectangle (tooling/theme-layout.py renders it; 100%
+    # of the frame against the 8.5 capture rc8/side3). The column is the small system
+    # font's height (9) plus 5 wide, so its pieces show their first 14 columns and the
+    # left edge pieces their last one. 'layo' 139 (inactive) is the same pictures and
+    # no boxes. Three SVGs for the window's ::before, the PNGs inside them (an SVG used
+    # as an image may not fetch another file): the four corner groups, anchored to the
+    # box's corners by nested viewports; the two runs between them along the top and
+    # the foot (drawn in a box from x=30 to 36px before the right); the column's middle
+    # and the right edge's (in a box from y=29 to 41px before the foot).
+    def group(w, h, *pieces):
+        g = Image.new('RGBA', (w, h), (0, 0, 0, 0))
+        for rid, box, x, y in pieces:
+            im = pxm[rid][0]; im = im.crop(box) if box else im; g.alpha_composite(im.convert('RGBA'), (x, y))
+        return g
+    def img(im, x, y): return "<image x='%d' y='%d' width='%d' height='%d' href='%s'/>" % (x, y, im.width, im.height, png_uri(im))
+    def run(i, im, x, y, w, h):   # a piece tiled from (x, y) across a w x h rectangle
+        return ("<pattern id='p%d' x='%d' y='%d' width='%d' height='%d' patternUnits='userSpaceOnUse'>%s</pattern>"
+                "<rect x='%d' y='%d' width='%s' height='%s' fill='url(#p%d)'/>") % (i, x, y, im.width, im.height, img(im, 0, 0), x, y, w, h, i)
+    def svg(body, name):
+        open(os.path.join(out, name + '.svg'), 'w').write(
+            "<svg xmlns='http://www.w3.org/2000/svg' style='image-rendering:pixelated'>%s</svg>" % body)
+    tl = group(30, 29, (6205, (0, 0, 16, 19), 1, 0), (6213, None, 17, 5),
+               (6206, (0, 0, 14, 10), 3, 19), (6204, (4, 0, 5, 10), 17, 19))
+    bl = group(30, 41, (6208, (0, 0, 14, 33), 3, 0), (6202, (4, 0, 5, 33), 17, 0),
+               (6209, (0, 0, 17, 8), 0, 33), (6214, None, 17, 33))
+    tr = group(36, 27, (6193, None, 0, 3), (6194, None, 29, 0), (6195, None, 29, 17))
+    br = group(36, 41, (6197, None, 29, 0), (6199, None, 0, 33), (6198, None, 29, 33))
+    end = "<svg x='100%%' y='%s' overflow='visible'>%s</svg>"
+    svg(img(tl, 0, 0) + "<svg y='100%' overflow='visible'>" + img(bl, 0, -41) + "</svg>"
+        + end % (0, img(tr, -36, 2)) + end % ('100%', img(br, -36, -41)), 'side-frame')
+    svg(run(0, pxm[6192][0], 0, 5, '100%', 4)
+        + "<svg y='100%' overflow='visible'>" + run(1, pxm[6200][0], 0, -8, '100%', 5) + "</svg>", 'side-runs')
+    svg(run(0, group(15, 256, (6207, (0, 0, 14, 256), 0, 0), (6203, (4, 0, 5, 256), 14, 0)), 3, 0, 15, '100%')
+        + end % (0, run(1, pxm[6196][0], -7, 0, 5, '100%')), 'side-edges')
+    # The boxes (pxm 201, and 211's upright pictures): close and collapse side by
+    # side, their pressed pictures below.
+    boxes = Image.new('RGBA', (18, 18), (0, 0, 0, 0))
+    for rid, i, x, y in ((201, 0, 0, 0), (211, 2, 9, 0), (201, 1, 0, 9), (211, 3, 9, 9)):
+        boxes.alpha_composite(pxm[rid][i].convert('RGBA'), (x, y))
+    save(boxes, 'side-boxes')
     # The rule's shade: ppat 7099's one-row pencil line, drawn from the window's 8th
     # column (the capture matches it 100% from x=8 to x=157 at y=19).
     save(ppats[7099].crop((0, 0, 128, 1)), 'utility-rule-shade')

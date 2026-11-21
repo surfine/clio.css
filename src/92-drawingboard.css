@@ -501,6 +501,55 @@
   content: none;
 }
 
+/* ---- Side-title utility window --------------------------------------------------
+   The theme's 'layo' 138 (ActiveSideFloatingWindow), decoded by
+   tooling/theme-layout.py, matches the 8.5 capture's frame 100% (rc8/side3, the
+   Appearance SDK's sample): the column is the small system font's height plus 5
+   (14px of the 18px pieces), the content 18px in and 9px down. Three pictures
+   (tooling/db-art.py): the four corner groups; the runs along the top and the foot
+   between them; the column's and the right edge's middles. In the background
+   ('layo' 139) the same pictures and no boxes. The content keeps the utility
+   window's #ccc (the application draws it). */
+[data-era="drawingboard"] .window.utility.side {
+  padding: 9px 5px 8px 18px;
+  background: #cccccc content-box;
+}
+
+[data-era="drawingboard"] .window.utility.side::before {
+  background:
+    url("art/drawingboard/side-frame.svg"),
+    url("art/drawingboard/side-edges.svg") 0 29px / 100% calc(100% - 70px) no-repeat,
+    url("art/drawingboard/side-runs.svg") 30px 0 / calc(100% - 66px) 100% no-repeat;
+}
+
+[data-era="drawingboard"] .window.utility.side > .title-bar {
+  inset: 0 auto 0 0;
+  width: 18px;
+  height: auto;
+}
+
+/* The boxes (201, and 211 upright), 6px in, 8px down and 7px up; pressed below. */
+[data-era="drawingboard"] .window.utility.side > .title-bar > :is(.close, .shade, .collapse) {
+  visibility: visible;
+  inset: 8px auto auto 6px;
+  width: 9px;
+  height: 9px;
+  background: url("art/drawingboard/side-boxes.png");
+}
+
+[data-era="drawingboard"] .window.utility.side > .title-bar > :is(.shade, .collapse) {
+  inset: auto auto 7px 6px;
+  background-position-x: -9px;
+}
+
+[data-era="drawingboard"] .window.utility.side > .title-bar > :is(:active:where(:not([data-clio-off])), .active) {
+  background-position-y: -9px;
+}
+
+[data-era="drawingboard"] .window.utility.side.inactive > .title-bar > * {
+  visibility: hidden;
+}
+
 /* ---- Menus -----------------------------------------------------------------
    The shade: 2px of pencil (ppat 130, 131) down the right from 3px below the
    menu's top and along the foot from 4px in. A menu that is not a drop-down

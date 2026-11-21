@@ -26,7 +26,7 @@ P = Mac OS 8/9 Platinum. 0.10.0 added every row marked new in CHANGELOG.md.
 | Window without size box / zoom only (`noGrowDocProc`, `zoomNoGrow`) | IM-TE ch. 4 | `.window` (leave the boxes out) | yes | yes | yes | yes |
 | Rounded-corner window (`rDocProc`, desk accessories) | IM-TE ch. 4 | `.rounded-window`, `.rounded-title` | yes | yes | yes | yes |
 | Utility (floating) window | HIG92 ch. 5; HIG8 ch. 5; `kWindowFloat*` | `.window.utility` | inferred | inferred | inferred | yes |
-| Side-title utility window (`kWindowFloatSide*`) | Toolbox Ref. | `.window.utility.side` | adapted | adapted | adapted | yes |
+| Side-title utility window (`kWindowFloatSide*`) | Toolbox Ref. | `.window.utility.side` | adapted | adapted | yes | yes |
 | Modal dialog (`dBoxProc`), plain box, shadowed box | HIG87 p.58; IM-TE ch. 4/6 | `.modal-dialog`, `.standard-dialog` | yes | yes | yes | yes |
 | Movable modal dialog (`movableDBoxProc`) | HIG92 ch. 6; HIG8 ch. 3 | `.window.movable-modal` | inferred | inferred | inferred | yes |
 | Alert: note, caution, stop | HIG87 p.60; IM-TE ch. 6 | `.alert-box`, `.alert-icon.note/.caution/.stop` | yes | yes | yes | yes |

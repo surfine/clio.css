@@ -349,6 +349,13 @@ specimens.push(
   P9("p9-side-right", side("", 255, 92, "#9999cc"), [253, 0, 4, 85], "side-utility", [743, 454, 4, 85]),
   P9("p9-side-bottom", side("", 255, 92, "#9999cc"), [0, 90, 240, 4], "side-utility", [490, 544, 240, 4]),
   P9("p9-side-inactive", side(" inactive", 315, 82, "#9999cc"), [0, 0, 12, 82], "side-utility", [90, 129, 12, 82]),
+  // Drawing Board: the same sample in Mac OS 8.5 (rc8 run, frame side3: the frame's
+  // top-left at 486,454, content 237x84 at 504,463). The sample draws its own scroll bars
+  // and size box in the content's foot and right, so the crops keep to the frame's bands.
+  DB("db-side-bar", side("", 260, 101, "#9999cc"), [0, 0, 18, 101], "../rc8/side3", [486, 454, 18, 101]),
+  DB("db-side-top", side("", 260, 101, "#9999cc"), [18, 0, 244, 9], "../rc8/side3", [504, 454, 244, 9]),
+  DB("db-side-right", side("", 260, 101, "#9999cc"), [255, 0, 7, 83], "../rc8/side3", [741, 454, 7, 83]),
+  DB("db-side-bottom", side("", 260, 101, "#9999cc"), [0, 93, 240, 8], "../rc8/side3", [486, 547, 240, 8]),
 );
 // Placard: the CDEF Tester's 100x50 placard (frames placard, placard-disabled) on the
 // window's #ddd. Drawing Board's pencil frame drifts in shade: its face is compared.

@@ -2662,7 +2662,7 @@
       </dl>
       
       <details class="evidence-details">
-        <summary>Evidence (5)</summary>
+        <summary>Evidence (8)</summary>
       <table class="evidence">
         <caption>Where each value comes from</caption>
         <thead><tr><th scope="col">Era</th><th scope="col">Value</th><th scope="col">Status</th><th scope="col">Source</th></tr></thead>
@@ -2681,9 +2681,27 @@
         </tr>
 <tr>
           <td>Drawing Board</td>
-          <td>As the top-title utility window: Platinum's bar and boxes inside the Drawing Board document window's paper and frame pieces; the theme's own side-window pieces (Util LSide pictures 6205-6214) are not reproduced</td>
+          <td>The theme's own frame as its 'layo' 138 (ActiveSideFloatingWindow) lays it out: a 14px column (the small system font's 9px height plus 5) of the Util LSide pieces 6205-6209 clipped to it, the content 18px in and 9px down, the utility pieces 6192-6204 and 6213/6214 round it, the close box (201) 6px in and 8px down, the collapse box upright (211's third picture) 7px above the foot</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, Mac OS 8.5 with Drawing Board in Infinite Mac (frames in .fidelity, see tooling/fidelity.mjs): the same sample, frame side3 in the rc8 run; tooling/theme-layout.py decodes the theme's 'layo' resources and draws them from the pieces</code><br><span class="upstream">the drawing matches the capture's 4123 frame pixels 100% (theme-layout.py --check); specimens db-side-bar, -top, -right, -bottom 100% identical</span></td>
+        </tr>
+<tr>
+          <td>Drawing Board</td>
+          <td>In the background: the same frame and no boxes</td>
+          <td><span class="status status-inferred">Inferred</span></td>
+          <td><code>clio.css — the theme's 'layo' 139 (InactiveSideFloatingWindow): the same pieces, whose inactive pictures are identical, and no box parts</code><br><span class="upstream">no capture of a background side window (the rc8 run's background utility window is half-drawn)</span></td>
+        </tr>
+<tr>
+          <td>Drawing Board</td>
+          <td>A pressed box shows its second picture</td>
+          <td><span class="status status-inferred">Inferred</span></td>
+          <td><code>clio.css — pxm 201 and 211 carry two pictures per box, as the document window's 200/210/220 (normal, pressed)</code><br><span class="upstream">the capture has no pressed box</span></td>
+        </tr>
+<tr>
+          <td>Drawing Board</td>
+          <td>The content keeps the utility window's #ccc</td>
           <td><span class="status status-adapted">Adapted</span></td>
-          <td><code>clio.css capture, Mac OS 8.5 with Drawing Board in Infinite Mac (frames in .fidelity, see tooling/fidelity.mjs): the same sample, frame side3 in the rc8 run</code><br><span class="upstream">captured, not drawn</span></td>
+          <td><code>clio.css</code><br><span class="upstream">the application draws the content</span></td>
         </tr>
 <tr>
           <td>System 7</td>
