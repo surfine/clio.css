@@ -1,4 +1,4 @@
-/*! clio.css 1.0.1 | MIT | https://surfine.github.io/clio.css/
+/*! clio.css 1.0.2 | MIT | https://surfine.github.io/clio.css/
  * Classic Mac OS interface CSS: System 6, System 7, Mac OS 8.5 Drawing Board and Mac OS 9 Platinum.
  * Measured values traced to AI System 6; see EVIDENCE.md.
  * Includes art from system.css (MIT) and pixel reconstructions of Apple control art; see THIRD-PARTY.md. */
@@ -5294,6 +5294,9 @@
   --clio-art-db-popup-arrow: url("art/drawingboard/parts/popup-arrow.png"); /* 7x9 */
   --clio-art-db-popup-arrow-off: url("art/drawingboard/parts/popup-arrow-off.png"); /* 7x9 */
   --clio-art-db-submenu: url("art/drawingboard/parts/submenu.png"); /* 6x11 */
+  --clio-art-db-menucheck: url("art/drawingboard/parts/menucheck.png"); /* 10x8 */
+  /* The menu check mark in the menu ink, as 8.5 draws the menu font's glyph (popup-open). */
+  --clio-art-p-check: var(--clio-art-db-menucheck);
   --clio-art-db-grow: url("art/drawingboard/parts/grow.png"); /* 16x16 */
   --clio-art-db-popup-corner: url("art/drawingboard/parts/popup-corner.png"); /* 24x24 */
   --clio-art-db-popup-corner-off: url("art/drawingboard/parts/popup-corner-off.png"); /* 24x24 */
@@ -6267,8 +6270,8 @@
 [data-era="drawingboard"] ul.clio-popup-menu.menu {   /* outweighs the menus' :is(.menu, ul[role="menu"]) */
   --clio-menu-item-active-bg:
     var(--clio-art-db-menu-underline-left) left 16px bottom 0 / 29px 3px no-repeat,
-    var(--clio-art-db-menu-underline-right) right 15px bottom 0 / 36px 3px no-repeat,
-    var(--clio-art-db-menu-underline-tiled) left 45px bottom 0 / calc(100% - 96px) 3px no-repeat;
+    var(--clio-art-db-menu-underline-right) right 16px bottom 0 / 36px 3px no-repeat,   /* 16px: popup-open, the right piece ends 16px in */
+    var(--clio-art-db-menu-underline-tiled) left 45px bottom 0 / calc(100% - 97px) 3px no-repeat;
   background:
     url("art/drawingboard/menu-top.png") calc(0px - var(--clio-db-phase, 0px)) 0 / 128px 1px repeat-x border-box,
     url("art/drawingboard/menu-left.png") 0 0 / 1px 128px repeat-y border-box,

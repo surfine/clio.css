@@ -80,6 +80,18 @@ art = {
     'db-thumb-top': pxm[1116][0], 'db-thumb-bottom': pxm[1117][0],
     'db-thumb-vgrip': pxm[1119][0], 'db-thumb-vstretch': pxm[1118][0],
 }
+# The menu check mark is no pixmap: Mac OS 8.5 draws the menu font's check glyph in the
+# menu's ink, #313131 (popup-open.png: the mark's solid pixels are 49,49,49 and its edges
+# that ink's coverage over the paper). The glyph is Platinum's (tooling/p9-art.py, kept in
+# src/90-platinum.css as --clio-art-p9-menucheck), recoloured.
+def _menucheck():
+    import re
+    css = open(os.path.join(HERE, '..', 'src', '90-platinum.css')).read()
+    b64 = re.search(r'--clio-art-p9-menucheck: url\("data:image/png;base64,([^"]+)"\)', css).group(1)
+    im = Image.open(io.BytesIO(base64.b64decode(b64))).convert('RGBA')
+    im.putdata([(0x31, 0x31, 0x31, a) if a else (0, 0, 0, 0) for (_, _, _, a) in im.getdata()])
+    return im
+art['db-menucheck'] = _menucheck()
 # Tabs (NTabLeft 6x25, NTabRight 17x27; image 0 is the front tab, 1 a back
 # tab, 2 pressed). In the capture the right end sits 2px above the left end,
 # so the left end is dropped 2px. The 1px stretch between them is the right

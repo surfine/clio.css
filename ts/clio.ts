@@ -460,7 +460,7 @@
     if (drawn(sel)) { alignPicker(sel); return; }
     if (e.pointerType === "touch") return;
     e.preventDefault();
-    sel.focus({ preventScroll: true });
+    sel.focus({ preventScroll: true, focusVisible: false });   // a pressed pop-up draws no keyboard ring (popup-open)
     openPopup(sel);
     (popup as Popup | null)!.x = e.clientX; (popup as Popup | null)!.y = e.clientY;   // openPopup set it
   }, true);
@@ -1365,7 +1365,7 @@
   })();
 
   window.clio = {
-    version: "1.0.1",
+    version: "1.0.2",
     zoomRects,
     collapse,
     sounds: soundsApi,

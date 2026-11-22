@@ -1,12 +1,27 @@
 # Changelog
 
-## Unreleased
+## 1.0.2 (2026-11-23)
 
+The first 1.0.x on npm: it carries 1.0.0 and 1.0.1 below, which were tagged but never
+published.
+
+- **Drawing Board's open pop-up menu now matches the capture structurally** (re-measured
+  for the LTS; `db-popup-open` 96.2% → 97.3% same, no pixel structurally off). Three
+  differences the old note had put down to antialiasing were real: the check mark is the
+  menu font's glyph in the menu ink #313131, not black (`art/drawingboard/parts/menucheck.png`,
+  written by `tooling/db-art.py`); the chosen item's underline ends 16px in, not 15px; and
+  a pop-up opened with the pointer no longer draws the keyboard focus ring round its
+  button (clio.js focuses it with `focusVisible: false`). The menu bar's menus take the
+  same check.
+- **B15 identified**: the Drawing Board utility window's title is set in Gadget, the small
+  system font of the theme's scene 'Drawing Board on Parchment' ('scen' 2000) that the
+  captures use. Gadget is Apple's and is not shipped, so the title keeps clio.css's face.
 - **clio.js and the sounds panel are written in TypeScript** (internal; no behaviour change).
   The sources moved from `js/` to `ts/` and are checked in strict mode; the build emits them
-  with `tsc` (TypeScript 7, a dev dependency) as the same plain scripts. Proof that nothing
-  changed: minified, the emitted `dist/clio.js` and `dist/clio-sounds-panel.js` are byte for
-  byte the 1.0.1 ones; the unminified files are only reindented. New: `dist/clio.d.ts`
+  with `tsc` (TypeScript 7, a dev dependency) as the same plain scripts. Proof that the move
+  changed nothing (`f078c8f`): minified, the emitted `dist/clio.js` and
+  `dist/clio-sounds-panel.js` were byte for byte the 1.0.1 ones; the unminified files are
+  only reindented by `tsc`. New: `dist/clio.d.ts`
   declares `window.clio` and `window.clioSoundsPanel` for TypeScript and editors, and the
   `clio.css/js` export carries it as its `types`.
 

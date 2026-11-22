@@ -1,6 +1,6 @@
 {
   "name": "clio.css",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "CSS library for classic Mac OS interfaces: Macintosh System 6, System 7, Mac OS 8.5 Drawing Board and Mac OS 8/9 Platinum windows, menus, buttons, scroll bars and dialogs, with every value traced to measured pixels.",
   "homepage": "https://surfine.github.io/clio.css/",
   "license": "MIT",
@@ -33,8 +33,8 @@
   ],
   "install": {
     "npm": "npm install clio.css",
-    "cdn": "https://unpkg.com/clio.css@1.0.1/dist/clio.css",
-    "jsdelivr": "https://cdn.jsdelivr.net/npm/clio.css@1.0.1/dist/clio.css"
+    "cdn": "https://unpkg.com/clio.css@1.0.2/dist/clio.css",
+    "jsdelivr": "https://cdn.jsdelivr.net/npm/clio.css@1.0.2/dist/clio.css"
   },
   "evidenceStatuses": {
     "measured": "read from real pixels of the era",
@@ -448,6 +448,13 @@
           "status": "measured",
           "source": "clio.css — 'layo' 136 ends the frame at the rule; the content rectangle starts on the next row",
           "upstream": "reverses 1.0.0's rule shade (ppat 7099), LTS-AUDIT A16"
+        },
+        {
+          "era": "drawingboard",
+          "claim": "A utility window's title is set in the scene's small system font: the captures' scene is 'scen' 2000 (Drawing Board on Parchment), whose system and small system fonts are Gadget (scene 128, on a Grid, names Charcoal and Geneva). Gadget is Apple's and is not shipped, so the title keeps clio.css's face, centred on the capture's baseline (77px for \"Applications\" where Gadget sets 71px)",
+          "status": "measured",
+          "source": "clio.css — the theme file's 'scen' resources (tooling/theme-resources.py), read 2026-11-23; capture hig/drawingboard/switcher.png",
+          "upstream": "LTS-AUDIT B15"
         },
         {
           "era": "drawingboard",
@@ -1150,10 +1157,10 @@
         },
         {
           "era": "drawingboard",
-          "claim": "Open pop-up menu: drawn by clio.js wherever it runs (the browser's picker cannot carry the theme's shade and corner pixels; without clio.js, base-select draws it plain): its top on the button's, as wide as the button less 20px of arrows, the top pen shifted with the button's phase, text 18px in and a pixel higher than in pull-down menus, the check 1px in, the underline on the item's last rows",
+          "claim": "Open pop-up menu: drawn by clio.js wherever it runs (the browser's picker cannot carry the theme's shade and corner pixels; without clio.js, base-select draws it plain): its top on the button's, as wide as the button less 20px of arrows, the top pen shifted with the button's phase, text 18px in and a pixel higher than in pull-down menus, the check 1px in and drawn in the menu ink #313131 (the menu font's glyph, not black: its solid pixels read 49,49,49), the underline on the item's last rows with its right piece ending 16px in, and no keyboard focus ring round the pressed button",
           "status": "measured",
           "source": "clio.css capture, Mac OS 8.5 with the theme in Infinite Mac, Appearance > Appearance held (frame popup-open)",
-          "upstream": "specimens db-js-popup-open and db-popup-open 96.2% same, 98.9% within 8/255: the text's edge levels over the paper differ by a step"
+          "upstream": "specimens db-js-popup-open and db-popup-open 97.3% same, 99.95% within 8/255, none structurally off (2026-11-23: the check's ink, the underline's right piece 1px left and the ring were the off pixels; what remains is antialiasing over the paper within a step)"
         }
       ]
     },
