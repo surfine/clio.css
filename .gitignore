@@ -5,3 +5,4 @@ node_modules/
 tooling/__pycache__/
 .notes/
 packs/
+.build/

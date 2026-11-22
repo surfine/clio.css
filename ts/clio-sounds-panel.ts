@@ -3,9 +3,15 @@
 (function () {
   "use strict";
 
+  interface PanelState { track: string; classes: string[] }
+  interface PackIndex {
+    sets?: { slug?: unknown; name?: unknown; manifest?: string }[];
+    alerts?: Record<string, { manifest?: string } | null>;
+  }
+
   var KEY = "clio-sounds-panel";
   var CLASSES = ["menus", "windows", "controls", "finder"];
-  var LABELS = { menus: "Menus", windows: "Windows", controls: "Controls", finder: "Finder" };
+  var LABELS: Record<string, string> = { menus: "Menus", windows: "Windows", controls: "Controls", finder: "Finder" };
   var ERAS = ["drawingboard", "platinum"];
   var count = 0;
 
@@ -27,34 +33,34 @@
     }
   }
 
-  function save(state) {
+  function save(state: PanelState) {
     try {
       window.localStorage.setItem(KEY, JSON.stringify({ track: state.track, classes: state.classes }));
     } catch (err) {}
   }
 
-  function paint(classes) {
+  function paint(classes: string[]) {
     var on = CLASSES.filter(function (name) { return classes.indexOf(name) >= 0; });
     document.documentElement.setAttribute("data-clio-sounds", on.length ? on.join(" ") : "none");
   }
 
-  window.clioSoundsPanel = function (container, opts) {
+  window.clioSoundsPanel = function (container: Element, opts?: ClioSoundsPanelOptions) {
     if (!container) throw new Error("clioSoundsPanel needs a container");
     opts = opts || {};
     var base = typeof opts.base === "string" && opts.base ? opts.base : "packs/";
     if (base.charAt(base.length - 1) !== "/") base += "/";
-    var eras = opts.eras == null ? ERAS.slice() : [].concat(opts.eras);
+    var eras = opts.eras == null ? ERAS.slice() : ([] as string[]).concat(opts.eras);
 
     var saved = readSaved();
-    var state = saved
+    var state: PanelState = saved
       ? { track: saved.track, classes: saved.classes }
       : { track: "none", classes: CLASSES.slice() };
-    var used = new Set();
-    var boxes = {};
-    var handlers = {};
+    var used = new Set<string>();
+    var boxes: Record<string, HTMLInputElement> = {};
+    var handlers: Record<string, () => void> = {};
     var destroyed = false;
     var loadToken = 0;
-    var index = null;
+    var index: PackIndex | null = null;
     var id = ++count;
 
     var root = document.createElement("div");
@@ -98,13 +104,13 @@
     var api = sounds();
     if (api) api.muted = true;
 
-    async function load(url, eraOpt) {
+    async function load(url: string, eraOpt?: string[]) {
       if (!url || used.has(url)) return;
       if (!sounds()) return;
       used.add(url);
       try {
-        if (eraOpt) await window.clio.sounds.use(url, { era: eraOpt });
-        else await window.clio.sounds.use(url);
+        if (eraOpt) await window.clio!.sounds.use(url, { era: eraOpt });
+        else await window.clio!.sounds.use(url);
       } catch (err) {
         used.delete(url);
       }
@@ -113,16 +119,16 @@
     async function applyTrack() {
       var mine = ++loadToken;
       if (state.track === "none" || !index) {
-        if (sounds() && state.track === "none") window.clio.sounds.muted = true;
+        if (sounds() && state.track === "none") window.clio!.sounds.muted = true;
         return;
       }
       var sets = Array.isArray(index.sets) ? index.sets : [];
-      var set = null;
+      var set: NonNullable<PackIndex["sets"]>[number] | null = null;
       for (var i = 0; i < sets.length; i++) {
         if (sets[i] && String(sets[i].slug) === state.track) { set = sets[i]; break; }
       }
       if (!set) return;
-      if (sounds()) window.clio.sounds.muted = false;
+      if (sounds()) window.clio!.sounds.muted = false;
       await load(base + set.manifest, eras);
       if (mine !== loadToken || destroyed) return;
       var alerts = index.alerts && typeof index.alerts === "object" ? index.alerts : {};

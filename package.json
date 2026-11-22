@@ -51,7 +51,10 @@
     "./package.json": "./package.json",
     "./system7": "./dist/clio.system7.css",
     "./system7.min": "./dist/clio.system7.min.css",
-    "./js": "./dist/clio.js",
+    "./js": {
+      "types": "./dist/clio.d.ts",
+      "default": "./dist/clio.js"
+    },
     "./js.min": "./dist/clio.min.js",
     "./sounds-panel": "./dist/clio-sounds-panel.js"
   },
@@ -68,6 +71,7 @@
   "scripts": {
     "build": "node tooling/build.mjs",
     "test": "node tooling/build.mjs && node test/check.mjs",
+    "typecheck": "tsc -p . --noEmit",
     "fidelity": "node tooling/fidelity.mjs",
     "behaviour": "node tooling/build.mjs && node tooling/behaviour.mjs",
     "prepack": "node tooling/build.mjs && node test/check.mjs",
@@ -84,5 +88,8 @@
   },
   "engines": {
     "node": ">=18"
+  },
+  "devDependencies": {
+    "typescript": "7.0.2"
   }
 }

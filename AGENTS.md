@@ -17,6 +17,11 @@ For AI coding agents using or changing this repository.
 - Sources: `src/*.css` (concatenated in file-name order) and `components/index.mjs`
   (docs, `components.json`, `llms.txt`, `llms-full.txt` and `EVIDENCE.md` are generated
   from it). Never hand-edit `dist/`, `docs/`, `llms.txt` or `EVIDENCE.md`.
+- clio.js and the sounds panel are TypeScript in `ts/` (strict; `npm install` first). The
+  build emits them with `tsc` as plain scripts, not modules: keep each an IIFE that sets
+  only `window.clio` / `window.clioSoundsPanel`. Their public types live in
+  `types/clio.d.ts` (shipped as `dist/clio.d.ts`); `window.clio = { … } satisfies ClioApi`
+  keeps the declaration and the code together. `npm run typecheck` checks without building.
 - After a change: `npm test` (build + static checks) must pass. For Platinum chrome,
   run `npm run fidelity` and do not let a specimen's exact-match share fall.
 - Every new or changed value needs an evidence row in `components/index.mjs` with an

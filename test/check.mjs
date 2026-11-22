@@ -33,7 +33,7 @@ const noComments = css.replace(/\/\*[\s\S]*?\*\//g, "");
 const declared = new Set([...noComments.matchAll(/(--clio-[\w-]+)\s*:/g)].map((m) => m[1]));
 const used = new Set([...noComments.matchAll(/var\((--clio-[\w-]+)/g)].map((m) => m[1]));
 const optional = new Set(["--clio-details-shadow", "--clio-icon-selected-filter", "--clio-scrollbar-thumb-bg-horizontal", "--clio-scrollbar-thumb-shadow-horizontal", "--clio-scrollbar-thumb-color", "--clio-scrollbar-track-color"]);
-// clio.js sets these on the scrollers it draws bars for (js/clio.js).
+// clio.js sets these on the scrollers it draws bars for (ts/clio.ts).
 const js = readFileSync(join(root, "dist/clio.js"), "utf8");
 const fromJs = (v) => (/^--clio-sb-/.test(v) && js.includes(v.replace(/^--clio-sb-/, ""))) || js.includes(`"${v}"`);
 for (const v of used) ok(declared.has(v) || optional.has(v) || fromJs(v), `read but never declared: ${v}`);
@@ -135,7 +135,7 @@ ok(read("docs/llms-full.txt").includes("```css"), "llms-full.txt: stylesheet mis
 
 // 10. Package.
 const pkg = JSON.parse(read("package.json"));
-for (const [k, v] of Object.entries(pkg.exports)) if (!v.includes("*")) ok(existsSync(join(root, v)), `exports ${k} -> ${v} missing`);
+for (const [k, e] of Object.entries(pkg.exports)) for (const v of typeof e === "string" ? [e] : Object.values(e)) if (!v.includes("*")) ok(existsSync(join(root, v)), `exports ${k} -> ${v} missing`);   // a conditional export ({ types, default }) names each file
 // 200 KB since 0.10.0, which added every control the classic guidelines define (COVERAGE.md);
 // 220 KB from the Classic close (owner, 2026-11-14): the all-eras file keeps the four Classic
 // eras, and Mac OS X eras ship as files of their own. 222 KB on 2026-11-18 (owner) for the

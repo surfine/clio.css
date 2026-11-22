@@ -673,7 +673,7 @@ ok(still, "insertion point: lit and still under reduced motion");
   await press("#b");
   await page.evaluate(() => document.body.insertAdjacentHTML("beforeend", '<div class="alert-box">Alert</div>'));
   { const h = await heard(); ok(h === "alert", `sounds: System 7 has no interface sounds, only its alert sound (${h})`); }
-  // The Appearance-style panel (js/clio-sounds-panel.js): off until chosen, remembered.
+  // The Appearance-style panel (ts/clio-sounds-panel.ts): off until chosen, remembered.
   {
     const file = join(dir, `panel-${ENGINE}.html`);
     writeFileSync(file, `<!doctype html><html data-era="platinum"><head><meta charset="utf-8"><link rel="stylesheet" href="/dist/clio.css"></head><body style="margin:20px"><div class="clio"><div id="panel"></div><button id="pb">OK</button></div><script src="/dist/clio.js"></script><script src="/dist/clio-sounds-panel.js"></script><script>window.panel = clioSoundsPanel(document.querySelector("#panel"), { base: "${rel(sdir)}/" }); window.heard = []; document.addEventListener("clio:sound", (e) => window.heard.push(e.detail.code));</script></body></html>`);

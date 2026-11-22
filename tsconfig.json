@@ -1,0 +1,15 @@
+{
+  // The runtime scripts users load (dist/clio.js, dist/clio-sounds-panel.js), written in
+  // TypeScript and emitted as plain, commented, non-module scripts by tooling/build.mjs.
+  "compilerOptions": {
+    "target": "es2022",
+    "lib": ["dom", "dom.iterable", "es2022"],
+    "strict": true,
+    "noEmitOnError": true,
+    "removeComments": false,
+    "rootDir": "ts",
+    "outDir": ".build",
+    "skipLibCheck": true
+  },
+  "include": ["ts/**/*.ts", "types/**/*.d.ts"]
+}

@@ -1,5 +1,15 @@
 # Changelog
 
+## Unreleased
+
+- **clio.js and the sounds panel are written in TypeScript** (internal; no behaviour change).
+  The sources moved from `js/` to `ts/` and are checked in strict mode; the build emits them
+  with `tsc` (TypeScript 7, a dev dependency) as the same plain scripts. Proof that nothing
+  changed: minified, the emitted `dist/clio.js` and `dist/clio-sounds-panel.js` are byte for
+  byte the 1.0.1 ones; the unminified files are only reindented. New: `dist/clio.d.ts`
+  declares `window.clio` and `window.clioSoundsPanel` for TypeScript and editors, and the
+  `clio.css/js` export carries it as its `types`.
+
 ## 1.0.1 (2026-11-18, touch fixes)
 
 - **The scroll bars sat on the window's frame, not inside it** (owner's report from the touch

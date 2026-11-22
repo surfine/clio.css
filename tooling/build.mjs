@@ -11,6 +11,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { gzipSync } from "node:zlib";
 import { createRequire } from "node:module";
+import { execFileSync } from "node:child_process";
 import { components, AIS6 } from "../components/index.mjs";
 import { renderSite, renderLlms, renderLlmsFull, renderEvidence, renderSitemap } from "./site.mjs";
 
@@ -134,10 +135,18 @@ const copyArt = (to) => {
   for (const f of artFiles) { mkdirSync(dirname(join(root, to, f)), { recursive: true }); copyFileSync(join(root, f), join(root, to, f)); }
 };
 copyArt("dist");
-// clio.js, the optional behaviour layer: copied as written (it carries its own banner).
-write("dist/clio.js", read("js/clio.js").replace("0.11.0-dev", pkg.version));
-// The Appearance > Sound panel for sites that serve sound packs (copied as written).
-write("dist/clio-sounds-panel.js", read("js/clio-sounds-panel.js"));
+// clio.js, the optional behaviour layer, and the Appearance > Sound panel for sites that
+// serve sound packs: written in TypeScript (ts/), checked strict and emitted by tsc as plain
+// scripts with their comments and banner (.build/, then here). Their globals' types ship
+// as dist/clio.d.ts (types/clio.d.ts).
+const tsc = join(root, "node_modules/.bin/tsc");
+if (!existsSync(tsc)) { console.error("tsc not found: run npm install (typescript is a dev dependency)."); process.exit(1); }
+rmSync(join(root, ".build"), { recursive: true, force: true });
+execFileSync(tsc, ["-p", root], { stdio: "inherit" });
+const emitted = (f) => read(`.build/${f}`).replace(/^"use strict";\n/, "");   // the scripts keep "use strict" inside their own function
+write("dist/clio.js", emitted("clio.js").replace("0.11.0-dev", pkg.version));
+write("dist/clio-sounds-panel.js", emitted("clio-sounds-panel.js"));
+write("dist/clio.d.ts", read("types/clio.d.ts"));
 // clio.min.js: the same, minified by esbuild (a dev tool: here, or in AIS6_DIR as Playwright is).
 let esbuild;
 for (const base of [join(root, "package.json"), join(process.env.AIS6_DIR || "/Users/aaron/AI System 6", "package.json")]) { try { esbuild = createRequire(base)("esbuild"); break; } catch {} }
