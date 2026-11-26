@@ -1,6 +1,6 @@
 {
   "name": "clio.css",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "CSS library for classic Mac OS interfaces: Macintosh System 6, System 7, Mac OS 8.5 Drawing Board and Mac OS 8/9 Platinum windows, menus, buttons, scroll bars and dialogs, with every value traced to measured pixels.",
   "homepage": "https://surfine.github.io/clio.css/",
   "license": "MIT",
@@ -40,8 +40,8 @@
   ],
   "install": {
     "npm": "npm install clio.css",
-    "cdn": "https://unpkg.com/clio.css@1.0.2/dist/clio.css",
-    "jsdelivr": "https://cdn.jsdelivr.net/npm/clio.css@1.0.2/dist/clio.css"
+    "cdn": "https://unpkg.com/clio.css@1.1.0/dist/clio.css",
+    "jsdelivr": "https://cdn.jsdelivr.net/npm/clio.css@1.1.0/dist/clio.css"
   },
   "evidenceStatuses": {
     "measured": "read from real pixels of the era",
@@ -783,10 +783,17 @@
         },
         {
           "era": "nextstep",
-          "claim": "The menu bar is drawn as NeXT's main menu: a vertical panel 93px wide at the screen's top left, titled by its aria-label; a title opens its submenu to the right",
+          "claim": "The menu bar is drawn as NeXT's main menu: a vertical panel titled by its aria-label; a title opens its submenu to the right",
           "status": "adapted",
           "source": "clio.css (same DOM as the Classic menu bar)",
-          "upstream": "NeXTSTEP User Interface Guidelines, Release 3, ch. 6 (the main menu)"
+          "upstream": "NeXTSTEP User Interface Guidelines, Release 3 p.100 (the main menu)"
+        },
+        {
+          "era": "nextstep",
+          "claim": "A menu is as wide as its widest cell (Workspace's main menu 93px, Edit's 77px, its Info submenu 107px)",
+          "status": "measured",
+          "source": "clio.css capture, NeXTStep 3.0 in Infinite Mac (frames in .fidelity/ns30), frames boot1, info-open and edit-launch",
+          "upstream": "clio.css lets the browser size it to its text, whose widths are Helvetica's (D3)"
         },
         {
           "era": "nextstep",
@@ -843,6 +850,13 @@
           "status": "inferred",
           "source": "NeXTSTEP User Interface Guidelines, Release 3, ch. 6",
           "upstream": "the captured menus have none"
+        },
+        {
+          "era": "nextstep",
+          "claim": "A dimmed item does not highlight under the pointer",
+          "status": "inferred",
+          "source": "NeXTSTEP User Interface Guidelines, Release 3 p.100",
+          "upstream": "found by the Firefox run of nx-submenu-top, whose pointer rested on Clean Up Icons"
         },
         {
           "era": "nextstep",
@@ -2238,10 +2252,10 @@
         },
         {
           "era": "nextstep",
-          "claim": "Icon labels: Helvetica 12, black; a selected label on white",
-          "status": "inferred",
-          "source": "AI System 6 69-nextstep-appearance.css (--desktop-label-*)",
-          "upstream": "frame boot1 shows the selected home icon on white"
+          "claim": "Icon labels: Helvetica 12, black on the window's grey; a selected label on white",
+          "status": "measured",
+          "source": "clio.css capture, NeXTStep 3.0 in Infinite Mac (frames in .fidelity/ns30), frame boot1 (the File Viewer's shelf, \"me\" selected)",
+          "upstream": "the label's padding is inferred"
         }
       ]
     },
@@ -2985,10 +2999,10 @@
         },
         {
           "era": "nextstep",
-          "claim": "A docked application that is not running: three dots at the tile's lower left",
-          "status": "inferred",
-          "source": "NeXTSTEP User Interface Guidelines, Release 3, ch. 1 (the dock)",
-          "upstream": "frame boot1 shows the dots; their pixels are not yet measured"
+          "claim": "A docked application that is not running: three 3x2 marks 4px from the tile's lower left, 5px apart",
+          "status": "measured",
+          "source": "clio.css capture, NeXTStep 3.0 in Infinite Mac (frames in .fidelity/ns30), frame boot1 (the mail tile); tooling/nx-art.py check",
+          "upstream": "NeXTSTEP User Interface Guidelines, Release 3 p.6"
         }
       ]
     },

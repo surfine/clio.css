@@ -298,7 +298,7 @@ export function renderLlms({ pkg, components }) {
 
 Install: \`npm install ${pkg.name}\` or \`<link rel="stylesheet" href="https://unpkg.com/${pkg.name}@${pkg.version}/dist/clio.css">\`.
 Optional script: \`<script src="https://unpkg.com/${pkg.name}@${pkg.version}/dist/clio.js" defer></script>\`.
-System 6 is the default; add \`data-era="system7"\`, \`data-era="drawingboard"\` or \`data-era="platinum"\` to \`<html>\` or any element. Single-era builds: \`dist/clio.system6.css\`, \`dist/clio.system7.css\`, \`dist/clio.drawingboard.css\`, \`dist/clio.platinum.css\`.
+System 6 is the default; add \`data-era="system7"\`, \`data-era="drawingboard"\` or \`data-era="platinum"\` to \`<html>\` or any element. Single-era builds: \`dist/clio.system6.css\`, \`dist/clio.system7.css\`, \`dist/clio.drawingboard.css\`, \`dist/clio.platinum.css\`. NeXTSTEP 3.3 is its own file, \`dist/clio.nextstep.css\` (never in \`clio.css\`): the menu bar becomes the vertical main menu, the collapse box the miniaturize button, the zoom box the resize bar.
 All rules use \`:where()\` or one class, so author CSS always wins; every value is a \`--clio-*\` custom property.
 Drop-in for system.css markup (.window, .title-bar button.close, .btn, .btn-default, .standard-dialog, .modal-dialog, .alert-box, .field-row, role="menu-bar").
 
@@ -338,7 +338,7 @@ ${variants}`;
   });
   return `# clio.css ${pkg.version} — full reference
 
-Classic Mac OS interface CSS: System 6 (default), System 7 (data-era="system7"), Mac OS 8.5 Drawing Board (data-era="drawingboard") and Mac OS 8/9 Platinum (data-era="platinum").
+Classic Mac OS interface CSS: System 6 (default), System 7 (data-era="system7"), Mac OS 8.5 Drawing Board (data-era="drawingboard") and Mac OS 8/9 Platinum (data-era="platinum"). NeXTSTEP 3.3 ships as its own file, dist/clio.nextstep.css (data-era="nextstep").
 Install: npm install ${pkg.name} — or <link rel="stylesheet" href="https://unpkg.com/${pkg.name}@${pkg.version}/dist/clio.css">
 Rules have zero or one-class specificity; override any --clio-* custom property on any element.
 

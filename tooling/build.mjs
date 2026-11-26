@@ -103,9 +103,9 @@ const system6 = srcFiles.filter((f) => !isEra(f)).map(part).join("\n").replace('
 const system7Default = eraDefault("system7");
 const platinumDefault = eraDefault("platinum");
 const drawingboardDefault = eraDefault("drawingboard");
-// Chromium does not match a ::-webkit-scrollbar part whose selector has :root as an ancestor
-// (measured 2026-11-26: \`:root .x::-webkit-scrollbar-button\` is ignored, \`html .x::…\` and
-// \`[data-era] .x::…\` apply), so NeXTSTEP's scroll-bar rules take html as the page default.
+// In Chromium a NeXTSTEP scroll-bar rule under :root did not apply (2026-11-26:
+// \`:root .x::-webkit-scrollbar-button:vertical:start\` was ignored where \`html .x::…\` and
+// \`[data-era] .x::…\` applied), so its scroll-bar rules take html as the page default.
 const nextstepDefault = srcFiles
   .filter((f) => !isEra(f) || f.includes("nextstep"))
   .map((f) => (isEra(f) ? part(f).replace(/\[data-era="nextstep"\](?=[^{};]*?::-webkit-scrollbar)/g, "html").replaceAll('[data-era="nextstep"]', ":root") : part(f)))

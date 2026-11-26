@@ -31,7 +31,8 @@ export const rows = {
     row("On touch screens each title-bar button gets a 45px hit area; its art stays 15px", "adapted", "clio.css", "AI System 6's coarse-pointer rule"),
   ],
   menu: [
-    row("The menu bar is drawn as NeXT's main menu: a vertical panel 93px wide at the screen's top left, titled by its aria-label; a title opens its submenu to the right", "adapted", "clio.css (same DOM as the Classic menu bar)", NXUG + ", ch. 6 (the main menu)"),
+    row("The menu bar is drawn as NeXT's main menu: a vertical panel titled by its aria-label; a title opens its submenu to the right", "adapted", "clio.css (same DOM as the Classic menu bar)", NXUG + " p.100 (the main menu)"),
+    row("A menu is as wide as its widest cell (Workspace's main menu 93px, Edit's 77px, its Info submenu 107px)", "measured", NX30 + ", frames boot1, info-open and edit-launch", "clio.css lets the browser size it to its text, whose widths are Helvetica's (D3)"),
     row("Menu title: 22 rows, black face, white Helvetica Bold 12 at x=5, a white highlight top and left, #555555 then black below", "measured", NX30 + ", frame boot1 (Workspace main menu)", "rows 0-21"),
     row("Menu cell: 20 rows: white top row and left column, 17 rows of #aaaaaa, a #555555 row and column, a black row and column; Helvetica 12 at x=5", "measured", NX30 + ", frame boot1 (Workspace main menu, Info to Log Out)", "every cell the same"),
     row("Submenu arrow: 7x7, a black upright and an embossed point (#555555 above, white below), 6px from the right", "measured", NX30 + ", frame boot1 (Info row, x 80-86); tooling/nx-art.py check", "the grid equals the frame"),
@@ -40,6 +41,7 @@ export const rows = {
     row("A submenu hangs right against its menu, level with that menu's top whichever cell opened it; its left column is #555555", "measured", NX30 + ", frame info-open (the Info submenu open))", "fidelity nx-submenu-join; nx-submenu-top (the View submenu, opened from the fifth cell, frame view-open)"),
     row("A dimmed item's label is #555555", "measured", NX30 + ", frame view-open (Icon, Sort Icons, Clean Up Icons)", "the label's pixels are Helvetica and are not compared"),
     row("No dividers and no check marks in NeXT menus; a separator item is not drawn", "inferred", NXUG + ", ch. 6", "the captured menus have none"),
+    row("A dimmed item does not highlight under the pointer", "inferred", NXUG + " p.100", "found by the Firefox run of nx-submenu-top, whose pointer rested on Clean Up Icons"),
     row("A torn-off submenu (.torn-off) carries a close button in its title bar; an attached one has none", "inferred", NXUG + ", ch. 6; " + AIS6 + " reference notes", "not captured"),
     row("clio.js: a clicked menu stays up; a press dragged through it chooses on release", "inferred", NXUG + ", ch. 6", "AI System 6 reference notes (Menus)"),
   ],
@@ -95,7 +97,7 @@ export const rows = {
   ],
   desktop: [
     row("Workspace background #555555", "inferred", AIS6 + " (--desktop)", "NeXTStep 3.0 on a colour NeXT shows #555577 (frame boot1)"),
-    row("Icon labels: Helvetica 12, black; a selected label on white", "inferred", AIS6 + " (--desktop-label-*)", "frame boot1 shows the selected home icon on white"),
+    row("Icon labels: Helvetica 12, black on the window's grey; a selected label on white", "measured", NX30 + ", frame boot1 (the File Viewer's shelf, \"me\" selected)", "the label's padding is inferred"),
   ],
   typography: [
     row("Helvetica 12 for chrome and text, Helvetica Bold 12 for window and menu titles, set without antialiasing", "measured", NX30 + ", frame boot1 (menu and title text: black and white pixels only)", NXUG + ", ch. 9 (fonts)"),
@@ -160,7 +162,7 @@ export const components = [
     evidence: [
       row("Tiles 64x64 stacked edge to edge at the screen's right edge: two white rows and columns top and left, a dark then a black line bottom and right", "measured", NX30 + ", frame boot1 (dock x 1053-1116, y 0-63 and 64-127)", "five tiles and the recycler"),
       row("The tile's face is flat #aaaaaa: on a colour NeXT it is a texture, which clio.css does not reproduce", "adapted", "clio.css", "frame boot1"),
-      row("A docked application that is not running: three dots at the tile's lower left", "inferred", NXUG + ", ch. 1 (the dock)", "frame boot1 shows the dots; their pixels are not yet measured"),
+      row("A docked application that is not running: three 3x2 marks 4px from the tile's lower left, 5px apart", "measured", NX30 + ", frame boot1 (the mail tile); tooling/nx-art.py check", NXUG + " p.6"),
     ],
   },
 ];

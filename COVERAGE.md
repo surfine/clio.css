@@ -90,32 +90,32 @@ change), **—** (not in clio.css).
 | Element | Defined in | clio.css | NeXTSTEP |
 | --- | --- | --- | --- |
 | Window title bar, key window | NXUG3 p.55, 62 | `.window > .title-bar` | yes |
-| Window title bar, main window (not key) | NXUG3 p.63 | `.window.main` | inferred |
-| Window title bar, inactive window | NXUG3 p.59-60 (not drawn there) | `.window.inactive` | inferred |
+| Window title bar, main window (not key) | NXUG3 p.63 | `.window.main` | yes |
+| Window title bar, inactive window | NXUG3 p.59-60 (not drawn there) | `.window.inactive` | yes |
 | Miniaturize button | NXUG3 p.6, 55, 70 | `.shade`, `.collapse` (alias `.nextstep-miniaturize`) | yes |
-| Close button (and the edited document's broken X) | NXUG3 p.55, 71 | `.close`, `.window.edited` | inferred |
-| Resize bar | NXUG3 p.56, 70 | a window with a `.resize` box | inferred |
-| Panel: Open | NXUG3 p.90, 96 | `.window` with `.browser`, a field and buttons | — |
-| Panel: Save | NXUG3 p.91, 98 | `.window` with `.browser`, a field and buttons | — |
-| Panel: attention (alert) | NXUG3 p.4, 77, 84-87 | `.alert-box` | inferred |
+| Close button (and the edited document's broken X) | NXUG3 p.55, 71 | `.close`, `.window.edited` | yes (the broken X inferred) |
+| Resize bar | NXUG3 p.56, 70 | a window with a `.resize` box | yes |
+| Panel: Open | NXUG3 p.90, 96 | `.window` with `.browser`, a field and buttons | inferred (from primitives: its field, browser and buttons measured) |
+| Panel: Save | NXUG3 p.91, 98 | `.window` with `.browser`, a field and buttons | inferred (from primitives, as the Open panel) |
+| Panel: attention (alert) | NXUG3 p.4, 77, 84-87 | `.alert-box` | yes |
 | Panel: Info | NXUG3 p.89, 95 | `.window` without a `.resize` box | inferred |
 | Main menu as a vertical panel | NXUG3 p.5, 100 | `.menu-bar` (titled by `aria-label`) | yes |
 | Submenus | NXUG3 p.102-104 | `.menu` in a menu cell | yes |
 | Tear-off (detached) submenu | NXUG3 p.103-104 | `.menu.torn-off` | inferred |
 | Key equivalents in menus ("keyboard alternatives") | NXUG3 p.5, 23, 100 | `kbd` in an item | yes |
-| Push button | NXUG3 p.8, 135 | `button`, `.btn` | inferred |
-| Default button (the Return symbol) | NXUG3 p.139 | `.default` | inferred |
-| Switch (check box) | NXUG3 p.8, 154 | `input[type=checkbox]` | inferred |
-| Radio button | NXUG3 p.135, 155 | `input[type=radio]` | inferred |
-| Text field | NXUG3 p.9, 143-145 | `input`, `textarea` | inferred |
-| Slider | NXUG3 p.9, 145 | `input[type=range]` | inferred |
-| Scroller on the left, arrows together | NXUG3 p.10, 147-151 | `.clio-scroll`, `.window-pane` (left side with clio.js) | inferred |
-| Browser | NXUG3 p.11, 152 | `.browser` | inferred |
-| Pop-up list | NXUG3 p.136, 141 | `select` | inferred |
+| Push button | NXUG3 p.8, 135 | `button`, `.btn` | yes |
+| Default button (the Return symbol) | NXUG3 p.139 | `.default` | yes |
+| Switch (check box) | NXUG3 p.8, 154 | `input[type=checkbox]` | yes |
+| Radio button | NXUG3 p.135, 155 | `input[type=radio]` | yes |
+| Text field | NXUG3 p.9, 143-145 | `input`, `textarea` | yes |
+| Slider | NXUG3 p.9, 145 | `input[type=range]` | yes |
+| Scroller on the left, arrows together | NXUG3 p.10, 147-151 | `.clio-scroll`, `.window-pane` (left side with clio.js) | yes (clio.js; the browser's own bar adapted) |
+| Browser | NXUG3 p.11, 152 | `.browser` | yes |
+| Pop-up list | NXUG3 p.136, 141 | `select` | yes |
 | Pull-down list | NXUG3 p.137, 141 | `.pull-down` | inferred |
-| Workspace dock (application icons) | NXUG3 p.6, 54, 169 | `.dock` | yes |
-| Icon view (File Viewer) | not in NXUG3 (Workspace Manager, p.161) | `.icon` | inferred |
-| Key-window and focus states | NXUG3 p.59-66, 79-80 | `.window` / `.window.main` / `.window.inactive`; dotted focus frame | adapted |
+| Workspace dock (application icons) | NXUG3 p.6, 54, 169 | `.dock` | yes (the tile face adapted) |
+| Icon view (File Viewer) | not in NXUG3 (Workspace Manager, p.161) | `.icon` | inferred (selected label measured) |
+| Key-window and focus states | NXUG3 p.59-66, 79-80 | `.window` / `.window.main` / `.window.inactive`; dotted focus frame | yes (dotted keyboard focus adapted) |
 
 Pages are the printed ones, read from the Internet Archive's OCR text of the November 1993
 printing (`bitsavers_nextReleasInterfaceGuidelinesRelease3Nov93_9141848`); a few running

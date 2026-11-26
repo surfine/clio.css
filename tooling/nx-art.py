@@ -191,6 +191,11 @@ da
    # .         
     #.         
 """),
+    # A docked application that is not running: three marks at the tile's lower left.
+    "dock-dots": ("NeXTStep 3.0 in Infinite Mac, frame boot1 (the dock's mail tile, x 1057-1069, y 186-187)", ("ns30/boot1", 1057, 186), """
+##.  ##.  ##.
+#..  #..  #..
+"""),
     # A slider's knob, 20x14: the raised bevel with a groove down its middle and a #555555
     # shadow on its right.
     "slider-knob": ("NeXTStep 3.0 in Infinite Mac, frame prefs3 (Preferences, Display, Automatic Dimming)", ("ns30/prefs3", 360, 648), """
