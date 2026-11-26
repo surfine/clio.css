@@ -4,6 +4,7 @@
 //   dist/clio.system7.css    System 7 as the page default
 //   dist/clio.platinum.css   Platinum as the page default
 //   dist/clio.drawingboard.css  Mac OS 8.5 Drawing Board as the page default
+//   dist/clio.nextstep.css   NeXTSTEP 3.3 as the page default (D14; never in clio.css)
 //   *.min.css, dist/fonts/, dist/components.json
 //   docs/ (the site), llms.txt, llms-full.txt, EVIDENCE.md
 import { readFileSync, writeFileSync, mkdirSync, readdirSync, copyFileSync, rmSync, existsSync } from "node:fs";
@@ -87,11 +88,13 @@ const part = (f) => {
   const css = read(`src/${f}`).trim() + "\n";
   return /scrollbar-js/.test(f) ? css : mirrorScrollbars(css);
 };
-const all = srcFiles.map(part).join("\n");
-const isEra = (f) => /system7|platinum|drawingboard/.test(f);
+// NeXTSTEP (src/93-nextstep.css) ships only in its own file: clio.css stays the Classic bundle (D5, D14).
+const isNext = (f) => f.includes("nextstep");
+const all = srcFiles.filter((f) => !isNext(f)).map(part).join("\n");
+const isEra = (f) => /system7|platinum|drawingboard|nextstep/.test(f);
 // Drawing Board shares the Platinum layer, whose rules are scoped to either era.
 const SHARED = ':is([data-era="platinum"], [data-era="drawingboard"])';
-const layers = { system7: ["system7"], platinum: ["platinum"], drawingboard: ["platinum", "drawingboard"] };
+const layers = { system7: ["system7"], platinum: ["platinum"], drawingboard: ["platinum", "drawingboard"], nextstep: ["nextstep"] };
 const eraDefault = (era) => srcFiles
   .filter((f) => !isEra(f) || (layers[era].some((l) => f.includes(l)) && !(f.includes("platinum-only") && era !== "platinum")))
   .map((f) => (isEra(f) ? part(f).replaceAll(SHARED, ":root").replaceAll(`[data-era="${era}"]`, ":root") : part(f)))
@@ -100,6 +103,13 @@ const system6 = srcFiles.filter((f) => !isEra(f)).map(part).join("\n").replace('
 const system7Default = eraDefault("system7");
 const platinumDefault = eraDefault("platinum");
 const drawingboardDefault = eraDefault("drawingboard");
+// Chromium does not match a ::-webkit-scrollbar part whose selector has :root as an ancestor
+// (measured 2026-11-26: \`:root .x::-webkit-scrollbar-button\` is ignored, \`html .x::…\` and
+// \`[data-era] .x::…\` apply), so NeXTSTEP's scroll-bar rules take html as the page default.
+const nextstepDefault = srcFiles
+  .filter((f) => !isEra(f) || f.includes("nextstep"))
+  .map((f) => (isEra(f) ? part(f).replace(/\[data-era="nextstep"\](?=[^{};]*?::-webkit-scrollbar)/g, "html").replaceAll('[data-era="nextstep"]', ":root") : part(f)))
+  .join("\n");
 
 function minify(css) {
   return css
@@ -122,6 +132,10 @@ const outputs = {
   "clio.system7.css": banner(" (System 7 default)") + system7Default,
   "clio.platinum.css": banner(" (Platinum default)") + platinumDefault,
   "clio.drawingboard.css": banner(" (Drawing Board default)") + drawingboardDefault,
+  "clio.nextstep.css": `/*! clio.css ${pkg.version} (NeXTSTEP) | MIT | ${pkg.homepage}
+ * NeXTSTEP 3.3 interface CSS: windows, menus, controls, scrollers, browser and dock.
+ * Every value is measured, inferred or adapted; see EVIDENCE.md.
+ * Fonts: Clio Sans NX is Liberation Sans 2 (SIL OFL 1.1), renamed; see THIRD-PARTY.md. */\n` + nextstepDefault,
 };
 for (const [name, css] of Object.entries(outputs)) {
   write(`dist/${name}`, css);
@@ -165,6 +179,7 @@ const index = {
     { id: "system7", name: "Macintosh System 7 (colour)", attribute: 'data-era="system7"', file: "dist/clio.system7.css" },
     { id: "drawingboard", name: "Mac OS 8.5 Drawing Board (beta theme)", attribute: 'data-era="drawingboard"', file: "dist/clio.drawingboard.css" },
     { id: "platinum", name: "Mac OS 8/9 Platinum", attribute: 'data-era="platinum"', file: "dist/clio.platinum.css" },
+    { id: "nextstep", name: "NeXTSTEP 3.3", attribute: 'data-era="nextstep"', file: "dist/clio.nextstep.css", bundle: false },
   ],
   install: {
     npm: `npm install ${pkg.name}`,

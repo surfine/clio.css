@@ -1,6 +1,6 @@
 // Renderers for the docs site and the agent-facing text files.
 const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
-const ERA = { system6: "System 6", system7: "System 7", drawingboard: "Drawing Board", platinum: "Platinum", both: "All eras" };
+const ERA = { system6: "System 6", system7: "System 7", drawingboard: "Drawing Board", platinum: "Platinum", nextstep: "NeXTSTEP", both: "Classic eras" };
 const STATUS = {
   measured: "Measured",
   inferred: "Inferred",
@@ -129,7 +129,7 @@ export function renderSite({ pkg, components }) {
   <meta name="twitter:card" content="summary_large_image">
   <link rel="alternate" type="text/plain" title="llms.txt" href="llms.txt">
   <link rel="alternate" type="application/json" title="Component index" href="components.json">
-  <link rel="stylesheet" href="dist/clio.css">
+  <link rel="stylesheet" href="dist/clio.css" id="clio-sheet">
   <script src="dist/clio.js" defer></script>
   <script type="application/ld+json">${JSON.stringify(jsonld)}</script>
   <style>
@@ -202,6 +202,7 @@ export function renderSite({ pkg, components }) {
       <label><input type="radio" name="era" value="system7"> System 7</label>
       <label><input type="radio" name="era" value="drawingboard"> Drawing Board</label>
       <label><input type="radio" name="era" value="platinum"> Mac OS 9 Platinum</label>
+      <label><input type="radio" name="era" value="nextstep"> NeXTSTEP</label>
     </fieldset>
   </header>
 
@@ -256,7 +257,12 @@ export function renderSite({ pkg, components }) {
   <script>
     (function () {
       var root = document.documentElement;
-      function set(era) { root.setAttribute("data-era", ["platinum", "system7", "drawingboard"].indexOf(era) >= 0 ? era : "system6"); }
+      // NeXTSTEP ships in its own file (clio.nextstep.css): the page swaps stylesheets for it.
+      var sheet = document.getElementById("clio-sheet");
+      function set(era) {
+        root.setAttribute("data-era", ["platinum", "system7", "drawingboard", "nextstep"].indexOf(era) >= 0 ? era : "system6");
+        if (sheet) sheet.setAttribute("href", era === "nextstep" ? "dist/clio.nextstep.css" : "dist/clio.css");
+      }
       var era = new URLSearchParams(location.search).get("era");
       if (!era) { try { era = localStorage.getItem("clio-era"); } catch (e) {} }
       if (era) {

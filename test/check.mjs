@@ -12,16 +12,17 @@ let checks = 0;
 const ok = (cond, m) => { checks++; if (!cond) fail(m); };
 
 // 1. Outputs exist.
-const outputs = ["clio.css", "clio.min.css", "clio.system6.css", "clio.system6.min.css", "clio.system7.css", "clio.system7.min.css", "clio.platinum.css", "clio.platinum.min.css", "clio.drawingboard.css", "clio.drawingboard.min.css", "components.json", "fonts/ChicagoFLF.woff2", "fonts/Asap-Variable.woff2", "fonts/OFL-Asap.txt"];
+const outputs = ["clio.css", "clio.min.css", "clio.system6.css", "clio.system6.min.css", "clio.system7.css", "clio.system7.min.css", "clio.platinum.css", "clio.platinum.min.css", "clio.drawingboard.css", "clio.drawingboard.min.css", "clio.nextstep.css", "clio.nextstep.min.css", "fonts/ClioSansNX.woff2", "fonts/ClioSansNX-Bold.woff2", "fonts/OFL-Liberation.txt", "components.json", "fonts/ChicagoFLF.woff2", "fonts/Asap-Variable.woff2", "fonts/OFL-Asap.txt"];
 for (const f of outputs) ok(existsSync(join(root, "dist", f)), `missing dist/${f}`);
 
 const css = read("dist/clio.css");
 const s6 = read("dist/clio.system6.css");
 const pt = read("dist/clio.platinum.css");
 const db = read("dist/clio.drawingboard.css");
+const nx = read("dist/clio.nextstep.css");
 
 // 2. Braces balance (outside strings) in every build.
-for (const [name, text] of [["clio.css", css], ["clio.system6.css", s6], ["clio.platinum.css", pt], ["clio.drawingboard.css", db], ["clio.min.css", read("dist/clio.min.css")]]) {
+for (const [name, text] of [["clio.css", css], ["clio.system6.css", s6], ["clio.platinum.css", pt], ["clio.drawingboard.css", db], ["clio.nextstep.css", nx], ["clio.min.css", read("dist/clio.min.css")], ["clio.nextstep.min.css", read("dist/clio.nextstep.min.css")]]) {
   const stripped = text.replace(/\/\*[\s\S]*?\*\//g, "").replace(/"(?:[^"\\]|\\.)*"/g, '""');
   let depth = 0, bad = false;
   for (const ch of stripped) { if (ch === "{") depth++; if (ch === "}") depth--; if (depth < 0) bad = true; }
@@ -39,6 +40,10 @@ const fromJs = (v) => (/^--clio-sb-/.test(v) && js.includes(v.replace(/^--clio-s
 for (const v of used) ok(declared.has(v) || optional.has(v) || fromJs(v), `read but never declared: ${v}`);
 ok(/^\/\*! clio\.js/.test(js) && !js.includes("0.11.0-dev"), "dist/clio.js carries its banner and the package version");
 for (const v of optional) ok(noComments.includes(`var(${v},`), `${v} is optional but read without a fallback`);
+// ...and in the NeXTSTEP file, which is built from the base files and its own layer.
+const nxNoComments = nx.replace(/\/\*[\s\S]*?\*\//g, "");
+const nxDeclared = new Set([...nxNoComments.matchAll(/(--clio-[\w-]+)\s*:/g)].map((m) => m[1]));
+for (const m of nxNoComments.matchAll(/var\((--clio-[\w-]+)\s*\)/g)) ok(nxDeclared.has(m[1]) || optional.has(m[1]) || fromJs(m[1]), `clio.nextstep.css reads but never declares ${m[1]}`);
 
 // 4. System 6 build has no Platinum; Platinum build has no data-era scope left.
 const strip = (t) => t.replace(/\/\*[\s\S]*?\*\//g, "");
@@ -46,6 +51,9 @@ ok(!strip(s6).includes('data-era="platinum"') && !strip(s6).includes('data-era="
 ok(!strip(pt).includes('[data-era="platinum"]'), "clio.platinum.css still scoped to data-era");
 ok(!strip(pt).includes('data-era="drawingboard"'), "clio.platinum.css contains Drawing Board rules");
 ok(!strip(db).includes('[data-era="drawingboard"]') && !strip(db).includes('[data-era="platinum"]'), "clio.drawingboard.css still scoped to data-era");
+// NeXTSTEP ships only in its own file (D14): the Classic files never carry it.
+for (const [name, text] of [["clio.css", css], ["clio.system6.css", s6], ["clio.platinum.css", pt], ["clio.drawingboard.css", db]]) ok(!strip(text).includes("nextstep") && !text.includes("ClioSansNX"), `${name} contains NeXTSTEP rules`);
+ok(!strip(nx).includes('[data-era="nextstep"]') && !/data-era="(platinum|drawingboard)"|--clio-art-db-/.test(strip(nx)), "clio.nextstep.css still scoped to data-era or carries another era's layer");
 
 // 5. No external assets: url() is a data: URI, a bundled font, or Drawing Board
 //    theme art shipped beside the stylesheet (dist/art/drawingboard/, written by
@@ -55,39 +63,43 @@ ok(!strip(db).includes('[data-era="drawingboard"]') && !strip(db).includes('[dat
 //    fetched with CORS); "%23p" is such a tile's own pattern reference. The window edges'
 //    SVG pattern files (art/drawingboard/*-tiled.svg) and the utility windows' three each
 //    (art/drawingboard/side-*.svg, utility-*.svg) carry their PNGs inside.
-for (const m of noComments.matchAll(/url\(\s*["']?([^"')]+)/g)) {
+for (const [text, m] of [noComments, nxNoComments].flatMap((t) => [...t.matchAll(/url\(\s*["']?([^"')]+)/g)].map((m) => [t, m]))) {
   const u = m[1];
-  const png = u.startsWith("data:image/png;base64,") && /--clio-(art-(db|p9|s7|frame)|db-outline)-[\w-]+:\s*$/.test(noComments.slice(Math.max(0, m.index - 60), m.index));
+  const png = u.startsWith("data:image/png;base64,") && /--clio-(art-(db|p9|s7|frame)|db-outline)-[\w-]+:\s*$/.test(text.slice(Math.max(0, m.index - 60), m.index));
   if (u.startsWith("art/")) ok(existsSync(join(root, "dist", u)), `missing art file dist/${u}`);
-  ok(u.startsWith("data:image/svg+xml,") || png || /^fonts\/(ChicagoFLF\.woff2?|Asap-Variable\.woff2|ClioSans84\.woff2|ClioText84\.woff2|ClioText84-9\.woff2|ClioSans97\.woff2|ClioSans97Display\.woff2|ClioSans97Title\.woff2|ClioSans97Exact\.woff2|ClioSans97TitleExact\.woff2|ClioSans97Plain\.woff2|ClioSans97TitlePlain\.woff2|ClioSans97PlainExact\.woff2|ClioSans97TitlePlainExact\.woff2|Virtue\.woff2|FusionPixel12-(TC|SC|JA|KO)\.woff2)$/.test(u) || /^art\/(drawingboard|platinum|system7|system6|cursors)\/(pens\/|parts\/)?[a-z0-9-]+\.png$/.test(u) || /^art\/drawingboard\/([a-z0-9-]+-tiled|(side|utility)-(frame|runs|edges))\.svg$/.test(u) || /^%23\w+$/.test(u), `unexpected url(): ${u.slice(0, 60)}`);
+  ok(u.startsWith("data:image/svg+xml,") || png || /^fonts\/(ChicagoFLF\.woff2?|Asap-Variable\.woff2|ClioSans84\.woff2|ClioText84\.woff2|ClioText84-9\.woff2|ClioSans97\.woff2|ClioSans97Display\.woff2|ClioSans97Title\.woff2|ClioSans97Exact\.woff2|ClioSans97TitleExact\.woff2|ClioSans97Plain\.woff2|ClioSans97TitlePlain\.woff2|ClioSans97PlainExact\.woff2|ClioSans97TitlePlainExact\.woff2|ClioSansNX(-Bold)?\.woff2|Virtue\.woff2|FusionPixel12-(TC|SC|JA|KO)\.woff2)$/.test(u) || /^art\/(drawingboard|platinum|system7|system6|cursors)\/(pens\/|parts\/)?[a-z0-9-]+\.png$/.test(u) || /^art\/drawingboard\/([a-z0-9-]+-tiled|(side|utility)-(frame|runs|edges))\.svg$/.test(u) || /^%23\w+$/.test(u), `unexpected url(): ${u.slice(0, 60)}`);
 }
 
 // 6. Component index: every component is documented, evidenced and styled.
 const allowed = new Set(["measured", "inferred", "adapted", "third-party"]);
-const eras = new Set(["system6", "system7", "drawingboard", "platinum", "both"]);
+const eras = new Set(["system6", "system7", "drawingboard", "platinum", "nextstep", "both"]);
 const ids = new Set();
 for (const c of components) {
   ok(!ids.has(c.id), `duplicate component id ${c.id}`); ids.add(c.id);
   ok(c.summary && c.html && c.accessibility, `${c.id}: summary, html and accessibility required`);
   ok(c.evidence.length > 0, `${c.id}: no evidence`);
   const covered = new Set(c.evidence.map((e) => e.era));
-  ok(covered.has("system6") || covered.has("both"), `${c.id}: no System 6 evidence`);
-  ok(covered.has("platinum") || covered.has("both"), `${c.id}: no Platinum evidence`);
+  // A NeXTSTEP-only component (c.eras: ["nextstep"]) has no Classic rows; every other one needs both.
+  const nxOnly = (c.eras || []).length === 1 && c.eras[0] === "nextstep";
+  ok(nxOnly || covered.has("system6") || covered.has("both"), `${c.id}: no System 6 evidence`);
+  ok(nxOnly || covered.has("platinum") || covered.has("both"), `${c.id}: no Platinum evidence`);
+  ok(!nxOnly || [...covered].every((e) => e === "nextstep"), `${c.id}: a NeXTSTEP-only component with Classic evidence`);
+  const styled = nxOnly ? nx : css;
   for (const e of c.evidence) {
     ok(allowed.has(e.status), `${c.id}: bad status ${e.status}`);
     ok(eras.has(e.era), `${c.id}: bad era ${e.era}`);
     ok(e.claim && e.source && e.upstream, `${c.id}: evidence row missing claim, source or upstream`);
   }
-  for (const t of c.tokens) ok(declared.has(t), `${c.id}: token ${t} not declared`);
+  for (const t of c.tokens) ok((nxOnly ? nxDeclared : declared).has(t), `${c.id}: token ${t} not declared`);
   for (const sel of c.selectors) {
-    for (const cls of sel.matchAll(/\.([a-z][\w-]*)/g)) ok(css.includes(`.${cls[1]}`), `${c.id}: selector class .${cls[1]} not styled`);
-    for (const role of sel.matchAll(/\[role=(\w+)\]/g)) ok(css.includes(`role="${role[1]}"`), `${c.id}: role ${role[1]} not styled`);
+    for (const cls of sel.matchAll(/\.([a-z][\w-]*)/g)) ok(styled.includes(`.${cls[1]}`), `${c.id}: selector class .${cls[1]} not styled`);
+    for (const role of sel.matchAll(/\[role=(\w+)\]/g)) ok(styled.includes(`role="${role[1]}"`), `${c.id}: role ${role[1]} not styled`);
   }
   // Markup in examples should only use classes the stylesheet knows (or inline styles).
   const known = new Set(["field-row", "field-row-stacked", "visually-hidden"]);
   for (const html of [c.html, ...(c.variants || []).map((v) => v.html)]) {
     for (const m of html.matchAll(/class="([^"]+)"/g)) {
-      for (const cls of m[1].split(/\s+/)) ok(known.has(cls) || css.includes(`.${cls}`), `${c.id}: example uses unknown class .${cls}`);
+      for (const cls of m[1].split(/\s+/)) ok(known.has(cls) || styled.includes(`.${cls}`), `${c.id}: example uses unknown class .${cls}`);
     }
     ok(!/<script/i.test(html), `${c.id}: example contains a script`);
   }
@@ -141,6 +153,9 @@ for (const [k, e] of Object.entries(pkg.exports)) for (const v of typeof e === "
 // eras, and Mac OS X eras ship as files of their own. 222 KB on 2026-11-18 (owner) for the
 // Drawing Board utility window's frame (17 placed pieces, ~1.5 KB of CSS).
 ok(statSync(join(root, "dist/clio.min.css")).size < 223000, "clio.min.css grew past 223 KB");
+// NeXTSTEP's own file (D5, D14): the base files (about 99 KB minified, as clio.system6.min.css)
+// plus its layer. 150 KB leaves the layer about 50 KB.
+ok(statSync(join(root, "dist/clio.nextstep.min.css")).size < 150000, "clio.nextstep.min.css grew past 150 KB");
 const minJs = readFileSync(join(root, "dist/clio.min.js"), "utf8");
 ok(/^\/\*! clio\.js/.test(minJs) && minJs.length < js.length * 0.7, "dist/clio.min.js missing, without its banner, or not minified");
 
