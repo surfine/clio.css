@@ -74,7 +74,7 @@
   "scripts": {
     "build": "node tooling/build.ts",
     "test": "node tooling/build.ts && node test/check.ts",
-    "typecheck": "tsc -p . --noEmit",
+    "typecheck": "tsc -p . --noEmit && tsc -p tsconfig.tooling.json",
     "lint": "biome check",
     "fidelity": "node tooling/fidelity.ts",
     "behaviour": "node tooling/build.ts && node tooling/behaviour.ts",
