@@ -20,7 +20,7 @@ bytes except for the version in their banner.
   and Firefox; the values ported
   from AI System 6 that the frames contradicted are corrected (main window, pressed button,
   switch and radio sizes, pop-up height, menu rows, resize bar, text field corners).
-  Evidence rows for NeXTSTEP: 39 measured, 17 inferred, 8 adapted, 1 third-party.
+  Evidence rows for NeXTSTEP: 39 measured, 18 inferred, 8 adapted, 1 third-party.
 - **clio.js** draws NeXT's scroller on the left with both arrows together when the era asks
   (`--clio-scrollbar-side`, `--clio-scrollbar-arrows`, `--clio-scrollbar-arrow-length`,
   `--clio-scrollbar-arrow-gap`); the Classic eras set none of them and behave as before
