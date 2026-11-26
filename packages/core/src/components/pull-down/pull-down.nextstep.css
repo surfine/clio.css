@@ -1,0 +1,9 @@
+
+
+/* A pull-down list: a button that opens a menu of commands, marked with a
+   downward arrow. */
+[data-era="nextstep"] .pull-down {
+  justify-content: flex-start;
+  padding-right: 26px;
+  background: var(--clio-art-nx-submenu) right 8px center / 7px 7px no-repeat, var(--clio-button-bg);
+}

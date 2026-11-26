@@ -1,0 +1,119 @@
+
+
+/* Held close or zoom box: System 6 draws the same starburst in both
+   (measured, 6.0.8); the zoom box's inner square goes while it is held. */
+.title-bar > :is(.close, .close-box, .resize, .resize-box, .zoom):is(:active:where(:not([data-clio-off])), .active) {
+  background: var(--clio-art-s6-burst) 0 0 / 11px 11px no-repeat border-box, var(--clio-paper);
+}
+/* clio:segment */
+
+
+.title-bar > :is(.resize, .resize-box, .zoom):is(:active:where(:not([data-clio-off])), .active)::before {
+  opacity: 0;
+}
+/* clio:segment */
+
+
+:where(.menu, [role="menu"]) > li:not(.disabled, [aria-disabled="true"], .separator, [role="separator"], :has(> :is(:disabled, [aria-disabled="true"]))):is(:hover, :focus-within, .active):where(:not([data-clio-blink])),
+:where(.menu, [role="menu"]) > li > :is(a, button):not([aria-disabled="true"], :disabled):is(:hover, :focus-visible, .active):where(:not([data-clio-blink])) {
+  background: var(--clio-menu-item-active-bg);
+  box-shadow: var(--clio-menu-item-active-shadow);
+  color: var(--clio-menu-item-active-fg);
+  outline: none;
+}
+/* clio:segment */
+
+
+:where(.menu, [role="menu"]) > li:is(.checked, [aria-checked="true"]):is(:hover, :focus-within, .active):where(:not([data-clio-blink]))::before,
+:where(.menu, [role="menu"]) > li > :is([aria-checked="true"], .checked):is(:hover, :focus-visible, .active):where(:not([data-clio-blink]))::before {
+  background-image: var(--clio-art-s6-menucheck-on);
+}
+/* clio:segment */
+
+
+:where(.menu, [role="menu"]) > li:has(> :is(.menu, ul[role="menu"])):is(:hover, :focus-within, .active):where(:not([data-clio-blink]))::after {
+  background-image: var(--clio-art-s6-submenu-on);
+}
+/* clio:segment */
+/* Controls. Bare elements are styled through :where(), so the rules carry no
+   specificity. State model (from AI System 6's fidelity contract): hover never
+   changes a push button; pressed comes only from pointer-down, Space or
+   Enter (:active) or from the .active class; disabled keeps full geometry. */
+
+/* ---- Push buttons -------------------------------------------------------- */
+:where(button, .btn, .btn-default, .standard-button, input[type="button"], input[type="submit"], input[type="reset"]) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-width: var(--clio-button-min-width);
+  min-height: var(--clio-control-height);
+  margin: 0;
+  padding: var(--clio-button-padding);
+  border: var(--clio-button-border);
+  border-radius: var(--clio-button-radius);
+  background: var(--clio-button-bg);
+  box-shadow: var(--clio-button-shadow);
+  border-image: var(--clio-button-frame) var(--clio-button-frame-slice) fill / calc(var(--clio-button-frame-slice) * 1px) stretch;
+  color: var(--clio-button-fg);
+  font-family: var(--clio-font-chrome);
+  font-size: var(--clio-font-size);
+  font-stretch: var(--clio-font-stretch-text);
+  font-weight: var(--clio-button-weight);
+  -webkit-font-smoothing: var(--clio-font-smoothing);
+  -moz-osx-font-smoothing: grayscale;   /* Firefox on macOS otherwise thickens the pixel squares with a grey fringe */
+  line-height: 14px;
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: var(--clio-cursor-arrow);
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+:where(button, .btn, .btn-default, .standard-button, input[type="button"], input[type="submit"], input[type="reset"]):not(:disabled, .disabled):is(:active:where(:not([data-clio-off])), .active) {
+  background: var(--clio-button-active-bg);
+  box-shadow: var(--clio-button-active-shadow);
+  border-image-source: var(--clio-button-frame-held);
+  color: var(--clio-button-active-fg);
+}
+
+/* Default button: the ring that says Return will press it. Drawn as its own
+   rounded rectangle (Inside Macintosh: PenSize(3,3), InsetRect(-4,-4),
+   FrameRoundRect(16,16)), so its corners do not follow the button's. */
+:where(.default, .btn-default, button[type="submit"].default) {
+  position: relative;
+  border-radius: var(--clio-button-radius);
+}
+
+:where(.default, .btn-default)::before {
+  content: "";
+  position: absolute;
+  inset: calc(-1px - var(--clio-button-default-gap) - var(--clio-button-default-width));
+  border: var(--clio-button-default-width) solid var(--clio-ink);
+  border-radius: var(--clio-button-default-radius);
+  border-image: var(--clio-ring-frame) var(--clio-ring-frame-slice) / calc(var(--clio-ring-frame-slice) * 1px) stretch;
+  pointer-events: none;
+}
+/* clio:segment */
+
+
+:where(button, .btn, .btn-default, .standard-button, input[type="button"], input[type="submit"], input[type="reset"]):focus-visible {
+  outline: var(--clio-focus-outline);
+  outline-offset: var(--clio-focus-offset);
+}
+
+:where(.default, .btn-default):focus-visible {
+  outline-offset: calc(var(--clio-focus-offset) + 4px);
+}
+/* clio:segment */
+
+
+:where([role="tablist"], .tabs) > :is([role="tab"], li, button):is([aria-selected="true"], .active) {
+  z-index: 1;
+  border-bottom-color: var(--clio-tab-active-bg);
+  background: var(--clio-tab-active-bg);
+  color: var(--clio-ink);
+}

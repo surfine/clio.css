@@ -1,0 +1,61 @@
+
+
+/* ---- Radio buttons -------------------------------------------------------- */
+:where(input[type="radio"]) {
+  flex: none;
+  box-sizing: border-box;
+  width: var(--clio-radio-size);
+  height: var(--clio-radio-size);
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  background: var(--clio-radio-off);
+  vertical-align: -2px;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: var(--clio-cursor-arrow);
+}
+
+:where(input[type="radio"]):checked {
+  background: var(--clio-radio-on);
+}
+
+:where(input[type="radio"]):not(:disabled):active:where(:not([data-clio-off])) {
+  background: var(--clio-radio-pressed);
+}
+
+:where(input[type="radio"]):checked:not(:disabled):active:where(:not([data-clio-off])) {
+  background: var(--clio-radio-pressed-on);
+}
+
+:where(input[type="radio"]):disabled {
+  opacity: 0.45;
+}
+
+:where(input[type="checkbox"], input[type="radio"]):focus-visible {
+  outline: var(--clio-focus-outline);
+  outline-offset: var(--clio-focus-offset);
+}
+
+:where(input[type="checkbox"], input[type="radio"]) + label,
+:where(label):has(> :is(input[type="checkbox"], input[type="radio"])) {
+  font-family: var(--clio-font-chrome);
+  font-size: var(--clio-font-size);
+}
+
+:where(label):has(> :is(input[type="checkbox"], input[type="radio"])) {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+:where(input[type="checkbox"], input[type="radio"]):disabled + label,
+:where(label):has(> :is(input[type="checkbox"], input[type="radio"]):disabled) {
+  color: var(--clio-disabled);
+  background-image: var(--clio-disabled-dither);
+  background-size: 2px 2px;
+  background-attachment: fixed;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: var(--clio-disabled-fill);
+}

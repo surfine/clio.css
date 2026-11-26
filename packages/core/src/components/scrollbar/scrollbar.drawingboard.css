@@ -1,0 +1,78 @@
+
+
+/* ---- Scroll bars ----------------------------------------------------------- */
+[data-era="drawingboard"] :is(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-track,
+[data-era="drawingboard"]:is(html.clio-scrollbars)::-webkit-scrollbar-track {
+  border: 0;
+}
+
+/* The scroll box is the theme's 15px picture at its shortest (7px end + 8px end). */
+[data-era="drawingboard"] :is(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-thumb,
+[data-era="drawingboard"]:is(html.clio-scrollbars)::-webkit-scrollbar-thumb {
+  min-width: 15px;
+  min-height: 15px;
+}
+
+/* Tracks: #ece6e4 ruled by pattern pens (ppat 7045-7049) tiled from the
+   track's start: the edges and a double centre line. Rules, not tokens: the
+   pens read the scroller's own --clio-db-phase. */
+[data-era="drawingboard"] :is(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-track,
+[data-era="drawingboard"]:is(html.clio-scrollbars)::-webkit-scrollbar-track {
+  background:
+    url("art/drawingboard/track-v-left.png") 0 0 / 1px 128px repeat-y,
+    url("art/drawingboard/track-v-mid1.png") 7px 0 / 1px 256px repeat-y,
+    url("art/drawingboard/track-v-mid2.png") 8px 0 / 1px 256px repeat-y,
+    url("art/drawingboard/track-v-right.png") 15px 0 / 1px 128px repeat-y,
+    #ece6e4;
+}
+
+[data-era="drawingboard"] :is(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-track:horizontal,
+[data-era="drawingboard"]:is(html.clio-scrollbars)::-webkit-scrollbar-track:horizontal {
+  background:
+    url("art/drawingboard/track-h-top.png") calc(0px - var(--clio-db-phase, 0px)) 0 / 128px 1px repeat-x,
+    url("art/drawingboard/track-h-mid1.png") calc(0px - var(--clio-db-phase, 0px)) 7px / 256px 1px repeat-x,
+    url("art/drawingboard/track-h-mid2.png") calc(0px - var(--clio-db-phase, 0px)) 8px / 256px 1px repeat-x,
+    url("art/drawingboard/track-h-bottom.png") calc(0px - var(--clio-db-phase, 0px)) 15px / 128px 1px repeat-x,
+    #ece6e4;
+}
+
+[data-era="drawingboard"] :is(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-button,
+[data-era="drawingboard"]:is(html.clio-scrollbars)::-webkit-scrollbar-button,
+[data-era="drawingboard"] :is(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-button:active,
+[data-era="drawingboard"]:is(html.clio-scrollbars)::-webkit-scrollbar-button:active,
+[data-era="drawingboard"] :is(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-button:horizontal,
+[data-era="drawingboard"]:is(html.clio-scrollbars)::-webkit-scrollbar-button:horizontal {
+  /* :horizontal outweighs the Platinum rule that moves that art a pixel down. */
+  border: 0;
+  background-color: transparent;
+  background-position: 0 0;
+  background-size: 16px 16px;
+  box-shadow: none;
+}
+/* clio:segment */
+
+
+/* ---- Smart Scrolling (clio.js bars, data-clio-scrolling="smart") ----------
+   Both arrows at the far end are one picture of the theme's (ScrollArrowsDbl,
+   pxm# 334 and 324), each button showing its half (Mac OS 8.5 with the theme,
+   Appearance > Options > Smart Scrolling, frame smart-scroll). Held, the
+   picture's held state for that arrow; nothing to scroll, the dimmed one. */
+[data-era="drawingboard"] .clio-sb-host > .clio-sb-anchor > .clio-sb.clio-sb-h.clio-sb-smart > .clio-sb-button {
+  border: 0;
+  background: url("art/drawingboard/parts/hpair.png") 0 0 / 32px 16px no-repeat;
+  box-shadow: none;
+}
+[data-era="drawingboard"] .clio-sb-host > .clio-sb-anchor > .clio-sb.clio-sb-h.clio-sb-smart > .clio-sb-button.clio-sb-inc { background-position: -16px 0; }
+[data-era="drawingboard"] .clio-sb-host > .clio-sb-anchor > .clio-sb.clio-sb-h.clio-sb-smart > .clio-sb-dec.clio-held { background-image: url("art/drawingboard/parts/hpair-dec-on.png"); }
+[data-era="drawingboard"] .clio-sb-host > .clio-sb-anchor > .clio-sb.clio-sb-h.clio-sb-smart > .clio-sb-inc.clio-held { background-image: url("art/drawingboard/parts/hpair-inc-on.png"); }
+[data-era="drawingboard"] .clio-sb-host > .clio-sb-anchor > .clio-sb.clio-sb-h.clio-sb-smart.clio-sb-off > .clio-sb-button { background-image: url("art/drawingboard/parts/hpair-off.png"); }
+
+[data-era="drawingboard"] .clio-sb-host > .clio-sb-anchor > .clio-sb.clio-sb-v.clio-sb-smart > .clio-sb-button {
+  border: 0;
+  background: url("art/drawingboard/parts/vpair.png") 0 0 / 16px 32px no-repeat;
+  box-shadow: none;
+}
+[data-era="drawingboard"] .clio-sb-host > .clio-sb-anchor > .clio-sb.clio-sb-v.clio-sb-smart > .clio-sb-button.clio-sb-inc { background-position: 0 -16px; }
+[data-era="drawingboard"] .clio-sb-host > .clio-sb-anchor > .clio-sb.clio-sb-v.clio-sb-smart > .clio-sb-dec.clio-held { background-image: url("art/drawingboard/parts/vpair-dec-on.png"); }
+[data-era="drawingboard"] .clio-sb-host > .clio-sb-anchor > .clio-sb.clio-sb-v.clio-sb-smart > .clio-sb-inc.clio-held { background-image: url("art/drawingboard/parts/vpair-inc-on.png"); }
+[data-era="drawingboard"] .clio-sb-host > .clio-sb-anchor > .clio-sb.clio-sb-v.clio-sb-smart.clio-sb-off > .clio-sb-button { background-image: url("art/drawingboard/parts/vpair-off.png"); }

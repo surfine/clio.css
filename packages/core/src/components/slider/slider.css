@@ -1,0 +1,83 @@
+
+
+/* ---- Slider ------------------------------------------------------------------
+   <input type="range">, the Appearance slider (Mac OS 8 HIG: "Sliders and Tick
+   Marks"). Add class "ticks" and --clio-slider-tick-count for tick marks under
+   the track. System 6 and System 7 had no slider in the Toolbox; System 7.5's
+   control panels drew their own (see the System 7 layer). */
+:where(input[type="range"]) {
+  box-sizing: border-box;
+  height: var(--clio-slider-height);
+  margin: 0;
+  /* Chrome centres the track in the content box: the padding puts it
+     --clio-slider-track-top below the thumb's top. */
+  padding: 0 0 calc(var(--clio-slider-height) - var(--clio-slider-track-height) - 2 * var(--clio-slider-track-top));
+  background: transparent;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: var(--clio-cursor-arrow);
+}
+
+:where(input[type="range"].ticks) {
+  /* A whole number of pixels: each engine rounds a fractional period its own way. */
+  --clio-slider-tick-spacing: round((100% - var(--clio-slider-tick-run)) / (var(--clio-slider-tick-count) - 1), 1px);
+  height: calc(var(--clio-slider-height) + var(--clio-slider-tick-gap) + 4px);
+  background:
+    repeating-linear-gradient(to right, var(--clio-slider-tick-light) 0 1px, var(--clio-slider-tick-ink) 1px 2px, var(--clio-slider-tick-shade) 2px 3px, transparent 3px var(--clio-slider-tick-spacing)) var(--clio-slider-tick-offset) 100% / 100% 3px no-repeat,
+    repeating-linear-gradient(to right, var(--clio-slider-tick-light) 0 2px, transparent 2px var(--clio-slider-tick-spacing)) var(--clio-slider-tick-offset) calc(100% - 3px) / 100% 1px no-repeat;
+}
+
+:where(input[type="range"])::-webkit-slider-runnable-track {
+  box-sizing: border-box;
+  height: var(--clio-slider-track-height);
+  border-style: solid;
+  border-width: var(--clio-slider-track-slice);
+  border-color: transparent;
+  border-image: var(--clio-art-slider-track) var(--clio-slider-track-slice-n) fill / var(--clio-slider-track-slice) stretch;
+}
+
+:where(input[type="range"])::-webkit-slider-thumb {
+  width: var(--clio-slider-thumb-width);
+  height: var(--clio-slider-thumb-height);
+  /* the thumb sits in the track's content box, inside the border-image slice */
+  margin-top: calc(-1 * (var(--clio-slider-track-top) + var(--clio-slider-track-slice)));
+  border: 0;
+  background: var(--clio-art-slider-thumb) 0 0 / 100% 100% no-repeat;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+/* Firefox: the same track and thumb through its own parts. Its thumb travels
+   the whole content box: the padding keeps it inside the track's ends, as
+   Chrome's and the Mac's (Mouse control panel at both ends), and the track
+   reaches back over the padding. */
+@supports selector(::-moz-range-thumb) {
+  :where(input[type="range"]) {
+    padding-inline: var(--clio-slider-track-slice);
+  }
+}
+
+:where(input[type="range"])::-moz-range-track {
+  margin-inline: calc(-1 * var(--clio-slider-track-slice));
+}
+
+:where(input[type="range"])::-moz-range-track {
+  box-sizing: border-box;
+  height: var(--clio-slider-track-height);
+  border-style: solid;
+  border-width: var(--clio-slider-track-slice);
+  border-color: transparent;
+  border-image: var(--clio-art-slider-track) var(--clio-slider-track-slice-n) fill / var(--clio-slider-track-slice) stretch;
+}
+
+:where(input[type="range"])::-moz-range-thumb {
+  box-sizing: border-box;
+  width: var(--clio-slider-thumb-width);
+  height: var(--clio-slider-thumb-height);
+  border: 0;
+  border-radius: 0;
+  background: var(--clio-art-slider-thumb) 0 0 / 100% 100% no-repeat;
+  /* Firefox centres the thumb in the content box (its top lands half a pixel
+     above, then on the pixel below); this brings its top to the content box's. */
+  translate: 0 round(down, (var(--clio-slider-thumb-height) - var(--clio-slider-track-height) - 2 * var(--clio-slider-track-top)) / 2, 1px);
+}

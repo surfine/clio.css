@@ -1,0 +1,108 @@
+
+
+/* ---- Windows ------------------------------------------------------------- */
+[data-era="nextstep"] :is(.window.main, .window.is-nextstep-main) {
+  --clio-titlebar-bg: var(--clio-titlebar-main-bg);
+  --clio-tb-light: var(--clio-titlebar-main-light);
+  --clio-titlebar-shade: var(--clio-titlebar-main-shade);
+}
+
+[data-era="nextstep"] :is(.window.inactive, .inactive-title-bar) {
+  --clio-titlebar-bg: var(--clio-titlebar-inactive-bg);
+  --clio-tb-light: var(--clio-titlebar-inactive-light);
+  --clio-title-fg: var(--clio-title-inactive-fg);
+}
+
+/* The title bar: the miniaturize button left, the title centred on the whole
+   bar, the close button right. */
+[data-era="nextstep"] :is(.title-bar, .inactive-title-bar) {
+  grid-template-columns: var(--clio-titlebar-slot) minmax(0, 1fr) var(--clio-titlebar-slot);
+  align-items: center;
+  background: var(--clio-titlebar-bg);
+  box-shadow: inset 1px 1px 0 var(--clio-tb-light), inset -1px -1px 0 var(--clio-titlebar-shade);
+}
+
+[data-era="nextstep"] :is(.title-bar, .inactive-title-bar) > :is(.title, h1, h2, h3) {
+  font-weight: var(--clio-title-weight);
+}
+
+[data-era="nextstep"] .title-bar > :is(button, .close, .close-box, .resize, .resize-box, .zoom, .shade, .shade-box, .collapse, .nextstep-miniaturize, .miniaturize) {
+  width: var(--clio-box-size);
+  height: var(--clio-box-size);
+  border: 0;
+  background: var(--clio-art-nx-miniaturize) 0 0 / 15px 15px no-repeat;
+  box-shadow: none;
+}
+
+[data-era="nextstep"] .title-bar > :is(.close, .close-box) {
+  grid-column: 3;
+  justify-self: end;
+  margin: 0 var(--clio-box-inset) 0 0;
+  background-image: var(--clio-art-nx-close);
+}
+
+[data-era="nextstep"] .title-bar > :is(.shade, .shade-box, .collapse, .nextstep-miniaturize, .miniaturize) {
+  display: block;
+  grid-column: 1;
+  justify-self: start;
+  margin: 0 0 0 var(--clio-box-inset);
+}
+
+/* NeXTSTEP has no zoom button: the zoom box draws nothing in the bar and stands
+   for the resize bar under the window. */
+[data-era="nextstep"] .title-bar > :is(.resize, .resize-box, .zoom) {
+  display: none;
+}
+
+[data-era="nextstep"] .title-bar > :is(.resize, .resize-box, .zoom, .shade, .shade-box, .collapse)::before {
+  content: none;
+}
+
+[data-era="nextstep"] :is(.window.edited, .window.is-edited) > .title-bar > :is(.close, .close-box) {
+  background-image: var(--clio-art-nx-close-edited);
+}
+/* clio:segment */
+
+
+/* A background window keeps its buttons (they do not act until it is key). */
+[data-era="nextstep"] .window.inactive > .title-bar > :not(.title, h1, h2, h3, .resize, .resize-box, .zoom) {
+  visibility: visible;
+}
+
+/* The resize bar: a window whose title bar has a zoom box can be resized. */
+[data-era="nextstep"] .window:has(> .title-bar > :is(.resize, .resize-box, .zoom)) {
+  padding-bottom: var(--clio-resizebar-height);
+}
+
+[data-era="nextstep"] .window:has(> .title-bar > :is(.resize, .resize-box, .zoom))::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: var(--clio-resizebar-height);
+  border-top: 1px solid #555555;
+  box-sizing: border-box;
+  /* the two ends' dividers: #555555 then white, 28px in from the left */
+  background:
+    linear-gradient(#555555, #555555) 28px 0 / 1px 100% no-repeat,
+    linear-gradient(#ffffff, #ffffff) 29px 0 / 1px 100% no-repeat,
+    linear-gradient(#555555, #555555) calc(100% - 29px) 0 / 1px 100% no-repeat,
+    linear-gradient(#ffffff, #ffffff) calc(100% - 28px) 0 / 1px 100% no-repeat,
+    #aaaaaa;
+  box-shadow: inset 0 1px 0 #ffffff;
+  pointer-events: none;
+}
+
+[data-era="nextstep"] .window-pane {
+  background: var(--clio-pane-bg);
+}
+/* clio:segment */
+
+
+/* ---- Touch and forced colours (adapted) ---------------------------------------- */
+@media (pointer: coarse) {
+  [data-era="nextstep"] .title-bar > :is(button, .close, .close-box, .shade, .shade-box, .collapse, .nextstep-miniaturize, .miniaturize)::after {
+    inset: -15px;
+  }
+}

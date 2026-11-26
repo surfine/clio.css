@@ -1,0 +1,148 @@
+
+
+/* ---- Main menu and submenus ---------------------------------------------
+   The menu bar is drawn as NeXT's main menu: a vertical panel whose title is
+   the bar's aria-label; each title is a cell that opens its submenu to the
+   right. A submenu's title is its own aria-label. */
+[data-era="nextstep"] :is(.menu-bar, ul[role="menubar"], ul[role="menu-bar"]) {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: var(--clio-menubar-width);
+  height: auto;
+  border-right: 1px solid #000000;
+  border-bottom: 0;
+}
+
+[data-era="nextstep"] :is(.menu-bar, [role="menubar"], [role="menu-bar"], .menu, [role="menu"]):is([aria-label], .torn-off)::before {
+  content: attr(aria-label);
+  display: block;
+  flex: none;
+  box-sizing: border-box;
+  height: var(--clio-menu-title-height);
+  padding: var(--clio-menu-title-padding);
+  border-bottom: 1px solid #000000;
+  background: #000000;
+  box-shadow: inset 1px 1px 0 #ffffff, inset -1px 0 0 #555555, inset 0 -1px 0 #555555;
+  color: #ffffff;
+  font: 700 12px/21px var(--clio-font-chrome);
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+[data-era="nextstep"] :is(.menu-bar, [role="menubar"], [role="menu-bar"]) > li,
+[data-era="nextstep"] :is(.menu, [role="menu"]) > li {
+  display: flex;
+  box-sizing: border-box;
+  min-height: var(--clio-menu-item-height);
+  padding: 0;
+  border-bottom: 1px solid #000000;
+  background: #aaaaaa;
+  box-shadow: var(--clio-menu-cell);
+}
+
+[data-era="nextstep"] :is(.menu-bar, [role="menubar"], [role="menu-bar"]) > li > :is(button, a, span) {
+  flex: 1;
+  justify-content: flex-start;
+  min-height: calc(var(--clio-menu-item-height) - 1px);
+  padding: var(--clio-menu-item-padding);
+  line-height: calc(var(--clio-menu-item-height) - 1px);
+}
+/* clio:segment */
+
+
+/* A cell that opens a submenu carries the arrow, 5px from its right and centred (6px
+   down in a 20px cell);
+   on a highlighted cell the arrow's light edge is light grey. */
+[data-era="nextstep"] :is(.menu-bar, [role="menubar"], [role="menu-bar"], .menu, [role="menu"]) > li > :is(button, a)[aria-haspopup="true"] {
+  background: var(--clio-art-nx-submenu) right 5px center / 7px 7px no-repeat;
+}
+/* clio:segment */
+
+
+/* A submenu opens right against its menu, level with that menu's top (whichever
+   cell opened it): the cells do not position it, the menu does. */
+[data-era="nextstep"] :is(.menu-bar, [role="menubar"], [role="menu-bar"]),
+[data-era="nextstep"] :is(.menu, [role="menu"]):not(li > *) {
+  position: relative;
+}
+
+[data-era="nextstep"] :is(.menu-bar, [role="menubar"], [role="menu-bar"], .menu, [role="menu"]) > li {
+  position: static;
+}
+
+[data-era="nextstep"] :is(.menu-bar, [role="menubar"], [role="menu-bar"], .menu, [role="menu"]) li > :is(.menu, ul[role="menu"]) {
+  top: 0;
+  left: 100%;
+  margin-left: 1px;
+}
+
+[data-era="nextstep"] :is(.menu, ul[role="menu"]) {
+  min-width: 93px;
+  border-left: 1px solid #555555;
+  border-right: 1px solid #000000;
+  border-bottom: 0;
+}
+
+[data-era="nextstep"] :is(.menu, [role="menu"]) > li > :is(a, button) {
+  min-height: calc(var(--clio-menu-item-height) - 1px);
+  padding: var(--clio-menu-item-padding);
+  line-height: calc(var(--clio-menu-item-height) - 1px);
+}
+
+/* A torn-off submenu (measured, Workspace's Info menu dragged away): a #555555 line
+   on its top as on its left, and a close button 2px in from the title bar's face. */
+[data-era="nextstep"] :is(.menu, [role="menu"]).torn-off {
+  position: relative;
+  box-shadow: 0 -1px 0 #555555;   /* a shadow, not a border: it keeps the top-right pixel #555555 */
+}
+
+[data-era="nextstep"] :is(.menu, [role="menu"]).torn-off::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  width: 15px;
+  height: 15px;
+  background: var(--clio-art-nx-close) 0 0 / 15px 15px no-repeat;
+}
+
+/* No check marks or dividers in NeXT menus; dimmed items are #555555. */
+[data-era="nextstep"] :is(.menu, [role="menu"]) > :is(li.separator, li[role="separator"], hr) {
+  display: none;
+}
+
+[data-era="nextstep"] :is(.menu, [role="menu"]) > li:is(.checked, [aria-checked="true"])::before,
+[data-era="nextstep"] :is(.menu, [role="menu"]) > li > :is([aria-checked="true"], .checked)::before {
+  content: none;
+}
+
+[data-era="nextstep"] :is(.menu, [role="menu"]) > li:is(.disabled, [aria-disabled="true"]),
+[data-era="nextstep"] :is(.menu, [role="menu"]) > li > :is(a, button):is(:disabled, [aria-disabled="true"]) {
+  color: var(--clio-disabled);
+  -webkit-text-fill-color: var(--clio-disabled);
+  background-image: none;
+}
+
+[data-era="nextstep"] :is(.menu-bar, [role="menubar"], [role="menu-bar"], .menu, [role="menu"]) :is(kbd, .shortcut) {
+  margin-left: auto;
+  padding-left: 12px;
+  font: inherit;
+}
+/* clio:segment */
+
+
+[data-era="nextstep"] :is(button, .btn, .btn-default, .standard-button, input[type="button"], input[type="submit"], input[type="reset"]):is(:disabled, .disabled, .is-disabled) {
+  background: var(--clio-button-bg);
+  color: var(--clio-button-disabled-fg);
+  -webkit-text-fill-color: var(--clio-button-disabled-fg);
+  box-shadow: var(--clio-button-shadow);
+}
+/* clio:segment */
+
+
+@media (forced-colors: active) {
+  [data-era="nextstep"] :is(.menu-bar, [role="menubar"], .menu, [role="menu"])::before {
+    forced-color-adjust: none;
+  }
+}

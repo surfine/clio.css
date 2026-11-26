@@ -1,0 +1,6 @@
+
+
+[data-era="nextstep"] .icon > :is(figcaption, span, .icon-label) {
+  padding: 0 2px;
+  font-size: 12px;
+}

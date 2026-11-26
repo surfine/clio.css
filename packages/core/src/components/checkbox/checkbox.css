@@ -1,0 +1,33 @@
+
+
+/* ---- Check boxes ---------------------------------------------------------- */
+:where(input[type="checkbox"]) {
+  position: relative;
+  flex: none;
+  box-sizing: border-box;
+  width: var(--clio-check-size);
+  height: var(--clio-check-size);
+  margin: 0;
+  border: var(--clio-check-border);
+  border-radius: 0;
+  background: var(--clio-check-bg);
+  box-shadow: var(--clio-check-shadow);
+  vertical-align: -2px;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: var(--clio-cursor-arrow);
+}
+
+:where(input[type="checkbox"]):checked {
+  background: var(--clio-check-mark), var(--clio-check-bg);
+  background-origin: var(--clio-check-mark-origin);
+}
+
+:where(input[type="checkbox"]):not(:disabled):active:where(:not([data-clio-off])) {
+  border-width: var(--clio-check-pressed-border-width);
+}
+
+:where(input[type="checkbox"]):disabled {
+  border-color: var(--clio-disabled);
+  opacity: 0.6;
+}

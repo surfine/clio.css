@@ -1,0 +1,16 @@
+
+
+/* ---- Text fields ---------------------------------------------------------------
+   Pens (ppat 7003-7006): the rows tiled from the white's left edge, the left
+   column from its top, the right column from 1px higher (both of Date & Time's
+   fields agree), and the corner pixels they leave (tooling/db-pens.py). A rule,
+   not a token: the rows read the field's own --clio-db-phase. */
+[data-era="drawingboard"] :is(input:not([type]), input[type="text"], input[type="search"], input[type="email"], input[type="url"], input[type="password"], input[type="number"], input[type="tel"], textarea) {
+  border-image: url("art/drawingboard/pens/field-corners.png") 5 / 5px stretch;
+  background:
+    url("art/drawingboard/pens/field-left.png") left 0 top 2px / 1px 32px repeat-y border-box,
+    url("art/drawingboard/pens/field-right.png") right 0 top 1px / 1px 32px repeat-y border-box,
+    url("art/drawingboard/pens/field-top.png") calc(2px - var(--clio-db-phase, 0px)) 0 / 128px 1px repeat-x border-box,
+    url("art/drawingboard/pens/field-bottom.png") calc(2px - var(--clio-db-phase, 0px)) 100% / 128px 1px repeat-x border-box,
+    #ffffff padding-box;
+}

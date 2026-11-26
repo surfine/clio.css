@@ -1,0 +1,22 @@
+
+
+/* A box: a #555555 outline with a white one drawn over it a pixel down and right
+   (measured, Preferences' Menu Button box); its title centred across the top. */
+[data-era="nextstep"] fieldset {
+  position: relative;
+}
+
+[data-era="nextstep"] fieldset::before {
+  content: "";
+  position: absolute;
+  inset: 0 -2px -2px 0;
+  border: 1px solid #ffffff;
+  pointer-events: none;
+}
+
+[data-era="nextstep"] fieldset > legend {
+  position: relative;
+  margin: 0 auto;
+  padding: 0 5px;
+  background: var(--clio-pane-bg);
+}

@@ -1,0 +1,37 @@
+
+
+/* The same check mark in an open pop-up menu drawn by the browser (base-select). */
+@supports (appearance: base-select) {
+  :is([data-era="platinum"], [data-era="drawingboard"]) select option::checkmark {
+    left: 8px;
+    width: 10px;
+    background: var(--clio-art-p-check) 0 0 / 10px 8px no-repeat;
+  }
+
+  :is([data-era="platinum"], [data-era="drawingboard"]) select option:is(:hover, :focus-visible)::checkmark {
+    filter: invert(1);
+  }
+}
+/* clio:segment */
+
+
+/* Disabled pop-up menu: #888 frame, flat face, the #aaa divider and a grey
+   arrow (Mac OS 9.0 Appearance, "Position Automatically"). Browsers also fade
+   a disabled <select>; Mac OS did not. */
+:is([data-era="platinum"], [data-era="drawingboard"]) select:disabled {
+  border-color: #888888;
+  background:
+    var(--clio-art-p-dropdown-off) right 7px top 4px / 7px 10px no-repeat,
+    linear-gradient(#aaaaaa, #aaaaaa) right 20px top 0 / 1px 100% no-repeat,
+    #dddddd;
+  background-clip: padding-box;
+  box-shadow: none;
+  color: #888888;
+  opacity: 1;
+  border-image-source: var(--clio-art-frame-p9-popup-disabled);
+}
+
+/* The face stays inside the frame, so the rounded corners show what is behind. */
+:is([data-era="platinum"], [data-era="drawingboard"]) select {
+  background-clip: padding-box;
+}

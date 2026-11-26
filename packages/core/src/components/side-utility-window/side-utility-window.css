@@ -1,0 +1,14 @@
+
+
+/* ---- Utility window ------------------------------------------------------------------
+   A floating palette (Mac OS 8 HIG: "Utility Windows"; HIG 1992: floating
+   windows): <div class="window utility"> with the usual .title-bar. Its title
+   bar is thinner, its boxes smaller and its title in the small font. Before
+   Mac OS 8 the eras draw it from the document window's parts (inferred). */
+:where(.window.utility) {
+  --clio-titlebar-height: var(--clio-utility-titlebar-height);
+  --clio-titlebar-row: var(--clio-utility-titlebar-row);
+  --clio-box-size: var(--clio-utility-box-size);
+  --clio-titlebar-slot: var(--clio-utility-slot);
+  min-width: 80px;
+}

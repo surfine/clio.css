@@ -1,0 +1,169 @@
+
+
+/* ---- Scrollers ------------------------------------------------------------------
+   The browser's own scroll bar stays on the right (a page cannot move it); both
+   arrows sit together at its end. clio.js draws it on the left. The browser's
+   bar is styled inside @supports, so the build does not copy these rules onto
+   clio.js's bars, which have their own below. */
+@supports selector(::-webkit-scrollbar) {
+  [data-era="nextstep"] :is(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-track:vertical {
+    border-left: 1px solid #000000;
+  }
+
+  [data-era="nextstep"] :is(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-thumb {
+    min-width: 18px;
+    min-height: 18px;
+  }
+
+  [data-era="nextstep"] :is(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-button {
+    border: 0;
+    background-size: 16px 16px;
+  }
+
+  [data-era="nextstep"] :is(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-button:vertical:start:decrement,
+  [data-era="nextstep"] :is(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-button:horizontal:end:increment {
+    display: none;
+  }
+
+  [data-era="nextstep"] :is(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-button:vertical:end:decrement {
+    display: block;
+    width: var(--clio-scrollbar-size);
+    height: var(--clio-scrollbar-size);
+    border-left: 1px solid #000000;
+    background: var(--clio-scrollbar-up) 1px 1px / 16px 16px no-repeat, #aaaaaa;
+  }
+
+  [data-era="nextstep"] :is(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-button:vertical:end:increment {
+    border-left: 1px solid #000000;
+    background: var(--clio-scrollbar-down) 1px 1px / 16px 16px no-repeat, #aaaaaa;
+  }
+
+  [data-era="nextstep"] :is(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-button:horizontal:start:decrement {
+    border-top: 1px solid #000000;
+    background: var(--clio-scrollbar-left) 1px 1px / 16px 16px no-repeat, #aaaaaa;
+  }
+
+  [data-era="nextstep"] :is(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-button:horizontal:start:increment {
+    display: block;
+    width: var(--clio-scrollbar-size);
+    height: var(--clio-scrollbar-size);
+    border-top: 1px solid #000000;
+    background: var(--clio-scrollbar-right) 1px 1px / 16px 16px no-repeat, #aaaaaa;
+  }
+
+  [data-era="nextstep"] :is(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-button:vertical:decrement:active { background-image: var(--clio-scrollbar-up-on); }
+  [data-era="nextstep"] :is(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-button:vertical:increment:active { background-image: var(--clio-scrollbar-down-on); }
+  [data-era="nextstep"] :is(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-button:horizontal:decrement:active { background-image: var(--clio-scrollbar-left-on); }
+  [data-era="nextstep"] :is(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-button:horizontal:increment:active { background-image: var(--clio-scrollbar-right-on); }
+
+  [data-era="nextstep"] :is(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-corner {
+    border: 0;
+    background: #aaaaaa;
+  }
+}
+
+/* clio.js's bars, measured (NeXTStep 3.0, the File Viewer's browser): an 18px
+   lane between the box's line and a black line on the content's side; inside it
+   a 1px #aaaaaa margin, 16px of #555555/#aaaaaa dots, the 16px raised knob with
+   its dimple; the two 16x16 arrows together at the bottom (vertical) or the
+   left (horizontal), each in a 17px cell that keeps 1px of margin before it,
+   and 1px of margin after the last. Host and doubled classes: these must beat
+   the copies of the base scroll-bar rules (up to six classes). */
+[data-era="nextstep"] .clio-sb-host.clio-sb-y {
+  padding-right: var(--clio-sb-pr, 0px);
+  padding-left: calc(var(--clio-sb-pl, 0px) + var(--clio-scrollbar-size));
+}
+
+[data-era="nextstep"] .clio-sb-host > .clio-sb-anchor > .clio-sb.clio-sb > :is(.clio-sb-track, .clio-sb-button) {
+  border: 0;
+  box-shadow: none;
+}
+
+[data-era="nextstep"] .clio-sb-host > .clio-sb-anchor > .clio-sb.clio-sb-v > :is(.clio-sb-track, .clio-sb-button) {
+  border-right: 1px solid #000000;
+}
+
+[data-era="nextstep"] .clio-sb-host > .clio-sb-anchor > .clio-sb.clio-sb-h > :is(.clio-sb-track, .clio-sb-button) {
+  border-top: 1px solid #000000;
+}
+
+[data-era="nextstep"] .clio-sb-host > .clio-sb-anchor > .clio-sb.clio-sb > .clio-sb-track {
+  background:
+    var(--clio-nx-lane) calc(1px + var(--clio-sb-px, 0px)) calc(1px + var(--clio-sb-py, 0px)) / 2px 2px,
+    #aaaaaa;
+  background-clip: content-box, border-box;
+}
+
+[data-era="nextstep"] .clio-sb-host > .clio-sb-anchor > .clio-sb.clio-sb-v > .clio-sb-track {
+  bottom: calc(2 * var(--clio-scrollbar-arrow-length) + var(--clio-scrollbar-arrow-gap));
+  padding: 1px 1px 0;
+}
+
+[data-era="nextstep"] .clio-sb-host > .clio-sb-anchor > .clio-sb.clio-sb-h > .clio-sb-track {
+  left: calc(2 * var(--clio-scrollbar-arrow-length) + var(--clio-scrollbar-arrow-gap));
+  padding: 1px 1px 1px 0;   /* the margin is at the far end (measured, ns30b/hb4) */
+}
+
+[data-era="nextstep"] .clio-sb-host > .clio-sb-anchor > .clio-sb.clio-sb-v > .clio-sb-thumb {
+  left: 1px;
+  right: 2px;
+}
+
+[data-era="nextstep"] .clio-sb-host > .clio-sb-anchor > .clio-sb.clio-sb-h > .clio-sb-thumb {
+  top: 2px;
+  bottom: 1px;
+}
+
+[data-era="nextstep"] .clio-sb-host > .clio-sb-anchor > .clio-sb.clio-sb > .clio-sb-button {
+  background-color: #aaaaaa;
+  background-position: 1px 1px;
+  background-size: 16px 16px;
+  background-repeat: no-repeat;
+}
+
+[data-era="nextstep"] .clio-sb-host > .clio-sb-anchor > .clio-sb.clio-sb-v.clio-sb-smart > .clio-sb-dec {
+  top: auto;
+  bottom: calc(var(--clio-scrollbar-arrow-length) + var(--clio-scrollbar-arrow-gap));
+  width: 100%;
+  height: var(--clio-scrollbar-arrow-length);
+}
+
+[data-era="nextstep"] .clio-sb-host > .clio-sb-anchor > .clio-sb.clio-sb-v.clio-sb-smart > .clio-sb-inc {
+  bottom: 0;
+  width: 100%;
+  height: calc(var(--clio-scrollbar-arrow-length) + var(--clio-scrollbar-arrow-gap));
+}
+
+[data-era="nextstep"] .clio-sb-host > .clio-sb-anchor > .clio-sb.clio-sb-h.clio-sb-near > .clio-sb-dec {
+  left: 0;
+  right: auto;
+  width: var(--clio-scrollbar-arrow-length);
+  height: 100%;
+  background-position: 1px 1px;
+}
+
+[data-era="nextstep"] .clio-sb-host > .clio-sb-anchor > .clio-sb.clio-sb-h.clio-sb-near > .clio-sb-inc {
+  left: var(--clio-scrollbar-arrow-length);
+  right: auto;
+  width: calc(var(--clio-scrollbar-arrow-length) + var(--clio-scrollbar-arrow-gap));
+  height: 100%;
+  background-position: 1px 1px;
+}
+
+[data-era="nextstep"] .clio-sb-host > .clio-sb-anchor > .clio-sb.clio-sb-h.clio-sb-near > .clio-sb-track {
+  right: 0;
+}
+
+[data-era="nextstep"] .clio-sb-host > .clio-sb-anchor > .clio-sb.clio-sb-v > .clio-sb-dec { background-image: var(--clio-scrollbar-up); }
+[data-era="nextstep"] .clio-sb-host > .clio-sb-anchor > .clio-sb.clio-sb-v > .clio-sb-inc { background-image: var(--clio-scrollbar-down); }
+[data-era="nextstep"] .clio-sb-host > .clio-sb-anchor > .clio-sb.clio-sb-h > .clio-sb-dec { background-image: var(--clio-scrollbar-left); }
+[data-era="nextstep"] .clio-sb-host > .clio-sb-anchor > .clio-sb.clio-sb-h > .clio-sb-inc { background-image: var(--clio-scrollbar-right); }
+[data-era="nextstep"] .clio-sb-host > .clio-sb-anchor > .clio-sb-v.clio-sb-v > .clio-sb-dec.clio-held { background-image: var(--clio-scrollbar-up-on); }
+[data-era="nextstep"] .clio-sb-host > .clio-sb-anchor > .clio-sb-v.clio-sb-v > .clio-sb-inc.clio-held { background-image: var(--clio-scrollbar-down-on); }
+[data-era="nextstep"] .clio-sb-host > .clio-sb-anchor > .clio-sb-h.clio-sb-h > .clio-sb-dec.clio-held { background-image: var(--clio-scrollbar-left-on); }
+[data-era="nextstep"] .clio-sb-host > .clio-sb-anchor > .clio-sb-h.clio-sb-h > .clio-sb-inc.clio-held { background-image: var(--clio-scrollbar-right-on); }
+
+/* With nothing to scroll the knob and the arrows go; the lane runs the whole bar. */
+[data-era="nextstep"] .clio-sb-host > .clio-sb-anchor > .clio-sb.clio-sb.clio-sb-off > .clio-sb-button { display: none; }
+[data-era="nextstep"] .clio-sb-host > .clio-sb-anchor > .clio-sb-v.clio-sb-v.clio-sb-off > .clio-sb-track { bottom: 0; }
+[data-era="nextstep"] .clio-sb-host > .clio-sb-anchor > .clio-sb-h.clio-sb-h.clio-sb-off > .clio-sb-track { left: 0; }

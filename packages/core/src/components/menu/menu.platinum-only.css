@@ -1,0 +1,5 @@
+
+
+[data-era="platinum"] .clio-popup-menu > li:is(.checked, [aria-checked="true"])::before {
+  left: 3px;
+}

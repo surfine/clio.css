@@ -1,0 +1,37 @@
+
+
+/* ---- Chasing arrows ------------------------------------------------------------
+   The asynchronous progress indicator (Mac OS 8 HIG: "Asynchronous Arrows").
+   Markup: <span class="chasing-arrows" role="status" aria-label="Looking…">.
+   It turns by stepping through the era's frames; with reduced motion it
+   stands still on the first. Earlier eras had a spinning watch cursor
+   instead, and use Platinum's arrows. */
+:where(.chasing-arrows) {
+  position: relative;
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  overflow: hidden;
+  vertical-align: middle;
+}
+
+/* The frames side by side on a strip that moves a frame at a time (transform
+   only, so the turning stays off the main thread). */
+:where(.chasing-arrows)::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: calc(16px * var(--clio-chasing-arrows-frames));
+  height: 16px;
+  background: var(--clio-art-chasing-arrows) 0 0 / 100% 100% no-repeat;
+  animation: clio-chase calc(var(--clio-chasing-arrows-frames) * 0.12s) steps(var(--clio-chasing-arrows-frames)) infinite;
+}
+
+@keyframes clio-chase {
+  to { transform: translateX(calc(-16px * var(--clio-chasing-arrows-frames))); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(.chasing-arrows)::before { animation: none; }
+}

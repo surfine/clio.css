@@ -1,0 +1,10 @@
+
+
+/* ---- Placard (Mac OS 8.5, the Appearance SDK's CDEF Tester, frames placard and
+   placard-disabled): a #cebdb5 face in a pencil line whose shade drifts from #333 to
+   #888 (drawn flat in its commonest shade, #555); disabled, a #cdc6bd face with a
+   faint line along the top only. */
+[data-era="drawingboard"] .placard {
+  border-color: #555555;
+  background: #cebdb5;
+}

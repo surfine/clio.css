@@ -1,0 +1,20 @@
+
+
+/* ---- Scroll arrow art sits on the bevelled box ---------------------------- */
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-button:horizontal {
+  background-position: 0 1px, 0 0;   /* the vertical boxes' art one pixel to the right, the horizontal one pixel down */
+}
+
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-button,
+:is([data-era="platinum"], [data-era="drawingboard"]):is(html.clio-scrollbars)::-webkit-scrollbar-button {
+  background-position: 1px 0, 0 0;
+  background-size: 14px 14px, 100% 100%;
+}
+
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(.window-pane, .listbox, [role="listbox"], textarea, select[multiple], .clio-scroll, .clio-scrollbars *)::-webkit-scrollbar-button:active,
+:is([data-era="platinum"], [data-era="drawingboard"]):is(html.clio-scrollbars)::-webkit-scrollbar-button:active {
+  /* Held (Mac OS 9.0 Finder, the down arrow held; frame arrow-held): a #777
+     face in --clio-scrollbar-button-bevel-on's #555 and #999 bevel. */
+  background-color: #777777;
+  box-shadow: none;
+}

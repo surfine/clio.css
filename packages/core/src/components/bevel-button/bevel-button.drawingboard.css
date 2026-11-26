@@ -1,0 +1,12 @@
+
+
+[data-era="drawingboard"] .bevel {
+  border-width: 1px;
+  border-image: url("art/drawingboard/pens/button-corners.png") 5 / 5px stretch;
+  background: var(--clio-button-bg);
+}
+
+[data-era="drawingboard"] .bevel:is(:active:where(:not([data-clio-off])), .active, [aria-pressed="true"]):not(:disabled) {
+  border-image-source: url("art/drawingboard/pens/button-held-corners.png");
+  background: var(--clio-button-active-bg);
+}

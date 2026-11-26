@@ -1,0 +1,52 @@
+
+
+/* ---- List view headers -----------------------------------------------------
+   Measured row by row (Finder list view, Mac OS 9.0). A header: #666 above,
+   white light along its top and left, #ccc, #888 shade and a #333 rule below;
+   the #666 column on its left is the divider. The sorted header is sunk:
+   #111 top and left, #444 right and below (#222 at the two odd corners), a
+   #555 then #aaa inner bevel round #888. The sort-direction cell adds an #888
+   shade on its right. */
+:is([data-era="platinum"], [data-era="drawingboard"]) .list-view th {
+  background:
+    linear-gradient(#666666, #666666) 0 0 / 100% 1px no-repeat,
+    linear-gradient(#666666, #666666) 0 0 / 1px calc(100% - 1px) no-repeat,
+    linear-gradient(#555555, #555555) 0 100% / 1px 1px no-repeat,
+    linear-gradient(#333333, #333333) 1px 100% / 100% 1px no-repeat,
+    linear-gradient(#ffffff, #ffffff) 1px 1px / 100% 1px no-repeat,
+    linear-gradient(#ffffff, #ffffff) 1px 1px / 1px calc(100% - 3px) no-repeat,
+    linear-gradient(#888888, #888888) 2px calc(100% - 1px) / 100% 1px no-repeat,
+    #cccccc;
+}
+
+:is([data-era="platinum"], [data-era="drawingboard"]) .list-view th[aria-sort]:not([aria-sort="none"]) {
+  background:
+    linear-gradient(#222222, #222222) 100% 0 / 1px 1px no-repeat,
+    linear-gradient(#222222, #222222) 0 100% / 1px 1px no-repeat,
+    linear-gradient(#111111, #111111) 0 0 / calc(100% - 1px) 1px no-repeat,
+    linear-gradient(#111111, #111111) 0 0 / 1px calc(100% - 1px) no-repeat,
+    linear-gradient(#444444, #444444) 100% 1px / 1px 100% no-repeat,
+    linear-gradient(#444444, #444444) 1px 100% / 100% 1px no-repeat,
+    linear-gradient(#777777, #777777) calc(100% - 1px) 1px / 1px 1px no-repeat,
+    linear-gradient(#777777, #777777) 1px calc(100% - 1px) / 1px 1px no-repeat,
+    linear-gradient(#555555, #555555) 1px 1px / calc(100% - 3px) 1px no-repeat,
+    linear-gradient(#555555, #555555) 1px 1px / 1px calc(100% - 3px) no-repeat,
+    linear-gradient(#aaaaaa, #aaaaaa) calc(100% - 1px) 2px / 1px calc(100% - 3px) no-repeat,
+    linear-gradient(#aaaaaa, #aaaaaa) 2px calc(100% - 1px) / calc(100% - 3px) 1px no-repeat,
+    #888888;
+}
+
+:is([data-era="platinum"], [data-era="drawingboard"]) .list-view th.sort-direction {
+  background:
+    linear-gradient(#888888, #888888) 100% 2px / 1px calc(100% - 3px) no-repeat,
+    linear-gradient(#cccccc, #cccccc) 100% 1px / 1px 1px no-repeat,
+    linear-gradient(#666666, #666666) 0 0 / 100% 1px no-repeat,
+    linear-gradient(#666666, #666666) 0 0 / 1px calc(100% - 1px) no-repeat,
+    linear-gradient(#555555, #555555) 0 100% / 1px 1px no-repeat,
+    linear-gradient(#333333, #333333) 1px 100% / 100% 1px no-repeat,
+    linear-gradient(#ffffff, #ffffff) 1px 1px / 100% 1px no-repeat,
+    linear-gradient(#ffffff, #ffffff) 1px 1px / 1px calc(100% - 3px) no-repeat,
+    linear-gradient(#888888, #888888) 2px calc(100% - 1px) / 100% 1px no-repeat,
+    url("art/platinum/sort-direction.png") 4px 6px / 8px 7px no-repeat,
+    #cccccc;
+}

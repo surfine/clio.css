@@ -14,9 +14,16 @@ For AI coding agents using or changing this repository.
 
 ## Changing this repository
 
-- Sources: `src/*.css` (concatenated in file-name order) and `components/index.ts`
-  (docs, `components.json`, `llms.txt`, `llms-full.txt` and `EVIDENCE.md` are generated
-  from it). Never hand-edit `dist/`, `docs/`, `llms.txt` or `EVIDENCE.md`.
+- Sources: the CSS fragments in `packages/core/src/` (`components/<name>/<name>.css` for a
+  component's base, `<name>.<layer>.css` for an era layer such as `window.platinum.css`,
+  `foundation/` for fonts, tokens, base, cursors, adapt and CJK) and `components/index.ts`.
+  `packages/core/src/order.ts` lists which fragment segments make up each single-file layer
+  (named as the old `src/` files: `20-window.css`, `90-platinum.css`…), in cascade order;
+  segments inside a fragment are separated by `/* clio:segment */`. Add a rule to the segment
+  it belongs beside; a rule that must sit between two other fragments' rules is a new segment
+  and a new `order.ts` entry. `npm test` fails on an unused or doubly used segment.
+  Docs, `components.json`, `llms.txt`, `llms-full.txt` and `EVIDENCE.md` are generated
+  from `components/index.ts`. Never hand-edit `dist/`, `docs/`, `llms.txt` or `EVIDENCE.md`.
 - Tooling and tests are TypeScript under `tooling/`, `test/` and `components/`, run
   directly by Node 24 (type stripping: no build step, no `enum` or other syntax Node cannot
   strip). Imports name the `.ts` file. `npx tsc --noEmit -p tsconfig.tooling.json` checks them
@@ -50,13 +57,13 @@ For AI coding agents using or changing this repository.
   (Control Strip, Dock, …) is in scope with its markup. Launch posts (awesome lists,
   Show HN) wait for Aqua. The plan and the decisions behind it: ROADMAP-MACOSX.md.
   Since 2026-11-26 (D14) NeXTSTEP 3.3 is a clio.css era (`data-era="nextstep"`,
-  `src/93-nextstep.css`, shipped as `dist/clio.nextstep.css` only); the four Classic eras
+  the `*.nextstep.css` fragments and `foundation/nextstep.css`, shipped as `dist/clio.nextstep.css` only); the four Classic eras
   stay the Classic line (D7, D16: fixes still ship) and `dist/clio.css` stays the Classic bundle; the Mac OS X eras belong
   to clio.wasm (D8).
-- Tokens live on `:root, [data-era="system6"]` (01-tokens.css),
-  `[data-era="system7"]` (80-system7.css), `:is([data-era="platinum"],
-  [data-era="drawingboard"])` (90-platinum.css, shared: both are Appearance Manager
-  themes) and `[data-era="drawingboard"]` (92-drawingboard.css, which overrides). A token that reads another token is
+- Tokens live on `:root, [data-era="system6"]` (`foundation/tokens.css`),
+  `[data-era="system7"]` (`foundation/system7.css`), `:is([data-era="platinum"],
+  [data-era="drawingboard"])` (`foundation/platinum.css`, shared: both are Appearance Manager
+  themes) and `[data-era="drawingboard"]` (`foundation/drawingboard.css`, which overrides). A token that reads another token is
   resolved where it is declared, so an era that changes `--clio-paper` must re-declare
   every token built from it.
 - Motion: none today. If added, animate `transform`/`opacity` only and honour

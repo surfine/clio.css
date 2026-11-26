@@ -1,0 +1,253 @@
+
+
+/* ---- Window ----------------------------------------------------------------
+   Drawn as the theme draws it: the nine 'pxm#' frame pieces (6176-6184, active
+   and inactive sets), placed where Mac OS 8.5 puts them round a 476x338
+   outline (Appearance window, found 1:1 in the capture), with the edge pieces
+   tiled from their ends. Under them the window paper (ppat 7120): 128x128,
+   origin at the content's top-left, 6px in and 22px down (Date & Time, Finder
+   Preferences windows agree). Corners overrun the outline, so they sit on a
+   pseudo-element larger than the window; the tiled edges sit on one clipped
+   to where each edge runs. Files: art/drawingboard/ (tooling/db-art.py --files). */
+[data-era="drawingboard"] .window {
+  --db-tl: url("art/drawingboard/window-tl.png");
+  --db-top: url("art/drawingboard/window-top.png");
+  --db-top-tiled: url("art/drawingboard/window-top-tiled.svg");
+  --db-bottom-tiled: url("art/drawingboard/window-bottom-tiled.svg");
+  --db-tr: url("art/drawingboard/window-tr.png");
+  --db-ur: url("art/drawingboard/window-ur.png");
+  --db-right: url("art/drawingboard/window-right.png");
+  --db-br: url("art/drawingboard/window-br.png");
+  --db-bottom: url("art/drawingboard/window-bottom.png");
+  --db-bl: url("art/drawingboard/window-bl.png");
+  --db-left: url("art/drawingboard/window-left.png");
+  isolation: isolate;
+  min-width: 128px;
+  min-height: 60px;
+}
+
+[data-era="drawingboard"] .window.inactive {
+  --db-tl: url("art/drawingboard/window-tl-inactive.png");
+  --db-top: url("art/drawingboard/window-top-inactive.png");
+  --db-top-tiled: url("art/drawingboard/window-top-inactive-tiled.svg");
+  --db-bottom-tiled: url("art/drawingboard/window-bottom-inactive-tiled.svg");
+  --db-tr: url("art/drawingboard/window-tr-inactive.png");
+  --db-ur: url("art/drawingboard/window-ur-inactive.png");
+  --db-right: url("art/drawingboard/window-right-inactive.png");
+  --db-br: url("art/drawingboard/window-br-inactive.png");
+  --db-bottom: url("art/drawingboard/window-bottom-inactive.png");
+  --db-bl: url("art/drawingboard/window-bl-inactive.png");
+  --db-left: url("art/drawingboard/window-left-inactive.png");
+}
+
+[data-era="drawingboard"] .window,
+[data-era="drawingboard"] .window:not(.inactive) {
+  background: url("art/drawingboard/paper.png") calc(6px - var(--clio-db-phase, 0px)) 22px / 128px 128px;
+}
+
+[data-era="drawingboard"] .window::before,
+[data-era="drawingboard"] .window::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Edges: the box from 1px left of the outline to the shadow's far side. */
+[data-era="drawingboard"] .window::before {
+  inset: 0 -7px -8px -1px;
+  background:
+    var(--db-top) 25px 0 / 256px 22px repeat-x,
+    var(--db-left) 0 22px / 7px 214px repeat-y,
+    var(--db-right) right 0 top 54px / 13px 150px repeat-y,
+    var(--db-bottom) left 57px bottom 0 / 183px 14px repeat-x;
+  clip-path: polygon(25px 0, calc(100% - 13px) 0, calc(100% - 13px) 54px, 100% 54px,
+    100% calc(100% - 54px), calc(100% - 59px) calc(100% - 54px), calc(100% - 59px) 100%,
+    57px 100%, 57px calc(100% - 22px), 0 calc(100% - 22px), 0 22px, 25px 22px);
+}
+
+/* Corners, overrunning the outline by up to 10px. */
+[data-era="drawingboard"] .window::after {
+  inset: -10px -11px -18px -8px;
+  background:
+    var(--db-tl) 4px 5px / 28px 27px no-repeat,
+    var(--db-tr) right 1px top 0 / 16px 32px no-repeat,
+    var(--db-ur) right 4px top 32px / 13px 32px no-repeat,
+    var(--db-br) right 0 bottom 2px / 63px 62px no-repeat,
+    var(--db-bl) left 0 bottom 0 / 64px 32px no-repeat;
+}
+
+/* Collapsed (Infinite HD's collapse box, Mac OS 8.5 with the theme; frame
+   collapsed): the theme draws the frame as for an empty window, the bottom
+   corners and the foot's shadow under the title bar, which is drawn last. The
+   box is the title bar and the foot's black line. Two layers do it: ::after is
+   the title bar's area alone (its paper, the top edge and the top corners);
+   ::before is everything outside that area (the corners' overrun, the bottom
+   corners and the shadow). The edges tile from SVG patterns, which stop where
+   their box does. The bottom right corner lies over the upper right edge here. */
+[data-era="drawingboard"] .window.collapsed {
+  padding-bottom: 1px;
+}
+
+[data-era="drawingboard"] .window.collapsed::after {
+  clip-path: inset(10px 11px calc(100% - 32px) 8px);
+  background:
+    var(--db-tl) 4px 5px / 28px 27px no-repeat,
+    var(--db-tr) right 1px top 0 / 16px 32px no-repeat,
+    var(--db-top-tiled) 32px 10px / calc(100% - 49px) 22px no-repeat,
+    url("art/drawingboard/paper.png") calc(14px - var(--clio-db-phase, 0px)) 32px / 128px 128px;
+}
+
+[data-era="drawingboard"] .window.collapsed::before {
+  inset: -10px -11px -18px -8px;
+  clip-path: polygon(evenodd, 0 0, 100% 0, 100% 100%, 0 100%, 0 0,
+    8px 10px, calc(100% - 11px) 10px, calc(100% - 11px) 32px, 8px 32px, 8px 10px);
+  background:
+    var(--db-tl) 4px 5px / 28px 27px no-repeat,
+    var(--db-tr) right 1px top 0 / 16px 32px no-repeat,
+    var(--db-br) right 0 bottom 2px / 63px 62px no-repeat,
+    var(--db-ur) right 4px top 32px / 13px 32px no-repeat,
+    var(--db-bl) left 0 bottom 0 / 64px 32px no-repeat,
+    var(--db-bottom-tiled) left 64px bottom 10px / calc(100% - 126px) 14px no-repeat;
+}
+/* clio:segment */
+
+
+[data-era="drawingboard"] .window.utility > .title-bar {
+  position: absolute;
+  inset: 7px 0 auto;
+  height: 11px;
+  margin: 0;
+  padding: 0 11px 0 4px;
+  border: 0;
+  background: none;
+  justify-content: center;
+}
+
+[data-era="drawingboard"] .window.utility > .title-bar > :is(.title, h1, h2, h3) {
+  background: none;
+}
+
+[data-era="drawingboard"] .window.utility > .title-bar > :is(.close, .resize, .zoom, .shade, .collapse) {
+  inset: 0 auto auto 7px;
+  width: 9px;
+  height: 9px;
+  background: url("art/drawingboard/utility-boxes.png");
+  box-shadow: none;
+}
+
+[data-era="drawingboard"] .window.utility > .title-bar > :is(.resize, .zoom) {
+  inset: 0 17px auto auto;
+  background-position-x: -9px;
+}
+
+[data-era="drawingboard"] .window.utility > .title-bar > :is(.shade, .collapse) {
+  inset: 0 4px auto auto;
+  background-position-x: -18px;
+}
+/* clio:segment */
+
+
+[data-era="drawingboard"] .window.utility.inactive > .title-bar > * {
+  visibility: hidden;
+}
+/* clio:segment */
+
+
+[data-era="drawingboard"] .window.utility.side > .title-bar {
+  inset: 0 auto 0 0;
+  width: 18px;
+  height: auto;
+}
+
+/* The boxes (201, and 211 upright), 6px in, 8px down and 7px up; pressed below. */
+[data-era="drawingboard"] .window.utility.side > .title-bar > * {
+  inset: 8px auto auto 6px;
+  background: url("art/drawingboard/side-boxes.png");
+}
+
+[data-era="drawingboard"] .window.utility.side > .title-bar > :is(.shade, .collapse) {
+  inset: auto auto 7px 6px;
+  background-position-x: -9px;
+}
+/* clio:segment */
+
+
+[data-era="drawingboard"] .window-pane {
+  border: 0;
+  background: transparent;
+}
+
+[data-era="drawingboard"] .window > .details-bar {
+  border-left: 0;
+  border-right: 0;
+}
+
+[data-era="drawingboard"] .title-bar,
+[data-era="drawingboard"] .window.inactive > .title-bar,
+[data-era="drawingboard"] .inactive-title-bar {
+  background: transparent;
+}
+
+[data-era="drawingboard"] .title-bar > :is(.title, h1, h2, h3) {
+  padding: var(--clio-title-padding);
+  background: transparent;
+  transform: none;
+}
+
+[data-era="drawingboard"] .title-bar > :is(.title, h1, h2, h3)::after {
+  content: none;
+}
+
+/* Close, zoom and collapse boxes are the theme's 11px pictures. */
+[data-era="drawingboard"] .title-bar > :is(button, .close, .close-box, .resize, .resize-box, .zoom, .shade, .shade-box, .collapse) {
+  border: 0;
+  background: var(--clio-art-db-close) 0 0 / 11px 11px no-repeat;
+  box-shadow: none;
+}
+
+[data-era="drawingboard"] .title-bar > :is(.resize, .resize-box, .zoom) {
+  background-image: var(--clio-art-db-zoom);
+}
+
+[data-era="drawingboard"] .title-bar > :is(.shade, .shade-box, .collapse) {
+  background-image: var(--clio-art-db-collapse);
+}
+/* clio:segment */
+
+
+[data-era="drawingboard"] .title-bar > :is(.resize, .resize-box, .zoom, .shade, .shade-box, .collapse)::before {
+  content: none;
+}
+
+/* Background window: its own frame set, grey title, boxes erased (base rule). */
+[data-era="drawingboard"] .window.inactive {
+  color: #555555;
+}
+
+[data-era="drawingboard"] .window.inactive > .title-bar > :is(.title, h1, h2, h3),
+[data-era="drawingboard"] .inactive-title-bar > :is(.title, h1, h2, h3) {
+  background: transparent;
+}
+/* clio:segment */
+
+
+/* The dragged outline: the plain band round the frame and shadow (inside the
+   margin), with each corner's patch XORed in. */
+[data-era="drawingboard"] .clio-outline {
+  mask:
+    var(--clio-db-outline-tl) left 0 top 0 / 80px 80px no-repeat border-box exclude,
+    var(--clio-db-outline-tr) right 0 top 0 / 80px 80px no-repeat border-box exclude,
+    var(--clio-db-outline-bl) left 0 bottom 0 / 80px 80px no-repeat border-box exclude,
+    var(--clio-db-outline-br) right 0 bottom 0 / 80px 80px no-repeat border-box exclude,
+    linear-gradient(#000 0 0) content-box exclude,
+    linear-gradient(#000 0 0) 12px 12px / calc(100% - 24px) calc(100% - 24px) no-repeat border-box;
+}
+/* clio:segment */
+
+
+[data-era="drawingboard"] .placard:is(:disabled, [aria-disabled="true"], .window.inactive *) {
+  border-color: #b6ada5 #cdc6bd #cdc6bd;
+  background: #cdc6bd;
+  color: #9f9a94;
+}

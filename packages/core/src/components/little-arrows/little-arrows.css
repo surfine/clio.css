@@ -1,0 +1,48 @@
+
+
+/* ---- Little arrows -----------------------------------------------------------
+   The up/down pair beside a number or clock field (Mac OS 8 HIG: "Little
+   Arrows"; System 7's control panels drew them too). Markup:
+   <span class="little-arrows" role="group" aria-label="Cache size">
+     <button class="up" aria-label="Increase"></button>
+     <button class="down" aria-label="Decrease"></button></span>
+   Add aria-disabled="true" (or disabled buttons) for the dimmed pair. */
+:where(.little-arrows) {
+  display: inline-flex;
+  flex-direction: column;
+  width: var(--clio-little-arrows-width);
+  height: var(--clio-little-arrows-height);
+  background: var(--clio-art-little-arrows) 0 0 / 100% 100% no-repeat;
+  vertical-align: middle;
+}
+
+:where(.little-arrows) > :where(button) {
+  flex: 1 1 50%;
+  min-width: 0;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-image: none;
+  background: transparent;
+  box-shadow: none;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+:where(.little-arrows) > :where(button)::before,
+:where(.little-arrows) > :where(button)::after {
+  content: none;
+}
+
+:where(.little-arrows):has(> .up:active:where(:not([data-clio-off]))) {
+  background-image: var(--clio-art-little-arrows-up, var(--clio-art-little-arrows));
+}
+
+:where(.little-arrows):has(> .down:active:where(:not([data-clio-off]))) {
+  background-image: var(--clio-art-little-arrows-down, var(--clio-art-little-arrows));
+}
+
+:where(.little-arrows):is([aria-disabled="true"], :has(> button:disabled)) {
+  background-image: var(--clio-art-little-arrows-disabled, var(--clio-art-little-arrows));
+}

@@ -1,0 +1,76 @@
+
+
+/* ---- The open pop-up menu (Mac OS 9.0, Appearance > Fonts, Large System Font
+   held; frame popup-open) ----------------------------------------------------
+   Laid with its top on the button's (the current item there), as wide as the
+   button less its arrows (20px), framed all round in black with a white and
+   #999 bevel whose other two corners stay #ddd, and its shadow starting 2px in
+   (the clip takes the first pixel of each end). The check mark sits 3px in,
+   the text 20px. */
+[data-era="platinum"] select {
+  --clio-popup-menu-trim: 20px;
+  --clio-popup-menu-align: top;
+}
+
+[data-era="platinum"] .clio-popup-menu {
+  border-top-width: 1px;
+  background:
+    var(--clio-p9-bevel),
+    #dddddd;
+  box-shadow: 1px 1px 0 #222222;
+  clip-path: polygon(0 0, 100% 0, 100% 2px, calc(100% + 1px) 2px, calc(100% + 1px) calc(100% + 1px), 2px calc(100% + 1px), 2px 100%, 0 100%);
+}
+
+[data-era="platinum"] .clio-popup-menu > li {
+  padding-left: 20px;
+}
+
+/* Black on #ddd, every antialiasing level as the screen shows it (the push
+   buttons' palette: the same colours). */
+[data-era="platinum"] .clio-popup-menu > li:not(.disabled, .active, :hover) {
+  font-family: "Clio Sans '97 Exact", var(--clio-font-chrome);
+  font-palette: --clio-aa-p9-button;
+}
+/* clio:segment */
+
+
+/* The same menu where the browser draws it (base-select). */
+@supports (appearance: base-select) {
+  [data-era="platinum"] select::picker(select) {
+    min-width: calc(anchor-size(width) - 20px);
+    border-top-width: 1px;
+    background:
+      var(--clio-p9-bevel),
+      #dddddd;
+    box-shadow: 1px 1px 0 #222222;
+    clip-path: polygon(0 0, 100% 0, 100% 2px, calc(100% + 1px) 2px, calc(100% + 1px) calc(100% + 1px), 2px calc(100% + 1px), 2px 100%, 0 100%);
+  }
+
+  [data-era="platinum"] select option {
+    padding-left: 20px;
+  }
+
+  [data-era="platinum"] select option:not(:disabled, :hover, :focus-visible) {
+    font-family: "Clio Sans '97 Exact", var(--clio-font-chrome);
+    font-palette: --clio-aa-p9-button;
+  }
+
+  [data-era="platinum"] select option::checkmark {
+    left: 3px;
+  }
+}
+
+/* While its menu is open the button's arrows are drawn pressed: a #444 top row,
+   #555 then a #666 face, the arrows white, #777 and #888 below and to the right
+   (frame fonts-popup-open). clio.js marks the select it opens a menu for. */
+[data-era="platinum"] select.clio-open {
+  background: var(--clio-art-p9-popup-open-arrows) right 0 top 0 / 19px 18px no-repeat, var(--clio-popup-arrow), var(--clio-popup-bg);
+  border-image-source: var(--clio-art-frame-p9-popup-open);   /* the arrows' corners pressed too */
+}
+
+@supports selector(:open) {
+  [data-era="platinum"] select:open {
+    background: var(--clio-art-p9-popup-open-arrows) right 0 top 0 / 19px 18px no-repeat, var(--clio-popup-arrow), var(--clio-popup-bg);
+    border-image-source: var(--clio-art-frame-p9-popup-open);
+  }
+}

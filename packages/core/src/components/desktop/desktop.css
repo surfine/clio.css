@@ -1,0 +1,45 @@
+
+
+/* ---- Desktop icons ---------------------------------------------------------- */
+:where(.icon) {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 2px;
+  width: 80px;
+  min-width: 0;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  color: var(--clio-ink);
+  font-family: var(--clio-font-small);
+  font-size: var(--clio-font-size-small);
+  text-align: center;
+  cursor: var(--clio-cursor-arrow);
+}
+
+:where(.icon) > :is(img, svg, .icon-image) {
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+:where(.icon) > :is(figcaption, span, .icon-label) {
+  max-width: 100%;
+  padding: 0 2px;
+  background: var(--clio-label-bg);
+  color: var(--clio-label-fg);
+  line-height: 13px;
+}
+/* clio:segment */
+
+
+:where(.icon):is(.selected, [aria-selected="true"], [aria-pressed="true"]) > :is(figcaption, span, .icon-label) {
+  background: var(--clio-label-selected-bg);
+  color: var(--clio-label-selected-fg);
+}

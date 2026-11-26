@@ -1,0 +1,28 @@
+
+
+/* ---- Progress -------------------------------------------------------------- */
+:where(progress) {
+  box-sizing: border-box;
+  width: 100%;
+  height: var(--clio-progress-height);
+  margin: 0;
+  border: var(--clio-progress-border);
+  border-radius: 0;
+  background: var(--clio-progress-bg);
+  box-shadow: var(--clio-progress-shadow);
+  color: var(--clio-ink);
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+:where(progress)::-webkit-progress-bar {
+  background: var(--clio-progress-bg);
+}
+
+:where(progress)::-webkit-progress-value {
+  background: var(--clio-progress-fill);
+}
+
+:where(progress)::-moz-progress-bar {
+  background: var(--clio-progress-fill);
+}

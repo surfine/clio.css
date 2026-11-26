@@ -1,0 +1,13 @@
+
+
+[data-era="drawingboard"] input[type="range"]::-webkit-slider-runnable-track {
+  border: 0;
+  border-image: none;
+  background: url("art/drawingboard/slider-track.png") calc(0px - var(--clio-db-phase, 0px)) 0 / 64px 1px repeat-x;
+}
+
+[data-era="drawingboard"] input[type="range"]::-moz-range-track {
+  border: 0;
+  border-image: none;
+  background: url("art/drawingboard/slider-track.png") calc(0px - var(--clio-db-phase, 0px)) 0 / 64px 1px repeat-x;
+}

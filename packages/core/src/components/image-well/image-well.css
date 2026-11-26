@@ -1,0 +1,15 @@
+
+
+/* ---- Image well ---------------------------------------------------------------------
+   A sunken well that holds a picture or an icon (Mac OS 8 HIG: "Image Wells"),
+   drawn like the era's field frame round a white face (inferred: no image
+   well was on the captured screens). <div class="image-well"><img …></div> */
+:where(.image-well) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  border: var(--clio-field-border);
+  background: var(--clio-image-well-bg);
+  box-shadow: var(--clio-field-shadow);
+}

@@ -1,0 +1,38 @@
+
+
+/* ---- List view headers (Finder list view, Mac OS 8.5): a #9f9a94 pencil line
+   above and below; plain headers #cdc6bd with a #555 line at the foot, the
+   sorted one #9f9a94 with the #555 line at the top and #333 on its left; #888
+   between columns. Colours are each line's dominant one: the theme draws
+   these lines with pattern pens, not reproduced here. */
+[data-era="drawingboard"] .list-view th {
+  background:
+    linear-gradient(#9f9a94, #9f9a94) 0 0 / 100% 1px no-repeat,
+    linear-gradient(#9f9a94, #9f9a94) 0 100% / 100% 1px no-repeat,
+    linear-gradient(#555555, #555555) 0 calc(100% - 1px) / 100% 1px no-repeat,
+    linear-gradient(#888888, #888888) 0 1px / 1px calc(100% - 2px) no-repeat,
+    #cdc6bd;
+}
+
+[data-era="drawingboard"] .list-view th[aria-sort]:not([aria-sort="none"]) {
+  background:
+    linear-gradient(#9f9a94, #9f9a94) 0 0 / 100% 1px no-repeat,
+    linear-gradient(#555555, #555555) 0 1px / 100% 1px no-repeat,
+    linear-gradient(#333333, #333333) 0 1px / 1px calc(100% - 2px) no-repeat,
+    #9f9a94;
+}
+
+[data-era="drawingboard"] .list-view th.sort-direction {
+  background:
+    linear-gradient(#555555, #555555) 100% 1px / 1px calc(100% - 2px) no-repeat,
+    linear-gradient(#9f9a94, #9f9a94) 0 0 / 100% 1px no-repeat,
+    linear-gradient(#9f9a94, #9f9a94) 0 100% / 100% 1px no-repeat,
+    linear-gradient(#555555, #555555) 0 calc(100% - 1px) / 100% 1px no-repeat,
+    linear-gradient(#888888, #888888) 0 1px / 1px calc(100% - 2px) no-repeat,
+    #cdc6bd;
+}
+
+[data-era="drawingboard"] .list-view {
+  --clio-list-view-bg: #e7ded6;
+  --clio-list-view-sorted-bg: #d6c6b5;
+}

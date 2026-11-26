@@ -1,0 +1,108 @@
+/* The rare controls (ROADMAP "Can wait" 10): the rounded-corner window, placards,
+   split bars and the side-title utility window (its Platinum drawing is in
+   90-platinum.css). Measured in Infinite Mac; see EVIDENCE.md. */
+
+/* ---- Rounded-corner window (rDocProc, desk accessories) ----------------------
+   <div class="rounded-window"> > <div class="rounded-title"> (> .close, h2) and
+   any content. The Calculator draws the same window in System 6.0.8, 7.5.3,
+   Mac OS 8.5 (Drawing Board) and 9.0: a 1px black frame whose corners step in
+   5, 3, 2, 1, 1 pixels; a 17-row black title bar ruled below, the title in
+   white centred in the space right of an 11px white close box at (9,4). In the
+   background the bar turns white, the title black, and the close box goes. */
+:where(.rounded-window) {
+  --clio-rounded-bg: #ffffff;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  min-width: 60px;
+  border: 1px solid #000000;
+  background: var(--clio-rounded-bg);
+  -webkit-mask:
+    var(--clio-art-rdoc-mask-tl) left top / 6px 6px no-repeat,
+    var(--clio-art-rdoc-mask-tr) right top / 6px 6px no-repeat,
+    var(--clio-art-rdoc-mask-bl) left bottom / 6px 6px no-repeat,
+    var(--clio-art-rdoc-mask-br) right bottom / 6px 6px no-repeat,
+    linear-gradient(#000000, #000000) 0 6px / 100% calc(100% - 12px) no-repeat,
+    linear-gradient(#000000, #000000) 6px 0 / calc(100% - 12px) 100% no-repeat;
+  mask:
+    var(--clio-art-rdoc-mask-tl) left top / 6px 6px no-repeat,
+    var(--clio-art-rdoc-mask-tr) right top / 6px 6px no-repeat,
+    var(--clio-art-rdoc-mask-bl) left bottom / 6px 6px no-repeat,
+    var(--clio-art-rdoc-mask-br) right bottom / 6px 6px no-repeat,
+    linear-gradient(#000000, #000000) 0 6px / 100% calc(100% - 12px) no-repeat,
+    linear-gradient(#000000, #000000) 6px 0 / calc(100% - 12px) 100% no-repeat;
+}
+
+/* The frame's curve inside each corner, over the title bar and the content. */
+.rounded-window::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  z-index: 1;
+  background:
+    var(--clio-art-rdoc-frame-tl) left top / 6px 6px no-repeat,
+    var(--clio-art-rdoc-frame-tr) right top / 6px 6px no-repeat,
+    var(--clio-art-rdoc-frame-bl) left bottom / 6px 6px no-repeat,
+    var(--clio-art-rdoc-frame-br) right bottom / 6px 6px no-repeat;
+  pointer-events: none;
+}
+
+.rounded-window > .rounded-title {
+  position: relative;
+  display: flex;
+  flex: none;
+  justify-content: center;
+  box-sizing: border-box;
+  height: 18px;
+  padding: 1px 1px 0 18px;
+  border-bottom: 1px solid #000000;
+  background: #000000;
+  color: #ffffff;
+  font-family: var(--clio-font-window-title, var(--clio-font-chrome));
+  user-select: none;
+  -webkit-user-select: none;
+}
+/* clio:segment */
+
+
+.rounded-window > .rounded-title > :is(button.close, .close) {
+  position: absolute;
+  top: 3px;
+  left: 8px;
+  box-sizing: border-box;
+  width: 11px;
+  min-width: 0;
+  height: 11px;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  border: 1px solid #ffffff;
+  border-image: none;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  font-size: 0;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: var(--clio-cursor-arrow);
+}
+
+.rounded-window > .rounded-title > :is(button.close, .close)::before,
+.rounded-window > .rounded-title > :is(button.close, .close)::after {
+  content: none;
+}
+
+.rounded-window > .rounded-title > :is(button.close, .close):focus-visible {
+  outline: 1px dotted #ffffff;
+  outline-offset: 1px;
+}
+
+.rounded-window.inactive > .rounded-title {
+  background: #ffffff;
+  color: #000000;
+}
+
+.rounded-window.inactive > .rounded-title > :is(button.close, .close) {
+  visibility: hidden;
+}

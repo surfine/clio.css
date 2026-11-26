@@ -1,0 +1,16 @@
+
+
+/* ---- Placard (Mac OS 9.0, the Appearance SDK's CDEF Tester, frame placard) -----
+   1px black, white light on the top and left, #aaa shade on the right and the
+   bottom (the corners they would share stay #ddd), #ddd face. Disabled: a #555
+   frame on #eee, no light or shade (frame placard-disabled). */
+:is([data-era="platinum"], [data-era="drawingboard"]) .placard {
+  border-color: #000000;
+  background:
+    linear-gradient(#ffffff, #ffffff) 0 0 / calc(100% - 1px) 1px no-repeat,
+    linear-gradient(#ffffff, #ffffff) 0 0 / 1px calc(100% - 1px) no-repeat,
+    linear-gradient(#aaaaaa, #aaaaaa) 100% 1px / 1px calc(100% - 1px) no-repeat,
+    linear-gradient(#aaaaaa, #aaaaaa) 1px 100% / calc(100% - 1px) 1px no-repeat,
+    #dddddd;
+  color: #000000;
+}

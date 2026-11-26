@@ -1,0 +1,7 @@
+
+
+/* A push-on/push-off button that is on. */
+[data-era="nextstep"] :is(button, .btn, .standard-button, input[type="button"]):not(:disabled, .disabled)[aria-pressed="true"]:not(:active, .active, .is-active) {
+  background: var(--clio-button-on-bg);
+  box-shadow: var(--clio-button-on-shadow);
+}

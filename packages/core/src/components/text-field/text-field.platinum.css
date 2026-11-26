@@ -1,0 +1,5 @@
+
+
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(input:not([type]), input[type="text"], input[type="search"], input[type="email"], input[type="url"], input[type="password"], input[type="number"], input[type="tel"], textarea):focus-visible {
+  box-shadow: var(--clio-field-focus-shadow);
+}

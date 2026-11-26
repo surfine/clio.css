@@ -1,0 +1,40 @@
+
+
+/* ---- Check boxes and radio buttons: one picture per state. ---------------- */
+[data-era="drawingboard"] input[type="checkbox"] {
+  width: 14px;
+  height: 11px;
+  border: 0;
+  background: var(--clio-art-db-check) 0 0 / 14px 11px no-repeat;
+  box-shadow: none;
+  vertical-align: -1px;
+}
+
+[data-era="drawingboard"] input[type="checkbox"]:checked {
+  background-image: var(--clio-art-db-check-on);
+}
+
+[data-era="drawingboard"] input[type="checkbox"]:checked::after {
+  content: none;
+}
+
+[data-era="drawingboard"] input[type="checkbox"]:indeterminate {
+  background-image: var(--clio-art-db-check-mixed);
+}
+
+[data-era="drawingboard"] input[type="checkbox"]:not(:disabled):active:where(:not([data-clio-off])) {
+  background: var(--clio-art-db-check-pressed) 0 0 / 14px 11px no-repeat;
+  box-shadow: none;
+}
+
+[data-era="drawingboard"] input[type="checkbox"]:checked:not(:disabled):active:where(:not([data-clio-off])) {
+  background-image: var(--clio-art-db-check-on-pressed);
+}
+
+[data-era="drawingboard"] input[type="checkbox"]:disabled {
+  background-image: var(--clio-art-db-check-disabled);
+}
+
+[data-era="drawingboard"] input[type="checkbox"]:checked:disabled {
+  background-image: var(--clio-art-db-check-on-disabled);
+}

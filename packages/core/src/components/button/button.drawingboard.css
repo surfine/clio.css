@@ -1,0 +1,176 @@
+
+
+[data-era="drawingboard"] .window.utility > .title-bar > :is(:active:where(:not([data-clio-off])), .active) {
+  background-position-y: -9px;
+}
+/* clio:segment */
+
+
+[data-era="drawingboard"] .window.utility.side > .title-bar > :is(:active:where(:not([data-clio-off])), .active) {
+  background-position-y: -9px;
+}
+/* clio:segment */
+
+
+[data-era="drawingboard"] .title-bar > :is(button, .close, .close-box):is(:active:where(:not([data-clio-off])), .active) {
+  background: var(--clio-art-db-close-on) 0 0 / 11px 11px no-repeat;
+  box-shadow: none;
+}
+
+[data-era="drawingboard"] .title-bar > :is(.resize, .resize-box, .zoom):is(:active:where(:not([data-clio-off])), .active) {
+  background: var(--clio-art-db-zoom-on) 0 0 / 11px 11px no-repeat;
+}
+
+[data-era="drawingboard"] .title-bar > :is(.shade, .shade-box, .collapse):is(:active:where(:not([data-clio-off])), .active) {
+  background: var(--clio-art-db-collapse-on) 0 0 / 11px 11px no-repeat;
+}
+/* clio:segment */
+
+
+/* ---- Default button: a second pencil line round the button and its shade,
+   with a light #9f9a94 pencil line between (Energy Saver notice,
+   "Close Message": ring 2px out on the left and top, 3px right, 2px below). -- */
+[data-era="drawingboard"] :is(.default, .btn-default)::before {
+  inset: -3px -4px -3px -3px;
+  border: 1px solid;
+  border-color: #555555 #111111 #333333 #555555;
+  border-radius: 0;
+  box-shadow: inset 0 0 0 1px #9f9a94;
+}
+/* clio:segment */
+
+
+[data-era="drawingboard"] :is(.menu, [role="menu"]) > li:is(.checked, [aria-checked="true"]):is(:hover, :focus-within, .active):where(:not([data-clio-blink]))::before,
+[data-era="drawingboard"] :is(.menu, [role="menu"]) > li > :is([aria-checked="true"], .checked):is(:hover, :focus-visible, .active):where(:not([data-clio-blink]))::before {
+  filter: none;
+}
+/* clio:segment */
+
+
+[data-era="drawingboard"] :is([role="tablist"], .tabs) > :is([role="tab"], li, button):is([aria-selected="true"], .active) {
+  padding-top: 6px;
+  border-image-source: var(--clio-art-db-tab-selected);
+  color: #313131;
+}
+/* clio:segment */
+
+
+[data-era="drawingboard"] :is([role="tablist"], .tabs) > :is([role="tab"], li, button):is([aria-selected="true"], .active)::after {
+  content: "";
+  position: absolute;
+  left: -5px;
+  right: -12px;
+  bottom: -1px;
+  height: 1px;
+  background: #e7ded6;
+}
+/* clio:segment */
+
+
+
+/* The 1px pencil shade right of and below a push button (ppat 7079, 7070 next
+   rows; held: 7127, 7126, tiled from the second column and row). A default
+   button instead wears a 3px pencil band (ppat 7085 rows, 7086 columns) whose
+   inner line is the box's edge, 2px outside it. Insets are from the padding box. */
+[data-era="drawingboard"] :is(button, .btn, .btn-default):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .rounded-title > *, .control-strip *, .disclosure, .little-arrows > *, .help-button)::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: -2px;
+  bottom: -2px;
+  left: 4px;
+  border: 0;
+  border-image: none;
+  box-shadow: none;
+  background:
+    url("art/drawingboard/pens/button-shade-right.png") right 0 bottom 2px / 1px 16px repeat-y,
+    url("art/drawingboard/pens/button-shade-bottom.png") right 2px bottom 0 / 64px 1px repeat-x;
+  pointer-events: none;
+}
+
+[data-era="drawingboard"] :is(button, .btn, .btn-default):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .rounded-title > *, .control-strip *, .disclosure, .little-arrows > *, .help-button, :disabled, .disabled):is(:active:where(:not([data-clio-off])), .active)::before {
+  left: 0;
+  background:
+    url("art/drawingboard/pens/button-held-shade-right.png") right 0 top 0 / 1px 16px repeat-y,
+    url("art/drawingboard/pens/button-held-shade-bottom.png") left 0 bottom 0 / 32px 1px repeat-x;
+}
+
+[data-era="drawingboard"] :is(button, .btn, .btn-default):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .rounded-title > *, .control-strip *, .disclosure, .little-arrows > *, .help-button):is(.default, .btn-default)::before {
+  inset: -3px;
+  background:
+    url("art/drawingboard/pens/button-default-left-3.png") left 0 bottom 3px / 1px 16px repeat-y,
+    url("art/drawingboard/pens/button-default-left-2.png") left 1px bottom 3px / 1px 16px repeat-y,
+    url("art/drawingboard/pens/button-default-left.png") left 2px bottom 3px / 1px 16px repeat-y,
+    url("art/drawingboard/pens/button-default-right.png") right 2px bottom 3px / 1px 16px repeat-y,
+    url("art/drawingboard/pens/button-default-right-2.png") right 1px bottom 3px / 1px 16px repeat-y,
+    url("art/drawingboard/pens/button-default-right-3.png") right 0 bottom 3px / 1px 16px repeat-y,
+    url("art/drawingboard/pens/button-default-top-3.png") right 3px top 0 / 64px 1px repeat-x,
+    url("art/drawingboard/pens/button-default-top-2.png") right 3px top 1px / 64px 1px repeat-x,
+    url("art/drawingboard/pens/button-default-top.png") right 3px top 2px / 64px 1px repeat-x,
+    url("art/drawingboard/pens/button-default-bottom.png") right 3px bottom 2px / 64px 1px repeat-x,
+    url("art/drawingboard/pens/button-default-bottom-2.png") right 3px bottom 1px / 64px 1px repeat-x,
+    url("art/drawingboard/pens/button-default-bottom-3.png") right 3px bottom 0 / 64px 1px repeat-x;
+}
+
+/* The pencil overruns at a push button's corners, outside its box: Button*
+   pieces round a plain button, *Default pieces round the default one. */
+[data-era="drawingboard"] :is(button, .btn, .btn-default, input[type="button"], input[type="submit"], input[type="reset"]):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .rounded-title > *, .control-strip *, .disclosure, .little-arrows > *, .help-button) {
+  position: relative;
+}
+
+[data-era="drawingboard"] :is(button, .btn, .btn-default):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .rounded-title > *, .control-strip *, .disclosure, .little-arrows > *, .help-button)::after {
+  content: "";
+  position: absolute;
+  inset: -6px;   /* from the padding box: 5px outside the frame */
+  background:
+    var(--clio-art-db-btn-tl) left 3px top 3px / 7px 3px no-repeat,
+    var(--clio-art-db-btn-tr) right 2px top 3px / 4px 3px no-repeat,
+    var(--clio-art-db-btn-br) right 1px bottom 0 / 5px 6px no-repeat,
+    var(--clio-art-db-btn-bl) left 3px bottom 2px / 7px 4px no-repeat;
+  pointer-events: none;
+}
+
+[data-era="drawingboard"] :is(button, .btn, .btn-default):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .rounded-title > *, .control-strip *, .disclosure, .little-arrows > *, .help-button, :disabled, .disabled):is(:active:where(:not([data-clio-off])), .active)::after {
+  background:
+    var(--clio-art-db-btn-tl) left 3px top 3px / 7px 3px no-repeat,
+    var(--clio-art-db-btn-tr) right 2px top 3px / 4px 3px no-repeat,
+    var(--clio-art-db-btn-br-held) right 1px bottom 0 / 5px 6px no-repeat,
+    var(--clio-art-db-btn-bl) left 3px bottom 2px / 7px 4px no-repeat;
+}
+
+[data-era="drawingboard"] :is(button, .btn, .btn-default):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .rounded-title > *, .control-strip *, .disclosure, .little-arrows > *, .help-button):is(.default, .btn-default) {
+  border-image-source: none;
+}
+
+[data-era="drawingboard"] :is(button, .btn, .btn-default):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .rounded-title > *, .control-strip *, .disclosure, .little-arrows > *, .help-button):is(.default, .btn-default)::after {
+  background:
+    url("art/drawingboard/pens/button-default-corner-tl.png") left 5px top 5px / 5px 5px no-repeat,
+    url("art/drawingboard/pens/button-default-corner-tr.png") right 5px top 5px / 5px 5px no-repeat,
+    url("art/drawingboard/pens/button-default-corner-bl.png") left 5px bottom 5px / 5px 5px no-repeat,
+    url("art/drawingboard/pens/button-default-corner-br.png") right 5px bottom 5px / 5px 5px no-repeat,
+    var(--clio-art-db-def-tl) left 1px top 1px / 9px 5px no-repeat,
+    var(--clio-art-db-def-tr) right 1px top 2px / 4px 4px no-repeat,
+    var(--clio-art-db-def-br) right 0 bottom 0 / 5px 6px no-repeat,
+    var(--clio-art-db-def-bl) left 1px bottom 1px / 9px 5px no-repeat;
+}
+/* clio:segment */
+
+
+/* ---- Antialiasing as Mac OS blends it: #333 labels on #cec6b5 (their solid
+   pixels #313131, from a 16-bit buffer); grey when disabled. */
+[data-era="drawingboard"] :is(button, .btn, .btn-default, input[type="button"], input[type="submit"], input[type="reset"]):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .rounded-title > *, .control-strip *, .disclosure, .little-arrows > *, .help-button),
+[data-era="drawingboard"] :is(button, .btn, .btn-default, input[type="button"], input[type="submit"], input[type="reset"]):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .rounded-title > *, .control-strip *, .disclosure, .little-arrows > *, .help-button):not(:disabled, .disabled):is(:active:where(:not([data-clio-off])), .active) {
+  font-palette: --clio-aa-db-button;
+}
+/* clio:segment */
+
+
+/* Bevel buttons: drawn as the theme's push button (its pens, corner pixels,
+   hatch and shade); the Navigation Services bevel buttons were not matched
+   pen for pen (inferred). */
+/* The Help button's held state: the theme's pressed bevel with the same art
+   shifted one pixel down-right (inferred — the 8.5 capture is of the normal
+   state; the theme's press drops the button's content by one pixel). */
+[data-era="drawingboard"] .help-button:is(:active:where(:not([data-clio-off])), .active) {
+  background: var(--clio-art-help-button) 1px 1px / 21px 20px no-repeat, var(--clio-button-active-bg);
+}

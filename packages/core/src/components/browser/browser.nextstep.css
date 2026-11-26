@@ -1,0 +1,30 @@
+
+
+/* ---- Browser ----------------------------------------------------------------------
+   NeXT's column browser (measured, the File Viewer in browser view): a sunken
+   box (#555555 then black at the top and left, #555555 then white at the
+   bottom), columns of #aaaaaa side by side, each with its scroller at its left
+   (clio.js) behind a black line, 15px rows, a white selected row, the menu's
+   arrow on a branch 4px from the right and 4px down. Markup: .browser >
+   .listbox (or [role=listbox]), items with aria-haspopup or .branch. */
+[data-era="nextstep"] .browser {
+  display: flex;
+  gap: 0;
+  border: 1px solid #000000;
+  border-right-color: #555555;
+  border-bottom-color: #555555;
+  background: #aaaaaa;
+  box-shadow: -1px -1px 0 #555555, 1px 1px 0 #ffffff;
+}
+/* clio:segment */
+
+
+[data-era="nextstep"] .browser > :is(.listbox, [role="listbox"]) > :is(li, [role="option"]):is(.branch, [aria-haspopup="true"]) {
+  background: var(--clio-art-nx-submenu) right 4px top 4px / 7px 7px no-repeat;
+}
+/* clio:segment */
+
+
+[data-era="nextstep"] .browser > :is(.listbox, [role="listbox"]) > :is(li, [role="option"]):is(.branch, [aria-haspopup="true"]):is([aria-selected="true"], .selected) {
+  background-image: var(--clio-art-nx-submenu-lit);
+}

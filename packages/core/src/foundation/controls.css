@@ -1,0 +1,6 @@
+
+
+:where(label) {
+  font-family: var(--clio-font-chrome);
+  font-size: var(--clio-font-size);
+}

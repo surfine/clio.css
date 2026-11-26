@@ -1,0 +1,53 @@
+
+
+/* ---- Utility window (palette) ----------------------------------------------
+   The theme's 'layo' 136 (ActiveFloatingWindow), decoded by tooling/theme-layout.py,
+   matches the 8.5 Application Switcher's frame 100% (hig/drawingboard/switcher):
+   the content 8px in, 19px down, 5px from the right (then a 2px shade) and 8px up.
+   Three pictures (tooling/db-art.py): the corner groups; the title bar, the rule
+   (6192's bottom row) and the foot between them; the side edges' middles. The boxes
+   are 201, 221 and 211, the title centred 3.5px left of the window's middle on the
+   capture's baseline. The
+   content keeps the utility window's #ccc (the application draws it). */
+[data-era="drawingboard"] .window.utility {
+  min-width: 128px;
+  min-height: 60px;
+  padding: 19px 5px 8px 8px;
+  border: 0;
+  background: #cccccc content-box;
+}
+
+[data-era="drawingboard"] .window.utility::before {
+  inset: 0 -2px 0 0;
+  clip-path: none;
+  background:
+    url("art/drawingboard/utility-frame.svg"),
+    url("art/drawingboard/utility-edges.svg") 0 38px / 100% calc(100% - 79px) no-repeat,
+    url("art/drawingboard/utility-runs.svg") 19px 0 / calc(100% - 55px) 100% no-repeat;
+}
+/* clio:segment */
+
+
+[data-era="drawingboard"] .window.utility::after {
+  content: none;
+}
+
+/* ---- Side-title utility window --------------------------------------------------
+   The theme's 'layo' 138 (ActiveSideFloatingWindow), decoded by
+   tooling/theme-layout.py, matches the 8.5 capture's frame 100% (rc8/side3, the
+   Appearance SDK's sample): the column is the small system font's height plus 5
+   (14px of the 18px pieces), the content 18px in and 9px down. Three pictures
+   (tooling/db-art.py): the four corner groups; the runs along the top and the foot
+   between them; the column's and the right edge's middles. In the background
+   ('layo' 139) the same pictures and no boxes. The content keeps the utility
+   window's #ccc (the application draws it). */
+[data-era="drawingboard"] .window.utility.side {
+  padding: 9px 5px 8px 18px;
+}
+
+[data-era="drawingboard"] .window.utility.side::before {
+  background:
+    url("art/drawingboard/side-frame.svg"),
+    url("art/drawingboard/side-edges.svg") 0 29px / 100% calc(100% - 70px) no-repeat,
+    url("art/drawingboard/side-runs.svg") 30px 0 / calc(100% - 66px) 100% no-repeat;
+}

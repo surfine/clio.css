@@ -1,0 +1,31 @@
+
+
+/* ---- Group boxes (fieldset) ---------------------------------------------- */
+:where(fieldset) {
+  margin: 0;
+  padding: 8px 10px 10px;
+  border: var(--clio-group-border);
+  background: var(--clio-group-bg);
+  box-shadow: var(--clio-group-shadow);
+}
+
+:where(fieldset) > :where(legend) {
+  padding: 0 4px;
+  background: var(--clio-pane-bg);
+  font-family: var(--clio-font-chrome);
+  font-size: var(--clio-font-size);
+  font-weight: var(--clio-chrome-weight);
+}
+/* clio:segment */
+
+
+/* ---- Group boxes: secondary, and titled by a check box ---------------------------
+   <fieldset class="secondary"> is the lighter group for a subordinate set
+   (Mac OS 8 HIG: "Group Boxes"). A check box or pop-up menu as the title goes
+   in the legend: <legend><label><input type="checkbox"> Use a server</label></legend>.
+   Before Mac OS 8 every group box is the one kind. */
+:where(fieldset > legend) > :where(label) {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}

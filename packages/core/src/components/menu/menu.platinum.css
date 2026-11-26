@@ -1,0 +1,60 @@
+
+
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(.default, .btn-default):is(:disabled, .disabled)::before {
+  box-shadow: 0 0 0 1px #888888;
+}
+
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(button, .btn, .btn-default, input[type="button"], input[type="submit"], input[type="reset"]):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .rounded-title > *, .control-strip *, .disclosure, .little-arrows > *, .help-button):is(:disabled, .disabled) {
+  background: transparent;
+  box-shadow: none;
+  border-image: var(--clio-button-frame-disabled) var(--clio-button-frame-slice) fill / calc(var(--clio-button-frame-slice) * 1px) stretch;
+}
+/* clio:segment */
+
+
+/* ---- Menus ------------------------------------------------------------------- */
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(.menu-bar, [role="menubar"], [role="menu-bar"]) > li > :is(button, a, span) {
+  font-weight: 700;
+}
+
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(.menu, [role="menu"]) > li:is(.checked, [aria-checked="true"])::before,
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(.menu, [role="menu"]) > li > :is([aria-checked="true"], .checked)::before {
+  left: 8px;   /* the art's first column is the glyph's (it used to start a column early) */
+  width: 10px;
+  height: 8px;
+  margin-top: -4px;
+  background: var(--clio-art-p-check) 0 0 / 10px 8px no-repeat;
+}
+/* clio:segment */
+
+
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(.menu, [role="menu"]) > li:has(> :is(.menu, ul[role="menu"]))::after,
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(.menu, [role="menu"]) > li > [aria-haspopup="true"]::after {
+  background-image: var(--clio-art-p-submenu);
+}
+/* clio:segment */
+
+
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(.menu, [role="menu"]) > li.divider {
+  border-bottom: 0;
+  box-shadow: inset 0 -2px 0 #dddddd, inset 0 -3px 0 #ffffff, inset 0 -4px 0 #888888;
+}
+/* clio:segment */
+
+
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(button, .btn, .btn-default, input[type="button"], input[type="submit"], input[type="reset"]):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .rounded-title > *, .control-strip *, .disclosure, .little-arrows > *, .help-button):is(:disabled, .disabled) {
+  font-palette: --clio-aa-p9-button-disabled;
+}
+/* clio:segment */
+
+
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(.menu, [role="menu"]) > li:is(.disabled, [aria-disabled="true"]),
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(.menu, [role="menu"]) > li > :is(a, button):is(:disabled, [aria-disabled="true"]) {
+  font-palette: --clio-aa-6f6f6f;
+}
+
+/* A submenu sits inside its parent's <li>, which stays chosen while the
+   pointer is in the submenu: its own items start from the black levels. */
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(.menu, [role="menu"]) :is(.menu, [role="menu"]) {
+  font-palette: normal;
+}

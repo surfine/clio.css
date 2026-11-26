@@ -1,0 +1,37 @@
+
+
+/* ---- Tabs: left end, one stretched column, right end. ---------------------- */
+[data-era="drawingboard"] :is([role="tablist"], .tabs) {
+  padding: 0 8px;
+}
+
+[data-era="drawingboard"] :is([role="tablist"], .tabs) > :is([role="tab"], li, button) {
+  height: 27px;
+  margin: 0 -6px -1px 0;
+  padding: 6px 0 0;
+  border-width: 0 17px 0 6px;
+  border-image: var(--clio-art-db-tab) 0 17 0 6 fill / 0 17px 0 6px stretch;
+  color: #313131;
+  line-height: 20px;
+}
+
+[data-era="drawingboard"] :is([role="tablist"], .tabs) > :is([role="tab"], li, button):not(:disabled):active:where(:not([data-clio-off])) {
+  border-image-source: var(--clio-art-db-tab-pressed);
+  color: #313131;
+}
+/* clio:segment */
+
+
+/* The panel's top line runs under the back tabs and breaks under the front
+   one (capture: row 121, #555 to #777 under Themes, none under Appearance). */
+[data-era="drawingboard"] :is([role="tablist"], .tabs) > :is([role="tab"], li, button) {
+  position: relative;
+  margin-bottom: 0;
+}
+/* clio:segment */
+
+
+[data-era="drawingboard"] :is([role="tabpanel"], .tab-panel) {
+  border-top: 1px solid #666666;
+  box-shadow: none;
+}

@@ -1,0 +1,9 @@
+
+
+/* Held: a black square with a #99c face and the starburst. */
+[data-era="system7"] .title-bar > :is(.close, .close-box, .resize, .resize-box, .zoom):is(:active:where(:not([data-clio-off])), .active) {
+  border-color: #000000;
+  background: var(--clio-art-s6-burst) 0 0 / 11px 11px no-repeat border-box, #9999cc;
+  background-clip: border-box;
+  box-shadow: 0 0 0 1px #eeeeee;
+}

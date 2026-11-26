@@ -1,0 +1,10 @@
+
+
+[data-era="drawingboard"] progress {
+  border-left-color: #333333;
+}
+
+[data-era="drawingboard"] progress:indeterminate,
+[data-era="drawingboard"] progress:indeterminate::-webkit-progress-bar {
+  background: var(--clio-art-db-progress-arrows) 0 center / 128px 5px repeat-x, #ddd6c5;
+}

@@ -1,8 +1,10 @@
 // Static checks for a release. Fails loudly; prints what it checked.
-import { readFileSync, existsSync, statSync } from "node:fs";
+import { readFileSync, existsSync, statSync, readdirSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { components } from "../components/index.ts";
+import { usage } from "../packages/core/src/bundles.ts";
+import { segments } from "../packages/core/src/assemble.ts";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const read = (p: string): string => readFileSync(join(root, p), "utf8");
@@ -158,6 +160,19 @@ ok(statSync(join(root, "dist/clio.min.css")).size < 223000, "clio.min.css grew p
 ok(statSync(join(root, "dist/clio.nextstep.min.css")).size < 160000, "clio.nextstep.min.css grew past 160 KB");
 const minJs = readFileSync(join(root, "dist/clio.min.js"), "utf8");
 ok(/^\/\*! clio\.js/.test(minJs) && minJs.length < js.length * 0.7, "dist/clio.min.js missing, without its banner, or not minified");
+
+// P2: the single files are assembled from component fragments (packages/core/src/bundles.ts).
+// Every fragment on disk is used, and each of its segments exactly once, in no other order.
+{
+  const base = join(root, "packages/core/src");
+  const onDisk = readdirSync(base, { recursive: true, encoding: "utf8" }).filter((f) => f.endsWith(".css")).map((f) => f.split("\\").join("/")).sort();
+  const used = usage();
+  ok(JSON.stringify(onDisk) === JSON.stringify([...used.keys()].sort()), `fragments on disk and in order.ts differ: ${onDisk.filter((f) => !used.has(f)).join(" ")} ${[...used.keys()].filter((f) => !onDisk.includes(f)).join(" ")}`);
+  for (const [f, ns] of used) {
+    const n = existsSync(join(base, f)) ? segments(f).length : 0;
+    ok(ns.length === n && ns.every((x, i) => x === i), `${f}: order.ts uses segments ${ns.join(",")} of ${n}`);
+  }
+}
 
 if (failures.length) {
   console.error(`FAIL ${failures.length} of ${checks} checks`);

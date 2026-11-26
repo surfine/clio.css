@@ -1,0 +1,79 @@
+
+
+/* List boxes: the 1px between the olive line and the white is see-through. */
+[data-era="drawingboard"] :is(.listbox, ul[role="listbox"], ol[role="listbox"], div[role="listbox"], select[multiple], select[size]:not([size="1"])) {
+  padding: 1px;
+  background-clip: content-box;
+}
+/* clio:segment */
+
+
+/* Disabled pop-up menu: the pens' lighter rows, the theme's dimmed hatch and
+   arrow (Appearance, "Variation"). */
+/* The arrow and hatch stay inside the frame; the pens draw on it. */
+[data-era="drawingboard"] select,
+[data-era="drawingboard"] select:disabled {
+  background-clip: padding-box, padding-box, border-box, border-box, border-box, border-box, padding-box;
+}
+
+[data-era="drawingboard"] select:disabled {
+  border-image: url("art/drawingboard/pens/popup-disabled-corners.png") 5 / 5px stretch;
+  border-color: transparent;
+  background:
+    var(--clio-art-db-popup-arrow-off) right 5px top 4px / 7px 9px no-repeat padding-box,
+    var(--clio-art-db-popup-corner-off) right 19px bottom / 24px 24px no-repeat padding-box,
+    url("art/drawingboard/pens/popup-disabled-left.png") left 0 bottom 1px / 1px 16px repeat-y border-box,
+    url("art/drawingboard/pens/popup-disabled-right.png") right 0 bottom 1px / 1px 16px repeat-y border-box,
+    url("art/drawingboard/pens/popup-disabled-top.png") right 1px top 0 / 64px 1px repeat-x border-box,
+    url("art/drawingboard/pens/popup-disabled-bottom.png") right 1px bottom 0 / 64px 1px repeat-x border-box,
+    #cec6b5;
+  color: #8c8c8c;
+}
+/* clio:segment */
+
+
+/* The open pop-up menu (Appearance > Appearance held; frame popup-open): its top
+   on the button's with the current item there, as wide as the button less its
+   20px of arrows. */
+[data-era="drawingboard"] select {
+  --clio-popup-menu-trim: 20px;
+  --clio-popup-menu-align: top;
+}
+
+/* In the open pop-up the top line is the pen shifted with the button's phase (a
+   full line: the menu hangs from no bar), the text a pixel higher and 18px in,
+   the check mark 1px in, and the chosen item's underline on its last rows. */
+[data-era="drawingboard"] ul.clio-popup-menu.menu {   /* outweighs the menus' :is(.menu, ul[role="menu"]) */
+  --clio-menu-item-active-bg:
+    var(--clio-art-db-menu-underline-left) left 16px bottom 0 / 29px 3px no-repeat,
+    var(--clio-art-db-menu-underline-right) right 16px bottom 0 / 36px 3px no-repeat,   /* 16px: popup-open, the right piece ends 16px in */
+    var(--clio-art-db-menu-underline-tiled) left 45px bottom 0 / calc(100% - 97px) 3px no-repeat;
+  background:
+    url("art/drawingboard/menu-top.png") calc(0px - var(--clio-db-phase, 0px)) 0 / 128px 1px repeat-x border-box,
+    url("art/drawingboard/menu-left.png") 0 0 / 1px 128px repeat-y border-box,
+    url("art/drawingboard/menu-right.png") right 0 top 4px / 1px 128px repeat-y border-box,
+    url("art/drawingboard/menu-foot.png") calc(4px - var(--clio-db-phase, 0px)) 100% / 128px 1px repeat-x border-box,
+    url("art/drawingboard/menu-paper.png") 0 0 / 64px 64px padding-box,
+    #dddddd;
+}
+
+[data-era="drawingboard"] .clio-popup-menu > li {
+  min-height: 16px;
+  padding-left: 18px;
+  padding-bottom: 2px;
+  line-height: 16px;
+}
+/* clio:segment */
+
+
+/* With clio.js there (data-clio-popups), Drawing Board's pop-ups are not the
+   browser's picker: clio.js draws the menu with the theme's paper, pens and
+   shade, which a picker cannot carry. Without clio.js, base-select still does. */
+@supports (appearance: base-select) {
+  @media (pointer: fine) {
+    :root[data-clio-popups] [data-era="drawingboard"] select:not([multiple], [size]:not([size="1"])),
+    :root[data-clio-popups][data-era="drawingboard"] select:not([multiple], [size]:not([size="1"])) {
+      appearance: none;
+    }
+  }
+}

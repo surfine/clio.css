@@ -1,0 +1,31 @@
+
+
+[data-era="drawingboard"] input[type="radio"],
+[data-era="drawingboard"] input[type="radio"]:not(:disabled):active:where(:not([data-clio-off])) {
+  width: 16px;
+  height: 12px;
+  border: 0;
+  border-radius: 0;
+  background: var(--clio-art-db-radio) 0 0 / 16px 12px no-repeat;
+  box-shadow: none;
+}
+
+[data-era="drawingboard"] input[type="radio"]:checked {
+  background: var(--clio-art-db-radio-on) 0 0 / 16px 12px no-repeat;
+}
+
+[data-era="drawingboard"] input[type="radio"]:checked:not(:disabled):active:where(:not([data-clio-off])) {
+  background: var(--clio-art-db-radio-on-pressed) 0 0 / 16px 12px no-repeat;
+}
+
+[data-era="drawingboard"] input[type="radio"]:disabled {
+  background-image: var(--clio-art-db-radio-disabled);
+}
+
+[data-era="drawingboard"] input[type="radio"]:checked:disabled {
+  background-image: var(--clio-art-db-radio-on-disabled);
+}
+
+[data-era="drawingboard"] :is(input[type="checkbox"], input[type="radio"]):disabled {
+  opacity: 1;
+}

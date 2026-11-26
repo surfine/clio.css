@@ -1,0 +1,12 @@
+
+
+/* ---- Switches and radio buttons ------------------------------------------- */
+[data-era="nextstep"] input[type="checkbox"]:checked {
+  background: var(--clio-check-mark), var(--clio-check-bg);
+}
+
+[data-era="nextstep"] input[type="checkbox"]:disabled {
+  opacity: 1;
+  border-color: #555555;
+  box-shadow: none;
+}

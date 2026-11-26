@@ -1,0 +1,29 @@
+
+
+/* ---- Radio buttons: Mac OS 9's shaded ball (pressed states drawn here). ---- */
+:is([data-era="platinum"], [data-era="drawingboard"]) input[type="radio"] {
+  border: 0;
+  border-radius: 0;
+  background: var(--clio-art-p9-radio) 0 0 / 12px 12px no-repeat;
+  box-shadow: none;
+}
+
+:is([data-era="platinum"], [data-era="drawingboard"]) input[type="radio"]:checked {
+  background: var(--clio-art-p9-radio-on) 0 0 / 12px 12px no-repeat;
+}
+
+:is([data-era="platinum"], [data-era="drawingboard"]) input[type="radio"]:not(:disabled):active:where(:not([data-clio-off])) {
+  background: var(--clio-art-p9-radio-pressed) 0 0 / 12px 12px no-repeat;
+}
+
+/* Held while on: not captured; the on ball stays (inferred). */
+:is([data-era="platinum"], [data-era="drawingboard"]) input[type="radio"]:checked:not(:disabled):active:where(:not([data-clio-off])) {
+  background: var(--clio-art-p9-radio-on) 0 0 / 12px 12px no-repeat;
+}
+/* clio:segment */
+
+
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(input[type="checkbox"], input[type="radio"]):disabled {
+  border-color: #888888;
+  opacity: 0.6;
+}

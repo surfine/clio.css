@@ -1,0 +1,84 @@
+
+
+/* ---- Panels ---------------------------------------------------------------------
+   A panel is a window: the key window's title bar, no shadow. An attention panel
+   (.alert-box, measured: Workspace's Log Out) has an empty title bar; under it the
+   application's 48px icon and the panel's title (its aria-label) in Helvetica 18,
+   a groove (#555555 over white) 86 rows into the panel, the message centred, the
+   buttons 8px from the lower right, 8px apart. */
+[data-era="nextstep"] :is(.modal-dialog, .alert-box, dialog.modal) {
+  position: relative;
+  min-width: 300px;
+  padding-top: calc(var(--clio-titlebar-height) + 12px);
+}
+
+[data-era="nextstep"] :is(.modal-dialog, .alert-box, dialog.modal)::before {
+  content: attr(aria-label);
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  box-sizing: border-box;
+  height: var(--clio-titlebar-height);
+  border-bottom: 1px solid #000000;
+  background: #000000;
+  box-shadow: inset 1px 1px 0 #aaaaaa, inset -1px -1px 0 #555555;
+  color: #ffffff;
+  font: 700 12px/21px var(--clio-font-chrome);
+  text-align: center;
+}
+
+[data-era="nextstep"] .alert-box.alert-box {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  min-height: 185px;
+  padding: 108px 8px 8px;
+  background:
+    linear-gradient(#555555, #555555) 0 86px / 100% 1px no-repeat,
+    linear-gradient(#ffffff, #ffffff) 0 87px / 100% 1px no-repeat,
+    var(--clio-dialog-bg);
+}
+
+[data-era="nextstep"] .alert-box::before {
+  content: "";
+}
+
+[data-era="nextstep"] .alert-box::after {
+  content: attr(aria-label);
+  position: absolute;
+  top: 41px;
+  left: 67px;
+  font: 400 18px/22px var(--clio-font-chrome);
+  white-space: nowrap;
+}
+
+[data-era="nextstep"] .alert-box > .alert-icon {
+  position: absolute;
+  top: 30px;
+  left: 8px;
+  width: 48px;
+  height: 48px;
+}
+
+[data-era="nextstep"] .alert-box > :is(.alert-contents, .modal-contents, p) {
+  margin: 0;
+  text-align: center;
+}
+
+[data-era="nextstep"] .alert-box > :is(.alert-buttons, .dialog-buttons) {
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 12px;
+}
+
+/* An alert carries the application's icon, not a symbol: without one the slot
+   stays empty. */
+[data-era="nextstep"] :where(.alert-icon.caution, .alert-icon.note, .alert-icon.stop) {
+  border: 0;
+  background: transparent;
+}
+
+[data-era="nextstep"] :where(.alert-icon.caution, .alert-icon.note, .alert-icon.stop)::before {
+  content: none;
+}

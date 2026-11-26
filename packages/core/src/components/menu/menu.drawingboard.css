@@ -1,0 +1,115 @@
+
+
+/* ---- Menus -----------------------------------------------------------------
+   The shade: 2px of pencil (ppat 130, 131) down the right from 3px below the
+   menu's top and along the foot from 4px in. A menu that is not a drop-down
+   becomes the shade's containing block. --clio-db-phase shifts the pens
+   along the menu (Mac OS drew the Finder's File menu 64px further along). */
+[data-era="drawingboard"] :is(.menu, ul[role="menu"]):not(li > *) {
+  position: relative;
+}
+
+/* Paper (ppat 7125) from the inside top-left, and a frame drawn with pattern
+   pens (ppat 129-132), each tiled from the menu's own corner: the left pen
+   and the top from the top-left, the right pen from 4px lower, the foot from
+   4px in. Rules, not tokens: the pens read this menu's own top line and phase. */
+[data-era="drawingboard"] :is(.menu, ul[role="menu"]) {
+  background:
+    url("art/drawingboard/menu-top.png") 0 calc(var(--clio-menu-border-top-width) - 1px) / 128px 1px repeat-x border-box,
+    url("art/drawingboard/menu-left.png") 0 calc(var(--clio-menu-border-top-width) - 1px) / 1px 128px repeat-y border-box,
+    url("art/drawingboard/menu-right.png") right 0 top calc(var(--clio-menu-border-top-width) + 3px) / 1px 128px repeat-y border-box,
+    url("art/drawingboard/menu-foot.png") calc(4px - var(--clio-db-phase, 0px)) 100% / 128px 1px repeat-x border-box,
+    url("art/drawingboard/menu-paper.png") 0 0 / 64px 64px padding-box,
+    #dddddd;
+}
+
+[data-era="drawingboard"] :is(.menu, [role="menu"]) > :is(li.separator, li[role="separator"], hr) {
+  background: url("art/drawingboard/menu-separator.png") calc(0px - var(--clio-db-phase, 0px)) 4px / 128px 1px repeat-x;
+}
+
+/* A menu bar's menu hangs from the bar's last row, which is its top line. */
+[data-era="drawingboard"] :is(.menu-bar, [role="menubar"], [role="menu-bar"]) > li > :is(.menu, ul[role="menu"]) {
+  --clio-menu-border-top-width: 0px;
+}
+
+[data-era="drawingboard"] :is(.menu, ul[role="menu"])::before {
+  content: "";
+  position: absolute;
+  top: 3px;      /* from the padding box: 4px below the top line */
+  right: -3px;
+  bottom: -3px;
+  left: 3px;
+  background:
+    url("art/drawingboard/menu-shade-right.png") right 0 top 0 / 2px 128px repeat-y,
+    url("art/drawingboard/menu-shade-foot.png") calc(0px - var(--clio-db-phase, 0px)) 100% / 128px 2px repeat-x;
+  pointer-events: none;
+}
+
+/* The fixed pencil pixels where the pens meet (File and Edit menus agree). */
+[data-era="drawingboard"] :is(.menu, ul[role="menu"])::after {
+  content: "";
+  position: absolute;
+  top: 1px;      /* from the padding box: 2px below the top line */
+  right: -3px;
+  bottom: -3px;
+  left: -1px;
+  background:
+    url("art/drawingboard/menu-corner-tr.png") right 0 top 0 / 3px 2px no-repeat,
+    url("art/drawingboard/menu-corner-br.png") right 0 bottom 0 / 3px 3px no-repeat,
+    url("art/drawingboard/menu-corner-bl.png") left 0 bottom 0 / 4px 3px no-repeat;
+  pointer-events: none;
+}
+/* clio:segment */
+
+
+/* Disabled push button: not captured; the plain button's frame and face with
+   the theme's grey label (inferred). */
+[data-era="drawingboard"] :is(button, .btn, .btn-default, input[type="button"], input[type="submit"], input[type="reset"]):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .rounded-title > *, .control-strip *, .disclosure, .little-arrows > *, .help-button):is(:disabled, .disabled) {
+  background: var(--clio-button-bg);
+  color: #9f9a94;
+  -webkit-text-fill-color: #9f9a94;
+}
+/* clio:segment */
+
+
+/* ---- Menus ------------------------------------------------------------------ */
+[data-era="drawingboard"] :is(.menu, [role="menu"]) > li:has(> :is(.menu, ul[role="menu"]))::after,
+[data-era="drawingboard"] :is(.menu, [role="menu"]) > li > [aria-haspopup="true"]::after,
+[data-era="drawingboard"] :is(.menu, [role="menu"]) > li:has(> :is(.menu, ul[role="menu"])):is(:hover, :focus-within, .active):where(:not([data-clio-blink]))::after {
+  background-image: var(--clio-art-db-submenu);
+}
+/* clio:segment */
+
+
+[data-era="drawingboard"] :is(.menu, [role="menu"]) > li.divider {
+  box-shadow: inset 0 -4px 0 #dddddd, inset 0 -5px 0 #888888;
+}
+/* clio:segment */
+
+
+[data-era="drawingboard"] :is(button, .btn, .btn-default, input[type="button"], input[type="submit"], input[type="reset"]):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .rounded-title > *, .control-strip *, .disclosure, .little-arrows > *, .help-button):is(:disabled, .disabled) {
+  font-palette: --clio-aa-db-button-disabled;
+}
+/* clio:segment */
+
+
+/* Drawing Board's chosen items stay #313131 (underlined, not inverted) and its
+   dimmed text is #8c8c8c. Browsers with COLRv1 draw the edge levels in the text
+   colour; Safari's COLRv0 file draws them from these palettes. */
+[data-era="drawingboard"] :is(.menu-bar, [role="menubar"], [role="menu-bar"]) > li > :is(button, a, span),
+[data-era="drawingboard"] :is(.menu, [role="menu"]) > li,
+[data-era="drawingboard"] :is(.menu, [role="menu"]) > li > :is(a, button) {
+  font-palette: --clio-aa-313131 !important;   /* outranks the shared chosen-item rule */
+}
+
+[data-era="drawingboard"] :is(.menu, [role="menu"]) > li:is(.disabled, [aria-disabled="true"]),
+[data-era="drawingboard"] :is(.menu, [role="menu"]) > li > :is(a, button):is(:disabled, [aria-disabled="true"]) {
+  font-palette: --clio-aa-8c8c8c !important;
+}
+/* clio:segment */
+
+
+[data-era="drawingboard"] .clio-popup-menu > li:is(.checked, [aria-checked="true"])::before {
+  left: 1px;
+  margin-top: -5px;
+}

@@ -1,0 +1,53 @@
+
+
+/* ---- List view --------------------------------------------------------------
+   The Finder's list view: column headers, the sorted column marked, rows of
+   name and details. Markup: <table class="list-view"> with <th aria-sort> on
+   the sorted column and an optional empty <th class="sort-direction">.
+   System 7: plain headers in the small font, the sorted one underlined, a
+   double rule below (Finder, View by Name). */
+:where(.list-view) {
+  border-collapse: collapse;
+  border-spacing: 0;
+  background: var(--clio-list-view-bg);
+  font-family: var(--clio-font-small);
+  font-size: var(--clio-font-size-small);
+  line-height: var(--clio-list-view-row);
+}
+
+:where(.list-view) :where(th, td) {
+  box-sizing: border-box;
+}
+
+:where(.list-view) :where(th) {
+  height: var(--clio-list-view-header-height);
+  padding: var(--clio-list-view-header-padding);
+  background: var(--clio-list-view-header-bg);
+  font-weight: normal;
+  line-height: 14px;
+  text-align: left;
+  vertical-align: top;
+  white-space: nowrap;
+}
+
+:where(.list-view) :where(th[aria-sort]:not([aria-sort="none"])) {
+  background: var(--clio-list-view-sorted-header-bg);
+  text-decoration: var(--clio-list-view-sorted-decoration);
+  text-underline-offset: 2px;
+}
+
+:where(.list-view) :where(td) {
+  height: var(--clio-list-view-row);
+  padding: 0 4px;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+:where(.list-view) :where(td.sorted) {
+  background: var(--clio-list-view-sorted-bg);
+}
+
+:where(.list-view) :where(.sort-direction) {
+  width: var(--clio-list-view-sort-width);
+  padding: 0;
+}

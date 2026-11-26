@@ -88,7 +88,7 @@ A behaviour test must look at the result the user sees: a test that only read
   `:active:where(:not([data-clio-off]))`; menu highlights got
   `:where(:not([data-clio-blink]))`.
 - **Era-only rules**: a rule that must not reach Drawing Board goes in
-  `src/91-platinum-only.css`, which the build leaves out of `clio.drawingboard.css`.
+  the `*.platinum-only.css` layer (`91-platinum-only.css`), which the build leaves out of `clio.drawingboard.css`.
 - **Retina**: `image-rendering: pixelated` on the root at 2/3/4 dppx, handed back to
   smoothing for the page's own images. What still differs at 2x is layout on half
   pixels (centred text with an odd spare width), which 1x rounds away.

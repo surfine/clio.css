@@ -1,0 +1,9 @@
+
+
+[data-era="drawingboard"] fieldset {
+  background: transparent;
+}
+
+[data-era="drawingboard"] fieldset > legend {
+  margin-left: 0;
+}

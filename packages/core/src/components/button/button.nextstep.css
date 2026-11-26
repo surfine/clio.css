@@ -1,0 +1,78 @@
+
+
+[data-era="nextstep"] .title-bar.title-bar > :is(.close, .close-box):is(:active:where(:not([data-clio-off])), .active) {
+  background: var(--clio-art-nx-close-held) 0 0 / 15px 15px no-repeat;
+  box-shadow: none;
+}
+
+[data-era="nextstep"] .title-bar.title-bar > :is(.shade, .shade-box, .collapse, .nextstep-miniaturize, .miniaturize):is(:active:where(:not([data-clio-off])), .active) {
+  background: var(--clio-art-nx-miniaturize-held) 0 0 / 15px 15px no-repeat;
+  box-shadow: none;
+}
+/* clio:segment */
+
+
+[data-era="nextstep"] :is(.menu-bar, [role="menubar"], [role="menu-bar"]) > li > :is(button, a, span):is([aria-expanded="true"], .active),
+[data-era="nextstep"] :is(.menu-bar, [role="menubar"], [role="menu-bar"]) > li.open > :is(button, a, span),
+[data-era="nextstep"] :is(.menu, [role="menu"]) > li:not(.disabled, [aria-disabled="true"], .separator, [role="separator"], :has(> :is(:disabled, [aria-disabled="true"]))):is(:hover, :focus-within, .active):where(:not([data-clio-blink])),
+[data-era="nextstep"] :is(.menu, [role="menu"]) > li > :is(a, button):not([aria-disabled="true"], :disabled):is(:hover, :focus-visible, .active):where(:not([data-clio-blink])) {
+  background: var(--clio-menu-item-active-bg);
+  color: var(--clio-menu-item-active-fg);
+  box-shadow: var(--clio-menu-cell);
+}
+/* clio:segment */
+
+
+[data-era="nextstep"] :is(.menu-bar, [role="menubar"], [role="menu-bar"]) > li > :is(button, a)[aria-haspopup="true"]:is([aria-expanded="true"], .active),
+[data-era="nextstep"] :is(.menu-bar, [role="menubar"], [role="menu-bar"]) > li.open > :is(button, a)[aria-haspopup="true"],
+[data-era="nextstep"] :is(.menu, [role="menu"]) > li > :is(button, a)[aria-haspopup="true"]:not([aria-disabled="true"], :disabled):is(:hover, :focus-visible, .active, [aria-expanded="true"]):where(:not([data-clio-blink])) {
+  background: var(--clio-art-nx-submenu-lit) right 5px center / 7px 7px no-repeat, var(--clio-menu-item-active-bg);
+}
+/* clio:segment */
+
+
+/* ---- Buttons --------------------------------------------------------------- */
+[data-era="nextstep"] :is(button, .btn, .btn-default, .standard-button, input[type="button"], input[type="submit"], input[type="reset"]) {
+  border-image: none;
+}
+
+[data-era="nextstep"] :is(button, .btn, .btn-default, .standard-button, input[type="button"], input[type="submit"], input[type="reset"]):not(:disabled, .disabled):is(:active:where(:not([data-clio-off])), .active, .is-active) {
+  background: var(--clio-button-active-bg);
+  box-shadow: var(--clio-button-active-shadow);
+  color: var(--clio-button-active-fg);
+}
+/* clio:segment */
+
+
+/* The default button: no ring; the return mark after the label. */
+[data-era="nextstep"] :is(.default, .btn-default, .btn.default)::before {
+  content: none;
+}
+
+[data-era="nextstep"] :is(.default, .btn-default, .btn.default) {
+  padding-right: 32px;
+}
+
+[data-era="nextstep"] :is(.default, .btn-default, .btn.default)::after {
+  content: "";
+  position: absolute;
+  top: calc(50% - 6px);
+  right: 5px;
+  width: 15px;
+  height: 10px;
+  background: var(--clio-art-nx-return) 0 0 / 15px 10px no-repeat;
+}
+/* clio:segment */
+
+
+/* The return mark shows only while its window is key. */
+[data-era="nextstep"] :is(.window.inactive, .window.main) :is(.default, .btn-default, .btn.default)::after {
+  content: none;
+}
+/* clio:segment */
+
+
+[data-era="nextstep"] :is([role="tablist"], .tabs) > :is([role="tab"], li, button):is([aria-selected="true"], .active) {
+  border: 0;
+  box-shadow: inset 1px 1px 0 #ffffff, inset -1px 0 0 #000000, inset -2px 0 0 #555555;
+}

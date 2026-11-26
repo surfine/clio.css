@@ -1,0 +1,39 @@
+
+
+/* ---- Workspace dock and icons ---------------------------------------------------------
+   The dock is a column of 64px tiles at the screen's right edge; a docked
+   application that is not running shows three dots at the lower left. */
+[data-era="nextstep"] .dock {
+  display: inline-flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+[data-era="nextstep"] .dock > :is(li, .dock-tile) {
+  position: relative;
+  display: grid;
+  place-items: center;
+  box-sizing: border-box;
+  width: var(--clio-dock-tile);
+  height: var(--clio-dock-tile);
+  background: var(--clio-dock-tile-bg);
+  box-shadow: inset 2px 2px 0 #ffffff, inset -1px -1px 0 #000000, inset -2px -2px 0 #555555;
+}
+
+[data-era="nextstep"] .dock > :is(li, .dock-tile) > :is(img, svg) {
+  width: 48px;
+  height: 48px;
+  image-rendering: pixelated;
+}
+
+[data-era="nextstep"] .dock > :is(li, .dock-tile):is(.not-running, [data-running="false"])::after {
+  content: "";
+  position: absolute;
+  bottom: 4px;
+  left: 4px;
+  width: 13px;
+  height: 2px;
+  background: var(--clio-art-nx-dock-dots) 0 0 / 13px 2px no-repeat;
+}

@@ -1,0 +1,33 @@
+
+
+/* ---- Side-title utility window (kWindowFloatSide*; Mac OS 9.0, the Appearance
+   SDK's sample "Side Utility Window", frames side3) ------------------------------
+   <div class="window utility side"> with the usual .title-bar (close box at the
+   top, collapse box at the foot; no title is drawn). The frame is the utility
+   window's: 1px black, white light on the top and left, #999 shade on the right
+   and the bottom, the drop from the second row and column. The bar is 10px of #ccc
+   down the left with the 3px dot pattern from 12px below its top to 12px above its
+   foot; the collapse box is the title-bar one transposed. */
+[data-era="platinum"] .window.utility.side {
+  flex-direction: row;
+  background:
+    linear-gradient(#ffffff, #ffffff) 0 0 / calc(100% - 1px) 1px no-repeat,
+    linear-gradient(#ffffff, #ffffff) 0 0 / 1px calc(100% - 1px) no-repeat,
+    linear-gradient(#999999, #999999) 100% 1px / 1px calc(100% - 1px) no-repeat,
+    linear-gradient(#999999, #999999) 1px 100% / calc(100% - 1px) 1px no-repeat,
+    #cccccc;
+}
+/* clio:segment */
+
+
+/* In the background: a #555 frame and drop on flat #ddd; no boxes, no dots. */
+[data-era="platinum"] .window.utility.side.inactive {
+  border-color: #555555;
+  background: #dddddd;
+}
+
+[data-era="platinum"] .window.utility.side.inactive::before {
+  background:
+    linear-gradient(#555555, #555555) 100% 0 / 1px 100% no-repeat,
+    linear-gradient(#555555, #555555) 0 100% / 100% 1px no-repeat;
+}

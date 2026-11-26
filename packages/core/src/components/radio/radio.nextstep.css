@@ -1,0 +1,5 @@
+
+
+[data-era="nextstep"] input[type="radio"]:disabled {
+  opacity: 0.6;
+}

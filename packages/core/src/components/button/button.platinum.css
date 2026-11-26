@@ -1,0 +1,75 @@
+
+
+:is([data-era="platinum"], [data-era="drawingboard"]) .title-bar > :is(button, .close, .close-box, .resize, .resize-box, .zoom, .shade, .shade-box, .collapse):is(:active:where(:not([data-clio-off])), .active) {
+  background: linear-gradient(to bottom right, #444444, #bbbbbb);
+  box-shadow: -1px -1px 0 #888888, 1px 1px 0 #ffffff, inset -1px -1px 0 #999999;
+}
+/* clio:segment */
+
+
+/* ---- Default button ring: 1px black, a #aaa bevel band, 1px gap. -------- */
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(.default, .btn-default) {
+  position: relative;
+  box-shadow: var(--clio-button-shadow);
+}
+
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(.default, .btn-default):not(:disabled, .disabled):is(:active:where(:not([data-clio-off])), .active) {
+  box-shadow: var(--clio-button-active-shadow);
+}
+
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(.default, .btn-default)::before {
+  content: "";
+  position: absolute;
+  border-width: 1px;                  /* longhands: the shorthand would reset the ring, which is a border-image */
+  border-style: solid;
+  border-color: transparent;
+  inset: -4px;
+  border-radius: 0;
+  box-shadow: none;
+  pointer-events: none;
+}
+/* clio:segment */
+
+
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(.menu, [role="menu"]) > li:is(.checked, [aria-checked="true"]):is(:hover, :focus-within, .active):where(:not([data-clio-blink]))::before,
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(.menu, [role="menu"]) > li > :is([aria-checked="true"], .checked):is(:hover, :focus-visible, .active):where(:not([data-clio-blink]))::before {
+  filter: invert(1);
+}
+/* clio:segment */
+
+
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(.menu, [role="menu"]) > li:has(> :is(.menu, ul[role="menu"])):is(:hover, :focus-within, .active):where(:not([data-clio-blink]))::after {
+  background-image: var(--clio-art-p-submenu-on);
+}
+/* clio:segment */
+
+
+:is([data-era="platinum"], [data-era="drawingboard"]) :is([role="tablist"], .tabs) > :is([role="tab"], li, button):is([aria-selected="true"], .active) {
+  z-index: 1;
+  padding-top: 0;
+  border-image-source: var(--clio-art-p-tab-selected);
+  background: transparent;
+  color: #000000;
+}
+/* clio:segment */
+
+
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(button, .btn, .btn-default, input[type="button"], input[type="submit"], input[type="reset"]):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .rounded-title > *, .control-strip *, .disclosure, .little-arrows > *, .help-button) {
+  font-family: var(--clio-font-button);
+  font-palette: --clio-aa-p9-button;
+}
+
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(button, .btn, .btn-default, input[type="button"], input[type="submit"], input[type="reset"]):not(.icon, [role="tab"], [role="menuitem"], .title-bar > *, .rounded-title > *, .control-strip *, .disclosure, .little-arrows > *, .help-button):not(:disabled, .disabled):is(:active:where(:not([data-clio-off])), .active) {
+  font-palette: --clio-aa-p9-button-held;
+}
+/* clio:segment */
+
+
+/* Safari's COLRv0 edge levels in white and dimmed text (src/00-fonts.css). */
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(.menu-bar, [role="menubar"], [role="menu-bar"]) > li > :is(button, a, span):is([aria-expanded="true"], .active),
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(.menu-bar, [role="menubar"], [role="menu-bar"]) > li.open > :is(button, a, span),
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(.menu, [role="menu"]) > li:not(.disabled, [aria-disabled="true"], .separator, [role="separator"], :has(> :is(:disabled, [aria-disabled="true"]))):is(:hover, :focus-within, .active):where(:not([data-clio-blink])),
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(.menu, [role="menu"]) > li > :is(a, button):not([aria-disabled="true"], :disabled):is(:hover, :focus-visible, .active):where(:not([data-clio-blink])),
+:is([data-era="platinum"], [data-era="drawingboard"]) .icon:is(.selected, [aria-selected="true"], [aria-pressed="true"]) > :is(figcaption, span, .icon-label) {
+  font-palette: --clio-aa-white;
+}

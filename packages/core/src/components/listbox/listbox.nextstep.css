@@ -1,0 +1,45 @@
+
+
+/* ---- Lists, groups, tabs ----------------------------------------------------- */
+[data-era="nextstep"] :is(.listbox, [role="listbox"]) > :is(li, [role="option"]):is([aria-selected="true"], .selected),
+[data-era="nextstep"] :is(select[multiple], select[size]:not([size="1"])) option:checked {
+  background: #ffffff;
+  color: #000000;
+}
+/* clio:segment */
+
+
+[data-era="nextstep"] .browser > :is(.listbox, [role="listbox"]) {
+  flex: 0 0 var(--clio-browser-column);
+  height: auto;
+  border: 0;
+  border-left: 1px solid #000000;
+  background: #aaaaaa;
+  box-shadow: none;
+  font-family: var(--clio-font-text);
+}
+
+[data-era="nextstep"] .browser > :is(.listbox, [role="listbox"]):first-child {
+  border-left: 0;
+}
+
+[data-era="nextstep"] .browser > :is(.listbox, [role="listbox"]) > :is(li, [role="option"]) {
+  position: relative;
+  min-height: var(--clio-browser-row);
+  padding: 0 16px 0 2px;
+  background: transparent;
+  line-height: var(--clio-browser-row);
+}
+
+/* The first row starts four rows above the column's top. */
+[data-era="nextstep"] .browser > :is(.listbox, [role="listbox"]) > :is(li, [role="option"]):first-child {
+  margin-top: -4px;
+}
+/* clio:segment */
+
+
+[data-era="nextstep"] .browser > :is(.listbox, [role="listbox"]) > :is(li, [role="option"]):is([aria-selected="true"], .selected) {
+  background-color: #ffffff;
+  color: #000000;
+  box-shadow: none;
+}

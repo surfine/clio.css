@@ -1,0 +1,31 @@
+
+
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(fieldset) > legend {
+  background: var(--clio-pane-bg);
+}
+
+/* WebKit starts a fieldset's padding box below the whole legend (clientTop is the
+   legend's height), so the dots would fill the band between the drawn top line and
+   the legend's foot: the first layer covers that band with the pane in every engine. */
+:is([data-era="platinum"], [data-era="drawingboard"]) fieldset {
+  background:
+    linear-gradient(var(--clio-pane-bg), var(--clio-pane-bg)) 1px 1px / calc(100% - 2px) calc(var(--clio-font-size) * 1.5) no-repeat border-box,
+    linear-gradient(var(--clio-pane-bg), var(--clio-pane-bg)) 0 0 / 100% 100% no-repeat padding-box,
+    var(--clio-art-p9-group-dots) 0 0 / 2px 2px fixed border-box;
+  image-rendering: pixelated;   /* keep the dots from blending into one grey */
+}
+
+/* The title's gap opens 13px after the corner (General Controls, "Desktop"). */
+:is([data-era="platinum"], [data-era="drawingboard"]) fieldset > legend {
+  margin-left: 2px;
+}
+/* clio:segment */
+
+
+/* Secondary group box (Sound, "Settings for selected device"): one #888 line,
+   no light. */
+:is([data-era="platinum"], [data-era="drawingboard"]) fieldset.secondary {
+  border: 1px solid #888888;
+  background: transparent;
+  box-shadow: none;
+}

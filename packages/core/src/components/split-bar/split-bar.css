@@ -1,0 +1,55 @@
+
+
+/* While a split bar is dragged the split line's place shows as a 3-row grey band
+   across the view (Inside Macintosh: Windows — the split line follows the pointer
+   as an outline; HIG 1992, "Splitting a Window"). Drawn by clio.js. */
+:where(.clio-split-outline) {
+  position: fixed;
+  z-index: 2147483000;
+  height: 3px;
+  background: repeating-conic-gradient(#ffffff 0 25%, transparent 0 50%) 0 0 / 2px 2px;
+  mix-blend-mode: difference;
+  pointer-events: none;
+}
+
+/* ---- Split bar and split line ---------------------------------------------------
+   <div class="split-view"> > .split-bar (above the vertical scroll bar), panes,
+   and a .split-line between two panes. Apple's guidelines (1992) give the split
+   bar as a control 5 pixels high by the width of the scroll bar, at its top, and
+   the split line as two lines with a one-pixel space; BBEdit 5.1 in Mac OS 9 draws
+   it 7 rows high (90-platinum.css). Moving it is the application's: clio.css only
+   draws it. */
+:where(.split-view) {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  background: var(--clio-split-bg, var(--clio-pane-bg));
+}
+
+:where(.split-view) > :where(.split-bar) {
+  align-self: flex-end;
+}
+
+:where(.split-bar) {
+  flex: none;
+  box-sizing: border-box;
+  width: var(--clio-scrollbar-size);
+  height: var(--clio-split-bar-height, 5px);
+  background: var(--clio-split-ink, var(--clio-ink));
+  cursor: row-resize;
+}
+
+:where(.split-line) {
+  --clio-split-line-1: 1px;
+  flex: none;
+  box-sizing: border-box;
+  height: var(--clio-split-bar-height, 5px);
+  margin: 0;
+  border: 0;
+  background:
+    linear-gradient(var(--clio-split-ink, var(--clio-ink)), var(--clio-split-ink, var(--clio-ink))) right top / var(--clio-scrollbar-size) 100% no-repeat,
+    linear-gradient(var(--clio-split-ink, var(--clio-ink)), var(--clio-split-ink, var(--clio-ink))) 0 var(--clio-split-line-1) / 100% 1px no-repeat,
+    linear-gradient(var(--clio-split-ink, var(--clio-ink)), var(--clio-split-ink, var(--clio-ink))) 0 calc(var(--clio-split-line-1) + 2px) / 100% 1px no-repeat,
+    var(--clio-split-bg, var(--clio-pane-bg));
+  cursor: row-resize;
+}

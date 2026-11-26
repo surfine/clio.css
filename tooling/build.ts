@@ -15,6 +15,8 @@ import * as esbuild from "esbuild";
 import { execFileSync } from "node:child_process";
 import { components, AIS6 } from "../components/index.ts";
 import { renderSite, renderLlms, renderLlmsFull, renderEvidence, renderSitemap } from "./site.ts";
+// The layers (named as src/ named its files) come from the component fragments in packages/core.
+import { srcFiles, source } from "../packages/core/src/bundles.ts";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const pkg = JSON.parse(readFileSync(join(root, "package.json"), "utf8"));
@@ -26,7 +28,6 @@ const banner = (variant: string): string => `/*! clio.css ${pkg.version}${varian
  * Measured values traced to AI System 6; see EVIDENCE.md.
  * Includes art from system.css (MIT) and pixel reconstructions of Apple control art; see THIRD-PARTY.md. */\n`;
 
-const srcFiles = readdirSync(join(root, "src")).filter((f) => f.endsWith(".css")).sort();
 // clio.js draws scroll bars as elements (fixed-size scroll boxes, held arrows, the
 // dragged outline). Every ::-webkit-scrollbar rule is copied onto those elements, right
 // after the original, so the two bars share one set of rules. Each pseudo-class maps to
@@ -85,7 +86,7 @@ function mirrorScrollbars(css: string): string {
   return out;
 }
 const part = (f: string): string => {
-  const css = read(`src/${f}`).trim() + "\n";
+  const css = source(f).trim() + "\n";
   return /scrollbar-js/.test(f) ? css : mirrorScrollbars(css);
 };
 // NeXTSTEP (src/93-nextstep.css) ships only in its own file: clio.css stays the Classic bundle (D5, D14).

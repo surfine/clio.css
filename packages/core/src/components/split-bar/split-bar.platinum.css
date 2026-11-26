@@ -1,0 +1,14 @@
+
+
+/* ---- Split bar (BBEdit 5.1, Mac OS 9.0, frames bb3 and split-done) -------------
+   7 rows of black across the scroll bar's width; the split line puts its two
+   lines on the bar's fourth and sixth rows. */
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(.split-view, .split-bar, .split-line) {
+  --clio-split-bar-height: 7px;
+  --clio-split-bg: #ffffff;
+  --clio-split-ink: #000000;
+}
+
+:is([data-era="platinum"], [data-era="drawingboard"]) .split-line {
+  --clio-split-line-1: 3px;
+}

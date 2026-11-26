@@ -1,0 +1,29 @@
+
+
+/* ---- Radio buttons: drawn, not cut from a screenshot ------------------------ */
+/* Check box mark: inside the frame, plus the two columns that overhang it. */
+:is([data-era="platinum"], [data-era="drawingboard"]) input[type="checkbox"]:checked::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: -3px;
+  width: 2px;
+  height: 4px;
+  background: var(--clio-art-p9-check-overhang) 0 0 / 2px 4px no-repeat;
+}
+/* clio:segment */
+
+
+/* Held while checked: the mark over the held box (inferred; only the empty
+   box was captured held). */
+:is([data-era="platinum"], [data-era="drawingboard"]) input[type="checkbox"]:checked:not(:disabled):active:where(:not([data-clio-off])) {
+  background:
+    var(--clio-art-p9-check) 0 0 / 10px 10px no-repeat padding-box,
+    var(--clio-art-p9-checkbox-pressed) -1px -1px / 12px 12px no-repeat;
+}
+
+:is([data-era="platinum"], [data-era="drawingboard"]) input[type="checkbox"]:not(:disabled):active:where(:not([data-clio-off])) {
+  border-color: transparent;
+  background: var(--clio-art-p9-checkbox-pressed) -1px -1px / 12px 12px no-repeat;
+  box-shadow: none;
+}

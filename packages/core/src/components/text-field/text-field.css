@@ -1,0 +1,76 @@
+
+
+/* ---- Text fields ---------------------------------------------------------- */
+:where(input:not([type]), input[type="text"], input[type="search"], input[type="email"], input[type="password"],
+  input[type="number"], input[type="url"], input[type="tel"], input[type="date"], input[type="time"],
+  input[type="datetime-local"], input[type="month"], input[type="week"], textarea) {
+  box-sizing: border-box;
+  min-height: var(--clio-field-height);
+  margin: 0;
+  padding: var(--clio-field-padding);
+  border: var(--clio-field-border);
+  border-radius: 0;
+  background: var(--clio-field-bg);
+  box-shadow: var(--clio-field-shadow);
+  color: var(--clio-ink);
+  font-family: var(--clio-font-text);
+  font-size: var(--clio-font-size);
+  font-stretch: var(--clio-font-stretch-text);
+  line-height: 14px;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+:where(textarea) {
+  display: block;
+  line-height: 16px;
+  resize: vertical;
+}
+
+:where(input, textarea):focus-visible {
+  outline: var(--clio-field-focus-outline, var(--clio-focus-outline));
+  outline-offset: var(--clio-focus-offset);
+  box-shadow: var(--clio-field-focus-shadow);
+}
+
+:where(input, textarea):disabled {
+  color: var(--clio-disabled);
+}
+
+:where(input, textarea)::placeholder {
+  color: var(--clio-disabled);
+  opacity: 1;
+}
+/* clio:segment */
+
+
+/* ---- clio.js: the insertion point --------------------------------------------
+   TextEdit inverted a 1px line for its caret, as tall as the line: white in a
+   difference blend inverts what is under it the same way. The field's own caret
+   is hidden only while clio.js draws this one. */
+.clio-caret {
+  position: absolute;
+  z-index: 2147483646;
+  width: 1px;
+  background: #ffffff;
+  mix-blend-mode: difference;
+  pointer-events: none;
+}
+
+.clio-caret-off,
+.clio-caret[hidden] {
+  visibility: hidden;
+}
+/* clio:segment */
+
+
+/* Forced colours repaint the line and may drop the blend: the system's caret instead. */
+@media (forced-colors: active) {
+  .clio-caret {
+    display: none;
+  }
+
+  .clio-caret-field {
+    caret-color: auto;
+  }
+}

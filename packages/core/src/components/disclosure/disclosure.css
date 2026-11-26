@@ -1,0 +1,53 @@
+/* Controls the classic guidelines add to the first set (Macintosh Human
+   Interface Guidelines 1992, ch. 7; Mac OS 8 Human Interface Guidelines,
+   ch. 2), each drawn per era from tokens. COVERAGE.md lists them all. */
+
+/* ---- Disclosure triangle ---------------------------------------------------
+   Markup: <button class="disclosure" aria-expanded="false" aria-label="Show">
+   or <details><summary>…</summary>…</details>. System 7 brought it to the
+   Finder's list views; System 6 had none (it uses System 7's). */
+:where(.disclosure) {
+  display: inline-block;
+  box-sizing: border-box;
+  width: var(--clio-disclosure-size);
+  height: var(--clio-disclosure-size);
+  min-width: 0;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: var(--clio-art-disclosure) 0 0 / var(--clio-disclosure-size) var(--clio-disclosure-size) no-repeat;
+  box-shadow: none;
+  vertical-align: middle;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: var(--clio-cursor-arrow);
+}
+
+:where(.disclosure):is([aria-expanded="true"], .open) {
+  background-image: var(--clio-art-disclosure-open);
+}
+
+:where(details) > :where(summary) {
+  display: flex;
+  align-items: center;
+  gap: var(--clio-disclosure-gap);
+  list-style: none;
+  cursor: var(--clio-cursor-arrow);
+}
+
+:where(details) > :where(summary)::-webkit-details-marker {
+  display: none;
+}
+
+:where(details) > :where(summary)::before {
+  content: "";
+  flex: none;
+  width: var(--clio-disclosure-size);
+  height: var(--clio-disclosure-size);
+  background: var(--clio-art-disclosure) 0 0 / var(--clio-disclosure-size) var(--clio-disclosure-size) no-repeat;
+}
+
+:where(details[open]) > :where(summary)::before {
+  background-image: var(--clio-art-disclosure-open);
+}

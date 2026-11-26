@@ -1,0 +1,57 @@
+
+
+:where(.icon):is(.selected, [aria-selected="true"], [aria-pressed="true"]) > :is(img, svg, .icon-image) {
+  filter: var(--clio-icon-selected-filter, invert(1));
+}
+/* clio:segment */
+
+
+/* ---- Bevel button ------------------------------------------------------------
+   A square bevelled button for an icon or a short label, which can act as a
+   push button, a toggle (aria-pressed) or a menu (class "menu", aria-haspopup)
+   (Mac OS 8 HIG: "Bevel Buttons"). Earlier eras had none and use push buttons'
+   square cousin from Platinum. */
+:where(.bevel) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-width: var(--clio-bevel-min);
+  min-height: var(--clio-bevel-min);
+  margin: 0;
+  padding: var(--clio-bevel-padding);
+  border: var(--clio-bevel-slice) solid transparent;
+  border-radius: 0;
+  border-image: var(--clio-art-bevel) var(--clio-bevel-slice-n) fill / var(--clio-bevel-slice) stretch;
+  background: transparent;
+  box-shadow: none;
+  color: var(--clio-ink);
+  font: inherit;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: var(--clio-cursor-arrow);
+}
+
+:where(.bevel):is(:active:where(:not([data-clio-off])), .active, [aria-pressed="true"]):not(:disabled) {
+  border-image-source: var(--clio-art-bevel-held);
+}
+
+:where(.bevel) {
+  position: relative;
+}
+
+:where(.bevel)::before,
+:where(.bevel)::after {
+  content: none;
+}
+
+/* The menu arrow, over the face (border-image fill paints over backgrounds). */
+:where(.bevel.menu, .bevel[aria-haspopup])::after {
+  content: "";
+  position: absolute;
+  right: calc(var(--clio-bevel-arrow-right) - var(--clio-bevel-slice));
+  bottom: calc(var(--clio-bevel-arrow-bottom) - var(--clio-bevel-slice));
+  width: var(--clio-bevel-arrow-width);
+  height: var(--clio-bevel-arrow-height);
+  background: var(--clio-art-bevel-menu-arrow) 0 0 / 100% 100% no-repeat;
+}

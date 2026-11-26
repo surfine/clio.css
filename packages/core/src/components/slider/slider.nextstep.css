@@ -1,0 +1,51 @@
+
+
+/* ---- Slider ------------------------------------------------------------------
+   Measured (Preferences, Display): a 16px sunken lane of the scroller's dots,
+   black at the top and left (both to the corners), white at the bottom and
+   right, the 20x14 knob inside it. */
+[data-era="nextstep"] input[type="range"] {
+  box-sizing: border-box;
+  height: var(--clio-slider-height);
+  padding: 1px;
+  border: 0;
+  background: var(--clio-art-nx-lane) 0 1px / 2px 2px, #aaaaaa;
+  box-shadow: inset 0 1px 0 #000000, inset 1px 0 0 #000000, inset 0 -1px 0 #ffffff, inset -1px 0 0 #ffffff;
+}
+
+[data-era="nextstep"] input[type="range"]::-webkit-slider-runnable-track {
+  height: calc(var(--clio-slider-height) - 2px);
+  border: 0;
+  border-image: none;
+  background: transparent;
+}
+
+[data-era="nextstep"] input[type="range"]::-webkit-slider-thumb {
+  width: var(--clio-slider-thumb-width);
+  height: var(--clio-slider-thumb-height);
+  margin-top: 0;
+  border: 0;
+  background: var(--clio-art-nx-slider-knob) 0 0 / 20px 14px no-repeat;
+  box-shadow: none;
+}
+
+[data-era="nextstep"] input[type="range"]::-moz-range-track {
+  height: calc(var(--clio-slider-height) - 2px);
+  margin: 0;
+  border: 0;
+  border-image: none;
+  background: transparent;
+}
+
+[data-era="nextstep"] input[type="range"]::-moz-range-thumb {
+  box-sizing: border-box;
+  width: var(--clio-slider-thumb-width);
+  height: var(--clio-slider-thumb-height);
+  border: 0;
+  border-radius: 0;
+  background: var(--clio-art-nx-slider-knob) 0 0 / 20px 14px no-repeat;
+  box-shadow: none;
+  /* Firefox puts the knob a row too high unless it is translated at all; a zero
+     translate is enough at 1x, 2x and 3x (fidelity nx-slider). */
+  translate: 0 0;
+}

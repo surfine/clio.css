@@ -1,0 +1,23 @@
+
+
+/* ---- Placard ------------------------------------------------------------------
+   A framed strip for status at the foot of a window, beside the horizontal scroll
+   bar (Mac OS 8 HIG: "Placards"). The control came with the Appearance Manager;
+   before it, the eras draw a 1px frame on the paper (adapted). */
+:where(.placard) {
+  display: inline-flex;
+  align-items: center;
+  box-sizing: border-box;
+  min-height: 16px;
+  margin: 0;
+  padding: 0 4px;
+  border: 1px solid var(--clio-ink);
+  border-radius: 0;
+  background: var(--clio-paper);
+  box-shadow: none;
+  color: var(--clio-ink);
+  font-family: var(--clio-font-small);
+  font-size: var(--clio-font-size-small, 9px);
+  line-height: 12px;
+  white-space: nowrap;
+}

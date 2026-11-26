@@ -1,0 +1,41 @@
+
+
+/* ---- Tabs -------------------------------------------------------------------
+   System 6 had no tab control; the System 6 tab here is an adaptation (a
+   boxed label that joins its panel). Platinum draws the real Mac OS 9 tab. */
+:where([role="tablist"], .tabs) {
+  display: flex;
+  align-items: flex-end;
+  gap: 0;
+  margin: 0;
+  padding: 0 8px;
+  list-style: none;
+}
+
+:where([role="tablist"], .tabs) > :is([role="tab"], li, button) {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  box-sizing: border-box;
+  min-width: 0;
+  min-height: var(--clio-tab-height);
+  margin: 0 -1px -1px 0;
+  padding: 0 12px;
+  border: 1px solid var(--clio-ink);
+  border-radius: 0;
+  background: var(--clio-tab-bg);
+  box-shadow: none;
+  color: var(--clio-ink);
+  font-family: var(--clio-font-chrome);
+  font-size: var(--clio-font-size);
+  font-weight: var(--clio-chrome-weight);
+  cursor: var(--clio-cursor-arrow);
+}
+/* clio:segment */
+
+
+:where([role="tabpanel"], .tab-panel) {
+  padding: 10px;
+  border: var(--clio-tab-panel-border);
+  background: var(--clio-tab-panel-bg);
+}

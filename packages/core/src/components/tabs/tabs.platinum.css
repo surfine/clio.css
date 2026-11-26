@@ -1,0 +1,37 @@
+
+
+/* ---- Tabs: drawn from the measured Mac OS 9 tab (tooling/tab-art.py) ------ */
+:is([data-era="platinum"], [data-era="drawingboard"]) :is([role="tablist"], .tabs) {
+  gap: 0;
+  padding: 0 4px;
+}
+
+:is([data-era="platinum"], [data-era="drawingboard"]) :is([role="tablist"], .tabs) > :is([role="tab"], li, button) {
+  min-width: 48px;
+  height: 24px;
+  min-height: 0;
+  margin: 0 -3px -1px 0;
+  padding: 3px 0 0;
+  border-style: solid;
+  border-width: 0 16px;
+  border-color: transparent;
+  border-radius: 0;
+  border-image: var(--clio-art-p-tab) 0 16 fill / 0 16px stretch;
+  background: transparent;
+  box-shadow: none;
+  font-weight: 700;
+  line-height: 18px;
+}
+
+:is([data-era="platinum"], [data-era="drawingboard"]) :is([role="tablist"], .tabs) > :is([role="tab"], li, button):not(:disabled):active:where(:not([data-clio-off])) {
+  border-image-source: var(--clio-art-p-tab-pressed);
+  background: transparent;
+  color: #ffffff;
+}
+/* clio:segment */
+
+
+:is([data-era="platinum"], [data-era="drawingboard"]) :is([role="tabpanel"], .tab-panel) {
+  border-top: 0;
+  box-shadow: inset 1px 0 0 #ffffff, inset -1px -1px 0 #888888;
+}

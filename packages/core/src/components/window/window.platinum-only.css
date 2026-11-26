@@ -1,0 +1,157 @@
+
+
+/* ---- Collapsed (WindowShade): the frame closes round the title bar --------
+   Mac OS 9.0, Games collapsed (frame collapsed): the title bar's last two rows
+   become the window's own #999 shade and black frame, which run under the side
+   bands too. */
+[data-era="platinum"] .window.collapsed {
+  padding-bottom: 1px;
+}
+
+/* the bevel only: the inner strip round the pane has gone with it */
+[data-era="platinum"] .window.collapsed:not(.inactive) {
+  background:
+    var(--clio-p9-bevel),
+    var(--clio-window-bg);
+}
+
+[data-era="platinum"] .window.collapsed > .title-bar {
+  height: calc(var(--clio-titlebar-height) - 2px);
+  border-bottom-width: 0;
+}
+/* clio:segment */
+
+
+/* The title's line is 12px, not the 13px row: Charcoal's 11px ascent and 3px
+   descent then leave no half pixel above the baseline, which each browser
+   rounded its own way (Chromium up, WebKit and Firefox down a row). The box
+   keeps its 13px height. */
+[data-era="platinum"] .title-bar > :is(.title, h1, h2, h3) {
+  line-height: calc(var(--clio-titlebar-row) - 1px);
+}
+
+/* The column just past the cut-out covers the ridges' #777 rows (their cut is a
+   pixel to the right of the white rows'). It used to be an ::after outside the
+   title, shown through overflow-clip-margin, which WebKit lacks; now the title
+   is a pixel wider into it (a -1px margin keeps it centred where it was) and
+   paints that column itself. */
+[data-era="platinum"] .title-bar:not(.inactive-title-bar, .window.inactive > .title-bar) > :is(.title, h1, h2, h3) {
+  margin-right: -1px;
+  padding-right: 4px;
+  background:
+    repeating-linear-gradient(to bottom, transparent 0 1px, #777777 1px 2px) 0 0 / 1px 12px no-repeat,
+    repeating-linear-gradient(to bottom, transparent 0 1px, #cccccc 1px 2px) right 0 top 0 / 1px 12px no-repeat,
+    linear-gradient(#cccccc, #cccccc) 0 0 / calc(100% - 1px) 100% no-repeat;
+}
+
+[data-era="platinum"] .title-bar > :is(.title, h1, h2, h3)::after {
+  content: none;
+}
+
+/* ---- The window's drop shadow starts 2px in -------------------------------
+   Mac OS 9.0 (Infinite HD, measured): the 1px black shadow runs down the right
+   from the frame's third row and along the foot from its third column; a
+   box-shadow could only start it 1px in. Two border lines on a pseudo-element
+   draw it (the box itself stays clear); its offsets count from the padding box,
+   inside the 1px frame. */
+[data-era="platinum"] .window {
+  box-shadow: none;
+}
+
+[data-era="platinum"] .window::after {
+  content: "";
+  position: absolute;
+  top: 1px;
+  right: -2px;
+  bottom: -2px;
+  left: 1px;
+  border-right: 1px solid #000000;
+  border-bottom: 1px solid #000000;
+  pointer-events: none;
+}
+
+/* Behind another window the shadow turns #555555 and keeps the same notch
+   (Mac OS 9.0 Finder window, measured). */
+[data-era="platinum"] .window.inactive {
+  box-shadow: none;
+}
+
+[data-era="platinum"] .window.inactive::after {
+  border-color: #555555;
+}
+/* clio:segment */
+
+
+[data-era="platinum"] .window.utility.side > .title-bar {
+  display: block;
+  flex: none;
+  width: 10px;
+  height: auto;
+  margin: 1px 0 1px 1px;
+  padding: 0;
+  background: url("art/platinum/utility-dots.png") 1px 12px / 3px 3px repeat, #cccccc;
+  box-shadow: none;
+}
+
+/* The dots keep to columns 1 to 9 and rows 12 to 12 above the foot: a #ccc frame
+   painted over the pattern's edges. */
+[data-era="platinum"] .window.utility.side > .title-bar::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-style: solid;
+  border-color: #cccccc;
+  border-width: 12px 0 12px 1px;
+  pointer-events: none;
+}
+
+[data-era="platinum"] .window.utility.side > .title-bar::after {
+  content: none;
+}
+
+[data-era="platinum"] .window.utility.side > .title-bar > :is(.close, .close-box, .resize, .resize-box, .zoom, .shade, .shade-box, .collapse) {
+  top: 0;
+  right: auto;
+  left: 0;
+  z-index: 1;
+  box-shadow: none;
+}
+
+[data-era="platinum"] .window.utility.side > .title-bar > :is(.shade, .shade-box, .collapse, .resize, .resize-box, .zoom) {
+  top: auto;
+  bottom: 0;
+  background-image: url("art/platinum/utility-collapse-side.png");
+}
+
+[data-era="platinum"] .window.utility.side > .window-pane {
+  margin: 1px 1px 1px 0;
+}
+/* clio:segment */
+
+
+[data-era="platinum"] .window.utility.side.inactive > .title-bar {
+  background: #dddddd;
+}
+
+[data-era="platinum"] .window.utility.side.inactive > .title-bar::before {
+  content: none;
+}
+
+/* ---- Utility window: the dot pattern right of the title ---------------------- */
+/* The dots right of the title run from the right end (their phase differs
+   from the left run's by one column). */
+[data-era="platinum"] .window.utility > .title-bar::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 25px;
+  bottom: 1px;
+  left: 50%;
+  border: 0;
+  background:
+    url("art/platinum/utility-dots.png") right -1px top 2px / 3px 3px repeat-x,
+    url("art/platinum/utility-dots.png") right -1px top 5px / 3px 3px repeat-x,
+    url("art/platinum/utility-dots.png") right -1px top 8px / 3px 3px repeat-x,
+    #cccccc;
+  box-shadow: none;
+}

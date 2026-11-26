@@ -1,0 +1,297 @@
+/* Windows.
+   Markup: .window > .title-bar (> .close, .title, .resize [, .shade]) >
+   optional .details-bar > .window-pane. system.css markup (.title-bar
+   button.close / button.resize, .inactive-title-bar) and AI System 6 markup
+   (.close-box, .resize-box, .shade-box, h1/h2 as the title) also work. */
+:where(.window) {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 120px;
+  padding: var(--clio-window-padding);
+  border: var(--clio-window-border);
+  background: var(--clio-window-bg);
+  box-shadow: var(--clio-window-shadow);
+}
+
+/* ---- Title bar ---------------------------------------------------------
+   System 6: a 17px box under a 1px inset: 2px of paper, six 1px ink stripes
+   on a 2px period across a 12px row, 2px of paper, then the 1px rule. */
+.title-bar,
+.inactive-title-bar {
+  --clio-tb-close: var(--clio-titlebar-slot);
+  --clio-tb-zoom: var(--clio-titlebar-slot);
+  --clio-tb-shade: var(--clio-titlebar-shade-slot);
+  --clio-tb-gutter: max(var(--clio-tb-close), calc(var(--clio-tb-zoom) + var(--clio-tb-shade)));
+  position: relative;
+  display: grid;
+  flex: none;
+  grid-template-columns:
+    var(--clio-tb-gutter)
+    minmax(0, 1fr)
+    var(--clio-tb-zoom)
+    calc(var(--clio-tb-gutter) - var(--clio-tb-zoom));
+  grid-template-rows: var(--clio-titlebar-row);
+  align-items: start;
+  box-sizing: border-box;
+  height: var(--clio-titlebar-height);
+  margin: var(--clio-titlebar-margin);
+  padding: var(--clio-titlebar-padding);
+  border-bottom: var(--clio-titlebar-border);
+  background: var(--clio-titlebar-bg);
+  font-family: var(--clio-font-chrome);
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* A slot is reserved only for a control that is really there, so the title
+   stays centred on the whole bar. */
+.title-bar:not(:has(> :is(.resize, .resize-box, .zoom))) { --clio-tb-zoom: 0px; }
+.title-bar:not(:has(> :is(.shade, .shade-box, .collapse))) { --clio-tb-shade: 0px; }
+
+.title-bar > :is(.title, h1, h2, h3),
+.inactive-title-bar > :is(.title, h1, h2, h3) {
+  grid-column: 2;
+  grid-row: 1;
+  justify-self: center;
+  max-width: 100%;
+  height: var(--clio-titlebar-row);
+  margin: 0;
+  padding: var(--clio-title-padding);
+  overflow: hidden;
+  background: var(--clio-title-bg);
+  color: var(--clio-title-fg);
+  font-family: var(--clio-font-window-title, var(--clio-font-chrome));
+  font-size: var(--clio-title-font-size);
+  font-stretch: var(--clio-font-stretch-title);
+  font-weight: var(--clio-chrome-weight);
+  line-height: var(--clio-titlebar-row);
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ---- Close, zoom and collapse boxes ------------------------------------ */
+.title-bar > :is(button, .close, .close-box, .resize, .resize-box, .zoom, .shade, .shade-box, .collapse) {
+  position: relative;
+  grid-row: 1;
+  width: var(--clio-box-size);
+  min-width: 0;
+  height: var(--clio-box-size);
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  border: 1px solid var(--clio-ink);
+  border-radius: 0;
+  background: var(--clio-paper);
+  box-shadow: 0 0 0 var(--clio-box-isolation) var(--clio-paper);
+  color: transparent;
+  font-size: 0;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: var(--clio-cursor-arrow);
+  touch-action: manipulation;
+}
+
+.title-bar > :is(.close, .close-box) {
+  grid-column: 1;
+  justify-self: start;
+  margin-left: var(--clio-box-inset);
+}
+
+.title-bar > :is(.resize, .resize-box, .zoom) {
+  grid-column: 3;
+  justify-self: end;
+  margin-right: var(--clio-box-inset);
+}
+
+/* System 6 had no WindowShade box; only an era that opens the slot shows it. */
+.title-bar > :is(.shade, .shade-box, .collapse) {
+  display: var(--clio-shade-display);
+  grid-column: 4;
+  justify-self: end;
+}
+/* clio:segment */
+
+
+/* Zoom box: an inner square sharing the outer frame's top-left corner,
+   7 of the frame's 11 pixels (System 6's 7:11 ratio). */
+.title-bar > :is(.resize, .resize-box, .zoom)::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  width: 7px;
+  height: 7px;
+  border-right: 1px solid var(--clio-ink);
+  border-bottom: 1px solid var(--clio-ink);
+  box-sizing: border-box;
+}
+/* clio:segment */
+
+
+.title-bar > button:focus-visible {
+  outline: var(--clio-focus-outline);
+  outline-offset: calc(var(--clio-box-isolation) - 1px);
+}
+
+/* ---- Inactive windows ----------------------------------------------------
+   System 6 draws a background window's title bar as a plain strip with its
+   name: no stripes, no close box, no zoom box. */
+.window.inactive > .title-bar,
+.inactive-title-bar {
+  background: var(--clio-titlebar-inactive-bg);
+}
+
+.window.inactive > .title-bar > :is(.title, h1, h2, h3),
+.inactive-title-bar > :is(.title, h1, h2, h3) {
+  color: var(--clio-title-inactive-fg);
+}
+
+.window.inactive > .title-bar > :not(.title, h1, h2, h3),
+.inactive-title-bar > :not(.title, h1, h2, h3) {
+  visibility: hidden;
+}
+
+/* ---- Window body ------------------------------------------------------- */
+:where(.window-pane) {
+  flex: 1 1 auto;
+  min-height: 0;
+  padding: 8px;
+  overflow: auto;
+  background: var(--clio-pane-bg);
+  font-size: var(--clio-font-size);
+  line-height: 16px;
+}
+
+/* Finder's info line ("3 items  1,234K in disk"), ruled twice below. */
+:where(.details-bar) {
+  display: flex;
+  flex: none;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: var(--clio-details-height);
+  padding: var(--clio-details-padding);
+  border-bottom: var(--clio-details-border);
+  background: var(--clio-details-bg);
+  box-shadow: var(--clio-details-shadow, none);
+  font-family: var(--clio-font-small);
+  font-size: var(--clio-details-font-size);
+  line-height: var(--clio-details-height);
+  white-space: nowrap;
+}
+
+/* A separator line between groups in a window or dialog (Mac OS 8 HIG:
+   "Separator Lines"): <hr class="separator"> or <div class="separator">. */
+:where(.separator) {
+  flex: none;
+  box-sizing: border-box;
+  height: var(--clio-separator-height);
+  margin: var(--clio-separator-margin);
+  border: 0;
+  background: var(--clio-separator-bg);
+}
+
+/* A status line under the pane. */
+:where(.status-bar) {
+  display: flex;
+  flex: none;
+  gap: 12px;
+  padding: 1px 8px;
+  border-top: var(--clio-border);
+  background: var(--clio-details-bg);
+  font-family: var(--clio-font-small);
+  font-size: var(--clio-font-size-small);
+  line-height: 14px;
+}
+
+/* Collapsed (WindowShade; clio.js toggles .collapsed from the collapse box):
+   only the title bar stays. */
+:where(.window.collapsed) {
+  height: auto !important;
+  min-height: 0 !important;
+}
+
+:where(.window.collapsed) > :not(.title-bar) {
+  display: none !important;
+}
+
+
+/* clio:segment */
+
+
+:where(.window.utility) > :where(.title-bar) > :is(.title, h1, h2, h3) {
+  font-size: var(--clio-utility-title-size, var(--clio-title-font-size));
+}
+/* clio:segment */
+
+
+.rounded-window > .rounded-title > :is(.title, h1, h2, h3) {
+  margin: 0;
+  overflow: hidden;
+  color: inherit;
+  font: inherit;
+  font-size: var(--clio-title-font-size);
+  font-stretch: var(--clio-font-stretch-title);
+  font-weight: var(--clio-chrome-weight);
+  line-height: 16px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+/* clio:segment */
+
+
+/* clio.js outlines (a dragged window, zoom rects): QuickDraw's grey pattern,
+   inverting what lies under it, in step with the screen. */
+.clio-outline {
+  /* The outline is the frame of the window's structure region (QuickDraw's
+     InsetRgn, rows and columns apart): the frame and its 1px shadow, which starts
+     --clio-drag-outline-shadow-inset in from the top-right and bottom-left corners,
+     so the region and the band step in there (all measured). e, k, w below. */
+  --e: var(--clio-drag-outline-extra, 0px);
+  --k: var(--clio-drag-outline-shadow-inset, 1px);
+  --w: var(--clio-drag-outline-width, 1px);
+  position: fixed;
+  z-index: 2147483000;
+  box-sizing: border-box;
+  margin: 0;
+  /* gray inverts the pixels whose x + y is odd on the screen (System 6.0.8, 7.5.3
+     and Mac OS 9.0, measured); clio.js sets the position that keeps it to the page */
+  background: repeating-conic-gradient(#ffffff 0 25%, transparent 0 50%) 0 0 / 2px 2px;
+  mix-blend-mode: difference;
+  /* the band (box less content box), the region's two notches taken out and the
+     two pieces of the inset region they remove put back: every piece lies wholly
+     in or out of what is below it, so xor does each */
+  mask:
+    linear-gradient(#000 0 0) left 0 bottom 0 / var(--k) var(--e) no-repeat border-box exclude,
+    linear-gradient(#000 0 0) right 0 top 0 / var(--e) var(--k) no-repeat border-box exclude,
+    linear-gradient(#000 0 0) left var(--w) bottom var(--w) / var(--k) var(--e) no-repeat border-box exclude,
+    linear-gradient(#000 0 0) right var(--w) top var(--w) / var(--e) var(--k) no-repeat border-box exclude,
+    linear-gradient(#000 0 0) content-box exclude,
+    linear-gradient(#000 0 0) border-box;
+  pointer-events: none;
+  image-rendering: pixelated;
+}
+
+/* clio.js: the move button of a movable window and the live region. Out of
+   sight but in reach; with keyboard focus the title bar shows the ring. */
+:is(.clio-move, .clio-live) {
+  /* !important: the title bar's own button rules (the close box's art and
+     place) must not reach it */
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  margin: -1px !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  clip-path: inset(50%) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+  background: none !important;
+  box-shadow: none !important;
+}
+
+.title-bar:has(> .clio-move:focus-visible) {
+  outline: var(--clio-focus-outline);
+  outline-offset: -1px;
+}

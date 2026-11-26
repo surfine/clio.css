@@ -1,0 +1,62 @@
+
+
+/* The title bar's light and shade edges. */
+[data-era="system7"] .title-bar {
+  /* The shade is drawn last: it owns the bottom-left and top-right corners. */
+  box-shadow: inset -1px -1px 0 #9999cc, inset 1px 1px 0 #ccccff;
+}
+
+/* Close and zoom boxes: an 11px square sunk into the bar (#336 above-left,
+   #ccf below-right) with a raised #ccf/#336 inner ring around #aaa, and 1px
+   of #eee between the box and the stripes. */
+[data-era="system7"] .title-bar > :is(button, .close, .close-box, .resize, .resize-box, .zoom) {
+  /* The outer ring is painted, not bordered: the whole top row and left column
+     are #336 (a CSS border would mitre the corners into a blend). */
+  border: 1px solid transparent;
+  background:
+    linear-gradient(#333366, #333366) 0 0 / 100% 1px no-repeat,
+    linear-gradient(#333366, #333366) 0 0 / 1px 100% no-repeat,
+    linear-gradient(#aaaaaa, #aaaaaa) 0 0 / 100% 100% no-repeat,   /* tiled, WebKit dithers it ±1 */
+    #ccccff;
+  background-origin: border-box, border-box, padding-box, border-box;
+  background-clip: border-box, border-box, padding-box, border-box;
+  box-shadow: inset 1px 1px 0 #ccccff, inset -1px -1px 0 #333366, 0 0 0 1px #eeeeee;
+}
+
+/* Zoom: a 5px square in the top-left of the grey centre, drawn #336. */
+[data-era="system7"] .title-bar > :is(.resize, .resize-box, .zoom)::before {
+  top: 1px;
+  left: 1px;
+  width: 5px;
+  height: 5px;
+  border-right: 1px solid #333366;
+  border-bottom: 1px solid #333366;
+}
+/* clio:segment */
+
+
+/* Background window: #555 frame, a plain white title bar, #888 title. */
+[data-era="system7"] .window.inactive {
+  border-color: #555555;
+}
+
+[data-era="system7"] .window.inactive > .title-bar,
+[data-era="system7"] .inactive-title-bar {
+  border-bottom-color: #555555;
+  box-shadow: none;
+  --clio-title-bg: #ffffff;
+}
+
+[data-era="system7"] .window.inactive > .title-bar > :is(.title, h1, h2, h3),
+[data-era="system7"] .inactive-title-bar > :is(.title, h1, h2, h3) {
+  background: #ffffff;
+}
+/* clio:segment */
+
+
+/* Collapsed: the title bar's bottom line is the frame's foot, so the shaded
+   window is 19px tall and its shadow starts 1px in under it (System 7.5.3,
+   Infinite HD shaded, measured). */
+[data-era="system7"] .window.collapsed {
+  border-bottom-width: 0;
+}

@@ -1,0 +1,16 @@
+
+
+/* ---- Rounded-corner window (the Calculator, Mac OS 9.0 and 8.5) ----------------
+   The old window definition draws it as in System 7, its title in the system font
+   antialiased: white on black, black on white in the background (levels measured,
+   tooling/aa-palettes.py). */
+:is([data-era="platinum"], [data-era="drawingboard"]) .rounded-window > .rounded-title {
+  font-family: Charcoal, "Charcoal CY", "Clio Sans '97 Title Exact", "Clio Sans '97 Title", "Clio Sans '97", "Clio Asap", Geneva, sans-serif;
+  padding-left: 16px;   /* Clio Sans '97 Title sets "Calculator" 2px narrower than the Mac's Charcoal: fitted to the capture */
+  font-size: 12px;
+  font-palette: --clio-aa-rdoc-title;
+}
+
+:is([data-era="platinum"], [data-era="drawingboard"]) .rounded-window.inactive > .rounded-title {
+  font-palette: --clio-aa-rdoc-title-inactive;
+}

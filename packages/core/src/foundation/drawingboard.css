@@ -1,0 +1,337 @@
+/* Mac OS 8.5 "Drawing Board" (the beta theme Apple shipped in 8.5b6 and
+   withdrew). Applies inside any element with data-era="drawingboard"; it shares
+   the Platinum layer's structure (both are Appearance Manager themes) and
+   replaces its colours, geometry and art. clio.drawingboard.css is a build of
+   this file with Drawing Board as the page default.
+   Values: Infinite Mac, Mac OS 8.5 with the theme installed
+   (`npm run capture:drawingboard`), read 1:1. The art is the theme's own:
+   its 'pxm#' pictures and 'ppat' patterns (papers and the pattern pens the
+   theme draws its pencil lines with), written to art/drawingboard/ by
+   tooling/db-art.py and tooling/db-pens.py and placed as Mac OS places them,
+   each found 1:1 in the capture. The stylesheet loads them from art/ beside
+   itself, as it loads fonts/. See EVIDENCE.md. */
+[data-era="drawingboard"] {
+  /* the theme's own arrow: 'crsr' 128, 16x16 in greys, hot spot 0,0 (tooling/db-cursor.py
+     writes art/cursors/db-arrow{,-2x,-3x}.png; --check compares every pixel with the
+     resource). 129-131 are the same arrow with a drag badge (copy, alias, a document). */
+  --clio-cursor-arrow: image-set(url("art/cursors/db-arrow.png") 1x, url("art/cursors/db-arrow-2x.png") 2x, url("art/cursors/db-arrow-3x.png") 3x) 0 0, default;
+  --clio-scrollbar-size: 16px;
+  --clio-scrollbar-button-bevel: none;
+  --clio-scrollbar-button-bevel-on: none;
+  /* clio.js: the dragged region is the frame and its shadow, 7px across and 8px
+     down, with the frame pieces' overrun near the corners (tooling/db-outline.py
+     writes those as patches; the outline gets a 12px margin to hold them) */
+  --clio-drag-outline-extra: 7px;
+  --clio-drag-outline-extra-y: 8px;
+  --clio-drag-outline-margin: 12px;
+  --clio-db-outline-tl: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAABQCAQAAAAkGDomAAAARElEQVR42u3WwQ0AIAgEQUP/PWMHfD3iTAUbIcRzAF7pTqio9OiaUhLesNLHXDs2cUPU6lCA375ZDjQAAAAAAAAAADC6wVkT9TSjiRQAAAAASUVORK5CYII=");
+  --clio-db-outline-tr: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAABQCAQAAAAkGDomAAAAZElEQVR42u3UwQ5AMBBF0Y74/1+ulSAS6YY8nLOTWFyjndZ4qd7H3pvSP0SgQIECb96Ec9birooJPKfETXD9xVvqaPQjcfsTeHxyi3+2ZuInWAnzu7q98RMEAAAAAAAAAAD4oAW4lBQeuypXEwAAAABJRU5ErkJggg==");
+  --clio-db-outline-bl: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAABQCAQAAAAkGDomAAAAfElEQVR42u3XSw6AMAgFQNt4/yvj3sT6V9rMbHXxBIo6TQAAAAAAAAAAAGeV1sWI1c3l+4DzVpw/wtwSsa7nN+qZFqcKmCFcM2CWGWxWMEPI9DNY9s7u3y2vB58j31aMuLr5nh2M+sLUlOQB7cFO3iRaPHwFu/hE9Uc0ggXRch4XFPn+mwAAAABJRU5ErkJggg==");
+  --clio-db-outline-br: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAABQCAQAAAAkGDomAAAATUlEQVR42u3XwQkAIAwDQO3+O+sAiviMcjdBqGDT1gAAAAAAAOBkDDMAACC8su5Ka2U16jViZU2xdzcJ8PNWeOpbuQ1Y6W8hoIACQrgJSZMT/52XbkwAAAAASUVORK5CYII=");
+  /* outline patches: 176 pixels in four 80x80 corners (tooling/db-outline.py) */
+  --clio-scrollbar-thumb-overlap: 0px;
+  --clio-scrollbar-thumb-after: none;
+  /* Titles sit on the textured title bar, where no palette can know the
+     background: they keep Clio Sans '97 Title in the text colour. */
+  --clio-font-window-title: Charcoal, "Charcoal CY", "Clio Sans '97 Title", "Clio Sans '97", "Clio Asap", Geneva, "Helvetica Neue", Arial, sans-serif;
+  /* Where a 128px theme pattern starts. Mac OS sometimes starts one half a
+     tile (64px) earlier, depending on where the window sits on screen; a page
+     matching a particular screen can set 64px on that window or control. */
+  --clio-db-phase: 0px;
+  /* Slider (Keyboard, Key Repeat): a 1px pencil track (ppat 7024) 2px below
+     the top of the theme's 9x16 thumb (1106). */
+  --clio-slider-track-height: 1px;
+  --clio-slider-track-top: 2px;
+  --clio-slider-track-slice: 0px;
+  --clio-slider-thumb-width: 9px;
+  --clio-art-slider-thumb: url("art/drawingboard/parts/slider-thumb.png");
+  /* Tick marks (Keyboard, Key Repeat): 2px of the theme's ink, 3px tall, under
+     the track at the same spacing as Platinum's (the Keyboard capture: five
+     marks 22px apart, the first 9px in). */
+  --clio-slider-tick-light: transparent;
+  --clio-slider-tick-ink: #333333;
+  --clio-slider-tick-shade: #333333;
+  --clio-slider-tick-offset: 9px;
+  --clio-slider-tick-run: 9px;
+  /* Little arrows: the theme's 13x21 pictures (350: normal, up held, down held,
+     dimmed), through 16 bits (Date & Time). */
+  --clio-little-arrows-width: 13px;
+  --clio-little-arrows-height: 21px;
+  --clio-art-little-arrows: url("art/drawingboard/parts/little-arrows.png");
+  --clio-art-little-arrows-up: url("art/drawingboard/parts/little-arrows-up.png");
+  --clio-art-little-arrows-down: url("art/drawingboard/parts/little-arrows-down.png");
+  --clio-art-little-arrows-disabled: url("art/drawingboard/parts/little-arrows-disabled.png");
+  /* Chasing arrows: the theme's six frames (390). */
+  --clio-art-chasing-arrows: url("art/drawingboard/parts/chasing-arrows.png");
+  --clio-chasing-arrows-frames: 6;
+  /* Help button: as the Keyboard control panel draws it. */
+  --clio-art-help-button: url("art/drawingboard/help-button.png");
+  /* Scrolling menu arrows: the theme's 364 and 389 (Control Panels submenu). */
+  --clio-art-menu-scroll-down: url("art/drawingboard/parts/menu-scroll-down.png");
+  --clio-art-menu-scroll-up: url("art/drawingboard/parts/menu-scroll-up.png");
+  /* Disclosure triangle: the theme's 11px pictures (closed 340, open 343, which
+     Mac OS draws through 16 bits), Finder list view. */
+  --clio-disclosure-size: 11px;
+  --clio-art-disclosure: url("art/drawingboard/parts/disclosure.png");
+  --clio-art-disclosure-open: url("art/drawingboard/parts/disclosure-open.png");
+  --clio-ink: #313131;
+  --clio-paper: #e7ded6;
+  --clio-face: #cdc6bd;
+  --clio-disabled: #8c8c8c;
+  --clio-selection-bg: #ccccff;
+
+  --clio-border: 1px solid #555555;
+
+  /* Window: the theme's own nine frame pictures (see the Window rules), on
+     the content paper. The frame is 6px on each side inside the outline; the
+     title bar's 22 rows include the outline and the #555 rule. */
+  --clio-window-bg: #cdc6bd;
+  --clio-pane-bg: #e7ded6;
+  --clio-window-border: 0 none;
+  --clio-window-shadow: none;
+  --clio-window-padding: 0 6px 6px;
+
+  /* Title bar: 22 rows of the frame picture. Boxes 11px, 5px below the top. */
+  --clio-titlebar-height: 22px;
+  --clio-titlebar-padding: 4px 0 0;
+  --clio-titlebar-margin: 0 -1px;
+  --clio-titlebar-border: 0 none;
+  --clio-titlebar-row: 16px;
+  --clio-titlebar-inactive-bg: #cdc6bd;
+  --clio-title-bg: transparent;
+  --clio-title-fg: #313131;
+  --clio-title-inactive-fg: #9f9a94;
+
+  /* Menu bar: 22px of #cec6b5 paper, no rule under it. Menus: #ddd paper,
+     #333 outline, 18px items (20px with an icon); the chosen title and item
+     are underlined in pencil: left, stretched centre and right pieces, 16px
+     in from the menu's left, 15px from its right (Control Panels; the Appearance
+     pop-up's sits 16px from both), 1px above the item's foot. */
+  --clio-menubar-height: 22px;
+  --clio-menubar-bg: url("art/drawingboard/menubar.png") 0 0 / 630px 27px repeat-x, #cec6b5;
+  --clio-menubar-border: 0 none;
+  --clio-menubar-shadow: none;
+  --clio-menu-title-active-bg:
+    var(--clio-art-db-title-underline-left) left 0 bottom 3px / 15px 3px no-repeat,
+    var(--clio-art-db-title-underline-right) right 0 bottom 3px / 16px 3px no-repeat,
+    var(--clio-art-db-title-underline-tiled) left 15px bottom 3px / calc(100% - 31px) 4px no-repeat;
+  --clio-menu-title-active-fg: #313131;
+  --clio-menu-title-active-shadow: none;
+  /* Menus: the theme's paper inside a pencil frame (see the Menus rules). */
+  --clio-menu-bg: #dddddd;
+  --clio-menu-border: 1px solid transparent;
+  --clio-menu-border-top-width: 1px;
+  --clio-menu-shadow: none;
+  --clio-menu-item-height: 18px;
+  --clio-menu-item-active-bg:
+    var(--clio-art-db-menu-underline-left) left 16px bottom 1px / 29px 3px no-repeat,
+    var(--clio-art-db-menu-underline-right) right 15px bottom 1px / 36px 3px no-repeat,
+    var(--clio-art-db-menu-underline-tiled) left 45px bottom 1px / calc(100% - 96px) 3px no-repeat;
+  --clio-menu-item-active-fg: #313131;
+  --clio-menu-item-active-shadow: none;
+  --clio-menu-separator: none;
+  --clio-menu-separator-height: 9px;
+
+  /* Push buttons: four pattern pens (ppat 7070-7072, 7079) tiled from the last
+     column and row, the corner pixels they leave (tooling/db-pens.py), the
+     hatched ButtonFaceCorner in the lower right of the #cec6b5 face, and a
+     1px pencil shade right and below (the Buttons rules). Held: other pens
+     for the foot and right side, tiled from the second column and row, and no
+     hatch ("Save Theme…" held). */
+  --clio-button-bg:
+    url("art/drawingboard/pens/button-left.png") left 0 bottom 1px / 1px 16px repeat-y border-box,
+    url("art/drawingboard/pens/button-right.png") right 0 bottom 1px / 1px 16px repeat-y border-box,
+    url("art/drawingboard/pens/button-top.png") right 1px top 0 / 64px 1px repeat-x border-box,
+    url("art/drawingboard/pens/button-bottom.png") right 1px bottom 0 / 64px 1px repeat-x border-box,
+    var(--clio-art-db-button-corner) right 0 bottom / 24px 24px no-repeat padding-box,
+    #cec6b5;
+  --clio-button-fg: #313131;
+  /* The label sits 1px lower than Platinum's (themes tab, "Save Theme…"). */
+  --clio-button-padding: 2px 10px 0;
+  --clio-button-border: 1px solid transparent;
+  --clio-button-radius: 0;
+  --clio-button-shadow: none;
+  --clio-button-active-bg:
+    url("art/drawingboard/pens/button-held-left.png") left 0 bottom 1px / 1px 16px repeat-y border-box,
+    url("art/drawingboard/pens/button-held-right.png") right 0 top 1px / 1px 16px repeat-y border-box,
+    url("art/drawingboard/pens/button-held-top.png") right 1px top 0 / 64px 1px repeat-x border-box,
+    url("art/drawingboard/pens/button-held-bottom.png") left 1px bottom 0 / 32px 1px repeat-x border-box,
+    #cec6b5;
+  --clio-button-active-fg: #313131;
+  --clio-button-active-shadow: none;
+  --clio-button-frame: url("art/drawingboard/pens/button-corners.png");
+  --clio-button-frame-held: url("art/drawingboard/pens/button-held-corners.png");
+  --clio-button-frame-disabled: url("art/drawingboard/pens/button-corners.png");
+  --clio-button-frame-slice: 5;
+  --clio-ring-frame: none;
+  /* Pop-up frame: four pattern pens (ppat 7095-7098) tiled from the last
+     column and row, and the corner pixels they leave (tooling/db-pens.py). */
+  --clio-popup-frame: url("art/drawingboard/pens/popup-corners.png");
+  --clio-popup-frame-slice: 5;
+  --clio-popup-bg:
+    url("art/drawingboard/pens/popup-left.png") left 0 bottom 1px / 1px 16px repeat-y border-box,
+    url("art/drawingboard/pens/popup-right.png") right 0 bottom 1px / 1px 16px repeat-y border-box,
+    url("art/drawingboard/pens/popup-top.png") right 1px top 0 / 64px 1px repeat-x border-box,
+    url("art/drawingboard/pens/popup-bottom.png") right 1px bottom 0 / 64px 1px repeat-x border-box,
+    #cec6b5;
+  --clio-popup-border: 1px solid transparent;
+  --clio-popup-radius: 0;
+  --clio-popup-shadow: none;
+  --clio-popup-padding: 0 30px 0 7px;
+  --clio-popup-arrow:
+    var(--clio-art-db-popup-arrow) right 5px top 4px / 7px 9px no-repeat,
+    var(--clio-art-db-popup-corner) right 19px bottom / 24px 24px no-repeat;
+
+  /* Check boxes and radio buttons are the theme's own pictures. */
+  --clio-check-size: 14px;
+  --clio-radio-size: 16px;
+
+  /* Edit text: a 1px pencil line drawn with pattern pens, 1px of whatever is
+     behind (the paper) inside it, then the white field (Date & Time; the
+     Text fields rules). */
+  --clio-field-border: 2px solid transparent;
+  --clio-field-shadow: none;
+  --clio-field-focus-shadow: none;
+  --clio-button-disabled-fg: #8c8c8c;
+  --clio-button-disabled-border: 1px solid #888888;
+  /* The theme's scroll box at its shortest, 7px end and 8px end. */
+  --clio-scrollbar-thumb-length: 15px;
+
+  /* Scroll bars: the theme's 16px arrow boxes; a #ece6e4 track with a #aaa
+     edge, a two-pixel pencil rail down the middle and a #777 far edge; the
+     scroll box drawn from the theme's ends, stretch and grip. */
+  --clio-scrollbar-up: var(--clio-art-db-up);
+  --clio-scrollbar-up-on: var(--clio-art-db-up-on);
+  --clio-scrollbar-down: var(--clio-art-db-down);
+  --clio-scrollbar-down-on: var(--clio-art-db-down-on);
+  --clio-scrollbar-left: var(--clio-art-db-left);
+  --clio-scrollbar-left-on: var(--clio-art-db-left-on);
+  --clio-scrollbar-right: var(--clio-art-db-right);
+  --clio-scrollbar-right-on: var(--clio-art-db-right-on);
+  --clio-scrollbar-button-bg: transparent;
+  --clio-scrollbar-button-shadow: none;
+  /* Vertical (Desktop tab pattern list): #555 edges, a two-pixel #777 rail. */
+  --clio-scrollbar-track: linear-gradient(to right, #555555 0 1px, #ece6e4 1px 7px, #777777 7px 9px, #ece6e4 9px 15px, #555555 15px);
+  --clio-scrollbar-track-color: #ece6e4;
+  --clio-scrollbar-track-shadow: none;
+  /* The grip lies over the ends, (length - 2) / 2 rounded down from the start:
+     on the 15px box it covers the start's last pixel (Themes tab list). */
+  --clio-scrollbar-thumb-bg:
+    var(--clio-art-db-thumb-vgrip) 1px round(down, 50%, 1px) / 14px 2px no-repeat,
+    var(--clio-art-db-thumb-top) 1px 0 / 14px 7px no-repeat,
+    var(--clio-art-db-thumb-bottom) 1px 100% / 14px 8px no-repeat,
+    var(--clio-art-db-thumb-vstretch) 1px 0 / 14px 100% no-repeat;
+  --clio-scrollbar-thumb-bg-horizontal:
+    var(--clio-art-db-thumb-hgrip) round(down, 50%, 1px) 1px / 2px 14px no-repeat,
+    var(--clio-art-db-thumb-left) 0 1px / 7px 14px no-repeat,
+    var(--clio-art-db-thumb-right) 100% 1px / 8px 14px no-repeat,
+    var(--clio-art-db-thumb-hstretch) 0 1px / 100% 14px no-repeat;
+  --clio-scrollbar-thumb-color: #cdc6bd;
+  --clio-scrollbar-thumb-border: 0 none;
+  --clio-scrollbar-thumb-shadow: none;
+  --clio-scrollbar-corner: var(--clio-art-db-grow) 0 0 / 16px 16px no-repeat, #cdc6bd;
+
+  /* Dialogs: the theme's frame pictures (see the Dialogs rules); plain dialogs
+     keep a 1px pencil frame with a #777 band 7px wide on the right and 8px
+     deep below. */
+  --clio-dialog-bg: #e7ded6;
+  --clio-modal-border: 1px solid transparent;
+  --clio-modal-frame: none;
+  --clio-plain-dialog-border: 1px solid #333333;
+  --clio-plain-dialog-shadow: 7px 0 0 #777777, 0 8px 0 #777777, 7px 8px 0 #777777;
+
+  --clio-details-bg: #e7ded6;
+  --clio-details-border: 1px solid #555555;
+  --clio-details-shadow: none;
+  /* List boxes (Desktop tab pattern list): a 2px olive #9c9c63 line, 1px of
+     whatever is behind (the pane's paper) inside it, then white; the chosen
+     row #ccf. */
+  --clio-list-border: 2px solid #9c9c63;
+  --clio-list-shadow: none;
+  --clio-list-bg: #ffffff;
+  --clio-group-border: 1px solid #777777;
+  --clio-group-bg: transparent;
+  --clio-group-shadow: none;
+  /* Progress bar (Finder copy window): 12px, a #756f66 pencil line (#333 on
+     the left) round #ddd6c5; an indeterminate bar shows the theme's arrows.
+     The determinate fill was not captured and stays Platinum's. */
+  --clio-progress-height: 12px;
+  --clio-progress-bg: #ddd6c5;
+  --clio-progress-border: 1px solid #756f66;
+  --clio-progress-shadow: none;
+  --clio-tab-height: 27px;
+  /* Tab pane paper (ppat 7115), from the pane's inner top-left. */
+  --clio-tab-panel-bg: url("art/drawingboard/tab-paper.png") 0 0 / 256px 64px, #e7ded6;
+  --clio-tab-panel-border: 1px solid #555555;
+
+  /* Art: redrawn from the theme's 'pxm#' pixmaps by tooling/db-art.py. */
+  --clio-art-db-close: url("art/drawingboard/parts/close.png"); /* 11x11 */
+  --clio-art-db-close-on: url("art/drawingboard/parts/close-on.png"); /* 11x11 */
+  --clio-art-db-collapse: url("art/drawingboard/parts/collapse.png"); /* 11x11 */
+  --clio-art-db-collapse-on: url("art/drawingboard/parts/collapse-on.png"); /* 11x11 */
+  --clio-art-db-zoom: url("art/drawingboard/parts/zoom.png"); /* 11x11 */
+  --clio-art-db-zoom-on: url("art/drawingboard/parts/zoom-on.png"); /* 11x11 */
+  --clio-art-db-check: url("art/drawingboard/parts/check.png"); /* 14x11 */
+  --clio-art-db-check-on: url("art/drawingboard/parts/check-on.png"); /* 14x11 */
+  --clio-art-db-check-mixed: url("art/drawingboard/parts/check-mixed.png"); /* 14x11 */
+  --clio-art-db-check-pressed: url("art/drawingboard/parts/check-pressed.png"); /* 14x11 */
+  --clio-art-db-check-on-pressed: url("art/drawingboard/parts/check-on-pressed.png"); /* 14x11 */
+  --clio-art-db-check-disabled: url("art/drawingboard/parts/check-disabled.png"); /* 14x11 */
+  --clio-art-db-check-on-disabled: url("art/drawingboard/parts/check-on-disabled.png"); /* 14x11 */
+  --clio-art-db-radio: url("art/drawingboard/parts/radio.png"); /* 16x12 */
+  --clio-art-db-radio-on: url("art/drawingboard/parts/radio-on.png"); /* 16x12 */
+  --clio-art-db-radio-on-pressed: url("art/drawingboard/parts/radio-on-pressed.png"); /* 16x12 */
+  --clio-art-db-radio-disabled: url("art/drawingboard/parts/radio-disabled.png"); /* 16x12 */
+  --clio-art-db-radio-on-disabled: url("art/drawingboard/parts/radio-on-disabled.png"); /* 16x12 */
+  --clio-art-db-up: url("art/drawingboard/parts/up.png"); /* 16x16 */
+  --clio-art-db-up-on: url("art/drawingboard/parts/up-on.png"); /* 16x16 */
+  --clio-art-db-up-off: url("art/drawingboard/parts/up-off.png"); /* 16x16 */
+  --clio-art-db-down: url("art/drawingboard/parts/down.png"); /* 16x16 */
+  --clio-art-db-down-on: url("art/drawingboard/parts/down-on.png"); /* 16x16 */
+  --clio-art-db-down-off: url("art/drawingboard/parts/down-off.png"); /* 16x16 */
+  --clio-art-db-left: url("art/drawingboard/parts/left.png"); /* 16x16 */
+  --clio-art-db-left-on: url("art/drawingboard/parts/left-on.png"); /* 16x16 */
+  --clio-art-db-left-off: url("art/drawingboard/parts/left-off.png"); /* 16x16 */
+  --clio-art-db-right: url("art/drawingboard/parts/right.png"); /* 16x16 */
+  --clio-art-db-right-on: url("art/drawingboard/parts/right-on.png"); /* 16x16 */
+  --clio-art-db-right-off: url("art/drawingboard/parts/right-off.png"); /* 16x16 */
+  --clio-art-db-popup-arrow: url("art/drawingboard/parts/popup-arrow.png"); /* 7x9 */
+  --clio-art-db-popup-arrow-off: url("art/drawingboard/parts/popup-arrow-off.png"); /* 7x9 */
+  --clio-art-db-submenu: url("art/drawingboard/parts/submenu.png"); /* 6x11 */
+  --clio-art-db-menucheck: url("art/drawingboard/parts/menucheck.png"); /* 10x8 */
+  /* The menu check mark in the menu ink, as 8.5 draws the menu font's glyph (popup-open). */
+  --clio-art-p-check: var(--clio-art-db-menucheck);
+  --clio-art-db-grow: url("art/drawingboard/parts/grow.png"); /* 16x16 */
+  --clio-art-db-popup-corner: url("art/drawingboard/parts/popup-corner.png"); /* 24x24 */
+  --clio-art-db-popup-corner-off: url("art/drawingboard/parts/popup-corner-off.png"); /* 24x24 */
+  --clio-art-db-button-corner: url("art/drawingboard/parts/button-corner.png"); /* 24x24 */
+  --clio-art-db-btn-tl: url("art/drawingboard/parts/btn-tl.png"); /* 7x3 */
+  --clio-art-db-btn-tr: url("art/drawingboard/parts/btn-tr.png"); /* 4x3 */
+  --clio-art-db-btn-br: url("art/drawingboard/parts/btn-br.png"); /* 5x6 */
+  --clio-art-db-btn-br-held: url("art/drawingboard/parts/btn-br-held.png"); /* 5x6 */
+  --clio-art-db-btn-bl: url("art/drawingboard/parts/btn-bl.png"); /* 7x4 */
+  --clio-art-db-progress-arrows: url("art/drawingboard/parts/progress-arrows.png"); /* 128x5 */
+  --clio-art-db-def-tl: url("art/drawingboard/parts/def-tl.png"); /* 9x5 */
+  --clio-art-db-def-tr: url("art/drawingboard/parts/def-tr.png"); /* 4x4 */
+  --clio-art-db-def-br: url("art/drawingboard/parts/def-br.png"); /* 5x6 */
+  --clio-art-db-def-bl: url("art/drawingboard/parts/def-bl.png"); /* 9x5 */
+  --clio-art-db-thumb-left: url("art/drawingboard/parts/thumb-left.png"); /* 7x14 */
+  --clio-art-db-thumb-right: url("art/drawingboard/parts/thumb-right.png"); /* 8x14 */
+  --clio-art-db-thumb-hgrip: url("art/drawingboard/parts/thumb-hgrip.png"); /* 2x14 */
+  --clio-art-db-thumb-hstretch: url("art/drawingboard/parts/thumb-hstretch.png"); /* 1x14 */
+  --clio-art-db-thumb-top: url("art/drawingboard/parts/thumb-top.png"); /* 14x7 */
+  --clio-art-db-thumb-bottom: url("art/drawingboard/parts/thumb-bottom.png"); /* 14x8 */
+  --clio-art-db-thumb-vgrip: url("art/drawingboard/parts/thumb-vgrip.png"); /* 14x2 */
+  --clio-art-db-thumb-vstretch: url("art/drawingboard/parts/thumb-vstretch.png"); /* 14x1 */
+  --clio-art-db-tab: url("art/drawingboard/parts/tab.png"); /* 24x27 */
+  --clio-art-db-tab-selected: url("art/drawingboard/parts/tab-selected.png"); /* 24x27 */
+  --clio-art-db-tab-pressed: url("art/drawingboard/parts/tab-pressed.png"); /* 24x27 */
+  --clio-art-db-menu-underline-left: url("art/drawingboard/parts/menu-underline-left.png"); /* 29x3 */
+  --clio-art-db-menu-underline: url("art/drawingboard/parts/menu-underline.png"); /* 48x3 */
+  --clio-art-db-menu-underline-right: url("art/drawingboard/parts/menu-underline-right.png"); /* 36x3 */
+  --clio-art-db-title-underline-left: url("art/drawingboard/parts/title-underline-left.png"); /* 15x3 */
+  --clio-art-db-title-underline: url("art/drawingboard/parts/title-underline.png"); /* 32x4 */
+  --clio-art-db-title-underline-right: url("art/drawingboard/parts/title-underline-right.png"); /* 16x3 */
+  --clio-art-db-menu-underline-tiled: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='p' width='48' height='3' patternUnits='userSpaceOnUse'%3E%3Cimage image-rendering='pixelated' style='image-rendering:pixelated' width='48' height='3' href='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAADBAMAAAAnwpG3AAAAElBMVEUAAADMZmbMmWbMmZnMZjPMMzOFAtjtAAAAAXRSTlMAQObYZgAAACJJREFUeJxjFGSAAMb/DMYMDAxnwWwBBgbGUKgENmCATRAAmjoCqut/JFgAAAAASUVORK5CYII='/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100%' height='100%' fill='url(%23p)'/%3E%3C/svg%3E"); /* 48 px tile */
+  --clio-art-db-title-underline-tiled: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='p' width='32' height='4' patternUnits='userSpaceOnUse'%3E%3Cimage image-rendering='pixelated' style='image-rendering:pixelated' width='32' height='4' href='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAEBAMAAAAdaSDnAAAAD1BMVEUAAADMZmbMmWbMmZnMZjOW1IuaAAAAAXRSTlMAQObYZgAAACBJREFUeJxjdGGAgP+MDAwM5/4rs0D5DCA+gxGMhw8AALzeA23Id2x2AAAAAElFTkSuQmCC'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100%' height='100%' fill='url(%23p)'/%3E%3C/svg%3E"); /* 32 px tile */
+}

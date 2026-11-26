@@ -1,0 +1,33 @@
+
+
+/* ---- List boxes ------------------------------------------------------------ */
+:where(.listbox, ul[role="listbox"], ol[role="listbox"], div[role="listbox"]) {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  overflow: auto;
+  list-style: none;
+  border: var(--clio-list-border);
+  background: var(--clio-list-bg);
+  box-shadow: var(--clio-list-shadow);
+  font-family: var(--clio-font-text);
+  font-size: var(--clio-font-size);
+}
+
+:where(.listbox, [role="listbox"]) > :is(li, [role="option"]) {
+  min-height: var(--clio-list-row);
+  padding: 0 4px;
+  line-height: var(--clio-list-row);
+  white-space: nowrap;
+  cursor: var(--clio-cursor-arrow);
+}
+
+:where(.listbox, [role="listbox"]) > :is(li, [role="option"]):is([aria-selected="true"], .selected) {
+  background: var(--clio-selection-bg);
+  color: var(--clio-selection-fg);
+}
+
+:where(.listbox, [role="listbox"]) > :is(li, [role="option"]):focus-visible {
+  outline: var(--clio-focus-outline);
+  outline-offset: -2px;
+}

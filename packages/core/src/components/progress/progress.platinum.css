@@ -1,0 +1,8 @@
+
+
+/* Indeterminate progress (no value): Mac OS 9's stripes, one 16px period
+   repeated (Finder copy window). Static: clio.css adds no motion. */
+:is([data-era="platinum"], [data-era="drawingboard"]) progress:indeterminate,
+:is([data-era="platinum"], [data-era="drawingboard"]) progress:indeterminate::-webkit-progress-bar {
+  background: var(--clio-art-p9-progress-pole) 0 0 / 16px 10px repeat-x;
+}

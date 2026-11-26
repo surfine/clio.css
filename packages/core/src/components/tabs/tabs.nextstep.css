@@ -1,0 +1,7 @@
+
+
+[data-era="nextstep"] :is([role="tablist"], .tabs) > :is([role="tab"], li, button) {
+  border: 0;
+  background: #aaaaaa;
+  box-shadow: inset 1px 1px 0 #ffffff, inset -1px 0 0 #000000, inset -2px 0 0 #555555;
+}
