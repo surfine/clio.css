@@ -107,8 +107,8 @@ markdownLinks();
 
 // 6. The public pixel check.
 {
-  const exe = spawnSync("node", ["-e", "import('playwright').then(p=>console.log(p.chromium.executablePath()))"], { cwd: repo, encoding: "utf8" }).stdout.trim();
-  if (!exe || !existsSync(exe)) record("fidelity:public", requireBrowser ? "fail" : "skipped", "skipped: no Playwright Chromium installed (npx playwright install chromium); not counted as a pass");
+  const canLaunch = spawnSync("node", ["-e", "import('playwright').then(async(p)=>{const b=await p.chromium.launch();await b.close();console.log('ok')})"], { cwd: repo, encoding: "utf8" }).stdout.trim() === "ok";
+  if (!canLaunch) record("fidelity:public", requireBrowser ? "fail" : "skipped", "skipped: no Playwright Chromium installed (npx playwright install chromium); not counted as a pass");
   else {
     const r = run("fidelity public", "npm", ["run", "fidelity:public"], repo, { AIS6_DIR: join(work, "no-private-references") });
     const line = (r.out.match(/fidelity:public \(.*$/m) || [""])[0];
@@ -163,7 +163,7 @@ const want = Object.fromEntries(cj.components.map((c) => [c.id, c.html]));
 const contract = (await import("clio.css/contract")).default;
 if (!contract || !contract.tokens || !contract.tokens.nextstep) { failed = true; out("FAIL", "contract", "no tokens.nextstep"); }
 let chromium = null;
-try { chromium = createRequire(${JSON.stringify(playwrightDir + "/")})("./index.js").chromium; if (!existsSync(chromium.executablePath())) chromium = null; } catch { chromium = null; }
+try { chromium = createRequire(${JSON.stringify(playwrightDir + "/")})("./index.js").chromium; await (await chromium.launch()).close(); } catch { chromium = null; }
 if (!chromium) { out(${JSON.stringify(requireBrowser ? "FAIL" : "SKIPPED")}, "components render", "skipped: no Playwright Chromium to compare DOMs; not counted as a pass"); process.exit(failed ? 1 : 0); }
 const browser = await chromium.launch(); const page = await browser.newPage();
 const compare = (a, b) => page.evaluate(([a, b]) => {
@@ -274,7 +274,8 @@ function docNumbers(): void {
   for (const v of new Set(cdn)) if (v !== version) bad.push(`README CDN link names clio.css@${v}, package is ${version}`);
   const head2 = need("CHANGELOG section for " + version, changelog.match(new RegExp(`^## ${version.replace(/\./g, "\\.")} \\(([^)]*)\\)`, "m")));
   if (head2 && /unreleased/i.test(head2[1]!)) bad.push(`CHANGELOG ${version} still says unreleased`);
-  if (/^## .*unreleased/im.test(changelog)) bad.push("CHANGELOG has an unreleased section");
+  const topSection = (changelog.match(/^## .*$/m) || [""])[0];
+  if (/unreleased/i.test(topSection)) bad.push(`CHANGELOG's newest section is unreleased: ${topSection}`);
   // Evidence counts: the header table, the rows themselves and the README sentence.
   const counts: Record<string, number> = {};
   for (const m of evidence.matchAll(/^\| [^|]+ \| [^|]+ \| .* \| (Measured|Inferred|Adapted|Third-party) \| .* \|$/gm)) counts[m[1]!] = (counts[m[1]!] || 0) + 1;
@@ -315,7 +316,7 @@ function docNumbers(): void {
   let at = 0;
   for (const [n, m] of fr) { const j = tables.findIndex((t, k) => k >= at && t[0] === n && t[1] === m); if (j < 0) bad.push(`README fidelity row ${n} of ${m} is not a FIDELITY.md table (tables: ${tables.map((t) => t.join("/")).join(", ")})`); else at = j + 1; }
   const all = tables.reduce((a, t) => a + t[1], 0);
-  const rt = readme.match(/(\d+) specimens/);
+  const rt = readme.match(/\((\d+) specimens? compared\)/);
   if (rt && Number(rt[1]) !== all) bad.push(`README says ${rt[1]} specimens, FIDELITY.md has ${all}`);
   const dg = JSON.parse(read("test/fidelity-digests.json"));
   const pub = need("README public-check sentence", readme.match(/(\d+) of (\d+) specimens are publicly checkable/));

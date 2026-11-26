@@ -378,11 +378,14 @@ with captures of each era. From [FIDELITY.md](FIDELITY.md) (run of 2026-11-26):
 | Drawing Board | Mac OS 8.5 + 8.5b6 theme in Infinite Mac | 52 of 54 |
 | Platinum | Mac OS 9.0 in Infinite Mac | 55 of 55 |
 | Platinum | GUIdebook Mac OS 9.0 captures | 7 of 7 |
-| NeXTSTEP | NeXTStep 3.0 in Infinite Mac | 37 of 37 |
+| NeXTSTEP | NeXTStep 3.0 in Infinite Mac | 40 of 40 |
 
 The two Drawing Board specimens below 100% are the open pop-up menu (97.3%), whose text is
 antialiased over the paper. NeXTSTEP is measured on 3.0 because Infinite Mac runs no 3.3. The
-same file has the CJK, WebKit, Firefox, 2x and 3x results.
+same file has the WebKit, Firefox, 2x and 3x results (210 specimens compared). Its five
+`nx-ais6-*` rows compare with AI System 6's own drawn tiles, a check of agreement rather than
+fidelity, and are left out above. The three CJK specimens were not compared in that run: their
+frames were not on the machine that ran it.
 
 **What you can check yourself, and what only the author can.** The captures are Apple's
 pixels, so they are not in this repository. What is committed instead is
