@@ -6,13 +6,13 @@ so the look comes from clio.css itself and the behaviour (menu tracking, scroll 
 outlines) from clio.js. The components are controlled: props in, events out.
 
 ```bash
-npm install clio.css preact PACKAGE_NAME
+npm install clio.css preact clio.css-preact
 ```
 
 ```tsx
 import "clio.css/dist/clio.css";
 import { install } from "clio.css/js.esm";
-import { Window, Button, FieldRow } from "PACKAGE_NAME";
+import { Window, Button, FieldRow } from "clio.css-preact";
 
 install();   // optional: clio.js's behaviour
 

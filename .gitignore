@@ -7,5 +7,5 @@ tooling/__pycache__/
 packs/
 .build/
 
-# @clio/preact and @clio/react builds (npm run build:components)
+# clio.css-preact and clio.css-react builds (npm run build:components)
 packages/*/dist/

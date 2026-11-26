@@ -259,11 +259,15 @@ import contract from "clio.css/contract";
 contract.tokens.nextstep["--clio-titlebar-height"];   // "22px"
 ```
 
-## Preact and React (preview)
+## Preact and React
 
-The components are also written once in JSX (`packages/components`) and built as `@clio/preact`
-and `@clio/react` (`npm run build:components`). They are not on npm yet. Each renders the markup
-documented here exactly; load clio.css and, for behaviour, clio.js beside them.
+```bash
+npm install clio.css clio.css-preact   # or clio.css-react
+```
+
+The components are written once in JSX (`packages/components`) and published as
+`clio.css-preact` and `clio.css-react`. Each renders exactly the markup documented here.
+Load clio.css beside them, and clio.js for behaviour.
 
 ## Theming
 

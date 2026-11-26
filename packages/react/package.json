@@ -1,5 +1,5 @@
 {
-  "name": "@clio/react",
+  "name": "clio.css-react",
   "version": "2.0.0",
   "description": "clio.css components for React: one JSX source, rendering clio.css markup (load clio.css and, for behaviour, clio.js).",
   "license": "MIT",

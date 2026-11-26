@@ -1,4 +1,4 @@
-// The framework seam for @clio/react: packages/components imports "clio-jsx", which the
+// The framework seam for clio.css-react: packages/components imports "clio-jsx", which the
 // React build, tsconfig and Vitest project resolve to this file.
 import type { JSX, ReactNode } from "react";
 export { useEffect, useLayoutEffect, useRef } from "react";

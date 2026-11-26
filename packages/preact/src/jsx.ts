@@ -1,4 +1,4 @@
-// The framework seam for @clio/preact: packages/components imports "clio-jsx", which the
+// The framework seam for clio.css-preact: packages/components imports "clio-jsx", which the
 // Preact build, tsconfig and Vitest project resolve to this file.
 import type { ComponentChildren, JSX } from "preact";
 export { useEffect, useLayoutEffect, useRef } from "preact/hooks";

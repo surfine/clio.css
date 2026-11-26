@@ -14,8 +14,8 @@ unchanged: every `dist/*.css` file is built from the new sources to the same byt
   importing it installs nothing. `dist/clio.js` is the same program as a plain script, now bundled
   from per-component modules by Vite, without the source comments (72.2 kB, was 97.6 kB).
   `dist/clio.min.js` is 47.8 kB (was 48.2 kB).
-- **Components for Preact and React** (not published yet): one JSX source,
-  `packages/components`, builds `@clio/preact` and `@clio/react` with `npm run build:components`.
+- **Components for Preact and React:** the new packages `clio.css-preact` and `clio.css-react`
+  (2.0.0, MIT) are built from one JSX source, `packages/components` (`npm run build:components`).
   32 components each render exactly the markup in `components.json`, checked in both frameworks.
 - **Sources:** each component's CSS is in fragments beside its data and behaviour
   (`packages/core/src/components/<name>/`); `src/`, `components/*.mjs` and `ts/` are gone.

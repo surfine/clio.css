@@ -1,4 +1,4 @@
-// @clio/preact and @clio/react from one JSX source (packages/components/src), P5.
+// clio.css-preact and clio.css-react from one JSX source (packages/components/src), P5.
 //   packages/<framework>/dist/index.js     ESM, the framework left as an import (a peer dependency)
 //   packages/<framework>/dist/types/       declarations, "clio-jsx" pointed at the package's own seam
 // The tests (test/components.test.ts) run the source through the same seams; this is what ships.
