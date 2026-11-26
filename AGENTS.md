@@ -45,6 +45,10 @@ For AI coding agents using or changing this repository.
   own glass skin. clio.css feeds back into AI System 6, so AI System 6's own chrome
   (Control Strip, Dock, …) is in scope with its markup. Launch posts (awesome lists,
   Show HN) wait for Aqua. The plan and the decisions behind it: ROADMAP-MACOSX.md.
+  Since 2026-11-26 (D14) NeXTSTEP 3.3 is a clio.css era (`data-era="nextstep"`,
+  `src/93-nextstep.css`, shipped as `dist/clio.nextstep.css` only); the four Classic eras
+  stay frozen (D7) and `dist/clio.css` stays the Classic bundle; the Mac OS X eras belong
+  to clio.wasm (D8).
 - Tokens live on `:root, [data-era="system6"]` (01-tokens.css),
   `[data-era="system7"]` (80-system7.css), `:is([data-era="platinum"],
   [data-era="drawingboard"])` (90-platinum.css, shared: both are Appearance Manager
