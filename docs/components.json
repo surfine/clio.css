@@ -1,7 +1,7 @@
 {
   "name": "clio.css",
   "version": "2.0.0",
-  "description": "CSS library for classic Mac OS interfaces: Macintosh System 6, System 7, Mac OS 8.5 Drawing Board and Mac OS 8/9 Platinum windows, menus, buttons, scroll bars and dialogs, with every value traced to measured pixels.",
+  "description": "CSS library for Classic Mac OS and NeXTSTEP interfaces: Macintosh System 6, System 7, Mac OS 8.5 Drawing Board, Mac OS 8/9 Platinum and NeXTSTEP 3.3 windows, menus, buttons, scroll bars and dialogs, with every value traced to measured pixels.",
   "homepage": "https://surfine.github.io/clio.css/",
   "license": "MIT",
   "eras": [

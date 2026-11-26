@@ -1,60 +1,101 @@
 # clio.css
 
-**Classic Mac OS interfaces in CSS: System 6, System 7, Mac OS 8.5 Drawing Board and Mac OS 8/9 Platinum, and NeXTSTEP 3.3 in a file of its own, with every value traced to measured pixels.**
+**Classic Mac OS and NeXTSTEP in CSS.** Windows, menus, controls and dialogs of System 6,
+System 7, Mac OS 8.5 Drawing Board, Mac OS 9 Platinum and NeXTSTEP 3.3, drawn on native HTML
+elements, with every value traced to a source and labelled measured, inferred, adapted or
+third-party.
 
 [![npm](https://img.shields.io/npm/v/clio.css)](https://www.npmjs.com/package/clio.css)
 [![licence](https://img.shields.io/npm/l/clio.css)](LICENSE)
-[![clio.min.css gzip](https://img.shields.io/badge/clio.min.css-36.6%20kB%20gzip-blue)](#install)
+[![clio.min.css gzip](https://img.shields.io/badge/clio.min.css-36.7%20kB%20gzip-blue)](#install)
 [![dependencies](https://img.shields.io/badge/dependencies-0-brightgreen)](package.json)
 
 <img src="assets/eras@2x.png" width="760" alt="The same window and alert drawn by clio.css in System 6, System 7, Drawing Board, Platinum and NeXTSTEP">
 
-The same markup in four eras, rendered by `dist/clio.css` in Chromium
+The same markup in five eras, rendered by clio.css in Chromium
 ([`tooling/readme-eras.ts`](tooling/readme-eras.ts); 1x: [`assets/eras.png`](assets/eras.png)).
-
 Docs and live examples: https://surfine.github.io/clio.css/
 
-## Why clio.css
+## Install
+
+Four ways in, from least to most code:
+
+```html
+<!-- 1. One CSS file: the four Classic eras, System 6 by default -->
+<link rel="stylesheet" href="https://unpkg.com/clio.css@2.0.0/dist/clio.css">
+<!-- NeXTSTEP is its own file: https://unpkg.com/clio.css@2.0.0/dist/clio.nextstep.css -->
+<!-- optional behaviour (menus, scroll bars, window dragging): -->
+<script src="https://unpkg.com/clio.css@2.0.0/dist/clio.js" defer></script>
+```
+
+```js
+// 2. ES modules with a bundler (Vite, esbuild, …), after npm install clio.css
+import "clio.css";                         // or "clio.css/nextstep", "clio.css/platinum", …
+import { install } from "clio.css/js.esm";
+install();                                 // importing alone installs nothing
+```
+
+```tsx
+// 3. Preact: npm install clio.css clio.css-preact preact
+// 4. React:  npm install clio.css clio.css-react react
+import { Window, Button, FieldRow } from "clio.css-react";   // or "clio.css-preact"
+
+export const App = () => (
+  <Window title="Macintosh HD" style={{ width: "300px" }}>
+    <FieldRow><Button>Cancel</Button><Button default>OK</Button></FieldRow>
+  </Window>
+);
+```
+
+Set `data-era` (`system6`, `system7`, `drawingboard`, `platinum`) on `<html>` or any
+element; the components render exactly the markup documented on the site, and the look comes
+from the stylesheet. The jsDelivr URL works the same way
+(`https://cdn.jsdelivr.net/npm/clio.css@2.0.0/dist/clio.css`).
+
+| File | Draws | Minified | gzip |
+| --- | --- | ---: | ---: |
+| `dist/clio.css` | The four Classic eras; System 6 by default, `data-era` switches any subtree | 223 kB | 36.7 kB |
+| `dist/clio.system6.css` | System 6 only | 98.8 kB | 17.7 kB |
+| `dist/clio.system7.css` | System 7 (colour) as the page default | 113 kB | 20.2 kB |
+| `dist/clio.drawingboard.css` | Drawing Board as the page default | 191 kB | 33.3 kB |
+| `dist/clio.platinum.css` | Platinum as the page default | 152 kB | 27.1 kB |
+| `dist/clio.nextstep.css` | NeXTSTEP 3.3 (its own file, never in `clio.css`) | 154 kB | 26.2 kB |
+
+Sizes are the `*.min.css` builds of this version (gzip level 9); fonts and art load
+separately, by relative URL from `dist/fonts/` and `dist/art/`, so serve the `dist` folder
+whole (the CDNs do). `dist/components.json` is the machine-readable index: selectors, tokens,
+markup and evidence for each component.
+
+## How it differs
+
+| Library | Era | Technology | Licence | Last activity seen | Values traced to sources |
+| --- | --- | --- | --- | --- | --- |
+| clio.css | System 6, System 7, Mac OS 8.5 Drawing Board, Mac OS 9 Platinum, NeXTSTEP 3.3 | CSS, optional JS, Preact and React components | MIT | 2.0.0, 2026-11-26 | A row per value in [EVIDENCE.md](EVIDENCE.md); pixel check in [FIDELITY.md](FIDELITY.md) |
+| [system.css](https://github.com/sakofchit/system.css) | System 6 | CSS | MIT | 2023-03-18 | Not stated |
+| [New Dawn](https://github.com/npjg/new-dawn) (classic.css) | Mac OS 8.1 | CSS | Not found | 2019-06-20 | Not stated |
+| [Classicy](https://github.com/robbiebyrd/classicy) | Mac OS 8 (and a System 7 appearance) | React | Unlicense | 2026-11-23 | Not stated |
+| [platinum.css](https://github.com/mat-sz/platinum.css) | Mac OS 9 (README: not ready for use) | SCSS | BSD-3-Clause-Clear (npm) | 2020-06-30 | Not stated |
+| [98.css](https://github.com/jdan/98.css), the genre's reference | Windows 98 | CSS | MIT | 2025-09-07 | Not stated |
+
+No NeXTSTEP CSS library was found (searched 2026-11-27). "Not stated" means no per-value
+evidence was found in the project's README or repository root, not that none exists; dates
+are the newest commit or publish seen on 2026-11-27. Sources for every cell:
+[dev/launch/COMPARISON.md](dev/launch/COMPARISON.md).
+
+**The gap clio.css fills:** one library for Classic Mac OS from System 6 to Mac OS 9 plus
+NeXTSTEP, where each value says where it came from and the pixel check can be re-run.
 
 - **Measured, and labelled.** Every value has a row in [EVIDENCE.md](EVIDENCE.md) with a
-  source and a status: 206 of 273 rows are **measured** from real pixels of the era, 29
-  **inferred**, 35 **adapted** for the web and 3 **third-party**. Inferred rows say so.
+  source and a status: 255 of 348 rows are **measured** from real pixels of the era, 44
+  **inferred**, 45 **adapted** for the web and 4 **third-party**. Inferred rows say so.
 - **Native elements, accessible by default.** Controls are styled on `button`, `input`,
   `select`, `textarea`, `fieldset` and `progress`, so keyboard, forms and screen readers
   keep the browser's behaviour. Focus rings, forced-colours mode and a 45px touch hit area
   on title-bar boxes are [labelled adaptations](#what-the-era-did-not-have).
 - **Overridable.** Every rule uses `:where()` or a single class, and every value is a
   `--clio-*` custom property, so your CSS wins without `!important` ([Theming](#theming)).
-
-Pure CSS; an optional script, [clio.js](#cliojs-optional), adds the behaviour CSS cannot
-(menu tracking, scroll bars, window dragging, the text caret, sounds).
-
-## Install
-
-```bash
-npm install clio.css
-```
-
-```html
-<link rel="stylesheet" href="https://unpkg.com/clio.css@1.0.2/dist/clio.css">
-<!-- or https://cdn.jsdelivr.net/npm/clio.css@1.0.2/dist/clio.css -->
-```
-
-| File | Draws | Minified | gzip |
-| --- | --- | ---: | ---: |
-| `dist/clio.css` | All four eras; System 6 by default, `data-era` switches any subtree | 222 kB | 36.6 kB |
-| `dist/clio.system6.css` | System 6 only | 98.7 kB | 17.7 kB |
-| `dist/clio.system7.css` | System 7 (colour) as the page default | 113 kB | 20.1 kB |
-| `dist/clio.drawingboard.css` | Drawing Board as the page default | 191 kB | 33.2 kB |
-| `dist/clio.platinum.css` | Platinum as the page default | 152 kB | 27.0 kB |
-| `dist/clio.nextstep.css` | NeXTSTEP 3.3 (its own file, never in `clio.css`) | 154 kB | 26.3 kB |
-
-Sizes are the `*.min.css` builds (1.0.2; `clio.nextstep.css` 1.1.0; gzip); fonts and art load separately.
-`dist/components.json` is the machine-readable index: selectors, tokens, markup and
-evidence for each component.
-
-The stylesheets load fonts from `dist/fonts/` and Drawing Board's art from
-`dist/art/drawingboard/` by relative URL, so serve the `dist` folder whole (the CDNs do).
+- **Built with heavy AI assistance**, which is why the claims above are checkable rather than
+  asserted: read the evidence rows, and run `npm run fidelity:public` ([Fidelity](#fidelity)).
 
 ## Quick start
 
@@ -63,7 +104,7 @@ The stylesheets load fonts from `dist/fonts/` and Drawing Board's art from
 <html lang="en" data-era="system7"> <!-- system6 (default), system7, drawingboard or platinum -->
 <head>
   <meta charset="utf-8">
-  <link rel="stylesheet" href="https://unpkg.com/clio.css@1.0.2/dist/clio.css">
+  <link rel="stylesheet" href="https://unpkg.com/clio.css@2.0.0/dist/clio.css">
 </head>
 <body>
   <div class="window" style="width: 320px">
@@ -101,7 +142,7 @@ Drawing Board draws its pencil lines with 128px patterns. Mac OS sometimes start
 pattern half a tile along, depending on where the window sits; clio.css starts it at the
 element, and `--clio-db-phase: 64px` on a window or control matches the other case.
 
-### NeXTSTEP 3.3 (1.1.0)
+### NeXTSTEP 3.3
 
 `dist/clio.nextstep.css` draws NeXTSTEP 3.3 on the same markup: the menu bar becomes the
 vertical main menu (titled by its `aria-label`, submenus hanging level with its top), the
@@ -114,12 +155,11 @@ window that is not key. Three components exist only there: `.browser` (the colum
 together, as measured; without it the browser keeps its own bar on the right. Helvetica is
 named locally; elsewhere Clio Sans NX (Liberation Sans 2, OFL, renamed) is fitted to NeXT's
 screen font: whole-pixel advances and no kerning, within 0.6px of NeXT's label widths.
-The Classic files gain only one fix in 1.1.0 (a dimmed menu item no longer lights under the
-pointer); NeXTSTEP never enters `clio.css`.
+NeXTSTEP never enters `clio.css`.
 
 ## Components
 
-29 entries, the same as `dist/components.json`. Each name links to its docs section with
+32 entries, the same as `dist/components.json`. Each name links to its docs section with
 markup, tokens and evidence; the selectors are the first ones listed in the JSON.
 
 | Component | Selectors |
@@ -152,10 +192,13 @@ markup, tokens and evidence; the selectors are the first ones listed in the JSON
 | [Side-title utility window](https://surfine.github.io/clio.css/#side-utility-window) | `.window.utility.side`, `.window.utility.side.inactive` |
 | [Placard](https://surfine.github.io/clio.css/#placard) | `.placard`, `.placard[aria-disabled=true]` |
 | [Split bar](https://surfine.github.io/clio.css/#split-bar) | `.split-view`, `.split-bar`, `.split-line` |
+| [Browser (NeXTSTEP)](https://surfine.github.io/clio.css/#browser) | `.browser`, `.browser > .listbox`, `.browser .branch` |
+| [Pull-down list (NeXTSTEP)](https://surfine.github.io/clio.css/#pull-down) | `.pull-down` |
+| [Workspace dock (NeXTSTEP)](https://surfine.github.io/clio.css/#dock) | `.dock`, `.dock > li`, `.dock > .not-running` |
 | [Type and tokens](https://surfine.github.io/clio.css/#typography) | `.clio`, `.text`, `.heading`, `.display` |
 
 Where an era never had a control (tabs or sliders in System 6, for example), it borrows a
-later era's so a page keeps working when it switches era; [COVERAGE.md](COVERAGE.md)
+later era's so a page keeps working when it switches era; [dev/COVERAGE.md](dev/COVERAGE.md)
 checks every control and window in Apple's 1987, 1992 and Mac OS 8 guidelines, era by era.
 
 **Coming from [system.css](https://github.com/sakofchit/system.css)?** Its markup works
@@ -167,7 +210,7 @@ unchanged: `.title-bar button.close`, `button.resize`, `.inactive-title-bar`,
 ## clio.js (optional)
 
 ```html
-<script src="https://unpkg.com/clio.css@1.0.2/dist/clio.js" defer></script>
+<script src="https://unpkg.com/clio.css@2.0.0/dist/clio.js" defer></script>
 ```
 
 No dependencies; 72.2 kB, or 47.8 kB as `dist/clio.min.js`. clio.css works without it.
@@ -244,7 +287,7 @@ alert sound. `data-clio-sounds="menus windows controls finder"` keeps those clas
 (`"none"`: silent), `clio.sounds.muted = true` silences the page, a hidden page is silent,
 and each sound fires a `clio:sound` event. `dist/clio-sounds-panel.js` draws Appearance >
 Sound's controls for a site: `clioSoundsPanel(element, { base: "https://…/packs/" })`.
-Format, measurements and what is inferred: [SOUND-SETS.md](SOUND-SETS.md).
+Format, measurements and what is inferred: [dev/SOUND-SETS.md](dev/SOUND-SETS.md).
 
 </details>
 
@@ -265,9 +308,12 @@ contract.tokens.nextstep["--clio-titlebar-height"];   // "22px"
 npm install clio.css clio.css-preact   # or clio.css-react
 ```
 
-The components are written once in JSX (`packages/components`) and published as
-`clio.css-preact` and `clio.css-react`. Each renders exactly the markup documented here.
-Load clio.css beside them, and clio.js for behaviour.
+The 32 components are written once in JSX (`packages/components`) and published as
+[`clio.css-preact`](packages/preact/README.md) and [`clio.css-react`](packages/react/README.md),
+same version as clio.css. Each renders exactly the markup documented here, checked in both
+frameworks by `npm test` and, from the packed tarballs, by `npm run verify`. They are
+controlled components with no behaviour of their own: load clio.css beside them, and clio.js
+for behaviour.
 
 ## Theming
 
@@ -335,7 +381,28 @@ with captures of each era. From [FIDELITY.md](FIDELITY.md) (run of 2026-11-26):
 | NeXTSTEP | NeXTStep 3.0 in Infinite Mac | 37 of 37 |
 
 The two Drawing Board specimens below 100% are the open pop-up menu (97.3%), whose text is
-antialiased over the paper. The same file has the WebKit, Firefox, 2x and 3x results.
+antialiased over the paper. NeXTSTEP is measured on 3.0 because Infinite Mac runs no 3.3. The
+same file has the CJK, WebKit, Firefox, 2x and 3x results.
+
+**What you can check yourself, and what only the author can.** The captures are Apple's
+pixels, so they are not in this repository. What is committed instead is
+[`test/fidelity-digests.json`](test/fidelity-digests.json): for each specimen, the SHA-256 of
+its reference crop (thresholded to 1-bit where the comparison is, masked pixels left out).
+204 of 213 specimens are publicly checkable:
+
+```bash
+git clone https://github.com/surfine/clio.css && cd clio.css
+npm ci && npx playwright install chromium
+npm run fidelity:public    # renders each specimen and compares it with its digest
+```
+
+A digest proves "identical" or "not identical", nothing in between, so it covers only the
+specimens the full run found 100% identical. The 9 it cannot cover, each with its reason in the
+digest file: the two Drawing Board pop-up menus (97.3%), three CJK specimens whose frames
+were not on the machine that wrote the digests, and the four `nx-ais6-*` specimens, which
+compare with AI System 6's own drawn tiles (agreement, not fidelity). The percentages, the
+diff images, the 2x/3x runs and the reference captures themselves need `npm run fidelity` and
+the author's private AI System 6 checkout.
 
 At whole-number pixel ratios (2x, 3x) the art is magnified by nearest neighbour, so every
 Mac pixel becomes a solid block; at fractional ratios the browser's smoothing stays.
@@ -348,12 +415,14 @@ area while their art stays 11px), solid grey instead of a dithered disabled stat
 system controls in forced-colours mode. The chasing arrows, menu blinks, zoom rectangles
 and caret blink honour `prefers-reduced-motion`.
 
-## 1.0: the Classic LTS
+## Versions and support
 
-Classic Mac OS is finished here. [LTS-AUDIT.md](LTS-AUDIT.md) lists every item that is not
-a plain measured value: every gap in its section A is closed, and the remaining rows are
-labelled by-design adaptations or owner actions, each with its reason. Later changes go
-into 1.0.x fixes or a new major version, not into Classic's look.
+1.x was declared the Classic long-term line on 2026-11-18; 2.0.0 followed on 2026-11-26 with
+the same CSS rules and a new package structure. Which line carries the long-term promise, and
+for how long, is the owner's open decision: the options and what each would promise are in
+[dev/RELEASE-2.0.1.md](dev/RELEASE-2.0.1.md). Until it is made, 2.x is the line that gets
+releases. [dev/LTS-AUDIT.md](dev/LTS-AUDIT.md) lists every Classic value that is not a plain
+measurement, with its reason.
 
 ## Browser support
 
@@ -374,12 +443,15 @@ Firefox gets the era's colours only, or full scroll bars with clio.js.
 npm install
 npm run build      # dist/, docs/, llms.txt, EVIDENCE.md from packages/core/src
 npm test           # build + static checks
-npm run fidelity   # pixel check (needs a local AI System 6 checkout)
+npm run fidelity:public   # pixel check against the committed digests
+npm run verify     # the release gate: fresh clone, packs, baselines, docs, links
+npm run fidelity   # full pixel check (needs the author's AI System 6 checkout)
 ```
 
 Every new or changed value needs an evidence row with an honest status; see
-[AGENTS.md](AGENTS.md). How the eras were measured: [LESSONS.md](LESSONS.md). What is
-next: [ROADMAP.md](ROADMAP.md). `node tooling/readme-eras.ts` re-renders the README image.
+[AGENTS.md](AGENTS.md). Scope is fixed: Classic Mac OS and NeXTSTEP, no new eras (Mac OS X is a
+separate project, clio.wasm). How the eras were measured: [dev/LESSONS.md](dev/LESSONS.md).
+What is next: [dev/ROADMAP.md](dev/ROADMAP.md). `node tooling/readme-eras.ts` re-renders the README image.
 
 ## Licence
 

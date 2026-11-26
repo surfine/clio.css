@@ -11,9 +11,9 @@ import css from "./site.css?raw";
 export type ExampleModule = { default: () => ComponentChildren; variants?: Record<string, () => ComponentChildren> };
 export type SiteProps = { pkg: PackageInfo; components: Component[]; examples: Record<string, ExampleModule>; script: string };
 
-const TITLE = "clio.css — classic Mac OS CSS for System 6, System 7, Drawing Board and Mac OS 9 Platinum";
+const TITLE = "clio.css — Classic Mac OS and NeXTSTEP in CSS: System 6, System 7, Drawing Board, Mac OS 9 Platinum and NeXTSTEP 3.3";
 const DESCRIPTION =
-  "CSS library for classic Mac OS interfaces: System 6, System 7, Mac OS 8.5 Drawing Board and Mac OS 9 Platinum windows, menus, buttons and dialogs, measured from real pixels. MIT.";
+  "Classic Mac OS and NeXTSTEP in CSS: System 6, System 7, Drawing Board, Mac OS 9 Platinum and NeXTSTEP 3.3 windows, menus and controls, measured from real pixels. MIT.";
 
 const Codes = ({ items, sep = " " }: { items: string[]; sep?: string }) => (
   <>
@@ -193,8 +193,8 @@ export function Site({ pkg, components, examples, script }: SiteProps) {
             <span>clio.css</span>
           </h1>
           <p class="lede">
-            A CSS library for classic Mac OS interfaces: <strong>System 6</strong>, <strong>System 7</strong>, Mac OS 8.5’s withdrawn <strong>Drawing Board</strong> theme and{" "}
-            <strong>Mac OS 8/9 Platinum</strong>. Windows, menus, buttons, check boxes, pop-up menus, scroll bars and dialogs, drawn with CSS and small SVGs. Every value is traced to
+            A CSS library for Classic Mac OS and NeXTSTEP interfaces: <strong>System 6</strong>, <strong>System 7</strong>, Mac OS 8.5’s withdrawn <strong>Drawing Board</strong> theme,{" "}
+            <strong>Mac OS 8/9 Platinum</strong> and <strong>NeXTSTEP 3.3</strong> (its own file). Windows, menus, buttons, check boxes, pop-up menus, scroll bars and dialogs, drawn with CSS and small SVGs. Every value is traced to
             measured pixels or marked as inferred. No JavaScript, no screenshots or Apple fonts. MIT.
           </p>
           <fieldset class="era-switch">

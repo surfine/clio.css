@@ -2629,7 +2629,7 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
 
 /* Controls the classic guidelines add to the first set (Macintosh Human
    Interface Guidelines 1992, ch. 7; Mac OS 8 Human Interface Guidelines,
-   ch. 2), each drawn per era from tokens. COVERAGE.md lists them all. */
+   ch. 2), each drawn per era from tokens. dev/COVERAGE.md lists them all. */
 
 /* ---- Disclosure triangle ---------------------------------------------------
    Markup: <button class="disclosure" aria-expanded="false" aria-label="Show">

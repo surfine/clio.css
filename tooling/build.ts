@@ -26,8 +26,9 @@ const pkg = JSON.parse(readFileSync(join(root, "package.json"), "utf8"));
 const read = (p: string): string => readFileSync(join(root, p), "utf8");
 const write = (p: string, s: string): void => { mkdirSync(dirname(join(root, p)), { recursive: true }); writeFileSync(join(root, p), s); };
 
-const banner = (variant: string): string => `/*! clio.css ${pkg.version}${variant} | MIT | ${pkg.homepage}
- * Classic Mac OS interface CSS: System 6, System 7, Mac OS 8.5 Drawing Board and Mac OS 9 Platinum.
+const eras = " * clio.css draws five eras: System 6, System 7, Mac OS 8.5 Drawing Board, Mac OS 9 Platinum and NeXTSTEP 3.3.\n";
+const banner = (variant: string, scope: string): string => `/*! clio.css ${pkg.version}${variant} | MIT | ${pkg.homepage}
+${eras} * This file: ${scope}.
  * Measured values traced to AI System 6; see EVIDENCE.md.
  * Includes art from system.css (MIT) and pixel reconstructions of Apple control art; see THIRD-PARTY.md. */\n`;
 
@@ -131,13 +132,13 @@ function minify(css: string): string {
 
 rmSync(join(root, "dist"), { recursive: true, force: true });
 const outputs = {
-  "clio.css": banner("") + all,
-  "clio.system6.css": banner(" (System 6 only)") + system6,
-  "clio.system7.css": banner(" (System 7 default)") + system7Default,
-  "clio.platinum.css": banner(" (Platinum default)") + platinumDefault,
-  "clio.drawingboard.css": banner(" (Drawing Board default)") + drawingboardDefault,
+  "clio.css": banner("", "the four Classic eras, System 6 by default (NeXTSTEP is clio.nextstep.css)") + all,
+  "clio.system6.css": banner(" (System 6 only)", "System 6 only") + system6,
+  "clio.system7.css": banner(" (System 7 default)", "System 7 only, as the page default") + system7Default,
+  "clio.platinum.css": banner(" (Platinum default)", "Platinum only, as the page default") + platinumDefault,
+  "clio.drawingboard.css": banner(" (Drawing Board default)", "Drawing Board only, as the page default") + drawingboardDefault,
   "clio.nextstep.css": `/*! clio.css ${pkg.version} (NeXTSTEP) | MIT | ${pkg.homepage}
- * NeXTSTEP 3.3 interface CSS: windows, menus, controls, scrollers, browser and dock.
+${eras} * This file: NeXTSTEP 3.3 only: windows, menus, controls, scrollers, browser and dock.
  * Every value is measured, inferred or adapted; see EVIDENCE.md.
  * Fonts: Clio Sans NX is Liberation Sans 2 (SIL OFL 1.1), renamed; see THIRD-PARTY.md. */\n` + nextstepDefault,
 };

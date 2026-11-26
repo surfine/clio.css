@@ -11,7 +11,7 @@ Every value in clio.css 2.0.0 has a row here. Sources are paths in the AI System
 | Adapted | a deliberate departure for the web (touch, focus, contrast) | 45 |
 | Third-party | art or font from a named, licensed project | 4 |
 
-Pixel check: `npm run fidelity` renders the Platinum specimens and compares them with AI System 6's GUIdebook Mac OS 9.0 reference crops (it needs a local AI System 6 checkout; see the script).
+Pixel check: `npm run fidelity` renders specimens of all five eras and compares them with captures of each era (FIDELITY.md; it needs the author's AI System 6 checkout). `npm run fidelity:public` needs no private files: it compares the renders with the reference digests in test/fidelity-digests.json.
 
 | Component | Era | Value | Status | Source — upstream evidence |
 | --- | --- | --- | --- | --- |

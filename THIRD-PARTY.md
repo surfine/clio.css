@@ -23,10 +23,18 @@ presented as such:
   1:1 against the theme running in an emulator. A few corner pixels where the pens meet are
   read from that screen by `tooling/db-pens.py`. The theme file is not included. The
   textures and frame illustrations ship since 0.9.0, at the owner's decision.
+- NeXTSTEP 3.3 control art (`--clio-art-nx-*`, clio.nextstep.css only): title-bar close and
+  miniaturize buttons (plain, held, edited), scroller arrows (plain and held), the return mark,
+  submenu arrows, slider lane and knob, and the dock's dots, typed as grids in NeXTSTEP's four
+  greys and drawn as SVG by `tooling/nx-art.py`, each grid checked against NeXTStep 3.0 running
+  in an emulator (`nx-art.py check`). NeXT's arrow and I-beam cursors
+  (`dist/art/cursors/nx-*.png`) are typed as grids in `tooling/cursor-art.py`, from the same
+  emulator. No NeXT image, icon or font file is
+  included.
 
 They are included to document the look of these interfaces at the size of a single
 control. If that does not suit your use, override the `--clio-art-s7-*`,
-`--clio-art-p9-*` and `--clio-art-db-*` custom properties with your own art, or replace
+`--clio-art-p9-*`, `--clio-art-db-*` and `--clio-art-nx-*` custom properties with your own art, or replace
 the files in `dist/art/drawingboard/`.
 
 ## Fonts

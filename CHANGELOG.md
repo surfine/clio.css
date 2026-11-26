@@ -1,10 +1,20 @@
 # Changelog
 
-## 2.0.0 (unreleased: ready to publish, waiting for the owner)
+## 2.0.0 (2026-11-26)
 
-The source moves to TypeScript, components and Vite (PLAN-TS-PREACT.md, M1–M6). What you load is
-unchanged: every `dist/*.css` file is built from the new sources to the same bytes as 1.1.1, and
-`window.clio` keeps the same keys. The major version marks the new package structure and exports.
+Published to npm on 2026-11-26 UTC: clio.css 2.0.0 at 18:13:32, clio.css-preact 2.0.0 at
+18:13:36 and clio.css-react 2.0.0 at 18:13:53 (`npm view <name> time`); tag `v2.0.0` on
+`1fad799`, 2026-11-27 02:09 +0800. Each name's first version on npm is a
+`0.0.0-stage` placeholder created when the name was registered (clio.css 2026-11-13; the
+component packages 2026-11-26 18:12 UTC), described as "Temporary package placeholder for
+staged publishing".
+
+The source moves to TypeScript, components and Vite (dev/PLAN-TS-PREACT.md, M1–M6). What you
+load is unchanged: with banners and comments stripped, every `dist/*.css` file has 1.1.1's rules
+byte for byte (`npm run verify` checks this against the 1.1.1 tarball). The files themselves
+differ in the version in their banners and in one comment that names `capture-system6.ts`
+instead of `.mjs`. `window.clio` keeps the same keys. The major version marks the new package
+structure and exports.
 
 - **Host contract:** `clio.css/contract` (`dist/contract.js` and `.d.ts`) lists the eras and each
   component's selectors, aliases and tokens, plus each era's page-default token values. Its
@@ -53,7 +63,7 @@ What 1.1.0 left undone. 1.1.0 was published to npm on 2026-11-26 (09:24 UTC) wit
 
 ## 1.1.0 (2026-11-26, NeXTSTEP)
 
-A fifth era, in a file of its own (owner's decision D14 in ROADMAP-MACOSX.md), and one fix
+A fifth era, in a file of its own (owner's decision D14 in dev/ROADMAP-MACOSX.md), and one fix
 to the Classic eras: "LTS" names the Classic line beside clio.wasm, not a freeze (D16).
 Apart from that fix and the version in their banners, `dist/clio.css` and the Classic
 single-era files are 1.0.2's bytes.
@@ -73,7 +83,7 @@ single-era files are 1.0.2's bytes.
   and Firefox. Values ported from AI System 6 that the frames contradicted are corrected
   (main window, held and on buttons, switch and radio sizes, pop-up height, menu rows,
   resize bar, text field corners, desktop #555577). Evidence rows for NeXTSTEP: 47 measured,
-  13 inferred, 8 adapted, 1 third-party; COVERAGE.md: 23 of its 27 rows measured.
+  13 inferred, 8 adapted, 1 third-party; dev/COVERAGE.md: 23 of its 27 rows measured.
 - **clio.js** draws NeXT's scrollers as measured when the era asks: the vertical one on the
   left with both arrows at its bottom, the horizontal one with both at its left, each in a
   17px cell, held arrows one grey lighter (`--clio-scrollbar-side`, `--clio-scrollbar-arrows`,
@@ -166,7 +176,7 @@ published.
 
 ## 1.0.0 — the Classic LTS (2026-11-18)
 
-The Classic side is finished: [LTS-AUDIT.md](LTS-AUDIT.md) has no open A row, every B row is
+The Classic side is finished: [dev/LTS-AUDIT.md](dev/LTS-AUDIT.md) has no open A row, every B row is
 a deliberate adaptation with its reason, and the C rows are the owner's own steps. The eight
 measurement gaps the audit listed are closed, four of them by reading the software itself
 rather than a screen (System 6.0.8's System file from archive.org for the watch and the
@@ -201,7 +211,7 @@ dialogs' plain boxes). Nothing below changes the API.
   corners, all placed from the 8.5 Application Switcher (163x99). The title bar is the
   theme's 18px one. `dist/clio.min.css`'s budget rose to 222 KB for it (owner, 2026-11-18).
   Adapted, not measured: the right edge's 2px outer shade and the rule's second row.
-- **Appearance sound sets and alert sounds** (owner, 2026-11-15; SOUND-SETS.md). The sounds
+- **Appearance sound sets and alert sounds** (owner, 2026-11-15; dev/SOUND-SETS.md). The sounds
   never enter npm or this repository; the tool, the player and the docs do.
   - `tooling/soundset.py` reads a Mac OS 8.5–9 sound set or a `.sit` of them: both `snd#`
     layouts (8.5b6's 20-byte entries, the release's 44-byte ones), every `'snd '` (format 1
@@ -246,7 +256,7 @@ dialogs' plain boxes). Nothing below changes the API.
 ## 0.12.0 — 2026-11-15, the Classic final
 
 Everything the Classic Mac OS phase set out to do, measured in four eras and checked in
-Chromium, WebKit and Firefox (ROADMAP.md lists what moved to 0.12.1 and why).
+Chromium, WebKit and Firefox (dev/ROADMAP.md lists what moved to 0.12.1 and why).
 
 - Drawing Board's tiled underline patterns stay sharp at 2x and 3x (their embedded pictures
   are pixelated).
@@ -451,7 +461,7 @@ Behaviour and details, measured where the emulators allow. The new optional
 
 ## 0.10.0 — 2026-11-14
 
-Every control the classic guidelines define is now in clio.css. COVERAGE.md checks the
+Every control the classic guidelines define is now in clio.css. dev/COVERAGE.md checks the
 Apple Desktop Interface (1987), the Macintosh Human Interface Guidelines (1992), Inside
 Macintosh: Toolbox Essentials and the Mac OS 8 Human Interface Guidelines with its
 Appearance Manager control list, row by row, era by era.

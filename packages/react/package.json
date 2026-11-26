@@ -10,6 +10,7 @@
       "default": "./dist/index.js"
     }
   },
+  "types": "./dist/types/components/src/index.d.ts",
   "files": [
     "dist",
     "LICENSE",
@@ -21,6 +22,9 @@
   },
   "sideEffects": false,
   "homepage": "https://surfine.github.io/clio.css/",
+  "bugs": {
+    "url": "https://github.com/surfine/clio.css/issues"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/surfine/clio.css.git",
@@ -38,6 +42,7 @@
     "components"
   ],
   "scripts": {
-    "prepack": "cd ../.. && node tooling/build.ts && node tooling/build-components.ts"
+    "prepack": "cd ../.. && node tooling/build.ts && node tooling/build-components.ts",
+    "prepublishOnly": "node ../../tooling/release-guard.ts --stamp"
   }
 }

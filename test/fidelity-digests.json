@@ -1,0 +1,1853 @@
+{
+  "note": "SHA-256 of each reference crop's RGB bytes (thresholded to 1-bit for mono specimens; masked and ink-box pixels left out), prefixed with its size. The reference images stay private; npm run fidelity:public compares clio.css's render with these digests.",
+  "generated": "2026-11-26",
+  "verifiable": {
+    "active-titlebar": {
+      "era": "platinum",
+      "size": [
+        477,
+        22
+      ],
+      "mono": false,
+      "digest": "38bcaa985598cc8d0b9521c69e498ee1136c562f019de88ef9cd1b6caaef1ee1"
+    },
+    "inactive-titlebar": {
+      "era": "platinum",
+      "size": [
+        424,
+        22
+      ],
+      "mono": false,
+      "digest": "2b75db4ab58c0f26e41842d9d651fdd0f22ee2c2ca73c0521010b661fe0a8a18"
+    },
+    "default-ok": {
+      "era": "platinum",
+      "size": [
+        73,
+        32
+      ],
+      "mono": false,
+      "digest": "783a726008f742c488a14455f4b9b5f7a0b5c56f2c7513c8db81469111bc550c"
+    },
+    "button-disabled": {
+      "era": "platinum",
+      "size": [
+        80,
+        20
+      ],
+      "mono": false,
+      "digest": "ca9a9bfc72ebe3a869f1ee5a793232ba21edf505f234c7911fac45c881b81e7b"
+    },
+    "checkbox-checked": {
+      "era": "platinum",
+      "size": [
+        12,
+        12
+      ],
+      "mono": false,
+      "digest": "804b701f8962ab988a6bf47dd8e64b63894cb766a56ea38cc657e891bc7de808"
+    },
+    "checkbox-unchecked": {
+      "era": "platinum",
+      "size": [
+        12,
+        12
+      ],
+      "mono": false,
+      "digest": "beda9efdfdc6e13af8d7de69008b79b8f8da51b4c0e76f2900da9a8856f1dd01"
+    },
+    "selected-tab": {
+      "era": "platinum",
+      "size": [
+        103,
+        24
+      ],
+      "mono": false,
+      "digest": "1b5bd49314b66c5b65cc609a4405df896509f973564b1cc98cbd4f729d9d43b9"
+    },
+    "s6-titlebar": {
+      "era": "system6",
+      "size": [
+        240,
+        19
+      ],
+      "mono": true,
+      "digest": "42e025e5170944517fa4bc25f2b85b924b4b1e1a3359ab668e87678259a64f91"
+    },
+    "s6-default-ok": {
+      "era": "system6",
+      "size": [
+        68,
+        28
+      ],
+      "mono": true,
+      "digest": "e1574ba5c47c2831c1739e04a0ec9f4355e2ab64087c08b0e65d4fa82ea1d9ef"
+    },
+    "s6-checkbox": {
+      "era": "system6",
+      "size": [
+        12,
+        12
+      ],
+      "mono": true,
+      "digest": "d59369d738da0fa20ad084cc77d24d334fb53a98bcc1f06b552f731dac2f5cdf"
+    },
+    "s6-radio-on": {
+      "era": "system6",
+      "size": [
+        12,
+        12
+      ],
+      "mono": true,
+      "digest": "3b521b16eb6afaf17bbd28b85352d27ecb9de37b336a0cdce0b2f2ade68c8d1c"
+    },
+    "s6-radio-off": {
+      "era": "system6",
+      "size": [
+        12,
+        12
+      ],
+      "mono": true,
+      "digest": "58ac8439852d4c35b6f1f35efcf6501128054d1086b80e1505068e4089ea65af"
+    },
+    "s6-scroll-up": {
+      "era": "system6",
+      "size": [
+        14,
+        14
+      ],
+      "mono": true,
+      "digest": "53814bbaee5bfce3fe5956f38e8395891cb91f46d536d2d2d7f39bf6ab48c7e3"
+    },
+    "s6-js-scroll-drag": {
+      "era": "system6",
+      "size": [
+        15,
+        90
+      ],
+      "mono": true,
+      "digest": "99a60c25e9feba54006ad030fce547f9fa8592f5e70b3c1775a7d062472c58d9"
+    },
+    "s6-grow-box": {
+      "era": "system6",
+      "size": [
+        14,
+        14
+      ],
+      "mono": true,
+      "digest": "adfb72d2adafd7259c9847ded3c31c91ebc8a9ad31d2d5c361afe93375e71ccb"
+    },
+    "s6-scroll-left": {
+      "era": "system6",
+      "size": [
+        14,
+        14
+      ],
+      "mono": true,
+      "digest": "2b6f35ca34fd1c97e6e4b9163d26395574652217bd595f7d084af64fd73f08cd"
+    },
+    "s6-scroll-right": {
+      "era": "system6",
+      "size": [
+        14,
+        14
+      ],
+      "mono": true,
+      "digest": "f7bff21c0d5d9dc213afb591946e8ffec0293ed0faff972e22bccfea91a56cfb"
+    },
+    "s6-checkbox-checked": {
+      "era": "system6",
+      "size": [
+        12,
+        12
+      ],
+      "mono": true,
+      "digest": "169cb4f48cfa956f1db251b33bf92b06b898373a20aafb2052fb14fd78b9bcb8"
+    },
+    "s6-button-pressed": {
+      "era": "system6",
+      "size": [
+        60,
+        20
+      ],
+      "mono": true,
+      "digest": "44eca1b682c2e3a9d5110fd975cec3b9cc887e5fe26edd8317b6a6956c3a7bf1"
+    },
+    "s6-button-hover": {
+      "era": "system6",
+      "size": [
+        60,
+        20
+      ],
+      "mono": true,
+      "digest": "5a20d2f4cb9802df5ffb685f0f8e728e2e8923a5e933e8dfb92dca41610c3653"
+    },
+    "s6-popup-end": {
+      "era": "system6",
+      "size": [
+        6,
+        19
+      ],
+      "mono": true,
+      "digest": "d381ed4c5eb8b1fbaf22fc5abc6972323408b36b2e356384474ddfa59d6faede"
+    },
+    "s6-progress-fill": {
+      "era": "system6",
+      "size": [
+        12,
+        12
+      ],
+      "mono": true,
+      "digest": "c3a317c538c4bcc5ce0aa27b6b2283d05994fd6c0f427301eaa7a3a42d56f190"
+    },
+    "s6-info-line": {
+      "era": "system6",
+      "size": [
+        60,
+        17
+      ],
+      "mono": true,
+      "digest": "571546934e870a5652bf437b2b335c6cf3cfcd140b4acf2feaac8dda18de49f8"
+    },
+    "s6-geneva-12": {
+      "era": "system6",
+      "size": [
+        160,
+        16
+      ],
+      "mono": true,
+      "digest": "c9bcafd6f6069160862bed4f4ce8c09f0af6c1c9657b16dbfa44fb087336267e"
+    },
+    "s6-menu-disabled": {
+      "era": "system6",
+      "size": [
+        60,
+        16
+      ],
+      "mono": true,
+      "digest": "100c8c31cfc213d96ba134f1dfd1505bb6329a80977689e9cd9449b035e01553"
+    },
+    "s6-menu-separator": {
+      "era": "system6",
+      "size": [
+        136,
+        16
+      ],
+      "mono": true,
+      "digest": "a0ee6178e8eb7eafb6f6b5bdfc1ba8a665b2d2c8fc7e166c665b6a749abf2f6e"
+    },
+    "s7-titlebar": {
+      "era": "system7",
+      "size": [
+        377,
+        19
+      ],
+      "mono": false,
+      "digest": "85d8c28332acc1c0f99b838e5d48d8149b4176f169995e1efedce3af4a4d7d9f"
+    },
+    "s7-titlebar-inactive": {
+      "era": "system7",
+      "size": [
+        377,
+        16
+      ],
+      "mono": false,
+      "digest": "4d0aaf5ca3ec4b652581b1d2b04c54c47b49013c1af7282f34c44197047626f3"
+    },
+    "s7-collapsed": {
+      "era": "system7",
+      "size": [
+        229,
+        20
+      ],
+      "mono": false,
+      "digest": "3eedda8d3b13f5f4ebed1d04b55adce00010e150c599f56ac487648bde20fd19"
+    },
+    "s7-scroll-up": {
+      "era": "system7",
+      "size": [
+        14,
+        14
+      ],
+      "mono": false,
+      "digest": "ebc24a249f497025c8be4eaded4f887b663656aea4d337f49209c6f2efc79c60"
+    },
+    "s7-scroll-thumb": {
+      "era": "system7",
+      "size": [
+        14,
+        15
+      ],
+      "mono": false,
+      "digest": "fd72917fbf8812cc08e94b0d9524f943168b2d2a4599f21ed2efbe4e481d3c44"
+    },
+    "s7-grow-box": {
+      "era": "system7",
+      "size": [
+        14,
+        14
+      ],
+      "mono": false,
+      "digest": "a0ed92e61f34e1eec49cecce40c01a545dfa465d0076f11d53db9fe8a2ac8fa3"
+    },
+    "s7-scroll-left": {
+      "era": "system7",
+      "size": [
+        14,
+        14
+      ],
+      "mono": false,
+      "digest": "ea097dc4e1c53ad04ff7f75fcf9186253e16bf1c4404a3b6743e6c70272854d9"
+    },
+    "s7-scroll-right": {
+      "era": "system7",
+      "size": [
+        14,
+        14
+      ],
+      "mono": false,
+      "digest": "c9b2b772f6a960f1ba24c0c59cd473d48308af55f4623d1ae237812699e83314"
+    },
+    "s7-hscroll-thumb": {
+      "era": "system7",
+      "size": [
+        15,
+        14
+      ],
+      "mono": false,
+      "digest": "1a3dd1dc048b699e70fd26ffef6767da569d87b0ce5dc93fd24b70560bc5c267"
+    },
+    "s7-js-hscroll-lane": {
+      "era": "system7",
+      "size": [
+        40,
+        14
+      ],
+      "mono": false,
+      "digest": "52a6c5f363f4fd74f40ab517c74650ae20a088c18ea6acba9cf9b900c8ccb5dc"
+    },
+    "s7-alert-frame": {
+      "era": "system7",
+      "size": [
+        18,
+        18
+      ],
+      "mono": false,
+      "digest": "f5520be540c4ec6b93a0c92192590dd3e5420ab5a28065390f96af818ae4f069"
+    },
+    "s7-checkbox-on": {
+      "era": "system7",
+      "size": [
+        12,
+        12
+      ],
+      "mono": false,
+      "digest": "169cb4f48cfa956f1db251b33bf92b06b898373a20aafb2052fb14fd78b9bcb8"
+    },
+    "s7-checkbox-off": {
+      "era": "system7",
+      "size": [
+        12,
+        12
+      ],
+      "mono": false,
+      "digest": "d59369d738da0fa20ad084cc77d24d334fb53a98bcc1f06b552f731dac2f5cdf"
+    },
+    "s7-radio-on": {
+      "era": "system7",
+      "size": [
+        12,
+        12
+      ],
+      "mono": false,
+      "digest": "3b521b16eb6afaf17bbd28b85352d27ecb9de37b336a0cdce0b2f2ade68c8d1c"
+    },
+    "s7-radio-off": {
+      "era": "system7",
+      "size": [
+        12,
+        12
+      ],
+      "mono": false,
+      "digest": "58ac8439852d4c35b6f1f35efcf6501128054d1086b80e1505068e4089ea65af"
+    },
+    "s7-popup-end": {
+      "era": "system7",
+      "size": [
+        26,
+        20
+      ],
+      "mono": false,
+      "digest": "9979eec31b0b14be908e30015fea820ef1144179181c1e59dd7d34f8612bd292"
+    },
+    "s7-popup-disabled": {
+      "era": "system7",
+      "size": [
+        27,
+        22
+      ],
+      "mono": false,
+      "digest": "51943d6b9fc09163a1763e547ba49ee236295d6577714ceca9b9b1f6fc0cd5dd"
+    },
+    "s7-js-caret": {
+      "era": "system7",
+      "size": [
+        8,
+        20
+      ],
+      "mono": false,
+      "digest": "a26841e74506d957f81bd715a8d0d84578cace21403259ddc3c6c346bdaf089e"
+    },
+    "s7-progress-fill": {
+      "era": "system7",
+      "size": [
+        3,
+        11
+      ],
+      "mono": false,
+      "digest": "1b7a1db2d5bbd88d03edce583d9b24e29fad678417f46b828413b3deee0370b2"
+    },
+    "s7-progress-track": {
+      "era": "system7",
+      "size": [
+        8,
+        11
+      ],
+      "mono": false,
+      "digest": "472ced7cab90ad3b8ada25c724a6d575c26f2b76e613e2b7cd78bf40292ccd55"
+    },
+    "s7-menu-separator": {
+      "era": "system7",
+      "size": [
+        100,
+        16
+      ],
+      "mono": false,
+      "digest": "405f9eaab3cd6a54156f7220ac006952126f32f72f891cf4a31a0f7d27b398fb"
+    },
+    "s7-default-ok": {
+      "era": "system7",
+      "size": [
+        67,
+        28
+      ],
+      "mono": false,
+      "digest": "8c53478f0fb9745eb018131c7002cc95f98fcac1bca715513fb96fed98da81eb"
+    },
+    "db-close-box": {
+      "era": "drawingboard",
+      "size": [
+        11,
+        11
+      ],
+      "mono": false,
+      "digest": "170b539d44bd2ccaa2724cafcd9e5b79fed4b5d2e1958fdc7f5b943da04d1be5"
+    },
+    "db-collapse-box": {
+      "era": "drawingboard",
+      "size": [
+        11,
+        11
+      ],
+      "mono": false,
+      "digest": "0d4d3b9b14eef8f662917be6e4ef113a5923d65db9ff66d9a148144dbca7a854"
+    },
+    "db-collapsed-left": {
+      "era": "drawingboard",
+      "size": [
+        40,
+        31
+      ],
+      "mono": false,
+      "digest": "833d1ab5f0790600c964cc3387dbf8c70f08416fd56686d1f578db975a85f080"
+    },
+    "db-collapsed-right": {
+      "era": "drawingboard",
+      "size": [
+        40,
+        31
+      ],
+      "mono": false,
+      "digest": "4f87fabb26d2e009f2a1b89def3f1434b23a05e6dd1d569a7d0a1b4415f18859"
+    },
+    "db-titlebar-left": {
+      "era": "drawingboard",
+      "size": [
+        40,
+        26
+      ],
+      "mono": false,
+      "digest": "44a957e404b2439e0d2ec4f41df2e2d10e12510864017187226f58b3deb54f60"
+    },
+    "db-titlebar-right": {
+      "era": "drawingboard",
+      "size": [
+        40,
+        26
+      ],
+      "mono": false,
+      "digest": "3910082b027d6475196dfd79bb53c70c67964d121abf469b84c91347f99ec245"
+    },
+    "db-window-bottom-left": {
+      "era": "drawingboard",
+      "size": [
+        40,
+        40
+      ],
+      "mono": false,
+      "digest": "6ba26ef00a4f62df2ce5e0ba6c27be63a7086ce7831a2dec674b5e70df5d441f"
+    },
+    "db-window-bottom-right": {
+      "era": "drawingboard",
+      "size": [
+        40,
+        40
+      ],
+      "mono": false,
+      "digest": "6fd805a5350e5dca6491d957d93a8e7c3ee16bd50be1f0bba5b636a06f829698"
+    },
+    "db-popup-end": {
+      "era": "drawingboard",
+      "size": [
+        40,
+        20
+      ],
+      "mono": false,
+      "digest": "53361f1b0c9efab6d7548404e912d17b9ef9de2ce80cd3ba3c612fc314e0cb23"
+    },
+    "db-menubar": {
+      "era": "drawingboard",
+      "size": [
+        200,
+        22
+      ],
+      "mono": false,
+      "digest": "0b8ccf300b2a030f5cb3c00107cfca58366cfd70d15f4e6cb31c8bdac0eabecc"
+    },
+    "db-button-whole": {
+      "era": "drawingboard",
+      "size": [
+        103,
+        21
+      ],
+      "mono": false,
+      "digest": "3c76f4a3c0208b6cbb678059775f0f6e7ece57629a1818031797ab0c030902fc"
+    },
+    "db-button-end": {
+      "era": "drawingboard",
+      "size": [
+        16,
+        21
+      ],
+      "mono": false,
+      "digest": "adaae3be9412d058f5888af6e7b1a603f4cdf1eb4617dabef64cfd65047e17c6"
+    },
+    "db-scroll-arrow": {
+      "era": "drawingboard",
+      "size": [
+        16,
+        16
+      ],
+      "mono": false,
+      "digest": "4769955c6fb59b42ddd589629561db9614e3d79037e79c672b935576d85c80d4"
+    },
+    "db-scroll-thumb-start": {
+      "era": "drawingboard",
+      "size": [
+        6,
+        16
+      ],
+      "mono": false,
+      "digest": "9a1b92880ca26df5f416d8bdcd88d57217da90ba4d46653e88455976d2af36cd"
+    },
+    "db-scroll-thumb-grip": {
+      "era": "drawingboard",
+      "size": [
+        2,
+        14
+      ],
+      "mono": false,
+      "digest": "07c1709dae2e885b2ab266a4127425d788a183811bc045ffabb260279a77da01"
+    },
+    "db-scroll-thumb-end": {
+      "era": "drawingboard",
+      "size": [
+        7,
+        14
+      ],
+      "mono": false,
+      "digest": "b14603ec0e90c6ce3fc73e909179da94c27ca1b108eb77c103ccce487baf2050"
+    },
+    "db-scroll-track": {
+      "era": "drawingboard",
+      "size": [
+        100,
+        16
+      ],
+      "mono": false,
+      "digest": "a9d21df3768bfdc766622b3966b7dae2d005830bba1d97be435c54bc021ea0fe"
+    },
+    "db-js-scroll-arrow": {
+      "era": "drawingboard",
+      "size": [
+        16,
+        16
+      ],
+      "mono": false,
+      "digest": "4769955c6fb59b42ddd589629561db9614e3d79037e79c672b935576d85c80d4"
+    },
+    "db-js-scroll-thumb": {
+      "era": "drawingboard",
+      "size": [
+        15,
+        14
+      ],
+      "mono": false,
+      "digest": "17643dd0c656326a494a92df5039e6f8fd151d9b6705331bf821f929fcf7ff6b"
+    },
+    "db-js-smart-arrows": {
+      "era": "drawingboard",
+      "size": [
+        32,
+        16
+      ],
+      "mono": false,
+      "digest": "0da52dbbd7c776b5c11e0bed720e974b1873a29c1787a8f75f9fa4e24164787b"
+    },
+    "db-js-smart-held-left": {
+      "era": "drawingboard",
+      "size": [
+        32,
+        16
+      ],
+      "mono": false,
+      "digest": "6f72317a5f6fa0dd51fe9f2ca540618b5bc282d3c9ef81cb94dce23182e179d3"
+    },
+    "db-js-smart-held-right": {
+      "era": "drawingboard",
+      "size": [
+        32,
+        16
+      ],
+      "mono": false,
+      "digest": "58b20456ac5675d6321213140efd4cd93d04b3d0475b989de37771a200f18020"
+    },
+    "db-default-button": {
+      "era": "drawingboard",
+      "size": [
+        16,
+        24
+      ],
+      "mono": false,
+      "digest": "670acccc4987d7cd7366c997efe5ba398b9aef3ddd7adf821b3ae43defb87658"
+    },
+    "db-alert-corner": {
+      "era": "drawingboard",
+      "size": [
+        20,
+        12
+      ],
+      "mono": false,
+      "digest": "195483b5bb6955d66ce52ef112efe04a87362e49a101d25067a08e58a25bfc1b"
+    },
+    "db-alert-shadow": {
+      "era": "drawingboard",
+      "size": [
+        14,
+        12
+      ],
+      "mono": false,
+      "digest": "4631cabc50b2f40f378fca8a387833ffdf308d71a47f2be47f2fe09240676d2a"
+    },
+    "db-popup-disabled": {
+      "era": "drawingboard",
+      "size": [
+        40,
+        20
+      ],
+      "mono": false,
+      "digest": "41243a24baf81c0442b1a2e07af38304598e0b6760b2577d6d9df00f5f9c066e"
+    },
+    "db-button-held": {
+      "era": "drawingboard",
+      "size": [
+        16,
+        21
+      ],
+      "mono": false,
+      "digest": "5ddc04a383555c4f17d787ee9ab39e6b6fd2ad1f5925dc42800f347383cd1b9f"
+    },
+    "db-listbox-corner": {
+      "era": "drawingboard",
+      "size": [
+        8,
+        8
+      ],
+      "mono": false,
+      "digest": "35c80700c432c205cae648a01358d2fba92291e3b954afa6b7ef3886e44c3912"
+    },
+    "db-checkbox-on": {
+      "era": "drawingboard",
+      "size": [
+        14,
+        11
+      ],
+      "mono": false,
+      "digest": "337f5b347bc0800ed200dd9a7a7dec6dac1f4204f3f72cc15c9f9306d9d0177d"
+    },
+    "db-checkbox-off": {
+      "era": "drawingboard",
+      "size": [
+        14,
+        11
+      ],
+      "mono": false,
+      "digest": "da2939ad9e5d859d47e36c47a72ddc259ab6f886330fd51245fce84a5237249b"
+    },
+    "db-checkbox-disabled": {
+      "era": "drawingboard",
+      "size": [
+        14,
+        11
+      ],
+      "mono": false,
+      "digest": "d5f752c5abcdd4edd607010023c30b03103ca255bebc948a23f1e3f4c7901a0f"
+    },
+    "db-field-end": {
+      "era": "drawingboard",
+      "size": [
+        12,
+        25
+      ],
+      "mono": false,
+      "digest": "b25ef91def96355207d82bc72cef68a4d4a2c6cfd9348cd4dcd5d9cc029d8b79"
+    },
+    "db-radio-on": {
+      "era": "drawingboard",
+      "size": [
+        16,
+        12
+      ],
+      "mono": false,
+      "digest": "ec2a8e96d2a3c6308ab2ecf6494ba37d568bbb38a24cf13e978ddc6b396a029a"
+    },
+    "db-radio-off": {
+      "era": "drawingboard",
+      "size": [
+        16,
+        12
+      ],
+      "mono": false,
+      "digest": "9e79a5e44c4165bdbf240b50010970f1e0d26087045c9af56688b4febc4853a1"
+    },
+    "db-field-corner": {
+      "era": "drawingboard",
+      "size": [
+        12,
+        25
+      ],
+      "mono": false,
+      "digest": "343fd54abf1e27277d21eda3fc7b22cc8c25d2c05c57a9bbe04a890ec4a16536"
+    },
+    "db-menu-underline": {
+      "era": "drawingboard",
+      "size": [
+        124,
+        3
+      ],
+      "mono": false,
+      "digest": "29afc2ec82443e5b51999b6efadcb9acee8761b8f45bd9daac301d6144292730"
+    },
+    "db-menu-separator": {
+      "era": "drawingboard",
+      "size": [
+        100,
+        9
+      ],
+      "mono": false,
+      "digest": "b1c8de7bdf7e2e99d91058d7607211efe21cdaf70410f8789001fad13a7b7ff0"
+    },
+    "db-menu-corner": {
+      "era": "drawingboard",
+      "size": [
+        24,
+        23
+      ],
+      "mono": false,
+      "digest": "85b462106bab65ec0171852521aa34d80e4d9f8ce2059da426f21f4d2f53de84"
+    },
+    "db-menu-corner-left": {
+      "era": "drawingboard",
+      "size": [
+        24,
+        23
+      ],
+      "mono": false,
+      "digest": "4293df0433f70920de1ffca6bdfd527df2a8d5bb740c33dba9b9013b6c0ff258"
+    },
+    "db-menu-corner-top": {
+      "era": "drawingboard",
+      "size": [
+        24,
+        12
+      ],
+      "mono": false,
+      "digest": "d2026e1ce6a6a5d72cc39f322869e45af3cd9372f2704ec353f2c2201c95a7dd"
+    },
+    "s7-strip-start": {
+      "era": "system7",
+      "size": [
+        29,
+        24
+      ],
+      "mono": false,
+      "digest": "8458442f154ed6138e365a2a413586bc3e2f54a74be60ed29a9ec693d33f7dbd"
+    },
+    "p9-checkbox-on": {
+      "era": "platinum9",
+      "size": [
+        14,
+        12
+      ],
+      "mono": false,
+      "digest": "72332ce8293209112345c112a6493ae48478ec94d635727217e21bfd666ca6af"
+    },
+    "p9-checkbox-off": {
+      "era": "platinum9",
+      "size": [
+        12,
+        12
+      ],
+      "mono": false,
+      "digest": "beda9efdfdc6e13af8d7de69008b79b8f8da51b4c0e76f2900da9a8856f1dd01"
+    },
+    "p9-radio-on": {
+      "era": "platinum9",
+      "size": [
+        12,
+        12
+      ],
+      "mono": false,
+      "digest": "b0cddbda7ac4eaae8954e0cbb46cd300c85873418629380486e03acc55a77ba4"
+    },
+    "p9-radio-off": {
+      "era": "platinum9",
+      "size": [
+        12,
+        12
+      ],
+      "mono": false,
+      "digest": "996931efd6690e0ff3eacf944d3e6bb106d7e849c26f6d181800d56cd8ce115d"
+    },
+    "p9-titlebar": {
+      "era": "platinum9",
+      "size": [
+        477,
+        22
+      ],
+      "mono": false,
+      "digest": "9ec50fb09325086ae34c9b4d0e93f3529a44e0408c00cc2ed5cee528d76a3eb1"
+    },
+    "p9-titlebar-left": {
+      "era": "platinum9",
+      "size": [
+        30,
+        22
+      ],
+      "mono": false,
+      "digest": "ad6213be2196265374252282142b72cfe58d7e79786890cbd83a1ef1f166291e"
+    },
+    "p9-collapsed": {
+      "era": "platinum9",
+      "size": [
+        387,
+        23
+      ],
+      "mono": false,
+      "digest": "16f3be5926b2d1ca08ca0c4df96f1c7b0324280d5f50d28a413d2e6026351291"
+    },
+    "p9-titlebar-right": {
+      "era": "platinum9",
+      "size": [
+        36,
+        22
+      ],
+      "mono": false,
+      "digest": "0ee7c012cccad132a0a3c49318bece209a2b885a14ed4f60242cc8939a6850aa"
+    },
+    "p9-button-end": {
+      "era": "platinum9",
+      "size": [
+        86,
+        20
+      ],
+      "mono": false,
+      "digest": "9f66069a0cc068ca9185a138ec183b64dd838cbca7a4eaffed3b75c925dacb9d"
+    },
+    "p9-popup-disabled": {
+      "era": "platinum9",
+      "size": [
+        34,
+        20
+      ],
+      "mono": false,
+      "digest": "6be9cb5a5c3cebc98760d55ef8682a8244797fe08d683097e750541136946f11"
+    },
+    "p9-group-corner": {
+      "era": "platinum9",
+      "size": [
+        12,
+        30
+      ],
+      "mono": false,
+      "digest": "7f545ed6e598425a0112561997c6bcae0066a7e4dc470cdc75c91256be2fcf19"
+    },
+    "p9-menu-separator": {
+      "era": "platinum9",
+      "size": [
+        100,
+        6
+      ],
+      "mono": false,
+      "digest": "5dbe090894ff28b949fffde44702f78f65c71f075494c4778e4b7d1937e8b57e"
+    },
+    "p9-popup-end": {
+      "era": "platinum9",
+      "size": [
+        24,
+        20
+      ],
+      "mono": false,
+      "digest": "891a122cec1695f18b3a2d5e41a98016e8a2cb928973d25f28d43ad5f8ae01eb"
+    },
+    "p9-button-held": {
+      "era": "platinum9",
+      "size": [
+        86,
+        20
+      ],
+      "mono": false,
+      "digest": "a977e62fd42c6f0fbf01adbc0031b021aef4b6da2b05512f09fc220b8e50e159"
+    },
+    "p9-list-header": {
+      "era": "platinum9",
+      "size": [
+        374,
+        21
+      ],
+      "mono": false,
+      "digest": "275a64e5028837cef22f33efb074097938f596e4915f53965637fc2268253dc4"
+    },
+    "p9-slider": {
+      "era": "platinum9",
+      "size": [
+        156,
+        16
+      ],
+      "mono": false,
+      "digest": "029d2ee4642b239ee1a819599a395e1c6dc45905917231acf0caa5d427d1e8e6"
+    },
+    "p9-slider-min": {
+      "era": "platinum9",
+      "size": [
+        156,
+        16
+      ],
+      "mono": false,
+      "digest": "bf73f0eecb7ef658d50e7891b21d622b97c9e5de84f5d4d2a38f7e1fd6892e06"
+    },
+    "p9-slider-max": {
+      "era": "platinum9",
+      "size": [
+        156,
+        16
+      ],
+      "mono": false,
+      "digest": "7176a7f0949253d587e6603bff2c4e38815dc527db7a4403ac112cded080cfe9"
+    },
+    "p9-bevel-menu": {
+      "era": "platinum9",
+      "size": [
+        36,
+        27
+      ],
+      "mono": false,
+      "digest": "24126bccd30667d81a1e4f5991d89a029b0527e06a35d3ca8e81817b020b651a"
+    },
+    "p9-focus-field": {
+      "era": "platinum9",
+      "size": [
+        40,
+        27
+      ],
+      "mono": false,
+      "digest": "cbc8bf335bf2e500ed0a765923fcb41472b7722b0275eb047fde85a44ea16f11"
+    },
+    "p9-little-arrows": {
+      "era": "platinum9",
+      "size": [
+        13,
+        23
+      ],
+      "mono": false,
+      "digest": "9cb5b9e7f064a182a1094168763f57a23a42d83b53e9b950acf3b845d86dbef7"
+    },
+    "p9-little-arrows-dimmed": {
+      "era": "platinum9",
+      "size": [
+        13,
+        23
+      ],
+      "mono": false,
+      "digest": "66e485531023c231c64d873234cd0871bf1c47049db522864a31a3ee6aef823e"
+    },
+    "p9-chasing-arrows": {
+      "era": "platinum9",
+      "size": [
+        16,
+        16
+      ],
+      "mono": false,
+      "digest": "c80802f9e03464216072a0dfedd65254f06a46578b1236870d7d1e3ef6999abf"
+    },
+    "p9-separator": {
+      "era": "platinum9",
+      "size": [
+        185,
+        2
+      ],
+      "mono": false,
+      "digest": "7b8f9e25b5b790247ca4767441944ee2452bc7fbaeda661c285b4d90e08e7f22"
+    },
+    "p9-help-button": {
+      "era": "platinum9",
+      "size": [
+        21,
+        20
+      ],
+      "mono": false,
+      "digest": "308d0b0f4536770f1eade97d5dcae350c35e8e09e120b38bf1e5b4c6e255a036"
+    },
+    "p9-utility-left": {
+      "era": "platinum9",
+      "size": [
+        40,
+        15
+      ],
+      "mono": false,
+      "digest": "b502f70a24262c2093f2df2772e16c35198f7940d30725daf6916ecb148cc7b3"
+    },
+    "p9-utility-right": {
+      "era": "platinum9",
+      "size": [
+        35,
+        15
+      ],
+      "mono": false,
+      "digest": "9faf13650d7b738e54a5685b457138f40f41d0c661c207293fad0d4bf727d944"
+    },
+    "p9-movable-modal-left": {
+      "era": "platinum9",
+      "size": [
+        40,
+        22
+      ],
+      "mono": false,
+      "digest": "7ddc68b8e85325fb04ecf2ef43e2ede827491937df670ef5be28fd6ce41bec2f"
+    },
+    "p9-movable-modal-right": {
+      "era": "platinum9",
+      "size": [
+        40,
+        22
+      ],
+      "mono": false,
+      "digest": "59b634250bbc27fd5dbd8e6a260288aa48d5d5a8a9f757c0a86308f852c58aa9"
+    },
+    "p9-balloon-top": {
+      "era": "platinum9",
+      "size": [
+        140,
+        12
+      ],
+      "mono": false,
+      "digest": "039cd4db751f5921479cde3be282d40ca46e7239b5f7fac367a85727fcfb8f14"
+    },
+    "p9-balloon-bottom": {
+      "era": "platinum9",
+      "size": [
+        160,
+        12
+      ],
+      "mono": false,
+      "digest": "db127202ce0dcf0f9ea59ba29b056d54ef648be5e5f2148cd3441307fe092b01"
+    },
+    "p9-disclosure": {
+      "era": "platinum9",
+      "size": [
+        13,
+        13
+      ],
+      "mono": false,
+      "digest": "f3b11b08e9e55ba5819cb57c8a42dd51fd0ad27905231e7f8f788ee6310daa5d"
+    },
+    "p9-disclosure-open": {
+      "era": "platinum9",
+      "size": [
+        13,
+        13
+      ],
+      "mono": false,
+      "digest": "dcb36361302afd1732526e4aa89188204dc6acc4c849b522b6b9aa92c2047e79"
+    },
+    "p9-strip-start": {
+      "era": "platinum9",
+      "size": [
+        29,
+        24
+      ],
+      "mono": false,
+      "digest": "008e157bfffd30209ca8036f965ec02a2161ea6ed87f194eb90bd7805934526d"
+    },
+    "p9-strip-handle": {
+      "era": "platinum9",
+      "size": [
+        18,
+        24
+      ],
+      "mono": false,
+      "digest": "4a95570aef66d2128c67b33dcc91e6be374315b59431907a40024b38501c4456"
+    },
+    "p9-strip-collapsed": {
+      "era": "platinum9",
+      "size": [
+        18,
+        24
+      ],
+      "mono": false,
+      "digest": "507e142fd5d64c9aaea11de3c4e90e58054453aab6e7d761ab3eb1bf4e464ead"
+    },
+    "s7-js-scroll-top": {
+      "era": "system7",
+      "size": [
+        15,
+        41
+      ],
+      "mono": false,
+      "digest": "ed6c1d1a223d711cce95f73a0532416cd8f8fcf9c6fb5f76579e53c5ca81f631"
+    },
+    "p9-js-scroll-fixed": {
+      "era": "platinum9",
+      "size": [
+        15,
+        122
+      ],
+      "mono": false,
+      "digest": "117300d6979a12e3b0c5a52743b6d5247897a30ce81495c50b2ea143a3b7cb41"
+    },
+    "p9-js-scroll-off-h": {
+      "era": "platinum9",
+      "size": [
+        359,
+        15
+      ],
+      "mono": false,
+      "digest": "f8f11ca78a426ef203de2c281c02e56b17233dbb01422396cce905c5ff00dd48"
+    },
+    "p9-js-scroll-smart": {
+      "era": "platinum9",
+      "size": [
+        15,
+        122
+      ],
+      "mono": false,
+      "digest": "56f5e4e8c59b4fcbc0d8984b5055288854e90fc15d3128b90f108e390e0ea4fd"
+    },
+    "p9-js-popup-open": {
+      "era": "platinum9",
+      "size": [
+        142,
+        115
+      ],
+      "mono": false,
+      "digest": "54d574db4f333ab99c8bfa966e635d6ed33859cea55f3002b12bde06533651ae"
+    },
+    "p9-popup-open": {
+      "era": "platinum9",
+      "size": [
+        142,
+        115
+      ],
+      "mono": false,
+      "digest": "54d574db4f333ab99c8bfa966e635d6ed33859cea55f3002b12bde06533651ae"
+    },
+    "p9-js-popup-open-arrows": {
+      "era": "platinum9",
+      "size": [
+        21,
+        20
+      ],
+      "mono": false,
+      "digest": "1e9d6a49c192bedc104e7e8a4b7e896fba0eb44d8b1a51f81bb477247c518942"
+    },
+    "p9-popup-open-arrows": {
+      "era": "platinum9",
+      "size": [
+        21,
+        20
+      ],
+      "mono": false,
+      "digest": "1e9d6a49c192bedc104e7e8a4b7e896fba0eb44d8b1a51f81bb477247c518942"
+    },
+    "p9-js-scroll-arrow-held": {
+      "era": "platinum9",
+      "size": [
+        14,
+        14
+      ],
+      "mono": false,
+      "digest": "cb2461f141d39b184d2fbe8511bfbdc284d4cf729426735b4fe4bf1fa47045b3"
+    },
+    "s6-rdoc-title": {
+      "era": "system6",
+      "size": [
+        106,
+        19
+      ],
+      "mono": true,
+      "digest": "fdbb242471691f6c4c6e8a6d1c35a46ebba21026b4b19fc7ad2e68482d4ba496"
+    },
+    "s6-rdoc-title-inactive": {
+      "era": "system6",
+      "size": [
+        106,
+        19
+      ],
+      "mono": true,
+      "digest": "db8d24d78aae35c49726a561d3c6655deae2ec19331ff6efc90257e9ffa90042"
+    },
+    "s6-rdoc-left": {
+      "era": "system6",
+      "size": [
+        1,
+        143
+      ],
+      "mono": true,
+      "digest": "c1fe1dc968b8c51cc3860a1c7ce1f18c49faabf8464744b3dda2fd54deacff3f"
+    },
+    "s6-rdoc-bottom-left": {
+      "era": "system6",
+      "size": [
+        6,
+        6
+      ],
+      "mono": true,
+      "digest": "0cf95ae91ee5caaaa6aa74daac28364783e12f713dad99758d5b9d806fec88b0"
+    },
+    "s7-rdoc-title": {
+      "era": "system7",
+      "size": [
+        106,
+        19
+      ],
+      "mono": false,
+      "digest": "bfd189d11d83b25bc8b9a371d23e062d976f071bac8f0806c9ade25609d74e3d"
+    },
+    "s7-rdoc-left": {
+      "era": "system7",
+      "size": [
+        1,
+        143
+      ],
+      "mono": false,
+      "digest": "c1fe1dc968b8c51cc3860a1c7ce1f18c49faabf8464744b3dda2fd54deacff3f"
+    },
+    "p9-rdoc-title": {
+      "era": "platinum9",
+      "size": [
+        106,
+        19
+      ],
+      "mono": false,
+      "digest": "82341fb0522ead5a9a1168e549397746abb8af7bdd2131fb0b2ebb05f8d5adbc"
+    },
+    "p9-rdoc-title-inactive": {
+      "era": "platinum9",
+      "size": [
+        106,
+        19
+      ],
+      "mono": false,
+      "digest": "64c541a9fe695a182e32e998959457b7117f5edb7bbbf3c43d1bc202ce9a99c5"
+    },
+    "db-rdoc-title": {
+      "era": "drawingboard",
+      "size": [
+        106,
+        19
+      ],
+      "mono": false,
+      "digest": "82341fb0522ead5a9a1168e549397746abb8af7bdd2131fb0b2ebb05f8d5adbc"
+    },
+    "p9-side-bar": {
+      "era": "platinum9",
+      "size": [
+        12,
+        92
+      ],
+      "mono": false,
+      "digest": "8fe5085e733a06506c653d71d45012768896549b19eb390b7d7070c7d3cd6579"
+    },
+    "p9-side-top": {
+      "era": "platinum9",
+      "size": [
+        230,
+        2
+      ],
+      "mono": false,
+      "digest": "d62ca5925b00af40f89793b41c720dbcfc5c7184a35cb19ad2c20f3e48a84df4"
+    },
+    "p9-side-right": {
+      "era": "platinum9",
+      "size": [
+        4,
+        85
+      ],
+      "mono": false,
+      "digest": "7b81b4c6d0b587fe5944a35f95a98fc9043b3ef378cfe6aa5214b92125e6ba1c"
+    },
+    "p9-side-bottom": {
+      "era": "platinum9",
+      "size": [
+        240,
+        4
+      ],
+      "mono": false,
+      "digest": "00defc52c1236e7c755d718d981adb3192ab2fd409a1cad223811af6cb5d9dfb"
+    },
+    "p9-side-inactive": {
+      "era": "platinum9",
+      "size": [
+        12,
+        82
+      ],
+      "mono": false,
+      "digest": "fee6b61c7e222a8691101f684ff316a3d7585dc2ff60994fc70d852f8401f1ea"
+    },
+    "db-side-bar": {
+      "era": "drawingboard",
+      "size": [
+        18,
+        101
+      ],
+      "mono": false,
+      "digest": "57660456a3d0aad0603370a357fa985edc3536e737aa0c1c49a85ebab305369e"
+    },
+    "db-side-top": {
+      "era": "drawingboard",
+      "size": [
+        244,
+        9
+      ],
+      "mono": false,
+      "digest": "2a6ca961356240b3a6a0ac5d66773000528ffc54f7fb19e4e34368ac59a4abfd"
+    },
+    "db-side-right": {
+      "era": "drawingboard",
+      "size": [
+        7,
+        83
+      ],
+      "mono": false,
+      "digest": "0bd3a048250d6e04bd901ddddc022d923af4cccff286146867c3c0fb7082ce90"
+    },
+    "db-side-bottom": {
+      "era": "drawingboard",
+      "size": [
+        240,
+        8
+      ],
+      "mono": false,
+      "digest": "9c2904c65149b7f75881b5cc26bbc30a034f839f10ce821583cd609c2c4a19cb"
+    },
+    "db-utility-titlebar-left": {
+      "era": "drawingboard",
+      "size": [
+        17,
+        13
+      ],
+      "mono": false,
+      "digest": "440b1793308a7607ac304e81aaaed43a65755885e1020cda2f55c3df8a1ad727"
+    },
+    "db-utility-titlebar-right": {
+      "era": "drawingboard",
+      "size": [
+        38,
+        13
+      ],
+      "mono": false,
+      "digest": "de9982ddaff0696cde6be6d1c42a6ffafe3268290ee0f26dce67d2954b65fced"
+    },
+    "db-utility-left": {
+      "era": "drawingboard",
+      "size": [
+        5,
+        72
+      ],
+      "mono": false,
+      "digest": "606e1873c78d41f16fea2cee88a4075503318e8aee4eabcad201b115a8373ab1"
+    },
+    "db-utility-right": {
+      "era": "drawingboard",
+      "size": [
+        5,
+        20
+      ],
+      "mono": false,
+      "digest": "1296dd1b1e15cfe90d63fce5a7e280bded6c37b0ae71917e254e9078c2e26a86"
+    },
+    "db-utility-bottom": {
+      "era": "drawingboard",
+      "size": [
+        138,
+        5
+      ],
+      "mono": false,
+      "digest": "1078f460accb4aefa0aa109f2550b0a591455be9dc5166fbcd2e50617d5dd9bf"
+    },
+    "p9-placard": {
+      "era": "platinum9",
+      "size": [
+        100,
+        50
+      ],
+      "mono": false,
+      "digest": "96ee278fbd58976056267df92e3a8a6ddf3489d490edd6df430614667024c79e"
+    },
+    "p9-placard-disabled": {
+      "era": "platinum9",
+      "size": [
+        100,
+        50
+      ],
+      "mono": false,
+      "digest": "0da1cbbd4d36aa7e8887de2fa36ff05f429b580ec9308641a2eeff526d2bc3a9"
+    },
+    "db-placard-face": {
+      "era": "drawingboard",
+      "size": [
+        98,
+        48
+      ],
+      "mono": false,
+      "digest": "91cdf1b665dc92830a541c81237b1f692dd7e9a7a883733d7d69fd997c2071cd"
+    },
+    "db-placard-disabled-face": {
+      "era": "drawingboard",
+      "size": [
+        98,
+        48
+      ],
+      "mono": false,
+      "digest": "0b81894b6722f40a02e0aecdd157fa461ed46b6c400d077811d74cc77e4d3121"
+    },
+    "p9-split-bar": {
+      "era": "platinum9",
+      "size": [
+        16,
+        6
+      ],
+      "mono": false,
+      "digest": "b371c6627ea68c675bb08ceace2591cd400f629096efbc4df88198eca07ab5ae"
+    },
+    "p9-split-line": {
+      "era": "platinum9",
+      "size": [
+        115,
+        7
+      ],
+      "mono": false,
+      "digest": "705a530ecf3921b436850e48671195d1ce28b02a53fa951853f9e4c02541c738"
+    },
+    "nx-menu-title": {
+      "era": "nextstep",
+      "size": [
+        93,
+        22
+      ],
+      "mono": false,
+      "digest": "d1e4136c9fdbea0a4130e6ad8587332ee2960e12fe2c118e88b19250c0a4173e"
+    },
+    "nx-menu-cell": {
+      "era": "nextstep",
+      "size": [
+        93,
+        20
+      ],
+      "mono": false,
+      "digest": "cd6c7753bfdc524f2b79925d15f1c06e28f72113c86c59c5d4e3b13561a2b7f0"
+    },
+    "nx-titlebar-left": {
+      "era": "nextstep",
+      "size": [
+        40,
+        23
+      ],
+      "mono": false,
+      "digest": "b5e858d44d32050d20300b0c99ccad0ebfc8d29a66b8fbdef59a905072f80920"
+    },
+    "nx-titlebar-right": {
+      "era": "nextstep",
+      "size": [
+        26,
+        23
+      ],
+      "mono": false,
+      "digest": "7265af52266455ef43b97b3e702705caed11116650e18eecd8c14e00d61674eb"
+    },
+    "nx-resizebar-left": {
+      "era": "nextstep",
+      "size": [
+        40,
+        9
+      ],
+      "mono": false,
+      "digest": "8cd3921a13d35fbcc8687553eccf78bb32536a8bb1a1b8db4ffe1aadb289bb45"
+    },
+    "nx-resizebar-right": {
+      "era": "nextstep",
+      "size": [
+        40,
+        9
+      ],
+      "mono": false,
+      "digest": "300c93f1d4b2fdb38e2209ca53904810cd301629582763e497c2bafe660ce95b"
+    },
+    "nx-js-scroller": {
+      "era": "nextstep",
+      "size": [
+        19,
+        99
+      ],
+      "mono": false,
+      "digest": "9ce70973672848bf5be099eb6626ec298e2bf3947196790df6303618eaa33458"
+    },
+    "nx-browser": {
+      "era": "nextstep",
+      "size": [
+        40,
+        15
+      ],
+      "mono": false,
+      "digest": "36b54689a84aa8936247616ce8bb46f07640697763742cd647deceb0f83d5470"
+    },
+    "nx-alert-titlebar": {
+      "era": "nextstep",
+      "size": [
+        30,
+        24
+      ],
+      "mono": false,
+      "digest": "58f187d269c07b2a7282da886bacf5fb6a5f860064eeb8ee011c768f12412a4a"
+    },
+    "nx-alert-groove": {
+      "era": "nextstep",
+      "size": [
+        60,
+        6
+      ],
+      "mono": false,
+      "digest": "dbb80a2500a8dcbcabca89698e3a576fcc8ad9a52e54e994df737437e435538e"
+    },
+    "nx-alert-buttons": {
+      "era": "nextstep",
+      "size": [
+        184,
+        40
+      ],
+      "mono": false,
+      "digest": "b9e026ee904613af1a783d7ca1141eed3e2a9cac8a603d8ee538d97f0da6cbb1"
+    },
+    "nx-titlebar-inactive": {
+      "era": "nextstep",
+      "size": [
+        25,
+        23
+      ],
+      "mono": false,
+      "digest": "a8925fa04613a22d3670c9a31ec21ab25a2a4ab7f9b8ac1029817a042b115972"
+    },
+    "nx-close-inactive": {
+      "era": "nextstep",
+      "size": [
+        28,
+        23
+      ],
+      "mono": false,
+      "digest": "2bf1d30ca4437494235beb700cd24d49c063b8ffd05197e6d69e8d6704fe51db"
+    },
+    "nx-field-left": {
+      "era": "nextstep",
+      "size": [
+        10,
+        21
+      ],
+      "mono": false,
+      "digest": "78f5d3cb7ddb2923cba754885ac8fc9ca927a075f22779256f6cfc2b5125299d"
+    },
+    "nx-field-right": {
+      "era": "nextstep",
+      "size": [
+        10,
+        21
+      ],
+      "mono": false,
+      "digest": "f644618f916228adf818695008936a67cec244fec418e6524b494e3d294959e7"
+    },
+    "nx-radio-on": {
+      "era": "nextstep",
+      "size": [
+        15,
+        15
+      ],
+      "mono": false,
+      "digest": "ba102aefb6354aabf28ac83e93a0b0d2f70d1a96a204f374e0a03be712120100"
+    },
+    "nx-radio-off": {
+      "era": "nextstep",
+      "size": [
+        15,
+        15
+      ],
+      "mono": false,
+      "digest": "4bcaab917d3410957be0e666dbd8b98cb0dcd0f76fb9124825e4099d328f6413"
+    },
+    "nx-button-on": {
+      "era": "nextstep",
+      "size": [
+        59,
+        24
+      ],
+      "mono": false,
+      "digest": "6c18d95d7d7b92012da698b1657ea29d409a505d80873f59285cd881c5098436"
+    },
+    "nx-box-corner": {
+      "era": "nextstep",
+      "size": [
+        11,
+        11
+      ],
+      "mono": false,
+      "digest": "8fbb543c10cfae17669b48af6a200975e5e4a4bbfb1ea23f21dba651fce03f98"
+    },
+    "nx-slider": {
+      "era": "nextstep",
+      "size": [
+        170,
+        16
+      ],
+      "mono": false,
+      "digest": "a85c593e7b300a0ebcabe6efa6bacd3062eeabcde496106ad54f6eb1440434df"
+    },
+    "nx-tornoff-left": {
+      "era": "nextstep",
+      "size": [
+        11,
+        26
+      ],
+      "mono": false,
+      "digest": "53adf165dec4997462eab7e366bfad583c2969443c6c4abad3a47aab38c863f2"
+    },
+    "nx-tornoff-right": {
+      "era": "nextstep",
+      "size": [
+        26,
+        24
+      ],
+      "mono": false,
+      "digest": "31fb70707b7ea2ffabd784382db1b71439de5aeca905430766cb8ac47f44a57d"
+    },
+    "nx-panel-top": {
+      "era": "nextstep",
+      "size": [
+        10,
+        24
+      ],
+      "mono": false,
+      "digest": "cdf992167986b4cf99667c5bb49d348fd060b24f65761224f65f647bca70013b"
+    },
+    "nx-panel-foot": {
+      "era": "nextstep",
+      "size": [
+        12,
+        10
+      ],
+      "mono": false,
+      "digest": "cce6287f452957777811137263f6ca17d13e92b78c74ea013fae80c8aeddd7df"
+    },
+    "nx-box-plain": {
+      "era": "nextstep",
+      "size": [
+        8,
+        8
+      ],
+      "mono": false,
+      "digest": "ec53782b111f689e9328172c13f919c14729df35b57495dd7c7d49209a6e85e8"
+    },
+    "nx-close-held": {
+      "era": "nextstep",
+      "size": [
+        15,
+        15
+      ],
+      "mono": false,
+      "digest": "73c84719a3d2d7bdb14d73b7acb5a1d1bb9d6be4cdb1c6d9bf7052d9da142bf9"
+    },
+    "nx-close-edited": {
+      "era": "nextstep",
+      "size": [
+        15,
+        15
+      ],
+      "mono": false,
+      "digest": "9d213d729f87d6bb6a54a2cbda5b0dd4125a488b528c4ec18afd322d27f5746f"
+    },
+    "nx-js-hscroller": {
+      "era": "nextstep",
+      "size": [
+        60,
+        19
+      ],
+      "mono": false,
+      "digest": "c0822c94652ca71c0e3e65ae8fdc7ea41ad42537f3b69719178b0e87cea4e7bf"
+    },
+    "nx-js-arrow-held": {
+      "era": "nextstep",
+      "size": [
+        16,
+        16
+      ],
+      "mono": false,
+      "digest": "8a0bf0f01fc970c0b351c2246d478baee233a6acc2f4f7d268ef943618f1ee41"
+    },
+    "nx-button-held": {
+      "era": "nextstep",
+      "size": [
+        78,
+        24
+      ],
+      "mono": false,
+      "digest": "6e33eed0484813193caf3a058f5711dda381b244bd6035b33a58d453246639cc"
+    },
+    "nx-close": {
+      "era": "nextstep",
+      "size": [
+        27,
+        23
+      ],
+      "mono": false,
+      "digest": "a6658ff9fbaceb546b2d8a6c412c499e4b35da78fba37e9e19190dc55d242bb0"
+    },
+    "nx-titlebar-main": {
+      "era": "nextstep",
+      "size": [
+        16,
+        23
+      ],
+      "mono": false,
+      "digest": "32d7998d69ef93d57e50ec17975eb43c62cab768c74807ebead62d94a883a783"
+    },
+    "nx-popup": {
+      "era": "nextstep",
+      "size": [
+        130,
+        20
+      ],
+      "mono": false,
+      "digest": "f0d564676b772a91bf89201eada5d1ba46f47d10624bde4e1b5b02e786bda580"
+    },
+    "nx-button-disabled": {
+      "era": "nextstep",
+      "size": [
+        63,
+        24
+      ],
+      "mono": false,
+      "digest": "cef2b45992d6acc2fee88bffe9abb291f7cd540ed1a4928dc07894f0d36086db"
+    },
+    "nx-default-disabled": {
+      "era": "nextstep",
+      "size": [
+        63,
+        24
+      ],
+      "mono": false,
+      "digest": "40c98c7f78a72c6dcc45b2ea75e819f4324fd6939a493d72175ee61ed671f80e"
+    },
+    "nx-switch-on": {
+      "era": "nextstep",
+      "size": [
+        15,
+        15
+      ],
+      "mono": false,
+      "digest": "64b07aa4513c0ab06a2388698ab18214afa76a835e1567db4c6f96122b7387d7"
+    },
+    "nx-switch-off": {
+      "era": "nextstep",
+      "size": [
+        15,
+        15
+      ],
+      "mono": false,
+      "digest": "ee1a75fe3e925d4ce1b89ad4601c2fc86373050d2d7e701289efa60e5bd98a06"
+    },
+    "nx-submenu-join": {
+      "era": "nextstep",
+      "size": [
+        13,
+        62
+      ],
+      "mono": false,
+      "digest": "1ab88be1f61a0f0684822b4ac8e99d661fe275110c2ef7e0d03f5d6fd40475da"
+    },
+    "nx-submenu-top": {
+      "era": "nextstep",
+      "size": [
+        13,
+        162
+      ],
+      "mono": false,
+      "digest": "136834de3b09a7b29da6c49521edc34bdbb56fb295270b59bc4f80883e83ad6f"
+    },
+    "nx-menu-cell-lit": {
+      "era": "nextstep",
+      "size": [
+        93,
+        20
+      ],
+      "mono": false,
+      "digest": "425ce9f96b4f2bc4dd16c054ea76e036f75af21749e4cc7b2b0dc1b46a754b0f"
+    },
+    "nx-ais6-titlebar": {
+      "era": "nextstep-ais6",
+      "size": [
+        200,
+        22
+      ],
+      "mono": false,
+      "digest": "1d088c61abc13d55aa759a3b4d008725a85a0db4edfa8dce3e8dad31a3d029a4"
+    }
+  },
+  "notVerifiable": {
+    "db-js-popup-open": "97.3% identical in the full run: a digest can only prove 100%",
+    "db-popup-open": "97.3% identical in the full run: a digest can only prove 100%",
+    "s7-ja-menu-items": "no reference frame on the machine that wrote the digests",
+    "s7-ja-alert-text": "no reference frame on the machine that wrote the digests",
+    "p9-zh-popup-open": "no reference frame on the machine that wrote the digests",
+    "nx-ais6-default-ok": "63.8% identical in the full run: a digest can only prove 100%",
+    "nx-ais6-scroll-thumb": "75.7% identical in the full run: a digest can only prove 100%",
+    "nx-ais6-popup-end": "29.3% identical in the full run: a digest can only prove 100%",
+    "nx-ais6-checkbox": "24.3% identical in the full run: a digest can only prove 100%"
+  }
+}

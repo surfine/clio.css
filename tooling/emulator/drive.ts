@@ -3,7 +3,7 @@
 //   node tooling/emulator/drive.ts "https://infinitemac.org/1999/Mac%20OS%209.0" .fidelity/run [w h]
 //   tooling/emulator/d.sh .fidelity/run "click 18 9" "wait 500" "shot apple-menu"
 // Frames land in <dir> (keep them under .fidelity/, which git ignores: they are
-// Apple's screens and are never committed). See LESSONS.md.
+// Apple's screens and are never committed). See dev/LESSONS.md.
 // Append commands (one per line) to <dir>/cmd; results in <dir>/log.
 //  move x y | down | up | click x y | dbl x y | drag x1 y1 x2 y2 | slowdrag x1 y1 x2 y2 | key K | keydown K | keyup K | type TEXT | cmd K | wait ms
 //  shot NAME | burst NAME N MS (N canvas screenshots every MS ms) | arec | astop NAME

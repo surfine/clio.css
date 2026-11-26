@@ -9,3 +9,9 @@ packs/
 
 # clio.css-preact and clio.css-react builds (npm run build:components)
 packages/*/dist/
+
+# npm run verify output
+.verify/
+# launch video work files and renders (large; kept out of git)
+dev/launch/bilibili/work/
+dev/launch/bilibili/*.mp4

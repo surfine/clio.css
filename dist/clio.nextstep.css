@@ -1,5 +1,6 @@
 /*! clio.css 2.0.0 (NeXTSTEP) | MIT | https://surfine.github.io/clio.css/
- * NeXTSTEP 3.3 interface CSS: windows, menus, controls, scrollers, browser and dock.
+ * clio.css draws five eras: System 6, System 7, Mac OS 8.5 Drawing Board, Mac OS 9 Platinum and NeXTSTEP 3.3.
+ * This file: NeXTSTEP 3.3 only: windows, menus, controls, scrollers, browser and dock.
  * Every value is measured, inferred or adapted; see EVIDENCE.md.
  * Fonts: Clio Sans NX is Liberation Sans 2 (SIL OFL 1.1), renamed; see THIRD-PARTY.md. */
 /* Clio Sans '84: Chicago 12 rebuilt pixel for pixel from System 6.0.8
@@ -2032,7 +2033,7 @@
 
 /* Controls the classic guidelines add to the first set (Macintosh Human
    Interface Guidelines 1992, ch. 7; Mac OS 8 Human Interface Guidelines,
-   ch. 2), each drawn per era from tokens. COVERAGE.md lists them all. */
+   ch. 2), each drawn per era from tokens. dev/COVERAGE.md lists them all. */
 
 /* ---- Disclosure triangle ---------------------------------------------------
    Markup: <button class="disclosure" aria-expanded="false" aria-label="Show">

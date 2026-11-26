@@ -6,7 +6,7 @@ export function renderLlms({ pkg, components }: { pkg: PackageInfo; components: 
   const url = pkg.homepage;
   return `# clio.css
 
-> CSS library for classic Mac OS interfaces: Macintosh System 6, System 7, Mac OS 8.5 Drawing Board (the withdrawn beta theme) and Mac OS 8/9 Platinum. Windows, title bars, menu bars and menus, push buttons, check boxes, radio buttons, text fields, pop-up menus, list boxes, scroll bars, dialogs and alerts, group boxes, progress bars, tabs, the Control Strip and desktop icons: ${components.length} components. Pure CSS; an optional script, \`dist/clio.js\`, adds what CSS cannot (menu tracking, scroll bars, window dragging, the text caret, sounds). MIT licence; no Apple screenshots or font files. Every value is traced to its source and labelled measured (read from real pixels of the era), inferred, adapted or third-party.
+> CSS library for Classic Mac OS and NeXTSTEP interfaces: Macintosh System 6, System 7, Mac OS 8.5 Drawing Board (the withdrawn beta theme), Mac OS 8/9 Platinum and NeXTSTEP 3.3 (in its own file). Windows, title bars, menu bars and menus, push buttons, check boxes, radio buttons, text fields, pop-up menus, list boxes, scroll bars, dialogs and alerts, group boxes, progress bars, tabs, the Control Strip and desktop icons: ${components.length} components. Pure CSS; an optional script, \`dist/clio.js\`, adds what CSS cannot (menu tracking, scroll bars, window dragging, the text caret, sounds). MIT licence; no Apple screenshots or font files. Every value is traced to its source and labelled measured (read from real pixels of the era), inferred, adapted or third-party.
 
 Install: \`npm install ${pkg.name}\` or \`<link rel="stylesheet" href="https://unpkg.com/${pkg.name}@${pkg.version}/dist/clio.css">\`.
 Optional script: \`<script src="https://unpkg.com/${pkg.name}@${pkg.version}/dist/clio.js" defer></script>\`.
@@ -84,7 +84,7 @@ Every value in clio.css ${pkg.version} has a row here. Sources are paths in the 
 | Adapted | a deliberate departure for the web (touch, focus, contrast) | ${counts.adapted || 0} |
 | Third-party | art or font from a named, licensed project | ${counts["third-party"] || 0} |
 
-Pixel check: \`npm run fidelity\` renders the Platinum specimens and compares them with AI System 6's GUIdebook Mac OS 9.0 reference crops (it needs a local AI System 6 checkout; see the script).
+Pixel check: \`npm run fidelity\` renders specimens of all five eras and compares them with captures of each era (FIDELITY.md; it needs the author's AI System 6 checkout). \`npm run fidelity:public\` needs no private files: it compares the renders with the reference digests in test/fidelity-digests.json.
 
 | Component | Era | Value | Status | Source — upstream evidence |
 | --- | --- | --- | --- | --- |

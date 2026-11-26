@@ -21,7 +21,7 @@ loops). Two map layouts exist:
 The class bits are Appearance's: 1 windows, 2 menus, 4 controls, 8 Finder. The meaning
 of the per-slot numbers is not documented anywhere found; they are kept raw in the
 manifest (the "?" fields above are guesses, checked against the emulator in
-SOUND-SETS.md). The sound that plays is the first slot whose 'snd ' exists.
+dev/SOUND-SETS.md). The sound that plays is the first slot whose 'snd ' exists.
 
 'snd ' resources follow Inside Macintosh: Sound (format 1 and 2; stdSH, extSH, cmpSH).
 Every sound is written losslessly at its own rate, depth and channel count: 8-bit
@@ -366,7 +366,7 @@ LOOP_CLASS = {"wmov": 1, "wgro": 1, "umov": 1, "ugro": 1, "dmov": 1, "amov": 1, 
 
 def resolve(man):
     """What the player needs, worked out once: for each effect the sound and gain that play,
-    for each drag loop its four roles. Measured in Mac OS 9.0 with Platinum Sounds (SOUND-SETS.md):
+    for each drag loop its four roles. Measured in Mac OS 9.0 with Platinum Sounds (dev/SOUND-SETS.md):
     a slot's level is a gain of level/255, 0 meaning full (tabp 185 -> 0.730, tabr 0 -> 0.99,
     chke 55 -> 0.22, wmov idle 45 -> 0.17); a drag loop's slots are attack, moving, idle and
     release (Platinum's own names: 'sbth attack', 'wmov moving', 'wmov idle', 'wmov release';
@@ -415,7 +415,7 @@ ALERTS = {
     # Mac OS 8.5 (Drawing Board): its own six, measured in Monitors & Sound > Alerts
     # (there is no Sound control panel in 8.5). All six are recordings of the emulator's
     # output: the System suitcase holds five snd resources (Quack, not Laugh, among them),
-    # and they could not be dragged out this session (SOUND-SETS.md §8).
+    # and they could not be dragged out this session (dev/SOUND-SETS.md §8).
     "drawingboard": {"source": "Mac OS 8.5", "eras": ["drawingboard"],
                      "list": ["Droplet", "Indigo", "Laugh", "Simple Beep", "Sosumi", "Wild Eep"], "selected": "Sosumi",
                      "captures": {"Droplet": ("droplet.wav", 22050.0), "Indigo": ("indigo.wav", 22050.0),

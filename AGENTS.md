@@ -57,8 +57,9 @@ For AI coding agents using or changing this repository.
   and its client script is `client.ts`. A change to the site's look is proved with
   `node tooling/site-shots.ts capture <dir>`, run before and after, then `compare`:
   Chromium and WebKit pixel-identical; Firefox repeats about 1,500 px of noise.
-- After a change: `npm test` (build + static checks) must pass. For Platinum chrome,
-  run `npm run fidelity` and do not let a specimen's exact-match share fall.
+- After a change: `npm test` (build + static checks) must pass. For chrome, run
+  `npm run fidelity` (needs the private references) or at least `npm run fidelity:public`,
+  and do not let a specimen's share fall.
 - Every new or changed value needs an evidence row in the component's `<name>.data.ts` with an
   honest status: `measured` only when read from real pixels of the era (name the
   capture), `inferred` when reasoned, `adapted` for web-only changes, `third-party` for
@@ -69,21 +70,18 @@ For AI coding agents using or changing this repository.
   `tooling/s6-art.py`, `tooling/tab-art.py`, `tooling/db-art.py`). Name the capture or
   resource it was measured from in its evidence row. Large textures and illustrations
   (Drawing Board's paper and sketch lines) are not reproduced: use the dominant measured
-  colour and label it `adapted`. For the Mac OS X eras the owner chose otherwise (D4 in
-  ROADMAP-MACOSX.md): every part, large textures included, is redrawn pixel by pixel.
+  colour and label it `adapted`.
   Third-party art needs a licence entry in `THIRD-PARTY.md`.
-- Scope (owner decisions, 2026-11-13 and 2026-11-14): eras that can be measured in an
-  emulator — System 6, System 7, Drawing Board (Mac OS 8.5b6, as "System 8"), Platinum
-  (as "System 9"), and for the Mac OS X phase Aqua (10.2), Tiger (10.4), NeXTSTEP 3.3,
-  Snow Leopard (10.6), Lion (10.7), Yosemite (10.10) and Big Sur (11), plus the laptops
-  behind AI System 6's Pocket Desk (`clio.machines.css`). Never Dewfall, AI System 6's
-  own glass skin. clio.css feeds back into AI System 6, so AI System 6's own chrome
-  (Control Strip, Dock, …) is in scope with its markup. Launch posts (awesome lists,
-  Show HN) wait for Aqua. The plan and the decisions behind it: ROADMAP-MACOSX.md.
-  Since 2026-11-26 (D14) NeXTSTEP 3.3 is a clio.css era (`data-era="nextstep"`,
-  the `*.nextstep.css` fragments and `foundation/nextstep.css`, shipped as `dist/clio.nextstep.css` only); the four Classic eras
-  stay the Classic line (D7, D16: fixes still ship) and `dist/clio.css` stays the Classic bundle; the Mac OS X eras belong
-  to clio.wasm (D8).
+- Scope (owner, 2026-11-26 and 2026-11-27): Classic Mac OS — System 6, System 7, Drawing
+  Board (Mac OS 8.5b6), Platinum (Mac OS 9) — and NeXTSTEP 3.3 (`data-era="nextstep"`, the
+  `*.nextstep.css` fragments and `foundation/nextstep.css`, shipped only as
+  `dist/clio.nextstep.css`; `dist/clio.css` stays the four Classic eras). Only eras measured in
+  an emulator. **No new era starts.** The five eras take fixes and missing parts, each one
+  through `npm run verify`. The Mac OS X eras belong to clio.wasm, a separate project;
+  `dev/ROADMAP-MACOSX.md` is history, not a work order. Never Dewfall, AI System 6's own glass
+  skin. AI System 6's own chrome (Control Strip, …) is in scope with its markup.
+- Internal notes (roadmaps, lessons, audits, plans, handoffs, launch drafts, upstream
+  drafts) live in `dev/`, never in `docs/` (`docs/` is the published GitHub Pages root).
 - Tokens live on `:root, [data-era="system6"]` (`foundation/tokens.css`),
   `[data-era="system7"]` (`foundation/system7.css`), `:is([data-era="platinum"],
   [data-era="drawingboard"])` (`foundation/platinum.css`, shared: both are Appearance Manager
@@ -97,3 +95,23 @@ For AI coding agents using or changing this repository.
   `npm run build:font`, which needs Python with fontTools and brotli), never the WOFF2 by
   hand. Clio Sans '97 (Charcoal 12) comes from Mac OS 9.0's Key Caps, whose bar is 2px.
 - Keep `dist/clio.min.css` under the size budget in `test/check.test.ts`.
+
+## Releasing (owner only)
+
+- `npm run verify` is the local release gate (GitHub Actions is not used). It clones HEAD
+  into a temporary directory and runs, in order: `npm ci`, `npm test`, lint, typecheck; packs
+  clio.css, clio.css-preact and clio.css-react and installs the tarballs into a scratch
+  project, resolving every `exports` entry and rendering components with each peer
+  framework against `components.json`; compares `dist/*.css` rules (headers and comments
+  stripped) with the 1.1.1 baseline from npm, failing on any difference not listed in
+  `dev/css-rule-allowlist.json`; checks the numbers and versions quoted in README.md,
+  EVIDENCE.md and FIDELITY.md; checks relative links in Markdown; and runs
+  `npm run fidelity:public` when a browser is installed, printing `skipped` (never a pass)
+  when not. It writes its summary to `.verify/summary.md`.
+- Before any publish, run `npm run verify` on the commit to be published and paste its
+  summary into that version's CHANGELOG entry.
+- `prepublishOnly` refuses to publish unless `CLIO_OWNER_RELEASE=1` is set, then runs
+  `npm run verify`. **Agents never set `CLIO_OWNER_RELEASE`**, in any form (export, inline,
+  `.npmrc`, scripts), and never run `npm publish`, `npm version`, `git tag` or `git push` for
+  a release. Publishing is the owner's step.
+

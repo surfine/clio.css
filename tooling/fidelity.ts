@@ -7,6 +7,13 @@
 //
 // Needs Playwright with Chromium: installed here (AIS6_DIR points at reference tiles only).
 // Writes side-by-side images to .fidelity/ (git-ignored).
+//
+// Public mode (`npm run fidelity:public`, CLIO_FIDELITY_PUBLIC=1) needs no references: it
+// renders the same specimens and compares a SHA-256 digest of each crop (thresholded to 1-bit
+// where the specimen is, masked and ink-box pixels left out) with the reference's digest in
+// test/fidelity-digests.json, which a full Chromium run at 1x writes. Only specimens the full
+// run found 100% identical are publicly checkable; the file lists the others and why.
+import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
@@ -14,7 +21,11 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const ais6 = process.env.AIS6_DIR || "/Users/aaron/AI System 6";
 const tiles = join(ais6, "internal/evidence/drafts/theme-lab-fidelity/platinum/tiles");
-if (!existsSync(tiles)) {
+const PUBLIC = process.env.CLIO_FIDELITY_PUBLIC === "1" || process.argv.includes("--public");
+const digestFile = join(root, "test/fidelity-digests.json");
+interface Digest { era: string; size: number[]; mono: boolean; digest: string; ink?: string[] }
+interface Digests { note: string; generated: string; verifiable: Record<string, Digest>; notVerifiable: Record<string, string> }
+if (!PUBLIC && !existsSync(tiles)) {
   console.error(`No reference tiles at ${tiles}. Set AIS6_DIR to an AI System 6 checkout.`);
   process.exit(2);
 }
@@ -48,6 +59,8 @@ interface Metrics {
   ink?: InkRow[];
   same: number;
   exact: number;
+  refBytes?: string;
+  clioBytes?: string;
   structural: number;
   meanAbs: number;
   misses?: number[][];
@@ -532,10 +545,18 @@ for (const id of ["s6-progress-fill", "s7-progress-fill", "s7-progress-track"]) 
   const s = specimens.find((x) => x.id === id); if (s) s.noMetrics = true;
 }
 const ONLY = process.env.FIDELITY_ONLY ? new RegExp(process.env.FIDELITY_ONLY) : null;   // a quick look; writes no report
+const sha = (b64: string, size: number[]): string => createHash("sha256").update(`${size.join("x")}:`).update(Buffer.from(b64, "base64")).digest("hex");
+const published: Digests | null = PUBLIC ? JSON.parse(readFileSync(digestFile, "utf8")) : null;
+if (PUBLIC && DPR !== 1) { console.error("fidelity:public compares at 1x only (the digests are 1x)"); process.exit(2); }
+const digests: Record<string, Digest> = {};
+const publicRows: { id: string; era: string; pass: boolean; why?: string }[] = [];
+const skippedHere: Record<string, string> = {};
 for (const s of specimens) {
   if (ONLY && !ONLY.test(s.id)) continue;
   await page.mouse.up().catch(() => {});
-  if (s.refFile && !existsSync(s.refFile)) { console.log(`${s.id}: no reference (run npm run capture:system6)`); continue; }
+  const want = published?.verifiable[s.id];
+  if (PUBLIC && !want) continue;
+  if (!PUBLIC && s.refFile && !existsSync(s.refFile)) { console.log(`${s.id}: no reference (run npm run capture:system6)`); skippedHere[s.id] = "no reference frame on the machine that wrote the digests"; continue; }
   // Firefox has no ::-webkit-scrollbar: there the era's scroll bars are the ones clio.js
   // draws, so scroll-bar specimens load it (and say so in the table).
   // clio.js keeps the theme's 15px Drawing Board box, so the crops set for the browser's
@@ -543,9 +564,9 @@ for (const s of specimens) {
   // clio.js comes with every specimen that does not test the browser's own scroll bars: it
   // aligns centred labels as the Mac did (CLIO_CSS_ONLY=1 renders without it, where it is optional).
   if (!process.env.CLIO_CSS_ONLY && !/overflow|clio-scroll|listbox|textarea/.test(s.html)) s.js = true;
-  if (ENGINE === "firefox" && /^db-scroll-thumb-(grip|end)$/.test(s.id)) { console.log(`${s.id}: n/a in firefox (see db-js-scroll-thumb)`); continue; }
+  if (ENGINE === "firefox" && /^db-scroll-thumb-(grip|end)$/.test(s.id)) { console.log(`${s.id}: n/a in firefox (see db-js-scroll-thumb)`); if (PUBLIC) publicRows.push({ id: s.id, era: want!.era, pass: true, why: "n/a in this engine" }); continue; }
   if (ENGINE === "firefox" && !s.js && /scroll|grow-box/.test(s.id)) s.js = s.viaJs = true;
-  if (s.baseSelect && !(await page.goto("about:blank").then(() => page.evaluate(() => CSS.supports("appearance", "base-select"))))) { console.log(`${s.id}: n/a in ${ENGINE} (no base-select)`); continue; }
+  if (s.baseSelect && !(await page.goto("about:blank").then(() => page.evaluate(() => CSS.supports("appearance", "base-select"))))) { console.log(`${s.id}: n/a in ${ENGINE} (no base-select)`); if (PUBLIC) publicRows.push({ id: s.id, era: want!.era, pass: true, why: "n/a in this engine (no base-select)" }); else skippedHere[s.id] = "needs appearance: base-select"; continue; }
   // Firefox puts an inline control on a fractional baseline when its line box comes from the
   // page's default font (Times 16px): a check box at y 41.25 against the Mac's 40 at 2x and 3x.
   // The specimen's wrapper therefore carries Clio's metrics, as a Mac window would; specimens
@@ -567,7 +588,9 @@ for (const s of specimens) {
   // Engines snap a box at a fractional position to the pixel grid in their own way, and
   // a fractional clip is rounded differently again: crop at the pixel the box snapped to.
   const shot = await page.screenshot({ clip: { x: Math.round(box.x) + x, y: Math.round(box.y) + y, width: w, height: h } });
-  const ref = readFileSync(s.refFile || join(tiles, `${s.id}-reference.png`));
+  // Public mode has no reference: the shot stands in for it, so the same code reads the
+  // pixels the digest is taken of (the reference side is then the shot itself, uncropped).
+  const ref = PUBLIC ? shot : readFileSync(s.refFile || join(tiles, `${s.id}-reference.png`));
   const metrics: Metrics = await page.evaluate(async ([a, b, name, refCrop, mono, mask, dpr, ink]: [string, string, string, number[] | null, boolean, number[][], number, number[][]]) => {
     const load = (b64: string) => new Promise<HTMLImageElement>((res) => { const i = new Image(); i.onload = () => res(i); i.src = "data:image/png;base64," + b64; });
     let [ia, ib] = await Promise.all([load(a), load(b)]);
@@ -601,6 +624,9 @@ for (const s of specimens) {
     const inkResult = ink.map((box) => { const r = inkRows(B, box), c = inkRows(A, box); return { ref: r.join(","), clio: c.join(","), match: r.join() === c.join() }; });
     mask = mask.concat(ink);
     const masked = (i: number) => { const p = i / 4, x = p % w, y = Math.floor(p / w); return mask.some(([mx, my, mw, mh]) => x >= mx && x < mx + mw && y >= my && y < my + mh); };
+    // The bytes a public digest is taken of: RGB of every pixel not masked, after thresholding.
+    const kept = (P: Uint8ClampedArray): string => { const o: number[] = []; for (let i = 0; i < P.length; i += 4) if (!masked(i)) o.push(P[i], P[i + 1], P[i + 2]); let t = ""; for (let i = 0; i < o.length; i += 8192) t += String.fromCharCode(...o.slice(i, i + 8192)); return btoa(t); };
+    const refBytes = kept(B), clioBytes = kept(A);
     let exact = 0, same = 0, off = 0, sum = 0, n = 0;
     const misses: number[][] = [];
     const diff = document.createElement("canvas"); diff.width = w * 3; diff.height = h; const g = diff.getContext("2d")!;
@@ -622,15 +648,45 @@ for (const s of specimens) {
     const inkOk = inkResult.every((r) => r.match);
     if (!n) { n = 1; same = exact = inkOk ? 1 : 0; }   // all ink: the rows decide
     else if (!inkOk) same = 0;   // a geometry miss fails the specimen
-    return { name, size: [w, h], ...(ink.length ? { ink: inkResult } : {}), same: +(same / n).toFixed(4), exact: +(exact / n).toFixed(4), structural: +(off / n).toFixed(4), meanAbs: +(sum / n).toFixed(2), misses, image: diff.toDataURL("image/png").split(",")[1] };
-  }, [shot.toString("base64"), ref.toString("base64"), s.id, s.refCrop || null, !!s.mono, (s.mask || []).map((m) => m.map((v) => v * DPR)), DPR, (s.ink || []).map((m) => m.map((v) => v * DPR))] as [string, string, string, number[] | null, boolean, number[][], number, number[][]]);
+    return { name, size: [w, h], refBytes, clioBytes, ...(ink.length ? { ink: inkResult } : {}), same: +(same / n).toFixed(4), exact: +(exact / n).toFixed(4), structural: +(off / n).toFixed(4), meanAbs: +(sum / n).toFixed(2), misses, image: diff.toDataURL("image/png").split(",")[1] };
+  }, [shot.toString("base64"), ref.toString("base64"), s.id, PUBLIC ? null : s.refCrop || null, !!s.mono, (s.mask || []).map((m) => m.map((v) => v * DPR)), DPR, (s.ink || []).map((m) => m.map((v) => v * DPR))] as [string, string, string, number[] | null, boolean, number[][], number, number[][]]);
   writeFileSync(join(out, `${s.id}${tag}${DPR === 1 ? "" : "@" + DPR + "x"}-compare.png`), Buffer.from(metrics.image!, "base64"));
   delete metrics.image;
   writeFileSync(join(out, `${s.id}${tag}${DPR === 1 ? "" : "@" + DPR + "x"}-misses.json`), JSON.stringify(metrics.misses));   // [x, y, ref rgb, clio rgb]
   delete metrics.misses;
+  const era0 = s.group || s.era || "platinum";
+  if (PUBLIC) {
+    const got = sha(metrics.clioBytes!, metrics.size);
+    const inkGot = (metrics.ink || []).map((k) => k.clio);
+    const why = metrics.size.join() !== want!.size.join() ? `size ${metrics.size.join("x")}, digest's ${want!.size.join("x")}`
+      : got !== want!.digest ? "pixels differ from the reference digest"
+      : inkGot.join("|") !== (want!.ink || []).join("|") ? `ink rows ${inkGot.join(" / ")}, reference ${(want!.ink || []).join(" / ")}` : undefined;
+    publicRows.push({ id: s.id, era: era0, pass: !why, ...(why ? { why } : {}) });
+    delete metrics.refBytes; delete metrics.clioBytes;
+    continue;
+  }
+  if (DPR === 1 && ENGINE === "chromium" && metrics.same === 1) digests[s.id] = { era: era0, size: metrics.size, mono: !!s.mono, digest: sha(metrics.refBytes!, metrics.size), ...(metrics.ink ? { ink: metrics.ink.map((k) => k.ref) } : {}) };
+  else if (DPR === 1 && ENGINE === "chromium") skippedHere[s.id] = `${(metrics.same * 100).toFixed(1)}% identical in the full run: a digest can only prove 100%`;
+  delete metrics.refBytes; delete metrics.clioBytes;
   results.push({ ...metrics, era: s.group || s.era || "platinum", ...(s.viaJs ? { viaJs: true } : {}) });
 }
 await browser.close();
+if (PUBLIC) {
+  const fail = publicRows.filter((r) => !r.pass);
+  writeFileSync(join(out, `public-results${tag}.json`), JSON.stringify(publicRows, null, 2));
+  for (const r of fail) console.log(`FAIL ${r.id}: ${r.why}`);
+  const na = publicRows.filter((r) => r.why && r.pass).length;
+  const missing = Object.keys(published!.verifiable).filter((id) => !publicRows.some((r) => r.id === id) && (!ONLY || ONLY.test(id)));
+  for (const id of missing) console.log(`FAIL ${id}: in the digests but no longer a specimen`);
+  console.log(`fidelity:public (${ENGINE}, 1x): ${publicRows.length - fail.length - na} of ${publicRows.length - na} publicly checkable specimens identical to their reference digests${na ? `; ${na} n/a in this engine` : ""}; ${Object.keys(published!.notVerifiable).length} not publicly checkable (test/fidelity-digests.json)`);
+  process.exit(fail.length || missing.length ? 1 : 0);
+}
+if (!ONLY && DPR === 1 && ENGINE === "chromium") {
+  const notVerifiable: Record<string, string> = { ...skippedHere };
+  for (const s of specimens) if (!digests[s.id] && !notVerifiable[s.id]) notVerifiable[s.id] = "not run";
+  writeFileSync(digestFile, JSON.stringify({ note: "SHA-256 of each reference crop's RGB bytes (thresholded to 1-bit for mono specimens; masked and ink-box pixels left out), prefixed with its size. The reference images stay private; npm run fidelity:public compares clio.css's render with these digests.", generated: new Date().toISOString().slice(0, 10), verifiable: digests, notVerifiable } satisfies Digests, null, 2) + "\n");
+  console.log(`test/fidelity-digests.json: ${Object.keys(digests).length} publicly checkable, ${Object.keys(notVerifiable).length} not`);
+}
 console.log("specimen              size      same    exact   off>48  meanAbs   (reference | clio.css | diff in .fidelity/)");
 for (const r of results) if (r.ink) console.log(`${r.name}: ink rows ${r.ink.map((k) => k.match ? "same" : `ref ${k.ref} / clio ${k.clio}`).join("; ")}`);
 for (const r of results) console.log(`${r.name.padEnd(21)} ${r.size.join("x").padEnd(9)} ${String(r.same).padEnd(7)} ${String(r.exact).padEnd(7)} ${String(r.structural).padEnd(7)} ${r.meanAbs}${r.viaJs ? "  (clio.js bars)" : ""}`);
