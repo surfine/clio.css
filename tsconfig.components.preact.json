@@ -1,0 +1,23 @@
+{
+  // The shared components (packages/components) checked against preact's types: the same source
+  // must type-check under both frameworks ("clio-jsx" resolves to packages/preact/src/jsx.ts).
+  "compilerOptions": {
+    "target": "es2022",
+    "lib": ["dom", "dom.iterable", "es2022"],
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+    "jsxImportSource": "preact",
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "types": ["node"],
+    "paths": { "clio-jsx": ["./packages/preact/src/jsx.ts"], "clio-render": ["./packages/preact/src/render.ts"] }
+  },
+  "include": ["packages/components/**/*.ts", "packages/components/**/*.tsx", "packages/preact/src/*.ts", "test/components.test.ts"]
+}

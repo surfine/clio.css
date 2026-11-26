@@ -1,7 +1,7 @@
 {
   "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
   "files": {
-    "includes": ["ts/**", "tooling/**/*.ts", "packages/**/*.ts"]
+    "includes": ["ts/**", "tooling/**/*.ts", "packages/**/*.ts", "packages/**/*.tsx"]
   },
   "formatter": {
     "enabled": false,
@@ -19,5 +19,11 @@
       "correctness": { "noInnerDeclarations": "warn" },
       "suspicious": { "noAssignInExpressions": "warn", "useIterableCallbackReturn": "warn" }
     }
-  }
+  },
+  "overrides": [
+    {
+      "includes": ["packages/components/**"],
+      "linter": { "rules": { "a11y": { "useButtonType": "off" }, "suspicious": { "noArrayIndexKey": "off" } } }
+    }
+  ]
 }

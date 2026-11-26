@@ -6,3 +6,6 @@ tooling/__pycache__/
 .notes/
 packs/
 .build/
+
+# @clio/preact and @clio/react builds (npm run build:components)
+packages/*/dist/

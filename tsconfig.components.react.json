@@ -1,0 +1,23 @@
+{
+  // The shared components (packages/components) checked against react's types: the same source
+  // must type-check under both frameworks ("clio-jsx" resolves to packages/react/src/jsx.ts).
+  "compilerOptions": {
+    "target": "es2022",
+    "lib": ["dom", "dom.iterable", "es2022"],
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+    "jsxImportSource": "react",
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "types": ["node"],
+    "paths": { "clio-jsx": ["./packages/react/src/jsx.ts"], "clio-render": ["./packages/react/src/render.ts"] }
+  },
+  "include": ["packages/components/**/*.ts", "packages/components/**/*.tsx", "packages/react/src/*.ts", "test/components.test.ts"]
+}
