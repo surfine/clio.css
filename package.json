@@ -59,7 +59,12 @@
       "default": "./dist/clio.js"
     },
     "./js.min": "./dist/clio.min.js",
-    "./sounds-panel": "./dist/clio-sounds-panel.js"
+    "./sounds-panel": "./dist/clio-sounds-panel.js",
+    "./contract": {
+      "types": "./dist/contract.d.ts",
+      "default": "./dist/contract.js"
+    },
+    "./tokens/*": "./dist/tokens/*"
   },
   "files": [
     "dist",

@@ -1,5 +1,5 @@
 // Renderers for the docs site and the agent-facing text files.
-import type { Component, EvidenceStatus, Era, PackageInfo } from "../components/types.ts";
+import type { Component, EvidenceStatus, Era, PackageInfo } from "../packages/core/src/types.ts";
 
 const esc = (s: unknown): string => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 const ERA: Record<Era, string> = { system6: "System 6", system7: "System 7", drawingboard: "Drawing Board", platinum: "Platinum", nextstep: "NeXTSTEP", both: "Classic eras" };

@@ -1,0 +1,36 @@
+// Pop-up menu: markup, selectors, tokens and evidence (statuses: AGENTS.md). Edit here, then `npm run build`.
+import type { Component } from "../../types.ts";
+
+const component: Component = {
+  id: "select",
+  name: "Pop-up menu",
+  summary: "A <select> drawn as the era's pop-up menu; <select multiple> or size>1 becomes a list box.",
+  selectors: ["select", "select[multiple]", "select[size]"],
+  tokens: ["--clio-popup-bg", "--clio-popup-border", "--clio-popup-shadow", "--clio-popup-arrow"],
+  accessibility: "Native <select>, so the open list is the browser's own and works everywhere.",
+  html: `<div class="field-row">
+  <label for="clio-font">Font:</label>
+  <select id="clio-font">
+    <option>Chicago</option>
+    <option selected>Geneva</option>
+    <option>New York</option>
+  </select>
+</div>`,
+  evidence: [
+    { era: "both", claim: "Open pop-up menu: the era's menu laid over the button, the current item on the button's row, checked", status: "inferred", source: "clio.css capture, Mac OS 9.0 in Infinite Mac, SimpleText Text Style (frame platinum9/cl-size-popup)", upstream: "drawn with appearance: base-select where supported (Chrome 135, Safari 27; clio.js lines it up), by clio.js elsewhere; the row alignment is checked by npm run behaviour, not against pixels" },
+    { era: "platinum", claim: "Open pop-up menu: its top on the button's top (the current item there), as wide as the button less its 20px of arrows, framed all round in black with the white and #999 bevel, the shadow starting 2px in; check mark 3px in, text 20px, each antialiasing level as the screen shows it", status: "measured", source: "clio.css capture, Mac OS 9.0 in Infinite Mac, Appearance > Fonts, Large System Font held with the pointer off the menu (frame fonts-popup-open)", upstream: "specimens p9-js-popup-open (clio.js, all three engines) and p9-popup-open (base-select, Chromium and WebKit) 100% identical" },
+    { era: "platinum", claim: "While its menu is open the pop-up button's arrows are drawn pressed: #444 top row, #555 then a #666 face, white arrows, #777 and #888 below and right, the frame's corners to match", status: "measured", source: "clio.css capture, Mac OS 9.0 in Infinite Mac (frame fonts-popup-open); tooling/p9-art.py and frame-art.py", upstream: "specimens p9-js-popup-open-arrows and p9-popup-open-arrows (select:open) 100% identical" },
+    { era: "system7", claim: "An 18px box with an 11×6 black triangle 5px from the right edge, label 15px in, and a 1px shadow that starts 3px in from the corner", status: "measured", source: "clio.css capture, System 7.5.3 in Infinite Mac (npm run capture:system7), frame numbers (Number Format)", upstream: "100% identical; the triangle is System 7's addition" },
+    { era: "system6", claim: "An 18px rectangle with a 1px frame and a 1px drop shadow and no arrow; the shadow is what marks it as a menu; held, it inverts", status: "measured", source: "clio.css capture, System 6.0.8 in Infinite Mac (npm run capture:system6), frames save-dialog and popup-held (Standard File folder menu)", upstream: "the down triangle arrived with System 7" },
+    { era: "system7", claim: "Dimmed: the whole control (frame, shadow, title, arrow) drawn through the 50% gray, ink kept where x + y is odd, the pattern from the control's corner (QuickDraw kept it to the screen); browsers do not fade it; the arrow centred at floor(spare / 2)", status: "measured", source: "clio.css capture, System 7.5.3 in Infinite Mac, Memory control panel with virtual memory off (Select Hard Disk; frame memory)", upstream: "specimen s7-popup-disabled 100% identical in Chromium and Firefox; WebKit ignores mask-clip: no-clip, so the dimmed shadow is not drawn there" },
+    { era: "system6", claim: "Dimmed: as System 7, the control through the 50% gray", status: "inferred", source: "the System 7 measurement; no dimmed pop-up menu found in System 6.0.8's control panels and Finder", upstream: "dimmed buttons and items use the same pattern there (measured)" },
+    { era: "platinum", claim: "#ddd, 3px corners, white/#aaa bevel, bold label, a separate bevelled arrow part with the 7x10 arrow", status: "measured", source: "apps/desktop/styles/65-appearance-themes.css:1916 (P31)", upstream: "GUIdebook Mac OS 9.0 (popup-normal specimen), native 09b" },
+    { era: "platinum", claim: "The arrow part, drawn with background layers: a #aaa divider 20px from the right, a raised box with a white left and top edge and a #aaa then #777 shade, the arrows 7px from the right and 4px down; the field has a white top line and #aaa foot", status: "measured", source: "clio.css capture, Mac OS 9.0 in Infinite Mac (npm run capture:platinum), frame appearance-tab", upstream: "\"Apple platinum\" pop-up, 96.7% identical (p9-popup-end)" },
+    { era: "platinum", claim: "Arrow art (7x10), black, and #888 when disabled", status: "measured", source: "clio.css capture, Mac OS 9.0 in Infinite Mac (npm run capture:platinum), frames appearance-tab and appearance; tooling/p9-art.py", upstream: "replaces classic-stylesheets dropdown.svg" },
+    { era: "drawingboard", claim: "Pop-up menu: 20px, four pattern pens (ppat 7095-7098; disabled: their other rows) tiled from the last column and row, the corner pixels they leave, #cec6b5 face; the 7x9 double arrow 5px from the right and 4px down; the hatched ButtonFaceCorner (image 2, disabled image 3) ends 19px from the right", status: "measured", source: "clio.css capture, Mac OS 8.5 with the 8.5b6 Drawing Board theme in Infinite Mac (npm run capture:drawingboard), frame appearance; the theme file's ppat and pxm# resources, decoded by tooling/theme-resources.py, written by tooling/db-art.py and tooling/db-pens.py", upstream: "Appearance, Highlight Color and Variation pop-ups" },
+    { era: "drawingboard", claim: "Open pop-up menu: drawn by clio.js wherever it runs (the browser's picker cannot carry the theme's shade and corner pixels; without clio.js, base-select draws it plain): its top on the button's, as wide as the button less 20px of arrows, the top pen shifted with the button's phase, text 18px in and a pixel higher than in pull-down menus, the check 1px in and drawn in the menu ink #313131 (the menu font's glyph, not black: its solid pixels read 49,49,49), the underline on the item's last rows with its right piece ending 16px in, and no keyboard focus ring round the pressed button", status: "measured", source: "clio.css capture, Mac OS 8.5 with the theme in Infinite Mac, Appearance > Appearance held (frame popup-open)", upstream: "specimens db-js-popup-open and db-popup-open 97.3% same, 99.95% within 8/255, none structurally off (2026-11-23: the check's ink, the underline's right piece 1px left and the ring were the off pixels; what remains is antialiasing over the paper within a step)" },
+    { era: "nextstep", claim: "Pop-up list: a 20px push button with the raised 11x8 bar mark 4px from its right and 5px from its top; no frame of its own", status: "measured", source: "clio.css capture, NeXTStep 3.0 in Infinite Mac (frames in .fidelity/ns30), frame prefs-dock (Workspace Manager Preferences, Dock), the Dock pop-up, 130x20); tooling/nx-art.py check", upstream: "fidelity nx-popup" },
+  ],
+};
+
+export default component;

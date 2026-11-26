@@ -16,7 +16,7 @@ import { execFileSync } from "node:child_process";
 import { mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { components } from "../components/index.ts";
+import { components } from "../packages/core/src/components.ts";
 import { SEP } from "../packages/core/src/assemble.ts";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");

@@ -4,7 +4,7 @@ import { expect, test } from "vitest";
 import { readFileSync, existsSync, statSync, readdirSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
-import { components } from "../components/index.ts";
+import { components } from "../packages/core/src/components.ts";
 import { usage } from "../packages/core/src/bundles.ts";
 import { segments } from "../packages/core/src/assemble.ts";
 
@@ -186,6 +186,21 @@ section("11. Fragments assemble the single files");
     const n = existsSync(join(base, f)) ? segments(f).length : 0;
     ok(ns.length === n && ns.every((x, i) => x === i), `${f}: order.ts uses segments ${ns.join(",")} of ${n}`);
   }
+}
+
+section("12. The host contract mirrors the index and the CSS");
+{
+  const c = (await import("../dist/contract.js")).default as { eras: string[]; components: { id: string; selectors: string[]; tokens: string[] }[]; tokens: Record<string, Record<string, string>> };
+  ok(JSON.stringify(c.components.map((x) => [x.id, x.selectors, x.tokens])) === JSON.stringify(components.map((x) => [x.id, x.selectors, x.tokens])), "contract.js: components differ from the index");
+  ok(JSON.stringify(c.eras) === JSON.stringify(["system6", "system7", "drawingboard", "platinum", "nextstep"]), `contract.js: eras ${c.eras.join(" ")}`);
+  for (const era of c.eras) {
+    const file = JSON.parse(read(`dist/tokens/${era}.json`));
+    ok(JSON.stringify(file) === JSON.stringify(c.tokens[era]), `dist/tokens/${era}.json differs from contract.js`);
+    ok(Object.keys(file).length > 300, `dist/tokens/${era}.json has ${Object.keys(file).length} tokens`);
+  }
+  // a token a component names is a page default or declared on some selector: the contract names nothing that does not exist
+  const anyDeclared = new Set([...noComments.matchAll(/(--clio-[\w-]+)\s*:/g), ...nxNoComments.matchAll(/(--clio-[\w-]+)\s*:/g)].map((m) => m[1]));
+  for (const x of c.components) for (const t of x.tokens) ok(anyDeclared.has(t) || optional.has(t) || fromJs(t), `${x.id} names ${t}, which no CSS declares`);
 }
 
 for (const [name, r] of sections) {
