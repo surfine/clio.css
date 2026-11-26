@@ -52,8 +52,8 @@ site under the same name, and `clio.css/components.json` lists them for tools.
 ## Source
 
 Written once in JSX in [`packages/components`](https://github.com/surfine/clio.css/tree/main/packages/components),
-which builds this package and its Preact twin (`clio.css-preact`). Built with heavy AI
-assistance; the markup check and clio.css's [EVIDENCE.md](https://github.com/surfine/clio.css/blob/main/EVIDENCE.md)
-are how to verify it.
+which builds this package and its Preact twin (`clio.css-preact`). Both are checked to render the
+markup in clio.css's `components.json`; where each value comes from is in
+[EVIDENCE.md](https://github.com/surfine/clio.css/blob/main/EVIDENCE.md).
 
 MIT, see [LICENSE](LICENSE). Not affiliated with or endorsed by Apple Inc. or NeXT.

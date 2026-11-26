@@ -99,6 +99,16 @@ For AI coding agents using or changing this repository.
   hand. Clio Sans '97 (Charcoal 12) comes from Mac OS 9.0's Key Caps, whose bar is 2px.
 - Keep `dist/clio.min.css` under the size budget in `test/check.test.ts`.
 
+## Disclosure
+
+- A commit an AI agent writes or helps with ends with an `Assisted-by: <model> via <tool>`
+  trailer (for example `Assisted-by: Claude Opus 5.5 via Claude Code`), the form Fedora's
+  AI-assisted contribution policy uses. The same line goes at the end of pull requests and
+  issues an agent prepares for other projects.
+- That trailer is the disclosure. README, release notes, launch posts and PR descriptions do
+  not present AI use as a feature or a reason to trust or distrust the work; the evidence
+  rows and `npm run fidelity:public` are what readers check.
+
 ## Releasing (owner only)
 
 - `npm run verify` is the local release gate (GitHub Actions is not used). It clones HEAD

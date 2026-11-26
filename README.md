@@ -94,8 +94,8 @@ NeXTSTEP, where each value says where it came from and the pixel check can be re
   on title-bar boxes are [labelled adaptations](#what-the-era-did-not-have).
 - **Overridable.** Every rule uses `:where()` or a single class, and every value is a
   `--clio-*` custom property, so your CSS wins without `!important` ([Theming](#theming)).
-- **Built with heavy AI assistance**, which is why the claims above are checkable rather than
-  asserted: read the evidence rows, and run `npm run fidelity:public` ([Fidelity](#fidelity)).
+- **Checkable.** The claims above can be checked rather than taken on trust: read the
+  evidence rows, and run `npm run fidelity:public` ([Fidelity](#fidelity)).
 
 ## Quick start
 
@@ -460,6 +460,7 @@ npm run verify     # the release gate: fresh clone, packs, baselines, docs, link
 npm run fidelity   # full pixel check (needs the author's AI System 6 checkout)
 ```
 
+Commits made with AI tools say so in an `Assisted-by:` trailer, the form Fedora's AI policy uses.
 Every new or changed value needs an evidence row with an honest status; see
 [AGENTS.md](AGENTS.md). Scope is fixed: Classic Mac OS and NeXTSTEP, no new eras (Mac OS X is a
 separate project, clio.wasm). How the eras were measured: [dev/LESSONS.md](dev/LESSONS.md).
