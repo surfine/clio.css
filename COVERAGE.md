@@ -83,7 +83,7 @@ in EVIDENCE.md; the pixel checks are in FIDELITY.md.
 `data-era="nextstep"`, shipped only in `dist/clio.nextstep.css` (D14). One row per element
 of ROADMAP-MACOSX.md section 4's NeXTSTEP list. Source: **NXUG3**, *NeXTSTEP User Interface
 Guidelines, Release 3* (NeXT, November 1993). Status as above: **yes** (measured from NeXTStep
-3.0 running in Infinite Mac, the nearest real 3.x system the emulator has; no 3.3 frame yet),
+3.0 running in Infinite Mac, which the owner accepted as the source for 3.3's look, D15),
 **inferred** (ported from AI System 6 or drawn from NXUG3, not measured), **adapted** (a web
 change), **—** (not in clio.css).
 

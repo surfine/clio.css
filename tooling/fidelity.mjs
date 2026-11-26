@@ -682,7 +682,8 @@ ${table("platinum")}
 
 Reference: NeXTStep 3.0 running in Infinite Mac (the Previous emulator), the 1120×832 canvas
 read 1:1 (frames in \`.fidelity/ns30\`). Infinite Mac has no NeXTSTEP 3.3; 3.0 is the nearest
-real 3.x system it runs. Helvetica text is masked: Display PostScript set it 1-bit, and the
+real 3.x system it runs, and the owner accepted it as the
+source for 3.3's look (D15). Helvetica text is masked: Display PostScript set it 1-bit, and the
 browser's Helvetica cannot match it (D3); its rows are checked by eye.
 
 ${table("nextstep")}

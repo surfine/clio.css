@@ -15,7 +15,8 @@ bytes except for the version in their banner.
   lists, sliders, boxes, the column browser (`.browser`), the pull-down list (`.pull-down`)
   and the Workspace dock (`.dock`), which exist only in this file.
 - **Measured** in NeXTStep 3.0 running in Infinite Mac (Infinite Mac has no 3.3; 3.0 is the
-  nearest real 3.x system it runs, and every row names the frame it came from). All 27
+  nearest real 3.x system it runs, and every row names the frame it came from; the owner accepted 3.0 as the source for 3.3's
+  look, D15 in ROADMAP-MACOSX.md). All 27
   NeXTSTEP specimens in FIDELITY.md are pixel-identical to the frames in Chromium, WebKit
   and Firefox; the values ported
   from AI System 6 that the frames contradicted are corrected (main window, pressed button,
