@@ -27,8 +27,8 @@ const t0 = Date.now();
 for (;;) {
   await page.waitForTimeout(3000);
   const ok = await page.evaluate(() => {
-    const c = document.querySelector("canvas"); if (!c) return false;
-    const d = c.getContext("2d").getImageData(0, 0, c.width, 22).data;
+    const c = document.querySelector("canvas")!; if (!c) return false;
+    const d = c.getContext("2d")!.getImageData(0, 0, c.width, 22).data;
     let w = 0, b = 0;
     for (let x = 0; x < c.width; x++) { if (d[(5 * c.width + x) * 4] > 200) w++; if (d[(19 * c.width + x) * 4] < 50) b++; }
     return w > c.width * 0.6 && b > c.width * 0.9;
@@ -38,20 +38,21 @@ for (;;) {
 }
 await page.waitForTimeout(20000); // let the extra disks mount and the desktop settle
 const box = await page.locator("canvas").boundingBox();
-const at = (x, y) => [box.x + x + 0.5, box.y + y + 0.5];
-const wait = (ms) => page.waitForTimeout(ms);
-const move = async (x, y) => { await page.mouse.move(...at(x, y), { steps: 4 }); await wait(150); };
-const click = async (x, y) => { await move(x, y); await page.mouse.down(); await wait(120); await page.mouse.up(); await wait(400); };
-const cmd = async (k) => { await page.keyboard.down("Meta"); await wait(150); await page.keyboard.press(k); await wait(150); await page.keyboard.up("Meta"); await wait(3000); };
-const dump = async (name) => {
-  const b64 = await page.evaluate(() => document.querySelector("canvas").toDataURL("image/png").split(",")[1]);
+if (!box) throw new Error("the emulator canvas has no box");
+const at = (x: number, y: number): [number, number] => [box.x + x + 0.5, box.y + y + 0.5];
+const wait = (ms: number) => page.waitForTimeout(ms);
+const move = async (x: number, y: number) => { await page.mouse.move(...at(x, y), { steps: 4 }); await wait(150); };
+const click = async (x: number, y: number) => { await move(x, y); await page.mouse.down(); await wait(120); await page.mouse.up(); await wait(400); };
+const cmd = async (k: string, ms = 3000) => { await page.keyboard.down("Meta"); await wait(150); await page.keyboard.press(k); await wait(150); await page.keyboard.up("Meta"); await wait(ms); };
+const dump = async (name: string) => {
+  const b64 = await page.evaluate(() => document.querySelector("canvas")!.toDataURL("image/png").split(",")[1]);
   writeFileSync(join(out, `${name}.png`), Buffer.from(b64, "base64"));
   console.log("captured", name);
 };
 
 // Ink share in a canvas rectangle (Infinite Mac draws black as #222).
-const ink = (x, y, w, h) => page.evaluate(([x, y, w, h]) => {
-  const d = document.querySelector("canvas").getContext("2d").getImageData(x, y, w, h).data;
+const ink = (x: number, y: number, w: number, h: number) => page.evaluate(([x, y, w, h]) => {
+  const d = document.querySelector("canvas")!.getContext("2d")!.getImageData(x, y, w, h).data;
   let k = 0; for (let i = 0; i < d.length; i += 4) if (d[i] < 128) k++; return k / (d.length / 4);
 }, [x, y, w, h]);
 // Select the desktop document "Welcome!" and confirm its name tag inverted.

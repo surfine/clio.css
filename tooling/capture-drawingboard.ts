@@ -40,8 +40,8 @@ const t0 = Date.now();
 for (;;) {
   await page.waitForTimeout(3000);
   const ok = await page.evaluate(() => {
-    const c = document.querySelector("canvas"); if (!c) return false;
-    const d = c.getContext("2d").getImageData(0, 0, c.width, 22).data;
+    const c = document.querySelector("canvas")!; if (!c) return false;
+    const d = c.getContext("2d")!.getImageData(0, 0, c.width, 22).data;
     let w = 0, b = 0;
     for (let x = 0; x < c.width; x++) { if (d[(5 * c.width + x) * 4] > 200) w++; if (d[(19 * c.width + x) * 4] < 50) b++; }
     return w > c.width * 0.6 && b > c.width * 0.9;
@@ -51,26 +51,27 @@ for (;;) {
 }
 await page.waitForTimeout(30000); // let the extra disks mount and the desktop settle
 const box = await page.locator("canvas").boundingBox();
-const at = (x, y) => [box.x + x + 0.5, box.y + y + 0.5];
-const wait = (ms) => page.waitForTimeout(ms);
-const move = async (x, y) => { await page.mouse.move(...at(x, y), { steps: 4 }); await wait(150); };
-const click = async (x, y) => { await move(x, y); await page.mouse.down(); await wait(120); await page.mouse.up(); await wait(400); };
-const cmd = async (k, ms = 3000) => { await page.keyboard.down("Meta"); await wait(150); await page.keyboard.press(k); await wait(150); await page.keyboard.up("Meta"); await wait(ms); };
-const dump = async (name) => {
-  const b64 = await page.evaluate(() => document.querySelector("canvas").toDataURL("image/png").split(",")[1]);
+if (!box) throw new Error("the emulator canvas has no box");
+const at = (x: number, y: number): [number, number] => [box.x + x + 0.5, box.y + y + 0.5];
+const wait = (ms: number) => page.waitForTimeout(ms);
+const move = async (x: number, y: number) => { await page.mouse.move(...at(x, y), { steps: 4 }); await wait(150); };
+const click = async (x: number, y: number) => { await move(x, y); await page.mouse.down(); await wait(120); await page.mouse.up(); await wait(400); };
+const cmd = async (k: string, ms = 3000) => { await page.keyboard.down("Meta"); await wait(150); await page.keyboard.press(k); await wait(150); await page.keyboard.up("Meta"); await wait(ms); };
+const dump = async (name: string) => {
+  const b64 = await page.evaluate(() => document.querySelector("canvas")!.toDataURL("image/png").split(",")[1]);
   writeFileSync(join(out, `${name}.png`), Buffer.from(b64, "base64"));
   console.log("captured", name);
 };
 
-const drag = async (x0, y0, x1, y1) => { await move(x0, y0); await page.mouse.down(); await wait(400); for (let i = 1; i <= 20; i++) await move(x0 + (x1 - x0) * i / 20, y0 + (y1 - y0) * i / 20); await wait(600); await page.mouse.up(); await wait(2500); };
+const drag = async (x0: number, y0: number, x1: number, y1: number) => { await move(x0, y0); await page.mouse.down(); await wait(400); for (let i = 1; i <= 20; i++) await move(x0 + (x1 - x0) * i / 20, y0 + (y1 - y0) * i / 20); await wait(600); await page.mouse.up(); await wait(2500); };
 const away = async () => { await move(600, 590); await wait(300); };
-const menuBarUp = () => page.evaluate(() => { const c = document.querySelector("canvas"); const d = c.getContext("2d").getImageData(0, 0, c.width, 22).data; let w = 0; for (let x = 0; x < c.width; x++) if (d[(6 * c.width + x) * 4] > 180) w++; return w > c.width * 0.5; });
+const menuBarUp = () => page.evaluate(() => { const c = document.querySelector("canvas")!; const d = c.getContext("2d")!.getImageData(0, 0, c.width, 22).data; let w = 0; for (let x = 0; x < c.width; x++) if (d[(6 * c.width + x) * 4] > 180) w++; return w > c.width * 0.5; });
 
 // 1. Drop the zipped theme; Infinite Mac expands it into The Outside World:Downloads.
 await page.evaluate(async (b64) => {
   const bin = Uint8Array.from(atob(b64), (c) => c.charCodeAt(0));
   const dt = new DataTransfer(); dt.items.add(new File([bin], "DrawingBoard.zip", { type: "application/zip" }));
-  const t = document.querySelector("canvas"); const r = t.getBoundingClientRect();
+  const t = document.querySelector("canvas")!; const r = t.getBoundingClientRect();
   for (const e of ["dragenter", "dragover", "drop"]) t.dispatchEvent(new DragEvent(e, { dataTransfer: dt, bubbles: true, cancelable: true, clientX: r.x + 200, clientY: r.y + 200 }));
 }, zip);
 await wait(15000);
@@ -91,7 +92,7 @@ await wait(25000);
 // 5. Apple menu > Control Panels > Appearance; Appearance tab; choose Drawing Board.
 // Apple menu > Control Panels > item at y. The Control Panels row is at y=176 in
 // Platinum (16px rows) and y=194 in Drawing Board (20px rows for items with icons).
-const appleSub = async (y, peek, cp = 176) => {
+const appleSub = async (y: number, peek?: string | null, cp = 176) => {
   await move(18, 9); await page.mouse.down(); await wait(1300);
   await move(60, 120); await move(60, cp); await wait(1300);
   await move(150, cp); await move(240, cp + 1); await wait(600); await move(240, 120); await move(240, y); await wait(1000);

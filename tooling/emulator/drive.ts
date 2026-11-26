@@ -20,9 +20,11 @@ import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 // Playwright from this repo.
 const root = join(dirname(fileURLToPath(import.meta.url)), "../..");
+interface Tap { on: boolean; chunks: Float32Array[][]; ctxs: AudioContext[]; seen: string[] }
+declare global { interface Window { __clioTap: Tap } }
 import pw from "playwright";
 const [url, dir, W = "1200", H = "900"] = process.argv.slice(2);
-const log = (s) => appendFileSync(`${dir}/log`, s + "\n");
+const log = (s: string) => appendFileSync(`${dir}/log`, s + "\n");
 writeFileSync(`${dir}/cmd`, ""); writeFileSync(`${dir}/log`, "");
 const b = await pw.chromium.launch({ args: ["--autoplay-policy=no-user-gesture-required"] });
 const page = await b.newPage({ viewport: { width: +W, height: +H } });
@@ -32,19 +34,21 @@ page.on("download", async (d) => { const f = `${dir}/${d.suggestedFilename()}`; 
 // a recorder (a ScriptProcessor, which hands over every rendered quantum on the main
 // thread), so the emulator's sound is captured as the browser was given it.
 await page.addInitScript(() => {
-  const tap = (window.__clioTap = { on: false, chunks: [], ctxs: [], seen: [] });
-  const recorders = new WeakMap();
-  const recorderFor = (ctx) => {
+  const tap: Tap = (window as unknown as { __clioTap: Tap }).__clioTap = { on: false, chunks: [], ctxs: [], seen: [] };
+  const recorders = new WeakMap<BaseAudioContext, ScriptProcessorNode>();
+  const recorderFor = (ctx: BaseAudioContext): ScriptProcessorNode => {
     let r = recorders.get(ctx);
     if (r) return r;
     r = ctx.createScriptProcessor(1024, 2, 2);
-    r.onaudioprocess = (e) => { const i = e.inputBuffer; if (tap.on) tap.chunks.push([i.getChannelData(0).slice(), i.getChannelData(1).slice()]); for (let c = 0; c < e.outputBuffer.numberOfChannels; c++) e.outputBuffer.getChannelData(c).fill(0); };
+    r.onaudioprocess = (e: AudioProcessingEvent) => { const i = e.inputBuffer; if (tap.on) tap.chunks.push([i.getChannelData(0).slice(), i.getChannelData(1).slice()]); for (let c = 0; c < e.outputBuffer.numberOfChannels; c++) e.outputBuffer.getChannelData(c).fill(0); };
     r.connect(ctx.destination);
-    recorders.set(ctx, r); tap.ctxs.push(ctx);
+    recorders.set(ctx, r); tap.ctxs.push(ctx as AudioContext);
     return r;
   };
-  const connect = AudioNode.prototype.connect;
-  AudioNode.prototype.connect = function (dest, ...rest) {
+  type Connect = (this: AudioNode, dest: AudioNode | AudioParam, ...rest: number[]) => unknown;
+  const proto = AudioNode.prototype as unknown as { connect: Connect };
+  const connect = proto.connect;
+  proto.connect = function (this: AudioNode, dest: AudioNode | AudioParam, ...rest: number[]) {
     const out = connect.call(this, dest, ...rest);
     if (dest instanceof AudioDestinationNode && !(this instanceof ScriptProcessorNode)) { tap.seen.push(this.constructor.name); connect.call(this, recorderFor(this.context)); }
     return out;
@@ -52,7 +56,7 @@ await page.addInitScript(() => {
 });
 await page.goto(url, { waitUntil: "domcontentloaded" });
 await page.waitForSelector("canvas", { timeout: 120000 });
-let box; const at = async (x, y) => { box = await page.locator("canvas").boundingBox(); return [box.x + +x + 0.5, box.y + +y + 0.5]; };
+const at = async (x: number | string, y: number | string): Promise<[number, number]> => { const box = await page.locator("canvas").boundingBox(); if (!box) throw new Error("the emulator canvas has no box"); return [box.x + +x + 0.5, box.y + +y + 0.5]; };
 log("ready");
 let done = 0, recAt = 0;   // while recording, each command's start is logged as @ms after arec
 for (;;) {
@@ -75,30 +79,30 @@ for (;;) {
       else if (c === "type") { for (const ch of a.join(" ")) { await page.keyboard.press(ch === " " ? "Space" : ch); await page.waitForTimeout(80); } }
       else if (c === "cmd") { await page.keyboard.down("Meta"); await page.waitForTimeout(150); await page.keyboard.press(a[0]); await page.waitForTimeout(150); await page.keyboard.up("Meta"); }
       else if (c === "wait") await page.waitForTimeout(+a[0]);
-      else if (c === "shot") { const b64 = await page.evaluate(() => document.querySelector("canvas").toDataURL("image/png").split(",")[1]); writeFileSync(`${dir}/${a[0]}.png`, Buffer.from(b64, "base64")); }
-      else if (c === "burst") { const [name, n, ms] = a; for (let i = 0; i < +n; i++) { const b64 = await page.evaluate(() => document.querySelector("canvas").toDataURL("image/png").split(",")[1]); writeFileSync(`${dir}/${name}-${i}.png`, Buffer.from(b64, "base64")); if (ms) await page.waitForTimeout(+ms); } log(`burst ${name} x${n} @${ms}ms`); }
+      else if (c === "shot") { const b64 = await page.evaluate(() => document.querySelector("canvas")!.toDataURL("image/png").split(",")[1]); writeFileSync(`${dir}/${a[0]}.png`, Buffer.from(b64, "base64")); }
+      else if (c === "burst") { const [name, n, ms] = a; for (let i = 0; i < +n; i++) { const b64 = await page.evaluate(() => document.querySelector("canvas")!.toDataURL("image/png").split(",")[1]); writeFileSync(`${dir}/${name}-${i}.png`, Buffer.from(b64, "base64")); if (ms) await page.waitForTimeout(+ms); } log(`burst ${name} x${n} @${ms}ms`); }
       else if (c === "shiftclick") { await page.mouse.move(...await at(a[0], a[1]), { steps: 5 }); await page.keyboard.down("Shift"); await page.waitForTimeout(100); await page.mouse.down(); await page.waitForTimeout(120); await page.mouse.up(); await page.keyboard.up("Shift"); }
       else if (c === "ctrlclick") { await page.mouse.move(...await at(a[0], a[1]), { steps: 5 }); await page.keyboard.down("Control"); await page.waitForTimeout(200); await page.mouse.down(); await page.waitForTimeout(1500); }
       else if (c === "ctrlup") { await page.mouse.up(); await page.keyboard.up("Control"); }
       else if (c === "dropzip") {
-        const zip = readFileSync(a.join(" ")).toString("base64"); const name = a.join(" ").split("/").pop();
-        await page.evaluate(async ([b64, name]) => {
+        const zip = readFileSync(a.join(" ")).toString("base64"); const name = a.join(" ").split("/").pop() ?? "upload.zip";
+        await page.evaluate(async ([b64, name]: [string, string]) => {
           const bin = Uint8Array.from(atob(b64), (c) => c.charCodeAt(0));
           const dt = new DataTransfer(); dt.items.add(new File([bin], name, { type: "application/zip" }));
-          const t = document.querySelector("canvas"); const r = t.getBoundingClientRect();
+          const t = document.querySelector("canvas")!; const r = t.getBoundingClientRect();
           for (const e of ["dragenter", "dragover", "drop"]) t.dispatchEvent(new DragEvent(e, { dataTransfer: dt, bubbles: true, cancelable: true, clientX: r.x + 200, clientY: r.y + 200 }));
-        }, [zip, name]);
+        }, [zip, name] as [string, string]);
       }
       else if (c === "rec") {
         // rec x y w h ms [moveX moveY | up | down | key K]: record a crop every animation frame; optional action at start
         const [x, y, w, h, ms] = a.slice(0, 5).map(Number); const act = a.slice(5);
-        const p = page.evaluate(([x, y, w, h, ms]) => new Promise((res) => {
-          const cv = document.querySelector("canvas"); const g = document.createElement("canvas").getContext("2d", { willReadFrequently: true });
-          g.canvas.width = w; g.canvas.height = h; const out = []; const t0 = performance.now(); let last = null;
+        const p = page.evaluate(([x, y, w, h, ms]: [number, number, number, number, number]) => new Promise<[number, number][]>((res) => {
+          const cv = document.querySelector("canvas")!; const g = document.createElement("canvas").getContext("2d", { willReadFrequently: true })!;
+          g.canvas.width = w; g.canvas.height = h; const out: [number, number][] = []; const t0 = performance.now(); let last: number | null = null;
           const step = () => { g.drawImage(cv, x, y, w, h, 0, 0, w, h); const d = g.getImageData(0, 0, w, h).data; let s = 0; for (let i = 0; i < d.length; i += 4) s = (s * 31 + d[i] + d[i + 1] * 3 + d[i + 2] * 7) >>> 0;
             const t = Math.round(performance.now() - t0); if (s !== last) { out.push([t, s]); last = s; } if (t < ms) requestAnimationFrame(step); else res(out); };
           requestAnimationFrame(step);
-        }), [x, y, w, h, ms]);
+        }), [x, y, w, h, ms] as [number, number, number, number, number]);
         if (act[0] === "up") { await page.waitForTimeout(30); await page.mouse.up(); }
         else if (act[0] === "down") { await page.waitForTimeout(30); await page.mouse.down(); }
         else if (act[0] === "key") { await page.waitForTimeout(30); await page.keyboard.press(act[1]); }
@@ -108,13 +112,13 @@ for (;;) {
       else if (c === "film") {
         // film x y w h ms [dbl X Y]: every changed frame of a crop as a PNG, with its time
         const [x, y, w, h, ms] = a.slice(0, 5).map(Number); const act = a.slice(5);
-        const p = page.evaluate(([x, y, w, h, ms]) => new Promise((res) => {
-          const cv = document.querySelector("canvas"); const g = document.createElement("canvas").getContext("2d", { willReadFrequently: true });
-          g.canvas.width = w; g.canvas.height = h; const out = []; const t0 = performance.now(); let last = null;
+        const p = page.evaluate(([x, y, w, h, ms]: [number, number, number, number, number]) => new Promise<[number, string][]>((res) => {
+          const cv = document.querySelector("canvas")!; const g = document.createElement("canvas").getContext("2d", { willReadFrequently: true })!;
+          g.canvas.width = w; g.canvas.height = h; const out: [number, string][] = []; const t0 = performance.now(); let last: number | null = null;
           const step = () => { g.drawImage(cv, x, y, w, h, 0, 0, w, h); const d = g.getImageData(0, 0, w, h).data; let s = 0; for (let i = 0; i < d.length; i += 4) s = (s * 31 + d[i] + d[i + 1] * 3 + d[i + 2] * 7) >>> 0;
             const t = Math.round(performance.now() - t0); if (s !== last) { out.push([t, g.canvas.toDataURL("image/png")]); last = s; } if (t < ms) requestAnimationFrame(step); else res(out); };
           requestAnimationFrame(step);
-        }), [x, y, w, h, ms]);
+        }), [x, y, w, h, ms] as [number, number, number, number, number]);
         if (act[0] === "up") { await page.waitForTimeout(30); await page.mouse.up(); }
         if (act[0] === "down") { await page.waitForTimeout(30); await page.mouse.down(); }
         if (act[0] === "dbl") { await page.waitForTimeout(30); await page.mouse.move(...await at(act[1], act[2]), { steps: 2 }); for (let i = 0; i < 2; i++) { await page.mouse.down(); await page.waitForTimeout(60); await page.mouse.up(); await page.waitForTimeout(60); } }
@@ -132,7 +136,7 @@ for (;;) {
           const n = t.chunks.reduce((s, c) => s + c[0].length, 0), L = new Float32Array(n), R = new Float32Array(n);
           let o = 0; for (const [a, b] of t.chunks) { L.set(a, o); R.set(b, o); o += a.length; }
           t.chunks = [];
-          const b64 = (f) => { const u = new Uint8Array(f.buffer); let s = ""; for (let i = 0; i < u.length; i += 0x8000) s += String.fromCharCode(...u.subarray(i, i + 0x8000)); return btoa(s); };
+          const b64 = (f: Float32Array) => { const u = new Uint8Array(f.buffer); let s = ""; for (let i = 0; i < u.length; i += 0x8000) s += String.fromCharCode(...u.subarray(i, i + 0x8000)); return btoa(s); };
           return { rate: t.ctxs[0] ? t.ctxs[0].sampleRate : 0, l: b64(L), r: b64(R) };
         });
         const L = new Float32Array(new Uint8Array(Buffer.from(l, "base64")).buffer), R = new Float32Array(new Uint8Array(Buffer.from(r, "base64")).buffer);
@@ -148,7 +152,7 @@ for (;;) {
       else if (c === "quit") { log("bye"); await b.close(); process.exit(0); }
       if (c === "astop") recAt = 0;
       log("ok " + lines[done - 1] + at0);
-    } catch (e) { log("ERR " + lines[done - 1] + " " + e.message.split("\n")[0]); }
+    } catch (e) { log("ERR " + lines[done - 1] + " " + (e as Error).message.split("\n")[0]); }
   }
   await page.waitForTimeout(200);
 }
