@@ -1,6 +1,6 @@
 # clio.css
 
-**Classic Mac OS interfaces in CSS: System 6, System 7, Mac OS 8.5 Drawing Board and Mac OS 8/9 Platinum, with every value traced to measured pixels.**
+**Classic Mac OS interfaces in CSS: System 6, System 7, Mac OS 8.5 Drawing Board and Mac OS 8/9 Platinum, and NeXTSTEP 3.3 in a file of its own, with every value traced to measured pixels.**
 
 [![npm](https://img.shields.io/npm/v/clio.css)](https://www.npmjs.com/package/clio.css)
 [![licence](https://img.shields.io/npm/l/clio.css)](LICENSE)
@@ -47,8 +47,9 @@ npm install clio.css
 | `dist/clio.system7.css` | System 7 (colour) as the page default | 113 kB | 20.1 kB |
 | `dist/clio.drawingboard.css` | Drawing Board as the page default | 191 kB | 33.2 kB |
 | `dist/clio.platinum.css` | Platinum as the page default | 152 kB | 27.0 kB |
+| `dist/clio.nextstep.css` | NeXTSTEP 3.3 (its own file, never in `clio.css`) | 146 kB | 25.4 kB |
 
-Sizes are the `*.min.css` builds of 1.0.2 (gzip -9); fonts and art load separately.
+Sizes are the `*.min.css` builds (1.0.2; `clio.nextstep.css` 1.1.0; gzip); fonts and art load separately.
 `dist/components.json` is the machine-readable index: selectors, tokens, markup and
 evidence for each component.
 
@@ -94,10 +95,24 @@ Mac's arrow and I-beam cursors are on by default; `class="clio-system-cursors"` 
 | `system7` | System 7.5.3 in Infinite Mac | Colour frame and title bar on the System 6 layout |
 | `drawingboard` | Mac OS 8.5 with the 8.5b6 Drawing Board theme, in Infinite Mac; control parts from the theme's own pixmaps | Paper, pencil lines and hatched corners (the Appearance theme Apple shipped in betas and withdrew) |
 | `platinum` | Mac OS 9.0 in Infinite Mac, and GUIdebook Mac OS 9.0 captures | Grey bevelled controls, ridged title bars, the WindowShade box |
+| `nextstep` (`dist/clio.nextstep.css`) | NeXTStep 3.0 in Infinite Mac (the nearest real 3.x system it runs), for NeXTSTEP 3.3's look | Four greys, black key title bars, the vertical main menu, scrollers on the left with their arrows together |
 
 Drawing Board draws its pencil lines with 128px patterns. Mac OS sometimes starts such a
 pattern half a tile along, depending on where the window sits; clio.css starts it at the
 element, and `--clio-db-phase: 64px` on a window or control matches the other case.
+
+### NeXTSTEP 3.3 (1.1.0)
+
+`dist/clio.nextstep.css` draws NeXTSTEP 3.3 on the same markup: the menu bar becomes the
+vertical main menu (titled by its `aria-label`, submenus hanging level with its top), the
+collapse box becomes the miniaturize button, the close box moves to the right, and a window
+with a zoom box gets the resize bar instead (NeXT had no zoom). `.window.main` is a main
+window that is not key. Three components exist only there: `.browser` (the column browser),
+`.pull-down` and `.dock`. With clio.js the scrollers sit on the left with both arrows
+together, as measured; without it the browser keeps its own bar on the right. Helvetica is
+named locally; elsewhere Clio Sans NX (Liberation Sans 2, OFL, renamed) keeps its widths.
+The four Classic eras are unchanged: `clio.css` and the Classic files are the 1.0.2 bytes
+apart from the version in their banner.
 
 ## Components
 
@@ -271,6 +286,7 @@ Apple's, which is why the fonts have other names. Licences and the legal note:
 | Fusion Pixel Font 12px | TakWolf's pixel font, cut per language | CJK stand-in | SIL OFL 1.1 |
 | ChicagoFLF | Robin Casady's outline revival of Chicago | System 6 and 7 `.display` text | Public domain |
 | Asap | Omnibus-Type's outline sans | Platinum and Drawing Board fallback | SIL OFL 1.1 |
+| Clio Sans NX | Liberation Sans 2 (Red Hat), subset and renamed | NeXTSTEP fallback for Helvetica | SIL OFL 1.1 |
 
 If Charcoal is installed, the Drawing Board and Platinum stacks use it first.
 `data-clio-font="truth"` uses Truth FB, which you install or load yourself. Window titles
@@ -290,6 +306,7 @@ with captures of each era. From [FIDELITY.md](FIDELITY.md) (run of 2026-11-26):
 | Drawing Board | Mac OS 8.5 + 8.5b6 theme in Infinite Mac | 52 of 54 |
 | Platinum | Mac OS 9.0 in Infinite Mac | 55 of 55 |
 | Platinum | GUIdebook Mac OS 9.0 captures | 7 of 7 |
+| NeXTSTEP | NeXTStep 3.0 in Infinite Mac | 27 of 27 |
 
 The two Drawing Board specimens below 100% are the open pop-up menu (97.3%), whose text is
 antialiased over the paper. The same file has the WebKit, Firefox, 2x and 3x results.

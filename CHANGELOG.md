@@ -1,5 +1,40 @@
 # Changelog
 
+## 1.1.0 (2026-11-26, NeXTSTEP)
+
+A fifth era, in a file of its own (owner's decision D14 in ROADMAP-MACOSX.md). The four
+Classic eras are frozen (D7): `dist/clio.css` and the Classic single-era files are 1.0.2's
+bytes except for the version in their banner.
+
+- **`data-era="nextstep"`, shipped only as `dist/clio.nextstep.css`** (`clio.css/nextstep`,
+  budget 150 KB minified; 146 KB today). NeXTSTEP 3.3's look on the Classic markup: the menu
+  bar is the vertical main menu titled by its `aria-label`; the collapse box is the
+  miniaturize button and the close box moves right; a window with a zoom box draws the
+  resize bar; `.window.main` is a main window that is not key; panels and attention panels;
+  buttons with the return mark (key window only), switches, radios, text fields, pop-up
+  lists, sliders, boxes, the column browser (`.browser`), the pull-down list (`.pull-down`)
+  and the Workspace dock (`.dock`), which exist only in this file.
+- **Measured** in NeXTStep 3.0 running in Infinite Mac (Infinite Mac has no 3.3; 3.0 is the
+  nearest real 3.x system it runs, and every row names the frame it came from). All 27
+  NeXTSTEP specimens in FIDELITY.md are pixel-identical to the frames in Chromium, WebKit
+  and Firefox; the values ported
+  from AI System 6 that the frames contradicted are corrected (main window, pressed button,
+  switch and radio sizes, pop-up height, menu rows, resize bar, text field corners).
+  Evidence rows for NeXTSTEP: 39 measured, 17 inferred, 8 adapted, 1 third-party.
+- **clio.js** draws NeXT's scroller on the left with both arrows together when the era asks
+  (`--clio-scrollbar-side`, `--clio-scrollbar-arrows`, `--clio-scrollbar-arrow-length`,
+  `--clio-scrollbar-arrow-gap`); the Classic eras set none of them and behave as before
+  (`npm run behaviour`: 207, 207 and 205 checks in Chromium, WebKit and Firefox).
+- **Clio Sans NX**, Liberation Sans 2 (SIL OFL 1.1) subset and renamed by
+  `tooling/nx-font.py`: Helvetica's widths where Helvetica is not installed (D3). Control art
+  is redrawn from the frames by `tooling/nx-art.py`, which checks each grid against its frame.
+- COVERAGE.md has a NeXTSTEP table against the *NeXTSTEP User Interface Guidelines*, Release 3.
+  Not done: the torn-off submenu, the pull-down list and the Info panel are inferred; the
+  horizontal scroller's arrows and the edited document's close button were not captured.
+- The NeXTSTEP build writes its scroll-bar rules under `html`, not `:root`: in Chromium a
+  `:root .x::-webkit-scrollbar-button:vertical:start` rule was ignored where `html .x::…`
+  applied. `clio.platinum.css` was checked and draws the same scroll bar as `clio.css`.
+
 ## 1.0.2 (2026-11-23)
 
 The first 1.0.x on npm: it carries 1.0.0 and 1.0.1 below, which were tagged but never

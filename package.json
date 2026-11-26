@@ -1,6 +1,6 @@
 {
   "name": "clio.css",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "CSS library for classic Mac OS interfaces: Macintosh System 6, System 7, Mac OS 8.5 Drawing Board and Mac OS 8/9 Platinum windows, menus, buttons, scroll bars and dialogs, with every value traced to measured pixels.",
   "keywords": [
     "css",
@@ -22,7 +22,8 @@
     "1-bit",
     "chicago",
     "ui",
-    "system.css"
+    "system.css",
+    "nextstep"
   ],
   "homepage": "https://surfine.github.io/clio.css/",
   "bugs": {
@@ -51,6 +52,8 @@
     "./package.json": "./package.json",
     "./system7": "./dist/clio.system7.css",
     "./system7.min": "./dist/clio.system7.min.css",
+    "./nextstep": "./dist/clio.nextstep.css",
+    "./nextstep.min": "./dist/clio.nextstep.min.css",
     "./js": {
       "types": "./dist/clio.d.ts",
       "default": "./dist/clio.js"
