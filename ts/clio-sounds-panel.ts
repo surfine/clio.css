@@ -125,7 +125,7 @@
       var sets = Array.isArray(index.sets) ? index.sets : [];
       var set: NonNullable<PackIndex["sets"]>[number] | null = null;
       for (var i = 0; i < sets.length; i++) {
-        if (sets[i] && String(sets[i].slug) === state.track) { set = sets[i]; break; }
+        if (sets[i] && String(sets[i]!.slug) === state.track) { set = sets[i]!; break; }
       }
       if (!set) return;
       if (sounds()) window.clio!.sounds.muted = false;
@@ -135,7 +135,7 @@
       var keys = Object.keys(alerts);
       for (var k = 0; k < keys.length; k++) {
         if (mine !== loadToken || destroyed) return;
-        var entry = alerts[keys[k]];
+        var entry = alerts[keys[k]!];
         if (entry && entry.manifest) await load(base + entry.manifest);
       }
     }
@@ -158,7 +158,7 @@
       });
       var known = false;
       for (var i = 0; i < sets.length; i++) {
-        if (sets[i] && String(sets[i].slug) === state.track) { known = true; break; }
+        if (sets[i] && String(sets[i]!.slug) === state.track) { known = true; break; }
       }
       if (state.track !== "none" && !known) {
         state.track = "none";
@@ -183,7 +183,7 @@
     }
 
     function onClass() {
-      state.classes = CLASSES.filter(function (name) { return boxes[name].checked; });
+      state.classes = CLASSES.filter(function (name) { return boxes[name]!.checked; });
       paint(state.classes);
       save(state);
     }
@@ -191,7 +191,7 @@
     select.addEventListener("change", onTrack);
     CLASSES.forEach(function (name) {
       handlers[name] = function () { onClass(); };
-      boxes[name].addEventListener("change", handlers[name]);
+      boxes[name]!.addEventListener("change", handlers[name]!);
     });
 
     start();
@@ -202,7 +202,7 @@
         loadToken++;
         select.removeEventListener("change", onTrack);
         CLASSES.forEach(function (name) {
-          boxes[name].removeEventListener("change", handlers[name]);
+          boxes[name]!.removeEventListener("change", handlers[name]!);
         });
         if (root.parentNode) root.parentNode.removeChild(root);
       },

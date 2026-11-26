@@ -304,7 +304,7 @@
     if (!track || track.li !== tli) { closeAll(); track = { bar, li: tli, mode: "sticky", hot: null, last: { x: 0, y: 0 } }; }
     openTitle(bar, tli);
     const m = menuOf(tli), list = m ? items(m) : [];
-    if (list.length) focusItem(list[last ? list.length - 1 : 0]);
+    if (list.length) focusItem(list[last ? list.length - 1 : 0]!);
   }
   document.addEventListener("focusin", (e) => {
     const t = e.target instanceof Element ? e.target : null;
@@ -336,8 +336,8 @@
     const next = (d: number) => titles[(titles.indexOf(tli) + d + titles.length) % titles.length];
     const down = vertical(bar);
     if (!inMenu && down) {
-      if (e.key === "ArrowDown" || e.key === "ArrowUp") return go(() => toTitle(bar, next(e.key === "ArrowDown" ? 1 : -1)));
-      if (e.key === "Home" || e.key === "End") return go(() => toTitle(bar, titles[e.key === "Home" ? 0 : titles.length - 1]));
+      if (e.key === "ArrowDown" || e.key === "ArrowUp") return go(() => toTitle(bar, next(e.key === "ArrowDown" ? 1 : -1)!));
+      if (e.key === "Home" || e.key === "End") return go(() => toTitle(bar, titles[e.key === "Home" ? 0 : titles.length - 1]!));
       if (["ArrowRight", "Enter", " "].includes(e.key) && menuOf(tli)) return go(() => enter(bar, tli, false));
       if (e.key === "Escape" && track) return go(() => toTitle(bar, tli, { quiet: true }));
       return;
@@ -345,7 +345,7 @@
     if (!inMenu) {
       if (["ArrowDown", "Enter", " ", "Home"].includes(e.key)) return go(() => enter(bar, tli, false));
       if (e.key === "End" || e.key === "ArrowUp") return go(() => enter(bar, tli, true));
-      if (e.key === "ArrowRight" || e.key === "ArrowLeft") return go(() => toTitle(bar, next(e.key === "ArrowRight" ? 1 : -1)));
+      if (e.key === "ArrowRight" || e.key === "ArrowLeft") return go(() => toTitle(bar, next(e.key === "ArrowRight" ? 1 : -1)!));
       if (e.key === "Escape" && track) return go(() => toTitle(bar, tli, { quiet: true }));
       return;
     }
@@ -353,12 +353,12 @@
     track.mode = track.mode === "preview" ? "sticky" : track.mode;
     const menu = inMenu.parentElement!, list = items(menu), i = list.indexOf(inMenu);
     const parentItem = menu.parentElement!.closest<HTMLElement>(`:is(${MENU}) > li`);
-    if (e.key === "ArrowDown" || e.key === "ArrowUp") return go(() => focusItem(list[(i + (e.key === "ArrowDown" ? 1 : list.length - 1)) % list.length]));
-    if (e.key === "Home" || e.key === "End") return go(() => focusItem(list[e.key === "Home" ? 0 : list.length - 1]));
+    if (e.key === "ArrowDown" || e.key === "ArrowUp") return go(() => focusItem(list[(i + (e.key === "ArrowDown" ? 1 : list.length - 1)) % list.length]!));
+    if (e.key === "Home" || e.key === "End") return go(() => focusItem(list[e.key === "Home" ? 0 : list.length - 1]!));
     if (e.key === "ArrowRight" && submenuOf(inMenu)) return go(() => { inMenu.classList.add("open"); const s = items(submenuOf(inMenu)!); if (s[0]) focusItem(s[0]); });
-    if (e.key === "ArrowRight") return down ? go(() => {}) : go(() => toTitle(bar, next(1)));
+    if (e.key === "ArrowRight") return down ? go(() => {}) : go(() => toTitle(bar, next(1)!));
     if ((e.key === "ArrowLeft" || e.key === "Escape") && parentItem) return go(() => { closeSub(parentItem); focusItem(parentItem); });
-    if (e.key === "ArrowLeft") return go(() => toTitle(bar, down ? tli : next(-1), { quiet: down }));
+    if (e.key === "ArrowLeft") return go(() => toTitle(bar, down ? tli : next(-1)!, { quiet: down }));
     if (e.key === "Escape") return go(() => toTitle(bar, tli, { quiet: true }));
     if ((e.key === "Enter" || e.key === " ") && usable(inMenu) && !submenuOf(inMenu)) return go(() => choose(inMenu, () => toTitle(bar, tli, { quiet: true })));
   }, true);
@@ -370,7 +370,7 @@
       for (const kbd of bar.querySelectorAll(`:is(${MENU}) > li kbd`)) {
         const m = kbd.textContent!.trim().match(/^(⇧?)\s*⌘\s*(.)$/u);   // "⌘N", "⇧⌘S"
         const li = kbd.closest<HTMLElement>(`:is(${MENU}) > li`)!;
-        if (!m || m[2].toLowerCase() !== key || !!m[1] !== e.shiftKey || !usable(li)) continue;
+        if (!m || m[2]!.toLowerCase() !== key || !!m[1] !== e.shiftKey || !usable(li)) continue;
         e.preventDefault();
         const tli = li.closest(`:is(${BAR}) > li`)!, t = titleOf(tli);
         if (t) t.classList.add("active");
@@ -529,7 +529,7 @@
     constructor(host: HTMLElement) {
       this.host = host;
       const cs = getComputedStyle(host);
-      for (const [v, side] of [["pt", "Top"], ["pr", "Right"], ["pb", "Bottom"], ["pl", "Left"]]) host.style.setProperty(`--clio-sb-${v}`, (cs as unknown as Record<string, string>)[`padding${side}`]);
+      for (const [v, side] of [["pt", "Top"], ["pr", "Right"], ["pb", "Bottom"], ["pl", "Left"]]) host.style.setProperty(`--clio-sb-${v}`, (cs as unknown as Record<string, string>)[`padding${side}`]!);
       this.pad = { t: px(cs.paddingTop), l: px(cs.paddingLeft) };
       this.overflow = { x: cs.overflowX, y: cs.overflowY };
       host.classList.add("clio-sb-host");
@@ -893,8 +893,8 @@
     menu.querySelector("button")!.focus({ preventScroll: true });
     menu.addEventListener("keydown", (e) => {
       const bs = [...menu.querySelectorAll("button")], i = bs.indexOf(document.activeElement as HTMLButtonElement);
-      if (e.key === "ArrowDown" || e.key === "ArrowUp") { e.preventDefault(); bs[(i + (e.key === "ArrowDown" ? 1 : bs.length - 1)) % bs.length].focus(); }
-      else if (e.key === "Home" || e.key === "End") { e.preventDefault(); bs[e.key === "Home" ? 0 : bs.length - 1].focus(); }
+      if (e.key === "ArrowDown" || e.key === "ArrowUp") { e.preventDefault(); bs[(i + (e.key === "ArrowDown" ? 1 : bs.length - 1)) % bs.length]!.focus(); }
+      else if (e.key === "Home" || e.key === "End") { e.preventDefault(); bs[e.key === "Home" ? 0 : bs.length - 1]!.focus(); }
       else if (e.key === "Escape") { e.preventDefault(); e.stopPropagation(); closeMoveMenu(true); }
       else if (e.key === "Tab") closeMoveMenu(false);
     });
@@ -1178,7 +1178,7 @@
     const man: Manifest = await (await fetch(base)).json();
     const files = new Map<string, AudioBuffer>();
     const want = new Map<string, number>();   // file -> exact rate
-    const add = (r: SoundRef | undefined) => { if (r && r.file && man.sounds && man.sounds[r.sound!]) want.set(r.file, man.sounds[r.sound!].rate); };
+    const add = (r: SoundRef | undefined) => { if (r && r.file && man.sounds && man.sounds[r.sound!]) want.set(r.file, man.sounds[r.sound!]!.rate); };
     if (man.alerts) for (const a of Object.values(man.alerts)) want.set(a.file, a.rate);
     for (const e of Object.values(man.events || {})) add(e.play);
     for (const e of Object.values(man.loops || {})) for (const r of Object.values(e.roles || {})) add(r);
@@ -1192,8 +1192,8 @@
     else { snd.sets = snd.sets.filter((x) => x.url !== entry.url); snd.sets.push(entry); }
     return { name: man.name || man.source, sounds: files.size };
   }
-  const setFor = (era: string) => { for (let i = snd.sets.length - 1; i >= 0; i--) { const s = snd.sets[i]; if (!s.eras || s.eras.includes("*") || s.eras.includes(era)) return s; } return null; };
-  const alertsFor = (era: string) => { for (let i = snd.alerts.length - 1; i >= 0; i--) { const s = snd.alerts[i]; if (!s.eras || s.eras.includes("*") || s.eras.includes(era)) return s; } return null; };
+  const setFor = (era: string) => { for (let i = snd.sets.length - 1; i >= 0; i--) { const s = snd.sets[i]!; if (!s.eras || s.eras.includes("*") || s.eras.includes(era)) return s; } return null; };
+  const alertsFor = (era: string) => { for (let i = snd.alerts.length - 1; i >= 0; i--) { const s = snd.alerts[i]!; if (!s.eras || s.eras.includes("*") || s.eras.includes(era)) return s; } return null; };
   function startSound(set: SoundSet, ref: SoundRef | undefined, opts: { loop?: boolean } = {}): Playing | null {
     const buf = ref && ref.file && set.files.get(ref.file);
     if (!buf || silent()) return null;
@@ -1392,7 +1392,7 @@
       if (!frames) frames = build();
       if (!frames) { stop(); return; }
       at = (at + 1) % frames.length;
-      for (const el of els) el.style.setProperty("--clio-cursor-wait", frames[at]);
+      for (const el of els) el.style.setProperty("--clio-cursor-wait", frames[at]!);
     };
     const kick = () => {
       const on = busy().length > 0;
