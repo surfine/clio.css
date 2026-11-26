@@ -948,7 +948,7 @@
       </dl>
       <p class="aliases">Also accepts: system.css markup (<code>.btn</code>, <code>.btn-default</code>, <code>.standard-button</code>); AI System 6 markup (<code>.btn.default</code>).</p>
       <details class="evidence-details">
-        <summary>Evidence (25)</summary>
+        <summary>Evidence (27)</summary>
       <table class="evidence">
         <caption>Where each value comes from</caption>
         <thead><tr><th scope="col">Era</th><th scope="col">Value</th><th scope="col">Status</th><th scope="col">Source</th></tr></thead>
@@ -1075,9 +1075,21 @@
         </tr>
 <tr>
           <td>NeXTSTEP</td>
-          <td>Pressed: the face turns white, the bevel sinks (#555555 top and left, white bottom and right)</td>
+          <td>On (.active): the face turns white, the bevel stays raised</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, NeXTStep 3.0 in Infinite Mac (frames in .fidelity/ns30), frame prefsapp-moved (Preferences, Mouse), the Right button)</code><br><span class="upstream">fidelity nx-button-on; AI System 6's sunken bevel corrected</span></td>
+        </tr>
+<tr>
+          <td>NeXTSTEP</td>
+          <td>Held under the pointer: the same white face</td>
           <td><span class="status status-inferred">Inferred</span></td>
-          <td><code>AI System 6 69-nextstep-appearance.css (--btn-active-*)</code><br><span class="upstream">not captured</span></td>
+          <td><code>NeXTSTEP User Interface Guidelines, Release 3 p.135</code><br><span class="upstream">the held moment was not captured</span></td>
+        </tr>
+<tr>
+          <td>NeXTSTEP</td>
+          <td>The return mark shows only while the button's window is key (gone in an inactive or main window)</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, NeXTStep 3.0 in Infinite Mac (frames in .fidelity/ns30), frames open-panel and open-inactive (Edit's Open panel, key and then behind Workspace)</code><br><span class="upstream">NeXTSTEP User Interface Guidelines, Release 3 p.139</span></td>
         </tr>
 <tr>
           <td>NeXTSTEP</td>
@@ -1259,9 +1271,9 @@
         </tr>
 <tr>
           <td>NeXTSTEP</td>
-          <td>Radio button: a 12px sunken ring, a black dot when on</td>
-          <td><span class="status status-inferred">Inferred</span></td>
-          <td><code>AI System 6 69-nextstep-appearance.css (P38, --radio-image)</code><br><span class="upstream">not captured</span></td>
+          <td>Radio button: a 15x15 ring, #555555 and black on the upper left, white on the lower right; on, a white disc inside it; the panel's grey round and inside the ring is left transparent</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, NeXTStep 3.0 in Infinite Mac (frames in .fidelity/ns30), frame prefsapp-moved (Preferences, Mouse), Menu Button: Enabled on, Disabled off); tooling/nx-art.py check</code><br><span class="upstream">fidelity nx-radio-on, nx-radio-off; AI System 6's 12px ring corrected</span></td>
         </tr>
         </tbody>
       </table>
@@ -1598,7 +1610,7 @@
       </dl>
       
       <details class="evidence-details">
-        <summary>Evidence (30)</summary>
+        <summary>Evidence (31)</summary>
       <table class="evidence">
         <caption>Where each value comes from</caption>
         <thead><tr><th scope="col">Era</th><th scope="col">Value</th><th scope="col">Status</th><th scope="col">Source</th></tr></thead>
@@ -1767,9 +1779,15 @@
         </tr>
 <tr>
           <td>NeXTSTEP</td>
-          <td>Horizontal scroller: the same lane and buttons, the arrows together at its left</td>
+          <td>Horizontal scroller: the same lane, margin and knob turned on their side, the black line on top</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, NeXTStep 3.0 in Infinite Mac (frames in .fidelity/ns30), frame prefsapp-moved (Preferences, Mouse), the icon row's scroller, which has no arrows)</code><br><span class="upstream">read from the frame; no specimen</span></td>
+        </tr>
+<tr>
+          <td>NeXTSTEP</td>
+          <td>Horizontal scroller's arrows: together at its left, in the vertical one's cells</td>
           <td><span class="status status-inferred">Inferred</span></td>
-          <td><code>NeXTSTEP User Interface Guidelines, Release 3 p.149 (the scroll buttons in the lower-left corner)</code><br><span class="upstream">no horizontal scroller with a knob was captured</span></td>
+          <td><code>NeXTSTEP User Interface Guidelines, Release 3 p.149 (the scroll buttons in the lower-left corner)</code><br><span class="upstream">no horizontal scroller with arrows was captured</span></td>
         </tr>
 <tr>
           <td>NeXTSTEP</td>
@@ -1954,7 +1972,7 @@
       </dl>
       
       <details class="evidence-details">
-        <summary>Evidence (7)</summary>
+        <summary>Evidence (8)</summary>
       <table class="evidence">
         <caption>Where each value comes from</caption>
         <thead><tr><th scope="col">Era</th><th scope="col">Value</th><th scope="col">Status</th><th scope="col">Source</th></tr></thead>
@@ -1997,9 +2015,15 @@
         </tr>
 <tr>
           <td>NeXTSTEP</td>
-          <td>Box: a #555555 line with a white line inside and below, the title on the box's line</td>
+          <td>Box: a #555555 outline with a white one drawn over it a pixel down and right</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, NeXTStep 3.0 in Infinite Mac (frames in .fidelity/ns30), frame prefsapp-moved (Preferences, Mouse), the Menu Button box)</code><br><span class="upstream">fidelity nx-box-corner</span></td>
+        </tr>
+<tr>
+          <td>NeXTSTEP</td>
+          <td>The box's title centred across its top line, the lines broken round it</td>
           <td><span class="status status-inferred">Inferred</span></td>
-          <td><code>NeXTSTEP User Interface Guidelines, Release 3, ch. 7 (boxes)</code><br><span class="upstream">not captured</span></td>
+          <td><code>clio.css capture, NeXTStep 3.0 in Infinite Mac (frames in .fidelity/ns30), frame prefsapp-moved (Preferences, Mouse))</code><br><span class="upstream">the title is Helvetica and is not compared</span></td>
         </tr>
         </tbody>
       </table>
@@ -2569,9 +2593,9 @@
         </tr>
 <tr>
           <td>NeXTSTEP</td>
-          <td>Slider: a sunken #555555 well, a raised square knob with the dimple</td>
-          <td><span class="status status-inferred">Inferred</span></td>
-          <td><code>NeXTSTEP User Interface Guidelines, Release 3, ch. 7 (sliders)</code><br><span class="upstream">not captured</span></td>
+          <td>Slider: a 16px lane of the scroller's dots, black at the top and left, white at the bottom and right; the 20x14 knob, a raised bevel with a groove down its middle and a #555555 shadow on its right</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, NeXTStep 3.0 in Infinite Mac (frames in .fidelity/ns30), frame prefs3 (Preferences, Display, Automatic Dimming, 170x16); tooling/nx-art.py check</code><br><span class="upstream">fidelity nx-slider, identical in Chromium, WebKit and Firefox</span></td>
         </tr>
         </tbody>
       </table>

@@ -45,7 +45,9 @@ export const rows = {
   ],
   button: [
     row("Push button: #aaaaaa face, no outline, a bevel of white top and left, #555555 then black bottom and right (black keeps the top-right and bottom-left corners); 24px tall", "measured", NX30 + ", frame prefs-dock (Workspace Manager Preferences, Dock), Revert and Set, 63x24)", "fidelity nx-button-disabled"),
-    row("Pressed: the face turns white, the bevel sinks (#555555 top and left, white bottom and right)", "inferred", AIS6 + " (--btn-active-*)", "not captured"),
+    row("On (.active): the face turns white, the bevel stays raised", "measured", NX30 + ", frame prefsapp-moved (Preferences, Mouse), the Right button)", "fidelity nx-button-on; AI System 6's sunken bevel corrected"),
+    row("Held under the pointer: the same white face", "inferred", NXUG + " p.135", "the held moment was not captured"),
+    row("The return mark shows only while the button's window is key (gone in an inactive or main window)", "measured", NX30 + ", frames open-panel and open-inactive (Edit's Open panel, key and then behind Workspace)", NXUG + " p.139"),
     row("Default button: no ring; the 15x10 embossed return mark 5px from the right, drawn the same when the button is dimmed", "measured", NX30 + ", frame prefs-dock (Workspace Manager Preferences, Dock), Set); tooling/nx-art.py check", NXUG + " p.139; fidelity nx-default-disabled"),
     row("Disabled: the label #555555, the bevel kept", "measured", NX30 + ", frame prefs-dock (Workspace Manager Preferences, Dock), Revert and Set)", "fidelity nx-button-disabled"),
     row("Keyboard focus: a 1px dotted frame 2px out", "adapted", "clio.css", "NeXTSTEP 3.3 had no control focus; OPENSTEP's dotted frame is the family's mark"),
@@ -55,7 +57,7 @@ export const rows = {
     row("Switch: a 15x15 raised square (white top and left, #555555 then black bottom and right); on, an embossed check", "measured", NX30 + ", frame prefs-dock (Workspace Manager Preferences, Dock), the Dock list's switches); tooling/nx-art.py check", "fidelity nx-switch-on, nx-switch-off; AI System 6's 12px switch corrected"),
   ],
   radio: [
-    row("Radio button: a 12px sunken ring, a black dot when on", "inferred", AIS6 + " (P38, --radio-image)", "not captured"),
+    row("Radio button: a 15x15 ring, #555555 and black on the upper left, white on the lower right; on, a white disc inside it; the panel's grey round and inside the ring is left transparent", "measured", NX30 + ", frame prefsapp-moved (Preferences, Mouse), Menu Button: Enabled on, Disabled off); tooling/nx-art.py check", "fidelity nx-radio-on, nx-radio-off; AI System 6's 12px ring corrected"),
   ],
   "text-field": [
     row("Text field: a white well 21px tall, no border: two #555555 lines top and left, #aaaaaa then white bottom and right; the top lines run to the right edge, the bottom ones from the left", "measured", NX30 + ", frame open-panel (Edit's Open panel, the Name field, 241x21)", "fidelity nx-field-left, nx-field-right"),
@@ -71,7 +73,8 @@ export const rows = {
     row("Scroller (clio.js): an 18px lane behind a black line on the content's side: a 1px #aaaaaa margin, then 16px of #555555 and #aaaaaa dots", "measured", NX30 + ", frame browser-small (the File Viewer in browser view, shrunk until its lists scroll), x 163-181, y 227-325)", "fidelity nx-js-scroller, identical in Chromium, WebKit and Firefox"),
     row("Knob: a 16px raised square as long as the visible share (at least 18px), 1px below the lane's top, with a 6x6 dimple 1px above and left of its middle", "measured", NX30 + ", frame browser-small (the File Viewer in browser view, shrunk until its lists scroll))", "the dimple equals AI System 6's ns-knob-dimple-6.svg"),
     row("Arrow buttons: 16x16 raised buttons with a black triangle, both at the bottom of a vertical scroller, up above down, each in a 17px cell with 1px of lane before it and 1px after the last", "measured", NX30 + ", frame browser-small (the File Viewer in browser view, shrunk until its lists scroll)); tooling/nx-art.py check", "the art equals AI System 6's ns-scroll-*-16.svg"),
-    row("Horizontal scroller: the same lane and buttons, the arrows together at its left", "inferred", NXUG + " p.149 (the scroll buttons in the lower-left corner)", "no horizontal scroller with a knob was captured"),
+    row("Horizontal scroller: the same lane, margin and knob turned on their side, the black line on top", "measured", NX30 + ", frame prefsapp-moved (Preferences, Mouse), the icon row's scroller, which has no arrows)", "read from the frame; no specimen"),
+    row("Horizontal scroller's arrows: together at its left, in the vertical one's cells", "inferred", NXUG + " p.149 (the scroll buttons in the lower-left corner)", "no horizontal scroller with arrows was captured"),
     row("With nothing to scroll the knob and the arrows go and the lane runs the whole bar", "measured", NX30 + ", frame browser (the browser's columns)", "AI System 6 reference notes (Controls, F14) agree"),
     row("The browser's own scroll bar (without clio.js) is drawn with the same art but stays on the right, with Chromium's minimum knob", "adapted", "clio.css", "a page cannot move the browser's own scroll bar"),
   ],
@@ -81,7 +84,8 @@ export const rows = {
     row("The application's icon, not a symbol: without one the slot stays empty", "inferred", NXUG + " p.84", "AI System 6 shows none either"),
   ],
   fieldset: [
-    row("Box: a #555555 line with a white line inside and below, the title on the box's line", "inferred", NXUG + ", ch. 7 (boxes)", "not captured"),
+    row("Box: a #555555 outline with a white one drawn over it a pixel down and right", "measured", NX30 + ", frame prefsapp-moved (Preferences, Mouse), the Menu Button box)", "fidelity nx-box-corner"),
+    row("The box's title centred across its top line, the lines broken round it", "inferred", NX30 + ", frame prefsapp-moved (Preferences, Mouse))", "the title is Helvetica and is not compared"),
   ],
   progress: [
     row("Progress: a sunken #aaaaaa well filled with #555555, 18px", "inferred", AIS6 + " (--progress-*)", "not captured"),
@@ -98,7 +102,7 @@ export const rows = {
     row("Helvetica is named only as a local font; elsewhere Clio Sans NX (Liberation Sans 2, OFL, renamed) has Helvetica's advance widths", "third-party", "fonts/ClioSansNX*.woff2 (tooling/nx-font.py); THIRD-PARTY.md", "D3: a local name plus a fitted OFL fallback"),
   ],
   slider: [
-    row("Slider: a sunken #555555 well, a raised square knob with the dimple", "inferred", NXUG + ", ch. 7 (sliders)", "not captured"),
+    row("Slider: a 16px lane of the scroller's dots, black at the top and left, white at the bottom and right; the 20x14 knob, a raised bevel with a groove down its middle and a #555555 shadow on its right", "measured", NX30 + ", frame prefs3 (Preferences, Display, Automatic Dimming, 170x16); tooling/nx-art.py check", "fidelity nx-slider, identical in Chromium, WebKit and Firefox"),
   ],
 };
 

@@ -191,34 +191,59 @@ da
    # .         
     #.         
 """),
-    # The radio button's ring, 12x12, and its dot.
-    "radio": ("AI System 6 69-nextstep-appearance.css (--radio-image)", None, """
-
-    dddd
-   d    d
-  d      d
- d        d
- d        d
- d        d
- d        d
-  d      ..
-   d    d.
-    dddd.
-
+    # A slider's knob, 20x14: the raised bevel with a groove down its middle and a #555555
+    # shadow on its right.
+    "slider-knob": ("NeXTStep 3.0 in Infinite Mac, frame prefs3 (Preferences, Display, Automatic Dimming)", ("ns30/prefs3", 360, 648), """
+.................d#d
+..aaaaaad.aaaaaaad#d
+..aaaaaad.aaaaaaad#d
+..aaaaaad.aaaaaaad#d
+..aaaaaad.aaaaaaad#d
+..aaaaaad.aaaaaaad#d
+..aaaaaad.aaaaaaad#d
+..aaaaaad.aaaaaaad#d
+..aaaaaad.aaaaaaad#d
+..aaaaaad.aaaaaaad#d
+..aaaaaad.aaaaaaad#d
+..aaaaaad.aaaaaaad#d
+.ddddddddadddddddd#d
+###################d
 """),
-    "radio-dot": ("AI System 6 69-nextstep-appearance.css (--radio-checked-image, a 2px circle at the centre)", None, """
-
-
-
-
-     ##
-    ####
-    ####
-     ##
-
-
-
-
+    # Radio buttons, 15x15, off and on (on: a white disc in the ring). The panel's
+    # #aaaaaa round them and inside the ring is left transparent.
+    "radio": ("NeXTStep 3.0 in Infinite Mac, frame prefsapp-moved (Preferences, Mouse, Menu Button), the Disabled radio, off", ("ns30/prefsapp-moved", 546, 667), """
+     ddddd     
+   dd#####dd   
+  d##       d  
+ d#d           
+ d#            
+d#            .
+d#            .
+d#            .
+d#            .
+d#            .
+ dd          . 
+ d           . 
+  d         .  
+    .     ..   
+     .....     
+"""),
+    "radio-on": ("NeXTStep 3.0 in Infinite Mac, frame prefsapp-moved (Preferences, Mouse, Menu Button), the Enabled radio, on", ("ns30/prefsapp-moved", 476, 667), """
+     ddddd     
+   dd#####dd   
+  d##aaaaad d  
+ d#daa....     
+ d#a........   
+d#aa........  .
+d#a.......... .
+d#a.......... .
+d#a.......... .
+d#a.......... .
+ dd ........a. 
+ d  ........a. 
+  d   ....aa.  
+    .     ..   
+     .....     
 """),
 }
 

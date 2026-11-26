@@ -1039,10 +1039,24 @@
         },
         {
           "era": "nextstep",
-          "claim": "Pressed: the face turns white, the bevel sinks (#555555 top and left, white bottom and right)",
+          "claim": "On (.active): the face turns white, the bevel stays raised",
+          "status": "measured",
+          "source": "clio.css capture, NeXTStep 3.0 in Infinite Mac (frames in .fidelity/ns30), frame prefsapp-moved (Preferences, Mouse), the Right button)",
+          "upstream": "fidelity nx-button-on; AI System 6's sunken bevel corrected"
+        },
+        {
+          "era": "nextstep",
+          "claim": "Held under the pointer: the same white face",
           "status": "inferred",
-          "source": "AI System 6 69-nextstep-appearance.css (--btn-active-*)",
-          "upstream": "not captured"
+          "source": "NeXTSTEP User Interface Guidelines, Release 3 p.135",
+          "upstream": "the held moment was not captured"
+        },
+        {
+          "era": "nextstep",
+          "claim": "The return mark shows only while the button's window is key (gone in an inactive or main window)",
+          "status": "measured",
+          "source": "clio.css capture, NeXTStep 3.0 in Infinite Mac (frames in .fidelity/ns30), frames open-panel and open-inactive (Edit's Open panel, key and then behind Workspace)",
+          "upstream": "NeXTSTEP User Interface Guidelines, Release 3 p.139"
         },
         {
           "era": "nextstep",
@@ -1196,10 +1210,10 @@
         },
         {
           "era": "nextstep",
-          "claim": "Radio button: a 12px sunken ring, a black dot when on",
-          "status": "inferred",
-          "source": "AI System 6 69-nextstep-appearance.css (P38, --radio-image)",
-          "upstream": "not captured"
+          "claim": "Radio button: a 15x15 ring, #555555 and black on the upper left, white on the lower right; on, a white disc inside it; the panel's grey round and inside the ring is left transparent",
+          "status": "measured",
+          "source": "clio.css capture, NeXTStep 3.0 in Infinite Mac (frames in .fidelity/ns30), frame prefsapp-moved (Preferences, Mouse), Menu Button: Enabled on, Disabled off); tooling/nx-art.py check",
+          "upstream": "fidelity nx-radio-on, nx-radio-off; AI System 6's 12px ring corrected"
         }
       ]
     },
@@ -1694,10 +1708,17 @@
         },
         {
           "era": "nextstep",
-          "claim": "Horizontal scroller: the same lane and buttons, the arrows together at its left",
+          "claim": "Horizontal scroller: the same lane, margin and knob turned on their side, the black line on top",
+          "status": "measured",
+          "source": "clio.css capture, NeXTStep 3.0 in Infinite Mac (frames in .fidelity/ns30), frame prefsapp-moved (Preferences, Mouse), the icon row's scroller, which has no arrows)",
+          "upstream": "read from the frame; no specimen"
+        },
+        {
+          "era": "nextstep",
+          "claim": "Horizontal scroller's arrows: together at its left, in the vertical one's cells",
           "status": "inferred",
           "source": "NeXTSTEP User Interface Guidelines, Release 3 p.149 (the scroll buttons in the lower-left corner)",
-          "upstream": "no horizontal scroller with a knob was captured"
+          "upstream": "no horizontal scroller with arrows was captured"
         },
         {
           "era": "nextstep",
@@ -1913,10 +1934,17 @@
         },
         {
           "era": "nextstep",
-          "claim": "Box: a #555555 line with a white line inside and below, the title on the box's line",
+          "claim": "Box: a #555555 outline with a white one drawn over it a pixel down and right",
+          "status": "measured",
+          "source": "clio.css capture, NeXTStep 3.0 in Infinite Mac (frames in .fidelity/ns30), frame prefsapp-moved (Preferences, Mouse), the Menu Button box)",
+          "upstream": "fidelity nx-box-corner"
+        },
+        {
+          "era": "nextstep",
+          "claim": "The box's title centred across its top line, the lines broken round it",
           "status": "inferred",
-          "source": "NeXTSTEP User Interface Guidelines, Release 3, ch. 7 (boxes)",
-          "upstream": "not captured"
+          "source": "clio.css capture, NeXTStep 3.0 in Infinite Mac (frames in .fidelity/ns30), frame prefsapp-moved (Preferences, Mouse))",
+          "upstream": "the title is Helvetica and is not compared"
         }
       ]
     },
@@ -2381,10 +2409,10 @@
         },
         {
           "era": "nextstep",
-          "claim": "Slider: a sunken #555555 well, a raised square knob with the dimple",
-          "status": "inferred",
-          "source": "NeXTSTEP User Interface Guidelines, Release 3, ch. 7 (sliders)",
-          "upstream": "not captured"
+          "claim": "Slider: a 16px lane of the scroller's dots, black at the top and left, white at the bottom and right; the 20x14 knob, a raised bevel with a groove down its middle and a #555555 shadow on its right",
+          "status": "measured",
+          "source": "clio.css capture, NeXTStep 3.0 in Infinite Mac (frames in .fidelity/ns30), frame prefs3 (Preferences, Display, Automatic Dimming, 170x16); tooling/nx-art.py check",
+          "upstream": "fidelity nx-slider, identical in Chromium, WebKit and Firefox"
         }
       ]
     },

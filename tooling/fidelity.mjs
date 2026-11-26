@@ -429,6 +429,15 @@ specimens.push(
   // Edit's Open panel (frame open-panel): the Name field's two ends (241x21 at 459,378).
   NX("nx-field-left", `<div style="padding:12px;background:#aaa"><input type="text" id="s" style="width:241px"></div>`, [0, 0, 10, 21], "open-panel", [459, 378, 10, 21]),
   NX("nx-field-right", `<div style="padding:12px;background:#aaa"><input type="text" id="s" style="width:241px"></div>`, [231, 0, 10, 21], "open-panel", [690, 378, 10, 21]),
+  // Preferences, Mouse (frame prefsapp-moved): the Menu Button radios (Enabled on, Disabled
+  // off), the pushed-in Right button, the Menu Button box's lower right corner.
+  NX("nx-radio-on", `<div style="padding:12px;background:#aaa"><input type="radio" id="s" checked></div>`, [0, 0, 15, 15], "prefsapp-moved", [476, 667, 15, 15]),
+  NX("nx-radio-off", `<div style="padding:12px;background:#aaa"><input type="radio" id="s"></div>`, [0, 0, 15, 15], "prefsapp-moved", [546, 667, 15, 15]),
+  NX("nx-button-on", `<div style="padding:12px;background:#aaa"><button class="active" id="s" style="width:59px;min-width:0">Right</button></div>`, [0, 0, 59, 24], "prefsapp-moved", [549, 748, 59, 24], { mask: [[14, 4, 36, 16]] }),
+  NX("nx-box-corner", `<div style="padding:12px;background:#aaa"><fieldset id="s" style="width:146px;height:130px;box-sizing:border-box;padding:0"><legend>Menu Button</legend></fieldset></div>`, [137, 120, 11, 11], "prefsapp-moved", [608, 770, 11, 11]),
+  // Preferences, Display (frame prefs3): the Automatic Dimming slider, 170x16 at 292,647, its
+  // knob 67px along (value 67 of 148: one step a pixel in every engine).
+  NX("nx-slider", `<div style="padding:12px;background:#aaa"><input type="range" id="s" min="0" max="148" step="1" value="67" style="width:170px"></div>`, [0, 0, 170, 16], "prefs3", [292, 647, 170, 16]),
   NX("nx-close", nxWindow(395, "Prefs", '<button class="close" aria-label="Close"></button>'), [368, 0, 27, 23], "prefs-dock", [986, 112, 27, 23]),
   NX("nx-titlebar-main", nxWindow(604, "File Viewer").replace('class="window"', 'class="window main"'), [588, 0, 16, 23], "prefs-dock", [740, 12, 16, 23]),
   NX("nx-popup", `<div style="padding:12px;background:#aaa"><select id="s" style="width:130px"><option>Dock</option></select></div>`, [0, 0, 130, 20], "prefs-dock", [754, 139, 130, 20], { mask: [[5, 3, 45, 14]] }),
