@@ -698,7 +698,7 @@
       </dl>
       <p class="aliases">Also accepts: system.css markup (<code>ul[role=menu-bar]</code>, <code>[role=menu-item]</code>, <code>li.divider</code>).</p>
       <details class="evidence-details">
-        <summary>Evidence (34)</summary>
+        <summary>Evidence (35)</summary>
       <table class="evidence">
         <caption>Where each value comes from</caption>
         <thead><tr><th scope="col">Era</th><th scope="col">Value</th><th scope="col">Status</th><th scope="col">Source</th></tr></thead>
@@ -885,9 +885,15 @@
         </tr>
 <tr>
           <td>NeXTSTEP</td>
-          <td>A submenu hangs right against the main menu, its title one title-bar height above the chosen cell; its left column is #555555</td>
+          <td>A submenu hangs right against its menu, level with that menu's top whichever cell opened it; its left column is #555555</td>
           <td><span class="status status-measured">Measured</span></td>
-          <td><code>clio.css capture, NeXTStep 3.0 in Infinite Mac (frames in .fidelity/ns30), frame info-open (the Info submenu open))</code><br><span class="upstream">fidelity nx-submenu-join</span></td>
+          <td><code>clio.css capture, NeXTStep 3.0 in Infinite Mac (frames in .fidelity/ns30), frame info-open (the Info submenu open))</code><br><span class="upstream">fidelity nx-submenu-join; nx-submenu-top (the View submenu, opened from the fifth cell, frame view-open)</span></td>
+        </tr>
+<tr>
+          <td>NeXTSTEP</td>
+          <td>A dimmed item's label is #555555</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, NeXTStep 3.0 in Infinite Mac (frames in .fidelity/ns30), frame view-open (Icon, Sort Icons, Clean Up Icons)</code><br><span class="upstream">the label's pixels are Helvetica and are not compared</span></td>
         </tr>
 <tr>
           <td>NeXTSTEP</td>
@@ -1592,7 +1598,7 @@
       </dl>
       
       <details class="evidence-details">
-        <summary>Evidence (28)</summary>
+        <summary>Evidence (30)</summary>
       <table class="evidence">
         <caption>Where each value comes from</caption>
         <thead><tr><th scope="col">Era</th><th scope="col">Value</th><th scope="col">Status</th><th scope="col">Source</th></tr></thead>
@@ -1743,27 +1749,39 @@
         </tr>
 <tr>
           <td>NeXTSTEP</td>
-          <td>Scroller: an 18px lane of #555555 and #aaaaaa dots and a black line on the content's side (19px)</td>
-          <td><span class="status status-inferred">Inferred</span></td>
-          <td><code>AI System 6 69-nextstep-appearance.css (P20, --window-frame-track-*)</code><br><span class="upstream">AI System 6 Theme Lab scroll-thumb (authored)</span></td>
+          <td>Scroller (clio.js): an 18px lane behind a black line on the content's side: a 1px #aaaaaa margin, then 16px of #555555 and #aaaaaa dots</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, NeXTStep 3.0 in Infinite Mac (frames in .fidelity/ns30), frame browser-small (the File Viewer in browser view, shrunk until its lists scroll), x 163-181, y 227-325)</code><br><span class="upstream">fidelity nx-js-scroller, identical in Chromium, WebKit and Firefox</span></td>
         </tr>
 <tr>
           <td>NeXTSTEP</td>
-          <td>Knob: a raised #aaaaaa square, at least as long as it is wide, with a 6x6 dimple in the middle</td>
-          <td><span class="status status-inferred">Inferred</span></td>
-          <td><code>AI System 6 69-nextstep-appearance.css (P21, ns-knob-dimple-6.svg)</code><br><span class="upstream">NeXTSTEP User Interface Guidelines, Release 3, ch. 7 (scrollers)</span></td>
+          <td>Knob: a 16px raised square as long as the visible share (at least 18px), 1px below the lane's top, with a 6x6 dimple 1px above and left of its middle</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, NeXTStep 3.0 in Infinite Mac (frames in .fidelity/ns30), frame browser-small (the File Viewer in browser view, shrunk until its lists scroll))</code><br><span class="upstream">the dimple equals AI System 6's ns-knob-dimple-6.svg</span></td>
         </tr>
 <tr>
           <td>NeXTSTEP</td>
-          <td>Arrow buttons: 16x16 raised buttons with a black triangle, both at the bottom of a vertical scroller and at the left of a horizontal one</td>
-          <td><span class="status status-inferred">Inferred</span></td>
-          <td><code>AI System 6 69-nextstep-appearance.css (ns-scroll-up-16.svg, C9)</code><br><span class="upstream">NeXTSTEP User Interface Guidelines, Release 3, ch. 7, figure 14</span></td>
+          <td>Arrow buttons: 16x16 raised buttons with a black triangle, both at the bottom of a vertical scroller, up above down, each in a 17px cell with 1px of lane before it and 1px after the last</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, NeXTStep 3.0 in Infinite Mac (frames in .fidelity/ns30), frame browser-small (the File Viewer in browser view, shrunk until its lists scroll)); tooling/nx-art.py check</code><br><span class="upstream">the art equals AI System 6's ns-scroll-*-16.svg</span></td>
         </tr>
 <tr>
           <td>NeXTSTEP</td>
-          <td>The browser's own scroll bar stays on the right (a page cannot move it); clio.js draws NeXT's on the left</td>
+          <td>Horizontal scroller: the same lane and buttons, the arrows together at its left</td>
+          <td><span class="status status-inferred">Inferred</span></td>
+          <td><code>NeXTSTEP User Interface Guidelines, Release 3 p.149 (the scroll buttons in the lower-left corner)</code><br><span class="upstream">no horizontal scroller with a knob was captured</span></td>
+        </tr>
+<tr>
+          <td>NeXTSTEP</td>
+          <td>With nothing to scroll the knob and the arrows go and the lane runs the whole bar</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, NeXTStep 3.0 in Infinite Mac (frames in .fidelity/ns30), frame browser (the browser's columns)</code><br><span class="upstream">AI System 6 reference notes (Controls, F14) agree</span></td>
+        </tr>
+<tr>
+          <td>NeXTSTEP</td>
+          <td>The browser's own scroll bar (without clio.js) is drawn with the same art but stays on the right, with Chromium's minimum knob</td>
           <td><span class="status status-adapted">Adapted</span></td>
-          <td><code>clio.css</code><br><span class="upstream">NeXTSTEP User Interface Guidelines, Release 3, ch. 7: the vertical scroller is on the left</span></td>
+          <td><code>clio.css</code><br><span class="upstream">a page cannot move the browser's own scroll bar</span></td>
         </tr>
         </tbody>
       </table>
@@ -3182,22 +3200,28 @@
       </dl>
       
       <details class="evidence-details">
-        <summary>Evidence (2)</summary>
+        <summary>Evidence (3)</summary>
       <table class="evidence">
         <caption>Where each value comes from</caption>
         <thead><tr><th scope="col">Era</th><th scope="col">Value</th><th scope="col">Status</th><th scope="col">Source</th></tr></thead>
         <tbody>
 <tr>
           <td>NeXTSTEP</td>
-          <td>Columns of 16px rows, white, divided by black lines; a branch carries the menu's arrow</td>
-          <td><span class="status status-inferred">Inferred</span></td>
-          <td><code>NeXTSTEP User Interface Guidelines, Release 3, ch. 7 (browsers)</code><br><span class="upstream">AI System 6 finder-columns.js</span></td>
+          <td>A sunken box (#555555 then black at the top and left, #555555 then white at the bottom); columns 145px wide on #aaaaaa, each with its scroller at its left behind a black line; 15px rows, the first starting 4px above the column; a branch carries the menu's arrow 4px from the right and 4px down</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, NeXTStep 3.0 in Infinite Mac (frames in .fidelity/ns30), frames browser and browser-small (the File Viewer in browser view)</code><br><span class="upstream">fidelity nx-browser</span></td>
         </tr>
 <tr>
           <td>NeXTSTEP</td>
-          <td>Selected item: a raised light-grey cell</td>
+          <td>The selected row is white across the column; its arrow's light edge turns #aaaaaa</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, NeXTStep 3.0 in Infinite Mac (frames in .fidelity/ns30), frame browser (&quot;me&quot;)</code><br><span class="upstream">fidelity nx-browser</span></td>
+        </tr>
+<tr>
+          <td>NeXTSTEP</td>
+          <td>The box's right edge</td>
           <td><span class="status status-inferred">Inferred</span></td>
-          <td><code>NeXTSTEP User Interface Guidelines, Release 3, ch. 7</code><br><span class="upstream">not captured</span></td>
+          <td><code>clio.css (the bottom's colours)</code><br><span class="upstream">covered by a panel on the captured frames</span></td>
         </tr>
         </tbody>
       </table>

@@ -3560,14 +3560,17 @@
   /* Scrollers: an 18px lane of #555555 and #aaaaaa dots between black lines, the
      knob a raised square with a dimple, both arrows together. */
   --clio-scrollbar-size: 19px;
-  --clio-scrollbar-track: repeating-conic-gradient(#555555 0% 25%, #aaaaaa 0% 50%) 0 0 / 2px 2px;
+  --clio-scrollbar-track: var(--clio-art-nx-lane) 0 0 / 2px 2px;
   --clio-scrollbar-track-shadow: none;
   --clio-scrollbar-thumb-length: 18px;
   --clio-scrollbar-thumb-tracking: live;
-  --clio-scrollbar-thumb-overlap: 0px;
+  --clio-scrollbar-thumb-overlap: -1px;
+  --clio-scrollbar-arrow-length: 17px;
+  --clio-scrollbar-arrow-gap: 1px;
+  --clio-nx-lane: var(--clio-art-nx-lane);
   --clio-scrollbar-thumb-after: none;
   --clio-scrollbar-thumb-inset: 1px;
-  --clio-scrollbar-thumb-bg: var(--clio-art-nx-dimple) center / 6px 6px no-repeat, #aaaaaa;
+  --clio-scrollbar-thumb-bg: var(--clio-art-nx-dimple) calc(50% - 1px) calc(50% - 1px) / 6px 6px no-repeat, #aaaaaa;
   --clio-scrollbar-thumb-border: 0;
   --clio-scrollbar-thumb-shadow: var(--clio-bevel);
   --clio-scrollbar-button-bg: #aaaaaa;
@@ -3638,8 +3641,8 @@
   --clio-slider-thumb-height: 18px;
 
   /* Browser and Workspace dock */
-  --clio-browser-column: 150px;
-  --clio-browser-row: 16px;
+  --clio-browser-column: 145px;
+  --clio-browser-row: 15px;
   --clio-dock-tile: 64px;
   --clio-dock-tile-bg: #aaaaaa;
 
@@ -3654,15 +3657,16 @@
   --clio-art-nx-submenu-lit: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='7' height='7' shape-rendering='crispEdges'%3E%3Cpath fill='%23000' d='M0 0h1v1H0zM0 1h1v1H0zM0 2h1v1H0zM0 3h1v1H0zM0 4h1v1H0zM0 5h1v1H0zM0 6h1v1H0z'/%3E%3Cpath fill='%23555' d='M1 0h1v1H1zM2 1h2v1H2zM4 2h2v1H4z'/%3E%3Cpath fill='%23aaa' d='M6 3h1v1H6zM4 4h2v1H4zM2 5h2v1H2zM1 6h1v1H1z'/%3E%3C/svg%3E");
   --clio-art-nx-popup-mark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='8' shape-rendering='crispEdges'%3E%3Cpath fill='%23000' d='M8 0h1v1H8zM8 1h1v1H8zM8 2h1v1H8zM8 3h1v1H8zM8 4h1v1H8zM0 5h9v1H0z'/%3E%3Cpath fill='%23555' d='M7 1h1v1H7zM7 2h1v1H7zM9 2h2v1H9zM7 3h1v1H7zM9 3h2v1H9zM1 4h7v1H1zM9 4h2v1H9zM9 5h2v1H9zM2 6h9v1H2zM2 7h9v1H2z'/%3E%3Cpath fill='%23aaa' d='M1 1h6v1H1zM1 2h6v1H1zM1 3h6v1H1z'/%3E%3Cpath fill='%23fff' d='M0 0h8v1H0zM0 1h1v1H0zM0 2h1v1H0zM0 3h1v1H0zM0 4h1v1H0z'/%3E%3C/svg%3E");
   --clio-art-nx-dimple: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='6' shape-rendering='crispEdges'%3E%3Cpath fill='%23000' d='M2 0h3v1H2zM1 1h1v1H1zM0 2h1v1H0zM0 3h1v1H0zM0 4h1v1H0z'/%3E%3Cpath fill='%23555' d='M1 0h1v1H1zM0 1h1v1H0zM2 1h4v1H2zM1 2h2v1H1zM1 3h1v1H1zM1 4h1v1H1zM1 5h1v1H1z'/%3E%3Cpath fill='%23fff' d='M4 3h2v1H4zM3 4h3v1H3zM3 5h2v1H3z'/%3E%3C/svg%3E");
-  --clio-art-nx-arrow-up: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' shape-rendering='crispEdges'%3E%3Cpath fill='%23000' d='M15 0h1v1H15zM7 1h1v1H7zM15 1h1v1H15zM7 2h1v1H7zM15 2h1v1H15zM6 3h3v1H6zM15 3h1v1H15zM6 4h3v1H6zM15 4h1v1H15zM5 5h5v1H5zM15 5h1v1H15zM5 6h5v1H5zM15 6h1v1H15zM4 7h7v1H4zM15 7h1v1H15zM4 8h7v1H4zM15 8h1v1H15zM15 9h1v1H15zM15 10h1v1H15zM15 11h1v1H15zM15 12h1v1H15zM15 13h1v1H15zM15 14h1v1H15zM0 15h14v1H0zM15 15h1v1H15z'/%3E%3Cpath fill='%23555' d='M7 0h1v1H7zM14 1h1v1H14zM6 2h1v1H6zM8 2h1v1H8zM14 2h1v1H14zM14 3h1v1H14zM5 4h1v1H5zM9 4h1v1H9zM14 4h1v1H14zM14 5h1v1H14zM4 6h1v1H4zM10 6h1v1H10zM14 6h1v1H14zM14 7h1v1H14zM3 8h1v1H3zM11 8h1v1H11zM14 8h1v1H14zM14 9h1v1H14zM14 10h1v1H14zM14 11h1v1H14zM14 12h1v1H14zM14 13h1v1H14zM1 14h14v1H1zM14 15h1v1H14z'/%3E%3Cpath fill='%23aaa' d='M1 1h6v1H1zM8 1h6v1H8zM1 2h5v1H1zM9 2h5v1H9zM1 3h5v1H1zM9 3h5v1H9zM1 4h4v1H1zM10 4h4v1H10zM1 5h4v1H1zM10 5h4v1H10zM1 6h3v1H1zM11 6h3v1H11zM1 7h3v1H1zM11 7h3v1H11zM1 8h2v1H1zM12 8h2v1H12zM1 9h13v1H1zM1 10h13v1H1zM1 11h13v1H1zM1 12h13v1H1zM1 13h13v1H1z'/%3E%3Cpath fill='%23fff' d='M0 0h7v1H0zM8 0h7v1H8zM0 1h1v1H0zM0 2h1v1H0zM0 3h1v1H0zM0 4h1v1H0zM0 5h1v1H0zM0 6h1v1H0zM0 7h1v1H0zM0 8h1v1H0zM0 9h1v1H0zM0 10h1v1H0zM0 11h1v1H0zM0 12h1v1H0zM0 13h1v1H0zM0 14h1v1H0z'/%3E%3C/svg%3E");
+  --clio-art-nx-arrow-up: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' shape-rendering='crispEdges'%3E%3Cpath fill='%23000' d='M15 0h1v1H15zM15 1h1v1H15zM15 2h1v1H15zM15 3h1v1H15zM7 4h1v1H7zM15 4h1v1H15zM7 5h1v1H7zM15 5h1v1H15zM6 6h3v1H6zM15 6h1v1H15zM6 7h3v1H6zM15 7h1v1H15zM5 8h5v1H5zM15 8h1v1H15zM5 9h5v1H5zM15 9h1v1H15zM4 10h7v1H4zM15 10h1v1H15zM4 11h7v1H4zM15 11h1v1H15zM15 12h1v1H15zM15 13h1v1H15zM15 14h1v1H15zM0 15h16v1H0z'/%3E%3Cpath fill='%23555' d='M14 1h1v1H14zM14 2h1v1H14zM7 3h1v1H7zM14 3h1v1H14zM14 4h1v1H14zM6 5h1v1H6zM8 5h1v1H8zM14 5h1v1H14zM14 6h1v1H14zM5 7h1v1H5zM9 7h1v1H9zM14 7h1v1H14zM14 8h1v1H14zM4 9h1v1H4zM10 9h1v1H10zM14 9h1v1H14zM14 10h1v1H14zM3 11h1v1H3zM11 11h1v1H11zM14 11h1v1H14zM14 12h1v1H14zM14 13h1v1H14zM1 14h14v1H1z'/%3E%3Cpath fill='%23aaa' d='M1 1h13v1H1zM1 2h13v1H1zM1 3h6v1H1zM8 3h6v1H8zM1 4h6v1H1zM8 4h6v1H8zM1 5h5v1H1zM9 5h5v1H9zM1 6h5v1H1zM9 6h5v1H9zM1 7h4v1H1zM10 7h4v1H10zM1 8h4v1H1zM10 8h4v1H10zM1 9h3v1H1zM11 9h3v1H11zM1 10h3v1H1zM11 10h3v1H11zM1 11h2v1H1zM12 11h2v1H12zM1 12h13v1H1zM1 13h13v1H1z'/%3E%3Cpath fill='%23fff' d='M0 0h15v1H0zM0 1h1v1H0zM0 2h1v1H0zM0 3h1v1H0zM0 4h1v1H0zM0 5h1v1H0zM0 6h1v1H0zM0 7h1v1H0zM0 8h1v1H0zM0 9h1v1H0zM0 10h1v1H0zM0 11h1v1H0zM0 12h1v1H0zM0 13h1v1H0zM0 14h1v1H0z'/%3E%3C/svg%3E");
+  --clio-art-nx-lane: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='2' height='2' shape-rendering='crispEdges'%3E%3Cpath fill='%23555' d='M1 0h1v1H1zM0 1h1v1H0z'/%3E%3Cpath fill='%23aaa' d='M0 0h1v1H0zM1 1h1v1H1z'/%3E%3C/svg%3E");
   --clio-art-nx-check: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='15' height='15' shape-rendering='crispEdges'%3E%3Cpath fill='%23000' d='M14 0h1v1H14zM14 1h1v1H14zM14 2h1v1H14zM11 3h1v1H11zM14 3h1v1H14zM10 4h1v1H10zM14 4h1v1H14zM4 5h1v1H4zM9 5h1v1H9zM14 5h1v1H14zM4 6h1v1H4zM8 6h1v1H8zM14 6h1v1H14zM4 7h1v1H4zM7 7h1v1H7zM14 7h1v1H14zM6 8h1v1H6zM14 8h1v1H14zM5 9h1v1H5zM14 9h1v1H14zM4 10h1v1H4zM14 10h1v1H14zM3 11h1v1H3zM14 11h1v1H14zM14 12h1v1H14zM14 13h1v1H14zM0 14h15v1H0z'/%3E%3Cpath fill='%23555' d='M13 1h1v1H13zM13 2h1v1H13zM13 3h1v1H13zM11 4h1v1H11zM13 4h1v1H13zM10 5h1v1H10zM13 5h1v1H13zM9 6h1v1H9zM13 6h1v1H13zM5 7h1v1H5zM8 7h1v1H8zM13 7h1v1H13zM4 8h1v1H4zM7 8h1v1H7zM13 8h1v1H13zM6 9h1v1H6zM13 9h1v1H13zM5 10h1v1H5zM13 10h1v1H13zM4 11h1v1H4zM13 11h1v1H13zM13 12h1v1H13zM1 13h13v1H1z'/%3E%3Cpath fill='%23aaa' d='M1 1h12v1H1zM1 2h10v1H1zM12 2h1v1H12zM1 3h9v1H1zM12 3h1v1H12zM1 4h8v1H1zM12 4h1v1H12zM1 5h2v1H1zM5 5h3v1H5zM11 5h2v1H11zM1 6h2v1H1zM5 6h2v1H5zM10 6h3v1H10zM1 7h2v1H1zM9 7h4v1H9zM1 8h2v1H1zM8 8h5v1H8zM1 9h2v1H1zM7 9h6v1H7zM1 10h2v1H1zM6 10h7v1H6zM1 11h2v1H1zM5 11h8v1H5zM1 12h12v1H1z'/%3E%3Cpath fill='%23fff' d='M0 0h14v1H0zM0 1h1v1H0zM0 2h1v1H0zM11 2h1v1H11zM0 3h1v1H0zM10 3h1v1H10zM0 4h1v1H0zM9 4h1v1H9zM0 5h1v1H0zM3 5h1v1H3zM8 5h1v1H8zM0 6h1v1H0zM3 6h1v1H3zM7 6h1v1H7zM0 7h1v1H0zM3 7h1v1H3zM6 7h1v1H6zM0 8h1v1H0zM3 8h1v1H3zM5 8h1v1H5zM0 9h1v1H0zM3 9h2v1H3zM0 10h1v1H0zM3 10h1v1H3zM0 11h1v1H0zM0 12h1v1H0zM0 13h1v1H0z'/%3E%3C/svg%3E");
   --clio-art-nx-switch: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='15' height='15' shape-rendering='crispEdges'%3E%3Cpath fill='%23000' d='M14 0h1v1H14zM14 1h1v1H14zM14 2h1v1H14zM14 3h1v1H14zM14 4h1v1H14zM14 5h1v1H14zM14 6h1v1H14zM14 7h1v1H14zM14 8h1v1H14zM14 9h1v1H14zM14 10h1v1H14zM14 11h1v1H14zM14 12h1v1H14zM14 13h1v1H14zM0 14h15v1H0z'/%3E%3Cpath fill='%23555' d='M13 1h1v1H13zM13 2h1v1H13zM13 3h1v1H13zM13 4h1v1H13zM13 5h1v1H13zM13 6h1v1H13zM13 7h1v1H13zM13 8h1v1H13zM13 9h1v1H13zM13 10h1v1H13zM13 11h1v1H13zM13 12h1v1H13zM1 13h13v1H1z'/%3E%3Cpath fill='%23aaa' d='M1 1h12v1H1zM1 2h12v1H1zM1 3h12v1H1zM1 4h12v1H1zM1 5h12v1H1zM1 6h12v1H1zM1 7h12v1H1zM1 8h12v1H1zM1 9h12v1H1zM1 10h12v1H1zM1 11h12v1H1zM1 12h12v1H1z'/%3E%3Cpath fill='%23fff' d='M0 0h14v1H0zM0 1h1v1H0zM0 2h1v1H0zM0 3h1v1H0zM0 4h1v1H0zM0 5h1v1H0zM0 6h1v1H0zM0 7h1v1H0zM0 8h1v1H0zM0 9h1v1H0zM0 10h1v1H0zM0 11h1v1H0zM0 12h1v1H0zM0 13h1v1H0z'/%3E%3C/svg%3E");
   --clio-art-nx-return: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='15' height='10' shape-rendering='crispEdges'%3E%3Cpath fill='%23000' d='M10 0h4v1H10zM4 1h2v1H4zM10 1h1v1H10zM3 2h1v1H3zM10 2h1v1H10zM2 3h1v1H2zM6 3h5v1H6zM1 4h1v1H1zM0 5h1v1H0zM1 6h1v1H1zM2 7h1v1H2zM3 8h1v1H3zM4 9h1v1H4z'/%3E%3Cpath fill='%23555' d='M14 0h1v1H14zM4 2h2v1H4zM3 3h1v1H3zM5 3h1v1H5zM2 4h1v1H2zM1 5h1v1H1z'/%3E%3Cpath fill='%23aaa' d='M4 3h1v1H4z'/%3E%3Cpath fill='%23fff' d='M14 1h1v1H14zM14 2h1v1H14zM14 3h1v1H14zM14 4h1v1H14zM14 5h1v1H14zM14 6h1v1H14zM5 7h10v1H5zM5 8h1v1H5zM5 9h1v1H5z'/%3E%3C/svg%3E");
-  --clio-art-nx-radio: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='10' shape-rendering='crispEdges'%3E%3Cpath fill='%23555' d='M4 0h4v1H4zM3 1h1v1H3zM8 1h1v1H8zM2 2h1v1H2zM9 2h1v1H9zM1 3h1v1H1zM10 3h1v1H10zM1 4h1v1H1zM10 4h1v1H10zM1 5h1v1H1zM10 5h1v1H10zM1 6h1v1H1zM10 6h1v1H10zM2 7h1v1H2zM3 8h1v1H3zM8 8h1v1H8zM4 9h4v1H4z'/%3E%3Cpath fill='%23fff' d='M9 7h2v1H9zM9 8h1v1H9zM8 9h1v1H8z'/%3E%3C/svg%3E");
-  --clio-art-nx-radio-dot: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='4' shape-rendering='crispEdges'%3E%3Cpath fill='%23000' d='M5 0h2v1H5zM4 1h4v1H4zM4 2h4v1H4zM5 3h2v1H5z'/%3E%3C/svg%3E");
-  --clio-art-nx-arrow-right: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' shape-rendering='crispEdges'%3E%3Cpath fill='%23000' d='M15 0h1v1H15zM15 1h1v1H15zM15 2h1v1H15zM15 3h1v1H15zM0 4h2v1H0zM15 4h1v1H15zM0 5h4v1H0zM15 5h1v1H15zM0 6h6v1H0zM15 6h1v1H15zM0 7h8v1H0zM15 7h1v1H15zM0 8h6v1H0zM15 8h1v1H15zM0 9h4v1H0zM15 9h1v1H15zM0 10h2v1H0zM15 10h1v1H15zM15 11h1v1H15zM15 12h1v1H15zM15 13h1v1H15zM15 14h1v1H15zM0 15h14v1H0zM15 15h1v1H15z'/%3E%3Cpath fill='%23555' d='M14 1h1v1H14zM14 2h1v1H14zM0 3h1v1H0zM14 3h1v1H14zM2 4h1v1H2zM14 4h1v1H14zM4 5h1v1H4zM14 5h1v1H14zM6 6h1v1H6zM14 6h1v1H14zM8 7h1v1H8zM14 7h1v1H14zM6 8h1v1H6zM14 8h1v1H14zM4 9h1v1H4zM14 9h1v1H14zM2 10h1v1H2zM14 10h1v1H14zM0 11h1v1H0zM14 11h1v1H14zM14 12h1v1H14zM14 13h1v1H14zM1 14h14v1H1zM14 15h1v1H14z'/%3E%3Cpath fill='%23aaa' d='M1 1h13v1H1zM1 2h13v1H1zM1 3h13v1H1zM3 4h11v1H3zM5 5h9v1H5zM7 6h7v1H7zM9 7h5v1H9zM7 8h7v1H7zM5 9h9v1H5zM3 10h11v1H3zM1 11h13v1H1zM1 12h13v1H1zM1 13h13v1H1z'/%3E%3Cpath fill='%23fff' d='M0 0h15v1H0zM0 1h1v1H0zM0 2h1v1H0zM0 12h1v1H0zM0 13h1v1H0zM0 14h1v1H0z'/%3E%3C/svg%3E");
-  --clio-art-nx-arrow-down: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' shape-rendering='crispEdges'%3E%3Cpath fill='%23000' d='M1 0h7v1H1zM15 0h1v1H15zM1 1h7v1H1zM15 1h1v1H15zM2 2h5v1H2zM15 2h1v1H15zM2 3h5v1H2zM15 3h1v1H15zM3 4h3v1H3zM15 4h1v1H15zM3 5h3v1H3zM15 5h1v1H15zM4 6h1v1H4zM15 6h1v1H15zM4 7h1v1H4zM15 7h1v1H15zM15 8h1v1H15zM15 9h1v1H15zM15 10h1v1H15zM15 11h1v1H15zM15 12h1v1H15zM15 13h1v1H15zM15 14h1v1H15zM0 15h14v1H0zM15 15h1v1H15z'/%3E%3Cpath fill='%23555' d='M0 0h1v1H0zM8 0h1v1H8zM14 1h1v1H14zM1 2h1v1H1zM7 2h1v1H7zM14 2h1v1H14zM14 3h1v1H14zM2 4h1v1H2zM6 4h1v1H6zM14 4h1v1H14zM14 5h1v1H14zM3 6h1v1H3zM5 6h1v1H5zM14 6h1v1H14zM14 7h1v1H14zM4 8h1v1H4zM14 8h1v1H14zM14 9h1v1H14zM14 10h1v1H14zM14 11h1v1H14zM14 12h1v1H14zM14 13h1v1H14zM1 14h14v1H1zM14 15h1v1H14z'/%3E%3Cpath fill='%23aaa' d='M8 1h6v1H8zM8 2h6v1H8zM1 3h1v1H1zM7 3h7v1H7zM1 4h1v1H1zM7 4h7v1H7zM1 5h2v1H1zM6 5h8v1H6zM1 6h2v1H1zM6 6h8v1H6zM1 7h3v1H1zM5 7h9v1H5zM1 8h3v1H1zM5 8h9v1H5zM1 9h13v1H1zM1 10h13v1H1zM1 11h13v1H1zM1 12h13v1H1zM1 13h13v1H1z'/%3E%3Cpath fill='%23fff' d='M9 0h6v1H9zM0 1h1v1H0zM0 2h1v1H0zM0 3h1v1H0zM0 4h1v1H0zM0 5h1v1H0zM0 6h1v1H0zM0 7h1v1H0zM0 8h1v1H0zM0 9h1v1H0zM0 10h1v1H0zM0 11h1v1H0zM0 12h1v1H0zM0 13h1v1H0zM0 14h1v1H0z'/%3E%3C/svg%3E");
-  --clio-art-nx-arrow-left: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' shape-rendering='crispEdges'%3E%3Cpath fill='%23000' d='M15 0h1v1H15zM7 1h2v1H7zM15 1h1v1H15zM5 2h4v1H5zM15 2h1v1H15zM3 3h6v1H3zM15 3h1v1H15zM1 4h8v1H1zM15 4h1v1H15zM3 5h6v1H3zM15 5h1v1H15zM5 6h4v1H5zM15 6h1v1H15zM7 7h2v1H7zM15 7h1v1H15zM15 8h1v1H15zM15 9h1v1H15zM15 10h1v1H15zM15 11h1v1H15zM15 12h1v1H15zM15 13h1v1H15zM15 14h1v1H15zM0 15h14v1H0zM15 15h1v1H15z'/%3E%3Cpath fill='%23555' d='M8 0h1v1H8zM6 1h1v1H6zM14 1h1v1H14zM4 2h1v1H4zM14 2h1v1H14zM2 3h1v1H2zM14 3h1v1H14zM0 4h1v1H0zM14 4h1v1H14zM2 5h1v1H2zM14 5h1v1H14zM4 6h1v1H4zM14 6h1v1H14zM6 7h1v1H6zM14 7h1v1H14zM8 8h1v1H8zM14 8h1v1H14zM14 9h1v1H14zM14 10h1v1H14zM14 11h1v1H14zM14 12h1v1H14zM14 13h1v1H14zM1 14h14v1H1zM14 15h1v1H14z'/%3E%3Cpath fill='%23aaa' d='M1 1h5v1H1zM9 1h5v1H9zM1 2h3v1H1zM9 2h5v1H9zM1 3h1v1H1zM9 3h5v1H9zM9 4h5v1H9zM1 5h1v1H1zM9 5h5v1H9zM1 6h3v1H1zM9 6h5v1H9zM1 7h5v1H1zM9 7h5v1H9zM1 8h7v1H1zM9 8h5v1H9zM1 9h13v1H1zM1 10h13v1H1zM1 11h13v1H1zM1 12h13v1H1zM1 13h13v1H1z'/%3E%3Cpath fill='%23fff' d='M0 0h8v1H0zM9 0h6v1H9zM0 1h1v1H0zM0 2h1v1H0zM0 3h1v1H0zM0 5h1v1H0zM0 6h1v1H0zM0 7h1v1H0zM0 8h1v1H0zM0 9h1v1H0zM0 10h1v1H0zM0 11h1v1H0zM0 12h1v1H0zM0 13h1v1H0zM0 14h1v1H0z'/%3E%3C/svg%3E");
+  --clio-art-nx-radio: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='12' shape-rendering='crispEdges'%3E%3Cpath fill='%23555' d='M4 1h4v1H4zM3 2h1v1H3zM8 2h1v1H8zM2 3h1v1H2zM9 3h1v1H9zM1 4h1v1H1zM10 4h1v1H10zM1 5h1v1H1zM10 5h1v1H10zM1 6h1v1H1zM10 6h1v1H10zM1 7h1v1H1zM10 7h1v1H10zM2 8h1v1H2zM3 9h1v1H3zM8 9h1v1H8zM4 10h4v1H4z'/%3E%3Cpath fill='%23fff' d='M9 8h2v1H9zM9 9h1v1H9zM8 10h1v1H8z'/%3E%3C/svg%3E");
+  --clio-art-nx-radio-dot: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='12' shape-rendering='crispEdges'%3E%3Cpath fill='%23000' d='M5 4h2v1H5zM4 5h4v1H4zM4 6h4v1H4zM5 7h2v1H5z'/%3E%3C/svg%3E");
+  --clio-art-nx-arrow-right: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' shape-rendering='crispEdges'%3E%3Cpath fill='%23000' d='M15 0h1v1H15zM15 1h1v1H15zM15 2h1v1H15zM15 3h1v1H15zM3 4h2v1H3zM15 4h1v1H15zM3 5h4v1H3zM15 5h1v1H15zM3 6h6v1H3zM15 6h1v1H15zM3 7h8v1H3zM15 7h1v1H15zM3 8h6v1H3zM15 8h1v1H15zM3 9h4v1H3zM15 9h1v1H15zM3 10h2v1H3zM15 10h1v1H15zM15 11h1v1H15zM15 12h1v1H15zM15 13h1v1H15zM15 14h1v1H15zM0 15h16v1H0z'/%3E%3Cpath fill='%23555' d='M14 1h1v1H14zM14 2h1v1H14zM3 3h1v1H3zM14 3h1v1H14zM5 4h1v1H5zM14 4h1v1H14zM7 5h1v1H7zM14 5h1v1H14zM9 6h1v1H9zM14 6h1v1H14zM11 7h1v1H11zM14 7h1v1H14zM9 8h1v1H9zM14 8h1v1H14zM7 9h1v1H7zM14 9h1v1H14zM5 10h1v1H5zM14 10h1v1H14zM3 11h1v1H3zM14 11h1v1H14zM14 12h1v1H14zM14 13h1v1H14zM1 14h14v1H1z'/%3E%3Cpath fill='%23aaa' d='M1 1h13v1H1zM1 2h13v1H1zM1 3h2v1H1zM4 3h10v1H4zM1 4h2v1H1zM6 4h8v1H6zM1 5h2v1H1zM8 5h6v1H8zM1 6h2v1H1zM10 6h4v1H10zM1 7h2v1H1zM12 7h2v1H12zM1 8h2v1H1zM10 8h4v1H10zM1 9h2v1H1zM8 9h6v1H8zM1 10h2v1H1zM6 10h8v1H6zM1 11h2v1H1zM4 11h10v1H4zM1 12h13v1H1zM1 13h13v1H1z'/%3E%3Cpath fill='%23fff' d='M0 0h15v1H0zM0 1h1v1H0zM0 2h1v1H0zM0 3h1v1H0zM0 4h1v1H0zM0 5h1v1H0zM0 6h1v1H0zM0 7h1v1H0zM0 8h1v1H0zM0 9h1v1H0zM0 10h1v1H0zM0 11h1v1H0zM0 12h1v1H0zM0 13h1v1H0zM0 14h1v1H0z'/%3E%3C/svg%3E");
+  --clio-art-nx-arrow-down: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' shape-rendering='crispEdges'%3E%3Cpath fill='%23000' d='M15 0h1v1H15zM15 1h1v1H15zM15 2h1v1H15zM4 3h7v1H4zM15 3h1v1H15zM4 4h7v1H4zM15 4h1v1H15zM5 5h5v1H5zM15 5h1v1H15zM5 6h5v1H5zM15 6h1v1H15zM6 7h3v1H6zM15 7h1v1H15zM6 8h3v1H6zM15 8h1v1H15zM7 9h1v1H7zM15 9h1v1H15zM7 10h1v1H7zM15 10h1v1H15zM15 11h1v1H15zM15 12h1v1H15zM15 13h1v1H15zM15 14h1v1H15zM0 15h16v1H0z'/%3E%3Cpath fill='%23555' d='M14 1h1v1H14zM14 2h1v1H14zM3 3h1v1H3zM11 3h1v1H11zM14 3h1v1H14zM14 4h1v1H14zM4 5h1v1H4zM10 5h1v1H10zM14 5h1v1H14zM14 6h1v1H14zM5 7h1v1H5zM9 7h1v1H9zM14 7h1v1H14zM14 8h1v1H14zM6 9h1v1H6zM8 9h1v1H8zM14 9h1v1H14zM14 10h1v1H14zM7 11h1v1H7zM14 11h1v1H14zM14 12h1v1H14zM14 13h1v1H14zM1 14h14v1H1z'/%3E%3Cpath fill='%23aaa' d='M1 1h13v1H1zM1 2h13v1H1zM1 3h2v1H1zM12 3h2v1H12zM1 4h3v1H1zM11 4h3v1H11zM1 5h3v1H1zM11 5h3v1H11zM1 6h4v1H1zM10 6h4v1H10zM1 7h4v1H1zM10 7h4v1H10zM1 8h5v1H1zM9 8h5v1H9zM1 9h5v1H1zM9 9h5v1H9zM1 10h6v1H1zM8 10h6v1H8zM1 11h6v1H1zM8 11h6v1H8zM1 12h13v1H1zM1 13h13v1H1z'/%3E%3Cpath fill='%23fff' d='M0 0h15v1H0zM0 1h1v1H0zM0 2h1v1H0zM0 3h1v1H0zM0 4h1v1H0zM0 5h1v1H0zM0 6h1v1H0zM0 7h1v1H0zM0 8h1v1H0zM0 9h1v1H0zM0 10h1v1H0zM0 11h1v1H0zM0 12h1v1H0zM0 13h1v1H0zM0 14h1v1H0z'/%3E%3C/svg%3E");
+  --clio-art-nx-arrow-left: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' shape-rendering='crispEdges'%3E%3Cpath fill='%23000' d='M15 0h1v1H15zM15 1h1v1H15zM15 2h1v1H15zM15 3h1v1H15zM10 4h2v1H10zM15 4h1v1H15zM8 5h4v1H8zM15 5h1v1H15zM6 6h6v1H6zM15 6h1v1H15zM4 7h8v1H4zM15 7h1v1H15zM6 8h6v1H6zM15 8h1v1H15zM8 9h4v1H8zM15 9h1v1H15zM10 10h2v1H10zM15 10h1v1H15zM15 11h1v1H15zM15 12h1v1H15zM15 13h1v1H15zM15 14h1v1H15zM0 15h16v1H0z'/%3E%3Cpath fill='%23555' d='M14 1h1v1H14zM14 2h1v1H14zM11 3h1v1H11zM14 3h1v1H14zM9 4h1v1H9zM14 4h1v1H14zM7 5h1v1H7zM14 5h1v1H14zM5 6h1v1H5zM14 6h1v1H14zM3 7h1v1H3zM14 7h1v1H14zM5 8h1v1H5zM14 8h1v1H14zM7 9h1v1H7zM14 9h1v1H14zM9 10h1v1H9zM14 10h1v1H14zM11 11h1v1H11zM14 11h1v1H14zM14 12h1v1H14zM14 13h1v1H14zM1 14h14v1H1z'/%3E%3Cpath fill='%23aaa' d='M1 1h13v1H1zM1 2h13v1H1zM1 3h10v1H1zM12 3h2v1H12zM1 4h8v1H1zM12 4h2v1H12zM1 5h6v1H1zM12 5h2v1H12zM1 6h4v1H1zM12 6h2v1H12zM1 7h2v1H1zM12 7h2v1H12zM1 8h4v1H1zM12 8h2v1H12zM1 9h6v1H1zM12 9h2v1H12zM1 10h8v1H1zM12 10h2v1H12zM1 11h10v1H1zM12 11h2v1H12zM1 12h13v1H1zM1 13h13v1H1z'/%3E%3Cpath fill='%23fff' d='M0 0h15v1H0zM0 1h1v1H0zM0 2h1v1H0zM0 3h1v1H0zM0 4h1v1H0zM0 5h1v1H0zM0 6h1v1H0zM0 7h1v1H0zM0 8h1v1H0zM0 9h1v1H0zM0 10h1v1H0zM0 11h1v1H0zM0 12h1v1H0zM0 13h1v1H0zM0 14h1v1H0z'/%3E%3C/svg%3E");
   --clio-art-nx-miniaturize-held: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='15' height='15' shape-rendering='crispEdges'%3E%3Cpath fill='%23000' d='M14 1h1v1H14zM2 2h10v1H2zM14 2h1v1H14zM2 3h10v1H2zM14 3h1v1H14zM2 4h10v1H2zM14 4h1v1H14zM2 5h1v1H2zM11 5h1v1H11zM14 5h1v1H14zM2 6h1v1H2zM11 6h1v1H11zM14 6h1v1H14zM2 7h1v1H2zM11 7h1v1H11zM14 7h1v1H14zM2 8h1v1H2zM11 8h1v1H11zM14 8h1v1H14zM2 9h1v1H2zM11 9h1v1H11zM14 9h1v1H14zM2 10h1v1H2zM11 10h1v1H11zM14 10h1v1H14zM2 11h10v1H2zM14 11h1v1H14zM14 12h1v1H14zM14 13h1v1H14zM1 14h14v1H1z'/%3E%3Cpath fill='%23555' d='M14 0h1v1H14zM13 1h1v1H13zM13 2h1v1H13zM13 3h1v1H13zM13 4h1v1H13zM13 5h1v1H13zM13 6h1v1H13zM13 7h1v1H13zM13 8h1v1H13zM13 9h1v1H13zM13 10h1v1H13zM13 11h1v1H13zM13 12h1v1H13zM1 13h13v1H1zM0 14h1v1H0z'/%3E%3Cpath fill='%23fff' d='M0 0h14v1H0zM0 1h13v1H0zM0 2h2v1H0zM12 2h1v1H12zM0 3h2v1H0zM12 3h1v1H12zM0 4h2v1H0zM12 4h1v1H12zM0 5h2v1H0zM3 5h8v1H3zM12 5h1v1H12zM0 6h2v1H0zM3 6h8v1H3zM12 6h1v1H12zM0 7h2v1H0zM3 7h8v1H3zM12 7h1v1H12zM0 8h2v1H0zM3 8h8v1H3zM12 8h1v1H12zM0 9h2v1H0zM3 9h8v1H3zM12 9h1v1H12zM0 10h2v1H0zM3 10h8v1H3zM12 10h1v1H12zM0 11h2v1H0zM12 11h1v1H12zM0 12h13v1H0zM0 13h1v1H0z'/%3E%3C/svg%3E");
   --clio-art-nx-close-held: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='15' height='15' shape-rendering='crispEdges'%3E%3Cpath fill='%23000' d='M14 0h1v1H14zM14 1h1v1H14zM2 2h1v1H2zM11 2h1v1H11zM14 2h1v1H14zM3 3h1v1H3zM10 3h1v1H10zM14 3h1v1H14zM4 4h1v1H4zM9 4h1v1H9zM14 4h1v1H14zM5 5h1v1H5zM8 5h1v1H8zM14 5h1v1H14zM6 6h2v1H6zM14 6h1v1H14zM6 7h2v1H6zM14 7h1v1H14zM5 8h1v1H5zM8 8h1v1H8zM14 8h1v1H14zM4 9h1v1H4zM9 9h1v1H9zM14 9h1v1H14zM3 10h1v1H3zM10 10h1v1H10zM14 10h1v1H14zM2 11h1v1H2zM11 11h1v1H11zM14 11h1v1H14zM14 12h1v1H14zM14 13h1v1H14zM0 14h15v1H0z'/%3E%3Cpath fill='%23555' d='M13 1h1v1H13zM3 2h1v1H3zM10 2h1v1H10zM13 2h1v1H13zM2 3h1v1H2zM4 3h1v1H4zM9 3h1v1H9zM11 3h1v1H11zM13 3h1v1H13zM3 4h1v1H3zM5 4h1v1H5zM8 4h1v1H8zM10 4h1v1H10zM13 4h1v1H13zM4 5h1v1H4zM6 5h2v1H6zM9 5h1v1H9zM13 5h1v1H13zM5 6h1v1H5zM8 6h1v1H8zM13 6h1v1H13zM5 7h1v1H5zM8 7h1v1H8zM13 7h1v1H13zM4 8h1v1H4zM6 8h2v1H6zM9 8h1v1H9zM13 8h1v1H13zM3 9h1v1H3zM5 9h1v1H5zM8 9h1v1H8zM10 9h1v1H10zM13 9h1v1H13zM2 10h1v1H2zM4 10h1v1H4zM9 10h1v1H9zM11 10h1v1H11zM13 10h1v1H13zM3 11h1v1H3zM10 11h1v1H10zM13 11h1v1H13zM13 12h1v1H13zM1 13h13v1H1z'/%3E%3Cpath fill='%23fff' d='M0 0h14v1H0zM0 1h13v1H0zM0 2h2v1H0zM4 2h6v1H4zM12 2h1v1H12zM0 3h2v1H0zM5 3h4v1H5zM12 3h1v1H12zM0 4h3v1H0zM6 4h2v1H6zM11 4h2v1H11zM0 5h4v1H0zM10 5h3v1H10zM0 6h5v1H0zM9 6h4v1H9zM0 7h5v1H0zM9 7h4v1H9zM0 8h4v1H0zM10 8h3v1H10zM0 9h3v1H0zM6 9h2v1H6zM11 9h2v1H11zM0 10h2v1H0zM5 10h4v1H5zM12 10h1v1H12zM0 11h2v1H0zM4 11h6v1H4zM12 11h1v1H12zM0 12h13v1H0zM0 13h1v1H0z'/%3E%3C/svg%3E");
   /* nx-art:end */
@@ -3830,35 +3834,33 @@
   box-shadow: var(--clio-menu-cell);
 }
 
-/* Every title in the main menu opens a submenu: it carries the arrow. */
-:root :is(.menu-bar, [role="menubar"], [role="menu-bar"]) > li:has(> [aria-haspopup="true"])::after,
-:root :is(.menu, [role="menu"]) > li:has(> :is(.menu, ul[role="menu"]))::after,
-:root :is(.menu, [role="menu"]) > li > [aria-haspopup="true"]::after {
-  content: "";
-  position: absolute;
-  top: 6px;
-  right: 5px;
-  width: 7px;
-  height: 7px;
-  margin: 0;
-  background: var(--clio-art-nx-submenu) 0 0 / 7px 7px no-repeat;
+/* A cell that opens a submenu carries the arrow, 5px from its right and 6px down;
+   on a highlighted cell the arrow's light edge is light grey. */
+:root :is(.menu-bar, [role="menubar"], [role="menu-bar"], .menu, [role="menu"]) > li > :is(button, a)[aria-haspopup="true"] {
+  background: var(--clio-art-nx-submenu) right 5px top 6px / 7px 7px no-repeat;
 }
 
-/* On a highlighted cell the arrow's light edge is light grey. */
-:root :is(.menu-bar, [role="menubar"], [role="menu-bar"]) > li:is(.open, :has(> :is([aria-expanded="true"], .active))):has(> [aria-haspopup="true"])::after,
-:root :is(.menu, [role="menu"]) > li:has(> :is(.menu, ul[role="menu"])):is(:hover, :focus-within, .active):where(:not([data-clio-blink]))::after {
-  background-image: var(--clio-art-nx-submenu-lit);
+:root :is(.menu-bar, [role="menubar"], [role="menu-bar"]) > li > :is(button, a)[aria-haspopup="true"]:is([aria-expanded="true"], .active),
+:root :is(.menu-bar, [role="menubar"], [role="menu-bar"]) > li.open > :is(button, a)[aria-haspopup="true"],
+:root :is(.menu, [role="menu"]) > li > :is(button, a)[aria-haspopup="true"]:not([aria-disabled="true"], :disabled):is(:hover, :focus-visible, .active, [aria-expanded="true"]):where(:not([data-clio-blink])) {
+  background: var(--clio-art-nx-submenu-lit) right 5px top 6px / 7px 7px no-repeat, var(--clio-menu-item-active-bg);
 }
 
-/* A submenu opens to the right of its cell, its title level with the cell. */
+/* A submenu opens right against its menu, level with that menu's top (whichever
+   cell opened it): the cells do not position it, the menu does. */
+:root :is(.menu-bar, [role="menubar"], [role="menu-bar"]),
+:root :is(.menu, [role="menu"]):not(li > *) {
+  position: relative;
+}
+
+:root :is(.menu-bar, [role="menubar"], [role="menu-bar"], .menu, [role="menu"]) > li {
+  position: static;
+}
+
 :root :is(.menu-bar, [role="menubar"], [role="menu-bar"], .menu, [role="menu"]) li > :is(.menu, ul[role="menu"]) {
   top: 0;
   left: 100%;
   margin-left: 1px;
-}
-
-:root :is(.menu-bar, [role="menubar"], [role="menu-bar"], .menu, [role="menu"]) li > :is(.menu, ul[role="menu"])[aria-label] {
-  top: calc(-1 * var(--clio-menu-title-height));
 }
 
 :root :is(.menu, ul[role="menu"]) {
@@ -4068,49 +4070,108 @@
   }
 }
 
-/* clio.js's bars: the vertical one in the left padding with its line on the
-   content's side, the arrows together (vertical: at the bottom, clio-sb-smart;
-   horizontal: at the left, clio-sb-near). */
+/* clio.js's bars, measured (NeXTStep 3.0, the File Viewer's browser): an 18px
+   lane between the box's line and a black line on the content's side; inside it
+   a 1px #aaaaaa margin, 16px of #555555/#aaaaaa dots, the 16px raised knob with
+   its dimple; the two 16x16 arrows together at the bottom (vertical) or the
+   left (horizontal), each in a 17px cell that keeps 1px of margin before it,
+   and 1px of margin after the last. Host and doubled classes: these must beat
+   the copies of the base scroll-bar rules (up to six classes). */
 :root .clio-sb-host.clio-sb-y {
   padding-right: var(--clio-sb-pr, 0px);
   padding-left: calc(var(--clio-sb-pl, 0px) + var(--clio-scrollbar-size));
 }
 
-:root .clio-sb-anchor > .clio-sb > .clio-sb-button {
-  display: block;
-  width: var(--clio-scrollbar-size);
-  height: var(--clio-scrollbar-size);
+:root .clio-sb-host > .clio-sb-anchor > .clio-sb.clio-sb > :is(.clio-sb-track, .clio-sb-button) {
   border: 0;
+  box-shadow: none;
+}
+
+:root .clio-sb-host > .clio-sb-anchor > .clio-sb.clio-sb-v > :is(.clio-sb-track, .clio-sb-button) {
+  border-right: 1px solid #000000;
+}
+
+:root .clio-sb-host > .clio-sb-anchor > .clio-sb.clio-sb-h > :is(.clio-sb-track, .clio-sb-button) {
+  border-top: 1px solid #000000;
+}
+
+:root .clio-sb-host > .clio-sb-anchor > .clio-sb.clio-sb > .clio-sb-track {
+  background:
+    var(--clio-nx-lane) calc(1px + var(--clio-sb-px, 0px)) calc(1px + var(--clio-sb-py, 0px)) / 2px 2px,
+    #aaaaaa;
+  background-clip: content-box, border-box;
+}
+
+:root .clio-sb-host > .clio-sb-anchor > .clio-sb.clio-sb-v > .clio-sb-track {
+  bottom: calc(2 * var(--clio-scrollbar-arrow-length) + var(--clio-scrollbar-arrow-gap));
+  padding: 1px 1px 0;
+}
+
+:root .clio-sb-host > .clio-sb-anchor > .clio-sb.clio-sb-h > .clio-sb-track {
+  left: calc(2 * var(--clio-scrollbar-arrow-length) + var(--clio-scrollbar-arrow-gap));
+  padding: 1px 0 1px 1px;
+}
+
+:root .clio-sb-host > .clio-sb-anchor > .clio-sb.clio-sb-v > .clio-sb-thumb {
+  left: 1px;
+  right: 2px;
+}
+
+:root .clio-sb-host > .clio-sb-anchor > .clio-sb.clio-sb-h > .clio-sb-thumb {
+  top: 2px;
+  bottom: 1px;
+}
+
+:root .clio-sb-host > .clio-sb-anchor > .clio-sb.clio-sb > .clio-sb-button {
   background-color: #aaaaaa;
   background-position: 1px 1px;
   background-size: 16px 16px;
   background-repeat: no-repeat;
 }
 
-:root .clio-sb-anchor > .clio-sb-v > :is(.clio-sb-track, .clio-sb-button) {
-  border-left: 0;
-  border-right: 1px solid #000000;
-  background-position: 1px 1px;
+:root .clio-sb-host > .clio-sb-anchor > .clio-sb.clio-sb-v.clio-sb-smart > .clio-sb-dec {
+  top: auto;
+  bottom: calc(var(--clio-scrollbar-arrow-length) + var(--clio-scrollbar-arrow-gap));
+  width: 100%;
+  height: var(--clio-scrollbar-arrow-length);
 }
 
-:root .clio-sb-anchor > .clio-sb-v > .clio-sb-button {
-  background-position: 0 1px;
+:root .clio-sb-host > .clio-sb-anchor > .clio-sb.clio-sb-v.clio-sb-smart > .clio-sb-inc {
+  bottom: 0;
+  width: 100%;
+  height: calc(var(--clio-scrollbar-arrow-length) + var(--clio-scrollbar-arrow-gap));
 }
 
-:root .clio-sb-anchor > .clio-sb-h > .clio-sb-button {
-  border-top: 1px solid #000000;
-  background-position: 1px 1px;
+:root .clio-sb-host > .clio-sb-anchor > .clio-sb.clio-sb-h.clio-sb-near > .clio-sb-dec {
+  left: 0;
+  right: auto;
+  width: var(--clio-scrollbar-arrow-length);
+  height: 100%;
+  background-position: 1px 2px;
 }
 
-:root .clio-sb-anchor > .clio-sb-v > .clio-sb-dec { background-image: var(--clio-scrollbar-up); }
-:root .clio-sb-anchor > .clio-sb-v > .clio-sb-inc { background-image: var(--clio-scrollbar-down); }
-:root .clio-sb-anchor > .clio-sb-h > .clio-sb-dec { background-image: var(--clio-scrollbar-left); }
-:root .clio-sb-anchor > .clio-sb-h > .clio-sb-inc { background-image: var(--clio-scrollbar-right); }
-:root .clio-sb-anchor > .clio-sb > .clio-sb-button.clio-held { background-color: #ffffff; }
+:root .clio-sb-host > .clio-sb-anchor > .clio-sb.clio-sb-h.clio-sb-near > .clio-sb-inc {
+  left: var(--clio-scrollbar-arrow-length);
+  right: auto;
+  width: calc(var(--clio-scrollbar-arrow-length) + var(--clio-scrollbar-arrow-gap));
+  height: 100%;
+  background-position: 1px 2px;
+}
 
-:root .clio-sb-anchor > .clio-sb-h.clio-sb-near > .clio-sb-dec { left: 0; right: auto; }
-:root .clio-sb-anchor > .clio-sb-h.clio-sb-near > .clio-sb-inc { left: var(--clio-scrollbar-size); right: auto; }
-:root .clio-sb-anchor > .clio-sb-h.clio-sb-near > .clio-sb-track { left: calc(2 * var(--clio-scrollbar-size)); right: 0; }
+:root .clio-sb-host > .clio-sb-anchor > .clio-sb.clio-sb-h.clio-sb-near > .clio-sb-track {
+  right: 0;
+}
+
+:root .clio-sb-host > .clio-sb-anchor > .clio-sb.clio-sb-v > .clio-sb-dec { background-image: var(--clio-scrollbar-up); }
+:root .clio-sb-host > .clio-sb-anchor > .clio-sb.clio-sb-v > .clio-sb-inc { background-image: var(--clio-scrollbar-down); }
+:root .clio-sb-host > .clio-sb-anchor > .clio-sb.clio-sb-h > .clio-sb-dec { background-image: var(--clio-scrollbar-left); }
+:root .clio-sb-host > .clio-sb-anchor > .clio-sb.clio-sb-h > .clio-sb-inc { background-image: var(--clio-scrollbar-right); }
+:root .clio-sb-host > .clio-sb-anchor > .clio-sb.clio-sb > .clio-sb-button.clio-held { background-color: #ffffff; }
+
+/* With nothing to scroll the knob and the arrows go; the lane runs the whole bar. */
+:root .clio-sb-host > .clio-sb-anchor > .clio-sb.clio-sb.clio-sb-off > .clio-sb-button { display: none; }
+:root .clio-sb-host > .clio-sb-anchor > .clio-sb-v.clio-sb-v.clio-sb-off > .clio-sb-track { bottom: 0; }
+:root .clio-sb-host > .clio-sb-anchor > .clio-sb-h.clio-sb-h.clio-sb-off > .clio-sb-track { left: 0; }
 
 /* ---- Lists, groups, tabs ----------------------------------------------------- */
 :root :is(.listbox, [role="listbox"]) > :is(li, [role="option"]):is([aria-selected="true"], .selected),
@@ -4169,14 +4230,20 @@
 }
 
 /* ---- Browser ----------------------------------------------------------------------
-   NeXT's column browser: columns of lists side by side; an item that leads
-   further carries the arrow. Markup: .browser > .listbox (or [role=listbox]),
-   items with aria-haspopup or .branch. */
+   NeXT's column browser (measured, the File Viewer in browser view): a sunken
+   box (#555555 then black at the top and left, #555555 then white at the
+   bottom), columns of #aaaaaa side by side, each with its scroller at its left
+   (clio.js) behind a black line, 15px rows, a white selected row, the menu's
+   arrow on a branch 4px from the right and 4px down. Markup: .browser >
+   .listbox (or [role=listbox]), items with aria-haspopup or .branch. */
 :root .browser {
   display: flex;
   gap: 0;
   border: 1px solid #000000;
+  border-right-color: #555555;
+  border-bottom-color: #555555;
   background: #aaaaaa;
+  box-shadow: -1px -1px 0 #555555, 1px 1px 0 #ffffff;
 }
 
 :root .browser > :is(.listbox, [role="listbox"]) {
@@ -4184,6 +4251,9 @@
   height: auto;
   border: 0;
   border-left: 1px solid #000000;
+  background: #aaaaaa;
+  box-shadow: none;
+  font-family: var(--clio-font-text);
 }
 
 :root .browser > :is(.listbox, [role="listbox"]):first-child {
@@ -4193,24 +4263,28 @@
 :root .browser > :is(.listbox, [role="listbox"]) > :is(li, [role="option"]) {
   position: relative;
   min-height: var(--clio-browser-row);
-  padding: 0 18px 0 4px;
-  background: #ffffff;
+  padding: 0 16px 0 2px;
+  background: transparent;
   line-height: var(--clio-browser-row);
 }
 
-:root .browser > :is(.listbox, [role="listbox"]) > :is(li, [role="option"]):is(.branch, [aria-haspopup="true"])::after {
-  content: "";
-  position: absolute;
-  top: calc(50% - 4px);
-  right: 5px;
-  width: 7px;
-  height: 7px;
-  background: var(--clio-art-nx-submenu) 0 0 / 7px 7px no-repeat;
+/* The first row starts four rows above the column's top. */
+:root .browser > :is(.listbox, [role="listbox"]) > :is(li, [role="option"]):first-child {
+  margin-top: -4px;
+}
+
+:root .browser > :is(.listbox, [role="listbox"]) > :is(li, [role="option"]):is(.branch, [aria-haspopup="true"]) {
+  background: var(--clio-art-nx-submenu) right 4px top 4px / 7px 7px no-repeat;
 }
 
 :root .browser > :is(.listbox, [role="listbox"]) > :is(li, [role="option"]):is([aria-selected="true"], .selected) {
-  background: #aaaaaa;
-  box-shadow: var(--clio-bevel);
+  background-color: #ffffff;
+  color: #000000;
+  box-shadow: none;
+}
+
+:root .browser > :is(.listbox, [role="listbox"]) > :is(li, [role="option"]):is(.branch, [aria-haspopup="true"]):is([aria-selected="true"], .selected) {
+  background-image: var(--clio-art-nx-submenu-lit);
 }
 
 /* ---- Workspace dock and icons ---------------------------------------------------------

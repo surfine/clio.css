@@ -27,7 +27,7 @@
     bar: HTMLDivElement; axis: string; track: HTMLDivElement; dec: HTMLDivElement; inc: HTMLDivElement; thumb: HTMLDivElement; ghost: HTMLDivElement | null;
     length: number; thumbLength: number; range: number; at: number; max: number; dragging?: boolean; onmove?: ((ev: PointerEvent) => void) | null;
   }
-  interface Metrics { cw: number; ch: number; sw: number; sh: number; sl: number; st: number; size: number; len: number; live: boolean; delay: number; smart: boolean; left: boolean; together: boolean; overlap: number; ox: number; oy: number }
+  interface Metrics { cw: number; ch: number; sw: number; sh: number; sl: number; st: number; size: number; len: number; live: boolean; delay: number; smart: boolean; left: boolean; together: boolean; arrow: number; gap: number; overlap: number; ox: number; oy: number }
   type Field = HTMLInputElement | HTMLTextAreaElement;
   type Timed = typeof announce & { t?: number };   // announce keeps its timer on itself
   interface SoundRef { file: string; sound?: string; gain?: number; loop?: [number, number] }
@@ -555,6 +555,10 @@
         // at the left of a horizontal bar that runs under it); unset in the Classic eras
         left: cs.getPropertyValue("--clio-scrollbar-side").trim() === "left",
         together: cs.getPropertyValue("--clio-scrollbar-arrows").trim() === "together",
+        // an arrow's cell along the bar when it is not the bar's width, and the lane left after
+        // the last arrow (NeXTSTEP: 17 and 1); unset, the arrows are square
+        arrow: px(cs.getPropertyValue("--clio-scrollbar-arrow-length")),
+        gap: px(cs.getPropertyValue("--clio-scrollbar-arrow-gap")),
         overlap: px(cs.getPropertyValue("--clio-scrollbar-thumb-overlap")),
         // the padding box's place on the page: QuickDraw aligned a lane's pattern with the
         // screen, so the lanes are aligned with the page (System 6.0.8, System 7.5.3)
@@ -603,14 +607,17 @@
       p.bar.classList.toggle("clio-sb-near", near);   // both arrows at the near end (NeXTSTEP's horizontal bar)
       p.bar.classList.toggle("clio-sb-off", max <= 0);
       const ov = this.m.overlap;   // Platinum's box shares its end lines with the arrows'
-      const track = length - 2 * size + 2 * ov;
+      const arrows = this.m.arrow ? 2 * this.m.arrow + this.m.gap : 2 * size;
+      // NeXTSTEP (--clio-scrollbar-arrow-length): the box keeps a margin (-overlap) from the lane's
+      // far end only; the arrows' own cells hold the margin at the near one
+      const track = this.m.arrow ? length - arrows + ov : length - arrows + 2 * ov;
       const thumb = Math.min(track, smart || near || this.m.together ? Math.max(this.m.len, Math.round(track * visible)) : this.m.len);
       const range = Math.max(0, track - thumb);
       const at = max > 0 ? Math.round(range * Math.min(1, pos / max)) : 0;
       Object.assign(p, { track: p.track, length: track, thumbLength: thumb, range, at, max });
       p.thumb.style[vertical ? "height" : "width"] = `${thumb}px`;
       p.thumb.style[vertical ? "minHeight" : "minWidth"] = "0";   // the browser bar's minimum is not the box's length
-      p.thumb.style[vertical ? "top" : "left"] = `${(smart ? 0 : near ? 2 * size : size) - ov}px`;
+      p.thumb.style[vertical ? "top" : "left"] = `${(smart ? 0 : near ? arrows : size) - ov}px`;
       p.thumb.style[vertical ? "width" : "height"] = "";
       if (!p.dragging) p.thumb.style.transform = vertical ? `translateY(${at}px)` : `translateX(${at}px)`;
     }
@@ -626,7 +633,7 @@
       const r = p.bar.getBoundingClientRect();
       const along = (ev: PointerEvent) => (vertical ? ev.clientY - r.top : ev.clientX - r.left);
       const smart = p.bar.classList.contains("clio-sb-smart");
-      const trackStart = (smart ? 0 : p.bar.classList.contains("clio-sb-near") ? 2 * m.size : m.size) - m.overlap;
+      const trackStart = (smart ? 0 : p.bar.classList.contains("clio-sb-near") ? (m.arrow ? 2 * m.arrow + m.gap : 2 * m.size) : m.size) - m.overlap;
       const target = e.target;
       let timer = 0, stop: ((ev: PointerEvent) => void) | undefined;
 

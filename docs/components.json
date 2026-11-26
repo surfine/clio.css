@@ -825,10 +825,17 @@
         },
         {
           "era": "nextstep",
-          "claim": "A submenu hangs right against the main menu, its title one title-bar height above the chosen cell; its left column is #555555",
+          "claim": "A submenu hangs right against its menu, level with that menu's top whichever cell opened it; its left column is #555555",
           "status": "measured",
           "source": "clio.css capture, NeXTStep 3.0 in Infinite Mac (frames in .fidelity/ns30), frame info-open (the Info submenu open))",
-          "upstream": "fidelity nx-submenu-join"
+          "upstream": "fidelity nx-submenu-join; nx-submenu-top (the View submenu, opened from the fifth cell, frame view-open)"
+        },
+        {
+          "era": "nextstep",
+          "claim": "A dimmed item's label is #555555",
+          "status": "measured",
+          "source": "clio.css capture, NeXTStep 3.0 in Infinite Mac (frames in .fidelity/ns30), frame view-open (Icon, Sort Icons, Clean Up Icons)",
+          "upstream": "the label's pixels are Helvetica and are not compared"
         },
         {
           "era": "nextstep",
@@ -1666,31 +1673,45 @@
         },
         {
           "era": "nextstep",
-          "claim": "Scroller: an 18px lane of #555555 and #aaaaaa dots and a black line on the content's side (19px)",
-          "status": "inferred",
-          "source": "AI System 6 69-nextstep-appearance.css (P20, --window-frame-track-*)",
-          "upstream": "AI System 6 Theme Lab scroll-thumb (authored)"
+          "claim": "Scroller (clio.js): an 18px lane behind a black line on the content's side: a 1px #aaaaaa margin, then 16px of #555555 and #aaaaaa dots",
+          "status": "measured",
+          "source": "clio.css capture, NeXTStep 3.0 in Infinite Mac (frames in .fidelity/ns30), frame browser-small (the File Viewer in browser view, shrunk until its lists scroll), x 163-181, y 227-325)",
+          "upstream": "fidelity nx-js-scroller, identical in Chromium, WebKit and Firefox"
         },
         {
           "era": "nextstep",
-          "claim": "Knob: a raised #aaaaaa square, at least as long as it is wide, with a 6x6 dimple in the middle",
-          "status": "inferred",
-          "source": "AI System 6 69-nextstep-appearance.css (P21, ns-knob-dimple-6.svg)",
-          "upstream": "NeXTSTEP User Interface Guidelines, Release 3, ch. 7 (scrollers)"
+          "claim": "Knob: a 16px raised square as long as the visible share (at least 18px), 1px below the lane's top, with a 6x6 dimple 1px above and left of its middle",
+          "status": "measured",
+          "source": "clio.css capture, NeXTStep 3.0 in Infinite Mac (frames in .fidelity/ns30), frame browser-small (the File Viewer in browser view, shrunk until its lists scroll))",
+          "upstream": "the dimple equals AI System 6's ns-knob-dimple-6.svg"
         },
         {
           "era": "nextstep",
-          "claim": "Arrow buttons: 16x16 raised buttons with a black triangle, both at the bottom of a vertical scroller and at the left of a horizontal one",
-          "status": "inferred",
-          "source": "AI System 6 69-nextstep-appearance.css (ns-scroll-up-16.svg, C9)",
-          "upstream": "NeXTSTEP User Interface Guidelines, Release 3, ch. 7, figure 14"
+          "claim": "Arrow buttons: 16x16 raised buttons with a black triangle, both at the bottom of a vertical scroller, up above down, each in a 17px cell with 1px of lane before it and 1px after the last",
+          "status": "measured",
+          "source": "clio.css capture, NeXTStep 3.0 in Infinite Mac (frames in .fidelity/ns30), frame browser-small (the File Viewer in browser view, shrunk until its lists scroll)); tooling/nx-art.py check",
+          "upstream": "the art equals AI System 6's ns-scroll-*-16.svg"
         },
         {
           "era": "nextstep",
-          "claim": "The browser's own scroll bar stays on the right (a page cannot move it); clio.js draws NeXT's on the left",
+          "claim": "Horizontal scroller: the same lane and buttons, the arrows together at its left",
+          "status": "inferred",
+          "source": "NeXTSTEP User Interface Guidelines, Release 3 p.149 (the scroll buttons in the lower-left corner)",
+          "upstream": "no horizontal scroller with a knob was captured"
+        },
+        {
+          "era": "nextstep",
+          "claim": "With nothing to scroll the knob and the arrows go and the lane runs the whole bar",
+          "status": "measured",
+          "source": "clio.css capture, NeXTStep 3.0 in Infinite Mac (frames in .fidelity/ns30), frame browser (the browser's columns)",
+          "upstream": "AI System 6 reference notes (Controls, F14) agree"
+        },
+        {
+          "era": "nextstep",
+          "claim": "The browser's own scroll bar (without clio.js) is drawn with the same art but stays on the right, with Chromium's minimum knob",
           "status": "adapted",
           "source": "clio.css",
-          "upstream": "NeXTSTEP User Interface Guidelines, Release 3, ch. 7: the vertical scroller is on the left"
+          "upstream": "a page cannot move the browser's own scroll bar"
         }
       ]
     },
@@ -2841,17 +2862,24 @@
       "evidence": [
         {
           "era": "nextstep",
-          "claim": "Columns of 16px rows, white, divided by black lines; a branch carries the menu's arrow",
-          "status": "inferred",
-          "source": "NeXTSTEP User Interface Guidelines, Release 3, ch. 7 (browsers)",
-          "upstream": "AI System 6 finder-columns.js"
+          "claim": "A sunken box (#555555 then black at the top and left, #555555 then white at the bottom); columns 145px wide on #aaaaaa, each with its scroller at its left behind a black line; 15px rows, the first starting 4px above the column; a branch carries the menu's arrow 4px from the right and 4px down",
+          "status": "measured",
+          "source": "clio.css capture, NeXTStep 3.0 in Infinite Mac (frames in .fidelity/ns30), frames browser and browser-small (the File Viewer in browser view)",
+          "upstream": "fidelity nx-browser"
         },
         {
           "era": "nextstep",
-          "claim": "Selected item: a raised light-grey cell",
+          "claim": "The selected row is white across the column; its arrow's light edge turns #aaaaaa",
+          "status": "measured",
+          "source": "clio.css capture, NeXTStep 3.0 in Infinite Mac (frames in .fidelity/ns30), frame browser (\"me\")",
+          "upstream": "fidelity nx-browser"
+        },
+        {
+          "era": "nextstep",
+          "claim": "The box's right edge",
           "status": "inferred",
-          "source": "NeXTSTEP User Interface Guidelines, Release 3, ch. 7",
-          "upstream": "not captured"
+          "source": "clio.css (the bottom's colours)",
+          "upstream": "covered by a panel on the captured frames"
         }
       ]
     },

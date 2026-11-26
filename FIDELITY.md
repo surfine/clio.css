@@ -229,6 +229,8 @@ browser's Helvetica cannot match it (D3); its rows are checked by eye.
 | nx-titlebar-right | 26×23 | 100.0% | 100.0% | 0.0% | 0 |
 | nx-resizebar-left | 40×9 | 100.0% | 100.0% | 0.0% | 0 |
 | nx-resizebar-right | 40×9 | 100.0% | 100.0% | 0.0% | 0 |
+| nx-js-scroller | 19×99 | 100.0% | 100.0% | 0.0% | 0 |
+| nx-browser | 40×15 | 100.0% | 100.0% | 0.0% | 0 |
 | nx-close | 27×23 | 100.0% | 100.0% | 0.0% | 0 |
 | nx-titlebar-main | 16×23 | 100.0% | 100.0% | 0.0% | 0 |
 | nx-popup | 130×20 | 100.0% | 100.0% | 0.0% | 0 |
@@ -237,6 +239,7 @@ browser's Helvetica cannot match it (D3); its rows are checked by eye.
 | nx-switch-on | 15×15 | 100.0% | 100.0% | 0.0% | 0 |
 | nx-switch-off | 15×15 | 100.0% | 100.0% | 0.0% | 0 |
 | nx-submenu-join | 13×62 | 100.0% | 100.0% | 0.0% | 0 |
+| nx-submenu-top | 13×162 | 100.0% | 100.0% | 0.0% | 0 |
 | nx-menu-cell-lit | 93×20 | 100.0% | 100.0% | 0.0% | 0 |
 
 Reference: AI System 6's own Theme Lab tiles for its NeXTSTEP appearance. AI System 6 authored
@@ -247,7 +250,7 @@ fidelity; where they and the NeXTStep 3.0 frames disagree, the frames win.
 | --- | --- | ---: | ---: | ---: | ---: |
 | nx-ais6-titlebar | 200×22 | 100.0% | 100.0% | 0.0% | 0 |
 | nx-ais6-default-ok | 82×24 | 63.8% | 63.8% | 36.2% | 46.58 |
-| nx-ais6-scroll-thumb | 18×32 | 74.1% | 74.1% | 25.9% | 24.05 |
+| nx-ais6-scroll-thumb | 18×32 | 75.7% | 75.7% | 24.3% | 21.99 |
 | nx-ais6-popup-end | 14×19 | 29.3% | 29.3% | 70.7% | 86.28 |
 | nx-ais6-checkbox | 12×12 | 24.3% | 29.9% | 62.5% | 70.99 |
 

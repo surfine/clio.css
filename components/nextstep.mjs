@@ -37,7 +37,8 @@ export const rows = {
     row("Submenu arrow: 7x7, a black upright and an embossed point (#555555 above, white below), 6px from the right", "measured", NX30 + ", frame boot1 (Info row, x 80-86); tooling/nx-art.py check", "the grid equals the frame"),
     row("Key equivalents: the plain letter at the cell's right (h, q)", "measured", NX30 + ", frame boot1 (Hide, Log Out)", NXUG + ", ch. 6"),
     row("A highlighted cell turns white, bevel kept; its arrow's light edge turns #aaaaaa", "measured", NX30 + ", frame info-open (the Info submenu open)); tooling/nx-art.py check", "fidelity nx-menu-cell-lit"),
-    row("A submenu hangs right against the main menu, its title one title-bar height above the chosen cell; its left column is #555555", "measured", NX30 + ", frame info-open (the Info submenu open))", "fidelity nx-submenu-join"),
+    row("A submenu hangs right against its menu, level with that menu's top whichever cell opened it; its left column is #555555", "measured", NX30 + ", frame info-open (the Info submenu open))", "fidelity nx-submenu-join; nx-submenu-top (the View submenu, opened from the fifth cell, frame view-open)"),
+    row("A dimmed item's label is #555555", "measured", NX30 + ", frame view-open (Icon, Sort Icons, Clean Up Icons)", "the label's pixels are Helvetica and are not compared"),
     row("No dividers and no check marks in NeXT menus; a separator item is not drawn", "inferred", NXUG + ", ch. 6", "the captured menus have none"),
     row("A torn-off submenu (.torn-off) carries a close button in its title bar; an attached one has none", "inferred", NXUG + ", ch. 6; " + AIS6 + " reference notes", "not captured"),
     row("clio.js: a clicked menu stays up; a press dragged through it chooses on release", "inferred", NXUG + ", ch. 6", "AI System 6 reference notes (Menus)"),
@@ -67,10 +68,12 @@ export const rows = {
     row("Lists: white, 1px black frame, 16px rows; a selected row is white on a light-grey cell in a browser, light grey in a plain list", "inferred", AIS6, "not captured"),
   ],
   scrollbar: [
-    row("Scroller: an 18px lane of #555555 and #aaaaaa dots and a black line on the content's side (19px)", "inferred", AIS6 + " (P20, --window-frame-track-*)", "AI System 6 Theme Lab scroll-thumb (authored)"),
-    row("Knob: a raised #aaaaaa square, at least as long as it is wide, with a 6x6 dimple in the middle", "inferred", AIS6 + " (P21, ns-knob-dimple-6.svg)", NXUG + ", ch. 7 (scrollers)"),
-    row("Arrow buttons: 16x16 raised buttons with a black triangle, both at the bottom of a vertical scroller and at the left of a horizontal one", "inferred", AIS6 + " (ns-scroll-up-16.svg, C9)", NXUG + ", ch. 7, figure 14"),
-    row("The browser's own scroll bar stays on the right (a page cannot move it); clio.js draws NeXT's on the left", "adapted", "clio.css", NXUG + ", ch. 7: the vertical scroller is on the left"),
+    row("Scroller (clio.js): an 18px lane behind a black line on the content's side: a 1px #aaaaaa margin, then 16px of #555555 and #aaaaaa dots", "measured", NX30 + ", frame browser-small (the File Viewer in browser view, shrunk until its lists scroll), x 163-181, y 227-325)", "fidelity nx-js-scroller, identical in Chromium, WebKit and Firefox"),
+    row("Knob: a 16px raised square as long as the visible share (at least 18px), 1px below the lane's top, with a 6x6 dimple 1px above and left of its middle", "measured", NX30 + ", frame browser-small (the File Viewer in browser view, shrunk until its lists scroll))", "the dimple equals AI System 6's ns-knob-dimple-6.svg"),
+    row("Arrow buttons: 16x16 raised buttons with a black triangle, both at the bottom of a vertical scroller, up above down, each in a 17px cell with 1px of lane before it and 1px after the last", "measured", NX30 + ", frame browser-small (the File Viewer in browser view, shrunk until its lists scroll)); tooling/nx-art.py check", "the art equals AI System 6's ns-scroll-*-16.svg"),
+    row("Horizontal scroller: the same lane and buttons, the arrows together at its left", "inferred", NXUG + " p.149 (the scroll buttons in the lower-left corner)", "no horizontal scroller with a knob was captured"),
+    row("With nothing to scroll the knob and the arrows go and the lane runs the whole bar", "measured", NX30 + ", frame browser (the browser's columns)", "AI System 6 reference notes (Controls, F14) agree"),
+    row("The browser's own scroll bar (without clio.js) is drawn with the same art but stays on the right, with Chromium's minimum knob", "adapted", "clio.css", "a page cannot move the browser's own scroll bar"),
   ],
   dialog: [
     row("Alert panel: #aaaaaa, the 1px black frame, a 22-row title bar with no buttons, no shadow; the application's icon instead of a symbol", "inferred", AIS6 + " (P30, --alert-icon-display: none)", NXUG + ", ch. 4 (panels) and ch. 8 (attention panels)"),
@@ -118,8 +121,9 @@ export const components = [
   </ul>
 </div>`,
     evidence: [
-      row("Columns of 16px rows, white, divided by black lines; a branch carries the menu's arrow", "inferred", NXUG + ", ch. 7 (browsers)", "AI System 6 finder-columns.js"),
-      row("Selected item: a raised light-grey cell", "inferred", NXUG + ", ch. 7", "not captured"),
+      row("A sunken box (#555555 then black at the top and left, #555555 then white at the bottom); columns 145px wide on #aaaaaa, each with its scroller at its left behind a black line; 15px rows, the first starting 4px above the column; a branch carries the menu's arrow 4px from the right and 4px down", "measured", NX30 + ", frames browser and browser-small (the File Viewer in browser view)", "fidelity nx-browser"),
+      row("The selected row is white across the column; its arrow's light edge turns #aaaaaa", "measured", NX30 + ", frame browser (\"me\")", "fidelity nx-browser"),
+      row("The box's right edge", "inferred", "clio.css (the bottom's colours)", "covered by a panel on the captured frames"),
     ],
   },
   {

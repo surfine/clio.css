@@ -120,7 +120,7 @@ d#dddd
 """),
     # A scroller arrow's triangle on its 16x16 button (up; down, left and right are
     # the same triangle turned about the button's face; the bevel is button()).
-    "arrow-up": ("AI System 6 assets/themes/nextstep/chrome/ns-scroll-up-16.svg", None, """
+    "arrow-up": ("NeXTStep 3.0 in Infinite Mac, frame browser-small (the File Viewer's browser, its scroller's up and down buttons at 164,292 and 164,309; the same as AI System 6's ns-scroll-*-16.svg)", None, """
 
 
 
@@ -136,6 +136,11 @@ d#dddd
 
 
 
+"""),
+    # The scroller lane's dots, one period (a picture, not a gradient: WebKit dithers gradients).
+    "lane": ("NeXTStep 3.0 in Infinite Mac, frame browser-small (the scroller lane, x 164-179)", None, """
+ad
+da
 """),
     # The switch's check, 12x12, drawn on the raised square.
     "check": ('NeXTStep 3.0 in Infinite Mac, frame prefs-dock (Workspace Manager Preferences, Dock), a checked switch in the Dock list', ('ns30/prefs-dock', 650, 194), """
@@ -219,7 +224,11 @@ d#dddd
 
 
 def rows(grid):
-    lines = grid.strip("\n").split("\n")
+    # one leading and one trailing newline belong to the triple-quoted string; blank rows
+    # inside are rows of the picture (an editor may have trimmed their spaces)
+    lines = grid.split("\n")
+    lines = lines[1:] if lines and lines[0] == "" else lines
+    lines = lines[:-1] if lines and lines[-1] == "" else lines
     w = max(len(r) for r in lines)
     return [r.ljust(w) for r in lines]
 
@@ -227,6 +236,8 @@ def rows(grid):
 def turn(grid, k):
     """Rotate a grid by k quarter turns clockwise."""
     g = rows(grid)
+    n = max(len(g), len(g[0]))   # turn about the square's centre: pad trimmed rows first
+    g = [r.ljust(n) for r in g] + [" " * n] * (n - len(g))
     for _ in range(k % 4):
         g = ["".join(g[len(g) - 1 - j][i] for j in range(len(g))) for i in range(len(g[0]))]
     return "\n".join(g)
@@ -269,7 +280,8 @@ def button(glyph, w=16, h=16):
     for y in range(h):
         g[y][0], g[y][w - 2], g[y][w - 1] = ".", "d", "#"
     g[0][w - 2], g[0][w - 1] = ".", "#"
-    g[h - 2][0], g[h - 1][0] = ".", "#"
+    g[h - 2][0] = "."
+    g[h - 1] = ["#"] * w
     for y, r in enumerate(rows(glyph)):
         for x, c in enumerate(r):
             if c != " ":
@@ -309,7 +321,11 @@ def measure(name, x, y, w, h):
 
 def check():
     bad = 0
-    for k, (src, crop, grid) in ART.items():
+    up = ART["arrow-up"][2]
+    built = {k: (src, crop, grid) for k, (src, crop, grid) in ART.items()}
+    built["arrow-up"] = (None, ("ns30/browser-small", 164, 292), button(turn(up, 0)))
+    built["arrow-down"] = (None, ("ns30/browser-small", 164, 309), button(turn(up, 2)))
+    for k, (src, crop, grid) in built.items():
         if not crop:
             continue
         im, (x, y) = frame(crop[0]), crop[1:]
