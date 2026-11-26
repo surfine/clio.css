@@ -2,7 +2,7 @@
 
 ## 1.1.1 (2026-11-26, NeXTSTEP finished)
 
-What 1.1.0 left undone. 1.1.0 was tagged but not published to npm; 1.1.1 carries it.
+What 1.1.0 left undone. 1.1.0 was published to npm on 2026-11-26 (09:24 UTC) without it; 1.1.1 carries it.
 
 - **The main menu is a column for the keyboard too:** in NeXTSTEP, Up and Down move between
   its titles, Right opens a submenu on its first item, Left comes back, and the bar carries
