@@ -1,12 +1,43 @@
 {
   "name": "@clio/preact",
-  "version": "2.0.0-dev",
+  "version": "2.0.0",
   "description": "clio.css components for Preact: one JSX source, rendering clio.css markup (load clio.css and, for behaviour, clio.js).",
   "license": "MIT",
   "type": "module",
-  "private": true,
-  "exports": { ".": { "types": "./dist/types/components/src/index.d.ts", "default": "./dist/index.js" } },
-  "files": ["dist"],
-  "peerDependencies": { "preact": ">=11.0.0", "clio.css": ">=2.0.0" },
-  "sideEffects": false
+  "exports": {
+    ".": {
+      "types": "./dist/types/components/src/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md"
+  ],
+  "peerDependencies": {
+    "preact": ">=11.0.0",
+    "clio.css": ">=2.0.0"
+  },
+  "sideEffects": false,
+  "homepage": "https://surfine.github.io/clio.css/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/surfine/clio.css.git",
+    "directory": "packages/preact"
+  },
+  "keywords": [
+    "clio.css",
+    "preact",
+    "classic mac os",
+    "system 6",
+    "system 7",
+    "mac os 9",
+    "platinum",
+    "nextstep",
+    "components"
+  ],
+  "scripts": {
+    "prepack": "cd ../.. && node tooling/build.ts && node tooling/build-components.ts"
+  }
 }
