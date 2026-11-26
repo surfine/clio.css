@@ -1,4 +1,6 @@
-// Static checks for a release. Fails loudly; prints what it checked.
+// Static checks for a release (Vitest: npm test). The checks run as the module loads, each
+// filed under its numbered section; every section is one test that lists its failures.
+import { expect, test } from "vitest";
 import { readFileSync, existsSync, statSync, readdirSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -8,11 +10,13 @@ import { segments } from "../packages/core/src/assemble.ts";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const read = (p: string): string => readFileSync(join(root, p), "utf8");
-const failures: string[] = [];
-const fail = (m: string): void => { failures.push(m); };
-let checks = 0;
-const ok = (cond: unknown, m: string): void => { checks++; if (!cond) fail(m); };
+const sections = new Map<string, { checks: number; failures: string[] }>();
+let current = { checks: 0, failures: [] as string[] };
+const section = (name: string): void => { current = { checks: 0, failures: [] }; sections.set(name, current); };
+const fail = (m: string): void => { current.failures.push(m); };
+const ok = (cond: unknown, m: string): void => { current.checks++; if (!cond) fail(m); };
 
+section("1. Outputs exist.");
 // 1. Outputs exist.
 const outputs = ["clio.css", "clio.min.css", "clio.system6.css", "clio.system6.min.css", "clio.system7.css", "clio.system7.min.css", "clio.platinum.css", "clio.platinum.min.css", "clio.drawingboard.css", "clio.drawingboard.min.css", "clio.nextstep.css", "clio.nextstep.min.css", "fonts/ClioSansNX.woff2", "fonts/ClioSansNX-Bold.woff2", "fonts/OFL-Liberation.txt", "components.json", "fonts/ChicagoFLF.woff2", "fonts/Asap-Variable.woff2", "fonts/OFL-Asap.txt"];
 for (const f of outputs) ok(existsSync(join(root, "dist", f)), `missing dist/${f}`);
@@ -23,6 +27,7 @@ const pt = read("dist/clio.platinum.css");
 const db = read("dist/clio.drawingboard.css");
 const nx = read("dist/clio.nextstep.css");
 
+section("2. Braces balance (outside strings) in every build.");
 // 2. Braces balance (outside strings) in every build.
 for (const [name, text] of [["clio.css", css], ["clio.system6.css", s6], ["clio.platinum.css", pt], ["clio.drawingboard.css", db], ["clio.nextstep.css", nx], ["clio.min.css", read("dist/clio.min.css")], ["clio.nextstep.min.css", read("dist/clio.nextstep.min.css")]]) {
   const stripped = text.replace(/\/\*[\s\S]*?\*\//g, "").replace(/"(?:[^"\\]|\\.)*"/g, '""');
@@ -31,6 +36,7 @@ for (const [name, text] of [["clio.css", css], ["clio.system6.css", s6], ["clio.
   ok(depth === 0 && !bad, `${name}: unbalanced braces`);
 }
 
+section("3. Every custom property that is read is declared somewhere.");
 // 3. Every custom property that is read is declared somewhere.
 const noComments = css.replace(/\/\*[\s\S]*?\*\//g, "");
 const declared = new Set([...noComments.matchAll(/(--clio-[\w-]+)\s*:/g)].map((m) => m[1]));
@@ -47,6 +53,7 @@ const nxNoComments = nx.replace(/\/\*[\s\S]*?\*\//g, "");
 const nxDeclared = new Set([...nxNoComments.matchAll(/(--clio-[\w-]+)\s*:/g)].map((m) => m[1]));
 for (const m of nxNoComments.matchAll(/var\((--clio-[\w-]+)\s*\)/g)) ok(nxDeclared.has(m[1]) || optional.has(m[1]) || fromJs(m[1]), `clio.nextstep.css reads but never declares ${m[1]}`);
 
+section("4. System 6 build has no Platinum; Platinum build has no data-era scope left.");
 // 4. System 6 build has no Platinum; Platinum build has no data-era scope left.
 const strip = (t: string): string => t.replace(/\/\*[\s\S]*?\*\//g, "");
 ok(!strip(s6).includes('data-era="platinum"') && !strip(s6).includes('data-era="system7"'), "clio.system6.css contains other eras' rules");
@@ -57,6 +64,7 @@ ok(!strip(db).includes('[data-era="drawingboard"]') && !strip(db).includes('[dat
 for (const [name, text] of [["clio.css", css], ["clio.system6.css", s6], ["clio.platinum.css", pt], ["clio.drawingboard.css", db]]) ok(!strip(text).includes("nextstep") && !text.includes("ClioSansNX"), `${name} contains NeXTSTEP rules`);
 ok(!strip(nx).includes('[data-era="nextstep"]') && !/data-era="(platinum|drawingboard)"|--clio-art-db-/.test(strip(nx)), "clio.nextstep.css still scoped to data-era or carries another era's layer");
 
+section("5. No external assets: url() is a data: URI, a bundled font, or Drawing Board");
 // 5. No external assets: url() is a data: URI, a bundled font, or Drawing Board
 //    theme art shipped beside the stylesheet (dist/art/drawingboard/, written by
 //    tooling/db-art.py and tooling/db-pens.py). PNG data URIs are allowed only for
@@ -72,6 +80,7 @@ for (const [text, m] of [noComments, nxNoComments].flatMap((t) => [...t.matchAll
   ok(u.startsWith("data:image/svg+xml,") || png || /^fonts\/(ChicagoFLF\.woff2?|Asap-Variable\.woff2|ClioSans84\.woff2|ClioText84\.woff2|ClioText84-9\.woff2|ClioSans97\.woff2|ClioSans97Display\.woff2|ClioSans97Title\.woff2|ClioSans97Exact\.woff2|ClioSans97TitleExact\.woff2|ClioSans97Plain\.woff2|ClioSans97TitlePlain\.woff2|ClioSans97PlainExact\.woff2|ClioSans97TitlePlainExact\.woff2|ClioSansNX(-Bold)?\.woff2|Virtue\.woff2|FusionPixel12-(TC|SC|JA|KO)\.woff2)$/.test(u) || /^art\/(drawingboard|platinum|system7|system6|cursors)\/(pens\/|parts\/)?[a-z0-9-]+\.png$/.test(u) || /^art\/drawingboard\/([a-z0-9-]+-tiled|(side|utility)-(frame|runs|edges))\.svg$/.test(u) || /^%23\w+$/.test(u), `unexpected url(): ${u.slice(0, 60)}`);
 }
 
+section("6. Component index: every component is documented, evidenced and styled.");
 // 6. Component index: every component is documented, evidenced and styled.
 const allowed = new Set(["measured", "inferred", "adapted", "third-party"]);
 const eras = new Set(["system6", "system7", "drawingboard", "platinum", "nextstep", "both"]);
@@ -107,11 +116,13 @@ for (const c of components) {
   }
 }
 
+section("7. components.json mirrors the source.");
 // 7. components.json mirrors the source.
 const json = JSON.parse(read("dist/components.json"));
 ok(json.components.length === components.length, "components.json out of date");
 ok(read("docs/components.json") === read("dist/components.json"), "docs/components.json differs from dist");
 
+section("8. Docs site: sections, metadata, structured data.");
 // 8. Docs site: sections, metadata, structured data.
 const site = read("docs/index.html");
 for (const c of components) ok(site.includes(`id="${c.id}"`) && site.includes(`href="#${c.id}"`), `docs: no section or link for ${c.id}`);
@@ -125,6 +136,7 @@ ok((site.match(/<h1[\s>]/g) || []).length === 1, "docs: exactly one h1 expected"
 ok(existsSync(join(root, "docs/dist/clio.css")), "docs: stylesheet not copied");
 ok(existsSync(join(root, "docs/og.png")), "docs: og.png missing (run the og capture)");
 
+section("9. llms.txt follows the llmstxt.org shape.");
 // 9. llms.txt follows the llmstxt.org shape.
 const llms = read("llms.txt");
 ok(/^# clio\.css\n\n> .+/m.test(llms), "llms.txt: needs an H1 and a blockquote summary");
@@ -147,6 +159,7 @@ ok(read("docs/llms-full.txt").includes("```css"), "llms-full.txt: stylesheet mis
   ok(existsSync(join(root, "dist/fonts/OFL-FusionPixel.txt")), "the Fusion Pixel licence must ship beside the fonts");
 }
 
+section("10. Package.");
 // 10. Package.
 const pkg: { exports: Record<string, string | Record<string, string>> } = JSON.parse(read("package.json"));
 for (const [k, e] of Object.entries(pkg.exports)) for (const v of typeof e === "string" ? [e] : Object.values(e)) if (!v.includes("*")) ok(existsSync(join(root, v)), `exports ${k} -> ${v} missing`);   // a conditional export ({ types, default }) names each file
@@ -161,6 +174,7 @@ ok(statSync(join(root, "dist/clio.nextstep.min.css")).size < 160000, "clio.nexts
 const minJs = readFileSync(join(root, "dist/clio.min.js"), "utf8");
 ok(/^\/\*! clio\.js/.test(minJs) && minJs.length < js.length * 0.7, "dist/clio.min.js missing, without its banner, or not minified");
 
+section("11. Fragments assemble the single files");
 // P2: the single files are assembled from component fragments (packages/core/src/bundles.ts).
 // Every fragment on disk is used, and each of its segments exactly once, in no other order.
 {
@@ -174,9 +188,9 @@ ok(/^\/\*! clio\.js/.test(minJs) && minJs.length < js.length * 0.7, "dist/clio.m
   }
 }
 
-if (failures.length) {
-  console.error(`FAIL ${failures.length} of ${checks} checks`);
-  for (const f of failures) console.error("  - " + f);
-  process.exit(1);
+for (const [name, r] of sections) {
+  test(`${name} (${r.checks} checks)`, () => {
+    expect(r.checks).toBeGreaterThan(0);
+    expect(r.failures).toEqual([]);
+  });
 }
-console.log(`ok ${checks} checks`);

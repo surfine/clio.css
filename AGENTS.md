@@ -72,4 +72,4 @@ For AI coding agents using or changing this repository.
   (or re-extract with `npm run capture:keycaps [-- geneva|geneva9|charcoal]` then
   `npm run build:font`, which needs Python with fontTools and brotli), never the WOFF2 by
   hand. Clio Sans '97 (Charcoal 12) comes from Mac OS 9.0's Key Caps, whose bar is 2px.
-- Keep `dist/clio.min.css` under the size budget in `test/check.ts`.
+- Keep `dist/clio.min.css` under the size budget in `test/check.test.ts`.
