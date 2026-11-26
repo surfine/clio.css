@@ -2,14 +2,14 @@
 import { readFileSync, existsSync, statSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
-import { components } from "../components/index.mjs";
+import { components } from "../components/index.ts";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
-const read = (p) => readFileSync(join(root, p), "utf8");
-const failures = [];
-const fail = (m) => failures.push(m);
+const read = (p: string): string => readFileSync(join(root, p), "utf8");
+const failures: string[] = [];
+const fail = (m: string): void => { failures.push(m); };
 let checks = 0;
-const ok = (cond, m) => { checks++; if (!cond) fail(m); };
+const ok = (cond: unknown, m: string): void => { checks++; if (!cond) fail(m); };
 
 // 1. Outputs exist.
 const outputs = ["clio.css", "clio.min.css", "clio.system6.css", "clio.system6.min.css", "clio.system7.css", "clio.system7.min.css", "clio.platinum.css", "clio.platinum.min.css", "clio.drawingboard.css", "clio.drawingboard.min.css", "clio.nextstep.css", "clio.nextstep.min.css", "fonts/ClioSansNX.woff2", "fonts/ClioSansNX-Bold.woff2", "fonts/OFL-Liberation.txt", "components.json", "fonts/ChicagoFLF.woff2", "fonts/Asap-Variable.woff2", "fonts/OFL-Asap.txt"];
@@ -36,7 +36,7 @@ const used = new Set([...noComments.matchAll(/var\((--clio-[\w-]+)/g)].map((m) =
 const optional = new Set(["--clio-details-shadow", "--clio-icon-selected-filter", "--clio-scrollbar-thumb-bg-horizontal", "--clio-scrollbar-thumb-shadow-horizontal", "--clio-scrollbar-thumb-color", "--clio-scrollbar-track-color"]);
 // clio.js sets these on the scrollers it draws bars for (ts/clio.ts).
 const js = readFileSync(join(root, "dist/clio.js"), "utf8");
-const fromJs = (v) => (/^--clio-sb-/.test(v) && js.includes(v.replace(/^--clio-sb-/, ""))) || js.includes(`"${v}"`);
+const fromJs = (v: string): boolean => (/^--clio-sb-/.test(v) && js.includes(v.replace(/^--clio-sb-/, ""))) || js.includes(`"${v}"`);
 for (const v of used) ok(declared.has(v) || optional.has(v) || fromJs(v), `read but never declared: ${v}`);
 ok(/^\/\*! clio\.js/.test(js) && !js.includes("0.11.0-dev"), "dist/clio.js carries its banner and the package version");
 for (const v of optional) ok(noComments.includes(`var(${v},`), `${v} is optional but read without a fallback`);
@@ -46,7 +46,7 @@ const nxDeclared = new Set([...nxNoComments.matchAll(/(--clio-[\w-]+)\s*:/g)].ma
 for (const m of nxNoComments.matchAll(/var\((--clio-[\w-]+)\s*\)/g)) ok(nxDeclared.has(m[1]) || optional.has(m[1]) || fromJs(m[1]), `clio.nextstep.css reads but never declares ${m[1]}`);
 
 // 4. System 6 build has no Platinum; Platinum build has no data-era scope left.
-const strip = (t) => t.replace(/\/\*[\s\S]*?\*\//g, "");
+const strip = (t: string): string => t.replace(/\/\*[\s\S]*?\*\//g, "");
 ok(!strip(s6).includes('data-era="platinum"') && !strip(s6).includes('data-era="system7"'), "clio.system6.css contains other eras' rules");
 ok(!strip(pt).includes('[data-era="platinum"]'), "clio.platinum.css still scoped to data-era");
 ok(!strip(pt).includes('data-era="drawingboard"'), "clio.platinum.css contains Drawing Board rules");
@@ -63,7 +63,7 @@ ok(!strip(nx).includes('[data-era="nextstep"]') && !/data-era="(platinum|drawing
 //    fetched with CORS); "%23p" is such a tile's own pattern reference. The window edges'
 //    SVG pattern files (art/drawingboard/*-tiled.svg) and the utility windows' three each
 //    (art/drawingboard/side-*.svg, utility-*.svg) carry their PNGs inside.
-for (const [text, m] of [noComments, nxNoComments].flatMap((t) => [...t.matchAll(/url\(\s*["']?([^"')]+)/g)].map((m) => [t, m]))) {
+for (const [text, m] of [noComments, nxNoComments].flatMap((t) => [...t.matchAll(/url\(\s*["']?([^"')]+)/g)].map((m): [string, RegExpExecArray] => [t, m]))) {
   const u = m[1];
   const png = u.startsWith("data:image/png;base64,") && /--clio-(art-(db|p9|s7|frame)|db-outline)-[\w-]+:\s*$/.test(text.slice(Math.max(0, m.index - 60), m.index));
   if (u.startsWith("art/")) ok(existsSync(join(root, "dist", u)), `missing art file dist/${u}`);
@@ -73,14 +73,14 @@ for (const [text, m] of [noComments, nxNoComments].flatMap((t) => [...t.matchAll
 // 6. Component index: every component is documented, evidenced and styled.
 const allowed = new Set(["measured", "inferred", "adapted", "third-party"]);
 const eras = new Set(["system6", "system7", "drawingboard", "platinum", "nextstep", "both"]);
-const ids = new Set();
+const ids = new Set<string>();
 for (const c of components) {
   ok(!ids.has(c.id), `duplicate component id ${c.id}`); ids.add(c.id);
   ok(c.summary && c.html && c.accessibility, `${c.id}: summary, html and accessibility required`);
   ok(c.evidence.length > 0, `${c.id}: no evidence`);
   const covered = new Set(c.evidence.map((e) => e.era));
   // A NeXTSTEP-only component (c.eras: ["nextstep"]) has no Classic rows; every other one needs both.
-  const nxOnly = (c.eras || []).length === 1 && c.eras[0] === "nextstep";
+  const nxOnly = c.eras !== undefined && c.eras.length === 1 && c.eras[0] === "nextstep";
   ok(nxOnly || covered.has("system6") || covered.has("both"), `${c.id}: no System 6 evidence`);
   ok(nxOnly || covered.has("platinum") || covered.has("both"), `${c.id}: no Platinum evidence`);
   ok(!nxOnly || [...covered].every((e) => e === "nextstep"), `${c.id}: a NeXTSTEP-only component with Classic evidence`);
@@ -118,7 +118,7 @@ ok(site.includes('<link rel="canonical"'), "docs: canonical link missing");
 ok(site.includes('property="og:image"'), "docs: og:image missing");
 const ld = site.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/);
 ok(ld, "docs: JSON-LD missing");
-if (ld) { try { const d = JSON.parse(ld[1]); ok(d["@graph"].some((n) => n["@type"] === "SoftwareSourceCode"), "docs: no SoftwareSourceCode node"); } catch { fail("docs: JSON-LD does not parse"); } }
+if (ld) { try { const d = JSON.parse(ld[1]) as { "@graph": { "@type": string }[] }; ok(d["@graph"].some((n) => n["@type"] === "SoftwareSourceCode"), "docs: no SoftwareSourceCode node"); } catch { fail("docs: JSON-LD does not parse"); } }
 ok((site.match(/<h1[\s>]/g) || []).length === 1, "docs: exactly one h1 expected");
 ok(existsSync(join(root, "docs/dist/clio.css")), "docs: stylesheet not copied");
 ok(existsSync(join(root, "docs/og.png")), "docs: og.png missing (run the og capture)");
@@ -146,7 +146,7 @@ ok(read("docs/llms-full.txt").includes("```css"), "llms-full.txt: stylesheet mis
 }
 
 // 10. Package.
-const pkg = JSON.parse(read("package.json"));
+const pkg: { exports: Record<string, string | Record<string, string>> } = JSON.parse(read("package.json"));
 for (const [k, e] of Object.entries(pkg.exports)) for (const v of typeof e === "string" ? [e] : Object.values(e)) if (!v.includes("*")) ok(existsSync(join(root, v)), `exports ${k} -> ${v} missing`);   // a conditional export ({ types, default }) names each file
 // 200 KB since 0.10.0, which added every control the classic guidelines define (COVERAGE.md);
 // 220 KB from the Classic close (owner, 2026-11-14): the all-eras file keeps the four Classic

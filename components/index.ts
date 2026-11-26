@@ -12,10 +12,12 @@
 
 export const AIS6 = "AI System 6 @b75cd4ed";
 
-import hig from "./hig.mjs";
-import { rows as nextstepRows, components as nextstepComponents } from "./nextstep.mjs";
+import type { Component } from "./types.ts";
 
-export const components = [
+import hig from "./hig.ts";
+import { rows as nextstepRows, components as nextstepComponents } from "./nextstep.ts";
+
+export const components: Component[] = [
   {
     id: "window",
     bare: true,

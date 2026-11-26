@@ -1,3 +1,5 @@
+import type { Component, Evidence } from "./types.ts";
+
 // NeXTSTEP 3.3 (D14): the evidence rows for the shared components, keyed by
 // component id, and the components only NeXTSTEP has. index.mjs merges both.
 // Sources:
@@ -12,9 +14,15 @@
 const NX30 = "clio.css capture, NeXTStep 3.0 in Infinite Mac (frames in .fidelity/ns30)";
 const AIS6 = "AI System 6 69-nextstep-appearance.css";
 const NXUG = "NeXTSTEP User Interface Guidelines, Release 3";
-const row = (claim, status, source, upstream) => ({ era: "nextstep", claim, status, source, upstream });
+const row = (claim: string, status: Evidence["status"], source: string, upstream: string): Evidence => ({
+  era: "nextstep",
+  claim,
+  status,
+  source,
+  upstream,
+});
 
-export const rows = {
+export const rows: Record<string, Evidence[]> = {
   window: [
     row("Title bar: 22 rows inside the 1px black frame: a 1px highlight on the top and left, 19 rows of face, a #555555 row and column on the bottom and right, a black line", "measured", NX30 + ", frame boot1 (File Viewer)", "agrees with AI System 6's P12"),
     row("Key window: black face, #aaaaaa highlight, white Helvetica Bold 12 title centred on the bar", "measured", NX30 + ", frame boot1 (File Viewer, the key window)", NXUG + ", ch. 4 (key and main windows)"),
@@ -116,7 +124,7 @@ export const rows = {
   ],
 };
 
-export const components = [
+export const components: Component[] = [
   {
     id: "browser",
     eras: ["nextstep"],

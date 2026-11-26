@@ -13,15 +13,15 @@ import { fileURLToPath } from "node:url";
 import { gzipSync } from "node:zlib";
 import * as esbuild from "esbuild";
 import { execFileSync } from "node:child_process";
-import { components, AIS6 } from "../components/index.mjs";
-import { renderSite, renderLlms, renderLlmsFull, renderEvidence, renderSitemap } from "./site.mjs";
+import { components, AIS6 } from "../components/index.ts";
+import { renderSite, renderLlms, renderLlmsFull, renderEvidence, renderSitemap } from "./site.ts";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const pkg = JSON.parse(readFileSync(join(root, "package.json"), "utf8"));
-const read = (p) => readFileSync(join(root, p), "utf8");
-const write = (p, s) => { mkdirSync(dirname(join(root, p)), { recursive: true }); writeFileSync(join(root, p), s); };
+const read = (p: string): string => readFileSync(join(root, p), "utf8");
+const write = (p: string, s: string): void => { mkdirSync(dirname(join(root, p)), { recursive: true }); writeFileSync(join(root, p), s); };
 
-const banner = (variant) => `/*! clio.css ${pkg.version}${variant} | MIT | ${pkg.homepage}
+const banner = (variant: string): string => `/*! clio.css ${pkg.version}${variant} | MIT | ${pkg.homepage}
  * Classic Mac OS interface CSS: System 6, System 7, Mac OS 8.5 Drawing Board and Mac OS 9 Platinum.
  * Measured values traced to AI System 6; see EVIDENCE.md.
  * Includes art from system.css (MIT) and pixel reconstructions of Apple control art; see THIRD-PARTY.md. */\n`;
@@ -33,7 +33,7 @@ const srcFiles = readdirSync(join(root, "src")).filter((f) => f.endsWith(".css")
 // one class (or an always-true :not()), keeping the rules' relative specificity.
 const SB = "> .clio-sb-anchor > ";
 const ANY = ":not(.clio-sb-never)";
-function mirrorSelector(sel) {
+function mirrorSelector(sel: string): string | null {
   const m = sel.match(/^(.*?)::-webkit-scrollbar(-[a-z]+)?((?::[a-z-]+)*)$/s);
   if (!m) return null;
   const [, host, part = "", states] = m;
@@ -56,7 +56,7 @@ function mirrorSelector(sel) {
   if (part === "-corner") return `${host} ${SB}.clio-sb-corner${own}`;
   return `${host} ${SB}${bar} > .clio-sb${part}${own}`;
 }
-function splitList(sel) {
+function splitList(sel: string): string[] {
   const out = []; let depth = 0, cur = "";
   for (const ch of sel) {
     if (ch === "(") depth++; else if (ch === ")") depth--;
@@ -65,7 +65,7 @@ function splitList(sel) {
   if (cur.trim()) out.push(cur.trim());
   return out;
 }
-function mirrorScrollbars(css) {
+function mirrorScrollbars(css: string): string {
   let out = "", i = 0;
   while (i < css.length) {
     const open = css.indexOf("{", i);
@@ -84,18 +84,18 @@ function mirrorScrollbars(css) {
   }
   return out;
 }
-const part = (f) => {
+const part = (f: string): string => {
   const css = read(`src/${f}`).trim() + "\n";
   return /scrollbar-js/.test(f) ? css : mirrorScrollbars(css);
 };
 // NeXTSTEP (src/93-nextstep.css) ships only in its own file: clio.css stays the Classic bundle (D5, D14).
-const isNext = (f) => f.includes("nextstep");
+const isNext = (f: string): boolean => f.includes("nextstep");
 const all = srcFiles.filter((f) => !isNext(f)).map(part).join("\n");
-const isEra = (f) => /system7|platinum|drawingboard|nextstep/.test(f);
+const isEra = (f: string): boolean => /system7|platinum|drawingboard|nextstep/.test(f);
 // Drawing Board shares the Platinum layer, whose rules are scoped to either era.
 const SHARED = ':is([data-era="platinum"], [data-era="drawingboard"])';
-const layers = { system7: ["system7"], platinum: ["platinum"], drawingboard: ["platinum", "drawingboard"], nextstep: ["nextstep"] };
-const eraDefault = (era) => srcFiles
+const layers: Record<string, string[]> = { system7: ["system7"], platinum: ["platinum"], drawingboard: ["platinum", "drawingboard"], nextstep: ["nextstep"] };
+const eraDefault = (era: string): string => srcFiles
   .filter((f) => !isEra(f) || (layers[era].some((l) => f.includes(l)) && !(f.includes("platinum-only") && era !== "platinum")))
   .map((f) => (isEra(f) ? part(f).replaceAll(SHARED, ":root").replaceAll(`[data-era="${era}"]`, ":root") : part(f)))
   .join("\n");
@@ -111,7 +111,7 @@ const nextstepDefault = srcFiles
   .map((f) => (isEra(f) ? part(f).replace(/\[data-era="nextstep"\](?=[^{};]*?::-webkit-scrollbar)/g, "html").replaceAll('[data-era="nextstep"]', ":root") : part(f)))
   .join("\n");
 
-function minify(css) {
+function minify(css: string): string {
   return css
     .replace(/\/\*(?!!)[\s\S]*?\*\//g, "")
     .replace(/\s+/g, " ")
@@ -145,7 +145,7 @@ mkdirSync(join(root, "dist/fonts"), { recursive: true });
 for (const f of readdirSync(join(root, "fonts"))) copyFileSync(join(root, "fonts", f), join(root, "dist/fonts", f));
 // Drawing Board theme art: the files the stylesheets reference, beside them.
 const artFiles = [...new Set([...(all + nextstepDefault).matchAll(/url\("(art\/[^"]+)"\)/g)].map((m) => m[1]))].sort();   // NeXTSTEP's cursors too
-const copyArt = (to) => {
+const copyArt = (to: string): void => {
   for (const f of artFiles) { mkdirSync(dirname(join(root, to, f)), { recursive: true }); copyFileSync(join(root, f), join(root, to, f)); }
 };
 copyArt("dist");
@@ -157,7 +157,7 @@ const tsc = join(root, "node_modules/.bin/tsc");
 if (!existsSync(tsc)) { console.error("tsc not found: run npm install (typescript is a dev dependency)."); process.exit(1); }
 rmSync(join(root, ".build"), { recursive: true, force: true });
 execFileSync(tsc, ["-p", root], { stdio: "inherit" });
-const emitted = (f) => read(`.build/${f}`).replace(/^"use strict";\n/, "");   // the scripts keep "use strict" inside their own function
+const emitted = (f: string): string => read(`.build/${f}`).replace(/^"use strict";\n/, "");   // the scripts keep "use strict" inside their own function
 write("dist/clio.js", emitted("clio.js").replace("0.11.0-dev", pkg.version));
 write("dist/clio-sounds-panel.js", emitted("clio-sounds-panel.js"));
 write("dist/clio.d.ts", read("types/clio.d.ts"));

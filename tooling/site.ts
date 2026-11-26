@@ -1,14 +1,16 @@
 // Renderers for the docs site and the agent-facing text files.
-const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
-const ERA = { system6: "System 6", system7: "System 7", drawingboard: "Drawing Board", platinum: "Platinum", nextstep: "NeXTSTEP", both: "Classic eras" };
-const STATUS = {
+import type { Component, EvidenceStatus, Era, PackageInfo } from "../components/types.ts";
+
+const esc = (s: unknown): string => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+const ERA: Record<Era, string> = { system6: "System 6", system7: "System 7", drawingboard: "Drawing Board", platinum: "Platinum", nextstep: "NeXTSTEP", both: "Classic eras" };
+const STATUS: Record<EvidenceStatus, string> = {
   measured: "Measured",
   inferred: "Inferred",
   adapted: "Adapted",
   "third-party": "Third-party",
 };
 
-function evidenceTable(c) {
+function evidenceTable(c: Component): string {
   const rows = c.evidence
     .map(
       (e) => `<tr>
@@ -28,7 +30,7 @@ ${rows}
       </table>`;
 }
 
-function example(html, id, reserve, bare) {
+function example(html: string, id: string, reserve: number | undefined, bare: boolean | undefined): string {
   const style = reserve ? ` style="min-height: ${reserve}px"` : "";
   const live = bare ? html : `<div class="specimen clio">\n${html}\n</div>`;
   return `<div class="example"${style}>
@@ -40,7 +42,7 @@ ${live}
       </div>`;
 }
 
-export function renderSite({ pkg, components }) {
+export function renderSite({ pkg, components }: { pkg: PackageInfo; components: Component[] }): string {
   const url = pkg.homepage;
   const title = "clio.css — classic Mac OS CSS for System 6, System 7, Drawing Board and Mac OS 9 Platinum";
   const description =
@@ -290,7 +292,7 @@ export function renderSite({ pkg, components }) {
 `;
 }
 
-export function renderLlms({ pkg, components }) {
+export function renderLlms({ pkg, components }: { pkg: PackageInfo; components: Component[] }): string {
   const url = pkg.homepage;
   return `# clio.css
 
@@ -320,7 +322,7 @@ ${components.map((c) => `- [${c.name}](${url}#${c.id}): ${c.summary}`).join("\n"
 `;
 }
 
-export function renderLlmsFull({ pkg, components, css }) {
+export function renderLlmsFull({ pkg, components, css }: { pkg: PackageInfo; components: Component[]; css: string }): string {
   const parts = components.map((c) => {
     const variants = (c.variants || []).map((v) => `### ${v.name}\n\n${v.note}\n\n\`\`\`html\n${v.html}\n\`\`\`\n`).join("\n");
     return `## ${c.name} (#${c.id})
@@ -350,11 +352,13 @@ ${css}\`\`\`
 `;
 }
 
-export function renderEvidence({ pkg, components }) {
+export function renderEvidence({ pkg, components }: { pkg: PackageInfo; components: Component[] }): string {
   const rows = components
     .flatMap((c) => c.evidence.map((e) => `| ${c.name} | ${ERA[e.era]} | ${e.claim.replace(/\|/g, "\\|")} | ${STATUS[e.status]} | \`${e.source.replace(/\|/g, "\\|")}\` — ${e.upstream.replace(/\|/g, "\\|")} |`))
     .join("\n");
-  const counts = components.flatMap((c) => c.evidence).reduce((m, e) => ((m[e.status] = (m[e.status] || 0) + 1), m), {});
+  const counts = components
+    .flatMap((c) => c.evidence)
+    .reduce<Record<string, number>>((m, e) => { m[e.status] = (m[e.status] || 0) + 1; return m; }, {});
   return `# Evidence
 
 Generated from \`components/index.mjs\` by \`npm run build\`; edit there.
@@ -376,7 +380,7 @@ ${rows}
 `;
 }
 
-export function renderSitemap({ pkg }) {
+export function renderSitemap({ pkg }: { pkg: PackageInfo }): string {
   const today = new Date().toISOString().slice(0, 10);
   return `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">

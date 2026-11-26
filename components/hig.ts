@@ -1,3 +1,5 @@
+import type { Component } from "./types.ts";
+
 const P9 = "clio.css capture, Mac OS 9.0 in Infinite Mac (driven by hand, frames in .fidelity/hig/platinum9)";
 const DB = "clio.css capture, Mac OS 8.5 with Drawing Board in Infinite Mac (frames in .fidelity/hig/drawingboard)";
 const S7 = "clio.css capture, System 7.5.3 in Infinite Mac (frames in .fidelity/hig/system7)";
@@ -5,8 +7,8 @@ const THEME = "the theme file's pxm# and ppat resources (tooling/db-art.py)";
 const HIG8 = "Mac OS 8 Human Interface Guidelines (1997), ch. 2";
 const HIG92 = "Macintosh Human Interface Guidelines (1992)";
 const IMTE = "Inside Macintosh: Macintosh Toolbox Essentials (1992), ch. 4";
-const RARE = (sys) => `clio.css capture, ${sys} in Infinite Mac (frames in .fidelity, see tooling/fidelity.mjs)`;
-export default [
+const RARE = (sys: string) => `clio.css capture, ${sys} in Infinite Mac (frames in .fidelity, see tooling/fidelity.mjs)`;
+const components: Component[] = [
   { id: "disclosure", name: "Disclosure triangle",
     summary: "The triangle that shows and hides a list's or a dialog's details. A <details> summary gets it too.",
     selectors: [".disclosure", ".disclosure[aria-expanded=true]", "details > summary", "details[open] > summary"],
@@ -201,3 +203,5 @@ export default [
       { era: "system6", claim: "The same as System 7", status: "inferred", source: HIG92 + ", ch. 5", upstream: "—" },
     ] },
 ];
+
+export default components;

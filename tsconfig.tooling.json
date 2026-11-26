@@ -1,0 +1,23 @@
+{
+  // The tooling scripts (tooling/, test/, components/) run directly under Node 24's type
+  // stripping: no build step, so imports name their `.ts` file and the compiler only checks.
+  // `erasableSyntaxOnly` rejects what Node cannot strip (enum, namespace, parameter properties).
+  "compilerOptions": {
+    "target": "es2022",
+    "lib": ["es2023", "dom", "dom.iterable"],
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "strict": true,
+    "noImplicitOverride": true,
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
+    "allowImportingTsExtensions": true,
+    "erasableSyntaxOnly": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "noEmit": true,
+    "types": ["node"]
+  },
+  "include": ["tooling/**/*.ts", "test/**/*.ts", "components/**/*.ts"]
+}

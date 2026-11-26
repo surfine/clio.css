@@ -1,7 +1,7 @@
 // Static contract for ts/clio-sounds-panel.ts (the worker's job); behaviour is checked in a browser by the controller.
 import { readFileSync, existsSync } from "node:fs";
 const f = "ts/clio-sounds-panel.ts", d = "test/sounds-panel.html";
-let bad = 0; const ok = (c, m) => { if (!c) { bad++; console.log("FAIL " + m); } };
+let bad = 0; const ok = (c: unknown, m: string): void => { if (!c) { bad++; console.log("FAIL " + m); } };
 ok(existsSync(f), f + " exists"); ok(existsSync(d), d + " exists");
 const s = existsSync(f) ? readFileSync(f, "utf8") : "";
 ok(/window\.clioSoundsPanel\s*=/.test(s), "defines window.clioSoundsPanel");
