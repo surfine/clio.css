@@ -34,6 +34,33 @@ A fix to clio.js's menus, then documentation, packaging and checks. The CSS rule
 - **Scope:** Classic Mac OS and NeXTSTEP 3.3; no new era starts. The Mac OS X eras are a
   separate project, clio.wasm. Internal notes moved from the root to `dev/`.
 
+Verify, on the commit before this note was added (only CHANGELOG.md changed since):
+
+> npm run verify — PASS
+>
+> Commit 20344ccdf15fef377b2da2f5a94ded171f9bacb9, clio.css 2.0.1, 2026-11-26T20:36:40Z, Node v24.14.1, darwin.
+>
+> | Step | Result | Detail |
+> | --- | --- | --- |
+> | npm ci | pass |  |
+> | npm test | pass | 78 passed (78) |
+> | lint | pass |  |
+> | typecheck | pass |  |
+> | clean after build | pass | dist/, docs/, llms.txt and EVIDENCE.md match the sources |
+> | npm pack clio.css | pass | clio.css-2.0.1.tgz, 300 files, 1932.1 kB |
+> | npm pack clio.css-preact | pass | clio.css-preact-2.0.1.tgz, 17 files, 8.4 kB |
+> | npm pack clio.css-react | pass | clio.css-react-2.0.1.tgz, 17 files, 8.5 kB |
+> | install tarballs | pass | with preact 11.2.0, react 19.3.1 |
+> | clio.css exports | pass | 19 entries resolve; js.esm and contract import |
+> | clio.css-preact exports | pass | 1 entries resolve; index imports |
+> | clio.css-react exports | pass | 1 entries resolve; index imports |
+> | clio.css-preact render | pass | button, checkbox match components.json with preact |
+> | clio.css-react render | pass | button, checkbox match components.json with react |
+> | CSS rules vs 1.1.1 | pass | 12 files, 5722 rules: identical to 1.1.1 with headers and comments stripped, 0 allow-listed change(s) |
+> | docs numbers and versions | pass | version 2.0.1 everywhere; evidence 255/44/45/4; 32 components; sizes; fidelity 23/23, 26/26, 52/54, 55/55, 7/7, 40/40, 1/5; 204 of 213 public |
+> | Markdown relative links | pass | 43 links in 40 files resolve |
+> | fidelity:public | pass | fidelity:public (chromium, 1x): 204 of 204 publicly checkable specimens identical to their reference digests; 9 not publicly checkable (test/fidelity-digests.json) |
+
 ## 2.0.0 (2026-11-26)
 
 Published to npm on 2026-11-26 UTC: clio.css 2.0.0 at 18:13:32, clio.css-preact 2.0.0 at
