@@ -170,7 +170,9 @@ unchanged: `.title-bar button.close`, `button.resize`, `.inactive-title-bar`,
 <script src="https://unpkg.com/clio.css@1.0.2/dist/clio.js" defer></script>
 ```
 
-No dependencies; 94.0 kB, or 46.7 kB as `dist/clio.min.js`. clio.css works without it.
+No dependencies; 72.2 kB, or 47.8 kB as `dist/clio.min.js`. clio.css works without it.
+As a module: `import { install } from "clio.css/js.esm"; install();` (importing alone
+installs nothing; `api` is the same object as `window.clio`).
 With it:
 
 - Buttons, check boxes, radio buttons and title-bar boxes track the pointer as the Mac's
@@ -245,6 +247,23 @@ Sound's controls for a site: `clioSoundsPanel(element, { base: "https://…/pack
 Format, measurements and what is inferred: [SOUND-SETS.md](SOUND-SETS.md).
 
 </details>
+
+## Contract and tokens
+
+`clio.css/contract` is what a host checks itself against: the eras, each component's
+selectors, aliases and tokens, and each era's page-default token values, typed to the
+token names. `clio.css/tokens/<era>.json` has the values alone.
+
+```js
+import contract from "clio.css/contract";
+contract.tokens.nextstep["--clio-titlebar-height"];   // "22px"
+```
+
+## Preact and React (preview)
+
+The components are also written once in JSX (`packages/components`) and built as `@clio/preact`
+and `@clio/react` (`npm run build:components`). They are not on npm yet. Each renders the markup
+documented here exactly; load clio.css and, for behaviour, clio.js beside them.
 
 ## Theming
 

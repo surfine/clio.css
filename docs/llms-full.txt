@@ -1,7 +1,7 @@
-# clio.css 1.1.1 — full reference
+# clio.css 2.0.0 — full reference
 
 Classic Mac OS interface CSS: System 6 (default), System 7 (data-era="system7"), Mac OS 8.5 Drawing Board (data-era="drawingboard") and Mac OS 8/9 Platinum (data-era="platinum"). NeXTSTEP 3.3 ships as its own file, dist/clio.nextstep.css (data-era="nextstep").
-Install: npm install clio.css — or <link rel="stylesheet" href="https://unpkg.com/clio.css@1.1.1/dist/clio.css">
+Install: npm install clio.css — or <link rel="stylesheet" href="https://unpkg.com/clio.css@2.0.0/dist/clio.css">
 Rules have zero or one-class specificity; override any --clio-* custom property on any element.
 
 ## Window (#window)

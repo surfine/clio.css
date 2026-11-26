@@ -1,5 +1,30 @@
 # Changelog
 
+## 2.0.0 (unreleased: ready to publish, waiting for the owner)
+
+The source moves to TypeScript, components and Vite (PLAN-TS-PREACT.md, M1–M6). What you load is
+unchanged: every `dist/*.css` file is built from the new sources to the same bytes as 1.1.1, and
+`window.clio` keeps the same keys. The major version marks the new package structure and exports.
+
+- **Host contract:** `clio.css/contract` (`dist/contract.js` and `.d.ts`) lists the eras and each
+  component's selectors, aliases and tokens, plus each era's page-default token values. Its
+  types name every token. `clio.css/tokens/<era>.json` holds the same values per era. A host
+  such as AI System 6 imports these instead of pinning values by hand.
+- **clio.js as an ES module:** `clio.css/js.esm` (`dist/clio.mjs`) exports `api` and `install()`;
+  importing it installs nothing. `dist/clio.js` is the same program as a plain script, now bundled
+  from per-component modules by Vite, without the source comments (72.2 kB, was 97.6 kB).
+  `dist/clio.min.js` is 47.8 kB (was 48.2 kB).
+- **Components for Preact and React** (not published yet): one JSX source,
+  `packages/components`, builds `@clio/preact` and `@clio/react` with `npm run build:components`.
+  32 components each render exactly the markup in `components.json`, checked in both frameworks.
+- **Sources:** each component's CSS is in fragments beside its data and behaviour
+  (`packages/core/src/components/<name>/`); `src/`, `components/*.mjs` and `ts/` are gone.
+  The docs page is Preact, prerendered by Vite, its specimens drawn by the components. It
+  matches 1.1.1's page pixel for pixel in Chromium and WebKit.
+- **Tooling** is TypeScript run by Node 24, and the static checks run under Vitest. Fidelity
+  (210 specimens at 1x, 2x and 3x) and behaviour (239, 239 and 237 checks) are unchanged in all
+  three engines.
+
 ## 1.1.1 (2026-11-26, NeXTSTEP finished)
 
 What 1.1.0 left undone. 1.1.0 was published to npm on 2026-11-26 (09:24 UTC) without it; 1.1.1 carries it.
