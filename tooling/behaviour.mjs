@@ -56,6 +56,20 @@ for (const era of ["system6", "system7", "platinum", "drawingboard"]) {
   ok(!(await page.evaluate(() => document.querySelector("#b").hasAttribute("data-clio-off"))), `${era}: data-clio-off cleared on release`);
 }
 
+// 1b. A dimmed menu item does not light under the pointer, whether the dimming is on the
+// <li> or on the button inside it (1.1.0: a cell holding a dimmed button lit up in System 6,
+// System 7 and Platinum).
+for (const era of ["system6", "system7", "platinum", "drawingboard"]) {
+  await load(era, `<ul class="menu" role="menu" style="width:150px"><li role="none"><button role="menuitem">Open</button></li><li role="none" id="d"><button role="menuitem" aria-disabled="true">Print</button></li><li role="menuitem" class="disabled" id="d2">Close</li></ul>`);
+  for (const id of ["d", "d2"]) {
+    const bg = () => page.locator(`#${id}`).evaluate((el) => getComputedStyle(el).backgroundColor + "|" + getComputedStyle(el).boxShadow);
+    const idle = await bg();
+    await page.locator(`#${id}`).hover();
+    ok(await bg() === idle, `${era}: a dimmed item (${id === "d" ? "dimmed button" : "dimmed li"}) does not light under the pointer`);
+    await page.mouse.move(700, 500);
+  }
+}
+
 // 2. Return clicks the default button after a flash; Esc clicks Cancel.
 await load("platinum", `<div class="modal-dialog" role="dialog" style="padding:16px"><input id="f" value="x"><button id="c" data-clio-cancel onclick="window.got='cancel'">Cancel</button><button id="d" class="default" onclick="window.got='ok'">OK</button></div>`);
 await page.focus("#f");

@@ -698,11 +698,17 @@
       </dl>
       <p class="aliases">Also accepts: system.css markup (<code>ul[role=menu-bar]</code>, <code>[role=menu-item]</code>, <code>li.divider</code>).</p>
       <details class="evidence-details">
-        <summary>Evidence (37)</summary>
+        <summary>Evidence (38)</summary>
       <table class="evidence">
         <caption>Where each value comes from</caption>
         <thead><tr><th scope="col">Era</th><th scope="col">Value</th><th scope="col">Status</th><th scope="col">Source</th></tr></thead>
         <tbody>
+<tr>
+          <td>Classic eras</td>
+          <td>A dimmed item never lights under the pointer, whether the dimming is on the item or on the button inside it (1.1.0 fix: a cell holding a dimmed button lit up in System 6, System 7 and Platinum)</td>
+          <td><span class="status status-inferred">Inferred</span></td>
+          <td><code>Macintosh Human Interface Guidelines (1992), ch. 4: a dimmed command cannot be chosen</code><br><span class="upstream">tooling/behaviour.mjs 1b, three engines</span></td>
+        </tr>
 <tr>
           <td>Platinum</td>
           <td>clio.js: a chosen item blinks 3 times, 3 ticks dark and 3 lit, before the menu closes and the command runs</td>

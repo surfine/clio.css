@@ -1390,7 +1390,7 @@
   cursor: var(--clio-cursor-arrow);
 }
 
-:where(.menu, [role="menu"]) > li:not(.disabled, [aria-disabled="true"], .separator, [role="separator"]):is(:hover, :focus-within, .active):where(:not([data-clio-blink])),
+:where(.menu, [role="menu"]) > li:not(.disabled, [aria-disabled="true"], .separator, [role="separator"], :has(> :is(:disabled, [aria-disabled="true"]))):is(:hover, :focus-within, .active):where(:not([data-clio-blink])),
 :where(.menu, [role="menu"]) > li > :is(a, button):not([aria-disabled="true"], :disabled):is(:hover, :focus-visible, .active):where(:not([data-clio-blink])) {
   background: var(--clio-menu-item-active-bg);
   box-shadow: var(--clio-menu-item-active-shadow);
@@ -4601,7 +4601,7 @@
 /* Safari's COLRv0 edge levels in white and dimmed text (src/00-fonts.css). */
 :is([data-era="platinum"], [data-era="drawingboard"]) :is(.menu-bar, [role="menubar"], [role="menu-bar"]) > li > :is(button, a, span):is([aria-expanded="true"], .active),
 :is([data-era="platinum"], [data-era="drawingboard"]) :is(.menu-bar, [role="menubar"], [role="menu-bar"]) > li.open > :is(button, a, span),
-:is([data-era="platinum"], [data-era="drawingboard"]) :is(.menu, [role="menu"]) > li:not(.disabled, [aria-disabled="true"], .separator, [role="separator"]):is(:hover, :focus-within, .active):where(:not([data-clio-blink])),
+:is([data-era="platinum"], [data-era="drawingboard"]) :is(.menu, [role="menu"]) > li:not(.disabled, [aria-disabled="true"], .separator, [role="separator"], :has(> :is(:disabled, [aria-disabled="true"]))):is(:hover, :focus-within, .active):where(:not([data-clio-blink])),
 :is([data-era="platinum"], [data-era="drawingboard"]) :is(.menu, [role="menu"]) > li > :is(a, button):not([aria-disabled="true"], :disabled):is(:hover, :focus-visible, .active):where(:not([data-clio-blink])),
 :is([data-era="platinum"], [data-era="drawingboard"]) .icon:is(.selected, [aria-selected="true"], [aria-pressed="true"]) > :is(figcaption, span, .icon-label) {
   font-palette: --clio-aa-white;

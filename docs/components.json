@@ -614,6 +614,13 @@
       "reserveHeight": 150,
       "evidence": [
         {
+          "era": "both",
+          "claim": "A dimmed item never lights under the pointer, whether the dimming is on the item or on the button inside it (1.1.0 fix: a cell holding a dimmed button lit up in System 6, System 7 and Platinum)",
+          "status": "inferred",
+          "source": "Macintosh Human Interface Guidelines (1992), ch. 4: a dimmed command cannot be chosen",
+          "upstream": "tooling/behaviour.mjs 1b, three engines"
+        },
+        {
           "era": "platinum",
           "claim": "clio.js: a chosen item blinks 3 times, 3 ticks dark and 3 lit, before the menu closes and the command runs",
           "status": "measured",

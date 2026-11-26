@@ -47,7 +47,7 @@ For AI coding agents using or changing this repository.
   Show HN) wait for Aqua. The plan and the decisions behind it: ROADMAP-MACOSX.md.
   Since 2026-11-26 (D14) NeXTSTEP 3.3 is a clio.css era (`data-era="nextstep"`,
   `src/93-nextstep.css`, shipped as `dist/clio.nextstep.css` only); the four Classic eras
-  stay frozen (D7) and `dist/clio.css` stays the Classic bundle; the Mac OS X eras belong
+  stay the Classic line (D7, D16: fixes still ship) and `dist/clio.css` stays the Classic bundle; the Mac OS X eras belong
   to clio.wasm (D8).
 - Tokens live on `:root, [data-era="system6"]` (01-tokens.css),
   `[data-era="system7"]` (80-system7.css), `:is([data-era="platinum"],

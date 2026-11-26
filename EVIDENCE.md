@@ -7,7 +7,7 @@ Every value in clio.css 1.1.0 has a row here. Sources are paths in the AI System
 | Status | Meaning | Rows |
 | --- | --- | ---: |
 | Measured | read from real pixels of the era | 245 |
-| Inferred | reasoned from documentation or behaviour, not measured | 47 |
+| Inferred | reasoned from documentation or behaviour, not measured | 48 |
 | Adapted | a deliberate departure for the web (touch, focus, contrast) | 43 |
 | Third-party | art or font from a named, licensed project | 4 |
 
@@ -81,6 +81,7 @@ Pixel check: `npm run fidelity` renders the Platinum specimens and compares them
 | Window | NeXTSTEP | No window shadow: the window is its 1px black frame | Inferred | `AI System 6 69-nextstep-appearance.css (P18)` — NeXTSTEP User Interface Guidelines, Release 3, ch. 4 |
 | Window | NeXTSTEP | Window and pane background #aaaaaa | Measured | `clio.css capture, NeXTStep 3.0 in Infinite Mac (frames in .fidelity/ns30), frame boot1` — File Viewer |
 | Window | NeXTSTEP | On touch screens each title-bar button gets a 45px hit area; its art stays 15px | Adapted | `clio.css` — AI System 6's coarse-pointer rule |
+| Menu bar and menus | Classic eras | A dimmed item never lights under the pointer, whether the dimming is on the item or on the button inside it (1.1.0 fix: a cell holding a dimmed button lit up in System 6, System 7 and Platinum) | Inferred | `Macintosh Human Interface Guidelines (1992), ch. 4: a dimmed command cannot be chosen` — tooling/behaviour.mjs 1b, three engines |
 | Menu bar and menus | Platinum | clio.js: a chosen item blinks 3 times, 3 ticks dark and 3 lit, before the menu closes and the command runs | Measured | `clio.css capture, Mac OS 9.0 in Infinite Mac, Apple menu, each animation frame of the emulator's canvas recorded (release at 30 ms; dark at 59, 159, 276 ms; gone at 375 ms)` — General Controls' default Menu Blinking |
 | Menu bar and menus | Drawing Board | clio.js: as Mac OS 9: 3 blinks of about 3 ticks; a menu opened with a click stays open | Measured | `clio.css capture, Mac OS 8.5 with the theme in Infinite Mac, Edit > Show Clipboard released (changes at 59, 126, 177, 227, 277, 327 ms; gone at 376 ms)` — Appearance > Options in 8.5: Smart Scrolling and double-click collapse both off |
 | Menu bar and menus | System 6 | clio.js: as Mac OS 9: the chosen item blinks 3 times, about 3 ticks dark and 3 lit | Measured | `clio.css capture, System 6.0.8 in Infinite Mac, File > Get Info released, each animation frame recorded (dark at 109, 193, 293 ms; gone at 392 ms)` — MenuFlash 3 |

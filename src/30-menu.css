@@ -151,7 +151,7 @@
   cursor: var(--clio-cursor-arrow);
 }
 
-:where(.menu, [role="menu"]) > li:not(.disabled, [aria-disabled="true"], .separator, [role="separator"]):is(:hover, :focus-within, .active):where(:not([data-clio-blink])),
+:where(.menu, [role="menu"]) > li:not(.disabled, [aria-disabled="true"], .separator, [role="separator"], :has(> :is(:disabled, [aria-disabled="true"]))):is(:hover, :focus-within, .active):where(:not([data-clio-blink])),
 :where(.menu, [role="menu"]) > li > :is(a, button):not([aria-disabled="true"], :disabled):is(:hover, :focus-visible, .active):where(:not([data-clio-blink])) {
   background: var(--clio-menu-item-active-bg);
   box-shadow: var(--clio-menu-item-active-shadow);
