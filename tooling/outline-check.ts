@@ -11,12 +11,15 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 import playwright from "playwright";
-const ENGINE = process.env.CLIO_ENGINE || "chromium";
+type Engine = "chromium" | "webkit" | "firefox";
+type Box = { x: number; y: number };
+const ENGINE = (process.env.CLIO_ENGINE || "chromium") as Engine;
 
 // era, frames, the window's frame rect on the screen (left, top, width, pane height), the
 // drag, and the pointer's boxes in the two frames (left out).
 const PH_DB = +(process.env.PH_DB || 218);
-const cases = [
+interface Case { era: string; dir: string; win: number[]; d: number[]; pointer: number[][]; allow?: [number, number] }
+const cases: Case[] = [
   { era: "system6", dir: "system6", win: [-1, 27, 240, 105], d: [80, 113], pointer: [[195, 33, 21, 28], [275, 146, 21, 25]] },
   { era: "system7", dir: "system7", win: [29, 55, 376, 218], d: [80, 116], pointer: [[295, 60, 21, 23], [375, 176, 21, 23]] },
   // Drawing Board: the frame (387x246) and its shadow, with the corner patches of tooling/db-outline.py.
@@ -35,17 +38,18 @@ for (const c of cases) {
   writeFileSync(file, `<!doctype html><html data-era="${c.era}"><head><meta charset="utf-8"><link rel="stylesheet" href="${pathToFileURL(join(root, "dist/clio.css")).href}"></head><body style="margin:0;background:#000;width:1000px;height:800px"><div class="window" id="w" style="position:absolute;left:${l + OFF}px;top:${t + OFF}px;width:${w}px;opacity:0"><div class="title-bar"><button class="close" aria-label="Close"></button><h2 class="title">HD</h2><button class="resize" aria-label="Zoom"></button></div><div class="window-pane" style="height:${ph}px"></div></div><script src="${pathToFileURL(join(root, "dist/clio.js")).href}"></script></body></html>`);
   await page.goto(pathToFileURL(file).href);
   const r = await page.locator("#w").boundingBox();
+  if (!r) throw new Error(`${c.era}: #w has no box`);
   await page.mouse.move(r.x + 150, r.y + 8); await page.mouse.down();
   await page.mouse.move(r.x + 150 + c.d[0], r.y + 8 + c.d[1], { steps: 5 });
   await page.waitForTimeout(300);   // the outline's mask pictures (Drawing Board) load
   const shot = (await page.screenshot()).toString("base64");
   await page.mouse.up();
-  const res = await page.evaluate(async ([a, b, s, pointer, off]) => {
-    const load = (b64) => new Promise((ok) => { const i = new Image(); i.onload = () => ok(i); i.src = "data:image/png;base64," + b64; });
-    const px = (img) => { const k = document.createElement("canvas"); k.width = img.width; k.height = img.height; const g = k.getContext("2d"); g.drawImage(img, 0, 0); return [g.getImageData(0, 0, img.width, img.height).data, img.width, img.height]; };
+  const res = await page.evaluate(async ([a, b, s, pointer, off]: [string, string, string, number[][], number]) => {
+    const load = (b64: string) => new Promise<HTMLImageElement>((ok) => { const i = new Image(); i.onload = () => ok(i); i.src = "data:image/png;base64," + b64; });
+    const px = (img: HTMLImageElement): [Uint8ClampedArray, number, number] => { const k = document.createElement("canvas"); k.width = img.width; k.height = img.height; const g = k.getContext("2d")!; g.drawImage(img, 0, 0); return [g.getImageData(0, 0, img.width, img.height).data, img.width, img.height]; };
     const [A, W, H] = px(await load(a)), [B] = px(await load(b)), [S, SW] = px(await load(s));
-    const skip = (x, y) => pointer.some(([px0, py0, pw, phh]) => x >= px0 && x < px0 + pw && y >= py0 && y < py0 + phh);
-    let both = 0, onlyRef = 0, onlyClio = 0; const odd = [];
+    const skip = (x: number, y: number) => pointer.some(([px0, py0, pw, phh]) => x >= px0 && x < px0 + pw && y >= py0 && y < py0 + phh);
+    let both = 0, onlyRef = 0, onlyClio = 0; const odd: string[] = [];
     for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
       if (skip(x, y)) continue;
       const i = (y * W + x) * 4, ref = A[i] !== B[i] || A[i + 1] !== B[i + 1] || A[i + 2] !== B[i + 2];
@@ -53,8 +57,8 @@ for (const c of cases) {
       if (ref && clio) both++; else if (ref || clio) { if (ref) onlyRef++; else onlyClio++; if (odd.length < 6) odd.push(`${ref ? "mac" : "clio"} ${x},${y}`); }
     }
     return { both, onlyRef, onlyClio, odd };
-  }, [readFileSync(before).toString("base64"), readFileSync(during).toString("base64"), shot, c.pointer, OFF]);
-  const [aRef, aClio] = c.allow || [0, 0];
+  }, [readFileSync(before).toString("base64"), readFileSync(during).toString("base64"), shot, c.pointer, OFF] as [string, string, string, number[][], number]);
+  const [aRef, aClio] = c.allow ?? [0, 0];
   const ok = res.onlyRef <= aRef && res.onlyClio <= aClio && res.both > 0;
   if (!ok) failed++;
   console.log(`${ok ? "ok  " : "FAIL"} ${c.era}: ${res.both} pixels inverted by both, ${res.onlyRef} only on the Mac, ${res.onlyClio} only by clio.js (${ENGINE})${res.odd.length ? ": " + res.odd.join("; ") : ""}`);

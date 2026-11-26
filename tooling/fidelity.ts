@@ -19,18 +19,53 @@ if (!existsSync(tiles)) {
   process.exit(2);
 }
 import playwright from "playwright";
+import type { Page } from "playwright";
+
+// A specimen's markup and the crop that compares it with the reference. The helpers below
+// fill in the rest; a specimen may add a held state, a mask, ink boxes or a JS-driven control.
+type Box = { x: number; y: number };
+interface Specimen {
+  id: string;
+  era?: string;
+  group?: string;
+  html: string;
+  crop: number[];
+  refFile?: string;
+  refCrop?: number[];
+  mask?: number[][];
+  ink?: number[][];
+  mono?: boolean;
+  js?: boolean;
+  viaJs?: boolean;
+  baseSelect?: boolean;
+  noMetrics?: boolean;
+  act?: (page: Page, box: Box) => Promise<void>;
+}
+interface InkRow { ref: string; clio: string; match: boolean }
+interface Metrics {
+  name: string;
+  size: number[];
+  ink?: InkRow[];
+  same: number;
+  exact: number;
+  structural: number;
+  meanAbs: number;
+  misses?: number[][];
+  image?: string;
+}
+type Result = Metrics & { era: string; viaJs?: boolean };
 
 // Each specimen: markup, the element to crop, the crop box, and the reference tile.
 // The Appearance control panel has no zoom box: close and WindowShade only.
-const W = (width, title, extra = "", cls = "window", zoom = false) => `<div class="${cls}" id="s" style="width:${width}px">
+const W = (width: number, title: string, extra = "", cls = "window", zoom = false): string => `<div class="${cls}" id="s" style="width:${width}px">
   <div class="title-bar"><button class="close" aria-label="Close"></button><h2 class="title">${title}</h2>${zoom ? '<button class="resize" aria-label="Zoom"></button>' : ""}<button class="shade" aria-label="Collapse"></button></div>
   <div class="window-pane" style="height:40px">${extra}</div></div>`;
 // What lies beside a window's shadow in the reference, behind the specimen (no mask needed):
 // a flat colour, or System 7's desktop gray (#666 on even pixels, #aaa on odd ones).
-const beside = (bg, html) => `<div style="width:fit-content;padding:0 2px 2px 0;background:${bg}">${html}</div>`;
+const beside = (bg: string, html: string): string => `<div style="width:fit-content;padding:0 2px 2px 0;background:${bg}">${html}</div>`;
 // a crisp picture: WebKit dithers a gradient by one level
 const S7DESK = "url(data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%272%27%20height%3D%272%27%20shape-rendering%3D%27crispEdges%27%3E%3Cpath%20fill%3D%27%23666666%27%20d%3D%27M0%200h2v2H0z%27%2F%3E%3Cpath%20fill%3D%27%23aaaaaa%27%20d%3D%27M1%200h1v1H1zM0%201h1v1H0z%27%2F%3E%3C%2Fsvg%3E) 0 0 / 2px 2px";
-const specimens = [
+const specimens: Specimen[] = [
   // GUIdebook's Mac took these with font smoothing on, so its titles are antialiased:
   // the title text is masked here and checked against Infinite Mac (p9-titlebar-*, 100%).
   { id: "active-titlebar", html: beside("#ffffff", W(476, "Appearance")), crop: [0, 0, 477, 22], mask: [[193, 3, 89, 14]] },   // GUIdebook's title in Charcoal
@@ -46,7 +81,7 @@ const specimens = [
 // (.fidelity/system6), compared after thresholding to 1-bit. `ref` is the crop
 // in the 512x342 frame; `crop` the same box around the clio.css element.
 const s6dir = join(root, ".fidelity/system6");
-const S6 = (id, html, crop, file, ref) => ({ id, era: "system6", html, crop, mono: true, refFile: join(s6dir, file + ".png"), refCrop: ref });
+const S6 = (id: string, html: string, crop: number[], file: string, ref: number[]): Specimen => ({ id, era: "system6", html, crop, mono: true, refFile: join(s6dir, file + ".png"), refCrop: ref });
 const s6Window = `<div class="window" id="s" style="width:240px;position:relative"><div class="title-bar"><button class="close" aria-label="Close"></button><h2 class="title">Macintosh HD</h2><button class="resize" aria-label="Zoom"></button></div><div class="details-bar"><span>2 items</span></div><div class="window-pane" style="height:80px"></div></div>`;
 const s6Scroll = `<div class="clio-scroll" id="s" style="width:120px;height:120px;overflow:scroll;background:#fff"><div style="width:400px;height:400px"></div></div>`;
 specimens.push(
@@ -78,8 +113,8 @@ specimens.push(
 
 // System 7: crops of the System 7.5.3 frames from `npm run capture:system7`, in colour.
 const s7dir = join(root, ".fidelity/system7");
-const S7 = (id, html, crop, file, ref) => ({ id, era: "system7", html, crop, refFile: join(s7dir, file + ".png"), refCrop: ref });
-const s7Window = (cls, title) => `<div class="${cls}" id="s" style="width:376px"><div class="title-bar"><button class="close" aria-label="Close"></button><h2 class="title">${title}</h2><button class="resize" aria-label="Zoom"></button></div><div class="window-pane" style="height:40px"></div></div>`;
+const S7 = (id: string, html: string, crop: number[], file: string, ref: number[]): Specimen => ({ id, era: "system7", html, crop, refFile: join(s7dir, file + ".png"), refCrop: ref });
+const s7Window = (cls: string, title: string): string => `<div class="${cls}" id="s" style="width:376px"><div class="title-bar"><button class="close" aria-label="Close"></button><h2 class="title">${title}</h2><button class="resize" aria-label="Zoom"></button></div><div class="window-pane" style="height:40px"></div></div>`;
 specimens.push(
   { ...S7("s7-titlebar", beside(S7DESK, s7Window("window", "Infinite HD")), [0, 0, 377, 19], "hd-window", [29, 55, 377, 19]), mask: [[218, 7, 14, 13]] },   // the pointer
   { ...S7("s7-titlebar-inactive", beside(S7DESK, s7Window("window inactive", "Infinite HD")), [0, 0, 377, 16], "folder-window", [29, 55, 377, 16]) },
@@ -119,7 +154,7 @@ specimens.push(
 // The window is the Appearance control panel (outline at 161,68, 476px wide).
 const dbdir = join(root, ".fidelity/drawingboard");
 const ART = pathToFileURL(join(root, "dist/art/drawingboard")).href;
-const DB = (id, html, crop, file, ref) => ({ id, era: "drawingboard", html, crop, refFile: join(dbdir, file + ".png"), refCrop: ref });
+const DB = (id: string, html: string, crop: number[], file: string, ref: number[]): Specimen => ({ id, era: "drawingboard", html, crop, refFile: join(dbdir, file + ".png"), refCrop: ref });
 const dbPlain = `<div class="window" id="s" style="width:376px;height:369px"><div class="title-bar"><button class="close" aria-label="Close"></button><h2 class="title">Date &amp; Time</h2><button class="collapse" aria-label="Collapse"></button></div><div class="window-pane" style="flex:1"></div></div>`;
 const dbCollapsed = `<div class=\"window collapsed\" id=\"s\" style=\"width:349px;height:200px\"><div class=\"title-bar\"><button class=\"close\" aria-label=\"Close\"></button><h2 class=\"title\">Infinite HD</h2><button class=\"resize\" aria-label=\"Zoom\"></button><button class=\"collapse\" aria-label=\"Collapse\"></button></div><div class=\"window-pane\" style=\"flex:1\"></div></div>`;
 const dbWindow = `<div class="window" id="s" style="width:476px;height:120px"><div class="title-bar"><button class="close" aria-label="Close"></button><h2 class="title">Appearance</h2><button class="collapse" aria-label="Collapse"></button></div><div class="window-pane" style="height:60px"></div></div>`;
@@ -201,8 +236,8 @@ specimens.push(
 
 // Platinum, re-measured: crops of Mac OS 9.0 from `npm run capture:platinum`.
 const p9dir = join(root, ".fidelity/platinum9");
-const P9 = (id, html, crop, file, ref, opt = {}) => ({ id, era: "platinum", group: "platinum9", html, crop, refFile: join(p9dir, file + ".png"), refCrop: ref, ...opt });
-const strip = (cls = "", id = "") => `<div class="control-strip${cls}" ${id === "strip" ? 'id="s"' : ""}><button class="control-strip-scroll control-strip-scroll-back" disabled aria-label="Scroll back"></button><div class="control-strip-modules" role="toolbar" aria-label="Control Strip"><div class="control-strip-module-track">${'<button class="control-strip-module" aria-haspopup="menu" aria-label="Module"></button>'.repeat(4)}</div></div><button class="control-strip-scroll control-strip-scroll-forward" disabled aria-label="Scroll forward"></button><button class="control-strip-handle" ${id === "handle" ? 'id="s"' : ""} aria-label="Collapse"></button></div>`;
+const P9 = (id: string, html: string, crop: number[], file: string, ref: number[], opt: Partial<Specimen> = {}): Specimen => ({ id, era: "platinum", group: "platinum9", html, crop, refFile: join(p9dir, file + ".png"), refCrop: ref, ...opt });
+const strip = (cls = "", id = ""): string => `<div class="control-strip${cls}" ${id === "strip" ? 'id="s"' : ""}><button class="control-strip-scroll control-strip-scroll-back" disabled aria-label="Scroll back"></button><div class="control-strip-modules" role="toolbar" aria-label="Control Strip"><div class="control-strip-module-track">${'<button class="control-strip-module" aria-haspopup="menu" aria-label="Module"></button>'.repeat(4)}</div></div><button class="control-strip-scroll control-strip-scroll-forward" disabled aria-label="Scroll forward"></button><button class="control-strip-handle" ${id === "handle" ? 'id="s"' : ""} aria-label="Collapse"></button></div>`;
 specimens.push(
   P9("p9-checkbox-on", `<div style="padding:12px;background:#eeeeee"><input type="checkbox" id="s" checked></div>`, [0, 0, 14, 12], "general-controls", [33, 81, 14, 12]),
   P9("p9-checkbox-off", `<div style="padding:12px;background:#eeeeee"><input type="checkbox" id="s"></div>`, [0, 0, 12, 12], "general-controls", [33, 129, 12, 12]),
@@ -261,7 +296,7 @@ specimens.push(
 
 // clio.js scroll bars (fixed-size scroll box, Smart Scrolling): Finder windows in
 // System 7.5.3 and Mac OS 9.0, frames hig/*/finder-scroll*.
-const jsScroll = (h, extra = "") => `<div class="clio-scroll" id="s" ${extra} style="width:200px;height:${h}px;overflow-x:hidden;overflow-y:scroll;background:#fff"><div style="height:4000px"></div></div>`;
+const jsScroll = (h: number, extra = ""): string => `<div class="clio-scroll" id="s" ${extra} style="width:200px;height:${h}px;overflow-x:hidden;overflow-y:scroll;background:#fff"><div style="height:4000px"></div></div>`;
 specimens.push(
   { ...S7("s7-js-scroll-top", jsScroll(124), [185, 0, 15, 41], "../hig/system7/finder-scroll", [405, 110, 15, 41]), js: true },
   { ...P9("p9-js-scroll-fixed", jsScroll(122), [185, 0, 15, 122], "../hig/platinum9/finder-scroll-fixed", [405, 111, 15, 122]), js: true },
@@ -292,7 +327,7 @@ specimens.push(
 // the pixel count, and checked instead for the rows that carry ink (the row height, the
 // baseline and the ink's band). The frame and the backgrounds around them are compared as usual.
 const cjkdir = join(root, ".fidelity/cjk");
-const CJ = (id, era, html, crop, file, ref) => ({ id, era, group: "cjk", html, crop, refFile: join(cjkdir, file + ".png"), refCrop: ref });
+const CJ = (id: string, era: string, html: string, crop: number[], file: string, ref: number[]): Specimen => ({ id, era, group: "cjk", html, crop, refFile: join(cjkdir, file + ".png"), refCrop: ref });
 // The stand-in alone: a Mac with an Osaka installed (current macOS has one) would draw the
 // Japanese specimens in it, ahead of the stand-in, as the stack intends for real pages.
 const standIn = `<style>:lang(ja) { --clio-font-cjk: "Clio Pixel JA"; } :lang(zh) { --clio-font-cjk: "Clio Pixel SC"; } :is(:lang(zh-Hant), :lang(zh-TW)) { --clio-font-cjk: "Clio Pixel TC"; }</style>`;
@@ -316,7 +351,7 @@ specimens.push(
 // desktop). The Calculator's own content (its keys, its heavy right and bottom
 // edge) is not the window's: crops keep to the title bar, the left frame and the
 // bottom-left corner. Pixels outside a corner's curve show what lay behind.
-const rdoc = (cls = "", bg = "#ffffff") => `<div style="padding:12px;background:${bg}"><div class="rounded-window${cls}" id="s" style="width:106px;height:168px"><div class="rounded-title"><button class="close" aria-label="Close"></button><h2>Calculator</h2></div></div></div>`;
+const rdoc = (cls = "", bg = "#ffffff"): string => `<div style="padding:12px;background:${bg}"><div class="rounded-window${cls}" id="s" style="width:106px;height:168px"><div class="rounded-title"><button class="close" aria-label="Close"></button><h2>Calculator</h2></div></div></div>`;
 const rdocOut = [[0, 0, 5, 1], [0, 1, 3, 1], [0, 2, 2, 1], [0, 3, 1, 2], [101, 0, 5, 1], [103, 1, 3, 1], [104, 2, 2, 1], [105, 3, 1, 2]];
 const rdocIn = [[2, 0, 4, 2], [3, 2, 3, 1], [4, 3, 2, 1]];   // the Calculator's content inside the bottom-left curve
 // Mac OS 8.5 and 9.0 antialias the title: ten of its faintest edge pixels (level 3 of 15)
@@ -338,7 +373,7 @@ specimens.push(
 // 315x82). Its content is the sample's list (a sunken frame), so crops keep to the
 // window's frame, bar and drop.
 const dbUtility = `<div style="padding:12px;background:#9999cc"><div class="window utility" id="s" style="width:163px;height:99px"><div class="title-bar"><button class="close" aria-label="Close"></button><h2 class="title">Applications</h2><button class="zoom" aria-label="Zoom"></button><button class="collapse" aria-label="Collapse"></button></div><div class="window-pane" style="flex:1"></div></div></div>`;
-const side = (cls, w, h, bg) => `<div style="padding:12px;background:${bg}"><div class="window utility side${cls}" id="s" style="width:${w}px;height:${h}px"><div class="title-bar"><button class="close" aria-label="Close"></button><h2 class="title">Tools</h2><button class="collapse" aria-label="Collapse"></button></div><div class="window-pane" style="flex:1;background:#ffffff"></div></div></div>`;
+const side = (cls: string, w: number, h: number, bg: string): string => `<div style="padding:12px;background:${bg}"><div class="window utility side${cls}" id="s" style="width:${w}px;height:${h}px"><div class="title-bar"><button class="close" aria-label="Close"></button><h2 class="title">Tools</h2><button class="collapse" aria-label="Collapse"></button></div><div class="window-pane" style="flex:1;background:#ffffff"></div></div></div>`;
 specimens.push(
   P9("p9-side-bar", side("", 255, 92, "#9999cc"), [0, 0, 12, 92], "side-utility", [490, 454, 12, 92]),
   P9("p9-side-top", side("", 255, 92, "#9999cc"), [12, 0, 230, 2], "side-utility", [502, 454, 230, 2]),
@@ -365,7 +400,7 @@ specimens.push(
 );
 // Placard: the CDEF Tester's 100x50 placard (frames placard, placard-disabled) on the
 // window's #ddd. Drawing Board's pencil frame drifts in shade: its face is compared.
-const placard = (attr = "", bg = "#dddddd") => `<div style="padding:12px;background:${bg}"><span class="placard" id="s"${attr} style="width:100px;height:50px"></span></div>`;
+const placard = (attr = "", bg = "#dddddd"): string => `<div style="padding:12px;background:${bg}"><span class="placard" id="s"${attr} style="width:100px;height:50px"></span></div>`;
 specimens.push(
   P9("p9-placard", placard(), [0, 0, 100, 50], "placard", [204, 169, 100, 50]),
   P9("p9-placard-disabled", placard(' aria-disabled="true"'), [0, 0, 100, 50], "placard-disabled", [204, 169, 100, 50]),
@@ -375,7 +410,7 @@ specimens.push(
 // Split bar (BBEdit 5.1 in Mac OS 9.0): unsplit above the vertical scroll bar (frame
 // split-bar, rows 80..85 beside the white text area), and the split line of a window
 // split in two (frame split-line, rows 300..306).
-const splitView = (line) => `<div class="split-view" id="s" style="width:200px;height:100px"><div class="split-bar" role="separator"></div><div class="window-pane" style="flex:1;background:#ffffff"></div>${line ? '<div class="split-line" role="separator"></div><div class="window-pane" style="flex:1;background:#ffffff"></div>' : ""}</div>`;
+const splitView = (line: boolean): string => `<div class="split-view" id="s" style="width:200px;height:100px"><div class="split-bar" role="separator"></div><div class="window-pane" style="flex:1;background:#ffffff"></div>${line ? '<div class="split-line" role="separator"></div><div class="window-pane" style="flex:1;background:#ffffff"></div>' : ""}</div>`;
 specimens.push(
   P9("p9-split-bar", splitView(false), [184, 1, 16, 6], "split-bar", [678, 80, 16, 6]),
   P9("p9-split-line", `<div style="height:7px;width:200px"></div>` + splitView(true).replace('id="s" ', "").replace('<div class="split-line" role="separator">', '<div class="split-line" id="s" role="separator">'), [85, 0, 115, 7], "split-line", [579, 300, 115, 7]),
@@ -387,9 +422,9 @@ specimens.push(
 // native frame behind them): a first-pass agreement check with the values ported from it.
 const nxdir = join(root, ".fidelity/ns30");
 const nxTiles = join(ais6, "internal/evidence/drafts/theme-lab-fidelity/nextstep/tiles");
-const NX = (id, html, crop, file, ref, opt = {}) => ({ id, era: "nextstep", html, crop, refFile: join(nxdir, file + ".png"), refCrop: ref, ...opt });
-const AX = (id, html, crop, tile, ref, opt = {}) => ({ id, era: "nextstep", group: "nextstep-ais6", html, crop, refFile: join(nxTiles, tile + "-reference.png"), refCrop: ref, ...opt });
-const nxWindow = (w, title, buttons = '<button class="shade" aria-label="Miniaturize"></button>') => `<div class="window" id="s" style="width:${w}px"><div class="title-bar">${buttons}<h2 class="title">${title}</h2></div><div class="window-pane" style="height:40px"></div></div>`;
+const NX = (id: string, html: string, crop: number[], file: string, ref: number[], opt: Partial<Specimen> = {}): Specimen => ({ id, era: "nextstep", html, crop, refFile: join(nxdir, file + ".png"), refCrop: ref, ...opt });
+const AX = (id: string, html: string, crop: number[], tile: string, ref: number[], opt: Partial<Specimen> = {}): Specimen => ({ id, era: "nextstep", group: "nextstep-ais6", html, crop, refFile: join(nxTiles, tile + "-reference.png"), refCrop: ref, ...opt });
+const nxWindow = (w: number, title: string, buttons = '<button class="shade" aria-label="Miniaturize"></button>') => `<div class="window" id="s" style="width:${w}px"><div class="title-bar">${buttons}<h2 class="title">${title}</h2></div><div class="window-pane" style="height:40px"></div></div>`;
 const nxMenu = `<ul class="menu-bar" role="menubar" aria-label="Workspace" id="s" style="width:93px"><li role="none"><button role="menuitem" aria-haspopup="true">Info</button></li><li role="none"><button role="menuitem" aria-haspopup="true">File</button></li><li role="none"><button role="menuitem">Hide <kbd>h</kbd></button></li></ul>`;
 specimens.push(
   // The Workspace main menu at the screen's top left (frame boot1); the text is Helvetica set by
@@ -446,7 +481,7 @@ specimens.push(
   // The File Viewer's horizontal scroller with arrows (frame ns30b/hb4: the browser walked five
   // columns deep): both arrows at its left, in 17px cells, the lane after a 1px gap.
   { ...NX("nx-js-hscroller", `<div class="clio-scroll" id="s" style="width:300px;height:80px;overflow-x:scroll;overflow-y:hidden;background:#aaa"><div style="width:900px;height:20px"></div></div>`, [0, 61, 60, 19], "../ns30b/hb4", [163, 199, 60, 19]), js: true,
-    act: async (page) => { await page.evaluate(() => { document.querySelector("#s").scrollLeft = 1e6; }); await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)))); } },   // the box at the far end, the lane clear
+    act: async (page) => { await page.evaluate(() => { document.querySelector("#s")!.scrollLeft = 1e6; }); await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)))); } },   // the box at the far end, the lane clear
   { ...NX("nx-js-arrow-held", `<div class="clio-scroll" id="s" style="width:300px;height:80px;overflow-x:scroll;overflow-y:hidden;background:#aaa"><div style="width:900px;height:20px"></div></div>`, [18, 63, 16, 16], "../ns30b/arrow-held", [181, 201, 16, 16]), js: true, mask: [[12, 12, 4, 4]],   // the pointer
     act: async (page, b) => { await page.mouse.move(b.x + 26, b.y + 71); await page.mouse.down(); await page.waitForTimeout(60); } },
   // Log Out's Cancel held, the pointer moved off before release (frame ns30b/button-held, 78x24 at 569,337).
@@ -479,7 +514,8 @@ const out = join(root, ".fidelity"), out0 = out;
 mkdirSync(out, { recursive: true });
 // CLIO_ENGINE=webkit|firefox renders in that engine (default chromium). Other engines
 // write results-<engine>[-<n>x].json and leave FIDELITY.md, which is the Chromium table.
-const ENGINE = process.env.CLIO_ENGINE || "chromium";
+type Engine = "chromium" | "webkit" | "firefox";
+const ENGINE = (process.env.CLIO_ENGINE || "chromium") as Engine;
 if (!["chromium", "webkit", "firefox"].includes(ENGINE)) { console.error(`CLIO_ENGINE must be chromium, webkit or firefox, not ${ENGINE}`); process.exit(2); }
 const browser = await playwright[ENGINE].launch(ENGINE === "chromium" ? { ignoreDefaultArgs: ["--hide-scrollbars"] } : {});
 const tag = (ENGINE === "chromium" ? "" : "-" + ENGINE);
@@ -488,7 +524,7 @@ const tag = (ENGINE === "chromium" ? "" : "-" + ENGINE);
 // (3x3) block. Results go to results-<n>x.json; FIDELITY.md stays the 1x table.
 const DPR = Number(process.env.FIDELITY_DPR || 1);
 const page = await browser.newPage({ viewport: { width: 800, height: 400 }, deviceScaleFactor: DPR });
-const results = [];
+const results: Result[] = [];
 // The three progress bars' wrappers keep the page's font: with Clio's metrics WebKit lays
 // them on half pixels at 2x (s6-progress-fill 78.5%, s7-progress-fill 89.4%, s7-progress-track
 // 86.4%). Firefox does not render those three at 2x either way, so nothing is lost there.
@@ -524,6 +560,7 @@ for (const s of specimens) {
   await page.evaluate(async () => { void document.body.offsetHeight; await document.fonts.ready; await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))); });
   if (s.js) await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))));
   const box = await page.locator("#s").boundingBox();
+  if (!box) throw new Error(`${s.id}: #s has no box`);
   // act(page, box): a held state the frame shows (the button stays down for the shot).
   if (s.act) { await s.act(page, box); await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)))); }
   const [x, y, w, h] = s.crop;
@@ -531,43 +568,43 @@ for (const s of specimens) {
   // a fractional clip is rounded differently again: crop at the pixel the box snapped to.
   const shot = await page.screenshot({ clip: { x: Math.round(box.x) + x, y: Math.round(box.y) + y, width: w, height: h } });
   const ref = readFileSync(s.refFile || join(tiles, `${s.id}-reference.png`));
-  const metrics = await page.evaluate(async ([a, b, name, refCrop, mono, mask, dpr, ink]) => {
-    const load = (b64) => new Promise((res) => { const i = new Image(); i.onload = () => res(i); i.src = "data:image/png;base64," + b64; });
+  const metrics: Metrics = await page.evaluate(async ([a, b, name, refCrop, mono, mask, dpr, ink]: [string, string, string, number[] | null, boolean, number[][], number, number[][]]) => {
+    const load = (b64: string) => new Promise<HTMLImageElement>((res) => { const i = new Image(); i.onload = () => res(i); i.src = "data:image/png;base64," + b64; });
     let [ia, ib] = await Promise.all([load(a), load(b)]);
     if (refCrop) {
       const c = document.createElement("canvas"); c.width = refCrop[2]; c.height = refCrop[3];
-      c.getContext("2d").drawImage(ib, refCrop[0], refCrop[1], refCrop[2], refCrop[3], 0, 0, refCrop[2], refCrop[3]);
+      c.getContext("2d")!.drawImage(ib, refCrop[0], refCrop[1], refCrop[2], refCrop[3], 0, 0, refCrop[2], refCrop[3]);
       ib = await load(c.toDataURL("image/png").split(",")[1]);
     }
     if (dpr !== 1) {
       const c = document.createElement("canvas"); c.width = ib.width * dpr; c.height = ib.height * dpr;
-      const g = c.getContext("2d"); g.imageSmoothingEnabled = false; g.drawImage(ib, 0, 0, c.width, c.height);
+      const g = c.getContext("2d")!; g.imageSmoothingEnabled = false; g.drawImage(ib, 0, 0, c.width, c.height);
       ib = await load(c.toDataURL("image/png").split(",")[1]);
     }
     const w = Math.min(ia.width, ib.width), h = Math.min(ia.height, ib.height);
-    const px = (img) => { const c = document.createElement("canvas"); c.width = w; c.height = h; const g = c.getContext("2d"); g.drawImage(img, 0, 0); return g.getImageData(0, 0, w, h).data; };
+    const px = (img: HTMLImageElement): Uint8ClampedArray => { const c = document.createElement("canvas"); c.width = w; c.height = h; const g = c.getContext("2d")!; g.drawImage(img, 0, 0); return g.getImageData(0, 0, w, h).data; };
     const A = px(ia), B = px(ib);
     if (mono) for (const P of [A, B]) for (let i = 0; i < P.length; i += 4) { const v = (P[i] + P[i + 1] + P[i + 2]) / 3 < 128 ? 0 : 255; P[i] = P[i + 1] = P[i + 2] = v; }
     // Masked pixels (the mouse pointer in a held-state frame, say) are not part of the
     // interface: they are left out of every count.
     // Ink boxes: for each, the rows holding ink (pixels more than 64 from the box's commonest
     // colour, masked pixels left out), in the reference and in clio.css. They must be the same rows.
-    const hidden = (x, y) => mask.some(([mx, my, mw, mh]) => x >= mx && x < mx + mw && y >= my && y < my + mh);
-    const inkRows = (P, [bx, by, bw, bh]) => {
-      const n = new Map(); const at = (x, y) => (y * w + x) * 4;
+    const hidden = (x: number, y: number) => mask.some(([mx, my, mw, mh]) => x >= mx && x < mx + mw && y >= my && y < my + mh);
+    const inkRows = (P: Uint8ClampedArray, [bx, by, bw, bh]: number[]) => {
+      const n = new Map<number, number>(); const at = (x: number, y: number) => (y * w + x) * 4;
       for (let y = by; y < by + bh; y++) for (let x = bx; x < bx + bw; x++) { if (hidden(x, y)) continue; const i = at(x, y), k = P[i] << 16 | P[i + 1] << 8 | P[i + 2]; n.set(k, (n.get(k) || 0) + 1); }
       const bg = [...n].sort((p, q) => q[1] - p[1])[0][0], br = bg >> 16, bgc = bg >> 8 & 255, bb = bg & 255;
-      const rows = [];
+      const rows: number[] = [];
       for (let y = by; y < by + bh; y++) for (let x = bx; x < bx + bw; x++) { if (hidden(x, y)) continue; const i = at(x, y); if (Math.max(Math.abs(P[i] - br), Math.abs(P[i + 1] - bgc), Math.abs(P[i + 2] - bb)) > 64) { rows.push(y - by); break; } }
       return rows;
     };
     const inkResult = ink.map((box) => { const r = inkRows(B, box), c = inkRows(A, box); return { ref: r.join(","), clio: c.join(","), match: r.join() === c.join() }; });
     mask = mask.concat(ink);
-    const masked = (i) => { const p = i / 4, x = p % w, y = Math.floor(p / w); return mask.some(([mx, my, mw, mh]) => x >= mx && x < mx + mw && y >= my && y < my + mh); };
+    const masked = (i: number) => { const p = i / 4, x = p % w, y = Math.floor(p / w); return mask.some(([mx, my, mw, mh]) => x >= mx && x < mx + mw && y >= my && y < my + mh); };
     let exact = 0, same = 0, off = 0, sum = 0, n = 0;
-    const misses = [];
-    const diff = document.createElement("canvas"); diff.width = w * 3; diff.height = h; const g = diff.getContext("2d");
-    const put = (P, x) => { const d = g.createImageData(w, h); d.data.set(P); g.putImageData(d, x, 0); };
+    const misses: number[][] = [];
+    const diff = document.createElement("canvas"); diff.width = w * 3; diff.height = h; const g = diff.getContext("2d")!;
+    const put = (P: Uint8ClampedArray, x: number) => { const d = g.createImageData(w, h); d.data.set(P); g.putImageData(d, x, 0); };
     put(B, 0); put(A, w);
     const d = g.createImageData(w, h);
     for (let i = 0; i < A.length; i += 4) {
@@ -586,8 +623,8 @@ for (const s of specimens) {
     if (!n) { n = 1; same = exact = inkOk ? 1 : 0; }   // all ink: the rows decide
     else if (!inkOk) same = 0;   // a geometry miss fails the specimen
     return { name, size: [w, h], ...(ink.length ? { ink: inkResult } : {}), same: +(same / n).toFixed(4), exact: +(exact / n).toFixed(4), structural: +(off / n).toFixed(4), meanAbs: +(sum / n).toFixed(2), misses, image: diff.toDataURL("image/png").split(",")[1] };
-  }, [shot.toString("base64"), ref.toString("base64"), s.id, s.refCrop || null, !!s.mono, (s.mask || []).map((m) => m.map((v) => v * DPR)), DPR, (s.ink || []).map((m) => m.map((v) => v * DPR))]);
-  writeFileSync(join(out, `${s.id}${tag}${DPR === 1 ? "" : "@" + DPR + "x"}-compare.png`), Buffer.from(metrics.image, "base64"));
+  }, [shot.toString("base64"), ref.toString("base64"), s.id, s.refCrop || null, !!s.mono, (s.mask || []).map((m) => m.map((v) => v * DPR)), DPR, (s.ink || []).map((m) => m.map((v) => v * DPR))] as [string, string, string, number[] | null, boolean, number[][], number, number[][]]);
+  writeFileSync(join(out, `${s.id}${tag}${DPR === 1 ? "" : "@" + DPR + "x"}-compare.png`), Buffer.from(metrics.image!, "base64"));
   delete metrics.image;
   writeFileSync(join(out, `${s.id}${tag}${DPR === 1 ? "" : "@" + DPR + "x"}-misses.json`), JSON.stringify(metrics.misses));   // [x, y, ref rgb, clio rgb]
   delete metrics.misses;
@@ -602,23 +639,23 @@ writeFileSync(join(out, DPR === 1 ? `results${tag}.json` : `results${tag}-${DPR}
 if (DPR !== 1 || ENGINE !== "chromium") { console.log(`${results.filter((r) => r.same === 1).length} of ${results.length} identical at ${DPR}x in ${ENGINE}`); process.exit(0); }
 const date = new Date().toISOString().slice(0, 10);
 // The other engines' last runs, if any, summarised for FIDELITY.md.
-function others() {
-  const out = [];
-  const ran = (f) => statSync(f).mtime.toISOString().slice(0, 10);
+function others(): string {
+  const out: string[] = [];
+  const ran = (f: string): string => statSync(f).mtime.toISOString().slice(0, 10);
   for (const e of ["webkit", "firefox"]) {
     const f = join(out0, `results-${e}.json`);
     if (!existsSync(f)) { out.push(`- ${e}: not run`); continue; }
-    const r = JSON.parse(readFileSync(f, "utf8"));
+    const r: Result[] = JSON.parse(readFileSync(f, "utf8"));
     const off = r.filter((x) => x.same !== 1);
     out.push(`- ${e === "webkit" ? "WebKit" : "Firefox"} (run ${ran(f)}): ${r.length - off.length} of ${r.length} identical` + (off.length ? `; not identical: ${off.map((x) => `${x.name} (${(x.same * 100).toFixed(1)}%)`).join(", ")}` : ""));
   }
   // The 2x/3x runs write results<engine>-<n>x.json; summarise the last ones beside the 1x table.
   for (const d of [2, 3]) {
-    const line = [];
+    const line: string[] = [];
     for (const [tag2, label] of [["", "Chromium"], ["-webkit", "WebKit"], ["-firefox", "Firefox"]]) {
       const f = join(out0, `results${tag2}-${d}x.json`);
       if (!existsSync(f)) continue;
-      const r = JSON.parse(readFileSync(f, "utf8"));
+      const r: Result[] = JSON.parse(readFileSync(f, "utf8"));
       line.push(`${label} ${r.filter((x) => x.same === 1).length}/${r.length} (run ${ran(f)})`);
     }
     if (line.length) out.push(`- ${d}x: ${line.join(", ")}`);
@@ -639,8 +676,8 @@ WebKit does not honour \`mask-clip: no-clip\`, so the 50% gray mask cuts it off.
 whose text starts on a half pixel (each engine rounds it its own way) is moved onto a whole pixel by
 clio.js; the specimens load it.`;
 }
-const row = (r) => "| " + r.name + " | " + r.size.join("×") + " | " + (r.same * 100).toFixed(1) + "% | " + (r.exact * 100).toFixed(1) + "% | " + (r.structural * 100).toFixed(1) + "% | " + r.meanAbs + " |";
-const table = (era) => {
+const row = (r: Result): string => "| " + r.name + " | " + r.size.join("×") + " | " + (r.same * 100).toFixed(1) + "% | " + (r.exact * 100).toFixed(1) + "% | " + (r.structural * 100).toFixed(1) + "% | " + r.meanAbs + " |";
+const table = (era: string): string => {
   const rows = results.filter((r) => r.era === era);
   if (!rows.length) return "Not compared in this run: the reference frames were not found on the machine that ran it.";
   return "| Specimen | Size | same | exact | off | mean |\n| --- | --- | ---: | ---: | ---: | ---: |\n" + rows.map(row).join("\n");
