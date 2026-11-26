@@ -8,7 +8,7 @@ Every value in clio.css 1.1.0 has a row here. Sources are paths in the AI System
 | --- | --- | ---: |
 | Measured | read from real pixels of the era | 255 |
 | Inferred | reasoned from documentation or behaviour, not measured | 44 |
-| Adapted | a deliberate departure for the web (touch, focus, contrast) | 44 |
+| Adapted | a deliberate departure for the web (touch, focus, contrast) | 45 |
 | Third-party | art or font from a named, licensed project | 4 |
 
 Pixel check: `npm run fidelity` renders the Platinum specimens and compares them with AI System 6's GUIdebook Mac OS 9.0 reference crops (it needs a local AI System 6 checkout; see the script).
@@ -361,4 +361,5 @@ Pixel check: `npm run fidelity` renders the Platinum specimens and compares them
 | Type and tokens | Classic eras | Window titles and push button labels: each of Charcoal's 16 antialiasing levels takes the exact colour the real screen shows for that text colour on that background (Platinum titles on #ccc, buttons on #ddd, held buttons white on #666, disabled; Drawing Board buttons #333 on #cec6b5 with #313131 solid pixels), via Clio Sans '97 Exact palettes | Measured | `clio.css captures of Mac OS 9.0 and Mac OS 8.5 in Infinite Mac; tooling/aa-palettes.py` — Appearance title bar, Set Desktop normal and held, Save Theme… |
 | Type and tokens | NeXTSTEP | Helvetica 12 for chrome and text, Helvetica Bold 12 for window and menu titles, set without antialiasing | Measured | `clio.css capture, NeXTStep 3.0 in Infinite Mac (frames in .fidelity/ns30), frame boot1 (menu and title text: black and white pixels only)` — NeXTSTEP User Interface Guidelines, Release 3, ch. 9 (fonts) |
 | Type and tokens | NeXTSTEP | Helvetica is named only as a local font; elsewhere Clio Sans NX, Liberation Sans 2 (OFL) renamed | Third-party | `fonts/ClioSansNX*.woff2 (tooling/nx-font.py); THIRD-PARTY.md` — D3: a local name plus a fitted OFL fallback |
+| Type and tokens | NeXTSTEP | Chinese, Japanese and Korean: Latin keeps Helvetica, ideographs and kana fall to the language's stand-in (96-cjk.css), at the Latin rows (menu cell 20px, title bar 22px, button 24px in Chromium, WebKit and Firefox) | Adapted | `clio.css` — NeXTSTEP 3.3 was not localized for them; NeXTSTEP-J is not in the emulator |
 | Type and tokens | NeXTSTEP | Clio Sans NX is fitted to NeXT's screen font: every advance a whole pixel at 12px, no kerning. Over 15 menu and title labels its ink is 0.60px from NeXT's on average (unfitted 1.13px; the Mac's own Helvetica 1.13px) | Measured | `clio.css capture, NeXTStep 3.0 in Infinite Mac (frames in .fidelity/ns30), frames boot1 and info-open (the Workspace menus); .notes/tools/textrender.mjs` — the fit changes widths, not shapes: the glyphs stay Liberation's |

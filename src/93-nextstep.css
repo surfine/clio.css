@@ -350,6 +350,18 @@
   --clio-cursor-text: text;
 }
 
+/* Chinese, Japanese and Korean [A]: NeXTSTEP 3.3 was not localized for them (NeXTSTEP-J
+   is not in the emulator), so Latin keeps Helvetica and only the ideographs and kana fall
+   to the language's stand-in (96-cjk.css's --clio-font-cjk), at the Latin rows: no row,
+   cell or bar changes height. */
+:is([data-era="nextstep"]:is(:lang(zh), :lang(ja), :lang(ko)), [data-era="nextstep"] :is(:lang(zh), :lang(ja), :lang(ko))) {
+  --clio-font-chrome: Helvetica, "Clio Sans NX", var(--clio-font-cjk), sans-serif;
+  --clio-font-text: Helvetica, "Clio Sans NX", var(--clio-font-cjk), sans-serif;
+  --clio-font-small: Helvetica, "Clio Sans NX", var(--clio-font-cjk), sans-serif;
+  --clio-font-display: Helvetica, "Clio Sans NX", var(--clio-font-cjk), sans-serif;
+  --clio-font-window-title: Helvetica, "Clio Sans NX", var(--clio-font-cjk), sans-serif;
+}
+
 /* ---- Windows ------------------------------------------------------------- */
 [data-era="nextstep"] :is(.window.main, .window.is-nextstep-main) {
   --clio-titlebar-bg: var(--clio-titlebar-main-bg);

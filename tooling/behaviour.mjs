@@ -819,6 +819,16 @@ ok(await page.evaluate(() => [getComputedStyle(document.querySelector("#c")).bac
 await loadNx(`<div class="window" style="width:200px"><div class="window-pane"><input type="text" id="f"></div></div>`);
 ok(await page.evaluate(() => getComputedStyle(document.documentElement).cursor.includes("nx-arrow") && getComputedStyle(document.querySelector("#f")).cursor.includes("nx-ibeam")), "nextstep: the arrow and the I-beam are NeXT's");
 
+// nx7. Chinese, Japanese and Korean keep NeXTSTEP's rows: Helvetica leads, the ideographs
+// fall to the language's stand-in.
+{
+  const rowsOf = (lang, words) => `<div lang="${lang}" class="nxl"><ul class="menu-bar" role="menubar" aria-label="${words[0]}"><li role="none"><button role="menuitem" aria-haspopup="true">${words[1]}</button></li></ul><div class="window" style="width:200px"><div class="title-bar"><h2 class="title">${words[2]}</h2></div><div class="window-pane"><button>${words[3]}</button></div></div></div>`;
+  await loadNx(rowsOf("en", ["Workspace", "Info", "File Viewer", "OK"]) + rowsOf("zh-Hant", ["工作區", "資訊", "檔案瀏覽器", "好"]) + rowsOf("ja", ["ワーク", "情報", "ファイル", "了解"]) + rowsOf("ko", ["작업", "정보", "파일", "확인"]));
+  await page.evaluate(() => document.fonts.ready);
+  const rows = await page.evaluate(() => [...document.querySelectorAll(".nxl")].map((d) => [".menu-bar > li", ".title-bar", ".window-pane button"].map((s) => Math.round(d.querySelector(s).getBoundingClientRect().height)).join("/") + "/" + getComputedStyle(d.querySelector("button")).fontFamily.split(",")[0].trim()));
+  ok(new Set(rows).size === 1 && rows[0] === "20/22/24/Helvetica", `nextstep: CJK keeps the rows and Helvetica leads (${rows.join(" ")})`);
+}
+
 ok(errors.length === 0, "no page errors: " + errors.join("; "));
 await browser.close();
 console.log(failed ? `FAIL ${failed} of ${passed + failed} behaviour checks (${ENGINE})` : `ok ${passed} behaviour checks (${ENGINE})`);

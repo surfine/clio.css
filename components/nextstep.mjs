@@ -108,6 +108,7 @@ export const rows = {
   typography: [
     row("Helvetica 12 for chrome and text, Helvetica Bold 12 for window and menu titles, set without antialiasing", "measured", NX30 + ", frame boot1 (menu and title text: black and white pixels only)", NXUG + ", ch. 9 (fonts)"),
     row("Helvetica is named only as a local font; elsewhere Clio Sans NX, Liberation Sans 2 (OFL) renamed", "third-party", "fonts/ClioSansNX*.woff2 (tooling/nx-font.py); THIRD-PARTY.md", "D3: a local name plus a fitted OFL fallback"),
+    row("Chinese, Japanese and Korean: Latin keeps Helvetica, ideographs and kana fall to the language's stand-in (96-cjk.css), at the Latin rows (menu cell 20px, title bar 22px, button 24px in Chromium, WebKit and Firefox)", "adapted", "clio.css", "NeXTSTEP 3.3 was not localized for them; NeXTSTEP-J is not in the emulator"),
     row("Clio Sans NX is fitted to NeXT's screen font: every advance a whole pixel at 12px, no kerning. Over 15 menu and title labels its ink is 0.60px from NeXT's on average (unfitted 1.13px; the Mac's own Helvetica 1.13px)", "measured", NX30 + ", frames boot1 and info-open (the Workspace menus); .notes/tools/textrender.mjs", "the fit changes widths, not shapes: the glyphs stay Liberation's"),
   ],
   slider: [
