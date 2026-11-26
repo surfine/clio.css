@@ -1,0 +1,7 @@
+{
+  // The docs page (packages/site) and the examples it draws, checked against Preact's types:
+  // "clio-jsx" resolves to packages/preact/src/jsx.ts. tooling/build-site.ts builds it with Vite.
+  "extends": "./tsconfig.components.preact.json",
+  "compilerOptions": { "types": ["node", "vite/client"] },
+  "include": ["packages/site/src/**/*.ts", "packages/site/src/**/*.tsx", "packages/components/**/*.ts", "packages/components/**/*.tsx", "packages/preact/src/*.ts"]
+}

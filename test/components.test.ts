@@ -18,11 +18,12 @@ beforeAll(async () => {
   browser = await chromium.launch();
   const page = await browser.newPage();
   // Both strings parse in one document. JSX drops the whitespace-only text between tags that a
-  // hand-written example has, and React separates adjacent text with comments: the walk ignores
+  // hand-written example has (the examples restore the ones that show: the site's screenshots guard
+  // visible spacing), and React separates adjacent text with comments: the walk ignores
   // both, collapses runs of white space in text, and compares style as the browser reads it.
   compare = (want, got) => page.evaluate(([a, b]) => {
     const parse = (html: string) => { const t = document.createElement("template"); t.innerHTML = html; return t.content; };
-    const kids = (n: Node) => [...n.childNodes].filter((c) => c.nodeType === 1 || (c.nodeType === 3 && /\S/.test(c.textContent!)) || (c.nodeType === 3 && !/\n/.test(c.textContent!)));
+    const kids = (n: Node) => [...n.childNodes].filter((c) => c.nodeType === 1 || (c.nodeType === 3 && /\S/.test(c.textContent!)));
     const path = (n: Node): string => (n.parentNode && n.parentNode.nodeType === 1 ? path(n.parentNode) + " > " : "") + (n.nodeType === 1 ? (n as Element).tagName.toLowerCase() : "#text");
     const same = (x: Node, y: Node): string | null => {
       if (x.nodeType !== y.nodeType) return `${path(x)}: node type ${x.nodeType} vs ${y.nodeType}`;

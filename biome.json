@@ -24,6 +24,10 @@
     {
       "includes": ["packages/components/**"],
       "linter": { "rules": { "a11y": { "useButtonType": "off" }, "suspicious": { "noArrayIndexKey": "off" } } }
+    },
+    {
+      "includes": ["packages/site/**"],
+      "linter": { "rules": { "correctness": { "useJsxKeyInIterable": "off" }, "security": { "noDangerouslySetInnerHtml": "off" }, "suspicious": { "noArrayIndexKey": "off" } } }
     }
   ]
 }

@@ -15,7 +15,8 @@ import * as esbuild from "esbuild";
 import { build as viteBuild } from "vite";
 import { execFileSync } from "node:child_process";
 import { components, AIS6 } from "../packages/core/src/components.ts";
-import { renderSite, renderLlms, renderLlmsFull, renderEvidence, renderSitemap } from "./site.ts";
+import { buildSite } from "./build-site.ts";
+import { renderLlms, renderLlmsFull, renderEvidence, renderSitemap } from "./site.ts";
 // The layers (named as src/ named its files) come from the component fragments in packages/core.
 import { srcFiles, source } from "../packages/core/src/bundles.ts";
 import { contract, rootTokens } from "../packages/core/src/contract.ts";
@@ -236,7 +237,7 @@ write("dist/contract.d.ts", `// clio.css ${pkg.version} host contract: dist/cont
 
 // Site and agent-facing files.
 rmSync(join(root, "docs"), { recursive: true, force: true });
-write("docs/index.html", renderSite({ pkg, components }));
+write("docs/index.html", await buildSite({ pkg, components }));
 write("docs/components.json", json);
 const llms = renderLlms({ pkg, components });
 const llmsFull = renderLlmsFull({ pkg, components, css: all });

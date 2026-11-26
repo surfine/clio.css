@@ -84,7 +84,7 @@
     "build": "node tooling/build.ts",
     "build:components": "node tooling/build-components.ts",
     "test": "node tooling/build.ts && node tooling/build-components.ts && vitest run",
-    "typecheck": "tsc -p . --noEmit && tsc -p tsconfig.runtime.json && tsc -p tsconfig.tooling.json && tsc -p tsconfig.components.preact.json && tsc -p tsconfig.components.react.json",
+    "typecheck": "tsc -p . --noEmit && tsc -p tsconfig.runtime.json && tsc -p tsconfig.tooling.json && tsc -p tsconfig.components.preact.json && tsc -p tsconfig.components.react.json && tsc -p tsconfig.site.json",
     "lint": "biome check",
     "fidelity": "node tooling/fidelity.ts",
     "behaviour": "node tooling/build.ts && node tooling/behaviour.ts",

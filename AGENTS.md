@@ -52,6 +52,11 @@ For AI coding agents using or changing this repository.
   `test/components.test.ts` runs in both frameworks and requires the same DOM as
   components.json, so a markup change goes into the data module and the component together.
   `npm run build:components` builds `packages/<framework>/dist/`; the packages are not published yet.
+- The docs page (docs/index.html) is Preact: `packages/site/src/`, prerendered at build time
+  through Vite's SSR build (`tooling/build-site.ts`). Its specimens are the component examples
+  and its client script is `client.ts`. A change to the site's look is proved with
+  `node tooling/site-shots.ts capture <dir>`, run before and after, then `compare`:
+  Chromium and WebKit pixel-identical; Firefox repeats about 1,500 px of noise.
 - After a change: `npm test` (build + static checks) must pass. For Platinum chrome,
   run `npm run fidelity` and do not let a specimen's exact-match share fall.
 - Every new or changed value needs an evidence row in the component's `<name>.data.ts` with an
