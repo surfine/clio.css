@@ -10,9 +10,16 @@ fitted to the measured advance widths and x-height"). The OFL reserves the name
 
   python3 tooling/nx-font.py LiberationSans-Regular.ttf LiberationSans-Bold.ttf
 
+Fitted to NeXTSTEP's screen: Display PostScript set Helvetica 12 with each glyph's advance
+rounded to whole pixels and no kerning (measured: menu and title text in NeXTStep 3.0's
+Workspace, .notes/logs/nx-text-*.tsv), so every advance here is rounded to a whole pixel at
+12px and kerning is left out. At other sizes the face is Liberation Sans's shapes with those
+advances.
+
 Needs fontTools and brotli. Writes fonts/ClioSansNX.woff2 and
 fonts/ClioSansNX-Bold.woff2 (Latin-1 and the punctuation the chrome uses).
 """
+import math
 import sys
 from pathlib import Path
 
@@ -32,13 +39,20 @@ def build(src, out, style):
         sys.exit(f"{src}: not an OFL Liberation Sans (licence field: {licence[:60]!r}); 1.x is GPL, use 2.x")
     opts = subset.Options()
     opts.flavor = "woff2"
-    opts.layout_features = ["kern", "liga"]
+    opts.layout_features = []   # NeXT's screen fonts set text unkerned, without ligatures
     opts.name_IDs = ["*"]
     opts.hinting = False
     opts.desubroutinize = True
     sub = subset.Subsetter(opts)
     sub.populate(unicodes=UNICODES)
     sub.subset(font)
+    upm = font["head"].unitsPerEm
+    hmtx = font["hmtx"]
+    for g, (adv, lsb) in list(hmtx.metrics.items()):
+        px = math.floor(adv * 12 / upm + 0.5)   # the screen font's whole-pixel advance at 12px
+        hmtx.metrics[g] = (round(px * upm / 12), lsb)
+    if "kern" in font:
+        del font["kern"]
     family, full = "Clio Sans NX", "Clio Sans NX" + ("" if style == "Regular" else " " + style)
     ps = "ClioSansNX-" + style
     for rec in font["name"].names:

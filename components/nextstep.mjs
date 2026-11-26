@@ -104,7 +104,8 @@ export const rows = {
   ],
   typography: [
     row("Helvetica 12 for chrome and text, Helvetica Bold 12 for window and menu titles, set without antialiasing", "measured", NX30 + ", frame boot1 (menu and title text: black and white pixels only)", NXUG + ", ch. 9 (fonts)"),
-    row("Helvetica is named only as a local font; elsewhere Clio Sans NX (Liberation Sans 2, OFL, renamed) has Helvetica's advance widths", "third-party", "fonts/ClioSansNX*.woff2 (tooling/nx-font.py); THIRD-PARTY.md", "D3: a local name plus a fitted OFL fallback"),
+    row("Helvetica is named only as a local font; elsewhere Clio Sans NX, Liberation Sans 2 (OFL) renamed", "third-party", "fonts/ClioSansNX*.woff2 (tooling/nx-font.py); THIRD-PARTY.md", "D3: a local name plus a fitted OFL fallback"),
+    row("Clio Sans NX is fitted to NeXT's screen font: every advance a whole pixel at 12px, no kerning. Over 15 menu and title labels its ink is 0.60px from NeXT's on average (unfitted 1.13px; the Mac's own Helvetica 1.13px)", "measured", NX30 + ", frames boot1 and info-open (the Workspace menus); .notes/tools/textrender.mjs", "the fit changes widths, not shapes: the glyphs stay Liberation's"),
   ],
   slider: [
     row("Slider: a 16px lane of the scroller's dots, black at the top and left, white at the bottom and right; the 20x14 knob, a raised bevel with a groove down its middle and a #555555 shadow on its right", "measured", NX30 + ", frame prefs3 (Preferences, Display, Automatic Dimming, 170x16); tooling/nx-art.py check", "fidelity nx-slider, identical in Chromium, WebKit and Firefox"),

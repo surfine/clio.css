@@ -3420,7 +3420,7 @@
       </dl>
       
       <details class="evidence-details">
-        <summary>Evidence (20)</summary>
+        <summary>Evidence (21)</summary>
       <table class="evidence">
         <caption>Where each value comes from</caption>
         <thead><tr><th scope="col">Era</th><th scope="col">Value</th><th scope="col">Status</th><th scope="col">Source</th></tr></thead>
@@ -3541,9 +3541,15 @@
         </tr>
 <tr>
           <td>NeXTSTEP</td>
-          <td>Helvetica is named only as a local font; elsewhere Clio Sans NX (Liberation Sans 2, OFL, renamed) has Helvetica's advance widths</td>
+          <td>Helvetica is named only as a local font; elsewhere Clio Sans NX, Liberation Sans 2 (OFL) renamed</td>
           <td><span class="status status-third-party">Third-party</span></td>
           <td><code>fonts/ClioSansNX*.woff2 (tooling/nx-font.py); THIRD-PARTY.md</code><br><span class="upstream">D3: a local name plus a fitted OFL fallback</span></td>
+        </tr>
+<tr>
+          <td>NeXTSTEP</td>
+          <td>Clio Sans NX is fitted to NeXT's screen font: every advance a whole pixel at 12px, no kerning. Over 15 menu and title labels its ink is 0.60px from NeXT's on average (unfitted 1.13px; the Mac's own Helvetica 1.13px)</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, NeXTStep 3.0 in Infinite Mac (frames in .fidelity/ns30), frames boot1 and info-open (the Workspace menus); .notes/tools/textrender.mjs</code><br><span class="upstream">the fit changes widths, not shapes: the glyphs stay Liberation's</span></td>
         </tr>
         </tbody>
       </table>

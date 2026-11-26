@@ -61,7 +61,7 @@ Inc., which is why the fonts have other names.
 
 Asap is a fallback stand-in for Charcoal and is not presented as an Apple font.
 
-| `dist/fonts/ClioSansNX.woff2`, `dist/fonts/ClioSansNX-Bold.woff2` (clio.nextstep.css only) | Clio Sans NX: Liberation Sans 2.1.5 Regular and 2.00.5 Bold, subset to Latin-1 and renamed by `tooling/nx-font.py` | Red Hat, Inc. (digitised data © 2010 Google Corporation) | SIL Open Font License 1.1, full text in `dist/fonts/OFL-Liberation.txt`; "Liberation" is a Reserved Font Name, so the modified subset carries another name |
+| `dist/fonts/ClioSansNX.woff2`, `dist/fonts/ClioSansNX-Bold.woff2` (clio.nextstep.css only) | Clio Sans NX: Liberation Sans 2.1.5 Regular and 2.00.5 Bold, subset to Latin-1, its advances rounded to whole pixels at 12px and its kerning left out, and renamed, by `tooling/nx-font.py` | Red Hat, Inc. (digitised data © 2010 Google Corporation) | SIL Open Font License 1.1, full text in `dist/fonts/OFL-Liberation.txt`; "Liberation" is a Reserved Font Name, so the modified subset carries another name |
 
 Clio Sans NX is a fallback stand-in for Helvetica on machines that do not have it; it is not
 presented as Helvetica, which clio.nextstep.css names only as a local font.
