@@ -288,9 +288,10 @@ export function renderLlms({ pkg, components }) {
   const url = pkg.homepage;
   return `# clio.css
 
-> CSS library for classic Mac OS interfaces: Macintosh System 6, System 7, Mac OS 8.5 Drawing Board (the withdrawn beta theme) and Mac OS 8/9 Platinum. Windows, title bars, menu bars and menus, push buttons, check boxes, radio buttons, text fields, pop-up menus, list boxes, scroll bars, dialogs and alerts, group boxes, progress bars, tabs and desktop icons. Pure CSS (no JavaScript), MIT licence, no screenshots or Apple fonts. Every value is traced to measured pixels from AI System 6 or marked as inferred.
+> CSS library for classic Mac OS interfaces: Macintosh System 6, System 7, Mac OS 8.5 Drawing Board (the withdrawn beta theme) and Mac OS 8/9 Platinum. Windows, title bars, menu bars and menus, push buttons, check boxes, radio buttons, text fields, pop-up menus, list boxes, scroll bars, dialogs and alerts, group boxes, progress bars, tabs, the Control Strip and desktop icons: ${components.length} components. Pure CSS; an optional script, \`dist/clio.js\`, adds what CSS cannot (menu tracking, scroll bars, window dragging, the text caret, sounds). MIT licence; no Apple screenshots or font files. Every value is traced to its source and labelled measured (read from real pixels of the era), inferred, adapted or third-party.
 
 Install: \`npm install ${pkg.name}\` or \`<link rel="stylesheet" href="https://unpkg.com/${pkg.name}@${pkg.version}/dist/clio.css">\`.
+Optional script: \`<script src="https://unpkg.com/${pkg.name}@${pkg.version}/dist/clio.js" defer></script>\`.
 System 6 is the default; add \`data-era="system7"\`, \`data-era="drawingboard"\` or \`data-era="platinum"\` to \`<html>\` or any element. Single-era builds: \`dist/clio.system6.css\`, \`dist/clio.system7.css\`, \`dist/clio.drawingboard.css\`, \`dist/clio.platinum.css\`.
 All rules use \`:where()\` or one class, so author CSS always wins; every value is a \`--clio-*\` custom property.
 Drop-in for system.css markup (.window, .title-bar button.close, .btn, .btn-default, .standard-dialog, .modal-dialog, .alert-box, .field-row, role="menu-bar").
