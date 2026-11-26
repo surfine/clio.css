@@ -591,6 +591,11 @@
   display: none;
 }
 
+[data-era="nextstep"] :is(.menu, [role="menu"]) > li:is(.checked, [aria-checked="true"])::before,
+[data-era="nextstep"] :is(.menu, [role="menu"]) > li > :is([aria-checked="true"], .checked)::before {
+  content: none;
+}
+
 [data-era="nextstep"] :is(.menu, [role="menu"]) > li:is(.disabled, [aria-disabled="true"]),
 [data-era="nextstep"] :is(.menu, [role="menu"]) > li > :is(a, button):is(:disabled, [aria-disabled="true"]) {
   color: var(--clio-disabled);

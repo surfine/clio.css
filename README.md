@@ -47,7 +47,7 @@ npm install clio.css
 | `dist/clio.system7.css` | System 7 (colour) as the page default | 113 kB | 20.1 kB |
 | `dist/clio.drawingboard.css` | Drawing Board as the page default | 191 kB | 33.2 kB |
 | `dist/clio.platinum.css` | Platinum as the page default | 152 kB | 27.0 kB |
-| `dist/clio.nextstep.css` | NeXTSTEP 3.3 (its own file, never in `clio.css`) | 153 kB | 26.0 kB |
+| `dist/clio.nextstep.css` | NeXTSTEP 3.3 (its own file, never in `clio.css`) | 154 kB | 26.3 kB |
 
 Sizes are the `*.min.css` builds (1.0.2; `clio.nextstep.css` 1.1.0; gzip); fonts and art load separately.
 `dist/components.json` is the machine-readable index: selectors, tokens, markup and
@@ -106,11 +106,14 @@ element, and `--clio-db-phase: 64px` on a window or control matches the other ca
 `dist/clio.nextstep.css` draws NeXTSTEP 3.3 on the same markup: the menu bar becomes the
 vertical main menu (titled by its `aria-label`, submenus hanging level with its top), the
 collapse box becomes the miniaturize button, the close box moves to the right, and a window
-with a zoom box gets the resize bar instead (NeXT had no zoom). `.window.main` is a main
+with a zoom box gets the resize bar instead (NeXT had no zoom). With clio.js the main menu is a column for the keyboard as well
+(Up and Down between titles, Right into a submenu), and NeXT's own arrow and I-beam cursors
+replace the Mac's. `data-clio-depth="2bit"` gives a black-and-white NeXT's workspace. `.window.main` is a main
 window that is not key. Three components exist only there: `.browser` (the column browser),
 `.pull-down` and `.dock`. With clio.js the scrollers sit on the left with both arrows
 together, as measured; without it the browser keeps its own bar on the right. Helvetica is
-named locally; elsewhere Clio Sans NX (Liberation Sans 2, OFL, renamed) keeps its widths.
+named locally; elsewhere Clio Sans NX (Liberation Sans 2, OFL, renamed) is fitted to NeXT's
+screen font: whole-pixel advances and no kerning, within 0.6px of NeXT's label widths.
 The Classic files gain only one fix in 1.1.0 (a dimmed menu item no longer lights under the
 pointer); NeXTSTEP never enters `clio.css`.
 

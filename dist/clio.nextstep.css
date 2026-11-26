@@ -1,4 +1,4 @@
-/*! clio.css 1.1.0 (NeXTSTEP) | MIT | https://surfine.github.io/clio.css/
+/*! clio.css 1.1.1 (NeXTSTEP) | MIT | https://surfine.github.io/clio.css/
  * NeXTSTEP 3.3 interface CSS: windows, menus, controls, scrollers, browser and dock.
  * Every value is measured, inferred or adapted; see EVIDENCE.md.
  * Fonts: Clio Sans NX is Liberation Sans 2 (SIL OFL 1.1), renamed; see THIRD-PARTY.md. */
@@ -3949,6 +3949,11 @@
 /* No check marks or dividers in NeXT menus; dimmed items are #555555. */
 :root :is(.menu, [role="menu"]) > :is(li.separator, li[role="separator"], hr) {
   display: none;
+}
+
+:root :is(.menu, [role="menu"]) > li:is(.checked, [aria-checked="true"])::before,
+:root :is(.menu, [role="menu"]) > li > :is([aria-checked="true"], .checked)::before {
+  content: none;
 }
 
 :root :is(.menu, [role="menu"]) > li:is(.disabled, [aria-disabled="true"]),

@@ -1,5 +1,31 @@
 # Changelog
 
+## 1.1.1 (2026-11-26, NeXTSTEP finished)
+
+What 1.1.0 left undone. 1.1.0 was tagged but not published to npm; 1.1.1 carries it.
+
+- **The main menu is a column for the keyboard too:** in NeXTSTEP, Up and Down move between
+  its titles, Right opens a submenu on its first item, Left comes back, and the bar carries
+  `aria-orientation="vertical"` (clio.js reads `--clio-menubar-orientation`). Classic bars
+  are unchanged.
+- **`npm run behaviour` checks NeXTSTEP** (24 checks: keyboard, sticky and dimmed menus, no
+  check marks, title-bar buttons, resize bar, return mark, left scrollers and held arrows,
+  the 2-bit switch, cursors, CJK rows): 238, 238 and 236 checks in Chromium, WebKit and
+  Firefox. 1.1.0's green run had no NeXTSTEP check at all.
+- **Clio Sans NX fitted to NeXT's screen font,** as D3 asked and 1.1.0 had not done: whole-pixel
+  advances at 12px, no kerning. Over 15 Workspace labels its width is 0.60px from NeXT's on
+  average (1.13px before, and for the Mac's own Helvetica).
+- **NeXT's cursors,** measured: the arrow (the Mac's but for its last row) and the 7x16 I-beam.
+- **`data-clio-depth="2bit"`** for a black-and-white NeXT's flat #555555 workspace (inferred).
+- **Chinese, Japanese and Korean** keep NeXTSTEP's rows: Latin in Helvetica, ideographs in the
+  language's stand-in (adapted).
+- **Checked at 2x and 3x and on touch:** all 37 NeXTSTEP specimens identical at 1x, 2x and 3x
+  in Chromium, WebKit and Firefox; on a 375px touch screen the cells take the coarse sizes
+  with no sideways scroll, and submenu arrows and the pop-up mark stay centred.
+- **Fixed:** a checked menu item's mark landed on another row in NeXTSTEP (NeXT menus have no
+  check marks; none is drawn); the docs site's NeXTSTEP switch was checked in all three
+  engines.
+
 ## 1.1.0 (2026-11-26, NeXTSTEP)
 
 A fifth era, in a file of its own (owner's decision D14 in ROADMAP-MACOSX.md), and one fix

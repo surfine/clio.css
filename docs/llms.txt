@@ -2,8 +2,8 @@
 
 > CSS library for classic Mac OS interfaces: Macintosh System 6, System 7, Mac OS 8.5 Drawing Board (the withdrawn beta theme) and Mac OS 8/9 Platinum. Windows, title bars, menu bars and menus, push buttons, check boxes, radio buttons, text fields, pop-up menus, list boxes, scroll bars, dialogs and alerts, group boxes, progress bars, tabs, the Control Strip and desktop icons: 32 components. Pure CSS; an optional script, `dist/clio.js`, adds what CSS cannot (menu tracking, scroll bars, window dragging, the text caret, sounds). MIT licence; no Apple screenshots or font files. Every value is traced to its source and labelled measured (read from real pixels of the era), inferred, adapted or third-party.
 
-Install: `npm install clio.css` or `<link rel="stylesheet" href="https://unpkg.com/clio.css@1.1.0/dist/clio.css">`.
-Optional script: `<script src="https://unpkg.com/clio.css@1.1.0/dist/clio.js" defer></script>`.
+Install: `npm install clio.css` or `<link rel="stylesheet" href="https://unpkg.com/clio.css@1.1.1/dist/clio.css">`.
+Optional script: `<script src="https://unpkg.com/clio.css@1.1.1/dist/clio.js" defer></script>`.
 System 6 is the default; add `data-era="system7"`, `data-era="drawingboard"` or `data-era="platinum"` to `<html>` or any element. Single-era builds: `dist/clio.system6.css`, `dist/clio.system7.css`, `dist/clio.drawingboard.css`, `dist/clio.platinum.css`. NeXTSTEP 3.3 is its own file, `dist/clio.nextstep.css` (never in `clio.css`): the menu bar becomes the vertical main menu, the collapse box the miniaturize button, the zoom box the resize bar.
 All rules use `:where()` or one class, so author CSS always wins; every value is a `--clio-*` custom property.
 Drop-in for system.css markup (.window, .title-bar button.close, .btn, .btn-default, .standard-dialog, .modal-dialog, .alert-box, .field-row, role="menu-bar").

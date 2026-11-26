@@ -776,6 +776,10 @@ await loadNx(nxMenu);
   ok(await li.evaluate((el) => getComputedStyle(el).backgroundColor) === idle, "nextstep: a dimmed item does not light under the pointer");
 }
 
+// nx2b. No check marks in NeXT menus (a checked item's mark used to land on another row).
+await loadNx(`<ul class="menu" role="menu" aria-label="View"><li role="none"><button role="menuitemcheckbox" aria-checked="true" id="chk">Show</button></li></ul>`);
+ok(await page.evaluate(() => getComputedStyle(document.querySelector("#chk"), "::before").content) === "none", "nextstep: a checked menu item draws no check mark");
+
 // nx3. Windows: miniaturize left, close right; a zoom box means the resize bar; the return
 // mark only in the key window.
 await loadNx(`<div class="window" id="w" style="width:300px"><div class="title-bar"><button class="close" aria-label="Close"></button><h2 class="title">Doc</h2><button class="resize" aria-label="Zoom"></button><button class="shade" aria-label="Miniaturize"></button></div><div class="window-pane" style="height:60px"><button class="default" id="ok">OK</button></div></div>
