@@ -515,12 +515,14 @@ function openTitle(bar, li) {
 	li.classList.add("open");
 	const t = titleOf(li);
 	if (t && t.hasAttribute("aria-expanded")) t.setAttribute("aria-expanded", "true");
+	t?.removeAttribute(OFF);
 }
 function closeTitle(li) {
 	if (li.classList.contains("open") && menuOf(li) && !(track && track.mode === "blink")) play("mnuc", li);
 	li.classList.remove("open");
 	const t = titleOf(li);
 	if (t && t.hasAttribute("aria-expanded")) t.setAttribute("aria-expanded", "false");
+	t?.setAttribute(OFF, "");
 	for (const x of li.querySelectorAll("li.open, li.active")) x.classList.remove("open", "active");
 }
 function closeAll() {
@@ -528,6 +530,7 @@ function closeAll() {
 	clearTimeout(track.timer);
 	clearTimeout(track.hold);
 	for (const li of track.bar.querySelectorAll(":scope > li.open")) closeTitle(li);
+	for (const li of track.bar.querySelectorAll(":scope > li")) titleOf(li)?.removeAttribute(OFF);
 	if (document.activeElement && track.bar.contains(document.activeElement)) document.activeElement.blur();
 	track = null;
 }

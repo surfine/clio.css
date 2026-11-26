@@ -80,6 +80,9 @@ For AI coding agents using or changing this repository.
   through `npm run verify`. The Mac OS X eras belong to clio.wasm, a separate project;
   `dev/ROADMAP-MACOSX.md` is history, not a work order. Never Dewfall, AI System 6's own glass
   skin. AI System 6's own chrome (Control Strip, …) is in scope with its markup.
+- Versions (owner, 2026-11-27): only 2.x is maintained; 1.x gets no releases. Fixes land on
+  `main` only. What 2.x keeps compatible is listed in README "Versions and support"; the
+  component packages' props follow semver only.
 - Internal notes (roadmaps, lessons, audits, plans, handoffs, launch drafts, upstream
   drafts) live in `dev/`, never in `docs/` (`docs/` is the published GitHub Pages root).
 - Tokens live on `:root, [data-era="system6"]` (`foundation/tokens.css`),

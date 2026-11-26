@@ -1,5 +1,39 @@
 # Changelog
 
+## 2.0.1 (2026-11-27)
+
+A fix to clio.js's menus, then documentation, packaging and checks. The CSS rules are 2.0.0's
+(and 1.1.1's), checked by `npm run verify` with banners and comments stripped.
+
+- **Fixed: a menu title left behind during a drag no longer looks pressed.** Pressing File and
+  dragging to Edit left File drawn with the pressed title's text colour (the browser keeps it
+  `:active` until release): faded white in Platinum, white on white (gone) in System 6 and 7,
+  a second lit title in Drawing Board. clio.js now marks titles it closes `data-clio-off`,
+  which clio.css's no-script pressed rule already skips. `npm run behaviour` checks it
+  (241 checks in Chromium and WebKit, 239 in Firefox).
+- **Only 2.x is maintained** (owner): 1.x gets no further releases; 2.x is supported for at
+  least 12 months from 2.0.1. README "Versions and support" lists what 2.x keeps compatible;
+  the component packages' props follow semver only.
+- **`npm run fidelity:public`** checks the pixel claims without the private reference
+  captures: 204 of 213 specimens are rendered and compared with the SHA-256 digest of their
+  reference crop (`test/fidelity-digests.json`), which lists the other 9 and why.
+- **`npm run verify`**, the local release gate: a fresh clone; npm ci, test, lint, typecheck;
+  the three packages packed and installed, every export resolved, both component packages
+  rendered with their framework against components.json; the CSS rules against 1.1.1; the
+  figures in README, EVIDENCE and FIDELITY; Markdown links; fidelity:public. `prepublishOnly`
+  refuses to publish unless the owner sets `CLIO_OWNER_RELEASE=1`.
+- **README** for a first visit: what it is, four ways to install, how it differs from similar
+  libraries, what readers can check themselves. Corrected: CDN links (named 1.0.2), 32
+  components (said 29), evidence counts (said 206 of 273 measured; 255 of 348), NeXTSTEP 40 of
+  40 specimens (said 37 of 37), file sizes.
+- **Banners** of `dist/*.css` name the five eras and what each file draws; the docs site,
+  llms.txt and the npm description name NeXTSTEP 3.3.
+- **clio.css-preact and clio.css-react** have their own README, a top-level `types` field and
+  a `bugs` URL.
+- **THIRD-PARTY.md** lists NeXTSTEP's reconstructed control art and cursors like the other eras'.
+- **Scope:** Classic Mac OS and NeXTSTEP 3.3; no new era starts. The Mac OS X eras are a
+  separate project, clio.wasm. Internal notes moved from the root to `dev/`.
+
 ## 2.0.0 (2026-11-26)
 
 Published to npm on 2026-11-26 UTC: clio.css 2.0.0 at 18:13:32, clio.css-preact 2.0.0 at

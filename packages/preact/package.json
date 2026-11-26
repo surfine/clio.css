@@ -1,6 +1,6 @@
 {
   "name": "clio.css-preact",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "clio.css components for Preact: one JSX source, rendering clio.css markup (load clio.css and, for behaviour, clio.js).",
   "license": "MIT",
   "type": "module",

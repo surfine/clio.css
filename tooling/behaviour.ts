@@ -267,6 +267,8 @@ for (const era of ["system7", "platinum"]) {
   await page.mouse.move(tx, ty); await page.mouse.down();
   const [ex, ey] = await center("#t2"); await page.mouse.move(ex, ey, { steps: 3 });
   ok(!(await shown("#m")) && await page.evaluate(() => document.querySelector("#t2")!.getAttribute("aria-expanded")) === "true", `${era}: dragging to another title switches menus`);
+  // the title the drag started on is still :active in the browser; it must not stay lit
+  ok(await page.evaluate(() => { const t = document.querySelector("#t")!, u = document.querySelector("#t2")!; return getComputedStyle(t).color !== getComputedStyle(u).color; }), `${era}: the title left behind is not drawn pressed`);
   await page.mouse.move(tx + 300, ty + 300); await page.mouse.up();
   // a submenu opens about 9 ticks after its item lights
   await page.mouse.move(tx, ty); await page.mouse.down();

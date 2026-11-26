@@ -22,10 +22,10 @@ Four ways in, from least to most code:
 
 ```html
 <!-- 1. One CSS file: the four Classic eras, System 6 by default -->
-<link rel="stylesheet" href="https://unpkg.com/clio.css@2.0.0/dist/clio.css">
-<!-- NeXTSTEP is its own file: https://unpkg.com/clio.css@2.0.0/dist/clio.nextstep.css -->
+<link rel="stylesheet" href="https://unpkg.com/clio.css@2.0.1/dist/clio.css">
+<!-- NeXTSTEP is its own file: https://unpkg.com/clio.css@2.0.1/dist/clio.nextstep.css -->
 <!-- optional behaviour (menus, scroll bars, window dragging): -->
-<script src="https://unpkg.com/clio.css@2.0.0/dist/clio.js" defer></script>
+<script src="https://unpkg.com/clio.css@2.0.1/dist/clio.js" defer></script>
 ```
 
 ```js
@@ -50,7 +50,7 @@ export const App = () => (
 Set `data-era` (`system6`, `system7`, `drawingboard`, `platinum`) on `<html>` or any
 element; the components render exactly the markup documented on the site, and the look comes
 from the stylesheet. The jsDelivr URL works the same way
-(`https://cdn.jsdelivr.net/npm/clio.css@2.0.0/dist/clio.css`).
+(`https://cdn.jsdelivr.net/npm/clio.css@2.0.1/dist/clio.css`).
 
 | File | Draws | Minified | gzip |
 | --- | --- | ---: | ---: |
@@ -104,7 +104,7 @@ NeXTSTEP, where each value says where it came from and the pixel check can be re
 <html lang="en" data-era="system7"> <!-- system6 (default), system7, drawingboard or platinum -->
 <head>
   <meta charset="utf-8">
-  <link rel="stylesheet" href="https://unpkg.com/clio.css@2.0.0/dist/clio.css">
+  <link rel="stylesheet" href="https://unpkg.com/clio.css@2.0.1/dist/clio.css">
 </head>
 <body>
   <div class="window" style="width: 320px">
@@ -210,7 +210,7 @@ unchanged: `.title-bar button.close`, `button.resize`, `.inactive-title-bar`,
 ## clio.js (optional)
 
 ```html
-<script src="https://unpkg.com/clio.css@2.0.0/dist/clio.js" defer></script>
+<script src="https://unpkg.com/clio.css@2.0.1/dist/clio.js" defer></script>
 ```
 
 No dependencies; 72.2 kB, or 47.8 kB as `dist/clio.min.js`. clio.css works without it.
@@ -420,12 +420,21 @@ and caret blink honour `prefers-reduced-motion`.
 
 ## Versions and support
 
-1.x was declared the Classic long-term line on 2026-11-18; 2.0.0 followed on 2026-11-26 with
-the same CSS rules and a new package structure. Which line carries the long-term promise, and
-for how long, is the owner's open decision: the options and what each would promise are in
-[dev/RELEASE-2.0.1.md](dev/RELEASE-2.0.1.md). Until it is made, 2.x is the line that gets
-releases. [dev/LTS-AUDIT.md](dev/LTS-AUDIT.md) lists every Classic value that is not a plain
-measurement, with its reason.
+**Only 2.x is maintained** (owner, 2026-11-27). 2.0 has 1.1.1's CSS rules unchanged (checked
+by `npm run verify` against the 1.1.1 tarball), so moving from 1.x renders the same; 1.x,
+declared the Classic long-term line on 2026-11-18, gets no further releases. 2.x is supported
+for at least 12 months from 2.0.1.
+
+Within 2.x these stay compatible: the selectors and aliases in `components.json`; every
+`--clio-*` name and its meaning (its value may change when a measurement corrects it, recorded
+in the CHANGELOG with its evidence row); each component's markup; the `dist/` file paths and
+`exports` keys, whose rules change only as recorded fixes; the shape of `clio.css/contract`
+and `clio.css/tokens/<era>.json`; and the keys and types of `window.clio`. Not promised:
+values a better measurement corrects, clio.js's internals, the docs site and tooling.
+The component packages promise the DOM they render (it is `components.json`'s markup) and
+otherwise follow semver only: their component names and props may change in a minor version,
+with a CHANGELOG note. [dev/LTS-AUDIT.md](dev/LTS-AUDIT.md) lists every Classic value that is
+not a plain measurement, with its reason.
 
 ## Browser support
 

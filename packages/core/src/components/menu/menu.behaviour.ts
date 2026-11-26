@@ -1,5 +1,5 @@
 import { play } from "../../runtime/sounds.ts";
-import { TICK, optedOut, reduced, type Pt } from "../../runtime/shared.ts";
+import { OFF, TICK, optedOut, reduced, type Pt } from "../../runtime/shared.ts";
 
 interface Track {
   bar: HTMLElement; li: HTMLElement; mode: "press" | "sticky" | "blink" | "preview";
@@ -32,17 +32,22 @@ function openTitle(bar: Element, li: Element) {
   if (!li.classList.contains("open") && menuOf(li)) play("mnuo", li);
   li.classList.add("open");
   const t = titleOf(li); if (t && t.hasAttribute("aria-expanded")) t.setAttribute("aria-expanded", "true");
+  t?.removeAttribute(OFF);
 }
 function closeTitle(li: Element) {
   if (li.classList.contains("open") && menuOf(li) && !(track && track.mode === "blink")) play("mnuc", li);
   li.classList.remove("open");
   const t = titleOf(li); if (t && t.hasAttribute("aria-expanded")) t.setAttribute("aria-expanded", "false");
+  // The title a drag started on stays :active until release; data-clio-off keeps clio.css's
+  // pressed look (the no-script fallback) off it while another title is open.
+  t?.setAttribute(OFF, "");
   for (const x of li.querySelectorAll("li.open, li.active")) x.classList.remove("open", "active");
 }
 function closeAll() {
   if (!track) return;
   clearTimeout(track.timer); clearTimeout(track.hold);
   for (const li of track.bar.querySelectorAll(":scope > li.open")) closeTitle(li);
+  for (const li of track.bar.querySelectorAll(":scope > li")) titleOf(li)?.removeAttribute(OFF);
   if (document.activeElement && track.bar.contains(document.activeElement)) (document.activeElement as HTMLElement).blur();
   track = null;
 }

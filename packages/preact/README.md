@@ -46,8 +46,8 @@ site under the same name, and `clio.css/components.json` lists them for tools.
 - The DOM each component renders is part of clio.css's markup: it changes only with
   clio.css's, and both are checked to match `components.json` in `npm test` and, from the
   packed tarballs, in `npm run verify`.
-- Whether the component props are part of the long-term promise is an open decision
-  (see [dev/RELEASE-2.0.1.md](https://github.com/surfine/clio.css/blob/main/dev/RELEASE-2.0.1.md)).
+- Component names and props follow semver only and are not part of clio.css's long-term
+  promise: they may change in a minor version, with a CHANGELOG note. The rendered DOM is.
 
 ## Source
 

@@ -1,6 +1,6 @@
 {
   "name": "clio.css",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "CSS library for Classic Mac OS and NeXTSTEP interfaces: Macintosh System 6, System 7, Mac OS 8.5 Drawing Board, Mac OS 8/9 Platinum and NeXTSTEP 3.3 windows, menus, buttons, scroll bars and dialogs, with every value traced to measured pixels.",
   "keywords": [
     "css",

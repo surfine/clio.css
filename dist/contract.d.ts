@@ -1,6 +1,6 @@
-// clio.css 2.0.0 host contract: dist/contract.js's eras, components and token names.
+// clio.css 2.0.1 host contract: dist/contract.js's eras, components and token names.
 declare const contract: {
-  "version": "2.0.0",
+  "version": "2.0.1",
   "eras": [
     "system6",
     "system7",
