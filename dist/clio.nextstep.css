@@ -3542,7 +3542,10 @@
   /* Text fields: a sunken white well. */
   --clio-field-bg: #ffffff;
   --clio-field-border: 0;
-  --clio-field-shadow: inset 2px 2px 0 #555555, inset -1px -1px 0 #ffffff, inset -2px -2px 0 #aaaaaa;
+  /* Two #555555 lines top and left, #aaaaaa then white bottom and right; the top
+     rows run to the right edge, the bottom rows from the left one (the order is the
+     corners' order). */
+  --clio-field-shadow: inset 0 1px 0 #555555, inset 0 -1px 0 #ffffff, inset 1px 0 0 #555555, inset -1px 0 0 #ffffff, inset 0 2px 0 #555555, inset 0 -2px 0 #aaaaaa, inset 2px 0 0 #555555, inset -2px 0 0 #aaaaaa;
   --clio-field-padding: 3px 4px;
   --clio-field-focus-shadow: var(--clio-field-shadow);
   --clio-field-focus-outline: var(--clio-focus-outline);
@@ -4196,10 +4199,15 @@
 }
 
 /* ---- Panels ---------------------------------------------------------------------
-   An alert is a panel: a title bar with no buttons, the icon, the message, the
-   buttons at the lower right. */
+   A panel is a window: the key window's title bar, no shadow. An attention panel
+   (.alert-box, measured: Workspace's Log Out) has an empty title bar; under it the
+   application's 48px icon and the panel's title (its aria-label) in Helvetica 18,
+   a groove (#555555 over white) 86 rows into the panel, the message centred, the
+   buttons 8px from the lower right, 8px apart. */
 :root :is(.modal-dialog, .alert-box, dialog.modal) {
   position: relative;
+  min-width: 300px;
+  padding-top: calc(var(--clio-titlebar-height) + 12px);
 }
 
 :root :is(.modal-dialog, .alert-box, dialog.modal)::before {
@@ -4216,6 +4224,50 @@
   color: #ffffff;
   font: 700 12px/21px var(--clio-font-chrome);
   text-align: center;
+}
+
+:root .alert-box.alert-box {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  min-height: 185px;
+  padding: 108px 8px 8px;
+  background:
+    linear-gradient(#555555, #555555) 0 86px / 100% 1px no-repeat,
+    linear-gradient(#ffffff, #ffffff) 0 87px / 100% 1px no-repeat,
+    var(--clio-dialog-bg);
+}
+
+:root .alert-box::before {
+  content: "";
+}
+
+:root .alert-box::after {
+  content: attr(aria-label);
+  position: absolute;
+  top: 41px;
+  left: 67px;
+  font: 400 18px/22px var(--clio-font-chrome);
+  white-space: nowrap;
+}
+
+:root .alert-box > .alert-icon {
+  position: absolute;
+  top: 30px;
+  left: 8px;
+  width: 48px;
+  height: 48px;
+}
+
+:root .alert-box > :is(.alert-contents, .modal-contents, p) {
+  margin: 0;
+  text-align: center;
+}
+
+:root .alert-box > :is(.alert-buttons, .dialog-buttons) {
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 12px;
 }
 
 /* An alert carries the application's icon, not a symbol: without one the slot

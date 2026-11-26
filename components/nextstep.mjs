@@ -19,7 +19,7 @@ export const rows = {
     row("Title bar: 22 rows inside the 1px black frame: a 1px highlight on the top and left, 19 rows of face, a #555555 row and column on the bottom and right, a black line", "measured", NX30 + ", frame boot1 (File Viewer)", "agrees with AI System 6's P12"),
     row("Key window: black face, #aaaaaa highlight, white Helvetica Bold 12 title centred on the bar", "measured", NX30 + ", frame boot1 (File Viewer, the key window)", NXUG + ", ch. 4 (key and main windows)"),
     row("Main window that is not key (.window.main): #555555 face, the #aaaaaa highlight kept, black instead of #555555 on the bottom and right, white title", "measured", NX30 + ", frame prefs-dock (File Viewer behind the Preferences panel)", "AI System 6 drew a white highlight (corrected); fidelity nx-titlebar-main"),
-    row("Inactive window: #aaaaaa face, white highlight, black title; the buttons stay", "inferred", AIS6 + " (P13)", NXUG + ", ch. 4"),
+    row("Inactive window: #aaaaaa face, white highlight, #555555 then black below, black title; its buttons stay", "measured", NX30 + ", frame edit-launch (File Viewer and Workspace Manager Preferences behind Edit)", "fidelity nx-titlebar-inactive, nx-close-inactive"),
     row("Miniaturize button: 15x15, white top and left, #aaaaaa face, #555555 then black bottom and right, a black window outline inside; 2px in from the highlight, centred on the 19 rows", "measured", NX30 + ", frame boot1 (File Viewer, x 156-170, y 16-30); tooling/nx-art.py check", "the grid equals the frame's 225 pixels"),
     row("Close button: the same box with an embossed X, 2px from the bar's right shade", "measured", NX30 + ", frame prefs-dock (Workspace Manager Preferences, Dock), the panel's close button, x 994-1008); tooling/nx-art.py check", "the grid equals AI System 6's ns-close-15.svg; fidelity nx-close"),
     row("An edited document's close button: the X broken in the middle", "inferred", AIS6 + " (N12, ns-close-edited-15.svg)", "not captured"),
@@ -58,7 +58,7 @@ export const rows = {
     row("Radio button: a 12px sunken ring, a black dot when on", "inferred", AIS6 + " (P38, --radio-image)", "not captured"),
   ],
   "text-field": [
-    row("Text field: a white well, no border, #555555 two pixels on the top and left, white then #aaaaaa on the bottom and right; 21px tall", "inferred", AIS6 + " (P32, --field-shadow)", "not captured"),
+    row("Text field: a white well 21px tall, no border: two #555555 lines top and left, #aaaaaa then white bottom and right; the top lines run to the right edge, the bottom ones from the left", "measured", NX30 + ", frame open-panel (Edit's Open panel, the Name field, 241x21)", "fidelity nx-field-left, nx-field-right"),
     row("Keyboard focus: the dotted frame", "adapted", "clio.css", "NeXT marked the key field with its blinking caret only"),
   ],
   select: [
@@ -76,7 +76,9 @@ export const rows = {
     row("The browser's own scroll bar (without clio.js) is drawn with the same art but stays on the right, with Chromium's minimum knob", "adapted", "clio.css", "a page cannot move the browser's own scroll bar"),
   ],
   dialog: [
-    row("Alert panel: #aaaaaa, the 1px black frame, a 22-row title bar with no buttons, no shadow; the application's icon instead of a symbol", "inferred", AIS6 + " (P30, --alert-icon-display: none)", NXUG + ", ch. 4 (panels) and ch. 8 (attention panels)"),
+    row("Attention panel: #aaaaaa, the 1px black frame, the key window's title bar with no title and no buttons, no shadow; a groove (#555555 over white) 86 rows in; the buttons 8px from the lower right and 8px apart", "measured", NX30 + ", frame logout-alert (Workspace's Log Out panel, 364x185)", "fidelity nx-alert-titlebar, nx-alert-groove, nx-alert-buttons"),
+    row("Above the groove the application's 48px icon and the panel's title (its aria-label) in Helvetica 18; the message centred below", "inferred", NX30 + ", frame logout-alert (positions read from the frame; text and icon are not compared)", NXUG + " p.84-87"),
+    row("The application's icon, not a symbol: without one the slot stays empty", "inferred", NXUG + " p.84", "AI System 6 shows none either"),
   ],
   fieldset: [
     row("Box: a #555555 line with a white line inside and below, the title on the box's line", "inferred", NXUG + ", ch. 7 (boxes)", "not captured"),

@@ -507,10 +507,10 @@
         },
         {
           "era": "nextstep",
-          "claim": "Inactive window: #aaaaaa face, white highlight, black title; the buttons stay",
-          "status": "inferred",
-          "source": "AI System 6 69-nextstep-appearance.css (P13)",
-          "upstream": "NeXTSTEP User Interface Guidelines, Release 3, ch. 4"
+          "claim": "Inactive window: #aaaaaa face, white highlight, #555555 then black below, black title; its buttons stay",
+          "status": "measured",
+          "source": "clio.css capture, NeXTStep 3.0 in Infinite Mac (frames in .fidelity/ns30), frame edit-launch (File Viewer and Workspace Manager Preferences behind Edit)",
+          "upstream": "fidelity nx-titlebar-inactive, nx-close-inactive"
         },
         {
           "era": "nextstep",
@@ -1291,10 +1291,10 @@
         },
         {
           "era": "nextstep",
-          "claim": "Text field: a white well, no border, #555555 two pixels on the top and left, white then #aaaaaa on the bottom and right; 21px tall",
-          "status": "inferred",
-          "source": "AI System 6 69-nextstep-appearance.css (P32, --field-shadow)",
-          "upstream": "not captured"
+          "claim": "Text field: a white well 21px tall, no border: two #555555 lines top and left, #aaaaaa then white bottom and right; the top lines run to the right edge, the bottom ones from the left",
+          "status": "measured",
+          "source": "clio.css capture, NeXTStep 3.0 in Infinite Mac (frames in .fidelity/ns30), frame open-panel (Edit's Open panel, the Name field, 241x21)",
+          "upstream": "fidelity nx-field-left, nx-field-right"
         },
         {
           "era": "nextstep",
@@ -1833,10 +1833,24 @@
         },
         {
           "era": "nextstep",
-          "claim": "Alert panel: #aaaaaa, the 1px black frame, a 22-row title bar with no buttons, no shadow; the application's icon instead of a symbol",
+          "claim": "Attention panel: #aaaaaa, the 1px black frame, the key window's title bar with no title and no buttons, no shadow; a groove (#555555 over white) 86 rows in; the buttons 8px from the lower right and 8px apart",
+          "status": "measured",
+          "source": "clio.css capture, NeXTStep 3.0 in Infinite Mac (frames in .fidelity/ns30), frame logout-alert (Workspace's Log Out panel, 364x185)",
+          "upstream": "fidelity nx-alert-titlebar, nx-alert-groove, nx-alert-buttons"
+        },
+        {
+          "era": "nextstep",
+          "claim": "Above the groove the application's 48px icon and the panel's title (its aria-label) in Helvetica 18; the message centred below",
           "status": "inferred",
-          "source": "AI System 6 69-nextstep-appearance.css (P30, --alert-icon-display: none)",
-          "upstream": "NeXTSTEP User Interface Guidelines, Release 3, ch. 4 (panels) and ch. 8 (attention panels)"
+          "source": "clio.css capture, NeXTStep 3.0 in Infinite Mac (frames in .fidelity/ns30), frame logout-alert (positions read from the frame; text and icon are not compared)",
+          "upstream": "NeXTSTEP User Interface Guidelines, Release 3 p.84-87"
+        },
+        {
+          "era": "nextstep",
+          "claim": "The application's icon, not a symbol: without one the slot stays empty",
+          "status": "inferred",
+          "source": "NeXTSTEP User Interface Guidelines, Release 3 p.84",
+          "upstream": "AI System 6 shows none either"
         }
       ]
     },

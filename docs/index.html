@@ -587,9 +587,9 @@
         </tr>
 <tr>
           <td>NeXTSTEP</td>
-          <td>Inactive window: #aaaaaa face, white highlight, black title; the buttons stay</td>
-          <td><span class="status status-inferred">Inferred</span></td>
-          <td><code>AI System 6 69-nextstep-appearance.css (P13)</code><br><span class="upstream">NeXTSTEP User Interface Guidelines, Release 3, ch. 4</span></td>
+          <td>Inactive window: #aaaaaa face, white highlight, #555555 then black below, black title; its buttons stay</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, NeXTStep 3.0 in Infinite Mac (frames in .fidelity/ns30), frame edit-launch (File Viewer and Workspace Manager Preferences behind Edit)</code><br><span class="upstream">fidelity nx-titlebar-inactive, nx-close-inactive</span></td>
         </tr>
 <tr>
           <td>NeXTSTEP</td>
@@ -1359,9 +1359,9 @@
         </tr>
 <tr>
           <td>NeXTSTEP</td>
-          <td>Text field: a white well, no border, #555555 two pixels on the top and left, white then #aaaaaa on the bottom and right; 21px tall</td>
-          <td><span class="status status-inferred">Inferred</span></td>
-          <td><code>AI System 6 69-nextstep-appearance.css (P32, --field-shadow)</code><br><span class="upstream">not captured</span></td>
+          <td>Text field: a white well 21px tall, no border: two #555555 lines top and left, #aaaaaa then white bottom and right; the top lines run to the right edge, the bottom ones from the left</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, NeXTStep 3.0 in Infinite Mac (frames in .fidelity/ns30), frame open-panel (Edit's Open panel, the Name field, 241x21)</code><br><span class="upstream">fidelity nx-field-left, nx-field-right</span></td>
         </tr>
 <tr>
           <td>NeXTSTEP</td>
@@ -1834,7 +1834,7 @@
       </dl>
       <p class="aliases">Also accepts: system.css markup (<code>.modal-dialog</code>, <code>.alert-box</code>, <code>.standard-dialog</code>, <code>.outer-border</code>, <code>.inner-border</code>, <code>.modal-contents</code>).</p>
       <details class="evidence-details">
-        <summary>Evidence (12)</summary>
+        <summary>Evidence (14)</summary>
       <table class="evidence">
         <caption>Where each value comes from</caption>
         <thead><tr><th scope="col">Era</th><th scope="col">Value</th><th scope="col">Status</th><th scope="col">Source</th></tr></thead>
@@ -1907,9 +1907,21 @@
         </tr>
 <tr>
           <td>NeXTSTEP</td>
-          <td>Alert panel: #aaaaaa, the 1px black frame, a 22-row title bar with no buttons, no shadow; the application's icon instead of a symbol</td>
+          <td>Attention panel: #aaaaaa, the 1px black frame, the key window's title bar with no title and no buttons, no shadow; a groove (#555555 over white) 86 rows in; the buttons 8px from the lower right and 8px apart</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, NeXTStep 3.0 in Infinite Mac (frames in .fidelity/ns30), frame logout-alert (Workspace's Log Out panel, 364x185)</code><br><span class="upstream">fidelity nx-alert-titlebar, nx-alert-groove, nx-alert-buttons</span></td>
+        </tr>
+<tr>
+          <td>NeXTSTEP</td>
+          <td>Above the groove the application's 48px icon and the panel's title (its aria-label) in Helvetica 18; the message centred below</td>
           <td><span class="status status-inferred">Inferred</span></td>
-          <td><code>AI System 6 69-nextstep-appearance.css (P30, --alert-icon-display: none)</code><br><span class="upstream">NeXTSTEP User Interface Guidelines, Release 3, ch. 4 (panels) and ch. 8 (attention panels)</span></td>
+          <td><code>clio.css capture, NeXTStep 3.0 in Infinite Mac (frames in .fidelity/ns30), frame logout-alert (positions read from the frame; text and icon are not compared)</code><br><span class="upstream">NeXTSTEP User Interface Guidelines, Release 3 p.84-87</span></td>
+        </tr>
+<tr>
+          <td>NeXTSTEP</td>
+          <td>The application's icon, not a symbol: without one the slot stays empty</td>
+          <td><span class="status status-inferred">Inferred</span></td>
+          <td><code>NeXTSTEP User Interface Guidelines, Release 3 p.84</code><br><span class="upstream">AI System 6 shows none either</span></td>
         </tr>
         </tbody>
       </table>
