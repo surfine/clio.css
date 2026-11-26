@@ -43,7 +43,7 @@ ART = {
 d##############
 """),
     # The close button, 15x15.
-    "close": ("AI System 6 69-nextstep-appearance.css (--nextstep-close-art)", None, """
+    "close": ("NeXTStep 3.0 in Infinite Mac, frame prefs-dock (Workspace Manager Preferences, Dock), the panel's close button", ('ns30/prefs-dock', 994, 116), """
 ..............#
 .aaaaaaaaaaaad#
 .a#daaaaaad#ad#
@@ -88,13 +88,23 @@ d##############
 # ..
 #.
 """),
+    # The same arrow on a highlighted (white) cell: its light edge is drawn light grey.
+    "submenu-lit": ("NeXTStep 3.0 in Infinite Mac, frame info-open (Workspace main menu, Info highlighted)", ("ns30/info-open", 80, 28), """
+#d     
+# dd   
+#   dd 
+#     a
+#   aa 
+# aa   
+#a     
+"""),
     # The pop-up list's mark, 11x8.
-    "popup-mark": ("AI System 6 assets/themes/nextstep/chrome/ns-popup-mark-11x8.svg", None, """
-........#
-.aaaaaaad#
-.aaaaaaad#d
-.aaaaaaad#d
-.dddddddd#d
+    "popup-mark": ("NeXTStep 3.0 in Infinite Mac, frame prefs-dock (Workspace Manager Preferences, Dock), the pop-up list's mark", ('ns30/prefs-dock', 869, 144), """
+........#  
+.aaaaaad#  
+.aaaaaad#dd
+.aaaaaad#dd
+.ddddddd#dd
 #########dd
   ddddddddd
   ddddddddd
@@ -128,19 +138,53 @@ d#dddd
 
 """),
     # The switch's check, 12x12, drawn on the raised square.
-    "check": ("AI System 6 69-nextstep-appearance.css (--choice-checkmark-image)", None, """
-
-         ##
-         ##
-        ##
-       ###
-      ###
- ##  ###
- ######
-  ####
-   ##
-
-
+    "check": ('NeXTStep 3.0 in Infinite Mac, frame prefs-dock (Workspace Manager Preferences, Dock), a checked switch in the Dock list', ('ns30/prefs-dock', 650, 194), """
+..............#
+.aaaaaaaaaaaad#
+.aaaaaaaaaa.ad#
+.aaaaaaaaa.#ad#
+.aaaaaaaa.#dad#
+.aa.#aaa.#daad#
+.aa.#aa.#daaad#
+.aa.#d.#daaaad#
+.aa.d.#daaaaad#
+.aa..#daaaaaad#
+.aa.#daaaaaaad#
+.aa#daaaaaaaad#
+.aaaaaaaaaaaad#
+.ddddddddddddd#
+###############
+"""),
+    # An unchecked switch: the raised square alone.
+    "switch": ("NeXTStep 3.0 in Infinite Mac, frame prefs-dock (Workspace Manager Preferences, Dock), an unchecked switch", ("ns30/prefs-dock", 650, 224), """
+..............#
+.aaaaaaaaaaaad#
+.aaaaaaaaaaaad#
+.aaaaaaaaaaaad#
+.aaaaaaaaaaaad#
+.aaaaaaaaaaaad#
+.aaaaaaaaaaaad#
+.aaaaaaaaaaaad#
+.aaaaaaaaaaaad#
+.aaaaaaaaaaaad#
+.aaaaaaaaaaaad#
+.aaaaaaaaaaaad#
+.aaaaaaaaaaaad#
+.ddddddddddddd#
+###############
+"""),
+    # The return mark on the button Return presses, 15x10 (drawn the same when the button is dimmed).
+    "return": ("NeXTStep 3.0 in Infinite Mac, frame prefs-dock (Workspace Manager Preferences, Dock), the Set button", ("ns30/prefs-dock", 950, 342), """
+          ####d
+    ##    #   .
+   #dd    #   .
+  #dad#####   .
+ #d           .
+#d            .
+ #            .
+  #  ..........
+   # .         
+    #.         
 """),
     # The radio button's ring, 12x12, and its dot.
     "radio": ("AI System 6 69-nextstep-appearance.css (--radio-image)", None, """

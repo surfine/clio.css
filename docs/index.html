@@ -244,7 +244,7 @@
       </dl>
       <p class="aliases">Also accepts: system.css markup (<code>.title-bar button.close</code>, <code>.title-bar button.resize</code>, <code>.inactive-title-bar</code>, <code>.window-pane</code>, <code>.details-bar</code>, <code>.separator</code>); AI System 6 markup (<code>.close-box</code>, <code>.resize-box</code>, <code>.shade-box</code>, <code>.title-bar h1</code>, <code>.title-bar h2</code>).</p>
       <details class="evidence-details">
-        <summary>Evidence (65)</summary>
+        <summary>Evidence (66)</summary>
       <table class="evidence">
         <caption>Where each value comes from</caption>
         <thead><tr><th scope="col">Era</th><th scope="col">Value</th><th scope="col">Status</th><th scope="col">Source</th></tr></thead>
@@ -581,9 +581,9 @@
         </tr>
 <tr>
           <td>NeXTSTEP</td>
-          <td>Main window that is not key: #555555 face, white highlight, white title (.window.main)</td>
-          <td><span class="status status-inferred">Inferred</span></td>
-          <td><code>AI System 6 69-nextstep-appearance.css (.is-nextstep-main)</code><br><span class="upstream">NeXTSTEP User Interface Guidelines, Release 3, ch. 4</span></td>
+          <td>Main window that is not key (.window.main): #555555 face, the #aaaaaa highlight kept, black instead of #555555 on the bottom and right, white title</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, NeXTStep 3.0 in Infinite Mac (frames in .fidelity/ns30), frame prefs-dock (File Viewer behind the Preferences panel)</code><br><span class="upstream">AI System 6 drew a white highlight (corrected); fidelity nx-titlebar-main</span></td>
         </tr>
 <tr>
           <td>NeXTSTEP</td>
@@ -599,9 +599,15 @@
         </tr>
 <tr>
           <td>NeXTSTEP</td>
-          <td>Close button: the same box with an embossed X; an edited document's X is broken in the middle</td>
+          <td>Close button: the same box with an embossed X, 2px from the bar's right shade</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, NeXTStep 3.0 in Infinite Mac (frames in .fidelity/ns30), frame prefs-dock (Workspace Manager Preferences, Dock), the panel's close button, x 994-1008); tooling/nx-art.py check</code><br><span class="upstream">the grid equals AI System 6's ns-close-15.svg; fidelity nx-close</span></td>
+        </tr>
+<tr>
+          <td>NeXTSTEP</td>
+          <td>An edited document's close button: the X broken in the middle</td>
           <td><span class="status status-inferred">Inferred</span></td>
-          <td><code>AI System 6 69-nextstep-appearance.css (P16, N12; assets/themes/nextstep/chrome)</code><br><span class="upstream">no close button on the captured frames yet</span></td>
+          <td><code>AI System 6 69-nextstep-appearance.css (N12, ns-close-edited-15.svg)</code><br><span class="upstream">not captured</span></td>
         </tr>
 <tr>
           <td>NeXTSTEP</td>
@@ -617,9 +623,9 @@
         </tr>
 <tr>
           <td>NeXTSTEP</td>
-          <td>Resize bar: 9 rows under a resizable window, its two ends 28px wide, bevelled</td>
-          <td><span class="status status-inferred">Inferred</span></td>
-          <td><code>AI System 6 69-nextstep-appearance.css (.nextstep-resize-strip, P19)</code><br><span class="upstream">geometry not yet measured</span></td>
+          <td>Resize bar: 8 rows inside the frame under a resizable window: #555555, white, six of #aaaaaa; each end divided off by #555555 then white, 28px in from the left and 29px from the right</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, NeXTStep 3.0 in Infinite Mac (frames in .fidelity/ns30), frame boot1 (File Viewer, rows 471-478)</code><br><span class="upstream">fidelity nx-resizebar-left, nx-resizebar-right; AI System 6's 9-row bevelled strip corrected</span></td>
         </tr>
 <tr>
           <td>NeXTSTEP</td>
@@ -692,7 +698,7 @@
       </dl>
       <p class="aliases">Also accepts: system.css markup (<code>ul[role=menu-bar]</code>, <code>[role=menu-item]</code>, <code>li.divider</code>).</p>
       <details class="evidence-details">
-        <summary>Evidence (33)</summary>
+        <summary>Evidence (34)</summary>
       <table class="evidence">
         <caption>Where each value comes from</caption>
         <thead><tr><th scope="col">Era</th><th scope="col">Value</th><th scope="col">Status</th><th scope="col">Source</th></tr></thead>
@@ -873,9 +879,15 @@
         </tr>
 <tr>
           <td>NeXTSTEP</td>
-          <td>A highlighted cell turns white</td>
-          <td><span class="status status-inferred">Inferred</span></td>
-          <td><code>AI System 6 69-nextstep-appearance.css (--menu-item-active-bg)</code><br><span class="upstream">not captured</span></td>
+          <td>A highlighted cell turns white, bevel kept; its arrow's light edge turns #aaaaaa</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, NeXTStep 3.0 in Infinite Mac (frames in .fidelity/ns30), frame info-open (the Info submenu open)); tooling/nx-art.py check</code><br><span class="upstream">fidelity nx-menu-cell-lit</span></td>
+        </tr>
+<tr>
+          <td>NeXTSTEP</td>
+          <td>A submenu hangs right against the main menu, its title one title-bar height above the chosen cell; its left column is #555555</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, NeXTStep 3.0 in Infinite Mac (frames in .fidelity/ns30), frame info-open (the Info submenu open))</code><br><span class="upstream">fidelity nx-submenu-join</span></td>
         </tr>
 <tr>
           <td>NeXTSTEP</td>
@@ -1051,9 +1063,9 @@
         </tr>
 <tr>
           <td>NeXTSTEP</td>
-          <td>Push button: #aaaaaa face, no outline, a bevel of white top and left, black then #555555 bottom and right; Helvetica 12; 24px tall</td>
-          <td><span class="status status-inferred">Inferred</span></td>
-          <td><code>AI System 6 69-nextstep-appearance.css (P31, --btn-shadow)</code><br><span class="upstream">AI System 6 Theme Lab default-ok (authored)</span></td>
+          <td>Push button: #aaaaaa face, no outline, a bevel of white top and left, #555555 then black bottom and right (black keeps the top-right and bottom-left corners); 24px tall</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, NeXTStep 3.0 in Infinite Mac (frames in .fidelity/ns30), frame prefs-dock (Workspace Manager Preferences, Dock), Revert and Set, 63x24)</code><br><span class="upstream">fidelity nx-button-disabled</span></td>
         </tr>
 <tr>
           <td>NeXTSTEP</td>
@@ -1063,15 +1075,15 @@
         </tr>
 <tr>
           <td>NeXTSTEP</td>
-          <td>Default button: no ring; the return mark after the label</td>
-          <td><span class="status status-inferred">Inferred</span></td>
-          <td><code>AI System 6 69-nextstep-appearance.css (NS04, --btn-default-return-mark)</code><br><span class="upstream">NeXTSTEP User Interface Guidelines, Release 3, ch. 7 (buttons)</span></td>
+          <td>Default button: no ring; the 15x10 embossed return mark 5px from the right, drawn the same when the button is dimmed</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, NeXTStep 3.0 in Infinite Mac (frames in .fidelity/ns30), frame prefs-dock (Workspace Manager Preferences, Dock), Set); tooling/nx-art.py check</code><br><span class="upstream">NeXTSTEP User Interface Guidelines, Release 3 p.139; fidelity nx-default-disabled</span></td>
         </tr>
 <tr>
           <td>NeXTSTEP</td>
           <td>Disabled: the label #555555, the bevel kept</td>
-          <td><span class="status status-inferred">Inferred</span></td>
-          <td><code>AI System 6 69-nextstep-appearance.css (--system-disabled-fg)</code><br><span class="upstream">not captured</span></td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, NeXTStep 3.0 in Infinite Mac (frames in .fidelity/ns30), frame prefs-dock (Workspace Manager Preferences, Dock), Revert and Set)</code><br><span class="upstream">fidelity nx-button-disabled</span></td>
         </tr>
 <tr>
           <td>NeXTSTEP</td>
@@ -1167,9 +1179,9 @@
         </tr>
 <tr>
           <td>NeXTSTEP</td>
-          <td>Switch: a 12px raised square (#555555 border, white and #555555 bevel) on #aaaaaa; on, a black check</td>
-          <td><span class="status status-inferred">Inferred</span></td>
-          <td><code>AI System 6 69-nextstep-appearance.css (P38, --choice-*)</code><br><span class="upstream">AI System 6 Theme Lab checkbox-checked (authored)</span></td>
+          <td>Switch: a 15x15 raised square (white top and left, #555555 then black bottom and right); on, an embossed check</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, NeXTStep 3.0 in Infinite Mac (frames in .fidelity/ns30), frame prefs-dock (Workspace Manager Preferences, Dock), the Dock list's switches); tooling/nx-art.py check</code><br><span class="upstream">fidelity nx-switch-on, nx-switch-off; AI System 6's 12px switch corrected</span></td>
         </tr>
         </tbody>
       </table>
@@ -1469,9 +1481,9 @@
         </tr>
 <tr>
           <td>NeXTSTEP</td>
-          <td>Pop-up list: a push button with the raised 11x8 bar mark 5px from its right; no frame of its own</td>
-          <td><span class="status status-inferred">Inferred</span></td>
-          <td><code>AI System 6 69-nextstep-appearance.css (P33, --system-select-arrow-bg)</code><br><span class="upstream">AI System 6 Theme Lab popup-normal (authored)</span></td>
+          <td>Pop-up list: a 20px push button with the raised 11x8 bar mark 4px from its right and 5px from its top; no frame of its own</td>
+          <td><span class="status status-measured">Measured</span></td>
+          <td><code>clio.css capture, NeXTStep 3.0 in Infinite Mac (frames in .fidelity/ns30), frame prefs-dock (Workspace Manager Preferences, Dock), the Dock pop-up, 130x20); tooling/nx-art.py check</code><br><span class="upstream">fidelity nx-popup</span></td>
         </tr>
         </tbody>
       </table>

@@ -214,6 +214,43 @@ Reference: GUIdebook Mac OS 9.0 captures, cropped by AI System 6 (`AIS6_DIR`).
 | checkbox-unchecked | 12×12 | 100.0% | 100.0% | 0.0% | 0 |
 | selected-tab | 103×24 | 100.0% | 100.0% | 0.0% | 0 |
 
+## NeXTSTEP
+
+Reference: NeXTStep 3.0 running in Infinite Mac (the Previous emulator), the 1120×832 canvas
+read 1:1 (frames in `.fidelity/ns30`). Infinite Mac has no NeXTSTEP 3.3; 3.0 is the nearest
+real 3.x system it runs. Helvetica text is masked: Display PostScript set it 1-bit, and the
+browser's Helvetica cannot match it (D3); its rows are checked by eye.
+
+| Specimen | Size | same | exact | off | mean |
+| --- | --- | ---: | ---: | ---: | ---: |
+| nx-menu-title | 93×22 | 100.0% | 100.0% | 0.0% | 0 |
+| nx-menu-cell | 93×20 | 100.0% | 100.0% | 0.0% | 0 |
+| nx-titlebar-left | 40×23 | 100.0% | 100.0% | 0.0% | 0 |
+| nx-titlebar-right | 26×23 | 100.0% | 100.0% | 0.0% | 0 |
+| nx-resizebar-left | 40×9 | 100.0% | 100.0% | 0.0% | 0 |
+| nx-resizebar-right | 40×9 | 100.0% | 100.0% | 0.0% | 0 |
+| nx-close | 27×23 | 100.0% | 100.0% | 0.0% | 0 |
+| nx-titlebar-main | 16×23 | 100.0% | 100.0% | 0.0% | 0 |
+| nx-popup | 130×20 | 100.0% | 100.0% | 0.0% | 0 |
+| nx-button-disabled | 63×24 | 100.0% | 100.0% | 0.0% | 0 |
+| nx-default-disabled | 63×24 | 100.0% | 100.0% | 0.0% | 0 |
+| nx-switch-on | 15×15 | 100.0% | 100.0% | 0.0% | 0 |
+| nx-switch-off | 15×15 | 100.0% | 100.0% | 0.0% | 0 |
+| nx-submenu-join | 13×62 | 100.0% | 100.0% | 0.0% | 0 |
+| nx-menu-cell-lit | 93×20 | 100.0% | 100.0% | 0.0% | 0 |
+
+Reference: AI System 6's own Theme Lab tiles for its NeXTSTEP appearance. AI System 6 authored
+them (it had no native frame), so they check agreement with the values ported from it, not
+fidelity; where they and the NeXTStep 3.0 frames disagree, the frames win.
+
+| Specimen | Size | same | exact | off | mean |
+| --- | --- | ---: | ---: | ---: | ---: |
+| nx-ais6-titlebar | 200×22 | 100.0% | 100.0% | 0.0% | 0 |
+| nx-ais6-default-ok | 82×24 | 63.8% | 63.8% | 36.2% | 46.58 |
+| nx-ais6-scroll-thumb | 18×32 | 74.1% | 74.1% | 25.9% | 24.05 |
+| nx-ais6-popup-end | 14×19 | 29.3% | 29.3% | 70.7% | 86.28 |
+| nx-ais6-checkbox | 12×12 | 24.3% | 29.9% | 62.5% | 70.99 |
+
 ## Chinese, Japanese and Korean
 
 Reference: KanjiTalk 7.5.3, and Mac OS 9.0 with the Chinese Language Kits from its install CD,

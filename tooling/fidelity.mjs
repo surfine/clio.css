@@ -405,6 +405,23 @@ specimens.push(
   // title bar, the miniaturize button in the left one; File Viewer has no close button.
   NX("nx-titlebar-left", nxWindow(604, "File Viewer"), [0, 0, 40, 23], "boot1", [152, 12, 40, 23]),
   NX("nx-titlebar-right", nxWindow(604, "File Viewer"), [578, 0, 26, 23], "boot1", [730, 12, 26, 23]),
+  // Workspace Manager Preferences (frame prefs-dock): the panel's close button, the File Viewer
+  // behind it now the main window, the pop-up list, the two dimmed buttons (Set is the Return
+  // button), the switches of the Dock list. Labels are masked (Helvetica, D3).
+  // The File Viewer's resize bar and its two ends (frame boot1, rows 471-479).
+  NX("nx-resizebar-left", nxWindow(604, "File Viewer", '<button class="shade" aria-label="Miniaturize"></button><button class="resize" aria-label="Resize"></button>'), [0, 63, 40, 9], "boot1", [152, 471, 40, 9]),
+  NX("nx-resizebar-right", nxWindow(604, "File Viewer", '<button class="shade" aria-label="Miniaturize"></button><button class="resize" aria-label="Resize"></button>'), [564, 63, 40, 9], "boot1", [716, 471, 40, 9]),
+  NX("nx-close", nxWindow(395, "Prefs", '<button class="close" aria-label="Close"></button>'), [368, 0, 27, 23], "prefs-dock", [986, 112, 27, 23]),
+  NX("nx-titlebar-main", nxWindow(604, "File Viewer").replace('class="window"', 'class="window main"'), [588, 0, 16, 23], "prefs-dock", [740, 12, 16, 23]),
+  NX("nx-popup", `<div style="padding:12px;background:#aaa"><select id="s" style="width:130px"><option>Dock</option></select></div>`, [0, 0, 130, 20], "prefs-dock", [754, 139, 130, 20], { mask: [[5, 3, 45, 14]] }),
+  NX("nx-button-disabled", `<div style="padding:12px;background:#aaa"><button id="s" disabled style="width:63px;min-width:0">Revert</button></div>`, [0, 0, 63, 24], "prefs-dock", [907, 303, 63, 24], { mask: [[10, 4, 40, 15]] }),
+  NX("nx-default-disabled", `<div style="padding:12px;background:#aaa"><button class="default" id="s" disabled style="width:63px;min-width:0">Set</button></div>`, [0, 0, 63, 24], "prefs-dock", [907, 336, 63, 24], { mask: [[10, 4, 30, 15]] }),
+  NX("nx-switch-on", `<div style="padding:12px;background:#aaa"><input type="checkbox" id="s" checked></div>`, [0, 0, 15, 15], "prefs-dock", [650, 194, 15, 15]),
+  NX("nx-switch-off", `<div style="padding:12px;background:#aaa"><input type="checkbox" id="s"></div>`, [0, 0, 15, 15], "prefs-dock", [650, 224, 15, 15]),
+  // The Info submenu open from the main menu (frame info-open): where it hangs, and the
+  // highlighted cell.
+  NX("nx-submenu-join", nxMenu.replace('<li role="none"><button role="menuitem" aria-haspopup="true">Info</button></li>', '<li role="none" class="open"><button role="menuitem" aria-haspopup="true" aria-expanded="true">Info</button><ul class="menu" role="menu" aria-label="Info"><li role="none"><button role="menuitem">Info Panel...</button></li><li role="none"><button role="menuitem">Legal...</button></li></ul></li>'), [86, 0, 13, 62], "info-open", [86, 0, 13, 62]),
+  NX("nx-menu-cell-lit", nxMenu.replace('<li role="none"><button role="menuitem" aria-haspopup="true">Info</button></li>', '<li role="none" class="open"><button role="menuitem" aria-haspopup="true" aria-expanded="true">Info</button></li>'), [0, 22, 93, 20], "info-open", [0, 22, 93, 20], { mask: [[4, 3, 30, 14], [40, 9, 12, 11]] }),
   AX("nx-ais6-titlebar", nxWindow(476, ""), [30, 1, 200, 22], "active-titlebar", [0, 0, 200, 22]),
   AX("nx-ais6-default-ok", `<div style="padding:12px;background:#aaa"><button class="default" id="s" style="width:82px">OK</button></div>`, [0, 0, 82, 24], "default-ok", [0, 0, 82, 24], { mask: [[20, 4, 50, 16]] }),
   AX("nx-ais6-scroll-thumb", `<div class="clio-scroll" id="s" style="width:120px;height:120px;overflow-y:scroll;overflow-x:hidden;background:#fff"><div style="height:300px"></div></div>`, [102, 0, 18, 32], "scroll-thumb", [0, 0, 18, 32]),
