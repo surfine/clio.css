@@ -1,10 +1,10 @@
 // End-to-end proof for clio.sounds with real packs (built by `npm run soundset` into the
 // git-ignored packs/): a page loads a set and an alert list, clio.js plays a few sounds,
-// and the page's own Web Audio output is recorded (the tap tooling/emulator/drive.mjs
+// and the page's own Web Audio output is recorded (the tap tooling/emulator/drive.ts
 // uses) and compared with the decoded WAV by tooling/soundcompare.py: the right sound, at
 // the manifest's gain, at the sound's own pitch.
-//   node tooling/sound-proof.mjs [set-slug] [code ...]     (defaults: platinum-sounds tabp mnuo)
-//   CLIO_ENGINE=webkit|firefox node tooling/sound-proof.mjs
+//   node tooling/sound-proof.ts [set-slug] [code ...]     (defaults: platinum-sounds tabp mnuo)
+//   CLIO_ENGINE=webkit|firefox node tooling/sound-proof.ts
 import { createServer } from "node:http";
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from "node:fs";
 import { join, dirname } from "node:path";

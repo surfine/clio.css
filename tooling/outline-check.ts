@@ -1,7 +1,7 @@
 // The outline clio.js drags, against the pixels a real drag inverts: for each era, the
 // pixels that differ between an emulator frame before the drag and one during it (less
 // the pointer) must be exactly the pixels clio.js's outline inverts on a black page.
-//   CLIO_ENGINE=chromium|webkit|firefox node tooling/outline-check.mjs
+//   CLIO_ENGINE=chromium|webkit|firefox node tooling/outline-check.ts
 // Frames (git-ignored, see tooling/emulator/measure-classic.sh): .fidelity/system6/window-drag*.png
 // (System 6.0.8, Macintosh HD dragged by 80,113), .fidelity/system7/window-drag*.png (System
 // 7.5.3, Infinite HD dragged by 80,116), .fidelity/platinum9/window-drag*.png (Mac OS 9.0, the same).

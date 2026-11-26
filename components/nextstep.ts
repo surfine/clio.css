@@ -1,10 +1,10 @@
 import type { Component, Evidence } from "./types.ts";
 
 // NeXTSTEP 3.3 (D14): the evidence rows for the shared components, keyed by
-// component id, and the components only NeXTSTEP has. index.mjs merges both.
+// component id, and the components only NeXTSTEP has. index.ts merges both.
 // Sources:
 //   NX30   NeXTStep 3.0 running in Infinite Mac (the Previous emulator), its 1120x832
-//          canvas read 1:1 by tooling/emulator/drive.mjs; frames stay in .fidelity/ns30.
+//          canvas read 1:1 by tooling/emulator/drive.ts; frames stay in .fidelity/ns30.
 //          Infinite Mac has no 3.3; the owner accepted 3.0 as the source for 3.3's look (D15), so a
 //          row measured there names 3.0.
 //   AIS6   AI System 6's 69-nextstep-appearance.css, ported as is: AI System 6 never

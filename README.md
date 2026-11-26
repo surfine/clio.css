@@ -10,7 +10,7 @@
 <img src="assets/eras@2x.png" width="760" alt="The same window and alert drawn by clio.css in System 6, System 7, Drawing Board, Platinum and NeXTSTEP">
 
 The same markup in four eras, rendered by `dist/clio.css` in Chromium
-([`tooling/readme-eras.mjs`](tooling/readme-eras.mjs); 1x: [`assets/eras.png`](assets/eras.png)).
+([`tooling/readme-eras.ts`](tooling/readme-eras.ts); 1x: [`assets/eras.png`](assets/eras.png)).
 
 Docs and live examples: https://surfine.github.io/clio.css/
 
@@ -349,14 +349,14 @@ Firefox gets the era's colours only, or full scroll bars with clio.js.
 
 ```bash
 npm install
-npm run build      # dist/, docs/, llms.txt, EVIDENCE.md from src/ and components/index.mjs
+npm run build      # dist/, docs/, llms.txt, EVIDENCE.md from src/ and components/index.ts
 npm test           # build + static checks
 npm run fidelity   # pixel check (needs a local AI System 6 checkout)
 ```
 
 Every new or changed value needs an evidence row with an honest status; see
 [AGENTS.md](AGENTS.md). How the eras were measured: [LESSONS.md](LESSONS.md). What is
-next: [ROADMAP.md](ROADMAP.md). `node tooling/readme-eras.mjs` re-renders the README image.
+next: [ROADMAP.md](ROADMAP.md). `node tooling/readme-eras.ts` re-renders the README image.
 
 ## Licence
 

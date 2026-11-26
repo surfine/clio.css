@@ -1,6 +1,6 @@
 // Long-running emulator driver for Infinite Mac (https://infinitemac.org), the
 // tool every clio.css measurement since 0.9 was taken with. Usage:
-//   node tooling/emulator/drive.mjs "https://infinitemac.org/1999/Mac%20OS%209.0" .fidelity/run [w h]
+//   node tooling/emulator/drive.ts "https://infinitemac.org/1999/Mac%20OS%209.0" .fidelity/run [w h]
 //   tooling/emulator/d.sh .fidelity/run "click 18 9" "wait 500" "shot apple-menu"
 // Frames land in <dir> (keep them under .fidelity/, which git ignores: they are
 // Apple's screens and are never committed). See LESSONS.md.

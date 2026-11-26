@@ -359,6 +359,8 @@ export function renderEvidence({ pkg, components }: { pkg: PackageInfo; componen
   const counts = components
     .flatMap((c) => c.evidence)
     .reduce<Record<string, number>>((m, e) => { m[e.status] = (m[e.status] || 0) + 1; return m; }, {});
+  // P1 must leave the generated files byte-identical, so this sentence still names the
+  // pre-migration path; P3 updates it when the artefacts are allowed to change.
   return `# Evidence
 
 Generated from \`components/index.mjs\` by \`npm run build\`; edit there.

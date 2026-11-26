@@ -1,7 +1,7 @@
 #!/bin/bash
 # The behaviour measurements of the Classic phase's close (2026-11-14), as driver
 # commands. Start a driver per system, wait for its desktop, then run that section:
-#   node tooling/emulator/drive.mjs "https://infinitemac.org/1991/System%206.0.8" .fidelity/m6 &
+#   node tooling/emulator/drive.ts "https://infinitemac.org/1991/System%206.0.8" .fidelity/m6 &
 #   tooling/emulator/measure-classic.sh system6 .fidelity/m6
 # Frames land in the run folder (git-ignored); copy the ones a specimen names into
 # .fidelity/<era>/ (named in the comments). Coordinates are Infinite Mac's screens.
@@ -42,7 +42,7 @@ platinum)
   $S/d.sh $D "cmd q" "wait 2000"; $S/panel.sh $D 83 appearance
   $S/d.sh $D "click 372 110" "wait 2500" "move 420 152" "wait 400" "down" "wait 1200" "move 700 152" "wait 800" "shot fonts-popup-open" "move 700 400" "up" ;;
 drawingboard-install)
-  # Mac OS 8.5: drop the theme (zip built as tooling/capture-drawingboard.mjs builds it, passed as $3),
+  # Mac OS 8.5: drop the theme (zip built as tooling/capture-drawingboard.ts builds it, passed as $3),
   # route it into the System Folder, restart, choose it in Appearance
   $S/d.sh $D "dropzip $3" "wait 15000" "click 753 228" "wait 800" "cmd o" "wait 4000" "click 45 88" "wait 800" "cmd o" "wait 4000" "click 45 88" "wait 800" "cmd o" "wait 4000" "click 45 88" "wait 800" "cmd o" "wait 4000"
   $S/d.sh $D "slowdrag 200 33 560 336" "wait 1000" "click 737 55" "wait 800" "cmd o" "wait 4000" "slowdrag 407 388 193 152" "wait 4000" "key Enter" "wait 8000"

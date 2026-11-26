@@ -6,7 +6,7 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 import playwright from "playwright";
 const css = pathToFileURL(join(root, "dist/clio.css")).href;
-const win = (title, body) => `<div class="window" style="width:360px">
+const win = (title: string, body: string): string => `<div class="window" style="width:360px">
   <div class="title-bar"><button class="close" aria-label="Close"></button><h2 class="title">${title}</h2><button class="resize" aria-label="Zoom"></button><button class="shade" aria-label="Collapse"></button></div>
   <div class="details-bar"><span>3 items</span><span>clio.css</span></div>
   <div class="window-pane" style="height:250px;font-size:12px">${body}</div></div>`;

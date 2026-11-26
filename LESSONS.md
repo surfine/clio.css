@@ -7,7 +7,7 @@ starts from the method, not from memory. What is still open is in [ROADMAP.md](R
 ## 1. The rule that made it work
 
 Every value is either measured from the real system or labelled as something else.
-`components/index.mjs` records each claim with a status: **measured** (read from real
+`components/index.ts` records each claim with a status: **measured** (read from real
 pixels or real timing), **inferred** (reasoned from documents or a neighbouring era),
 **adapted** (a deliberate change for the web: focus rings, touch sizes, keyboard menus),
 **third-party**. EVIDENCE.md and COVERAGE.md are generated from it. When a value cannot
@@ -19,7 +19,7 @@ be measured, say so in the row; do not round an inference up to a measurement.
 
 Infinite Mac (infinitemac.org) runs the real systems in the browser: System 6.0.8,
 System 7.5.3, Mac OS 8.5 (with the 8.5b6 Drawing Board theme dropped in), Mac OS 9.0.
-`tooling/emulator/drive.mjs` keeps one Playwright page on it and reads commands from a
+`tooling/emulator/drive.ts` keeps one Playwright page on it and reads commands from a
 file, so a measurement is a short script of moves, clicks and shots
 (`tooling/emulator/d.sh`). The canvas is read 1:1 with `toDataURL`, never a screenshot of
 the page.
@@ -53,7 +53,7 @@ Emulator quirks that cost time:
 
 ### The pixel check
 
-`tooling/fidelity.mjs` renders each specimen and compares a crop with the same crop of a
+`tooling/fidelity.ts` renders each specimen and compares a crop with the same crop of a
 captured frame: **same** (identical pixels) is the target, **exact** (≤ 8/255) is not
 enough. Masks remove the pointer from held-state frames. `FIDELITY_DPR=2|3` renders at
 that ratio and compares with the reference magnified by nearest neighbour;
@@ -61,7 +61,7 @@ that ratio and compares with the reference magnified by nearest neighbour;
 state (a pressed arrow, a dragged box, an open menu) for the shot. 127 specimens, all but
 Drawing Board's open pop-up identical at 1x in Chromium.
 
-`tooling/behaviour.mjs` (`npm run behaviour`) drives clio.js in all three engines: 145 checks
+`tooling/behaviour.ts` (`npm run behaviour`) drives clio.js in all three engines: 145 checks
 of held controls, keys, menus, pop-ups, scroll bars, window moves, cursors, sounds.
 A behaviour test must look at the result the user sees: a test that only read
 `--clio-picker-shift` passed while the open picker sat in the page's corner.
@@ -154,7 +154,7 @@ A behaviour test must look at the result the user sees: a test that only read
 - QuickDraw's patterns keep to the *screen*: lanes, the drag gray. Keep them to the page.
 - A dragged outline is the frame of the window's structure region: the frame and the drop
   shadow, notches included (the shadow starting 2px in makes Platinum's band step in).
-  Compare outlines as sets of inverted pixels (`tooling/outline-check.mjs`), not as crops.
+  Compare outlines as sets of inverted pixels (`tooling/outline-check.ts`), not as crops.
 - Read every frame you would compare as XOR: the System 6 scroll box outline is dkGray
   XOR, which over the ltGray lane comes out solid black.
 - Theme files have pictures for states you may not think of (Drawing Board's paired Smart
@@ -217,7 +217,7 @@ down.
   above the baseline to 1px below). A localized system's system font is the script's font:
   KanjiTalk draws Latin chrome in Osaka, which is why the CJK fonts lead every stack.
 - **Comparing a stand-in font honestly.** Glyphs that are not Apple's cannot match pixel for
-  pixel: an `ink` box in `tooling/fidelity.mjs` leaves a run out of the pixel count and checks
+  pixel: an `ink` box in `tooling/fidelity.ts` leaves a run out of the pixel count and checks
   the rows that carry ink instead. Specimens must force the stand-in (`--clio-font-cjk`):
   current macOS has an Osaka, which the stack rightly takes first.
 - **Metrics of a fallback font move the baseline.** WebKit and Firefox took the stand-in as
@@ -226,7 +226,7 @@ down.
   file (`tooling/cjk-fonts.py`), not only in CSS.
 - **Load per language.** A face is fetched only when text in its `unicode-range` meets a stack
   that names it, so naming the families only in `--clio-font-cjk` under `:lang()` keeps every
-  other page at zero bytes (`tooling/behaviour.mjs` checks it). A frequency-sliced
+  other page at zero bytes (`tooling/behaviour.ts` checks it). A frequency-sliced
   `unicode-range` would have cost about 100 KB of CSS; the national character set per file
   is both period-true and small (170–320 KB).
 - **clio.js menus hang off the era's root**, outside the `<select>`: copy any attribute CSS
@@ -262,7 +262,7 @@ enters the repo (ROMs, dumps and disassembly stay in a scratch folder).
 
 ## 8. Process
 
-- Never run `tooling/build.mjs` while a pixel or behaviour run is going: the run reads `dist/`
+- Never run `tooling/build.ts` while a pixel or behaviour run is going: the run reads `dist/`
   mid-way and its numbers mix two builds. Run checks in the background, edit only files the run
   does not read, and rerun after any build.
 - When several sessions share one checkout, `git fetch` before merging and expect conflicts only in
@@ -273,14 +273,14 @@ enters the repo (ROMs, dumps and disassembly stay in a scratch folder).
 - An absolutely placed `::after` counts its offsets from the padding box, inside the border:
   `right: -1px` still lands on the frame's own column.
 - A specimen's backdrop belongs in the markup, not in a mask: wrap it (`beside()` in
-  `fidelity.mjs`) with the colour or pattern beside the window, and give the wrapper room for the
+  `fidelity.ts`) with the colour or pattern beside the window, and give the wrapper room for the
   shadow. A data-URI picture inside a `style="..."` attribute must be fully percent-encoded and
   unquoted.
 - A driving script that clicks by coordinates breaks when the emulator restores windows elsewhere:
   take a screenshot after each step that moves windows, and fall back to doing it by hand.
 
 - Work in batches that each end pushed and green: build, `npm test`, the pixel check and
-  `npm run behaviour` in all three engines, `tooling/outline-check.mjs`, then push and wait
+  `npm run behaviour` in all three engines, `tooling/outline-check.ts`, then push and wait
   for GitHub Pages to serve the new file.
 - Keep a task note (`.notes/`, git-ignored) with each measurement as it is taken; the
   conversation will be compacted, the note will not.

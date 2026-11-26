@@ -14,10 +14,10 @@ import playwright from "playwright";
 const css = pathToFileURL(join(root, "dist/clio.css")).href;
 const js = pathToFileURL(join(root, "dist/clio.js")).href;
 const nxcss = pathToFileURL(join(root, "dist/clio.nextstep.css")).href;
-const eras = [["system6", "System 6"], ["system7", "System 7"], ["drawingboard", "Drawing Board"], ["platinum", "Platinum"], ["nextstep", "NeXTSTEP"]];
-const attr = (t) => t.replace(/&/g, "&amp;").replace(/"/g, "&quot;");
+const eras: [string, string][] = [["system6", "System 6"], ["system7", "System 7"], ["drawingboard", "Drawing Board"], ["platinum", "Platinum"], ["nextstep", "NeXTSTEP"]];
+const attr = (t: string): string => t.replace(/&/g, "&amp;").replace(/"/g, "&quot;");
 
-const strip = ([era, name]) => `<section data-era="${era}">
+const strip = ([era, name]: [string, string]): string => `<section data-era="${era}">
   <div class="window" style="width: 112px">
     <div class="title-bar">
       <button class="close" aria-label="Close"></button>
@@ -42,7 +42,7 @@ const STYLE = `section { background: var(--clio-desktop); display: grid; grid-te
   .window-pane { display: flex; flex-direction: column; gap: 8px; padding: 10px; }
   .window-pane progress { width: 100%; }
   .buttons { display: flex; justify-content: flex-end; }`;
-const column = (e) => e[0] !== "nextstep" ? strip(e) : `<iframe title="${e[1]}" srcdoc="${attr(`<!doctype html><html lang="en"><head><meta charset="utf-8"><link rel="stylesheet" href="${nxcss}"><style>html, body { margin: 0; height: 100%; } ${STYLE}</style></head><body>${strip(e)}</body></html>`)}"></iframe>`;
+const column = (e: [string, string]): string => e[0] !== "nextstep" ? strip(e) : `<iframe title="${e[1]}" srcdoc="${attr(`<!doctype html><html lang="en"><head><meta charset="utf-8"><link rel="stylesheet" href="${nxcss}"><style>html, body { margin: 0; height: 100%; } ${STYLE}</style></head><body>${strip(e)}</body></html>`)}"></iframe>`;
 const html = `<!doctype html><html lang="en"><head><meta charset="utf-8">
 <link rel="stylesheet" href="${css}"><script src="${js}" defer></script>
 <style>
@@ -68,7 +68,7 @@ writeFileSync(file, html);
 const browser = await playwright.chromium.launch();
 const page = await browser.newPage({ viewport: { width: 640, height: 320 }, deviceScaleFactor: 2 });
 await page.goto(pathToFileURL(file).href);
-await page.evaluate(async () => { await document.fonts.ready; for (const f of document.querySelectorAll("iframe")) await f.contentDocument.fonts.ready; await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))); });
+await page.evaluate(async () => { await document.fonts.ready; for (const f of document.querySelectorAll("iframe")) await f.contentDocument!.fonts.ready; await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))); });
 const out = join(root, "assets/social-preview.png");
 await page.locator("#card").screenshot({ path: out, animations: "disabled", caret: "hide" });
 await browser.close();

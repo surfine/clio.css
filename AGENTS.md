@@ -14,9 +14,13 @@ For AI coding agents using or changing this repository.
 
 ## Changing this repository
 
-- Sources: `src/*.css` (concatenated in file-name order) and `components/index.mjs`
+- Sources: `src/*.css` (concatenated in file-name order) and `components/index.ts`
   (docs, `components.json`, `llms.txt`, `llms-full.txt` and `EVIDENCE.md` are generated
   from it). Never hand-edit `dist/`, `docs/`, `llms.txt` or `EVIDENCE.md`.
+- Tooling and tests are TypeScript under `tooling/`, `test/` and `components/`, run
+  directly by Node 24 (type stripping: no build step, no `enum` or other syntax Node cannot
+  strip). Imports name the `.ts` file. `npx tsc --noEmit -p tsconfig.tooling.json` checks them
+  and `npm run lint` runs Biome over `tooling/` too.
 - clio.js and the sounds panel are TypeScript in `ts/` (strict; `npm install` first). The
   build emits them with `tsc` as plain scripts, not modules: keep each an IIFE that sets
   only `window.clio` / `window.clioSoundsPanel`. Their public types live in
@@ -24,7 +28,7 @@ For AI coding agents using or changing this repository.
   keeps the declaration and the code together. `npm run typecheck` checks without building.
 - After a change: `npm test` (build + static checks) must pass. For Platinum chrome,
   run `npm run fidelity` and do not let a specimen's exact-match share fall.
-- Every new or changed value needs an evidence row in `components/index.mjs` with an
+- Every new or changed value needs an evidence row in `components/index.ts` with an
   honest status: `measured` only when read from real pixels of the era (name the
   capture), `inferred` when reasoned, `adapted` for web-only changes, `third-party` for
   licensed art or fonts. An unmeasured value is never labelled measured.
@@ -61,4 +65,4 @@ For AI coding agents using or changing this repository.
   (or re-extract with `npm run capture:keycaps [-- geneva|geneva9|charcoal]` then
   `npm run build:font`, which needs Python with fontTools and brotli), never the WOFF2 by
   hand. Clio Sans '97 (Charcoal 12) comes from Mac OS 9.0's Key Caps, whose bar is 2px.
-- Keep `dist/clio.min.css` under the size budget in `test/check.mjs`.
+- Keep `dist/clio.min.css` under the size budget in `test/check.ts`.

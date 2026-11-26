@@ -2,9 +2,9 @@
 # CJK measurements (2026-11-14). Infinite Mac has one localized system, KanjiTalk 7.5.3;
 # Chinese and Korean come from the Language Kits on the Mac OS 9.0 install CD in
 # Infinite Mac's CD-ROM library, installed into the Mac OS 9.0 machine's own disk.
-#   node tooling/emulator/drive.mjs "https://infinitemac.org/1999/Mac%20OS%209.0" .fidelity/cjk9 &
+#   node tooling/emulator/drive.ts "https://infinitemac.org/1999/Mac%20OS%209.0" .fidelity/cjk9 &
 #   tooling/emulator/measure-cjk.sh lk-install .fidelity/cjk9
-#   node tooling/emulator/drive.mjs "https://infinitemac.org/1996/KanjiTalk%207.5.3" .fidelity/cjkt &
+#   node tooling/emulator/drive.ts "https://infinitemac.org/1996/KanjiTalk%207.5.3" .fidelity/cjkt &
 # Frames stay in the run folder (git-ignored). Coordinates are Infinite Mac's 800x600 screen
 # (pclick: the 1200x900 page).
 S=$(dirname $0); D=$2

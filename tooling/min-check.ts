@@ -1,6 +1,6 @@
 // The minified builds parse to the same rules as the full ones: every rule's selector
 // (as the browser serialises it) and declarations (whitespace and #abc/#aabbcc aside).
-//   node tooling/min-check.mjs        (Chromium, WebKit and Firefox through Playwright)
+//   node tooling/min-check.ts        (Chromium, WebKit and Firefox through Playwright)
 import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";

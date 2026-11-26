@@ -417,7 +417,7 @@ specimens.push(
 );
 
 // NeXTSTEP (dist/clio.nextstep.css). "nextstep": crops of NeXTStep 3.0 frames read 1:1 from
-// Infinite Mac (tooling/emulator/drive.mjs, frames in .fidelity/ns30; Infinite Mac has no 3.3).
+// Infinite Mac (tooling/emulator/drive.ts, frames in .fidelity/ns30; Infinite Mac has no 3.3).
 // "nextstep-ais6": AI System 6's five Theme Lab tiles, which AI System 6 authored itself (no
 // native frame behind them): a first-pass agreement check with the values ported from it.
 const nxdir = join(root, ".fidelity/ns30");

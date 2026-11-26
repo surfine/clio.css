@@ -43,7 +43,7 @@ const at = (x: number, y: number): [number, number] => [box.x + x + 0.5, box.y +
 const wait = (ms: number) => page.waitForTimeout(ms);
 const move = async (x: number, y: number) => { await page.mouse.move(...at(x, y), { steps: 4 }); await wait(150); };
 const click = async (x: number, y: number) => { await move(x, y); await page.mouse.down(); await wait(120); await page.mouse.up(); await wait(400); };
-const cmd = async (k: string, ms = 3000) => { await page.keyboard.down("Meta"); await wait(150); await page.keyboard.press(k); await wait(150); await page.keyboard.up("Meta"); await wait(ms); };
+const cmd = async (k: string, _ignoredMs?: number) => { await page.keyboard.down("Meta"); await wait(150); await page.keyboard.press(k); await wait(150); await page.keyboard.up("Meta"); await wait(3000); };
 const dump = async (name: string) => {
   const b64 = await page.evaluate(() => document.querySelector("canvas")!.toDataURL("image/png").split(",")[1]);
   writeFileSync(join(out, `${name}.png`), Buffer.from(b64, "base64"));

@@ -6,8 +6,8 @@
 // itself magnifies its art by nearest neighbour; the screenshot is saved as rendered,
 // with no resampling. Run `npm run build` first. Needs Playwright (installed here).
 //
-//   node tooling/readme-eras.mjs            two columns, two rows (fits GitHub at 1:1)
-//   node tooling/readme-eras.mjs --row      five columns in one row
+//   node tooling/readme-eras.ts            two columns, two rows (fits GitHub at 1:1)
+//   node tooling/readme-eras.ts --row      five columns in one row
 import { mkdirSync, writeFileSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
@@ -19,14 +19,14 @@ const row = process.argv.includes("--row");
 const css = pathToFileURL(join(root, "dist/clio.css")).href;
 const js = pathToFileURL(join(root, "dist/clio.js")).href;
 const nxcss = pathToFileURL(join(root, "dist/clio.nextstep.css")).href;
-const eras = [
+const eras: [string, string][] = [
   ["system6", "System 6"],
   ["system7", "System 7"],
   ["drawingboard", "Drawing Board"],
   ["platinum", "Platinum"],
   ["nextstep", "NeXTSTEP"],
 ];
-const attr = (t) => t.replace(/&/g, "&amp;").replace(/"/g, "&quot;");
+const attr = (t: string): string => t.replace(/&/g, "&amp;").replace(/"/g, "&quot;");
 
 const STYLE = `.cell { background: var(--clio-desktop); padding: 0 16px 20px; display: flex; flex-direction: column; gap: 16px; align-items: flex-start; height: 100%; box-sizing: border-box; }
   .label { margin: 0 -16px; align-self: stretch; padding: 4px 16px; background: #fff; color: #000;
@@ -35,7 +35,7 @@ const STYLE = `.cell { background: var(--clio-desktop); padding: 0 16px 20px; di
   .alert-box { margin-left: 20px; }`;
 
 // The README's Quick start window, then the alert from components.json ("dialog").
-const cell = (era, name) => `<section class="cell" data-era="${era}">
+const cell = (era: string, name: string): string => `<section class="cell" data-era="${era}">
   <p class="label">${name}</p>
   <div class="window" style="width: 320px">
     <div class="title-bar">
@@ -62,7 +62,7 @@ const cell = (era, name) => `<section class="cell" data-era="${era}">
 </section>`;
 
 // NeXTSTEP's cell: the same markup in a frame that loads clio.nextstep.css.
-const frame = (era, name) => `<iframe class="frame" title="${name}" srcdoc="${attr(`<!doctype html><html lang="en"><head><meta charset="utf-8"><link rel="stylesheet" href="${nxcss}"><script src="${js}" defer></script><style>html, body { margin: 0; background: #fff; } ${STYLE}</style></head><body>${cell(era, name)}</body></html>`)}"></iframe>`;
+const frame = (era: string, name: string): string => `<iframe class="frame" title="${name}" srcdoc="${attr(`<!doctype html><html lang="en"><head><meta charset="utf-8"><link rel="stylesheet" href="${nxcss}"><script src="${js}" defer></script><style>html, body { margin: 0; background: #fff; } ${STYLE}</style></head><body>${cell(era, name)}</body></html>`)}"></iframe>`;
 const html = `<!doctype html><html lang="en"><head><meta charset="utf-8">
 <link rel="stylesheet" href="${css}"><script src="${js}" defer></script>
 <style>
@@ -79,14 +79,16 @@ const file = join(root, ".fidelity/readme-eras.html");
 writeFileSync(file, html);
 
 const browser = await playwright.chromium.launch();
-for (const [scale, out] of [[1, "assets/eras.png"], [2, "assets/eras@2x.png"]]) {
+const renders: [number, string][] = [[1, "assets/eras.png"], [2, "assets/eras@2x.png"]];
+for (const [scale, out] of renders) {
   const page = await browser.newPage({ viewport: { width: 1600, height: 900 }, deviceScaleFactor: scale });
   await page.goto(pathToFileURL(file).href);
   await page.evaluate(async () => { await document.fonts.ready; await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))); });
   // the frame takes its row's height, its own content at least
-  await page.evaluate(async () => { for (const f of document.querySelectorAll("iframe")) { await f.contentDocument.fonts.ready; f.style.minHeight = f.contentDocument.body.scrollHeight + "px"; } await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))); });
+  await page.evaluate(async () => { for (const f of document.querySelectorAll("iframe")) { const d = f.contentDocument!; await d.fonts.ready; f.style.minHeight = d.body.scrollHeight + "px"; } await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))); });
   await page.locator("#shot").screenshot({ path: join(root, out), animations: "disabled", caret: "hide" });
   const size = await page.locator("#shot").boundingBox();
+  if (!size) throw new Error("#shot has no box");
   console.log(`wrote ${out} (${Math.round(size.width) * scale}x${Math.round(size.height) * scale})`);
   await page.close();
 }

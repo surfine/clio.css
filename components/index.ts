@@ -582,5 +582,5 @@ export const components: Component[] = [
   }
 ];
 
-// NeXTSTEP's rows on the shared components (components/nextstep.mjs).
+// NeXTSTEP's rows on the shared components (components/nextstep.ts).
 for (const c of components) c.evidence.push(...(nextstepRows[c.id] || []));
