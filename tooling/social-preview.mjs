@@ -3,17 +3,13 @@
 // dist/clio.nextstep.css in NeXTSTEP, on that
 // era's own desktop. One labelled column per era. Laid out at 640x320 and captured at 2x, where clio.css magnifies
 // its art by nearest neighbour, so every Mac pixel is a 2x2 block. Nothing is drawn by
-// hand. Run `npm run build` first. Needs Playwright (here or in AIS6_DIR).
-import { createRequire } from "node:module";
+// hand. Run `npm run build` first. Needs Playwright (installed here).
 import { mkdirSync, statSync, writeFileSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
-const ais6 = process.env.AIS6_DIR || "/Users/aaron/AI System 6";
-let playwright;
-for (const base of [join(root, "package.json"), join(ais6, "package.json")]) { try { playwright = createRequire(base)("playwright"); break; } catch {} }
-if (!playwright) { console.error("Playwright not found."); process.exit(2); }
+import playwright from "playwright";
 
 const css = pathToFileURL(join(root, "dist/clio.css")).href;
 const js = pathToFileURL(join(root, "dist/clio.js")).href;

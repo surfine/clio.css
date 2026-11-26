@@ -1,15 +1,12 @@
 // The minified builds parse to the same rules as the full ones: every rule's selector
 // (as the browser serialises it) and declarations (whitespace and #abc/#aabbcc aside).
 //   node tooling/min-check.mjs        (Chromium, WebKit and Firefox through Playwright)
-import { createRequire } from "node:module";
 import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
-let playwright;
-for (const base of [join(root, "package.json"), join(process.env.AIS6_DIR || "/Users/aaron/AI System 6", "package.json")]) { try { playwright = createRequire(base)("playwright"); break; } catch {} }
-if (!playwright) { console.error("Playwright not found (npm i -D playwright, or set AIS6_DIR)."); process.exit(2); }
+import playwright from "playwright";
 let failed = 0;
 for (const engine of ["chromium", "webkit", "firefox"]) {
   const browser = await playwright[engine].launch(); const page = await browser.newPage();

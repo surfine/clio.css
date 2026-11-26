@@ -5,9 +5,8 @@
 //
 //   AIS6_DIR=/path/to/AI\ System\ 6 npm run fidelity
 //
-// Needs Playwright with Chromium: installed here, or found in AIS6_DIR.
+// Needs Playwright with Chromium: installed here (AIS6_DIR points at reference tiles only).
 // Writes side-by-side images to .fidelity/ (git-ignored).
-import { createRequire } from "node:module";
 import { existsSync, mkdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
@@ -19,11 +18,7 @@ if (!existsSync(tiles)) {
   console.error(`No reference tiles at ${tiles}. Set AIS6_DIR to an AI System 6 checkout.`);
   process.exit(2);
 }
-let playwright;
-for (const base of [join(root, "package.json"), join(ais6, "package.json")]) {
-  try { playwright = createRequire(base)("playwright"); break; } catch {}
-}
-if (!playwright) { console.error("Playwright not found (npm i -D playwright, or point AIS6_DIR at a checkout that has it)."); process.exit(2); }
+import playwright from "playwright";
 
 // Each specimen: markup, the element to crop, the crop box, and the reference tile.
 // The Appearance control panel has no zoom box: close and WindowShade only.

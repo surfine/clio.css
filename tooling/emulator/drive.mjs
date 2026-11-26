@@ -15,15 +15,12 @@
 //  AudioContext's rate, as the emulator handed it to Web Audio) | ainfo (contexts, rates and nodes seen)
 //  (downloads: anything the page downloads, e.g. a file put in The Outside World > Uploads, lands in <dir>)
 //  quit
-import { createRequire } from "node:module";
 import { readFileSync, writeFileSync, appendFileSync, existsSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
-// Playwright from this repo, or from an AI System 6 checkout (AIS6_DIR), as tooling/fidelity.mjs.
+// Playwright from this repo.
 const root = join(dirname(fileURLToPath(import.meta.url)), "../..");
-let pw;
-for (const base of [join(root, "package.json"), join(process.env.AIS6_DIR || "/Users/aaron/AI System 6", "package.json")]) { try { pw = createRequire(base)("playwright"); break; } catch {} }
-if (!pw) { console.error("Playwright not found (npm i -D playwright, or set AIS6_DIR)."); process.exit(2); }
+import pw from "playwright";
 const [url, dir, W = "1200", H = "900"] = process.argv.slice(2);
 const log = (s) => appendFileSync(`${dir}/log`, s + "\n");
 writeFileSync(`${dir}/cmd`, ""); writeFileSync(`${dir}/log`, "");

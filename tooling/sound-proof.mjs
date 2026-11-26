@@ -5,7 +5,6 @@
 // the manifest's gain, at the sound's own pitch.
 //   node tooling/sound-proof.mjs [set-slug] [code ...]     (defaults: platinum-sounds tabp mnuo)
 //   CLIO_ENGINE=webkit|firefox node tooling/sound-proof.mjs
-import { createRequire } from "node:module";
 import { createServer } from "node:http";
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from "node:fs";
 import { join, dirname } from "node:path";
@@ -13,9 +12,7 @@ import { fileURLToPath } from "node:url";
 import { execFileSync } from "node:child_process";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
-let pw;
-for (const base of [join(root, "package.json"), join(process.env.AIS6_DIR || "/Users/aaron/AI System 6", "package.json")]) { try { pw = createRequire(base)("playwright"); break; } catch {} }
-if (!pw) { console.error("Playwright not found (npm i -D playwright, or set AIS6_DIR)."); process.exit(2); }
+import pw from "playwright";
 const [slug = "platinum-sounds", ...codesArg] = process.argv.slice(2);
 const codes = codesArg.length ? codesArg : ["tabp", "mnuo"];
 const setUrl = `/packs/sets/${slug}/manifest.json`, alertUrl = "/packs/alerts/platinum/manifest.json";

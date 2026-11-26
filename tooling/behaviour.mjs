@@ -1,19 +1,13 @@
 // Behaviour checks for clio.js in a real browser (Chromium through Playwright):
 // held controls, default and cancel keys, and the scroll bars it draws.
-//   npm run behaviour      (needs Playwright, here or in AIS6_DIR)
+//   npm run behaviour      (needs Playwright, installed here)
 //   CLIO_ENGINE=webkit|firefox npm run behaviour   (default chromium)
-import { createRequire } from "node:module";
 import { writeFileSync, mkdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
-const ais6 = process.env.AIS6_DIR || "/Users/aaron/AI System 6";
-let playwright;
-for (const base of [join(root, "package.json"), join(ais6, "package.json")]) {
-  try { playwright = createRequire(base)("playwright"); break; } catch {}
-}
-if (!playwright) { console.error("Playwright not found (npm i -D playwright, or set AIS6_DIR)."); process.exit(2); }
+import playwright from "playwright";
 
 const css = pathToFileURL(join(root, "dist/clio.css")).href;
 const js = pathToFileURL(join(root, process.env.CLIO_JS === "min" ? "dist/clio.min.js" : "dist/clio.js")).href;   // CLIO_JS=min checks the minified build

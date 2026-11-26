@@ -1,14 +1,10 @@
 // Renders assets/og.png (1200x630) with clio.css itself. Needs Playwright
-// (installed here or in AIS6_DIR, as for the pixel check).
-import { createRequire } from "node:module";
+// (installed here).
 import { writeFileSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
-const ais6 = process.env.AIS6_DIR || "/Users/aaron/AI System 6";
-let playwright;
-for (const base of [join(root, "package.json"), join(ais6, "package.json")]) { try { playwright = createRequire(base)("playwright"); break; } catch {} }
-if (!playwright) { console.error("Playwright not found."); process.exit(2); }
+import playwright from "playwright";
 const css = pathToFileURL(join(root, "dist/clio.css")).href;
 const win = (title, body) => `<div class="window" style="width:360px">
   <div class="title-bar"><button class="close" aria-label="Close"></button><h2 class="title">${title}</h2><button class="resize" aria-label="Zoom"></button><button class="shade" aria-label="Collapse"></button></div>

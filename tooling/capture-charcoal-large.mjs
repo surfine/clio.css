@@ -7,7 +7,6 @@
 //
 // The frames are Apple's screen pixels: evidence for measurement and tracing,
 // never committed or published.
-import { createRequire } from "node:module";
 import { mkdirSync, writeFileSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -16,10 +15,7 @@ const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const out = join(root, ".fidelity/platinum9");
 mkdirSync(out, { recursive: true });
 
-const ais6 = process.env.AIS6_DIR || "/Users/aaron/AI System 6";
-let playwright;
-for (const base of [join(root, "package.json"), join(ais6, "package.json")]) { try { playwright = createRequire(base)("playwright"); break; } catch {} }
-if (!playwright) { console.error("Playwright not found."); process.exit(2); }
+import playwright from "playwright";
 const browser = await playwright.chromium.launch();
 const page = await browser.newPage({ viewport: { width: 1200, height: 900 } });
 await page.goto("https://infinitemac.org/1999/Mac%20OS%209.0", { waitUntil: "domcontentloaded" });

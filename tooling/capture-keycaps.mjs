@@ -13,7 +13,6 @@
 // the pixel check, and are never committed or published. Infinite Mac draws
 // 1-bit black and white as #222222 and #eeeeee; the pixel check thresholds both
 // sides to pure black and white before comparing.
-import { createRequire } from "node:module";
 import { mkdirSync, writeFileSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -23,10 +22,7 @@ const FONT = process.argv[2] || "chicago";
 const OS9 = FONT === "charcoal";
 const out = join(root, OS9 ? ".fidelity/platinum9" : ".fidelity/system6");
 mkdirSync(out, { recursive: true });
-const ais6 = process.env.AIS6_DIR || "/Users/aaron/AI System 6";
-let playwright;
-for (const base of [join(root, "package.json"), join(ais6, "package.json")]) { try { playwright = createRequire(base)("playwright"); break; } catch {} }
-if (!playwright) { console.error("Playwright not found."); process.exit(2); }
+import playwright from "playwright";
 
 const browser = await playwright.chromium.launch();
 const page = await browser.newPage({ viewport: { width: 1200, height: 900 } });

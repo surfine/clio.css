@@ -4,21 +4,16 @@
 // in NeXTSTEP (in a frame of its own: that file is a page's whole stylesheet). Nothing is drawn by
 // hand: the image is a screenshot of the built library in Chromium. At 2x the library
 // itself magnifies its art by nearest neighbour; the screenshot is saved as rendered,
-// with no resampling. Run `npm run build` first. Needs Playwright (installed here or in
-// AIS6_DIR, as for the pixel check and tooling/og.mjs).
+// with no resampling. Run `npm run build` first. Needs Playwright (installed here).
 //
 //   node tooling/readme-eras.mjs            two columns, two rows (fits GitHub at 1:1)
 //   node tooling/readme-eras.mjs --row      five columns in one row
-import { createRequire } from "node:module";
 import { mkdirSync, writeFileSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
-const ais6 = process.env.AIS6_DIR || "/Users/aaron/AI System 6";
-let playwright;
-for (const base of [join(root, "package.json"), join(ais6, "package.json")]) { try { playwright = createRequire(base)("playwright"); break; } catch {} }
-if (!playwright) { console.error("Playwright not found."); process.exit(2); }
+import playwright from "playwright";
 
 const row = process.argv.includes("--row");
 const css = pathToFileURL(join(root, "dist/clio.css")).href;

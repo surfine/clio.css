@@ -11,7 +11,7 @@ import { readFileSync, writeFileSync, mkdirSync, readdirSync, copyFileSync, rmSy
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { gzipSync } from "node:zlib";
-import { createRequire } from "node:module";
+import * as esbuild from "esbuild";
 import { execFileSync } from "node:child_process";
 import { components, AIS6 } from "../components/index.mjs";
 import { renderSite, renderLlms, renderLlmsFull, renderEvidence, renderSitemap } from "./site.mjs";
@@ -161,10 +161,7 @@ const emitted = (f) => read(`.build/${f}`).replace(/^"use strict";\n/, "");   //
 write("dist/clio.js", emitted("clio.js").replace("0.11.0-dev", pkg.version));
 write("dist/clio-sounds-panel.js", emitted("clio-sounds-panel.js"));
 write("dist/clio.d.ts", read("types/clio.d.ts"));
-// clio.min.js: the same, minified by esbuild (a dev tool: here, or in AIS6_DIR as Playwright is).
-let esbuild;
-for (const base of [join(root, "package.json"), join(process.env.AIS6_DIR || "/Users/aaron/AI System 6", "package.json")]) { try { esbuild = createRequire(base)("esbuild"); break; } catch {} }
-if (!esbuild) { console.error("esbuild not found (npm i -D esbuild, or set AIS6_DIR): dist/clio.min.js not written."); process.exit(1); }
+// clio.min.js: the same, minified by esbuild (a dev dependency).
 write("dist/clio.min.js", esbuild.transformSync(read("dist/clio.js"), { minify: true, legalComments: "inline", target: "es2020" }).code);
 
 // Machine-readable component index.

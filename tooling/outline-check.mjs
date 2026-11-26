@@ -5,15 +5,12 @@
 // Frames (git-ignored, see tooling/emulator/measure-classic.sh): .fidelity/system6/window-drag*.png
 // (System 6.0.8, Macintosh HD dragged by 80,113), .fidelity/system7/window-drag*.png (System
 // 7.5.3, Infinite HD dragged by 80,116), .fidelity/platinum9/window-drag*.png (Mac OS 9.0, the same).
-import { createRequire } from "node:module";
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
-let playwright;
-for (const base of [join(root, "package.json"), join(process.env.AIS6_DIR || "/Users/aaron/AI System 6", "package.json")]) { try { playwright = createRequire(base)("playwright"); break; } catch {} }
-if (!playwright) { console.error("Playwright not found (npm i -D playwright, or set AIS6_DIR)."); process.exit(2); }
+import playwright from "playwright";
 const ENGINE = process.env.CLIO_ENGINE || "chromium";
 
 // era, frames, the window's frame rect on the screen (left, top, width, pane height), the
