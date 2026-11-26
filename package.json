@@ -75,6 +75,7 @@
     "build": "node tooling/build.mjs",
     "test": "node tooling/build.mjs && node test/check.mjs",
     "typecheck": "tsc -p . --noEmit",
+    "lint": "biome check",
     "fidelity": "node tooling/fidelity.mjs",
     "behaviour": "node tooling/build.mjs && node tooling/behaviour.mjs",
     "prepack": "node tooling/build.mjs && node test/check.mjs",
