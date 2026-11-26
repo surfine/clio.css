@@ -40,7 +40,7 @@ For AI coding agents using or changing this repository.
   `dist/clio.js` (a plain script that sets only `window.clio`) and `runtime/clio.ts` into
   `dist/clio.mjs` (exports `api` and `install`; importing installs nothing). esbuild bundles
   `dist/clio.min.js` from the same entry. The bundles drop comments; the modules keep them.
-  The sounds panel is still one file in `ts/`, emitted by `tsc` as a plain script setting
+  The sounds panel is one file, `packages/core/src/sounds-panel/clio-sounds-panel.ts`, emitted by `tsc` as a plain script setting
   `window.clioSoundsPanel`. Public types live in `types/clio.d.ts` (shipped as
   `dist/clio.d.ts`); `api = { … } satisfies ClioApi` keeps declaration and code together.
   `npm run typecheck` checks all of it without building.

@@ -13,9 +13,9 @@
     "verbatimModuleSyntax": true,
     "noEmitOnError": true,
     "removeComments": false,
-    "rootDir": "ts",
+    "rootDir": "packages/core/src/sounds-panel",
     "outDir": ".build",
     "skipLibCheck": true
   },
-  "include": ["ts/**/*.ts", "types/**/*.d.ts"]
+  "include": ["packages/core/src/sounds-panel/*.ts", "types/**/*.d.ts"]
 }

@@ -42,7 +42,7 @@ const noComments = css.replace(/\/\*[\s\S]*?\*\//g, "");
 const declared = new Set([...noComments.matchAll(/(--clio-[\w-]+)\s*:/g)].map((m) => m[1]));
 const used = new Set([...noComments.matchAll(/var\((--clio-[\w-]+)/g)].map((m) => m[1]));
 const optional = new Set(["--clio-details-shadow", "--clio-icon-selected-filter", "--clio-scrollbar-thumb-bg-horizontal", "--clio-scrollbar-thumb-shadow-horizontal", "--clio-scrollbar-thumb-color", "--clio-scrollbar-track-color"]);
-// clio.js sets these on the scrollers it draws bars for (ts/clio.ts).
+// clio.js sets these on the scrollers it draws bars for (packages/core/src/components/scrollbar/scrollbar.behaviour.ts).
 const js = readFileSync(join(root, "dist/clio.js"), "utf8");
 const fromJs = (v: string): boolean => (/^--clio-sb-/.test(v) && js.includes(v.replace(/^--clio-sb-/, ""))) || js.includes(`"${v}"`);
 for (const v of used) ok(declared.has(v) || optional.has(v) || fromJs(v), `read but never declared: ${v}`);

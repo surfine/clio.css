@@ -157,7 +157,7 @@ copyArt("dist");
 // *.behaviour.ts), bundled by Vite into dist/clio.js (a plain script that sets window.clio, as ever)
 // and dist/clio.mjs (the same modules; importing it installs nothing: call its install()).
 // The Appearance > Sound panel for sites that serve sound packs is still one TypeScript file
-// (ts/), checked strict and emitted by tsc as a plain script (.build/, then here). The globals'
+// (packages/core/src/sounds-panel/), checked strict and emitted by tsc as a plain script (.build/, then here). The globals'
 // types ship as dist/clio.d.ts (types/clio.d.ts).
 const tsc = join(root, "node_modules/.bin/tsc");
 if (!existsSync(tsc)) { console.error("tsc not found: run npm install (typescript is a dev dependency)."); process.exit(1); }
