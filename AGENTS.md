@@ -16,15 +16,20 @@ For AI coding agents using or changing this repository.
 
 - Sources: the CSS fragments in `packages/core/src/` (`components/<name>/<name>.css` for a
   component's base, `<name>.<layer>.css` for an era layer such as `window.platinum.css`,
-  `foundation/` for fonts, tokens, base, cursors, adapt and CJK) and `components/index.ts`.
+  `foundation/` for fonts, tokens, base, cursors, adapt and CJK) and each component's
+  `components/<name>/<name>.data.ts` (markup, selectors, tokens, evidence; the order is
+  `packages/core/src/components.ts`).
   `packages/core/src/order.ts` lists which fragment segments make up each single-file layer
   (named as the old `src/` files: `20-window.css`, `90-platinum.css`…), in cascade order;
   segments inside a fragment are separated by `/* clio:segment */`. Add a rule to the segment
   it belongs beside; a rule that must sit between two other fragments' rules is a new segment
   and a new `order.ts` entry. `npm test` fails on an unused or doubly used segment.
   Docs, `components.json`, `llms.txt`, `llms-full.txt` and `EVIDENCE.md` are generated
-  from `components/index.ts`. Never hand-edit `dist/`, `docs/`, `llms.txt` or `EVIDENCE.md`.
-- Tooling and tests are TypeScript under `tooling/`, `test/` and `components/`, run
+  from the data modules. Never hand-edit `dist/`, `docs/`, `llms.txt` or `EVIDENCE.md`.
+- `dist/contract.js` (+ `.d.ts`) and `dist/tokens/<era>.json` are the host contract (M2):
+  generated from the data modules and each era's `:root` values; hosts import
+  `clio.css/contract` instead of pinning values by hand.
+- Tooling and tests are TypeScript under `tooling/`, `test/` and `packages/`, run
   directly by Node 24 (type stripping: no build step, no `enum` or other syntax Node cannot
   strip). Imports name the `.ts` file. `npx tsc --noEmit -p tsconfig.tooling.json` checks them
   and `npm run lint` runs Biome over `tooling/` too.
@@ -35,7 +40,7 @@ For AI coding agents using or changing this repository.
   keeps the declaration and the code together. `npm run typecheck` checks without building.
 - After a change: `npm test` (build + static checks) must pass. For Platinum chrome,
   run `npm run fidelity` and do not let a specimen's exact-match share fall.
-- Every new or changed value needs an evidence row in `components/index.ts` with an
+- Every new or changed value needs an evidence row in the component's `<name>.data.ts` with an
   honest status: `measured` only when read from real pixels of the era (name the
   capture), `inferred` when reasoned, `adapted` for web-only changes, `third-party` for
   licensed art or fonts. An unmeasured value is never labelled measured.

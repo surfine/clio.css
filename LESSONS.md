@@ -7,7 +7,7 @@ starts from the method, not from memory. What is still open is in [ROADMAP.md](R
 ## 1. The rule that made it work
 
 Every value is either measured from the real system or labelled as something else.
-`components/index.ts` records each claim with a status: **measured** (read from real
+Each `<name>.data.ts` records each claim with a status: **measured** (read from real
 pixels or real timing), **inferred** (reasoned from documents or a neighbouring era),
 **adapted** (a deliberate change for the web: focus rings, touch sizes, keyboard menus),
 **third-party**. EVIDENCE.md and COVERAGE.md are generated from it. When a value cannot

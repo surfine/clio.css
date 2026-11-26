@@ -349,7 +349,7 @@ Firefox gets the era's colours only, or full scroll bars with clio.js.
 
 ```bash
 npm install
-npm run build      # dist/, docs/, llms.txt, EVIDENCE.md from src/ and components/index.ts
+npm run build      # dist/, docs/, llms.txt, EVIDENCE.md from packages/core/src
 npm test           # build + static checks
 npm run fidelity   # pixel check (needs a local AI System 6 checkout)
 ```
