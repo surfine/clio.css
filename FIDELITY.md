@@ -244,6 +244,16 @@ browser's Helvetica cannot match it (D3); its rows are checked by eye.
 | nx-button-on | 59×24 | 100.0% | 100.0% | 0.0% | 0 |
 | nx-box-corner | 11×11 | 100.0% | 100.0% | 0.0% | 0 |
 | nx-slider | 170×16 | 100.0% | 100.0% | 0.0% | 0 |
+| nx-tornoff-left | 11×26 | 100.0% | 100.0% | 0.0% | 0 |
+| nx-tornoff-right | 26×24 | 100.0% | 100.0% | 0.0% | 0 |
+| nx-panel-top | 10×24 | 100.0% | 100.0% | 0.0% | 0 |
+| nx-panel-foot | 12×10 | 100.0% | 100.0% | 0.0% | 0 |
+| nx-box-plain | 8×8 | 100.0% | 100.0% | 0.0% | 0 |
+| nx-close-held | 15×15 | 100.0% | 100.0% | 0.0% | 0 |
+| nx-close-edited | 15×15 | 100.0% | 100.0% | 0.0% | 0 |
+| nx-js-hscroller | 60×19 | 100.0% | 100.0% | 0.0% | 0 |
+| nx-js-arrow-held | 16×16 | 100.0% | 100.0% | 0.0% | 0 |
+| nx-button-held | 78×24 | 100.0% | 100.0% | 0.0% | 0 |
 | nx-close | 27×23 | 100.0% | 100.0% | 0.0% | 0 |
 | nx-titlebar-main | 16×23 | 100.0% | 100.0% | 0.0% | 0 |
 | nx-popup | 130×20 | 100.0% | 100.0% | 0.0% | 0 |
@@ -288,8 +298,8 @@ its scroll-bar specimens load clio.js, whose element bars take the same rules.
 Each line is that engine's last run, dated; a run older than the tables above covers
 fewer specimens.
 
-- WebKit (run 2026-11-26): 193 of 200 identical; not identical: s7-popup-disabled (96.1%), db-js-popup-open (97.3%), db-popup-open (97.3%), nx-ais6-default-ok (63.8%), nx-ais6-scroll-thumb (76.7%), nx-ais6-popup-end (34.2%), nx-ais6-checkbox (24.3%)
-- Firefox (run 2026-11-26): 190 of 195 identical; not identical: db-js-popup-open (97.2%), nx-ais6-default-ok (63.8%), nx-ais6-scroll-thumb (9.6%), nx-ais6-popup-end (29.3%), nx-ais6-checkbox (24.3%)
+- WebKit (run 2026-11-26): 203 of 210 identical; not identical: s7-popup-disabled (96.1%), db-js-popup-open (97.3%), db-popup-open (97.3%), nx-ais6-default-ok (63.8%), nx-ais6-scroll-thumb (76.7%), nx-ais6-popup-end (34.2%), nx-ais6-checkbox (24.3%)
+- Firefox (run 2026-11-26): 200 of 205 identical; not identical: db-js-popup-open (97.2%), nx-ais6-default-ok (63.8%), nx-ais6-scroll-thumb (9.6%), nx-ais6-popup-end (29.3%), nx-ais6-checkbox (24.3%)
 - 2x: Chromium 150/155 (run 2026-11-16), WebKit 147/155 (run 2026-11-16), Firefox 142/150 (run 2026-11-16)
 - 3x: Chromium 150/155 (run 2026-11-16), WebKit 142/155 (run 2026-11-16), Firefox 130/150 (run 2026-11-16)
 

@@ -1,13 +1,14 @@
 // Renders assets/eras.png (1x) and assets/eras@2x.png (2x) for the README: the same
 // markup (the README's Quick start window and an alert) drawn by dist/clio.css and
-// dist/clio.js in System 6, System 7, Drawing Board and Platinum. Nothing is drawn by
+// dist/clio.js in System 6, System 7, Drawing Board and Platinum, and by dist/clio.nextstep.css
+// in NeXTSTEP (in a frame of its own: that file is a page's whole stylesheet). Nothing is drawn by
 // hand: the image is a screenshot of the built library in Chromium. At 2x the library
 // itself magnifies its art by nearest neighbour; the screenshot is saved as rendered,
 // with no resampling. Run `npm run build` first. Needs Playwright (installed here or in
 // AIS6_DIR, as for the pixel check and tooling/og.mjs).
 //
 //   node tooling/readme-eras.mjs            two columns, two rows (fits GitHub at 1:1)
-//   node tooling/readme-eras.mjs --row      four columns in one row
+//   node tooling/readme-eras.mjs --row      five columns in one row
 import { createRequire } from "node:module";
 import { mkdirSync, writeFileSync } from "node:fs";
 import { join, dirname } from "node:path";
@@ -22,12 +23,21 @@ if (!playwright) { console.error("Playwright not found."); process.exit(2); }
 const row = process.argv.includes("--row");
 const css = pathToFileURL(join(root, "dist/clio.css")).href;
 const js = pathToFileURL(join(root, "dist/clio.js")).href;
+const nxcss = pathToFileURL(join(root, "dist/clio.nextstep.css")).href;
 const eras = [
   ["system6", "System 6"],
   ["system7", "System 7"],
   ["drawingboard", "Drawing Board"],
   ["platinum", "Platinum"],
+  ["nextstep", "NeXTSTEP"],
 ];
+const attr = (t) => t.replace(/&/g, "&amp;").replace(/"/g, "&quot;");
+
+const STYLE = `.cell { background: var(--clio-desktop); padding: 0 16px 20px; display: flex; flex-direction: column; gap: 16px; align-items: flex-start; height: 100%; box-sizing: border-box; }
+  .label { margin: 0 -16px; align-self: stretch; padding: 4px 16px; background: #fff; color: #000;
+           font: 12px var(--clio-font-chrome); border-bottom: 1px solid #000; }
+  .window-pane { display: flex; justify-content: space-between; align-items: center; padding: 12px; }
+  .alert-box { margin-left: 20px; }`;
 
 // The README's Quick start window, then the alert from components.json ("dialog").
 const cell = (era, name) => `<section class="cell" data-era="${era}">
@@ -45,7 +55,7 @@ const cell = (era, name) => `<section class="cell" data-era="${era}">
       <button class="default">OK</button>
     </div>
   </div>
-  <div class="alert-box" role="alertdialog" aria-labelledby="msg-${era}" style="width: 340px">
+  <div class="alert-box" role="alertdialog" aria-label="Close" aria-describedby="msg-${era}" style="width: 340px">
     <span class="alert-icon caution" aria-hidden="true"></span>
     <p id="msg-${era}">Save changes to the document “Untitled” before closing?</p>
     <div class="dialog-buttons">
@@ -56,18 +66,17 @@ const cell = (era, name) => `<section class="cell" data-era="${era}">
   </div>
 </section>`;
 
+// NeXTSTEP's cell: the same markup in a frame that loads clio.nextstep.css.
+const frame = (era, name) => `<iframe class="frame" title="${name}" srcdoc="${attr(`<!doctype html><html lang="en"><head><meta charset="utf-8"><link rel="stylesheet" href="${nxcss}"><script src="${js}" defer></script><style>html, body { margin: 0; background: #fff; } ${STYLE}</style></head><body>${cell(era, name)}</body></html>`)}"></iframe>`;
 const html = `<!doctype html><html lang="en"><head><meta charset="utf-8">
 <link rel="stylesheet" href="${css}"><script src="${js}" defer></script>
 <style>
   html, body { margin: 0; background: #fff; }
-  #shot { display: inline-grid; grid-template-columns: repeat(${row ? 4 : 2}, 380px); }
-  .cell { background: var(--clio-desktop); padding: 0 16px 20px; display: flex; flex-direction: column; gap: 16px; align-items: flex-start; }
-  .label { margin: 0 -16px; align-self: stretch; padding: 4px 16px; background: #fff; color: #000;
-           font: 12px var(--clio-font-chrome); border-bottom: 1px solid #000; }
-  .window-pane { display: flex; justify-content: space-between; align-items: center; padding: 12px; }
-  .alert-box { margin-left: 20px; }
+  #shot { display: inline-grid; grid-template-columns: repeat(${row ? 5 : 2}, 380px); }
+  .frame { display: block; width: 380px; height: 100%; border: 0; }
+  ${STYLE}
 </style></head>
-<body><div id="shot">${eras.map(([id, name]) => cell(id, name)).join("\n")}</div></body></html>`;
+<body><div id="shot">${eras.map(([id, name]) => (id === "nextstep" ? frame : cell)(id, name)).join("\n")}</div></body></html>`;
 
 mkdirSync(join(root, ".fidelity"), { recursive: true });
 mkdirSync(join(root, "assets"), { recursive: true });
@@ -79,6 +88,8 @@ for (const [scale, out] of [[1, "assets/eras.png"], [2, "assets/eras@2x.png"]]) 
   const page = await browser.newPage({ viewport: { width: 1600, height: 900 }, deviceScaleFactor: scale });
   await page.goto(pathToFileURL(file).href);
   await page.evaluate(async () => { await document.fonts.ready; await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))); });
+  // the frame takes its row's height, its own content at least
+  await page.evaluate(async () => { for (const f of document.querySelectorAll("iframe")) { await f.contentDocument.fonts.ready; f.style.minHeight = f.contentDocument.body.scrollHeight + "px"; } await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))); });
   await page.locator("#shot").screenshot({ path: join(root, out), animations: "disabled", caret: "hide" });
   const size = await page.locator("#shot").boundingBox();
   console.log(`wrote ${out} (${Math.round(size.width) * scale}x${Math.round(size.height) * scale})`);

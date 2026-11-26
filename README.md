@@ -7,7 +7,7 @@
 [![clio.min.css gzip](https://img.shields.io/badge/clio.min.css-36.6%20kB%20gzip-blue)](#install)
 [![dependencies](https://img.shields.io/badge/dependencies-0-brightgreen)](package.json)
 
-<img src="assets/eras@2x.png" width="760" alt="The same window and alert drawn by clio.css in System 6, System 7, Drawing Board and Platinum">
+<img src="assets/eras@2x.png" width="760" alt="The same window and alert drawn by clio.css in System 6, System 7, Drawing Board, Platinum and NeXTSTEP">
 
 The same markup in four eras, rendered by `dist/clio.css` in Chromium
 ([`tooling/readme-eras.mjs`](tooling/readme-eras.mjs); 1x: [`assets/eras.png`](assets/eras.png)).
@@ -47,7 +47,7 @@ npm install clio.css
 | `dist/clio.system7.css` | System 7 (colour) as the page default | 113 kB | 20.1 kB |
 | `dist/clio.drawingboard.css` | Drawing Board as the page default | 191 kB | 33.2 kB |
 | `dist/clio.platinum.css` | Platinum as the page default | 152 kB | 27.0 kB |
-| `dist/clio.nextstep.css` | NeXTSTEP 3.3 (its own file, never in `clio.css`) | 146 kB | 25.4 kB |
+| `dist/clio.nextstep.css` | NeXTSTEP 3.3 (its own file, never in `clio.css`) | 153 kB | 26.0 kB |
 
 Sizes are the `*.min.css` builds (1.0.2; `clio.nextstep.css` 1.1.0; gzip); fonts and art load separately.
 `dist/components.json` is the machine-readable index: selectors, tokens, markup and
@@ -111,8 +111,8 @@ window that is not key. Three components exist only there: `.browser` (the colum
 `.pull-down` and `.dock`. With clio.js the scrollers sit on the left with both arrows
 together, as measured; without it the browser keeps its own bar on the right. Helvetica is
 named locally; elsewhere Clio Sans NX (Liberation Sans 2, OFL, renamed) keeps its widths.
-The four Classic eras are unchanged: `clio.css` and the Classic files are the 1.0.2 bytes
-apart from the version in their banner.
+The Classic files gain only one fix in 1.1.0 (a dimmed menu item no longer lights under the
+pointer); NeXTSTEP never enters `clio.css`.
 
 ## Components
 
@@ -306,7 +306,7 @@ with captures of each era. From [FIDELITY.md](FIDELITY.md) (run of 2026-11-26):
 | Drawing Board | Mac OS 8.5 + 8.5b6 theme in Infinite Mac | 52 of 54 |
 | Platinum | Mac OS 9.0 in Infinite Mac | 55 of 55 |
 | Platinum | GUIdebook Mac OS 9.0 captures | 7 of 7 |
-| NeXTSTEP | NeXTStep 3.0 in Infinite Mac | 27 of 27 |
+| NeXTSTEP | NeXTStep 3.0 in Infinite Mac | 37 of 37 |
 
 The two Drawing Board specimens below 100% are the open pop-up menu (97.3%), whose text is
 antialiased over the paper. The same file has the WebKit, Firefox, 2x and 3x results.
