@@ -300,8 +300,8 @@ fewer specimens.
 
 - WebKit (run 2026-11-26): 203 of 210 identical; not identical: s7-popup-disabled (96.1%), db-js-popup-open (97.3%), db-popup-open (97.3%), nx-ais6-default-ok (63.8%), nx-ais6-scroll-thumb (76.7%), nx-ais6-popup-end (34.2%), nx-ais6-checkbox (24.3%)
 - Firefox (run 2026-11-26): 200 of 205 identical; not identical: db-js-popup-open (97.2%), nx-ais6-default-ok (63.8%), nx-ais6-scroll-thumb (9.6%), nx-ais6-popup-end (29.3%), nx-ais6-checkbox (24.3%)
-- 2x: Chromium 150/155 (run 2026-11-16), WebKit 147/155 (run 2026-11-16), Firefox 142/150 (run 2026-11-16)
-- 3x: Chromium 150/155 (run 2026-11-16), WebKit 142/155 (run 2026-11-16), Firefox 130/150 (run 2026-11-16)
+- 2x: Chromium 201/210 (run 2026-11-26), WebKit 198/210 (run 2026-11-26), Firefox 193/205 (run 2026-11-26)
+- 3x: Chromium 201/210 (run 2026-11-26), WebKit 193/210 (run 2026-11-26), Firefox 181/205 (run 2026-11-26)
 
 Firefox's wrapper carries Clio's metrics (a Mac window's line box) instead of the page's
 default Times, so its inline controls no longer land on quarter-pixel baselines: 142 and 130 at
