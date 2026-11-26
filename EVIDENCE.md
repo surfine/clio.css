@@ -7,8 +7,8 @@ Every value in clio.css 1.1.0 has a row here. Sources are paths in the AI System
 | Status | Meaning | Rows |
 | --- | --- | ---: |
 | Measured | read from real pixels of the era | 254 |
-| Inferred | reasoned from documentation or behaviour, not measured | 43 |
-| Adapted | a deliberate departure for the web (touch, focus, contrast) | 43 |
+| Inferred | reasoned from documentation or behaviour, not measured | 44 |
+| Adapted | a deliberate departure for the web (touch, focus, contrast) | 44 |
 | Third-party | art or font from a named, licensed project | 4 |
 
 Pixel check: `npm run fidelity` renders the Platinum specimens and compares them with AI System 6's GUIdebook Mac OS 9.0 reference crops (it needs a local AI System 6 checkout; see the script).
@@ -271,6 +271,8 @@ Pixel check: `npm run fidelity` renders the Platinum specimens and compares them
 | Desktop and icons | Platinum | 70% white tag with no edge; selected: black tag, white name, artwork darkened | Measured | `apps/desktop/styles/65-appearance-themes.css:882 (P12, P13)` — Mac OS 9 native capture 02 |
 | Desktop and icons | Platinum | Desktop colour #4a71ab | Inferred | `apps/desktop/styles/65-appearance-themes.css:85` — base colour of AI System 6's azul tile, generated from a 512 Pixels capture; the tile is not shipped |
 | Desktop and icons | Drawing Board | Desktop and icons are unchanged from Platinum; the theme's desktop pictures are not reproduced | Adapted | `clio.css` — scen 'Drawing Board on a Grid' / 'on Parchment' are Apple artwork |
+| Desktop and icons | NeXTSTEP | data-clio-depth="2bit": a black-and-white MegaPixel NeXT's workspace, flat #555555 (the screen's four greys) | Inferred | `clio.css (owner's request, 2026-11-26)` — Infinite Mac runs only a colour NeXT |
+| Desktop and icons | NeXTSTEP | On touch screens the menu cells grow to 32px, buttons to 36px, fields to 40px; the arrows and marks stay centred | Adapted | `clio.css (95-adapt.css's coarse-pointer sizes)` — checked at 375px wide: no sideways scroll |
 | Desktop and icons | NeXTSTEP | Workspace background #555577, flat | Measured | `clio.css capture, NeXTStep 3.0 in Infinite Mac (frames in .fidelity/ns30), frame boot1 (the desktop round the File Viewer)` — owner's choice 2026-11-26 over AI System 6's #555555, the 2-bit grey |
 | Desktop and icons | NeXTSTEP | Icon labels: Helvetica 12, black on the window's grey; a selected label on white | Measured | `clio.css capture, NeXTStep 3.0 in Infinite Mac (frames in .fidelity/ns30), frame boot1 (the File Viewer's shelf, "me" selected)` — the label's padding is inferred |
 | Disclosure triangle | System 7 | 11px, a black outline with a blue and white checker inside, closed and open | Measured | `clio.css capture, System 7.5.3 in Infinite Mac (frames in .fidelity/hig/system7), frames list and list-open (Finder, View by Name)` — Control Panels & Extensions |

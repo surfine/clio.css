@@ -205,7 +205,7 @@
   --clio-popup-shadow: var(--clio-bevel);
   --clio-popup-height: 20px;
   --clio-popup-padding: 0 22px 0 5px;
-  --clio-popup-arrow: var(--clio-art-nx-popup-mark) right 4px top 5px / 11px 8px no-repeat;
+  --clio-popup-arrow: var(--clio-art-nx-popup-mark) right 4px top calc(50% - 1px) / 11px 8px no-repeat;   /* 5px down at 20px (a percentage here is of the spare height), centred when taller (touch) */
   --clio-popup-weight: 400;
 
   /* Scrollers: an 18px lane of #555555 and #aaaaaa dots between black lines, the
@@ -327,6 +327,14 @@
   --clio-art-nx-arrow-left-held: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' shape-rendering='crispEdges'%3E%3Cpath fill='%23555' d='M15 0h1v1H15zM15 1h1v1H15zM15 2h1v1H15zM15 3h1v1H15zM10 4h2v1H10zM15 4h1v1H15zM8 5h4v1H8zM15 5h1v1H15zM6 6h6v1H6zM15 6h1v1H15zM4 7h8v1H4zM15 7h1v1H15zM6 8h6v1H6zM15 8h1v1H15zM8 9h4v1H8zM15 9h1v1H15zM10 10h2v1H10zM15 10h1v1H15zM15 11h1v1H15zM15 12h1v1H15zM15 13h1v1H15zM15 14h1v1H15zM0 15h16v1H0z'/%3E%3Cpath fill='%23aaa' d='M14 1h1v1H14zM14 2h1v1H14zM11 3h1v1H11zM14 3h1v1H14zM9 4h1v1H9zM14 4h1v1H14zM7 5h1v1H7zM14 5h1v1H14zM5 6h1v1H5zM14 6h1v1H14zM3 7h1v1H3zM14 7h1v1H14zM5 8h1v1H5zM14 8h1v1H14zM7 9h1v1H7zM14 9h1v1H14zM9 10h1v1H9zM14 10h1v1H14zM11 11h1v1H11zM14 11h1v1H14zM14 12h1v1H14zM14 13h1v1H14zM1 14h14v1H1z'/%3E%3Cpath fill='%23fff' d='M0 0h15v1H0zM0 1h14v1H0zM0 2h14v1H0zM0 3h11v1H0zM12 3h2v1H12zM0 4h9v1H0zM12 4h2v1H12zM0 5h7v1H0zM12 5h2v1H12zM0 6h5v1H0zM12 6h2v1H12zM0 7h3v1H0zM12 7h2v1H12zM0 8h5v1H0zM12 8h2v1H12zM0 9h7v1H0zM12 9h2v1H12zM0 10h9v1H0zM12 10h2v1H12zM0 11h11v1H0zM12 11h2v1H12zM0 12h14v1H0zM0 13h14v1H0zM0 14h1v1H0z'/%3E%3C/svg%3E");
   --clio-art-nx-miniaturize-held: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='15' height='15' shape-rendering='crispEdges'%3E%3Cpath fill='%23000' d='M14 1h1v1H14zM2 2h10v1H2zM14 2h1v1H14zM2 3h10v1H2zM14 3h1v1H14zM2 4h10v1H2zM14 4h1v1H14zM2 5h1v1H2zM11 5h1v1H11zM14 5h1v1H14zM2 6h1v1H2zM11 6h1v1H11zM14 6h1v1H14zM2 7h1v1H2zM11 7h1v1H11zM14 7h1v1H14zM2 8h1v1H2zM11 8h1v1H11zM14 8h1v1H14zM2 9h1v1H2zM11 9h1v1H11zM14 9h1v1H14zM2 10h1v1H2zM11 10h1v1H11zM14 10h1v1H14zM2 11h10v1H2zM14 11h1v1H14zM14 12h1v1H14zM14 13h1v1H14zM1 14h14v1H1z'/%3E%3Cpath fill='%23555' d='M14 0h1v1H14zM0 14h1v1H0z'/%3E%3Cpath fill='%23aaa' d='M13 1h1v1H13zM13 2h1v1H13zM13 3h1v1H13zM13 4h1v1H13zM13 5h1v1H13zM13 6h1v1H13zM13 7h1v1H13zM13 8h1v1H13zM13 9h1v1H13zM13 10h1v1H13zM13 11h1v1H13zM13 12h1v1H13zM1 13h13v1H1z'/%3E%3Cpath fill='%23fff' d='M0 0h14v1H0zM0 1h13v1H0zM0 2h2v1H0zM12 2h1v1H12zM0 3h2v1H0zM12 3h1v1H12zM0 4h2v1H0zM12 4h1v1H12zM0 5h2v1H0zM3 5h8v1H3zM12 5h1v1H12zM0 6h2v1H0zM3 6h8v1H3zM12 6h1v1H12zM0 7h2v1H0zM3 7h8v1H3zM12 7h1v1H12zM0 8h2v1H0zM3 8h8v1H3zM12 8h1v1H12zM0 9h2v1H0zM3 9h8v1H3zM12 9h1v1H12zM0 10h2v1H0zM3 10h8v1H3zM12 10h1v1H12zM0 11h2v1H0zM12 11h1v1H12zM0 12h13v1H0zM0 13h1v1H0z'/%3E%3C/svg%3E");
   /* nx-art:end */
+}
+
+/* A 2-bit (MegaPixel) NeXT: the same four greys, the workspace a flat dark grey.
+   data-clio-depth="2bit" on <html> or any element. [I: Infinite Mac runs a colour
+   NeXT only; on the 2-bit machines the screen had these four greys and nothing else.] */
+[data-era="nextstep"][data-clio-depth="2bit"],
+[data-era="nextstep"] [data-clio-depth="2bit"] {
+  --clio-desktop: #555555;
 }
 
 /* ---- Windows ------------------------------------------------------------- */
@@ -493,16 +501,17 @@
   box-shadow: var(--clio-menu-cell);
 }
 
-/* A cell that opens a submenu carries the arrow, 5px from its right and 6px down;
+/* A cell that opens a submenu carries the arrow, 5px from its right and centred (6px
+   down in a 20px cell);
    on a highlighted cell the arrow's light edge is light grey. */
 [data-era="nextstep"] :is(.menu-bar, [role="menubar"], [role="menu-bar"], .menu, [role="menu"]) > li > :is(button, a)[aria-haspopup="true"] {
-  background: var(--clio-art-nx-submenu) right 5px top 6px / 7px 7px no-repeat;
+  background: var(--clio-art-nx-submenu) right 5px center / 7px 7px no-repeat;
 }
 
 [data-era="nextstep"] :is(.menu-bar, [role="menubar"], [role="menu-bar"]) > li > :is(button, a)[aria-haspopup="true"]:is([aria-expanded="true"], .active),
 [data-era="nextstep"] :is(.menu-bar, [role="menubar"], [role="menu-bar"]) > li.open > :is(button, a)[aria-haspopup="true"],
 [data-era="nextstep"] :is(.menu, [role="menu"]) > li > :is(button, a)[aria-haspopup="true"]:not([aria-disabled="true"], :disabled):is(:hover, :focus-visible, .active, [aria-expanded="true"]):where(:not([data-clio-blink])) {
-  background: var(--clio-art-nx-submenu-lit) right 5px top 6px / 7px 7px no-repeat, var(--clio-menu-item-active-bg);
+  background: var(--clio-art-nx-submenu-lit) right 5px center / 7px 7px no-repeat, var(--clio-menu-item-active-bg);
 }
 
 /* A submenu opens right against its menu, level with that menu's top (whichever
@@ -686,10 +695,9 @@
   border-radius: 0;
   background: var(--clio-art-nx-slider-knob) 0 0 / 20px 14px no-repeat;
   box-shadow: none;
-  /* Firefox centres the knob on a half pixel and rounds it a row up; a quarter
-     pixel down lands it on the lane's top row, as in Chromium and WebKit
-     (fidelity nx-slider, all three identical). */
-  translate: 0 0.25px;
+  /* Firefox puts the knob a row too high unless it is translated at all; a zero
+     translate is enough at 1x, 2x and 3x (fidelity nx-slider). */
+  translate: 0 0;
 }
 
 /* ---- Scrollers ------------------------------------------------------------------

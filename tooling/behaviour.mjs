@@ -811,6 +811,10 @@ await loadNx(`<div class="clio-scroll" id="s" style="width:200px;height:150px;ov
   ok(await page.evaluate(() => document.querySelector("#s").scrollTop) > before, "nextstep: the held arrow scrolled");
 }
 
+// nx5. The 2-bit switch turns the workspace flat #555555; the colour NeXT's stays #555577.
+await loadNx(`<div class="desktop" id="c" style="min-height:10px"></div><div class="desktop" id="m" data-clio-depth="2bit" style="min-height:10px"></div>`);
+ok(await page.evaluate(() => [getComputedStyle(document.querySelector("#c")).backgroundColor, getComputedStyle(document.querySelector("#m")).backgroundColor].join()) === "rgb(85, 85, 119),rgb(85, 85, 85)", "nextstep: data-clio-depth=2bit gives the 2-bit workspace");
+
 ok(errors.length === 0, "no page errors: " + errors.join("; "));
 await browser.close();
 console.log(failed ? `FAIL ${failed} of ${passed + failed} behaviour checks (${ENGINE})` : `ok ${passed} behaviour checks (${ENGINE})`);
