@@ -722,6 +722,95 @@ ok(still, "insertion point: lit and still under reduced motion");
   server.close();
 }
 
+// NeXTSTEP (dist/clio.nextstep.css, its own file). The same markup as the Classic eras.
+const nxcss = pathToFileURL(join(root, "dist/clio.nextstep.css")).href;
+async function loadNx(body) {
+  const file = join(dir, `nextstep-${ENGINE}.html`);
+  writeFileSync(file, `<!doctype html><html data-era="nextstep"><head><meta charset="utf-8"><link rel="stylesheet" href="${nxcss}"></head><body style="margin:20px">${body}<script src="${js}"></script></body></html>`);
+  await page.goto(pathToFileURL(file).href);
+  await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))));
+}
+const nxMenu = `<ul class="menu-bar" role="menubar" aria-label="Workspace" id="bar">
+  <li role="none"><button role="menuitem" aria-haspopup="true" id="t-info">Info</button><ul class="menu" role="menu" aria-label="Info"><li role="none"><button role="menuitem" id="i-panel">Info Panel...</button></li><li role="none"><button role="menuitem" aria-disabled="true" id="i-legal">Legal...</button></li></ul></li>
+  <li role="none"><button role="menuitem" aria-haspopup="true" id="t-file">File</button><ul class="menu" role="menu" aria-label="File"><li role="none"><button role="menuitem" id="f-open">Open</button></li><li role="none"><button role="menuitem" id="f-close">Close</button></li></ul></li>
+  <li role="none"><button role="menuitem" id="t-hide">Hide <kbd>h</kbd></button></li>
+</ul>`;
+const nxShown = (sel) => page.locator(sel).evaluate((el) => getComputedStyle(el).display !== "none");
+const nxFocused = () => page.evaluate(() => document.activeElement && document.activeElement.id);
+
+// nx1. The main menu is a column: Up and Down move between titles, Right opens a submenu on
+// its first item, Left comes back to the title; the bar says it is vertical.
+await loadNx(nxMenu);
+ok(await page.evaluate(() => document.querySelector("#bar").getAttribute("aria-orientation")) === "vertical", "nextstep: the main menu is aria-orientation=vertical");
+await page.focus("#t-info");
+await page.keyboard.press("ArrowDown");
+ok(await nxFocused() === "t-file", `nextstep: Down moves to the next title (${await nxFocused()})`);
+await page.keyboard.press("ArrowUp");
+ok(await nxFocused() === "t-info", "nextstep: Up moves back");
+await page.keyboard.press("ArrowRight");
+ok(await nxFocused() === "i-panel" && await nxShown("#t-info + .menu"), "nextstep: Right opens the submenu on its first item");
+await page.keyboard.press("ArrowLeft");
+ok(await nxFocused() === "t-info" && !(await page.locator("#t-info").evaluate((t) => t.parentElement.classList.contains("open"))), "nextstep: Left closes it and returns to its title");
+await page.focus("#t-hide"); await page.keyboard.press("ArrowDown");
+ok(await nxFocused() === "t-info", "nextstep: Down wraps from the last title to the first");
+// the Classic bars stay horizontal
+await load("system6", nxMenu);
+ok(!(await page.evaluate(() => document.querySelector("#bar").hasAttribute("aria-orientation"))), "system6: the menu bar keeps no orientation");
+await page.focus("#t-info"); await page.keyboard.press("ArrowRight");
+ok(await nxFocused() === "t-file", "system6: Right still moves to the next title");
+
+// nx2. A clicked title keeps its submenu up (sticky); a dimmed item does not light; the
+// submenu hangs level with the main menu's top.
+await loadNx(nxMenu);
+{
+  const [x, y] = await center("#t-file");
+  await page.mouse.click(x, y);
+  ok(await nxShown("#t-file + .menu"), "nextstep: a clicked title keeps its submenu up");
+  const top = await page.evaluate(() => [document.querySelector("#bar").getBoundingClientRect().top, document.querySelector("#t-file + .menu").getBoundingClientRect().top]);
+  ok(top[0] === top[1], `nextstep: the submenu hangs level with the menu's top (${top})`);
+  await page.mouse.click(700, 500);
+  await page.locator("#t-info").click();
+  const li = page.locator("#i-legal").locator("..");
+  const idle = await li.evaluate((el) => getComputedStyle(el).backgroundColor);
+  await page.locator("#i-legal").hover();
+  ok(await li.evaluate((el) => getComputedStyle(el).backgroundColor) === idle, "nextstep: a dimmed item does not light under the pointer");
+}
+
+// nx3. Windows: miniaturize left, close right; a zoom box means the resize bar; the return
+// mark only in the key window.
+await loadNx(`<div class="window" id="w" style="width:300px"><div class="title-bar"><button class="close" aria-label="Close"></button><h2 class="title">Doc</h2><button class="resize" aria-label="Zoom"></button><button class="shade" aria-label="Miniaturize"></button></div><div class="window-pane" style="height:60px"><button class="default" id="ok">OK</button></div></div>
+<div class="window inactive" id="w2" style="width:300px"><div class="title-bar"><button class="close" aria-label="Close"></button><h2 class="title">Panel</h2></div><div class="window-pane" style="height:60px"><button class="default" id="ok2">OK</button></div></div>`);
+{
+  const r = await page.evaluate(() => { const b = (s) => document.querySelector(s).getBoundingClientRect(); return { win: b("#w"), close: b("#w .close"), mini: b("#w .shade"), zoom: getComputedStyle(document.querySelector("#w .resize")).display }; });
+  ok(r.mini.left - r.win.left < 10 && r.win.right - r.close.right < 10, `nextstep: miniaturize at the left, close at the right (${Math.round(r.mini.left - r.win.left)}, ${Math.round(r.win.right - r.close.right)})`);
+  ok(r.zoom === "none", "nextstep: the zoom box is not drawn");
+  const bar = (sel) => page.evaluate((s) => { const c = getComputedStyle(document.querySelector(s), "::after"); return c.content !== "none" ? parseFloat(c.height) : 0; }, sel);
+  ok(await bar("#w") === 8 && await bar("#w2") === 0, "nextstep: a window with a zoom box has the 8-row resize bar, one without has none");
+  const mark = (sel) => page.evaluate((s) => getComputedStyle(document.querySelector(s), "::after").content, sel);
+  ok(await mark("#ok") !== "none" && await mark("#ok2") === "none", "nextstep: the return mark shows in the key window only");
+}
+
+// nx4. clio.js's scrollers: the vertical one on the left with both arrows at its bottom, the
+// horizontal one with both at its left; a held arrow draws its held art and scrolls.
+await loadNx(`<div class="clio-scroll" id="s" style="width:200px;height:150px;overflow:scroll;background:#aaa"><div style="width:800px;height:2000px"></div></div>`);
+{
+  const g = await page.evaluate(() => {
+    const b = (s) => document.querySelector(s).getBoundingClientRect(), host = b("#s");
+    return { host, v: b("#s .clio-sb-v"), up: b("#s .clio-sb-v > .clio-sb-dec"), dn: b("#s .clio-sb-v > .clio-sb-inc"), lt: b("#s .clio-sb-h > .clio-sb-dec"), rt: b("#s .clio-sb-h > .clio-sb-inc"), hbar: b("#s .clio-sb-h") };
+  });
+  ok(Math.round(g.v.left) === Math.round(g.host.left), `nextstep: the vertical scroller is at the left (${Math.round(g.v.left - g.host.left)})`);
+  ok(g.up.bottom <= g.dn.top + 1 && g.v.bottom - g.dn.bottom < 2 && g.up.top - g.v.top > 40, "nextstep: both vertical arrows at the bottom, up above down");
+  ok(g.lt.left - g.hbar.left < 2 && g.rt.left - g.lt.right < 2 && g.hbar.right - g.rt.right > 40, "nextstep: both horizontal arrows at the left, left before right");
+  const [x, y] = [g.dn.left + g.dn.width / 2, g.dn.top + g.dn.height / 2];
+  const before = await page.evaluate(() => document.querySelector("#s").scrollTop);
+  await page.mouse.move(x, y); await page.mouse.down(); await page.waitForTimeout(60);
+  const held = await page.locator("#s .clio-sb-v > .clio-sb-inc").evaluate((el) => [el.classList.contains("clio-held"), getComputedStyle(el).backgroundImage]);
+  const idleArt = await page.evaluate(() => getComputedStyle(document.querySelector("#s .clio-sb-v > .clio-sb-dec")).backgroundImage);
+  ok(held[0] && held[1] !== idleArt && held[1].includes("svg"), "nextstep: a held arrow draws its held art");
+  await page.mouse.up();
+  ok(await page.evaluate(() => document.querySelector("#s").scrollTop) > before, "nextstep: the held arrow scrolled");
+}
+
 ok(errors.length === 0, "no page errors: " + errors.join("; "));
 await browser.close();
 console.log(failed ? `FAIL ${failed} of ${passed + failed} behaviour checks (${ENGINE})` : `ok ${passed} behaviour checks (${ENGINE})`);

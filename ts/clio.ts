@@ -281,6 +281,15 @@
   const items = (menu: Element) => [...menu.children].filter(usable) as HTMLElement[];
   const focusItem = (li: HTMLElement) => { const c = control(li); if (c === li && !li.hasAttribute("tabindex")) li.tabIndex = -1; c.focus(); if (track) light(li); };
   const titlesOf = (bar: Element) => [...bar.children].filter((li) => titleOf(li)) as HTMLElement[];
+  // NeXTSTEP draws the menu bar as a column (--clio-menubar-orientation: vertical): its titles
+  // go up and down, a submenu opens to the right. The bar says so to assistive technology.
+  const vertical = (bar: Element) => {
+    const v = getComputedStyle(bar).getPropertyValue("--clio-menubar-orientation").trim() === "vertical";
+    if (v ? bar.getAttribute("aria-orientation") !== "vertical" : bar.getAttribute("aria-orientation") === "vertical" && bar.hasAttribute("data-clio-orientation")) {
+      if (v) { bar.setAttribute("aria-orientation", "vertical"); bar.setAttribute("data-clio-orientation", ""); } else { bar.removeAttribute("aria-orientation"); bar.removeAttribute("data-clio-orientation"); }
+    }
+    return v;
+  };
   const menuOf = (tli: Element) => tli.querySelector(`:scope > :is(${MENU})`);
   let quiet = false;   // focus coming back to a title from its own menu: no preview
   function rove(bar: Element, tli: Element) { for (const li of titlesOf(bar)) { const t = titleOf(li)!; t.tabIndex = li === tli ? 0 : -1; } }
@@ -325,6 +334,14 @@
     const inMenu = f.closest<HTMLElement>(`:is(${MENU}) > li`);
     const go = (fn: () => void) => { e.preventDefault(); e.stopPropagation(); fn(); };
     const next = (d: number) => titles[(titles.indexOf(tli) + d + titles.length) % titles.length];
+    const down = vertical(bar);
+    if (!inMenu && down) {
+      if (e.key === "ArrowDown" || e.key === "ArrowUp") return go(() => toTitle(bar, next(e.key === "ArrowDown" ? 1 : -1)));
+      if (e.key === "Home" || e.key === "End") return go(() => toTitle(bar, titles[e.key === "Home" ? 0 : titles.length - 1]));
+      if (["ArrowRight", "Enter", " "].includes(e.key) && menuOf(tli)) return go(() => enter(bar, tli, false));
+      if (e.key === "Escape" && track) return go(() => toTitle(bar, tli, { quiet: true }));
+      return;
+    }
     if (!inMenu) {
       if (["ArrowDown", "Enter", " ", "Home"].includes(e.key)) return go(() => enter(bar, tli, false));
       if (e.key === "End" || e.key === "ArrowUp") return go(() => enter(bar, tli, true));
@@ -339,9 +356,9 @@
     if (e.key === "ArrowDown" || e.key === "ArrowUp") return go(() => focusItem(list[(i + (e.key === "ArrowDown" ? 1 : list.length - 1)) % list.length]));
     if (e.key === "Home" || e.key === "End") return go(() => focusItem(list[e.key === "Home" ? 0 : list.length - 1]));
     if (e.key === "ArrowRight" && submenuOf(inMenu)) return go(() => { inMenu.classList.add("open"); const s = items(submenuOf(inMenu)!); if (s[0]) focusItem(s[0]); });
-    if (e.key === "ArrowRight") return go(() => toTitle(bar, next(1)));
+    if (e.key === "ArrowRight") return down ? go(() => {}) : go(() => toTitle(bar, next(1)));
     if ((e.key === "ArrowLeft" || e.key === "Escape") && parentItem) return go(() => { closeSub(parentItem); focusItem(parentItem); });
-    if (e.key === "ArrowLeft") return go(() => toTitle(bar, next(-1)));
+    if (e.key === "ArrowLeft") return go(() => toTitle(bar, down ? tli : next(-1), { quiet: down }));
     if (e.key === "Escape") return go(() => toTitle(bar, tli, { quiet: true }));
     if ((e.key === "Enter" || e.key === " ") && usable(inMenu) && !submenuOf(inMenu)) return go(() => choose(inMenu, () => toTitle(bar, tli, { quiet: true })));
   }, true);
@@ -738,6 +755,7 @@
   const claimBar = (b: Element) => {
     if (optedOut(b) || b.hasAttribute("data-clio-menus")) return;
     b.setAttribute("data-clio-menus", "");
+    vertical(b);
     const ts = titlesOf(b), cur = ts.find((li) => titleOf(li)!.tabIndex === 0 && titleOf(li)!.hasAttribute("tabindex")) || ts[0];
     if (cur) rove(b, cur);   // one Tab stop for the whole bar
     for (const c of b.querySelectorAll<HTMLElement>(`:is(${MENU}) > li > :is(a, button)`)) if (!c.hasAttribute("tabindex")) c.tabIndex = -1;   // items are reached with the arrows

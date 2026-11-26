@@ -3499,6 +3499,9 @@
   --clio-menu-separator-height: 0px;
   /* clio.js: a clicked menu stays up; a press dragged through it chooses on release. */
   --clio-menu-sticky: 1;
+  /* clio.js: the main menu is a column; Up and Down move between its titles, Right opens
+     a submenu, Left comes back [A: NeXTSTEP 3.3 had no keyboard menus]. */
+  --clio-menubar-orientation: vertical;
 
   /* Push buttons: a bevel, no outline, no rounded frame. */
   /* black first, so it keeps the top-right and bottom-left corner pixels */
