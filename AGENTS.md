@@ -44,6 +44,14 @@ For AI coding agents using or changing this repository.
   `window.clioSoundsPanel`. Public types live in `types/clio.d.ts` (shipped as
   `dist/clio.d.ts`); `api = { … } satisfies ClioApi` keeps declaration and code together.
   `npm run typecheck` checks all of it without building.
+- @clio/preact and @clio/react come from one JSX source, `packages/components/src/`. It
+  imports only "clio-jsx" (hooks, the children type, element attributes), which
+  `packages/<framework>/src/jsx.ts` provides. Use `className`, `htmlFor` and style objects.
+  Components are controlled and render clio.css markup; behaviour stays in clio.js. Each
+  component has `packages/components/examples/<id>.tsx` rebuilding its `html` and variants.
+  `test/components.test.ts` runs in both frameworks and requires the same DOM as
+  components.json, so a markup change goes into the data module and the component together.
+  `npm run build:components` builds `packages/<framework>/dist/`; the packages are not published yet.
 - After a change: `npm test` (build + static checks) must pass. For Platinum chrome,
   run `npm run fidelity` and do not let a specimen's exact-match share fall.
 - Every new or changed value needs an evidence row in the component's `<name>.data.ts` with an
