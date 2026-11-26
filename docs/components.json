@@ -29,6 +29,13 @@
       "name": "Mac OS 8/9 Platinum",
       "attribute": "data-era=\"platinum\"",
       "file": "dist/clio.platinum.css"
+    },
+    {
+      "id": "nextstep",
+      "name": "NeXTSTEP 3.3",
+      "attribute": "data-era=\"nextstep\"",
+      "file": "dist/clio.nextstep.css",
+      "bundle": false
     }
   ],
   "install": {
@@ -476,6 +483,90 @@
           "status": "measured",
           "source": "clio.css capture, Mac OS 9.0 in Infinite Mac (frames in .fidelity/hig/platinum9), frame nav (Navigation Services Open)",
           "upstream": "left end 100% identical; the right end not compared"
+        },
+        {
+          "era": "nextstep",
+          "claim": "Title bar: 22 rows inside the 1px black frame: a 1px highlight on the top and left, 19 rows of face, a #555555 row and column on the bottom and right, a black line",
+          "status": "measured",
+          "source": "clio.css capture, NeXTStep 3.0 in Infinite Mac (frames in .fidelity/ns30), frame boot1 (File Viewer)",
+          "upstream": "agrees with AI System 6's P12"
+        },
+        {
+          "era": "nextstep",
+          "claim": "Key window: black face, #aaaaaa highlight, white Helvetica Bold 12 title centred on the bar",
+          "status": "measured",
+          "source": "clio.css capture, NeXTStep 3.0 in Infinite Mac (frames in .fidelity/ns30), frame boot1 (File Viewer, the key window)",
+          "upstream": "NeXTSTEP User Interface Guidelines, Release 3, ch. 4 (key and main windows)"
+        },
+        {
+          "era": "nextstep",
+          "claim": "Main window that is not key: #555555 face, white highlight, white title (.window.main)",
+          "status": "inferred",
+          "source": "AI System 6 69-nextstep-appearance.css (.is-nextstep-main)",
+          "upstream": "NeXTSTEP User Interface Guidelines, Release 3, ch. 4"
+        },
+        {
+          "era": "nextstep",
+          "claim": "Inactive window: #aaaaaa face, white highlight, black title; the buttons stay",
+          "status": "inferred",
+          "source": "AI System 6 69-nextstep-appearance.css (P13)",
+          "upstream": "NeXTSTEP User Interface Guidelines, Release 3, ch. 4"
+        },
+        {
+          "era": "nextstep",
+          "claim": "Miniaturize button: 15x15, white top and left, #aaaaaa face, #555555 then black bottom and right, a black window outline inside; 2px in from the highlight, centred on the 19 rows",
+          "status": "measured",
+          "source": "clio.css capture, NeXTStep 3.0 in Infinite Mac (frames in .fidelity/ns30), frame boot1 (File Viewer, x 156-170, y 16-30); tooling/nx-art.py check",
+          "upstream": "the grid equals the frame's 225 pixels"
+        },
+        {
+          "era": "nextstep",
+          "claim": "Close button: the same box with an embossed X; an edited document's X is broken in the middle",
+          "status": "inferred",
+          "source": "AI System 6 69-nextstep-appearance.css (P16, N12; assets/themes/nextstep/chrome)",
+          "upstream": "no close button on the captured frames yet"
+        },
+        {
+          "era": "nextstep",
+          "claim": "A held title-bar button's face turns white",
+          "status": "inferred",
+          "source": "AI System 6 69-nextstep-appearance.css (P15)",
+          "upstream": "not captured"
+        },
+        {
+          "era": "nextstep",
+          "claim": "Same DOM: the collapse box draws the miniaturize button at the left, the close box moves to the right, the zoom box (NeXT has none) is hidden and marks the window as resizable",
+          "status": "adapted",
+          "source": "clio.css",
+          "upstream": "NeXTSTEP User Interface Guidelines, Release 3, ch. 4: miniaturize and close are the title bar's only buttons"
+        },
+        {
+          "era": "nextstep",
+          "claim": "Resize bar: 9 rows under a resizable window, its two ends 28px wide, bevelled",
+          "status": "inferred",
+          "source": "AI System 6 69-nextstep-appearance.css (.nextstep-resize-strip, P19)",
+          "upstream": "geometry not yet measured"
+        },
+        {
+          "era": "nextstep",
+          "claim": "No window shadow: the window is its 1px black frame",
+          "status": "inferred",
+          "source": "AI System 6 69-nextstep-appearance.css (P18)",
+          "upstream": "NeXTSTEP User Interface Guidelines, Release 3, ch. 4"
+        },
+        {
+          "era": "nextstep",
+          "claim": "Window and pane background #aaaaaa",
+          "status": "measured",
+          "source": "clio.css capture, NeXTStep 3.0 in Infinite Mac (frames in .fidelity/ns30), frame boot1",
+          "upstream": "File Viewer"
+        },
+        {
+          "era": "nextstep",
+          "claim": "On touch screens each title-bar button gets a 45px hit area; its art stays 15px",
+          "status": "adapted",
+          "source": "clio.css",
+          "upstream": "AI System 6's coarse-pointer rule"
         }
       ]
     },
@@ -682,6 +773,69 @@
           "status": "measured",
           "source": "clio.css captures, frames hig/*/app-menu, help-menu, apple-menu, cp",
           "upstream": "positions not compared pixel by pixel"
+        },
+        {
+          "era": "nextstep",
+          "claim": "The menu bar is drawn as NeXT's main menu: a vertical panel 93px wide at the screen's top left, titled by its aria-label; a title opens its submenu to the right",
+          "status": "adapted",
+          "source": "clio.css (same DOM as the Classic menu bar)",
+          "upstream": "NeXTSTEP User Interface Guidelines, Release 3, ch. 6 (the main menu)"
+        },
+        {
+          "era": "nextstep",
+          "claim": "Menu title: 22 rows, black face, white Helvetica Bold 12 at x=5, a white highlight top and left, #555555 then black below",
+          "status": "measured",
+          "source": "clio.css capture, NeXTStep 3.0 in Infinite Mac (frames in .fidelity/ns30), frame boot1 (Workspace main menu)",
+          "upstream": "rows 0-21"
+        },
+        {
+          "era": "nextstep",
+          "claim": "Menu cell: 20 rows: white top row and left column, 17 rows of #aaaaaa, a #555555 row and column, a black row and column; Helvetica 12 at x=5",
+          "status": "measured",
+          "source": "clio.css capture, NeXTStep 3.0 in Infinite Mac (frames in .fidelity/ns30), frame boot1 (Workspace main menu, Info to Log Out)",
+          "upstream": "every cell the same"
+        },
+        {
+          "era": "nextstep",
+          "claim": "Submenu arrow: 7x7, a black upright and an embossed point (#555555 above, white below), 6px from the right",
+          "status": "measured",
+          "source": "clio.css capture, NeXTStep 3.0 in Infinite Mac (frames in .fidelity/ns30), frame boot1 (Info row, x 80-86); tooling/nx-art.py check",
+          "upstream": "the grid equals the frame"
+        },
+        {
+          "era": "nextstep",
+          "claim": "Key equivalents: the plain letter at the cell's right (h, q)",
+          "status": "measured",
+          "source": "clio.css capture, NeXTStep 3.0 in Infinite Mac (frames in .fidelity/ns30), frame boot1 (Hide, Log Out)",
+          "upstream": "NeXTSTEP User Interface Guidelines, Release 3, ch. 6"
+        },
+        {
+          "era": "nextstep",
+          "claim": "A highlighted cell turns white",
+          "status": "inferred",
+          "source": "AI System 6 69-nextstep-appearance.css (--menu-item-active-bg)",
+          "upstream": "not captured"
+        },
+        {
+          "era": "nextstep",
+          "claim": "No dividers and no check marks in NeXT menus; a separator item is not drawn",
+          "status": "inferred",
+          "source": "NeXTSTEP User Interface Guidelines, Release 3, ch. 6",
+          "upstream": "the captured menus have none"
+        },
+        {
+          "era": "nextstep",
+          "claim": "A torn-off submenu (.torn-off) carries a close button in its title bar; an attached one has none",
+          "status": "inferred",
+          "source": "NeXTSTEP User Interface Guidelines, Release 3, ch. 6; AI System 6 69-nextstep-appearance.css reference notes",
+          "upstream": "not captured"
+        },
+        {
+          "era": "nextstep",
+          "claim": "clio.js: a clicked menu stays up; a press dragged through it chooses on release",
+          "status": "inferred",
+          "source": "NeXTSTEP User Interface Guidelines, Release 3, ch. 6",
+          "upstream": "AI System 6 reference notes (Menus)"
         }
       ]
     },
@@ -854,6 +1008,48 @@
           "status": "measured",
           "source": "the theme's pxm# pixmaps (tooling/db-art.py); positions from frames themes-tab and energy-saver-alert",
           "upstream": "each piece found 1:1 round \"Save Theme…\" and \"Close Message\""
+        },
+        {
+          "era": "nextstep",
+          "claim": "Push button: #aaaaaa face, no outline, a bevel of white top and left, black then #555555 bottom and right; Helvetica 12; 24px tall",
+          "status": "inferred",
+          "source": "AI System 6 69-nextstep-appearance.css (P31, --btn-shadow)",
+          "upstream": "AI System 6 Theme Lab default-ok (authored)"
+        },
+        {
+          "era": "nextstep",
+          "claim": "Pressed: the face turns white, the bevel sinks (#555555 top and left, white bottom and right)",
+          "status": "inferred",
+          "source": "AI System 6 69-nextstep-appearance.css (--btn-active-*)",
+          "upstream": "not captured"
+        },
+        {
+          "era": "nextstep",
+          "claim": "Default button: no ring; the return mark after the label",
+          "status": "inferred",
+          "source": "AI System 6 69-nextstep-appearance.css (NS04, --btn-default-return-mark)",
+          "upstream": "NeXTSTEP User Interface Guidelines, Release 3, ch. 7 (buttons)"
+        },
+        {
+          "era": "nextstep",
+          "claim": "Disabled: the label #555555, the bevel kept",
+          "status": "inferred",
+          "source": "AI System 6 69-nextstep-appearance.css (--system-disabled-fg)",
+          "upstream": "not captured"
+        },
+        {
+          "era": "nextstep",
+          "claim": "Keyboard focus: a 1px dotted frame 2px out",
+          "status": "adapted",
+          "source": "clio.css",
+          "upstream": "NeXTSTEP 3.3 had no control focus; OPENSTEP's dotted frame is the family's mark"
+        },
+        {
+          "era": "nextstep",
+          "claim": "Minimum width 82px",
+          "status": "inferred",
+          "source": "AI System 6 69-nextstep-appearance.css (--theme-button-min-width)",
+          "upstream": "AI System 6 reference widths"
         }
       ]
     },
@@ -924,6 +1120,13 @@
           "status": "measured",
           "source": "clio.css capture, Mac OS 8.5 with the 8.5b6 Drawing Board theme in Infinite Mac (npm run capture:drawingboard), frames general-controls and date-time; the theme file's pxm# pixmaps, decoded by tooling/theme-resources.py and redrawn by tooling/db-art.py",
           "upstream": "off, on and disabled found 1:1 (Show Desktop, Show Launcher, Daylight-Saving Time is in effect)"
+        },
+        {
+          "era": "nextstep",
+          "claim": "Switch: a 12px raised square (#555555 border, white and #555555 bevel) on #aaaaaa; on, a black check",
+          "status": "inferred",
+          "source": "AI System 6 69-nextstep-appearance.css (P38, --choice-*)",
+          "upstream": "AI System 6 Theme Lab checkbox-checked (authored)"
         }
       ]
     },
@@ -969,6 +1172,13 @@
           "status": "measured",
           "source": "clio.css capture, Mac OS 8.5 with the 8.5b6 Drawing Board theme in Infinite Mac (npm run capture:drawingboard), frames general-controls and date-time; the theme file's pxm# pixmaps, decoded by tooling/theme-resources.py and redrawn by tooling/db-art.py",
           "upstream": "off and on found 1:1 (Documents, Menu Bar Clock)"
+        },
+        {
+          "era": "nextstep",
+          "claim": "Radio button: a 12px sunken ring, a black dot when on",
+          "status": "inferred",
+          "source": "AI System 6 69-nextstep-appearance.css (P38, --radio-image)",
+          "upstream": "not captured"
         }
       ]
     },
@@ -1057,6 +1267,20 @@
           "status": "measured",
           "source": "clio.css capture in Infinite Mac: System 6.0.8 Find File (mean 533 ms over 15 changes), System 7.5.3 Find File (516-634 ms), Mac OS 9.0 General Controls' preview at its middle setting (731-867 ms, mean 795 ms); CaretTime = (PRAM misc & 15) x 4 with factory misc $88, Mac IIx and Quadra 650 ROMs",
           "upstream": "clio.js blinks its insertion point at --clio-caret-ticks: 32 in System 6 and 7, 48 in Mac OS 8 and 9 (Drawing Board inferred from Mac OS 9)"
+        },
+        {
+          "era": "nextstep",
+          "claim": "Text field: a white well, no border, #555555 two pixels on the top and left, white then #aaaaaa on the bottom and right; 21px tall",
+          "status": "inferred",
+          "source": "AI System 6 69-nextstep-appearance.css (P32, --field-shadow)",
+          "upstream": "not captured"
+        },
+        {
+          "era": "nextstep",
+          "claim": "Keyboard focus: the dotted frame",
+          "status": "adapted",
+          "source": "clio.css",
+          "upstream": "NeXT marked the key field with its blinking caret only"
         }
       ]
     },
@@ -1161,6 +1385,13 @@
           "status": "measured",
           "source": "clio.css capture, Mac OS 8.5 with the theme in Infinite Mac, Appearance > Appearance held (frame popup-open)",
           "upstream": "specimens db-js-popup-open and db-popup-open 97.3% same, 99.95% within 8/255, none structurally off (2026-11-23: the check's ink, the underline's right piece 1px left and the ring were the off pixels; what remains is antialiasing over the paper within a step)"
+        },
+        {
+          "era": "nextstep",
+          "claim": "Pop-up list: a push button with the raised 11x8 bar mark 5px from its right; no frame of its own",
+          "status": "inferred",
+          "source": "AI System 6 69-nextstep-appearance.css (P33, --system-select-arrow-bg)",
+          "upstream": "AI System 6 Theme Lab popup-normal (authored)"
         }
       ]
     },
@@ -1221,6 +1452,13 @@
           "status": "measured",
           "source": "clio.css capture, Mac OS 8.5 with the 8.5b6 Drawing Board theme in Infinite Mac (npm run capture:drawingboard), frame desktop-tab",
           "upstream": "pattern list, lower-left corner"
+        },
+        {
+          "era": "nextstep",
+          "claim": "Lists: white, 1px black frame, 16px rows; a selected row is white on a light-grey cell in a browser, light grey in a plain list",
+          "status": "inferred",
+          "source": "AI System 6 69-nextstep-appearance.css",
+          "upstream": "not captured"
         }
       ]
     },
@@ -1411,6 +1649,34 @@
           "status": "measured",
           "source": "clio.css capture, Mac OS 8.5 with the theme, Smart Scrolling on (frames smart-scroll, smart-held-left, smart-held-right); the theme file's pxm#",
           "upstream": "specimens db-js-smart-arrows, db-js-smart-held-left and -right 100% identical in all three engines (the pointer on the held arrow masked); the vertical pair held matches the same way (frames only, no specimen); the dimmed state is still read from the resource order"
+        },
+        {
+          "era": "nextstep",
+          "claim": "Scroller: an 18px lane of #555555 and #aaaaaa dots and a black line on the content's side (19px)",
+          "status": "inferred",
+          "source": "AI System 6 69-nextstep-appearance.css (P20, --window-frame-track-*)",
+          "upstream": "AI System 6 Theme Lab scroll-thumb (authored)"
+        },
+        {
+          "era": "nextstep",
+          "claim": "Knob: a raised #aaaaaa square, at least as long as it is wide, with a 6x6 dimple in the middle",
+          "status": "inferred",
+          "source": "AI System 6 69-nextstep-appearance.css (P21, ns-knob-dimple-6.svg)",
+          "upstream": "NeXTSTEP User Interface Guidelines, Release 3, ch. 7 (scrollers)"
+        },
+        {
+          "era": "nextstep",
+          "claim": "Arrow buttons: 16x16 raised buttons with a black triangle, both at the bottom of a vertical scroller and at the left of a horizontal one",
+          "status": "inferred",
+          "source": "AI System 6 69-nextstep-appearance.css (ns-scroll-up-16.svg, C9)",
+          "upstream": "NeXTSTEP User Interface Guidelines, Release 3, ch. 7, figure 14"
+        },
+        {
+          "era": "nextstep",
+          "claim": "The browser's own scroll bar stays on the right (a page cannot move it); clio.js draws NeXT's on the left",
+          "status": "adapted",
+          "source": "clio.css",
+          "upstream": "NeXTSTEP User Interface Guidelines, Release 3, ch. 7: the vertical scroller is on the left"
         }
       ]
     },
@@ -1529,6 +1795,13 @@
           "status": "inferred",
           "source": "clio.css",
           "upstream": "—"
+        },
+        {
+          "era": "nextstep",
+          "claim": "Alert panel: #aaaaaa, the 1px black frame, a 22-row title bar with no buttons, no shadow; the application's icon instead of a symbol",
+          "status": "inferred",
+          "source": "AI System 6 69-nextstep-appearance.css (P30, --alert-icon-display: none)",
+          "upstream": "NeXTSTEP User Interface Guidelines, Release 3, ch. 4 (panels) and ch. 8 (attention panels)"
         }
       ]
     },
@@ -1588,6 +1861,13 @@
           "status": "measured",
           "source": "clio.css capture, Mac OS 9.0 in Infinite Mac (frames in .fidelity/platinum9), frame date-time (Use a Network Time Server)",
           "upstream": "—"
+        },
+        {
+          "era": "nextstep",
+          "claim": "Box: a #555555 line with a white line inside and below, the title on the box's line",
+          "status": "inferred",
+          "source": "NeXTSTEP User Interface Guidelines, Release 3, ch. 7 (boxes)",
+          "upstream": "not captured"
         }
       ]
     },
@@ -1655,6 +1935,13 @@
           "status": "inferred",
           "source": "clio.css",
           "upstream": "the copy ran too fast to show a determinate bar"
+        },
+        {
+          "era": "nextstep",
+          "claim": "Progress: a sunken #aaaaaa well filled with #555555, 18px",
+          "status": "inferred",
+          "source": "AI System 6 69-nextstep-appearance.css (--progress-*)",
+          "upstream": "not captured"
         }
       ]
     },
@@ -1705,6 +1992,13 @@
           "status": "measured",
           "source": "clio.css capture, Mac OS 8.5 with the 8.5b6 Drawing Board theme in Infinite Mac (npm run capture:drawingboard), frame appearance; the theme file's pxm# pixmaps, decoded by tooling/theme-resources.py and redrawn by tooling/db-art.py",
           "upstream": "NTabLeft and NTabRight found 1:1 at (244,96) and (327,94)"
+        },
+        {
+          "era": "nextstep",
+          "claim": "NeXTSTEP 3.3 had no tab control; tabs take the button's bevel",
+          "status": "adapted",
+          "source": "clio.css",
+          "upstream": "NeXTSTEP User Interface Guidelines, Release 3 has no tab view"
         }
       ]
     },
@@ -1857,6 +2151,20 @@
           "status": "adapted",
           "source": "clio.css",
           "upstream": "scen 'Drawing Board on a Grid' / 'on Parchment' are Apple artwork"
+        },
+        {
+          "era": "nextstep",
+          "claim": "Workspace background #555555",
+          "status": "inferred",
+          "source": "AI System 6 69-nextstep-appearance.css (--desktop)",
+          "upstream": "NeXTStep 3.0 on a colour NeXT shows #555577 (frame boot1)"
+        },
+        {
+          "era": "nextstep",
+          "claim": "Icon labels: Helvetica 12, black; a selected label on white",
+          "status": "inferred",
+          "source": "AI System 6 69-nextstep-appearance.css (--desktop-label-*)",
+          "upstream": "frame boot1 shows the selected home icon on white"
         }
       ]
     },
@@ -2021,6 +2329,13 @@
           "status": "inferred",
           "source": "Macintosh Human Interface Guidelines (1992), ch. 7: Sliders",
           "upstream": "no other dial control was found in any era"
+        },
+        {
+          "era": "nextstep",
+          "claim": "Slider: a sunken #555555 well, a raised square knob with the dimple",
+          "status": "inferred",
+          "source": "NeXTSTEP User Interface Guidelines, Release 3, ch. 7 (sliders)",
+          "upstream": "not captured"
         }
       ]
     },
@@ -2492,6 +2807,108 @@
       ]
     },
     {
+      "id": "browser",
+      "eras": [
+        "nextstep"
+      ],
+      "name": "Browser (NeXTSTEP)",
+      "summary": "NeXTSTEP's column browser: lists side by side, each item that leads further marked with an arrow. NeXTSTEP only (clio.nextstep.css).",
+      "selectors": [
+        ".browser",
+        ".browser > .listbox",
+        ".browser .branch"
+      ],
+      "tokens": [
+        "--clio-browser-column",
+        "--clio-browser-row"
+      ],
+      "accessibility": "Each column is a listbox; mark the selected item with aria-selected and give branches aria-haspopup or the class branch. Arrow keys between columns are up to your script.",
+      "html": "<div class=\"browser\" style=\"width: 302px\">\n  <ul class=\"listbox\" role=\"listbox\" aria-label=\"Disk\" style=\"height: 96px\">\n    <li role=\"option\" class=\"branch\" aria-selected=\"true\">Apps</li>\n    <li role=\"option\" class=\"branch\">Library</li>\n    <li role=\"option\">Welcome!</li>\n  </ul>\n  <ul class=\"listbox\" role=\"listbox\" aria-label=\"Apps\" style=\"height: 96px\">\n    <li role=\"option\">Edit.app</li>\n    <li role=\"option\">Mail.app</li>\n  </ul>\n</div>",
+      "evidence": [
+        {
+          "era": "nextstep",
+          "claim": "Columns of 16px rows, white, divided by black lines; a branch carries the menu's arrow",
+          "status": "inferred",
+          "source": "NeXTSTEP User Interface Guidelines, Release 3, ch. 7 (browsers)",
+          "upstream": "AI System 6 finder-columns.js"
+        },
+        {
+          "era": "nextstep",
+          "claim": "Selected item: a raised light-grey cell",
+          "status": "inferred",
+          "source": "NeXTSTEP User Interface Guidelines, Release 3, ch. 7",
+          "upstream": "not captured"
+        }
+      ]
+    },
+    {
+      "id": "pull-down",
+      "eras": [
+        "nextstep"
+      ],
+      "name": "Pull-down list (NeXTSTEP)",
+      "summary": "A button that opens a list of commands; its title stays the same. NeXTSTEP only.",
+      "selectors": [
+        ".pull-down"
+      ],
+      "tokens": [
+        "--clio-button-bg"
+      ],
+      "accessibility": "A <button class=\"pull-down\" aria-haspopup=\"menu\" aria-expanded=\"false\"> that opens a role=menu list.",
+      "html": "<button class=\"pull-down\" aria-haspopup=\"menu\" aria-expanded=\"false\">Operations</button>",
+      "evidence": [
+        {
+          "era": "nextstep",
+          "claim": "A push button with the menu's arrow at its right, title at the left",
+          "status": "inferred",
+          "source": "NeXTSTEP User Interface Guidelines, Release 3, ch. 7 (pop-up and pull-down lists)",
+          "upstream": "not captured"
+        }
+      ]
+    },
+    {
+      "id": "dock",
+      "eras": [
+        "nextstep"
+      ],
+      "name": "Workspace dock (NeXTSTEP)",
+      "summary": "The column of 64px application tiles at the screen's right edge; a docked application that is not running shows three dots. NeXTSTEP only.",
+      "selectors": [
+        ".dock",
+        ".dock > li",
+        ".dock > .not-running"
+      ],
+      "tokens": [
+        "--clio-dock-tile",
+        "--clio-dock-tile-bg"
+      ],
+      "accessibility": "A list of buttons labelled with the application's name; say whether it is running in the label.",
+      "html": "<ul class=\"dock\" aria-label=\"Dock\">\n  <li><button class=\"icon\" aria-label=\"Workspace (running)\" style=\"width: 64px\"><svg viewBox=\"0 0 48 48\" aria-hidden=\"true\"><rect x=\"8\" y=\"8\" width=\"32\" height=\"32\" fill=\"#000\"/></svg></button></li>\n  <li class=\"not-running\"><button class=\"icon\" aria-label=\"Edit (not running)\" style=\"width: 64px\"><svg viewBox=\"0 0 48 48\" aria-hidden=\"true\"><rect x=\"12\" y=\"8\" width=\"24\" height=\"32\" fill=\"#fff\" stroke=\"#000\"/></svg></button></li>\n</ul>",
+      "evidence": [
+        {
+          "era": "nextstep",
+          "claim": "Tiles 64x64 stacked edge to edge at the screen's right edge: two white rows and columns top and left, a dark then a black line bottom and right",
+          "status": "measured",
+          "source": "clio.css capture, NeXTStep 3.0 in Infinite Mac (frames in .fidelity/ns30), frame boot1 (dock x 1053-1116, y 0-63 and 64-127)",
+          "upstream": "five tiles and the recycler"
+        },
+        {
+          "era": "nextstep",
+          "claim": "The tile's face is flat #aaaaaa: on a colour NeXT it is a texture, which clio.css does not reproduce",
+          "status": "adapted",
+          "source": "clio.css",
+          "upstream": "frame boot1"
+        },
+        {
+          "era": "nextstep",
+          "claim": "A docked application that is not running: three dots at the tile's lower left",
+          "status": "inferred",
+          "source": "NeXTSTEP User Interface Guidelines, Release 3, ch. 1 (the dock)",
+          "upstream": "frame boot1 shows the dots; their pixels are not yet measured"
+        }
+      ]
+    },
+    {
       "id": "typography",
       "name": "Type and tokens",
       "summary": "The fonts, the palette and every --clio-* custom property you can override.",
@@ -2642,6 +3059,20 @@
           "status": "measured",
           "source": "clio.css captures of Mac OS 9.0 and Mac OS 8.5 in Infinite Mac; tooling/aa-palettes.py",
           "upstream": "Appearance title bar, Set Desktop normal and held, Save Theme…"
+        },
+        {
+          "era": "nextstep",
+          "claim": "Helvetica 12 for chrome and text, Helvetica Bold 12 for window and menu titles, set without antialiasing",
+          "status": "measured",
+          "source": "clio.css capture, NeXTStep 3.0 in Infinite Mac (frames in .fidelity/ns30), frame boot1 (menu and title text: black and white pixels only)",
+          "upstream": "NeXTSTEP User Interface Guidelines, Release 3, ch. 9 (fonts)"
+        },
+        {
+          "era": "nextstep",
+          "claim": "Helvetica is named only as a local font; elsewhere Clio Sans NX (Liberation Sans 2, OFL, renamed) has Helvetica's advance widths",
+          "status": "third-party",
+          "source": "fonts/ClioSansNX*.woff2 (tooling/nx-font.py); THIRD-PARTY.md",
+          "upstream": "D3: a local name plus a fitted OFL fallback"
         }
       ]
     }

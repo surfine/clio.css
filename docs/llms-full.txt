@@ -530,6 +530,55 @@ Accessibility: role=separator. If your script lets people move it, make it focus
 </div>
 ```
 
+## Browser (NeXTSTEP) (#browser)
+
+NeXTSTEP's column browser: lists side by side, each item that leads further marked with an arrow. NeXTSTEP only (clio.nextstep.css).
+
+Selectors: .browser, .browser > .listbox, .browser .branch
+Tokens: --clio-browser-column, --clio-browser-row
+Accessibility: Each column is a listbox; mark the selected item with aria-selected and give branches aria-haspopup or the class branch. Arrow keys between columns are up to your script.
+
+```html
+<div class="browser" style="width: 302px">
+  <ul class="listbox" role="listbox" aria-label="Disk" style="height: 96px">
+    <li role="option" class="branch" aria-selected="true">Apps</li>
+    <li role="option" class="branch">Library</li>
+    <li role="option">Welcome!</li>
+  </ul>
+  <ul class="listbox" role="listbox" aria-label="Apps" style="height: 96px">
+    <li role="option">Edit.app</li>
+    <li role="option">Mail.app</li>
+  </ul>
+</div>
+```
+
+## Pull-down list (NeXTSTEP) (#pull-down)
+
+A button that opens a list of commands; its title stays the same. NeXTSTEP only.
+
+Selectors: .pull-down
+Tokens: --clio-button-bg
+Accessibility: A <button class="pull-down" aria-haspopup="menu" aria-expanded="false"> that opens a role=menu list.
+
+```html
+<button class="pull-down" aria-haspopup="menu" aria-expanded="false">Operations</button>
+```
+
+## Workspace dock (NeXTSTEP) (#dock)
+
+The column of 64px application tiles at the screen's right edge; a docked application that is not running shows three dots. NeXTSTEP only.
+
+Selectors: .dock, .dock > li, .dock > .not-running
+Tokens: --clio-dock-tile, --clio-dock-tile-bg
+Accessibility: A list of buttons labelled with the application's name; say whether it is running in the label.
+
+```html
+<ul class="dock" aria-label="Dock">
+  <li><button class="icon" aria-label="Workspace (running)" style="width: 64px"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="8" y="8" width="32" height="32" fill="#000"/></svg></button></li>
+  <li class="not-running"><button class="icon" aria-label="Edit (not running)" style="width: 64px"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="12" y="8" width="24" height="32" fill="#fff" stroke="#000"/></svg></button></li>
+</ul>
+```
+
 ## Type and tokens (#typography)
 
 The fonts, the palette and every --clio-* custom property you can override.

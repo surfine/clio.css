@@ -386,7 +386,34 @@ specimens.push(
   P9("p9-split-line", `<div style="height:7px;width:200px"></div>` + splitView(true).replace('id="s" ', "").replace('<div class="split-line" role="separator">', '<div class="split-line" id="s" role="separator">'), [85, 0, 115, 7], "split-line", [579, 300, 115, 7]),
 );
 
+// NeXTSTEP (dist/clio.nextstep.css). "nextstep": crops of NeXTStep 3.0 frames read 1:1 from
+// Infinite Mac (tooling/emulator/drive.mjs, frames in .fidelity/ns30; Infinite Mac has no 3.3).
+// "nextstep-ais6": AI System 6's five Theme Lab tiles, which AI System 6 authored itself (no
+// native frame behind them): a first-pass agreement check with the values ported from it.
+const nxdir = join(root, ".fidelity/ns30");
+const nxTiles = join(ais6, "internal/evidence/drafts/theme-lab-fidelity/nextstep/tiles");
+const NX = (id, html, crop, file, ref, opt = {}) => ({ id, era: "nextstep", html, crop, refFile: join(nxdir, file + ".png"), refCrop: ref, ...opt });
+const AX = (id, html, crop, tile, ref, opt = {}) => ({ id, era: "nextstep", group: "nextstep-ais6", html, crop, refFile: join(nxTiles, tile + "-reference.png"), refCrop: ref, ...opt });
+const nxWindow = (w, title, buttons = '<button class="shade" aria-label="Miniaturize"></button>') => `<div class="window" id="s" style="width:${w}px"><div class="title-bar">${buttons}<h2 class="title">${title}</h2></div><div class="window-pane" style="height:40px"></div></div>`;
+const nxMenu = `<ul class="menu-bar" role="menubar" aria-label="Workspace" id="s"><li role="none"><button role="menuitem" aria-haspopup="true">Info</button></li><li role="none"><button role="menuitem" aria-haspopup="true">File</button></li><li role="none"><button role="menuitem">Hide <kbd>h</kbd></button></li></ul>`;
+specimens.push(
+  // The Workspace main menu at the screen's top left (frame boot1); the text is Helvetica set by
+  // Display PostScript, masked: the browser's Helvetica cannot match it pixel for pixel (D3).
+  NX("nx-menu-title", nxMenu, [0, 0, 93, 22], "boot1", [0, 0, 93, 22], { mask: [[4, 4, 70, 14]] }),
+  NX("nx-menu-cell", nxMenu, [0, 22, 93, 20], "boot1", [0, 22, 93, 20], { mask: [[4, 3, 30, 14]] }),
+  // The File Viewer (frame boot1: the key window, its frame at x 152-755, y 12): both ends of the
+  // title bar, the miniaturize button in the left one; File Viewer has no close button.
+  NX("nx-titlebar-left", nxWindow(604, "File Viewer"), [0, 0, 40, 23], "boot1", [152, 12, 40, 23]),
+  NX("nx-titlebar-right", nxWindow(604, "File Viewer"), [578, 0, 26, 23], "boot1", [730, 12, 26, 23]),
+  AX("nx-ais6-titlebar", nxWindow(476, ""), [30, 1, 200, 22], "active-titlebar", [0, 0, 200, 22]),
+  AX("nx-ais6-default-ok", `<div style="padding:12px;background:#aaa"><button class="default" id="s" style="width:82px">OK</button></div>`, [0, 0, 82, 24], "default-ok", [0, 0, 82, 24], { mask: [[20, 4, 50, 16]] }),
+  AX("nx-ais6-scroll-thumb", `<div class="clio-scroll" id="s" style="width:120px;height:120px;overflow-y:scroll;overflow-x:hidden;background:#fff"><div style="height:300px"></div></div>`, [102, 0, 18, 32], "scroll-thumb", [0, 0, 18, 32]),
+  AX("nx-ais6-popup-end", `<div style="padding:12px;background:#aaa"><select id="s" style="width:228px"><option>Helvetica</option></select></div>`, [214, 0, 14, 19], "popup-normal", [214, 0, 14, 19]),
+  AX("nx-ais6-checkbox", `<div style="padding:12px;background:#aaa"><input type="checkbox" id="s" checked></div>`, [0, 0, 12, 12], "checkbox-checked", [0, 0, 12, 12]),
+);
+
 const css = pathToFileURL(join(root, "dist/clio.css")).href;
+const nxcss = pathToFileURL(join(root, "dist/clio.nextstep.css")).href;
 const js = pathToFileURL(join(root, "dist/clio.js")).href;
 const out = join(root, ".fidelity"), out0 = out;
 mkdirSync(out, { recursive: true });
@@ -427,8 +454,8 @@ for (const s of specimens) {
   // page's default font (Times 16px): a check box at y 41.25 against the Mac's 40 at 2x and 3x.
   // The specimen's wrapper therefore carries Clio's metrics, as a Mac window would; specimens
   // that moved at 1x with them keep the default wrapper (s.noMetrics).
-  const wrapFont = s.noMetrics || process.env.FIDELITY_NO_WRAPFONT ? "" : `font-family:"Clio Sans '84",sans-serif;font-size:12px;line-height:16px;`;
-  const html = `<!doctype html><html data-era="${s.era || "platinum"}"><head><meta charset="utf-8"><link rel="stylesheet" href="${css}"><style>body{margin:0;padding:24px;background:#4a71ab;${wrapFont}${process.env.FIDELITY_CSS || ""}</style></head><body>${s.html}${s.js ? `<script src="${js}"></script>` : ""}</body></html>`;
+  const wrapFont = s.noMetrics || process.env.FIDELITY_NO_WRAPFONT ? "" : s.era === "nextstep" ? "font-family:Helvetica,sans-serif;font-size:12px;line-height:16px;" : `font-family:"Clio Sans '84",sans-serif;font-size:12px;line-height:16px;`;
+  const html = `<!doctype html><html data-era="${s.era || "platinum"}"><head><meta charset="utf-8"><link rel="stylesheet" href="${s.era === "nextstep" ? nxcss : css}"><style>body{margin:0;padding:24px;background:#4a71ab;${wrapFont}${process.env.FIDELITY_CSS || ""}</style></head><body>${s.html}${s.js ? `<script src="${js}"></script>` : ""}</body></html>`;
   const file = join(out, `${s.id}${tag}.html`);
   writeFileSync(file, html);
   await page.goto(pathToFileURL(file).href);
@@ -603,6 +630,21 @@ ${table("platinum9")}
 Reference: GUIdebook Mac OS 9.0 captures, cropped by AI System 6 (\`AIS6_DIR\`).
 
 ${table("platinum")}
+
+## NeXTSTEP
+
+Reference: NeXTStep 3.0 running in Infinite Mac (the Previous emulator), the 1120×832 canvas
+read 1:1 (frames in \`.fidelity/ns30\`). Infinite Mac has no NeXTSTEP 3.3; 3.0 is the nearest
+real 3.x system it runs. Helvetica text is masked: Display PostScript set it 1-bit, and the
+browser's Helvetica cannot match it (D3); its rows are checked by eye.
+
+${table("nextstep")}
+
+Reference: AI System 6's own Theme Lab tiles for its NeXTSTEP appearance. AI System 6 authored
+them (it had no native frame), so they check agreement with the values ported from it, not
+fidelity; where they and the NeXTStep 3.0 frames disagree, the frames win.
+
+${table("nextstep-ais6")}
 
 ## Chinese, Japanese and Korean
 

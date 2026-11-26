@@ -1,6 +1,6 @@
 # clio.css
 
-> CSS library for classic Mac OS interfaces: Macintosh System 6, System 7, Mac OS 8.5 Drawing Board (the withdrawn beta theme) and Mac OS 8/9 Platinum. Windows, title bars, menu bars and menus, push buttons, check boxes, radio buttons, text fields, pop-up menus, list boxes, scroll bars, dialogs and alerts, group boxes, progress bars, tabs, the Control Strip and desktop icons: 29 components. Pure CSS; an optional script, `dist/clio.js`, adds what CSS cannot (menu tracking, scroll bars, window dragging, the text caret, sounds). MIT licence; no Apple screenshots or font files. Every value is traced to its source and labelled measured (read from real pixels of the era), inferred, adapted or third-party.
+> CSS library for classic Mac OS interfaces: Macintosh System 6, System 7, Mac OS 8.5 Drawing Board (the withdrawn beta theme) and Mac OS 8/9 Platinum. Windows, title bars, menu bars and menus, push buttons, check boxes, radio buttons, text fields, pop-up menus, list boxes, scroll bars, dialogs and alerts, group boxes, progress bars, tabs, the Control Strip and desktop icons: 32 components. Pure CSS; an optional script, `dist/clio.js`, adds what CSS cannot (menu tracking, scroll bars, window dragging, the text caret, sounds). MIT licence; no Apple screenshots or font files. Every value is traced to its source and labelled measured (read from real pixels of the era), inferred, adapted or third-party.
 
 Install: `npm install clio.css` or `<link rel="stylesheet" href="https://unpkg.com/clio.css@1.0.2/dist/clio.css">`.
 Optional script: `<script src="https://unpkg.com/clio.css@1.0.2/dist/clio.js" defer></script>`.
@@ -45,6 +45,9 @@ Drop-in for system.css markup (.window, .title-bar button.close, .btn, .btn-defa
 - [Side-title utility window](https://surfine.github.io/clio.css/#side-utility-window): A floating window whose title bar runs down its left side (kWindowFloatSide*): close box at the top, collapse box at the foot.
 - [Placard](https://surfine.github.io/clio.css/#placard): A framed strip for status or a small control at the foot of a window, beside the horizontal scroll bar.
 - [Split bar](https://surfine.github.io/clio.css/#split-bar): The bar above a vertical scroll bar that splits a window into panes, and the split line between two panes.
+- [Browser (NeXTSTEP)](https://surfine.github.io/clio.css/#browser): NeXTSTEP's column browser: lists side by side, each item that leads further marked with an arrow. NeXTSTEP only (clio.nextstep.css).
+- [Pull-down list (NeXTSTEP)](https://surfine.github.io/clio.css/#pull-down): A button that opens a list of commands; its title stays the same. NeXTSTEP only.
+- [Workspace dock (NeXTSTEP)](https://surfine.github.io/clio.css/#dock): The column of 64px application tiles at the screen's right edge; a docked application that is not running shows three dots. NeXTSTEP only.
 - [Type and tokens](https://surfine.github.io/clio.css/#typography): The fonts, the palette and every --clio-* custom property you can override.
 
 ## Optional

@@ -13,6 +13,7 @@
 export const AIS6 = "AI System 6 @b75cd4ed";
 
 import hig from "./hig.mjs";
+import { rows as nextstepRows, components as nextstepComponents } from "./nextstep.mjs";
 
 export const components = [
   {
@@ -541,6 +542,7 @@ export const components = [
     ]
   },
   ...hig,
+  ...nextstepComponents,
   {
     id: "typography",
     name: "Type and tokens",
@@ -576,3 +578,6 @@ export const components = [
     ]
   }
 ];
+
+// NeXTSTEP's rows on the shared components (components/nextstep.mjs).
+for (const c of components) c.evidence.push(...(nextstepRows[c.id] || []));

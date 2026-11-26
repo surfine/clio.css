@@ -27,7 +27,7 @@
     bar: HTMLDivElement; axis: string; track: HTMLDivElement; dec: HTMLDivElement; inc: HTMLDivElement; thumb: HTMLDivElement; ghost: HTMLDivElement | null;
     length: number; thumbLength: number; range: number; at: number; max: number; dragging?: boolean; onmove?: ((ev: PointerEvent) => void) | null;
   }
-  interface Metrics { cw: number; ch: number; sw: number; sh: number; sl: number; st: number; size: number; len: number; live: boolean; delay: number; smart: boolean; overlap: number; ox: number; oy: number }
+  interface Metrics { cw: number; ch: number; sw: number; sh: number; sl: number; st: number; size: number; len: number; live: boolean; delay: number; smart: boolean; left: boolean; together: boolean; overlap: number; ox: number; oy: number }
   type Field = HTMLInputElement | HTMLTextAreaElement;
   type Timed = typeof announce & { t?: number };   // announce keeps its timer on itself
   interface SoundRef { file: string; sound?: string; gain?: number; loop?: [number, number] }
@@ -551,6 +551,10 @@
         live: cs.getPropertyValue("--clio-scrollbar-thumb-tracking").trim() === "live",
         delay: parseFloat(cs.getPropertyValue("--clio-scrollbar-repeat-delay")) || 0,
         smart: !!h.closest('[data-clio-scrolling="smart"]'),
+        // NeXTSTEP: the vertical bar on the left, both arrows together (at the bottom, and
+        // at the left of a horizontal bar that runs under it); unset in the Classic eras
+        left: cs.getPropertyValue("--clio-scrollbar-side").trim() === "left",
+        together: cs.getPropertyValue("--clio-scrollbar-arrows").trim() === "together",
         overlap: px(cs.getPropertyValue("--clio-scrollbar-thumb-overlap")),
         // the padding box's place on the page: QuickDraw aligned a lane's pattern with the
         // screen, so the lanes are aligned with the page (System 6.0.8, System 7.5.3)
@@ -572,14 +576,20 @@
       }
       this.m = m;
       const { cw, ch, size } = m, smart = m.smart && m.live;   // Smart Scrolling is Mac OS 8/9's
-      this.place(this.v, this.need.y, cw - size - this.pad.l, -this.pad.t, ch - (this.need.x ? size : 0), m.st, m.sh - ch, ch / m.sh, smart);
-      this.place(this.h, this.need.x, -this.pad.l, ch - size - this.pad.t, cw - (this.need.y ? size : 0), m.sl, m.sw - cw, cw / m.sw, smart);
+      if (m.left) {
+        const l = this.pad.l + (this.need.y ? size : 0);   // the bar sits in the left padding, which grew by its width
+        this.place(this.v, this.need.y, -l, -this.pad.t, ch - (this.need.x ? size : 0), m.st, m.sh - ch, ch / m.sh, smart || m.together);
+        this.place(this.h, this.need.x, -l, ch - size - this.pad.t, cw, m.sl, m.sw - cw, cw / m.sw, smart, m.together);
+      } else {
+        this.place(this.v, this.need.y, cw - size - this.pad.l, -this.pad.t, ch - (this.need.x ? size : 0), m.st, m.sh - ch, ch / m.sh, smart || m.together);
+        this.place(this.h, this.need.x, -this.pad.l, ch - size - this.pad.t, cw - (this.need.y ? size : 0), m.sl, m.sw - cw, cw / m.sw, smart, m.together);
+      }
       const c = this.corner.style;
-      c.display = this.need.x && this.need.y ? "block" : "none";
+      c.display = this.need.x && this.need.y && !m.left ? "block" : "none";
       c.left = `${cw - size - this.pad.l}px`; c.top = `${ch - size - this.pad.t}px`; c.width = c.height = `${size}px`;
     }
 
-    place(p: Part, on: boolean, x: number, y: number, length: number, pos: number, max: number, visible: number, smart: boolean) {
+    place(p: Part, on: boolean, x: number, y: number, length: number, pos: number, max: number, visible: number, smart: boolean, near = false) {
       const s = p.bar.style, { size } = this.m, vertical = p.axis === "v";
       s.display = on ? "block" : "none";
       if (!on) return;
@@ -590,16 +600,17 @@
       const tx = this.m.ox + this.pad.l + x + (vertical ? 1 : size), ty = this.m.oy + this.pad.t + y + (vertical ? size : 1);
       s.setProperty("--clio-sb-px", `${mod(tx, 8)}px`); s.setProperty("--clio-sb-py", `${mod(ty, 8)}px`);
       p.bar.classList.toggle("clio-sb-smart", smart);
+      p.bar.classList.toggle("clio-sb-near", near);   // both arrows at the near end (NeXTSTEP's horizontal bar)
       p.bar.classList.toggle("clio-sb-off", max <= 0);
       const ov = this.m.overlap;   // Platinum's box shares its end lines with the arrows'
       const track = length - 2 * size + 2 * ov;
-      const thumb = Math.min(track, smart ? Math.max(this.m.len, Math.round(track * visible)) : this.m.len);
+      const thumb = Math.min(track, smart || near || this.m.together ? Math.max(this.m.len, Math.round(track * visible)) : this.m.len);
       const range = Math.max(0, track - thumb);
       const at = max > 0 ? Math.round(range * Math.min(1, pos / max)) : 0;
       Object.assign(p, { track: p.track, length: track, thumbLength: thumb, range, at, max });
       p.thumb.style[vertical ? "height" : "width"] = `${thumb}px`;
       p.thumb.style[vertical ? "minHeight" : "minWidth"] = "0";   // the browser bar's minimum is not the box's length
-      p.thumb.style[vertical ? "top" : "left"] = `${(smart ? 0 : size) - ov}px`;
+      p.thumb.style[vertical ? "top" : "left"] = `${(smart ? 0 : near ? 2 * size : size) - ov}px`;
       p.thumb.style[vertical ? "width" : "height"] = "";
       if (!p.dragging) p.thumb.style.transform = vertical ? `translateY(${at}px)` : `translateX(${at}px)`;
     }
@@ -615,7 +626,7 @@
       const r = p.bar.getBoundingClientRect();
       const along = (ev: PointerEvent) => (vertical ? ev.clientY - r.top : ev.clientX - r.left);
       const smart = p.bar.classList.contains("clio-sb-smart");
-      const trackStart = (smart ? 0 : m.size) - m.overlap;
+      const trackStart = (smart ? 0 : p.bar.classList.contains("clio-sb-near") ? 2 * m.size : m.size) - m.overlap;
       const target = e.target;
       let timer = 0, stop: ((ev: PointerEvent) => void) | undefined;
 
