@@ -58,6 +58,10 @@
       "types": "./dist/clio.d.ts",
       "default": "./dist/clio.js"
     },
+    "./js.esm": {
+      "types": "./dist/clio.d.ts",
+      "default": "./dist/clio.mjs"
+    },
     "./js.min": "./dist/clio.min.js",
     "./sounds-panel": "./dist/clio-sounds-panel.js",
     "./contract": {
@@ -79,7 +83,7 @@
   "scripts": {
     "build": "node tooling/build.ts",
     "test": "node tooling/build.ts && vitest run",
-    "typecheck": "tsc -p . --noEmit && tsc -p tsconfig.tooling.json",
+    "typecheck": "tsc -p . --noEmit && tsc -p tsconfig.runtime.json && tsc -p tsconfig.tooling.json",
     "lint": "biome check",
     "fidelity": "node tooling/fidelity.ts",
     "behaviour": "node tooling/build.ts && node tooling/behaviour.ts",

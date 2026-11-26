@@ -19,5 +19,6 @@
     "noEmit": true,
     "types": ["node"]
   },
-  "include": ["tooling/**/*.ts", "test/**/*.ts", "components/**/*.ts", "packages/**/*.ts", "vitest.config.ts"]
+  "include": ["tooling/**/*.ts", "test/**/*.ts", "components/**/*.ts", "packages/**/*.ts", "vitest.config.ts"],
+  "exclude": ["packages/core/src/runtime/**", "packages/core/src/components/**/*.behaviour.ts"]
 }

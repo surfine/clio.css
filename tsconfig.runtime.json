@@ -1,0 +1,22 @@
+{
+  // The browser runtime (packages/core/src/runtime/ and each component's *.behaviour.ts): ES modules
+  // bundled by tooling/build.ts (Vite) into dist/clio.js (a script) and dist/clio.mjs. Checked here,
+  // never emitted by tsc. The shipped API's types are the globals in types/clio.d.ts.
+  "compilerOptions": {
+    "target": "es2022",
+    "lib": ["dom", "dom.iterable", "es2022"],
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "noImplicitOverride": true,
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "types": []
+  },
+  "include": ["packages/core/src/runtime/**/*.ts", "packages/core/src/components/**/*.behaviour.ts", "types/**/*.d.ts"]
+}

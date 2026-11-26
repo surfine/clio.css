@@ -1,6 +1,7 @@
 {
-  // The runtime scripts users load (dist/clio.js, dist/clio-sounds-panel.js), written in
-  // TypeScript and emitted as plain, commented, non-module scripts by tooling/build.ts.
+  // The Appearance > Sound panel script (dist/clio-sounds-panel.js), written in TypeScript and
+  // emitted as a plain, commented, non-module script by tooling/build.ts. clio.js itself is the
+  // ES modules checked by tsconfig.runtime.json and bundled by Vite.
   "compilerOptions": {
     "target": "es2022",
     "lib": ["dom", "dom.iterable", "es2022"],

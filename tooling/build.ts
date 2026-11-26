@@ -12,6 +12,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { gzipSync } from "node:zlib";
 import * as esbuild from "esbuild";
+import { build as viteBuild } from "vite";
 import { execFileSync } from "node:child_process";
 import { components, AIS6 } from "../packages/core/src/components.ts";
 import { renderSite, renderLlms, renderLlmsFull, renderEvidence, renderSitemap } from "./site.ts";
@@ -151,20 +152,45 @@ const copyArt = (to: string): void => {
   for (const f of artFiles) { mkdirSync(dirname(join(root, to, f)), { recursive: true }); copyFileSync(join(root, f), join(root, to, f)); }
 };
 copyArt("dist");
-// clio.js, the optional behaviour layer, and the Appearance > Sound panel for sites that
-// serve sound packs: written in TypeScript (ts/), checked strict and emitted by tsc as plain
-// scripts with their comments and banner (.build/, then here). Their globals' types ship
-// as dist/clio.d.ts (types/clio.d.ts).
+// clio.js, the optional behaviour layer: ES modules (packages/core/src/runtime/ and each component's
+// *.behaviour.ts), bundled by Vite into dist/clio.js (a plain script that sets window.clio, as ever)
+// and dist/clio.mjs (the same modules; importing it installs nothing: call its install()).
+// The Appearance > Sound panel for sites that serve sound packs is still one TypeScript file
+// (ts/), checked strict and emitted by tsc as a plain script (.build/, then here). The globals'
+// types ship as dist/clio.d.ts (types/clio.d.ts).
 const tsc = join(root, "node_modules/.bin/tsc");
 if (!existsSync(tsc)) { console.error("tsc not found: run npm install (typescript is a dev dependency)."); process.exit(1); }
 rmSync(join(root, ".build"), { recursive: true, force: true });
 execFileSync(tsc, ["-p", root], { stdio: "inherit" });
 const emitted = (f: string): string => read(`.build/${f}`).replace(/^"use strict";\n/, "");   // the scripts keep "use strict" inside their own function
-write("dist/clio.js", emitted("clio.js").replace("0.11.0-dev", pkg.version));
+const runtime = "packages/core/src/runtime";
+const jsBanner = read(`${runtime}/clio.ts`).match(/^\/\*![\s\S]*?\*\//)![0] + "\n";   // clio.ts opens with the /*! banner
+async function bundleRuntime(entry: string, format: "iife" | "es"): Promise<string> {
+  const out = await viteBuild({
+    configFile: false, root, logLevel: "warn", publicDir: false,
+    build: {
+      write: false, minify: false, target: "es2022", reportCompressedSize: false,
+      lib: { entry: join(root, runtime, entry), formats: [format], name: "clio" },
+      rolldownOptions: { output: { strict: false, topLevelVar: false,  comments: { legal: false, annotation: true, jsdoc: false } } },
+    },
+  });
+  const chunks = (Array.isArray(out) ? out : [out]).flatMap((o) => ("output" in o ? o.output : []));
+  const chunk = chunks.find((c) => c.type === "chunk");
+  if (chunks.length !== 1 || !chunk || chunk.type !== "chunk") throw new Error(`clio runtime ${format} build: expected one chunk, got ${chunks.length}`);
+  // a script keeps "use strict" inside its own function, so concatenating it does not make its neighbours strict
+  return format === "iife" ? chunk.code.replace(/^\(function\(\) \{\n/, '(function() {\n"use strict";\n') : chunk.code;
+}
+const version = (js: string): string => js.replace("0.11.0-dev", pkg.version);
+write("dist/clio.js", version(jsBanner + await bundleRuntime("iife.ts", "iife")));
+write("dist/clio.mjs", version(jsBanner + await bundleRuntime("clio.ts", "es")));
 write("dist/clio-sounds-panel.js", emitted("clio-sounds-panel.js"));
 write("dist/clio.d.ts", read("types/clio.d.ts"));
-// clio.min.js: the same, minified by esbuild (a dev dependency).
-write("dist/clio.min.js", esbuild.transformSync(read("dist/clio.js"), { minify: true, legalComments: "inline", target: "es2020" }).code);
+// clio.min.js: the same program, minified by esbuild (a dev dependency). It bundles the entry itself
+// instead of minifying dist/clio.js: esbuild folds, inlines and drops unused top-level code in a
+// module graph, which it cannot do inside the function Vite wraps a script in (about 800 bytes).
+const min = esbuild.buildSync({ entryPoints: [join(root, runtime, "iife.ts")], bundle: true, format: "iife", target: "es2020", minify: true, legalComments: "none", write: false, logLevel: "warning" }).outputFiles[0]!.text;
+if (!min.startsWith('"use strict";(()=>{')) throw new Error("clio.min.js: esbuild's iife wrapper changed");
+write("dist/clio.min.js", version(jsBanner + min.replace('"use strict";(()=>{', '(()=>{"use strict";')));   // "use strict" inside the function, as in clio.js
 
 // Machine-readable component index.
 const index = {

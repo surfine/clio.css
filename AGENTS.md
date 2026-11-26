@@ -33,11 +33,17 @@ For AI coding agents using or changing this repository.
   directly by Node 24 (type stripping: no build step, no `enum` or other syntax Node cannot
   strip). Imports name the `.ts` file. `npx tsc --noEmit -p tsconfig.tooling.json` checks them
   and `npm run lint` runs Biome over `tooling/` too.
-- clio.js and the sounds panel are TypeScript in `ts/` (strict; `npm install` first). The
-  build emits them with `tsc` as plain scripts, not modules: keep each an IIFE that sets
-  only `window.clio` / `window.clioSoundsPanel`. Their public types live in
-  `types/clio.d.ts` (shipped as `dist/clio.d.ts`); `window.clio = { … } satisfies ClioApi`
-  keeps the declaration and the code together. `npm run typecheck` checks without building.
+- clio.js is ES modules: each component's `<name>.behaviour.ts` plus `packages/core/src/runtime/`
+  (shared helpers, sounds, the watch, centred labels, and `clio.ts`, the entry). No module does
+  anything at load: each exports `install()`, and `runtime/clio.ts` calls them in a fixed order
+  (listener order is observable) after its guard. Vite bundles `runtime/iife.ts` into
+  `dist/clio.js` (a plain script that sets only `window.clio`) and `runtime/clio.ts` into
+  `dist/clio.mjs` (exports `api` and `install`; importing installs nothing). esbuild bundles
+  `dist/clio.min.js` from the same entry. The bundles drop comments; the modules keep them.
+  The sounds panel is still one file in `ts/`, emitted by `tsc` as a plain script setting
+  `window.clioSoundsPanel`. Public types live in `types/clio.d.ts` (shipped as
+  `dist/clio.d.ts`); `api = { … } satisfies ClioApi` keeps declaration and code together.
+  `npm run typecheck` checks all of it without building.
 - After a change: `npm test` (build + static checks) must pass. For Platinum chrome,
   run `npm run fidelity` and do not let a specimen's exact-match share fall.
 - Every new or changed value needs an evidence row in the component's `<name>.data.ts` with an
