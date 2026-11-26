@@ -433,11 +433,29 @@ specimens.push(
   // off), the pushed-in Right button, the Menu Button box's lower right corner.
   NX("nx-radio-on", `<div style="padding:12px;background:#aaa"><input type="radio" id="s" checked></div>`, [0, 0, 15, 15], "prefsapp-moved", [476, 667, 15, 15]),
   NX("nx-radio-off", `<div style="padding:12px;background:#aaa"><input type="radio" id="s"></div>`, [0, 0, 15, 15], "prefsapp-moved", [546, 667, 15, 15]),
-  NX("nx-button-on", `<div style="padding:12px;background:#aaa"><button class="active" id="s" style="width:59px;min-width:0">Right</button></div>`, [0, 0, 59, 24], "prefsapp-moved", [549, 748, 59, 24], { mask: [[14, 4, 36, 16]] }),
+  NX("nx-button-on", `<div style="padding:12px;background:#aaa"><button aria-pressed="true" id="s" style="width:59px;min-width:0">Right</button></div>`, [0, 0, 59, 24], "prefsapp-moved", [549, 748, 59, 24], { mask: [[14, 4, 36, 16]] }),
   NX("nx-box-corner", `<div style="padding:12px;background:#aaa"><fieldset id="s" style="width:146px;height:130px;box-sizing:border-box;padding:0"><legend>Menu Button</legend></fieldset></div>`, [137, 120, 11, 11], "prefsapp-moved", [608, 770, 11, 11]),
   // Preferences, Display (frame prefs3): the Automatic Dimming slider, 170x16 at 292,647, its
   // knob 67px along (value 67 of 148: one step a pixel in every engine).
   NX("nx-slider", `<div style="padding:12px;background:#aaa"><input type="range" id="s" min="0" max="148" step="1" value="67" style="width:170px"></div>`, [0, 0, 170, 16], "prefs3", [292, 647, 170, 16]),
+  // Workspace's Info submenu torn off (frame ns30b/tornoff, 107 wide at 393,549): its top
+  // left, and the title bar's close button.
+  ...["left", "right"].map((end) => NX(`nx-tornoff-${end}`, `<ul class="menu torn-off" role="menu" aria-label="Info" id="s" style="width:107px">${["Info Panel...", "Legal...", "Preferences..."].map((t) => `<li role="none"><button role="menuitem">${t}</button></li>`).join("")}<li role="none"><button role="menuitem">Help... <kbd>?</kbd></button></li></ul>`, end === "left" ? [0, -1, 11, 26] : [81, -1, 26, 24], "../ns30b/tornoff", end === "left" ? [393, 549, 11, 26] : [474, 549, 26, 24], end === "left" ? { mask: [[5, 3, 30, 16]] } : {})),
+  // Workspace's Info panel (frame ns30b/infopanel, 380x264 at 304,224): a panel is a window
+  // with a close button and no resize bar; its details sit in a box without a title.
+  NX("nx-panel-top", `<div class="window" id="s" style="width:380px"><div class="title-bar"><h2 class="title">Info</h2><button class="close" aria-label="Close"></button></div><div class="window-pane" style="height:240px"></div></div>`, [0, 0, 10, 24], "../ns30b/infopanel", [304, 224, 10, 24]),
+  NX("nx-panel-foot", `<div class="window" id="s" style="width:380px"><div class="title-bar"><h2 class="title">Info</h2><button class="close" aria-label="Close"></button></div><div class="window-pane" style="height:240px"></div></div>`, [0, 254, 12, 10], "../ns30b/infopanel", [304, 478, 12, 10]),
+  NX("nx-box-plain", `<div style="padding:12px;background:#aaa"><fieldset id="s" style="width:361px;height:58px;box-sizing:border-box;padding:0"></fieldset></div>`, [0, 0, 8, 8], "../ns30b/infopanel", [314, 401, 8, 8]),
+  NX("nx-close-held", `<div class="window" id="s" style="width:380px"><div class="title-bar"><h2 class="title">Info</h2><button class="close active" aria-label="Close"></button></div><div class="window-pane" style="height:40px"></div></div>`, [361, 4, 15, 15], "../ns30b/close-held", [665, 228, 15, 15], { mask: [[7, 7, 8, 8]] }),   // the pointer
+  NX("nx-close-edited", `<div class="window edited" id="s" style="width:380px"><div class="title-bar"><h2 class="title">UNTITLED.rtf</h2><button class="close" aria-label="Close"></button></div><div class="window-pane" style="height:40px"></div></div>`, [361, 4, 15, 15], "../ns30b/edited", [658, 31, 15, 15]),
+  // The File Viewer's horizontal scroller with arrows (frame ns30b/hb4: the browser walked five
+  // columns deep): both arrows at its left, in 17px cells, the lane after a 1px gap.
+  { ...NX("nx-js-hscroller", `<div class="clio-scroll" id="s" style="width:300px;height:80px;overflow-x:scroll;overflow-y:hidden;background:#aaa"><div style="width:900px;height:20px"></div></div>`, [0, 61, 60, 19], "../ns30b/hb4", [163, 199, 60, 19]), js: true,
+    act: async (page) => { await page.evaluate(() => { document.querySelector("#s").scrollLeft = 1e6; }); await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)))); } },   // the box at the far end, the lane clear
+  { ...NX("nx-js-arrow-held", `<div class="clio-scroll" id="s" style="width:300px;height:80px;overflow-x:scroll;overflow-y:hidden;background:#aaa"><div style="width:900px;height:20px"></div></div>`, [18, 63, 16, 16], "../ns30b/arrow-held", [181, 201, 16, 16]), js: true, mask: [[12, 12, 4, 4]],   // the pointer
+    act: async (page, b) => { await page.mouse.move(b.x + 26, b.y + 71); await page.mouse.down(); await page.waitForTimeout(60); } },
+  // Log Out's Cancel held, the pointer moved off before release (frame ns30b/button-held, 78x24 at 569,337).
+  NX("nx-button-held", `<div style="padding:12px;background:#aaa"><button class="active" id="s" style="width:78px;min-width:0">Cancel</button></div>`, [0, 0, 78, 24], "../ns30b/button-held", [569, 337, 78, 24], { mask: [[18, 4, 44, 16], [70, 4, 8, 17]] }),   // the label; the pointer
   NX("nx-close", nxWindow(395, "Prefs", '<button class="close" aria-label="Close"></button>'), [368, 0, 27, 23], "prefs-dock", [986, 112, 27, 23]),
   NX("nx-titlebar-main", nxWindow(604, "File Viewer").replace('class="window"', 'class="window main"'), [588, 0, 16, 23], "prefs-dock", [740, 12, 16, 23]),
   NX("nx-popup", `<div style="padding:12px;background:#aaa"><select id="s" style="width:130px"><option>Dock</option></select></div>`, [0, 0, 130, 20], "prefs-dock", [754, 139, 130, 20], { mask: [[5, 3, 45, 14]] }),

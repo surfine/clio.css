@@ -617,7 +617,9 @@
       Object.assign(p, { track: p.track, length: track, thumbLength: thumb, range, at, max });
       p.thumb.style[vertical ? "height" : "width"] = `${thumb}px`;
       p.thumb.style[vertical ? "minHeight" : "minWidth"] = "0";   // the browser bar's minimum is not the box's length
-      p.thumb.style[vertical ? "top" : "left"] = `${(smart ? 0 : near ? arrows : size) - ov}px`;
+      // NeXTSTEP's horizontal bar keeps its 1px margin at the far end, so the box starts right
+      // after the arrows' cells
+      p.thumb.style[vertical ? "top" : "left"] = `${smart ? -ov : near ? (this.m.arrow ? arrows : arrows - ov) : size - ov}px`;
       p.thumb.style[vertical ? "width" : "height"] = "";
       if (!p.dragging) p.thumb.style.transform = vertical ? `translateY(${at}px)` : `translateX(${at}px)`;
     }
@@ -633,7 +635,8 @@
       const r = p.bar.getBoundingClientRect();
       const along = (ev: PointerEvent) => (vertical ? ev.clientY - r.top : ev.clientX - r.left);
       const smart = p.bar.classList.contains("clio-sb-smart");
-      const trackStart = (smart ? 0 : p.bar.classList.contains("clio-sb-near") ? (m.arrow ? 2 * m.arrow + m.gap : 2 * m.size) : m.size) - m.overlap;
+      const near = p.bar.classList.contains("clio-sb-near");
+      const trackStart = smart ? -m.overlap : near ? (m.arrow ? 2 * m.arrow + m.gap : 2 * m.size - m.overlap) : m.size - m.overlap;
       const target = e.target;
       let timer = 0, stop: ((ev: PointerEvent) => void) | undefined;
 

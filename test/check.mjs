@@ -154,8 +154,8 @@ for (const [k, e] of Object.entries(pkg.exports)) for (const v of typeof e === "
 // Drawing Board utility window's frame (17 placed pieces, ~1.5 KB of CSS).
 ok(statSync(join(root, "dist/clio.min.css")).size < 223000, "clio.min.css grew past 223 KB");
 // NeXTSTEP's own file (D5, D14): the base files (about 99 KB minified, as clio.system6.min.css)
-// plus its layer. 150 KB leaves the layer about 50 KB.
-ok(statSync(join(root, "dist/clio.nextstep.min.css")).size < 150000, "clio.nextstep.min.css grew past 150 KB");
+// plus its layer. 160 KB (owner, 2026-11-26, D16) leaves the layer about 60 KB.
+ok(statSync(join(root, "dist/clio.nextstep.min.css")).size < 160000, "clio.nextstep.min.css grew past 160 KB");
 const minJs = readFileSync(join(root, "dist/clio.min.js"), "utf8");
 ok(/^\/\*! clio\.js/.test(minJs) && minJs.length < js.length * 0.7, "dist/clio.min.js missing, without its banner, or not minified");
 

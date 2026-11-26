@@ -529,15 +529,22 @@
         {
           "era": "nextstep",
           "claim": "An edited document's close button: the X broken in the middle",
-          "status": "inferred",
-          "source": "AI System 6 69-nextstep-appearance.css (N12, ns-close-edited-15.svg)",
-          "upstream": "not captured"
+          "status": "measured",
+          "source": "clio.css capture, NeXTStep 3.0 in Infinite Mac (frames in .fidelity/ns30), frame ns30b/edited (Edit's untitled document after typing); tooling/nx-art.py check",
+          "upstream": "fidelity nx-close-edited; equals AI System 6's ns-close-edited-15.svg"
         },
         {
           "era": "nextstep",
-          "claim": "A held title-bar button's face turns white",
+          "claim": "A held close button: white face, its inner shade #aaaaaa, the X etched in #555555 and #aaaaaa; the black frame stays",
+          "status": "measured",
+          "source": "clio.css capture, NeXTStep 3.0 in Infinite Mac (frames in .fidelity/ns30), frame ns30b/close-held (the Info panel's close button held; the quarter under the pointer mirrored from the others)",
+          "upstream": "fidelity nx-close-held, the pointer masked"
+        },
+        {
+          "era": "nextstep",
+          "claim": "A held miniaturize button: the close button's rule (white face, #aaaaaa inner shade)",
           "status": "inferred",
-          "source": "AI System 6 69-nextstep-appearance.css (P15)",
+          "source": "clio.css (tooling/nx-art.py held())",
           "upstream": "not captured"
         },
         {
@@ -867,10 +874,10 @@
         },
         {
           "era": "nextstep",
-          "claim": "A torn-off submenu (.torn-off) carries a close button in its title bar; an attached one has none",
-          "status": "inferred",
-          "source": "NeXTSTEP User Interface Guidelines, Release 3, ch. 6; AI System 6 69-nextstep-appearance.css reference notes",
-          "upstream": "not captured"
+          "claim": "A torn-off submenu (.torn-off): a #555555 line on its top as on its left, and a close button 2px in from the title bar's face; an attached one has none",
+          "status": "measured",
+          "source": "clio.css capture, NeXTStep 3.0 in Infinite Mac (frames in .fidelity/ns30), frame ns30b/tornoff (Workspace's Info menu dragged away)",
+          "upstream": "fidelity nx-tornoff-left, nx-tornoff-right"
         },
         {
           "era": "nextstep",
@@ -1060,17 +1067,17 @@
         },
         {
           "era": "nextstep",
-          "claim": "On (.active): the face turns white, the bevel stays raised",
+          "claim": "On (aria-pressed=\"true\"): the face turns white, the bevel stays raised",
           "status": "measured",
           "source": "clio.css capture, NeXTStep 3.0 in Infinite Mac (frames in .fidelity/ns30), frame prefsapp-moved (Preferences, Mouse), the Right button)",
           "upstream": "fidelity nx-button-on; AI System 6's sunken bevel corrected"
         },
         {
           "era": "nextstep",
-          "claim": "Held under the pointer: the same white face",
-          "status": "inferred",
-          "source": "NeXTSTEP User Interface Guidelines, Release 3 p.135",
-          "upstream": "the held moment was not captured"
+          "claim": "Held (:active, .active): white and sunken, 1px black top and left, 1px white bottom and right, the two odd corners white",
+          "status": "measured",
+          "source": "clio.css capture, NeXTStep 3.0 in Infinite Mac (frames in .fidelity/ns30), frame ns30b/button-held (Log Out's Cancel held; released off it, the panel stayed)",
+          "upstream": "fidelity nx-button-held"
         },
         {
           "era": "nextstep",
@@ -1736,10 +1743,17 @@
         },
         {
           "era": "nextstep",
-          "claim": "Horizontal scroller's arrows: together at its left, in the vertical one's cells",
-          "status": "inferred",
-          "source": "NeXTSTEP User Interface Guidelines, Release 3 p.149 (the scroll buttons in the lower-left corner)",
-          "upstream": "no horizontal scroller with arrows was captured"
+          "claim": "Horizontal scroller (clio.js): both arrows at its left in 17px cells, then a 1px gap, the lane with its 1px margin at the far end",
+          "status": "measured",
+          "source": "clio.css capture, NeXTStep 3.0 in Infinite Mac (frames in .fidelity/ns30), frame ns30b/hb4 (the File Viewer's browser five columns deep); tooling/nx-art.py check",
+          "upstream": "fidelity nx-js-hscroller"
+        },
+        {
+          "era": "nextstep",
+          "claim": "A held arrow: every pixel one grey lighter (black to #555555, #555555 to #aaaaaa, #aaaaaa to white)",
+          "status": "measured",
+          "source": "clio.css capture, NeXTStep 3.0 in Infinite Mac (frames in .fidelity/ns30), frame ns30b/arrow-held (the right arrow held)",
+          "upstream": "fidelity nx-js-arrow-held, three engines"
         },
         {
           "era": "nextstep",
@@ -1872,6 +1886,13 @@
           "status": "inferred",
           "source": "clio.css",
           "upstream": "—"
+        },
+        {
+          "era": "nextstep",
+          "claim": "A panel (Info): a window with the key title bar and a close button, no resize bar; its details in a box with no title",
+          "status": "measured",
+          "source": "clio.css capture, NeXTStep 3.0 in Infinite Mac (frames in .fidelity/ns30), frame ns30b/infopanel (Workspace's Info panel, 380x264)",
+          "upstream": "fidelity nx-panel-top, nx-panel-foot, nx-box-plain"
         },
         {
           "era": "nextstep",
@@ -2252,10 +2273,10 @@
         },
         {
           "era": "nextstep",
-          "claim": "Workspace background #555555",
-          "status": "inferred",
-          "source": "AI System 6 69-nextstep-appearance.css (--desktop)",
-          "upstream": "NeXTStep 3.0 on a colour NeXT shows #555577 (frame boot1)"
+          "claim": "Workspace background #555577, flat",
+          "status": "measured",
+          "source": "clio.css capture, NeXTStep 3.0 in Infinite Mac (frames in .fidelity/ns30), frame boot1 (the desktop round the File Viewer)",
+          "upstream": "owner's choice 2026-11-26 over AI System 6's #555555, the 2-bit grey"
         },
         {
           "era": "nextstep",

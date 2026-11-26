@@ -60,8 +60,27 @@ d##############
 .ddddddddddddd#
 ###############
 """),
+    # A held close button: white face, the inner shade turned #aaaaaa, the X etched. The
+    # pointer covered the lower right quarter (from x 7, y 7): mirrored from the others.
+    "close-held": ("NeXTStep 3.0 in Infinite Mac, frame ns30b/close-held (the Info panel's close button held)", None, """
+..............#
+.............a#
+..da......ad.a#
+..ada....ada.a#
+...ada..ada..a#
+....adaada...a#
+.....ad......a#
+.....ad......a#
+....adaada...a#
+...ada..ada..a#
+..ada....ada.a#
+..da......ad.a#
+.............a#
+.aaaaaaaaaaaaa#
+###############
+"""),
     # An edited document's close button: the X broken in the middle.
-    "close-edited": ("AI System 6 assets/themes/nextstep/chrome/ns-close-edited-15.svg", None, """
+    "close-edited": ("NeXTStep 3.0 in Infinite Mac, frame ns30b/edited (Edit's untitled document after typing; the same as AI System 6's ns-close-edited-15.svg)", ("ns30b/edited", 658, 31), """
 ..............#
 .aaaaaaaaaaaad#
 .a#daaaaaad#ad#
@@ -296,9 +315,17 @@ def svg(grid):
 
 
 def held(grid):
-    """A pressed title-bar button: the light face turns white (the art's own rule)."""
-    g = rows(grid)
-    return "\n".join(r[0] + r[1:-2].replace("a", ".") + r[-2:] if 0 < i < len(g) - 2 else r for i, r in enumerate(g))
+    """A held title-bar button, as the held close button shows: the face turns white and
+    the inner shade (the column and row inside the black) turns #aaaaaa."""
+    g = [list(r) for r in rows(grid)]
+    w, h = len(g[0]), len(g)
+    for y in range(1, h - 1):
+        for x in range(1, w - 1):
+            if x == w - 2 or y == h - 2:
+                g[y][x] = "a" if g[y][x] == "d" else g[y][x]
+            elif g[y][x] == "a":
+                g[y][x] = "."
+    return "\n".join("".join(r) for r in g)
 
 
 def button(glyph, w=16, h=16):
@@ -324,8 +351,9 @@ def tokens():
     up = ART["arrow-up"][2]
     for k, turns in (("arrow-up", 0), ("arrow-right", 1), ("arrow-down", 2), ("arrow-left", 3)):
         parts[k] = button(turn(up, turns))
+        # held: every pixel one grey lighter (measured on the right arrow, ns30b/arrow-held)
+        parts[k + "-held"] = "\n".join("".join({"#": "d", "d": "a", "a": ".", ".": "."}[c] for c in r) for r in rows(parts[k]))
     parts["miniaturize-held"] = held(ART["miniaturize"][2])
-    parts["close-held"] = held(ART["close"][2])
     lines = [f"  --clio-art-nx-{k}: {svg(v)};" for k, v in parts.items()]
     return "\n".join(lines)
 
@@ -355,6 +383,8 @@ def check():
     built = {k: (src, crop, grid) for k, (src, crop, grid) in ART.items()}
     built["arrow-up"] = (None, ("ns30/browser-small", 164, 292), button(turn(up, 0)))
     built["arrow-down"] = (None, ("ns30/browser-small", 164, 309), button(turn(up, 2)))
+    built["arrow-left"] = (None, ("ns30b/hb4", 164, 201), button(turn(up, 3)))
+    built["arrow-right"] = (None, ("ns30b/hb4", 181, 201), button(turn(up, 1)))
     for k, (src, crop, grid) in built.items():
         if not crop:
             continue
