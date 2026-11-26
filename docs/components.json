@@ -117,28 +117,28 @@
           "era": "system7",
           "claim": "clio.js: dragging the title bar moves a 1px grey outline around the window and its 1px shadow (the structure region); the gray inverts the pixels whose x + y is odd, kept to the page as QuickDraw kept it to the screen, and the window follows on release",
           "status": "measured",
-          "source": "clio.css capture, System 7.5.3 in Infinite Mac, Infinite HD dragged by 80,116 (frames before and during, diffed); tooling/outline-check.mjs: the same 614 pixels inverted in Chromium, WebKit and Firefox",
+          "source": "clio.css capture, System 7.5.3 in Infinite Mac, Infinite HD dragged by 80,116 (frames before and during, diffed); tooling/outline-check.ts: the same 614 pixels inverted in Chromium, WebKit and Firefox",
           "upstream": "QuickDraw DragGrayRgn of the window's structure region"
         },
         {
           "era": "system6",
           "claim": "clio.js: as System 7: a 1px grey outline around the window and its shadow, the gray on the odd pixels",
           "status": "measured",
-          "source": "clio.css capture, System 6.0.8 in Infinite Mac, Macintosh HD dragged by 80,113 (frames before and during, diffed); tooling/outline-check.mjs: the same 365 pixels in all three engines",
+          "source": "clio.css capture, System 6.0.8 in Infinite Mac, Macintosh HD dragged by 80,113 (frames before and during, diffed); tooling/outline-check.ts: the same 365 pixels in all three engines",
           "upstream": "QuickDraw DragGrayRgn"
         },
         {
           "era": "platinum",
           "claim": "clio.js: the dragged outline is a 2px band of the grey pattern (the odd pixels) round the window and its shadow; the shadow starts 2px in from the top-right and bottom-left corners, so the band steps in there",
           "status": "measured",
-          "source": "clio.css capture, Mac OS 9.0 in Infinite Mac, Infinite HD dragged by 80,116 (frames before and during, diffed); tooling/outline-check.mjs: the same 1260 pixels in Chromium, WebKit and Firefox",
+          "source": "clio.css capture, Mac OS 9.0 in Infinite Mac, Infinite HD dragged by 80,116 (frames before and during, diffed); tooling/outline-check.ts: the same 1260 pixels in Chromium, WebKit and Firefox",
           "upstream": "Drawing Board assumed the same (inferred)"
         },
         {
           "era": "drawingboard",
           "claim": "clio.js: the dragged outline is the same 2px band of the gray, round the frame and its shadow (7px across, 8px down), following the structure region's overrun near the corners (patches written by tooling/db-outline.py from the theme's pieces; the region's top-left and bottom-left pieces lie 1px right of the drawn ones, and the grey outer column's last row is region)",
           "status": "measured",
-          "source": "clio.css capture, Mac OS 8.5 with the 8.5b6 Drawing Board theme in Infinite Mac, Infinite HD dragged by 80,116 (frames before and during, diffed); tooling/outline-check.mjs: all 1349 of the Mac's pixels and no others in Chromium and WebKit",
+          "source": "clio.css capture, Mac OS 8.5 with the 8.5b6 Drawing Board theme in Infinite Mac, Infinite HD dragged by 80,116 (frames before and during, diffed); tooling/outline-check.ts: all 1349 of the Mac's pixels and no others in Chromium and WebKit",
           "upstream": "the 1px offset of the region pieces is fitted to this one frame (the inverted gray shows only every other pixel of the region), not read from the theme's region data"
         },
         {
@@ -166,14 +166,14 @@
           "era": "system6",
           "claim": "clio.js sounds: no interface sounds, only the alert sound (Simple Beep, Clink-Klank, Boing, Monkey; Speaker Volume 0-7)",
           "status": "measured",
-          "source": "System 6.0.8 in Infinite Mac: Control Panel > Sound; the System file out through BlueSCSI SD Transfer, decoded by tooling/soundset.py; Simple Beep (square-wave synth) and Clink-Klank (a sample played as two notes) kept as recorded by tooling/emulator/drive.mjs",
+          "source": "System 6.0.8 in Infinite Mac: Control Panel > Sound; the System file out through BlueSCSI SD Transfer, decoded by tooling/soundset.py; Simple Beep (square-wave synth) and Clink-Klank (a sample played as two notes) kept as recorded by tooling/emulator/drive.ts",
           "upstream": "Boing and Monkey against the emulator's output: correlation 0.997 and 0.995 (Infinite Mac hands Mini vMac's 22,254.5 Hz output to Web Audio labelled 22,050 Hz, so it plays 0.9% slow there; compared at the true rate)"
         },
         {
           "era": "system7",
           "claim": "clio.js sounds: no interface sounds, only the alert sound; the 17 alert sounds of System 7.5.3, Sosumi selected",
           "status": "measured",
-          "source": "System 7.5.3 in Infinite Mac: Sound control panel > Alert Sounds; the sounds dragged out of the System suitcase to Uploads, decoded by tooling/soundset.py, played in the control panel and recorded (drive.mjs arec/astop), compared by tooling/soundcompare.py",
+          "source": "System 7.5.3 in Infinite Mac: Sound control panel > Alert Sounds; the sounds dragged out of the System suitcase to Uploads, decoded by tooling/soundset.py, played in the control panel and recorded (drive.ts arec/astop), compared by tooling/soundcompare.py",
           "upstream": "16-bit 44.1 kHz sounds (Sheet, Dewdrop, Basil) identical at every one of 38,245, 42,877 and 55,568 output samples; 8-bit 11/22 kHz (Sosumi, Wild Eep, Droplet, Indigo) through the Sound Manager's interpolating converter, correlation 0.99984-0.99997, gain 0.995-0.998; the factory selection not checked"
         },
         {
@@ -208,14 +208,14 @@
           "era": "drawingboard",
           "claim": "clio.js sounds: Mac OS 8.5's six alert sounds — Droplet, Indigo, Laugh, Simple Beep, Sosumi, Wild Eep — with Sosumi selected",
           "status": "measured",
-          "source": "Mac OS 8.5 in Infinite Mac: Monitors & Sound > Alerts (the list and the selection, .fidelity/snd-m85/alerts.png); each sound played from the list and recorded by tooling/emulator/drive.mjs (arec/astop), compared by tooling/soundcompare.py with System 7.5.3's decoded snd resources",
+          "source": "Mac OS 8.5 in Infinite Mac: Monitors & Sound > Alerts (the list and the selection, .fidelity/snd-m85/alerts.png); each sound played from the list and recorded by tooling/emulator/drive.ts (arec/astop), compared by tooling/soundcompare.py with System 7.5.3's decoded snd resources",
           "upstream": "recordings, not decodes of 8.5's System file (the Finder copies one sound into The Outside World, but the 8.5 image generates no zip download, so the file cannot leave the emulator): Droplet correlation 0.999947, Indigo 0.999915, Sosumi 0.999893, Wild Eep 0.999776 against 7.5.3's samples; Laugh is a different sample from 9.0's (-0.065); Simple Beep is synthesized; 8.5's suitcase lists Quack (not in the panel) and no Laugh"
         },
         {
           "era": "both",
           "claim": "clio.js sounds: one-shots overlap, one drag loop at a time, off until a page loads a set, silent while hidden or muted",
           "status": "adapted",
-          "source": "Appearance.h: PlayThemeSound plays asynchronously, BeginThemeDragSound/EndThemeDragSound one at a time; tooling/behaviour.mjs (35 checks, three engines); tooling/sound-proof.mjs records clio.js playing Platinum Sounds: tabp and mnuo at their manifest gains, correlation 0.99998 in Chromium and WebKit",
+          "source": "Appearance.h: PlayThemeSound plays asynchronously, BeginThemeDragSound/EndThemeDragSound one at a time; tooling/behaviour.ts (35 checks, three engines); tooling/sound-proof.ts records clio.js playing Platinum Sounds: tabp and mnuo at their manifest gains, correlation 0.99998 in Chromium and WebKit",
           "upstream": "the Mac had no hidden page; the web's autoplay policy needs a press or key before the first sound"
         },
         {
@@ -264,7 +264,7 @@
           "era": "drawingboard",
           "claim": "Cursors: the theme's own arrow, 16x16 in greys, hot spot 0,0 (crsr 128); 129-131 are the same arrow with a drag badge",
           "status": "measured",
-          "source": "the Drawing Board theme file's crsr resources (Mac OS 8.5b6 Beta Themes), decoded by tooling/db-cursor.py into art/cursors/db-arrow{,-2x,-3x}.png; --check: every pixel of 1x, 2x and 3x equals the resource; tooling/behaviour.mjs: the page and buttons use it in Chromium, WebKit and Firefox",
+          "source": "the Drawing Board theme file's crsr resources (Mac OS 8.5b6 Beta Themes), decoded by tooling/db-cursor.py into art/cursors/db-arrow{,-2x,-3x}.png; --check: every pixel of 1x, 2x and 3x equals the resource; tooling/behaviour.ts: the page and buttons use it in Chromium, WebKit and Firefox",
           "upstream": "the theme's drag badges (copy, alias, a document) are not used, clio.css has one arrow; it ships no I-beam or watch of its own, so text and busy keep the measured System 7/Mac OS 9 ones"
         },
         {
@@ -625,7 +625,7 @@
           "claim": "A dimmed item never lights under the pointer, whether the dimming is on the item or on the button inside it (1.1.0 fix: a cell holding a dimmed button lit up in System 6, System 7 and Platinum)",
           "status": "inferred",
           "source": "Macintosh Human Interface Guidelines (1992), ch. 4: a dimmed command cannot be chosen",
-          "upstream": "tooling/behaviour.mjs 1b, three engines"
+          "upstream": "tooling/behaviour.ts 1b, three engines"
         },
         {
           "era": "platinum",
@@ -2746,28 +2746,28 @@
           "era": "system6",
           "claim": "A 1px black frame whose corners step in 5, 3, 2, 1, 1 pixels (the frame follows the same curve one pixel in); a 17-row black title bar ruled below; an 11px white close box at (9,4); the title in white, centred right of the close box. In the background: a white bar, a black title, no close box",
           "status": "measured",
-          "source": "clio.css capture, System 6.0.8 in Infinite Mac (frames in .fidelity, see tooling/fidelity.mjs): the Calculator (Apple menu), frames rdoc-calc and rdoc-calc-inactive; tooling/rare-art.py",
+          "source": "clio.css capture, System 6.0.8 in Infinite Mac (frames in .fidelity, see tooling/fidelity.ts): the Calculator (Apple menu), frames rdoc-calc and rdoc-calc-inactive; tooling/rare-art.py",
           "upstream": "specimens s6-rdoc-title, -title-inactive, -left, -bottom-left 100% identical"
         },
         {
           "era": "system7",
           "claim": "The same window in System 7.5.3",
           "status": "measured",
-          "source": "clio.css capture, System 7.5.3 in Infinite Mac (frames in .fidelity, see tooling/fidelity.mjs): the Calculator, frame rdoc-calc",
+          "source": "clio.css capture, System 7.5.3 in Infinite Mac (frames in .fidelity, see tooling/fidelity.ts): the Calculator, frame rdoc-calc",
           "upstream": "specimens s7-rdoc-title and s7-rdoc-left 100% identical"
         },
         {
           "era": "platinum",
           "claim": "Mac OS 9.0 draws the old window unchanged, its title in the system font antialiased (white on black; black on white in the background)",
           "status": "measured",
-          "source": "clio.css capture, Mac OS 9.0 in Infinite Mac (frames in .fidelity, see tooling/fidelity.mjs): the Calculator, frames rdoc-calc and rdoc-calc-inactive; levels in tooling/aa-palettes.py",
+          "source": "clio.css capture, Mac OS 9.0 in Infinite Mac (frames in .fidelity, see tooling/fidelity.ts): the Calculator, frames rdoc-calc and rdoc-calc-inactive; levels in tooling/aa-palettes.py",
           "upstream": "specimens p9-rdoc-title and -title-inactive 100% identical but for ten faint title pixels the font lacks (masked); the title's place fitted to this capture"
         },
         {
           "era": "drawingboard",
           "claim": "Drawing Board leaves it as Platinum does",
           "status": "measured",
-          "source": "clio.css capture, Mac OS 8.5 with the 8.5b6 Drawing Board theme in Infinite Mac (frames in .fidelity, see tooling/fidelity.mjs): the Calculator, frame rdoc-calc",
+          "source": "clio.css capture, Mac OS 8.5 with the 8.5b6 Drawing Board theme in Infinite Mac (frames in .fidelity, see tooling/fidelity.ts): the Calculator, frame rdoc-calc",
           "upstream": "specimen db-rdoc-title 100% identical (the same ten pixels masked)"
         },
         {
@@ -2795,7 +2795,7 @@
           "era": "platinum",
           "claim": "The utility window's frame (1px black, white light top and left, #999 shade right and bottom, the drop from the second row and column); a 10px #ccc bar down the left with the 10x10 close box at its top, the dot pattern from 12px below it to 12px above the foot, and the collapse box turned on its diagonal at the foot; no title. In the background: #555 frame and drop on flat #ddd",
           "status": "measured",
-          "source": "clio.css capture, Mac OS 9.0 in Infinite Mac (frames in .fidelity, see tooling/fidelity.mjs): the Appearance SDK's sample (Developer > Appearance SDK > Appearance Sample, Examples > Side Utility Window), frame side-utility; tooling/rare-art.py",
+          "source": "clio.css capture, Mac OS 9.0 in Infinite Mac (frames in .fidelity, see tooling/fidelity.ts): the Appearance SDK's sample (Developer > Appearance SDK > Appearance Sample, Examples > Side Utility Window), frame side-utility; tooling/rare-art.py",
           "upstream": "specimens p9-side-bar, -top, -right, -bottom, -inactive 100% identical"
         },
         {
@@ -2809,7 +2809,7 @@
           "era": "drawingboard",
           "claim": "The theme's own frame as its 'layo' 138 (ActiveSideFloatingWindow) lays it out: a 14px column (the small system font's 9px height plus 5) of the Util LSide pieces 6205-6209 clipped to it, the content 18px in and 9px down, the utility pieces 6192-6204 and 6213/6214 round it, the close box (201) 6px in and 8px down, the collapse box upright (211's third picture) 7px above the foot",
           "status": "measured",
-          "source": "clio.css capture, Mac OS 8.5 with Drawing Board in Infinite Mac (frames in .fidelity, see tooling/fidelity.mjs): the same sample, frame side3 in the rc8 run; tooling/theme-layout.py decodes the theme's 'layo' resources and draws them from the pieces",
+          "source": "clio.css capture, Mac OS 8.5 with Drawing Board in Infinite Mac (frames in .fidelity, see tooling/fidelity.ts): the same sample, frame side3 in the rc8 run; tooling/theme-layout.py decodes the theme's 'layo' resources and draws them from the pieces",
           "upstream": "the drawing matches the capture's 4123 frame pixels 100% (theme-layout.py --check); specimens db-side-bar, -top, -right, -bottom 100% identical"
         },
         {
@@ -2865,14 +2865,14 @@
           "era": "platinum",
           "claim": "1px black, white light on the top and left, #aaa shade on the right and the bottom (the corners they would share left #ddd), a #ddd face. Disabled: a #555 frame on #eee",
           "status": "measured",
-          "source": "clio.css capture, Mac OS 9.0 in Infinite Mac (frames in .fidelity, see tooling/fidelity.mjs): the Appearance SDK's CDEF Tester (CDEF Tester > Placard, 100x50, and Disable), frames placard and placard-disabled",
+          "source": "clio.css capture, Mac OS 9.0 in Infinite Mac (frames in .fidelity, see tooling/fidelity.ts): the Appearance SDK's CDEF Tester (CDEF Tester > Placard, 100x50, and Disable), frames placard and placard-disabled",
           "upstream": "specimens p9-placard and p9-placard-disabled 100% identical; held not shown by the tester"
         },
         {
           "era": "drawingboard",
           "claim": "A #cebdb5 face in the pencil line (its commonest shade, #555; it drifts from #333 to #888); disabled, #cdc6bd with a faint #b6ada5 line along the top only",
           "status": "adapted",
-          "source": "clio.css capture, Mac OS 8.5 with Drawing Board in Infinite Mac (frames in .fidelity, see tooling/fidelity.mjs): the CDEF Tester, frames placard and placard-disabled",
+          "source": "clio.css capture, Mac OS 8.5 with Drawing Board in Infinite Mac (frames in .fidelity, see tooling/fidelity.ts): the CDEF Tester, frames placard and placard-disabled",
           "upstream": "faces 100% identical (db-placard-face, -disabled-face); the drifting pencil drawn flat"
         },
         {
@@ -2920,7 +2920,7 @@
           "era": "platinum",
           "claim": "7 rows of black across the scroll bar's width, at its top; split, the bar tops the lower pane's scroll bar and the split line runs across the content as two black lines on its fourth and sixth rows",
           "status": "measured",
-          "source": "clio.css capture, Mac OS 9.0 in Infinite Mac (frames in .fidelity, see tooling/fidelity.mjs): BBEdit 5.1 (Developer folder), frames split-bar and split-line",
+          "source": "clio.css capture, Mac OS 9.0 in Infinite Mac (frames in .fidelity, see tooling/fidelity.ts): BBEdit 5.1 (Developer folder), frames split-bar and split-line",
           "upstream": "specimens p9-split-bar and p9-split-line 100% identical; the dragged 3-row grey outline is not drawn"
         },
         {
@@ -3176,28 +3176,28 @@
           "era": "both",
           "claim": "CJK stand-in: Fusion Pixel 12px proportional per language (Clio Pixel TC, SC, JA, KO), cut to the bitmap interface font's character set (Big5 93.7%, GB 2312 99.1%, JIS X 0208 99.5%, KS X 1001 97.4% covered) with Clio's vertical metrics (ascent 11, descent 3); after the period names Taipei, Beijing, Osaka, Seoul, before the outline families (Apple LiGothic, Hei, AppleGothic), and fetched only for text in that language",
           "status": "third-party",
-          "source": "fonts/FusionPixel12-*.woff2, tooling/cjk-fonts.py, src/96-cjk.css",
+          "source": "fonts/FusionPixel12-*.woff2, tooling/cjk-fonts.py, foundation/cjk.css",
           "upstream": "Fusion Pixel Font 2026.11.10 (TakWolf, OFL-1.1, no Reserved Font Name)"
         },
         {
           "era": "both",
           "claim": "System 6, Drawing Board, and Chinese and Korean on System 7 take the same CJK stacks without a measurement: Infinite Mac has no KanjiTalk 6 and no Chinese or Korean system, and the Korean Language Kit did not fit the Mac OS 9.0 disk beside the Chinese ones",
           "status": "inferred",
-          "source": "src/96-cjk.css, 97-cjk-platinum.css, 98-cjk-drawingboard.css",
+          "source": "foundation/cjk.css, cjk-platinum.css, cjk-drawingboard.css",
           "upstream": "the measured KanjiTalk 7.5.3 and Mac OS 9.0 rows above"
         },
         {
           "era": "both",
           "claim": "Small text (9px) keeps the 9px Latin face and draws CJK in the 12px stand-in scaled down: KanjiTalk's Finder drew 8px kanji there from a 9-point Osaka clio.css does not have",
           "status": "adapted",
-          "source": "src/96-cjk.css (--clio-font-small)",
+          "source": "foundation/cjk.css (--clio-font-small)",
           "upstream": "frame kt-hd-active (the window's information line)"
         },
         {
           "era": "both",
           "claim": "clio.js gives each row of a pop-up it draws its option's language, so :lang() reaches the menu, which hangs off the era's root",
           "status": "adapted",
-          "source": "js/clio.js openPopup; tooling/behaviour.mjs cjk checks",
+          "source": "js/clio.js openPopup; tooling/behaviour.ts cjk checks",
           "upstream": "web-only"
         },
         {

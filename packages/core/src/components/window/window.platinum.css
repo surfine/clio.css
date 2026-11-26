@@ -148,7 +148,7 @@
 
 /* ---- Antialiasing as Mac OS blends it -------------------------------------
    Window titles and push button labels in their own colours on their own
-   backgrounds take the exact palettes (src/00-fonts.css). */
+   backgrounds take the exact palettes (foundation/fonts.css). */
 :is([data-era="platinum"], [data-era="drawingboard"]) .title-bar > :is(.title, h1, h2, h3) {
   font-palette: --clio-aa-p9-title;
 }

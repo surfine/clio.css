@@ -999,7 +999,7 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
 
 /* Tokens: Macintosh System 6 is the default era. Measured values come from
    System 6.0.8 running in Infinite Mac, read from the emulator canvas 1:1
-   (tooling/capture-system6.mjs).
+   (tooling/capture-system6.ts).
    Every value below is traceable in EVIDENCE.md. A value marked [M] there was
    measured from real pixels; [I] is inferred; [A] is a deliberate web
    adaptation (contrast, focus, touch). Platinum re-declares these tokens in
@@ -4977,7 +4977,7 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
 
 /* ---- Antialiasing as Mac OS blends it -------------------------------------
    Window titles and push button labels in their own colours on their own
-   backgrounds take the exact palettes (src/00-fonts.css). */
+   backgrounds take the exact palettes (foundation/fonts.css). */
 :is([data-era="platinum"], [data-era="drawingboard"]) .title-bar > :is(.title, h1, h2, h3) {
   font-palette: --clio-aa-p9-title;
 }
@@ -5195,7 +5195,7 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
   background: transparent;
 }
 
-/* Safari's COLRv0 edge levels in white and dimmed text (src/00-fonts.css). */
+/* Safari's COLRv0 edge levels in white and dimmed text (foundation/fonts.css). */
 :is([data-era="platinum"], [data-era="drawingboard"]) :is(.menu-bar, [role="menubar"], [role="menu-bar"]) > li > :is(button, a, span):is([aria-expanded="true"], .active),
 :is([data-era="platinum"], [data-era="drawingboard"]) :is(.menu-bar, [role="menubar"], [role="menu-bar"]) > li.open > :is(button, a, span),
 :is([data-era="platinum"], [data-era="drawingboard"]) :is(.menu, [role="menu"]) > li:not(.disabled, [aria-disabled="true"], .separator, [role="separator"], :has(> :is(:disabled, [aria-disabled="true"]))):is(:hover, :focus-within, .active):where(:not([data-clio-blink])),

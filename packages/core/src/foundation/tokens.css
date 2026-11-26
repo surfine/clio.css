@@ -1,6 +1,6 @@
 /* Tokens: Macintosh System 6 is the default era. Measured values come from
    System 6.0.8 running in Infinite Mac, read from the emulator canvas 1:1
-   (tooling/capture-system6.mjs).
+   (tooling/capture-system6.ts).
    Every value below is traceable in EVIDENCE.md. A value marked [M] there was
    measured from real pixels; [I] is inferred; [A] is a deliberate web
    adaptation (contrast, focus, touch). Platinum re-declares these tokens in
