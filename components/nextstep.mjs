@@ -99,6 +99,7 @@ export const rows = {
     row("NeXTSTEP 3.3 had no tab control; tabs take the button's bevel", "adapted", "clio.css", NXUG + " has no tab view"),
   ],
   desktop: [
+    row("Cursors: NeXT's arrow, the Mac's but for its last row, and its I-beam, 7x16, black only, its crossbar on the hot spot's row (3, 8)", "measured", NX30 + ", frames ns30b/edited (the arrow over the workspace) and ns30c/ibeam (over Edit's text); tooling/cursor-art.py", "the arrow's hot spot (1, 1) is inferred from the Mac's"),
     row("data-clio-depth=\"2bit\": a black-and-white MegaPixel NeXT's workspace, flat #555555 (the screen's four greys)", "inferred", "clio.css (owner's request, 2026-11-26)", "Infinite Mac runs only a colour NeXT"),
     row("On touch screens the menu cells grow to 32px, buttons to 36px, fields to 40px; the arrows and marks stay centred", "adapted", "clio.css (95-adapt.css's coarse-pointer sizes)", "checked at 375px wide: no sideways scroll"),
     row("Workspace background #555577, flat", "measured", NX30 + ", frame boot1 (the desktop round the File Viewer)", "owner's choice 2026-11-26 over AI System 6's #555555, the 2-bit grey"),

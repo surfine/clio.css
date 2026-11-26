@@ -2273,6 +2273,13 @@
         },
         {
           "era": "nextstep",
+          "claim": "Cursors: NeXT's arrow, the Mac's but for its last row, and its I-beam, 7x16, black only, its crossbar on the hot spot's row (3, 8)",
+          "status": "measured",
+          "source": "clio.css capture, NeXTStep 3.0 in Infinite Mac (frames in .fidelity/ns30), frames ns30b/edited (the arrow over the workspace) and ns30c/ibeam (over Edit's text); tooling/cursor-art.py",
+          "upstream": "the arrow's hot spot (1, 1) is inferred from the Mac's"
+        },
+        {
+          "era": "nextstep",
           "claim": "data-clio-depth=\"2bit\": a black-and-white MegaPixel NeXT's workspace, flat #555555 (the screen's four greys)",
           "status": "inferred",
           "source": "clio.css (owner's request, 2026-11-26)",

@@ -815,6 +815,10 @@ await loadNx(`<div class="clio-scroll" id="s" style="width:200px;height:150px;ov
 await loadNx(`<div class="desktop" id="c" style="min-height:10px"></div><div class="desktop" id="m" data-clio-depth="2bit" style="min-height:10px"></div>`);
 ok(await page.evaluate(() => [getComputedStyle(document.querySelector("#c")).backgroundColor, getComputedStyle(document.querySelector("#m")).backgroundColor].join()) === "rgb(85, 85, 119),rgb(85, 85, 85)", "nextstep: data-clio-depth=2bit gives the 2-bit workspace");
 
+// nx6. NeXT's own cursors: the arrow on the page, the I-beam in a field.
+await loadNx(`<div class="window" style="width:200px"><div class="window-pane"><input type="text" id="f"></div></div>`);
+ok(await page.evaluate(() => getComputedStyle(document.documentElement).cursor.includes("nx-arrow") && getComputedStyle(document.querySelector("#f")).cursor.includes("nx-ibeam")), "nextstep: the arrow and the I-beam are NeXT's");
+
 ok(errors.length === 0, "no page errors: " + errors.join("; "));
 await browser.close();
 console.log(failed ? `FAIL ${failed} of ${passed + failed} behaviour checks (${ENGINE})` : `ok ${passed} behaviour checks (${ENGINE})`);

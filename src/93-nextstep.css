@@ -337,6 +337,19 @@
   --clio-desktop: #555555;
 }
 
+/* Cursors (tooling/cursor-art.py): NeXT's arrow, the Mac's but for its last row
+   (hot spot 1, 1 as the Mac's: inferred), and its I-beam, black only, hot spot on
+   the crossbar (3, 8). */
+:where([data-era="nextstep"]) {
+  --clio-cursor-arrow: image-set(url("art/cursors/nx-arrow.png") 1x, url("art/cursors/nx-arrow-2x.png") 2x, url("art/cursors/nx-arrow-3x.png") 3x) 1 1, default;
+  --clio-cursor-text: image-set(url("art/cursors/nx-ibeam.png") 1x, url("art/cursors/nx-ibeam-2x.png") 2x, url("art/cursors/nx-ibeam-3x.png") 3x) 3 8, text;
+}
+
+:where([data-era="nextstep"]).clio-system-cursors {
+  --clio-cursor-arrow: default;
+  --clio-cursor-text: text;
+}
+
 /* ---- Windows ------------------------------------------------------------- */
 [data-era="nextstep"] :is(.window.main, .window.is-nextstep-main) {
   --clio-titlebar-bg: var(--clio-titlebar-main-bg);

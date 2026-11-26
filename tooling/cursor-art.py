@@ -55,7 +55,12 @@ def draw(rows, scale):
                     for dx in range(scale): im.putpixel((x * scale + dx, y * scale + dy), col)
     return im
 out = os.path.join(ROOT, 'art', 'cursors'); os.makedirs(out, exist_ok=True)
-for name, rows in (('arrow', ARROW), ('ibeam', IBEAM), ('watch', WATCH)):
+# NeXTSTEP (NeXTStep 3.0 in Infinite Mac): the arrow over the workspace (frame ns30b/edited),
+# the Mac's but for its last row; the I-beam over Edit's text (frame ns30c/ibeam), black only,
+# its crossbar on the hot spot's row (3, 8).
+NX_ARROW = ARROW[:15] + ["      ..  "]
+NX_IBEAM = ["##   ##", "  # #  "] + ["   #   "] * 6 + ["  ###  "] + ["   #   "] * 5 + ["  # #  ", "##   ##"]
+for name, rows in (('arrow', ARROW), ('ibeam', IBEAM), ('watch', WATCH), ('nx-arrow', NX_ARROW), ('nx-ibeam', NX_IBEAM)):
     for s in (1, 2, 3):
         draw(rows, s).save(os.path.join(out, f"{name}{'' if s == 1 else f'-{s}x'}.png"), optimize=True)
 print('wrote', len(os.listdir(out)), 'files')

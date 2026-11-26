@@ -6,7 +6,7 @@ Every value in clio.css 1.1.0 has a row here. Sources are paths in the AI System
 
 | Status | Meaning | Rows |
 | --- | --- | ---: |
-| Measured | read from real pixels of the era | 254 |
+| Measured | read from real pixels of the era | 255 |
 | Inferred | reasoned from documentation or behaviour, not measured | 44 |
 | Adapted | a deliberate departure for the web (touch, focus, contrast) | 44 |
 | Third-party | art or font from a named, licensed project | 4 |
@@ -271,6 +271,7 @@ Pixel check: `npm run fidelity` renders the Platinum specimens and compares them
 | Desktop and icons | Platinum | 70% white tag with no edge; selected: black tag, white name, artwork darkened | Measured | `apps/desktop/styles/65-appearance-themes.css:882 (P12, P13)` — Mac OS 9 native capture 02 |
 | Desktop and icons | Platinum | Desktop colour #4a71ab | Inferred | `apps/desktop/styles/65-appearance-themes.css:85` — base colour of AI System 6's azul tile, generated from a 512 Pixels capture; the tile is not shipped |
 | Desktop and icons | Drawing Board | Desktop and icons are unchanged from Platinum; the theme's desktop pictures are not reproduced | Adapted | `clio.css` — scen 'Drawing Board on a Grid' / 'on Parchment' are Apple artwork |
+| Desktop and icons | NeXTSTEP | Cursors: NeXT's arrow, the Mac's but for its last row, and its I-beam, 7x16, black only, its crossbar on the hot spot's row (3, 8) | Measured | `clio.css capture, NeXTStep 3.0 in Infinite Mac (frames in .fidelity/ns30), frames ns30b/edited (the arrow over the workspace) and ns30c/ibeam (over Edit's text); tooling/cursor-art.py` — the arrow's hot spot (1, 1) is inferred from the Mac's |
 | Desktop and icons | NeXTSTEP | data-clio-depth="2bit": a black-and-white MegaPixel NeXT's workspace, flat #555555 (the screen's four greys) | Inferred | `clio.css (owner's request, 2026-11-26)` — Infinite Mac runs only a colour NeXT |
 | Desktop and icons | NeXTSTEP | On touch screens the menu cells grow to 32px, buttons to 36px, fields to 40px; the arrows and marks stay centred | Adapted | `clio.css (95-adapt.css's coarse-pointer sizes)` — checked at 375px wide: no sideways scroll |
 | Desktop and icons | NeXTSTEP | Workspace background #555577, flat | Measured | `clio.css capture, NeXTStep 3.0 in Infinite Mac (frames in .fidelity/ns30), frame boot1 (the desktop round the File Viewer)` — owner's choice 2026-11-26 over AI System 6's #555555, the 2-bit grey |

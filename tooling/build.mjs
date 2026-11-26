@@ -144,7 +144,7 @@ for (const [name, css] of Object.entries(outputs)) {
 mkdirSync(join(root, "dist/fonts"), { recursive: true });
 for (const f of readdirSync(join(root, "fonts"))) copyFileSync(join(root, "fonts", f), join(root, "dist/fonts", f));
 // Drawing Board theme art: the files the stylesheets reference, beside them.
-const artFiles = [...new Set([...all.matchAll(/url\("(art\/[^"]+)"\)/g)].map((m) => m[1]))].sort();
+const artFiles = [...new Set([...(all + nextstepDefault).matchAll(/url\("(art\/[^"]+)"\)/g)].map((m) => m[1]))].sort();   // NeXTSTEP's cursors too
 const copyArt = (to) => {
   for (const f of artFiles) { mkdirSync(dirname(join(root, to, f)), { recursive: true }); copyFileSync(join(root, f), join(root, to, f)); }
 };
