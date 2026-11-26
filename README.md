@@ -213,7 +213,7 @@ unchanged: `.title-bar button.close`, `button.resize`, `.inactive-title-bar`,
 <script src="https://unpkg.com/clio.css@2.0.1/dist/clio.js" defer></script>
 ```
 
-No dependencies; 72.2 kB, or 47.8 kB as `dist/clio.min.js`. clio.css works without it.
+No dependencies; 72.4 kB, or 48.0 kB as `dist/clio.min.js`. clio.css works without it.
 As a module: `import { install } from "clio.css/js.esm"; install();` (importing alone
 installs nothing; `api` is the same object as `window.clio`).
 With it:
