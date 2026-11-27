@@ -7023,7 +7023,7 @@ Accessibility: Text colours keep at least 4.5:1 on their grounds; disabled text 
   --clio-font-button: "Truth FB", Truth, "Clio Sans '97", "Clio Asap", Geneva, "Helvetica Neue", Arial, sans-serif;
 }
 
-/* Chinese, Japanese and Korean (owner decisions 9 and 10, 2026-11-14).
+/* Chinese, Japanese and Korean (design decisions 9 and 10, 2026-11-14).
 
    Measured: KanjiTalk 7.5.3 and Mac OS 9.0 with the Chinese Language Kits draw CJK text
    at the Roman geometry: 16px menu and text rows, the same baseline, 12px ideographs whose

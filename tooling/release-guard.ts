@@ -1,4 +1,4 @@
-// prepublishOnly: only the owner publishes. Agents never set CLIO_OWNER_RELEASE (AGENTS.md).
+// prepublishOnly: only the maintainer publishes. Agents never set CLIO_OWNER_RELEASE (AGENTS.md).
 //   node tooling/release-guard.ts            the root package: the guard, then npm run verify runs
 //   node tooling/release-guard.ts --stamp    a component package: the guard, then a passing
 //                                            .verify/stamp.json for this exact clean HEAD
@@ -9,7 +9,7 @@ import { fileURLToPath } from "node:url";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 if (process.env.CLIO_OWNER_RELEASE !== "1") {
-  console.error("Refusing to publish: CLIO_OWNER_RELEASE=1 is not set. Publishing is the owner's step (AGENTS.md, Releasing); agents never set it.");
+  console.error("Refusing to publish: CLIO_OWNER_RELEASE=1 is not set. Publishing is the maintainer's step (AGENTS.md, Releasing); agents never set it.");
   process.exit(1);
 }
 if (process.argv.includes("--stamp")) {

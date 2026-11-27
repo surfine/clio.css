@@ -1,4 +1,4 @@
-# Art for the rare controls (ROADMAP "Can wait" 10), redrawn from pixel
+# Art for the rare controls, redrawn from pixel
 # measurements in Infinite Mac (canvas read 1:1; see EVIDENCE.md):
 #
 #   python3 tooling/rare-art.py            prints CSS custom properties

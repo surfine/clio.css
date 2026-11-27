@@ -9,7 +9,7 @@ transparent (the paper round a ring, the gap inside it).
 
   .venv/bin/python tooling/frame-art.py     -> prints --clio-art-frame-* properties
 """
-import base64, io, os
+import base64, io, os, sys
 from PIL import Image
 
 ROOT = os.path.join(os.path.dirname(__file__), '..')
@@ -89,7 +89,9 @@ frames['s6-ring'] = nine(s6, 80, 154, 68, 28, 7, 10, 14, clear=(W,), hole=(4, 4,
 # button; GUIdebook's Mac OS 9.0 tiles (AI System 6, AIS6_DIR) for the default ring
 # round OK and for a disabled button.
 G = (0xdd, 0xdd, 0xdd)
-tiles = os.path.join(os.environ.get('AIS6_DIR', '/Users/aaron/AI System 6'), 'internal/evidence/drafts/theme-lab-fidelity/platinum/tiles')
+if not os.environ.get('AIS6_DIR'):
+    sys.exit('Set AIS6_DIR to an AI System 6 checkout (the reference tiles are private).')
+tiles = os.path.join(os.environ['AIS6_DIR'], 'internal/evidence/drafts/theme-lab-fidelity/platinum/tiles')
 tile = lambda n: Image.open(os.path.join(tiles, n + '-reference.png')).convert('RGB')
 appear = load('platinum9', 'appearance')
 frames['p9-button'] = nine(appear, 534, 369, 86, 20, 4, 6, 10, out_colour=(0xee, 0xee, 0xee))

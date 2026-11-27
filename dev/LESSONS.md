@@ -1,8 +1,8 @@
 # Lessons from the Classic Mac OS phase
 
 How clio.css took System 6, System 7, Mac OS 8.5 Drawing Board and Mac OS 9 Platinum from
-"close" to pixel-identical (0.8 → 0.11, November 2026), written down so the Mac OS X phase
-starts from the method, not from memory. What is still open is in [ROADMAP.md](ROADMAP.md).
+"close" to pixel-identical (0.8 → 0.11, November 2026): the method, written down so later
+work starts from it rather than from memory.
 
 ## 1. The rule that made it work
 
@@ -166,7 +166,7 @@ A behaviour test must look at the result the user sees: a test that only read
   Sample Code > CodeWarrior Pro > Appearance Sample runs in Mac OS 8.5 and 9.0, and its CDEF
   Tester draws any Appearance control on demand (placards came from it). The Calculator is
   the one rounded-corner window in every era.
-- A driver started with a plain `&` inside an agent's shell dies when that command ends:
+- A driver started with a plain `&` inside a short-lived shell dies when that command ends:
   start it with `nohup … & disown`. Drawing Board's scripted install is position-dependent;
   by hand: drop the theme on the System Folder, OK, Special > Restart, Appearance's pop-up.
 - Infinite Mac: hold the mouse a moment before a menu press or it misses; in Drawing Board
@@ -237,7 +237,7 @@ down.
 
 ## 7¾. Reading the ROMs (timings the emulator cannot settle)
 
-The owner allowed reading Mac OS's own code for numbers and rules only; nothing of it
+Mac OS's own code is read for numbers and rules only; nothing of it
 enters the repo (ROMs, dumps and disassembly stay in a scratch folder).
 
 - The ROMs Infinite Mac boots are its assets: the page's network log names them
@@ -282,14 +282,9 @@ enters the repo (ROMs, dumps and disassembly stay in a scratch folder).
 - Work in batches that each end pushed and green: build, `npm test`, the pixel check and
   `npm run behaviour` in all three engines, `tooling/outline-check.ts`, then push and wait
   for GitHub Pages to serve the new file.
-- Keep a task note (`.notes/`, git-ignored) with each measurement as it is taken; the
-  conversation will be compacted, the note will not.
+- Write each measurement down as it is taken (`.notes/` is git-ignored for this).
 - Generated files (`dist/`, `docs/`, `EVIDENCE.md`, `llms*.txt`) conflict on every rebase:
-  rebuild from sources instead of merging them. Merge another session's branch by
-  cherry-picking its commits, not the branch, when it sits on rewritten history; drop
-  stray files (a `node_modules` symlink) on the way.
+  rebuild from sources instead of merging them.
 - Measure before deciding: half the "known" Mac behaviours checked in the emulator
   differed in a detail (Platinum's bar is 15px, not 16; the System 7 box is 16 rows,
   not 17; the I-beam has no cross bar).
-- Ask the owner only for what changes the outcome; record decisions in memory and
-  ROADMAP.md.

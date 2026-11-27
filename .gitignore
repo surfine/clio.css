@@ -12,8 +12,9 @@ packages/*/dist/
 
 # npm run verify output
 .verify/
-# launch drafts, video and images: local only (owner, 2026-11-27)
-dev/launch/
 
-# upstream audits, drafts and send records: local only (owner, 2026-11-27)
-dev/upstream/
+# dev/ is local by default (plans, handoffs, roadmaps, audits, drafts); only these are public
+dev/*
+!dev/COVERAGE.md
+!dev/LESSONS.md
+!dev/css-rule-allowlist.json

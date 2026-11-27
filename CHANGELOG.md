@@ -11,7 +11,7 @@ A fix to clio.js's menus, then documentation, packaging and checks. The CSS rule
   a second lit title in Drawing Board. clio.js now marks titles it closes `data-clio-off`,
   which clio.css's no-script pressed rule already skips. `npm run behaviour` checks it
   (241 checks in Chromium and WebKit, 239 in Firefox).
-- **Only 2.x is maintained** (owner): 1.x gets no further releases; 2.x is supported for at
+- **Only 2.x is maintained**: 1.x gets no further releases; 2.x is supported for at
   least 12 months from 2.0.1. README "Versions and support" lists what 2.x keeps compatible;
   the component packages' props follow semver only.
 - **`npm run fidelity:public`** checks the pixel claims without the private reference
@@ -21,7 +21,7 @@ A fix to clio.js's menus, then documentation, packaging and checks. The CSS rule
   the three packages packed and installed, every export resolved, both component packages
   rendered with their framework against components.json; the CSS rules against 1.1.1; the
   figures in README, EVIDENCE and FIDELITY; Markdown links; fidelity:public. `prepublishOnly`
-  refuses to publish unless the owner sets `CLIO_OWNER_RELEASE=1`.
+  refuses to publish unless the maintainer sets `CLIO_OWNER_RELEASE=1`.
 - **README** for a first visit: what it is, four ways to install, how it differs from similar
   libraries, what readers can check themselves. Corrected: CDN links (named 1.0.2), 32
   components (said 29), evidence counts (said 206 of 273 measured; 255 of 348), NeXTSTEP 40 of
@@ -70,7 +70,7 @@ Published to npm on 2026-11-26 UTC: clio.css 2.0.0 at 18:13:32, clio.css-preact 
 component packages 2026-11-26 18:12 UTC), described as "Temporary package placeholder for
 staged publishing".
 
-The source moves to TypeScript, components and Vite (dev/PLAN-TS-PREACT.md, M1–M6). What you
+The source moves to TypeScript, components and Vite (milestones M1–M6). What you
 load is unchanged: with banners and comments stripped, every `dist/*.css` file has 1.1.1's rules
 byte for byte (`npm run verify` checks this against the 1.1.1 tarball). The files themselves
 differ in the version in their banners and in one comment that names `capture-system6.ts`
@@ -124,7 +124,7 @@ What 1.1.0 left undone. 1.1.0 was published to npm on 2026-11-26 (09:24 UTC) wit
 
 ## 1.1.0 (2026-11-26, NeXTSTEP)
 
-A fifth era, in a file of its own (owner's decision D14 in dev/ROADMAP-MACOSX.md), and one fix
+A fifth era, in a file of its own (decision D14), and one fix
 to the Classic eras: "LTS" names the Classic line beside clio.wasm, not a freeze (D16).
 Apart from that fix and the version in their banners, `dist/clio.css` and the Classic
 single-era files are 1.0.2's bytes.
@@ -139,7 +139,7 @@ single-era files are 1.0.2's bytes.
   fields, pop-up lists, sliders, boxes, the column browser (`.browser`), the pull-down list
   (`.pull-down`) and the Workspace dock (`.dock`), which exist only in this file.
 - **Measured** in NeXTStep 3.0 running in Infinite Mac: Infinite Mac has no 3.3, and the
-  owner accepted 3.0 as the source for 3.3's look (D15); every row names its frame. All 37
+  3.0 stands in for 3.3's look (D15); every row names its frame. All 37
   NeXTSTEP specimens in FIDELITY.md are pixel-identical to the frames in Chromium, WebKit
   and Firefox. Values ported from AI System 6 that the frames contradicted are corrected
   (main window, held and on buttons, switch and radio sizes, pop-up height, menu rows,
@@ -190,7 +190,7 @@ published.
 
 ## 1.0.1 (2026-11-18, touch fixes)
 
-- **The scroll bars sat on the window's frame, not inside it** (owner's report from the touch
+- **The scroll bars sat on the window's frame, not inside it** (reported from the touch
   bench: obvious in every era). A scroller with padding put its bars over the right and bottom
   frame by that padding, and the reserve that the bar's own width adds made a pane show a bar
   it did not need. `src/62-scrollbar-js.css` now steps the sticky anchor back by the
@@ -207,7 +207,7 @@ published.
   padded scroller through its first padding and past it (it fails on the old inset).
 
 - **Drawing Board's side-title utility window draws the theme's own frame** (it was
-  Platinum's bar inside the Drawing Board frame, LTS-AUDIT B13). The layout is the theme's
+  Platinum's bar inside the Drawing Board frame). The layout is the theme's
   `layo` 138, not `frme`: `tooling/theme-layout.py` decodes it and draws the frame from the
   pieces, equal pixel for pixel to the 8.5 capture of the Appearance SDK's sample (4123 frame
   pixels; the same decoder draws the Application Switcher's palette, 3080 pixels, title
@@ -225,10 +225,10 @@ published.
   through. Now drawn from the theme's `layo` 136 like the side window: clio.css equals the
   decoded frame in all three engines, which equals the Application Switcher's capture (3080
   frame pixels). The line under the rule that 1.0.0 drew from ppat 7099 is the switcher's
-  own list border inside the content, so it is gone (LTS-AUDIT A16 revised). Platinum's
+  own list border inside the content, so it is gone. Platinum's
   title-bar dots move to `91-platinum-only.css`. Specimens `db-utility-*`.
 
-- **A press dragged from a menu title to an item was lost on a touch screen** (owner's
+- **A press dragged from a menu title to an item was lost on a touch screen** (reported
   report): the page scrolled or the long-press callout took the gesture, so the pointer
   stream cancelled and the item never logged. The menu bar and its menus now keep the
   gesture (`touch-action: none`, `-webkit-touch-callout: none`), as the Mac's MenuDrag
@@ -237,8 +237,8 @@ published.
 
 ## 1.0.0 — the Classic LTS (2026-11-18)
 
-The Classic side is finished: [dev/LTS-AUDIT.md](dev/LTS-AUDIT.md) has no open A row, every B row is
-a deliberate adaptation with its reason, and the C rows are the owner's own steps. The eight
+The Classic side is finished: the internal audit has no open gap, and every remaining
+non-measured value is a deliberate adaptation with its reason. The eight
 measurement gaps the audit listed are closed, four of them by reading the software itself
 rather than a screen (System 6.0.8's System file from archive.org for the watch and the
 dialogs' plain boxes). Nothing below changes the API.
@@ -270,9 +270,9 @@ dialogs' plain boxes). Nothing below changes the API.
   replaces Platinum's for `[data-era="drawingboard"] .window.utility`: caps, the rule and its
   ends, the side edges (5x10 top, 5x256 middle, 5x33 bottom) and the bottom edge with its
   corners, all placed from the 8.5 Application Switcher (163x99). The title bar is the
-  theme's 18px one. `dist/clio.min.css`'s budget rose to 222 KB for it (owner, 2026-11-18).
+  theme's 18px one. `dist/clio.min.css`'s budget rose to 222 KB for it (2026-11-18).
   Adapted, not measured: the right edge's 2px outer shade and the rule's second row.
-- **Appearance sound sets and alert sounds** (owner, 2026-11-15; dev/SOUND-SETS.md). The sounds
+- **Appearance sound sets and alert sounds** (2026-11-15). The sounds
   never enter npm or this repository; the tool, the player and the docs do.
   - `tooling/soundset.py` reads a Mac OS 8.5–9 sound set or a `.sit` of them: both `snd#`
     layouts (8.5b6's 20-byte entries, the release's 44-byte ones), every `'snd '` (format 1
@@ -310,19 +310,19 @@ dialogs' plain boxes). Nothing below changes the API.
     pass through the Sound Manager's interpolating converter (correlation 0.99984–0.99997).
     IMA4 and μ-law decode identically to Apple's AudioToolbox and ffmpeg.
   - Measured in Mac OS 9.0 with Platinum Sounds: a slot's level is a gain of level/255
-    (0 = full), and a drag holds its idle loop while still. Default sound track per era
-    (owner): DrawingBoard Sounds and Platinum Sounds. `npm run soundset` builds Apple's four
-    sets and the alerts, what the owner's sites serve; `--all` builds all 42.
+    (0 = full), and a drag holds its idle loop while still. Default sound track per era:
+    DrawingBoard Sounds and Platinum Sounds. `npm run soundset` builds Apple's four
+    sets and the alerts by default; `--all` builds all 42.
 
 ## 0.12.0 — 2026-11-15, the Classic final
 
 Everything the Classic Mac OS phase set out to do, measured in four eras and checked in
-Chromium, WebKit and Firefox (dev/ROADMAP.md lists what moved to 0.12.1 and why).
+Chromium, WebKit and Firefox.
 
 - Drawing Board's tiled underline patterns stay sharp at 2x and 3x (their embedded pictures
   are pixelated).
 
-- **Chinese, Japanese and Korean** (owner decisions 9 and 10): `lang="zh-Hant|zh-Hans|ja|ko"`
+- **Chinese, Japanese and Korean** (design decisions 9 and 10): `lang="zh-Hant|zh-Hans|ja|ko"`
   gives the chrome and text a CJK stack: the period bitmap font (Taipei, Beijing, Osaka,
   Seoul), then Clio Pixel TC/SC/JA/KO, Fusion Pixel Font 12px (OFL-1.1) cut to Big5, GB 2312,
   JIS X 0208 or KS X 1001 with Clio's metrics (`tooling/cjk-fonts.py`, 170–320 KB each, loaded
@@ -334,7 +334,7 @@ Chromium, WebKit and Firefox (dev/ROADMAP.md lists what moved to 0.12.1 and why)
   (`ink` boxes in `tooling/fidelity.mjs`). clio.js's drawn pop-up rows keep their option's
   language. `--clio-font-cjk` overrides the stack.
 
-- **The rare controls** (ROADMAP "Can wait" 10), each found in software running in Infinite
+- **The rare controls**, each found in software running in Infinite
   Mac and compared pixel by pixel: the rounded-corner window `.rounded-window` (the
   Calculator, the same in System 6, 7, Mac OS 8.5 and 9.0; corner masks and frame curves from
   `tooling/rare-art.py`, its antialiased title levels in `tooling/aa-palettes.py`); the
@@ -371,12 +371,12 @@ insertion point, each measured in Infinite Mac.
 - **Colour fonts declared twice** (the Plain file alone, then with `tech(color-COLRv1)`), so a
   browser that cannot parse `tech()` keeps the font instead of losing it.
 - **Touch bench**: `docs/touch.html`, twelve checks with expected results and an automatic
-  environment report, for the owner's iPhone SE (iOS 15.8.8) and iPhone 18 Pro (iOS 27.3).
+  environment report, for an iPhone SE (iOS 15.8.8) and iPhone 18 Pro (iOS 27.3).
 - README: the unpkg example names 0.12.0; clio.js's caret and centring are documented.
 
 ### Timings from the ROMs
 
-Timings read from the Mac OS ROMs and checked in the emulator (ROADMAP 7–9 closed). The
+Timings read from the Mac OS ROMs and checked in the emulator. The
 values come from the Menu, Control and Dialog Manager code in the Mac IIx, Quadra 650 and
 New World ROMs; no Apple code or resources are in the repository.
 
@@ -454,7 +454,7 @@ Safari and Firefox, checked: `CLIO_ENGINE=webkit|firefox` runs the pixel check a
   shade and corner pixels), now laid like the real one: top on the button's, as wide as the
   button less its arrows, the top pen in the button's phase, text and check placed as measured.
   clio.js passes the select's `--clio-db-phase` to the menu it draws.
-- **The last Classic gaps** (owner's call: fix before Aqua):
+- **The last Classic gaps** (fixed before any later era):
   - Platinum: while a pop-up's menu is open its arrows are drawn pressed (clio.js marks the
     select `.clio-open`; base-select uses `select:open`).
   - Drawing Board: the collapsed window, the frame drawn as the theme draws it (the bottom
@@ -469,7 +469,7 @@ Safari and Firefox, checked: `CLIO_ENGINE=webkit|firefox` runs the pixel check a
   page (`touch-action: none` on `.clio-drag-bar`). Not tested on a physical iPhone.
 - **`dist/clio.min.js`** (esbuild, 31 KB; the package exports `./js` and `./js.min`);
   `CLIO_JS=min npm run behaviour` checks it. **Budget**: `clio.min.css` may grow to 220 KB
-  (owner, 2026-11-14); Mac OS X eras will ship as files of their own.
+  (2026-11-14); Mac OS X eras will ship as files of their own.
 - Size: the minifier shortens `#aabbcc` to `#abc` and drops spaces around `>` and after a
   declaration's colon (`tooling/min-check.mjs` checks the minified builds parse to the same rules
   in all three engines); shared bevel token `--clio-p9-bevel`.
@@ -572,7 +572,7 @@ Platinum are now identical to the real screen, pixel for pixel (FIDELITY.md gain
 column: identical pixels, no tolerance), with the masks each specimen states (the mouse
 pointer, text clio.css does not draw, what lies behind the control).
 
-**Drawing Board is drawn with the theme's own art.** The owner chose to ship it: the
+**Drawing Board is drawn with the theme's own art.** It ships: the
 `pxm#` pictures and `ppat` patterns of Apple's 8.5b6 theme, re-encoded by `tooling/db-art.py`
 into `dist/art/drawingboard/` (165 small PNGs, 57 KB) and placed as Mac OS places them.
 
@@ -627,7 +627,7 @@ traces its own.
 - **Control Strip**: System 7.5.3 measured (its own greys, same art); the end cap is drawn
   whole with its rounded corner (95.1% in both eras); the menu triangle sits 4px in.
 - What stays adapted or inferred is listed in EVIDENCE.md: the Drawing Board paper and
-  sketch textures (Apple artwork, owner's call), a few states that were not on screen in any
+  sketch textures (Apple artwork, a deliberate choice), a few states that were not on screen in any
   capture, and web necessities (focus rings, proportional scroll boxes).
 
 ## 0.7.0 — 2026-11-14

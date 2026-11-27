@@ -72,20 +72,21 @@ For AI coding agents using or changing this repository.
   (Drawing Board's paper and sketch lines) are not reproduced: use the dominant measured
   colour and label it `adapted`.
   Third-party art needs a licence entry in `THIRD-PARTY.md`.
-- Scope (owner, 2026-11-26 and 2026-11-27): Classic Mac OS — System 6, System 7, Drawing
+- Scope (2026-11-27): Classic Mac OS — System 6, System 7, Drawing
   Board (Mac OS 8.5b6), Platinum (Mac OS 9) — and NeXTSTEP 3.3 (`data-era="nextstep"`, the
   `*.nextstep.css` fragments and `foundation/nextstep.css`, shipped only as
   `dist/clio.nextstep.css`; `dist/clio.css` stays the four Classic eras). Only eras measured in
   an emulator. **No new era starts.** The five eras take fixes and missing parts, each one
-  through `npm run verify`. The Mac OS X eras belong to clio.wasm, a separate project;
-  `dev/ROADMAP-MACOSX.md` is history, not a work order. Never Dewfall, AI System 6's own glass
+  through `npm run verify`. The Mac OS X eras belong to clio.wasm, a separate project. Never Dewfall, AI System 6's own glass
   skin. AI System 6's own chrome (Control Strip, …) is in scope with its markup.
-- Versions (owner, 2026-11-27): only 2.x is maintained; 1.x gets no releases. Fixes land on
+- Versions (2026-11-27): only 2.x is maintained; 1.x gets no releases. Fixes land on
   `main` only. What 2.x keeps compatible is listed in README "Versions and support"; the
   component packages' props follow semver only.
-- Internal notes (roadmaps, lessons, audits, plans, handoffs) live in `dev/`, never in `docs/`
-  (`docs/` is the published GitHub Pages root). Launch drafts (`dev/launch/`) and upstream
-  audits and drafts (`dev/upstream/`) are local only and git-ignored: never commit them.
+- This repository is public and used by everyone. Commit only what helps people use or
+  change clio.css: code, generated output, evidence, and docs written for readers. Keep
+  plans, handoffs, roadmaps, audits, decision logs, launch drafts and notes about other
+  projects on your machine; `.gitignore` lists the local-only paths. `docs/` is the
+  published GitHub Pages root.
 - Tokens live on `:root, [data-era="system6"]` (`foundation/tokens.css`),
   `[data-era="system7"]` (`foundation/system7.css`), `:is([data-era="platinum"],
   [data-era="drawingboard"])` (`foundation/platinum.css`, shared: both are Appearance Manager
@@ -110,7 +111,7 @@ For AI coding agents using or changing this repository.
   not present AI use as a feature or a reason to trust or distrust the work; the evidence
   rows and `npm run fidelity:public` are what readers check.
 
-## Releasing (owner only)
+## Releasing (maintainer only)
 
 - `npm run verify` is the local release gate (GitHub Actions is not used). It clones HEAD
   into a temporary directory and runs, in order: `npm ci`, `npm test`, lint, typecheck; packs
@@ -127,5 +128,5 @@ For AI coding agents using or changing this repository.
 - `prepublishOnly` refuses to publish unless `CLIO_OWNER_RELEASE=1` is set, then runs
   `npm run verify`. **Agents never set `CLIO_OWNER_RELEASE`**, in any form (export, inline,
   `.npmrc`, scripts), and never run `npm publish`, `npm version`, `git tag` or `git push` for
-  a release. Publishing is the owner's step.
+  a release. Publishing is the maintainer's step.
 

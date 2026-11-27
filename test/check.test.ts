@@ -144,7 +144,7 @@ ok(/^## /m.test(llms), "llms.txt: needs H2 link sections");
 ok(read("docs/llms.txt") === llms, "docs/llms.txt differs from llms.txt");
 ok(read("docs/llms-full.txt").includes("```css"), "llms-full.txt: stylesheet missing");
 
-// 9b. CJK stand-ins (owner decisions 9 and 10): each face has a unicode-range, and the
+// 9b. CJK stand-ins (design decisions 9 and 10): each face has a unicode-range, and the
 // families are named only in --clio-font-cjk under :lang(), so pages without CJK text never
 // fetch them. The fonts are outside the CSS size budget.
 {
@@ -164,12 +164,12 @@ section("10. Package.");
 const pkg: { exports: Record<string, string | Record<string, string>> } = JSON.parse(read("package.json"));
 for (const [k, e] of Object.entries(pkg.exports)) for (const v of typeof e === "string" ? [e] : Object.values(e)) if (!v.includes("*")) ok(existsSync(join(root, v)), `exports ${k} -> ${v} missing`);   // a conditional export ({ types, default }) names each file
 // 200 KB since 0.10.0, which added every control the classic guidelines define (dev/COVERAGE.md);
-// 220 KB from the Classic close (owner, 2026-11-14): the all-eras file keeps the four Classic
-// eras, and Mac OS X eras ship as files of their own. 222 KB on 2026-11-18 (owner) for the
+// 220 KB from the Classic close (2026-11-14): the all-eras file keeps the four Classic
+// eras, and Mac OS X eras ship as files of their own. 222 KB on 2026-11-18 for the
 // Drawing Board utility window's frame (17 placed pieces, ~1.5 KB of CSS).
 ok(statSync(join(root, "dist/clio.min.css")).size < 223000, "clio.min.css grew past 223 KB");
 // NeXTSTEP's own file (D5, D14): the base files (about 99 KB minified, as clio.system6.min.css)
-// plus its layer. 160 KB (owner, 2026-11-26, D16) leaves the layer about 60 KB.
+// plus its layer. 160 KB (2026-11-26, D16) leaves the layer about 60 KB.
 ok(statSync(join(root, "dist/clio.nextstep.min.css")).size < 160000, "clio.nextstep.min.css grew past 160 KB");
 const minJs = readFileSync(join(root, "dist/clio.min.js"), "utf8");
 ok(/^\/\*! clio\.js/.test(minJs) && minJs.length < js.length * 0.7, "dist/clio.min.js missing, without its banner, or not minified");

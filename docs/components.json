@@ -454,14 +454,14 @@
           "claim": "A utility window's line under the rule is the content's, not the frame's (the Application Switcher draws its list's border there)",
           "status": "measured",
           "source": "clio.css — 'layo' 136 ends the frame at the rule; the content rectangle starts on the next row",
-          "upstream": "reverses 1.0.0's rule shade (ppat 7099), LTS-AUDIT A16"
+          "upstream": "reverses 1.0.0's rule shade (ppat 7099)"
         },
         {
           "era": "drawingboard",
           "claim": "A utility window's title is set in the scene's small system font: the captures' scene is 'scen' 2000 (Drawing Board on Parchment), whose system and small system fonts are Gadget (scene 128, on a Grid, names Charcoal and Geneva). Gadget is Apple's and is not shipped, so the title keeps clio.css's face, centred on the capture's baseline (77px for \"Applications\" where Gadget sets 71px)",
           "status": "measured",
           "source": "clio.css — the theme file's 'scen' resources (tooling/theme-resources.py), read 2026-11-23; capture hig/drawingboard/switcher.png",
-          "upstream": "LTS-AUDIT B15"
+          "upstream": "Gadget itself is not shipped"
         },
         {
           "era": "drawingboard",
@@ -986,7 +986,7 @@
           "claim": "Hover never changes a push button; pressed only on pointer-down, Space or Enter",
           "status": "inferred",
           "source": "docs/design/CLASSIC_PLATINUM_FIDELITY.md:210",
-          "upstream": "AI System 6 owner ruling: Platinum carries no hover state"
+          "upstream": "AI System 6 design ruling: Platinum carries no hover state"
         },
         {
           "era": "system6",
@@ -2282,7 +2282,7 @@
           "era": "nextstep",
           "claim": "data-clio-depth=\"2bit\": a black-and-white MegaPixel NeXT's workspace, flat #555555 (the screen's four greys)",
           "status": "inferred",
-          "source": "clio.css (owner's request, 2026-11-26)",
+          "source": "clio.css design choice (2026-11-26)",
           "upstream": "Infinite Mac runs only a colour NeXT"
         },
         {
@@ -2297,7 +2297,7 @@
           "claim": "Workspace background #555577, flat",
           "status": "measured",
           "source": "clio.css capture, NeXTStep 3.0 in Infinite Mac (frames in .fidelity/ns30), frame boot1 (the desktop round the File Viewer)",
-          "upstream": "owner's choice 2026-11-26 over AI System 6's #555555, the 2-bit grey"
+          "upstream": "chosen 2026-11-26 over AI System 6's #555555, the 2-bit grey"
         },
         {
           "era": "nextstep",

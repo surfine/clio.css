@@ -286,7 +286,8 @@ alert sound. `data-clio-sounds="menus windows controls finder"` keeps those clas
 (`"none"`: silent), `clio.sounds.muted = true` silences the page, a hidden page is silent,
 and each sound fires a `clio:sound` event. `dist/clio-sounds-panel.js` draws Appearance >
 Sound's controls for a site: `clioSoundsPanel(element, { base: "https://…/packs/" })`.
-Format, measurements and what is inferred: [dev/SOUND-SETS.md](dev/SOUND-SETS.md).
+What was measured and what is inferred: the sound rows in [EVIDENCE.md](EVIDENCE.md); the pack
+format is described at the top of `tooling/soundset.py`.
 
 </details>
 
@@ -419,7 +420,7 @@ and caret blink honour `prefers-reduced-motion`.
 
 ## Versions and support
 
-**Only 2.x is maintained** (owner, 2026-11-27). 2.0 has 1.1.1's CSS rules unchanged (checked
+**Only 2.x is maintained** (since 2026-11-27). 2.0 has 1.1.1's CSS rules unchanged (checked
 by `npm run verify` against the 1.1.1 tarball), so moving from 1.x renders the same; 1.x,
 declared the Classic long-term line on 2026-11-18, gets no further releases. 2.x is supported
 for at least 12 months from 2.0.1.
@@ -432,8 +433,8 @@ and `clio.css/tokens/<era>.json`; and the keys and types of `window.clio`. Not p
 values a better measurement corrects, clio.js's internals, the docs site and tooling.
 The component packages promise the DOM they render (it is `components.json`'s markup) and
 otherwise follow semver only: their component names and props may change in a minor version,
-with a CHANGELOG note. [dev/LTS-AUDIT.md](dev/LTS-AUDIT.md) lists every Classic value that is
-not a plain measurement, with its reason.
+with a CHANGELOG note. Every value that is not a plain measurement is labelled inferred or
+adapted in [EVIDENCE.md](EVIDENCE.md), with its reason.
 
 ## Browser support
 
@@ -463,7 +464,7 @@ Commits made with AI tools say so in an `Assisted-by:` trailer, the form Fedora'
 Every new or changed value needs an evidence row with an honest status; see
 [AGENTS.md](AGENTS.md). Scope is fixed: Classic Mac OS and NeXTSTEP, no new eras (Mac OS X is a
 separate project, clio.wasm). How the eras were measured: [dev/LESSONS.md](dev/LESSONS.md).
-What is next: [dev/ROADMAP.md](dev/ROADMAP.md). `node tooling/readme-eras.ts` re-renders the README image.
+`node tooling/readme-eras.ts` re-renders the README image.
 
 ## Licence
 

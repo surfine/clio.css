@@ -4554,7 +4554,7 @@
   }
 }
 
-/* Chinese, Japanese and Korean (owner decisions 9 and 10, 2026-11-14).
+/* Chinese, Japanese and Korean (design decisions 9 and 10, 2026-11-14).
 
    Measured: KanjiTalk 7.5.3 and Mac OS 9.0 with the Chinese Language Kits draw CJK text
    at the Roman geometry: 16px menu and text rows, the same baseline, 12px ideographs whose

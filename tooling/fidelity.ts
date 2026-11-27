@@ -19,14 +19,14 @@ import { join, dirname } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
-const ais6 = process.env.AIS6_DIR || "/Users/aaron/AI System 6";
+const ais6 = process.env.AIS6_DIR || "";
 const tiles = join(ais6, "internal/evidence/drafts/theme-lab-fidelity/platinum/tiles");
 const PUBLIC = process.env.CLIO_FIDELITY_PUBLIC === "1" || process.argv.includes("--public");
 const digestFile = join(root, "test/fidelity-digests.json");
 interface Digest { era: string; size: number[]; mono: boolean; digest: string; ink?: string[] }
 interface Digests { note: string; generated: string; verifiable: Record<string, Digest>; notVerifiable: Record<string, string> }
-if (!PUBLIC && !existsSync(tiles)) {
-  console.error(`No reference tiles at ${tiles}. Set AIS6_DIR to an AI System 6 checkout.`);
+if (!PUBLIC && (!ais6 || !existsSync(tiles))) {
+  console.error(ais6 ? `No reference tiles at ${tiles}.` : "The full pixel check needs the private reference captures: set AIS6_DIR to an AI System 6 checkout. Without them, run npm run fidelity:public.");
   process.exit(2);
 }
 import playwright from "playwright";
@@ -334,7 +334,7 @@ specimens.push(
     act: async (page, b) => { await page.mouse.move(b.x + 190, b.y + 112); await page.mouse.down(); } },
 );
 
-// CJK (owner decisions 9 and 10): frames from tooling/emulator/measure-cjk.sh in .fidelity/cjk,
+// CJK (design decisions 9 and 10): frames from tooling/emulator/measure-cjk.sh in .fidelity/cjk,
 // KanjiTalk 7.5.3 (System 7) and Mac OS 9.0 with the Chinese Language Kits. Clio's stand-in
 // (Fusion Pixel 12px) is not Osaka or Taipei, so each glyph run is an `ink` box: left out of
 // the pixel count, and checked instead for the rows that carry ink (the row height, the
@@ -358,7 +358,7 @@ specimens.push(
     act: async (page, b) => { await page.mouse.move(b.x + 40, b.y + 10); await page.mouse.down(); await page.mouse.move(b.x + 47, b.y + 9, { steps: 3 }); } },
 );
 
-// The rare controls (ROADMAP "Can wait" 10), measured in Infinite Mac.
+// The rare controls, measured in Infinite Mac.
 // Rounded-corner window: the Calculator desk accessory, 106x168, in each system
 // (frames rdoc-calc*: System 6 over the Finder's white window, the others over the
 // desktop). The Calculator's own content (its keys, its heavy right and bottom
@@ -788,7 +788,7 @@ ${table("platinum")}
 
 Reference: NeXTStep 3.0 running in Infinite Mac (the Previous emulator), the 1120×832 canvas
 read 1:1 (frames in \`.fidelity/ns30\`). Infinite Mac has no NeXTSTEP 3.3; 3.0 is the nearest
-real 3.x system it runs, and the owner accepted it as the
+real 3.x system it runs, and it stands in as the
 source for 3.3's look (D15). Helvetica text is masked: Display PostScript set it 1-bit, and the
 browser's Helvetica cannot match it (D3); its rows are checked by eye.
 

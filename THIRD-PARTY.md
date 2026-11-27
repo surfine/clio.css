@@ -22,7 +22,7 @@ presented as such:
   re-encoded as palette PNGs by `tooling/db-art.py` and `tooling/db-pens.py`, each matched
   1:1 against the theme running in an emulator. A few corner pixels where the pens meet are
   read from that screen by `tooling/db-pens.py`. The theme file is not included. The
-  textures and frame illustrations ship since 0.9.0, at the owner's decision.
+  textures and frame illustrations ship since 0.9.0.
 - NeXTSTEP 3.3 control art (`--clio-art-nx-*`, clio.nextstep.css only): title-bar close and
   miniaturize buttons (plain, held, edited), scroller arrows (plain and held), the return mark,
   submenu arrows, slider lane and knob, and the dock's dots, typed as grids in NeXTSTEP's four
