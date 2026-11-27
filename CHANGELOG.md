@@ -12,6 +12,33 @@ Documentation and packaging only; the CSS rules and clio.js behave as in 2.0.1.
   for the full check, or run `npm run fidelity:public`, which needs no private files.
 - **`npm run verify`** accepts a site map whose only change is its build date.
 
+Verify, on the commit before this note was added (only CHANGELOG.md changed since):
+
+> npm run verify — PASS
+>
+> Commit 4c5002f59df64c9f91839c163369d3ddf59a5d00, clio.css 2.0.2, 2026-11-27T09:38:06Z, Node v24.14.1, darwin.
+>
+> | Step | Result | Detail |
+> | --- | --- | --- |
+> | npm ci | pass |  |
+> | npm test | pass | 78 passed (78) |
+> | lint | pass |  |
+> | typecheck | pass |  |
+> | clean after build | pass | dist/, docs/, llms.txt and EVIDENCE.md match the sources |
+> | npm pack clio.css | pass | clio.css-2.0.2.tgz, 300 files, 1932.5 kB |
+> | npm pack clio.css-preact | pass | clio.css-preact-2.0.2.tgz, 17 files, 8.4 kB |
+> | npm pack clio.css-react | pass | clio.css-react-2.0.2.tgz, 17 files, 8.4 kB |
+> | install tarballs | pass | with preact 11.2.0, react 19.3.1 |
+> | clio.css exports | pass | 19 entries resolve; js.esm and contract import |
+> | clio.css-preact exports | pass | 1 entries resolve; index imports |
+> | clio.css-react exports | pass | 1 entries resolve; index imports |
+> | clio.css-preact render | pass | button, checkbox match components.json with preact |
+> | clio.css-react render | pass | button, checkbox match components.json with react |
+> | CSS rules vs 1.1.1 | pass | 12 files, 5722 rules: identical to 1.1.1 with headers and comments stripped, 0 allow-listed change(s) |
+> | docs numbers and versions | pass | version 2.0.2 everywhere; evidence 255/44/45/4; 32 components; sizes; fidelity 23/23, 26/26, 52/54, 55/55, 7/7, 40/40, 1/5; 204 of 213 public |
+> | Markdown relative links | pass | 22 links in 10 files resolve |
+> | fidelity:public | pass | fidelity:public (chromium, 1x): 204 of 204 publicly checkable specimens identical to their reference digests; 9 not publicly checkable (test/fidelity-digests.json) |
+
 ## 2.0.1 (2026-11-27)
 
 A fix to clio.js's menus, then documentation, packaging and checks. The CSS rules are 2.0.0's
