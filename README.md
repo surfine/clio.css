@@ -79,8 +79,7 @@ markup and evidence for each component.
 
 No NeXTSTEP CSS library was found (searched 2026-11-27). "Not stated" means no per-value
 evidence was found in the project's README or repository root, not that none exists; dates
-are the newest commit or publish seen on 2026-11-27. Sources for every cell:
-[dev/launch/COMPARISON.md](dev/launch/COMPARISON.md).
+are the newest commit or publish seen on 2026-11-27, on each project's GitHub page and npm.
 
 **The gap clio.css fills:** one library for Classic Mac OS from System 6 to Mac OS 9 plus
 NeXTSTEP, where each value says where it came from and the pixel check can be re-run.

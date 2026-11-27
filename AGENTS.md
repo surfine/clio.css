@@ -83,8 +83,9 @@ For AI coding agents using or changing this repository.
 - Versions (owner, 2026-11-27): only 2.x is maintained; 1.x gets no releases. Fixes land on
   `main` only. What 2.x keeps compatible is listed in README "Versions and support"; the
   component packages' props follow semver only.
-- Internal notes (roadmaps, lessons, audits, plans, handoffs, launch drafts, upstream
-  drafts) live in `dev/`, never in `docs/` (`docs/` is the published GitHub Pages root).
+- Internal notes (roadmaps, lessons, audits, plans, handoffs) live in `dev/`, never in `docs/`
+  (`docs/` is the published GitHub Pages root). Launch drafts (`dev/launch/`) and upstream
+  audits and drafts (`dev/upstream/`) are local only and git-ignored: never commit them.
 - Tokens live on `:root, [data-era="system6"]` (`foundation/tokens.css`),
   `[data-era="system7"]` (`foundation/system7.css`), `:is([data-era="platinum"],
   [data-era="drawingboard"])` (`foundation/platinum.css`, shared: both are Appearance Manager
