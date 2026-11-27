@@ -15,3 +15,6 @@ packages/*/dist/
 # launch video work files and renders (large; kept out of git)
 dev/launch/bilibili/work/
 dev/launch/bilibili/*.mp4
+
+# upstream audits, drafts and send records: local only (owner, 2026-11-27)
+dev/upstream/
