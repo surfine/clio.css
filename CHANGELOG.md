@@ -1,5 +1,17 @@
 # Changelog
 
+## 2.0.2 (2026-11-27)
+
+Documentation and packaging only; the CSS rules and clio.js behave as in 2.0.1.
+
+- **READMEs** on npm (clio.css, clio.css-preact, clio.css-react) say what to check instead of
+  how the code was written: the evidence rows and `npm run fidelity:public`.
+- **Wording** in the evidence rows, the docs site and the stylesheets' comments is neutral
+  ("design decision" instead of personal attributions). The CSS rules are unchanged.
+- **`npm run fidelity`** no longer assumes a reference folder on one machine: set `AIS6_DIR`
+  for the full check, or run `npm run fidelity:public`, which needs no private files.
+- **`npm run verify`** accepts a site map whose only change is its build date.
+
 ## 2.0.1 (2026-11-27)
 
 A fix to clio.js's menus, then documentation, packaging and checks. The CSS rules are 2.0.0's

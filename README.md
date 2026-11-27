@@ -22,10 +22,10 @@ Four ways in, from least to most code:
 
 ```html
 <!-- 1. One CSS file: the four Classic eras, System 6 by default -->
-<link rel="stylesheet" href="https://unpkg.com/clio.css@2.0.1/dist/clio.css">
-<!-- NeXTSTEP is its own file: https://unpkg.com/clio.css@2.0.1/dist/clio.nextstep.css -->
+<link rel="stylesheet" href="https://unpkg.com/clio.css@2.0.2/dist/clio.css">
+<!-- NeXTSTEP is its own file: https://unpkg.com/clio.css@2.0.2/dist/clio.nextstep.css -->
 <!-- optional behaviour (menus, scroll bars, window dragging): -->
-<script src="https://unpkg.com/clio.css@2.0.1/dist/clio.js" defer></script>
+<script src="https://unpkg.com/clio.css@2.0.2/dist/clio.js" defer></script>
 ```
 
 ```js
@@ -50,7 +50,7 @@ export const App = () => (
 Set `data-era` (`system6`, `system7`, `drawingboard`, `platinum`) on `<html>` or any
 element; the components render exactly the markup documented on the site, and the look comes
 from the stylesheet. The jsDelivr URL works the same way
-(`https://cdn.jsdelivr.net/npm/clio.css@2.0.1/dist/clio.css`).
+(`https://cdn.jsdelivr.net/npm/clio.css@2.0.2/dist/clio.css`).
 
 | File | Draws | Minified | gzip |
 | --- | --- | ---: | ---: |
@@ -103,7 +103,7 @@ NeXTSTEP, where each value says where it came from and the pixel check can be re
 <html lang="en" data-era="system7"> <!-- system6 (default), system7, drawingboard or platinum -->
 <head>
   <meta charset="utf-8">
-  <link rel="stylesheet" href="https://unpkg.com/clio.css@2.0.1/dist/clio.css">
+  <link rel="stylesheet" href="https://unpkg.com/clio.css@2.0.2/dist/clio.css">
 </head>
 <body>
   <div class="window" style="width: 320px">
@@ -209,7 +209,7 @@ unchanged: `.title-bar button.close`, `button.resize`, `.inactive-title-bar`,
 ## clio.js (optional)
 
 ```html
-<script src="https://unpkg.com/clio.css@2.0.1/dist/clio.js" defer></script>
+<script src="https://unpkg.com/clio.css@2.0.2/dist/clio.js" defer></script>
 ```
 
 No dependencies; 72.4 kB, or 48.0 kB as `dist/clio.min.js`. clio.css works without it.
