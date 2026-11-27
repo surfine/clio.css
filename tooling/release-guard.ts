@@ -12,6 +12,15 @@ if (process.env.CLIO_OWNER_RELEASE !== "1") {
   console.error("Refusing to publish: CLIO_OWNER_RELEASE=1 is not set. Publishing is the maintainer's step (AGENTS.md, Releasing); agents never set it.");
   process.exit(1);
 }
+// Publishing a version that is already on npm always fails at the very end, after a build. Say so first.
+{
+  const pkg = JSON.parse(readFileSync(join(process.cwd(), "package.json"), "utf8"));
+  const seen = spawnSync("npm", ["view", `${pkg.name}@${pkg.version}`, "version"], { encoding: "utf8" }).stdout.trim();
+  if (seen === pkg.version) {
+    console.error(`${pkg.name}@${pkg.version} is already on npm; nothing to publish. Raise the version first.`);
+    process.exit(1);
+  }
+}
 if (process.argv.includes("--stamp")) {
   const git = (a: string[]): string => spawnSync("git", a, { cwd: root, encoding: "utf8" }).stdout.trim();
   const f = join(root, ".verify/stamp.json");
