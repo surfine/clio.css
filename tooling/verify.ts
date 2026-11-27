@@ -58,7 +58,12 @@ for (const [name, args] of [["npm ci", ["ci", "--no-audit", "--no-fund"]], ["npm
   if (name === "npm ci" && !r.ok) finish();
 }
 const after = git(["status", "--porcelain"], repo);
-record("clean after build", after ? "fail" : "pass", after ? "the build changed committed files (rebuild and commit them)\n" + after : "dist/, docs/, llms.txt and EVIDENCE.md match the sources");
+// docs/sitemap.xml carries the build date in <lastmod>; a build on a later day changes only those
+// lines, which says nothing about the sources. Any other change still fails.
+const onlyDates = after === "M docs/sitemap.xml" && git(["diff", "-U0", "docs/sitemap.xml"], repo).split("\n")
+  .filter((l) => /^[-+](?![-+])/.test(l)).every((l) => /<lastmod>\d{4}-\d\d-\d\d<\/lastmod>/.test(l));
+record("clean after build", after && !onlyDates ? "fail" : "pass", after && !onlyDates ? "the build changed committed files (rebuild and commit them)\n" + after
+  : "dist/, docs/, llms.txt and EVIDENCE.md match the sources" + (onlyDates ? " (docs/sitemap.xml differs only in its <lastmod> build date)" : ""));
 
 const pkg = JSON.parse(readFileSync(join(repo, "package.json"), "utf8"));
 const version: string = pkg.version;
